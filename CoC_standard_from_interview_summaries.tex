@@ -8,13 +8,12 @@
 \usepackage{amssymb}            % Math symbols
 \usepackage[margin=2.5cm]{geometry} % Page margins
 \usepackage{hyperref}           % Clickable links/references (optional)
-
 % --- DOCUMENT ---
 \begin{document}
 
 \title{Detailed Components for a Biomass Chain of Custody Data Standard}
 \author{Based on a series of expert interviews and research into existing CoC standards} % should probably use a different data type here. 
-\date{\monthname, 2025} % Uses the compilation date
+\date{\monthname 2025} % Uses the compilation date
 \maketitle
 
 \section{Data Elements and Definitions}
@@ -25,27 +24,33 @@
         \begin{itemize} % Corresponds to ▪
             \item \textbf{Biomass Identification:}
                 \begin{itemize} % Corresponds to •
-                    \item Biomass Type: (e.g., sawmill residue, in-forest biomass, agricultural residue). Use standardized terminology.
-                    \item Quantity: (e.g., Bone Dry Tons (BDT), cubic meters, weight). Specify units of measure.
+                    \item Biomass Feedstock Type: (e.g., sawmill residue, in-forest biomass, agricultural residue). Use standardized terminology and categories reflecting those in ISCC, SBP, etc. Define mappings between these categories if needed.
+                    \item Quantity: (e.g., Bone Dry Tons (BDT), cubic meters, weight). Specify units of measure. Common units can be found in ISO 13662 or existing standards. 
                     \item Quality: (e.g., moisture content, species if applicable).
                     \item Product Form: (e.g., chips, pellets, logs, sawdust).
                 \end{itemize}
             \item \textbf{Sourcing Information:}
-                \begin{itemize} % Corresponds to •
-                    \item Location of Origin: (e.g., geographic coordinates, Forest Service district, Timber Harvest Plan (THP) number, sale number). Acknowledge the challenges of precise geolocation. GeoJSON should be the gold standard file type for Location of Origin. Shapefiles should also be treated as valid, as should lat lon. 
-                    \item Source Type: (e.g., private land, federal land, specific mill).
+                \begin{itemize} 
+                    \item Location of Origin: (e.g., geographic coordinates, Forest Service district, Timber Harvest Plan (THP) number, sale number). Example requirements:
+                        \begin{itemize}
+                            \item LCFS, RED III: Specific geotags
+                            \item SBP, FSC: Forest Management Unit (FMU)
+                            \item LCFS 2026: Plot data
+                        \end{itemize}
+                    Acknowledge the challenges of precise geolocation. GeoJSON could be the gold standard file type for Location of Origin. Shapefiles should also be treated as valid, as should lat lon. 
+                    \item Source Specification: Standard-dependent.
                     \item Harvest Method: (e.g., thinning, clear-cut, salvage).
                     \item Permit Information: (e.g., Forest Service permits).
                 \end{itemize}
             \item \textbf{Chain of Custody Events (Transfer Information):}
-                \begin{itemize} % Corresponds to •
+                \begin{itemize} 
                     \item Date and Time of Transfer.
                     \item Identification of Transferring and Receiving Parties: (e.g., names, organizations, unique identifiers).
                     \item Transportation Details: (e.g., truck ticket number, bill of lading, GPS tracking data if available).
                     \item Volume Transferred.
                 \end{itemize}
             \item \textbf{Certification Information:}
-                \begin{itemize} % Corresponds to •
+                \begin{itemize} 
                     \item Certification Scheme: (e.g., FSC, SFI, ATFS, BioMAT, BioRAM, ISCC, SBP).
                     \item Certificate Number.
                     \item Certification Status.
@@ -53,18 +58,18 @@
                     \item Verification Data: (e.g., audit reports, declarations).
                 \end{itemize}
             \item \textbf{Sustainability Data:}
-                \begin{itemize} % Corresponds to •
+                \begin{itemize} 
                     \item Sourcing from High Hazard Zones (HHZ) areas (if applicable).
                     \item Information related to clear-cut restrictions (if applicable).
                     \item Data relevant to GHG calculations (potentially from THPs).
                 \end{itemize}
             \item \textbf{Metadata:}
-                \begin{itemize} % Corresponds to •
+                \begin{itemize} 
                     \item Data Provider.
                     \item Timestamp of Data Entry.
                     \item Method of Data Collection.
                 \end{itemize}
-        \end{itemize} % End of ▪ level list
+        \end{itemize} 
 
     \item \textbf{Data Formats and Standards:}
         \begin{itemize}
@@ -76,7 +81,7 @@
     \item \textbf{Data Collection and Verification Procedures:}
         \begin{itemize}
             \item Outline recommended or required procedures for data collection at each stage of the supply chain.
-            \item Suggest methods for data verification, such as cross-referencing with existing systems (e.g., inventory systems, harvest data), third-party verification (e.g., scaling bureaus), and audits.
+            \item Suggest methods for data verification, such as cross-referencing with existing systems (e.g. inventory systems, harvest data), third-party verification (e.g. scaling bureaus) and audits.
             \item Acknowledge the importance of field visits for verifying sourcing claims, especially for non-certified suppliers.
         \end{itemize}
 
