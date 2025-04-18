@@ -1,0 +1,111 @@
+\documentclass[a4paper, 11pt]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}      % Input encoding
+\usepackage{datetime}
+\usepackage[T1]{fontenc}        % Font encoding
+\usepackage{amsmath}            % Math formulas
+\usepackage{amssymb}            % Math symbols
+\usepackage[margin=2.5cm]{geometry} % Page margins
+\usepackage{hyperref}           % Clickable links/references (optional)
+
+% --- DOCUMENT ---
+\begin{document}
+
+\title{Detailed Components for a Biomass Chain of Custody Data Standard}
+\author{Based on a series of expert interviews and research into existing CoC standards} % should probably use a different data type here. 
+\date{\monthname, 2025} % Uses the compilation date
+\maketitle
+
+\section{Data Elements and Definitions}
+
+\begin{itemize}
+    \item This section defines the core of the data standard. Each data element of the standard should be further refined, and this is not an exhaustive list.
+    \item Based on our interviews, we find the following components to be required by supply chain participants:
+        \begin{itemize} % Corresponds to ▪
+            \item \textbf{Biomass Identification:}
+                \begin{itemize} % Corresponds to •
+                    \item Biomass Type: (e.g., sawmill residue, in-forest biomass, agricultural residue). Use standardized terminology.
+                    \item Quantity: (e.g., Bone Dry Tons (BDT), cubic meters, weight). Specify units of measure.
+                    \item Quality: (e.g., moisture content, species if applicable).
+                    \item Product Form: (e.g., chips, pellets, logs, sawdust).
+                \end{itemize}
+            \item \textbf{Sourcing Information:}
+                \begin{itemize} % Corresponds to •
+                    \item Location of Origin: (e.g., geographic coordinates, Forest Service district, Timber Harvest Plan (THP) number, sale number). Acknowledge the challenges of precise geolocation. GeoJSON should be the gold standard file type for Location of Origin. Shapefiles should also be treated as valid, as should lat lon. 
+                    \item Source Type: (e.g., private land, federal land, specific mill).
+                    \item Harvest Method: (e.g., thinning, clear-cut, salvage).
+                    \item Permit Information: (e.g., Forest Service permits).
+                \end{itemize}
+            \item \textbf{Chain of Custody Events (Transfer Information):}
+                \begin{itemize} % Corresponds to •
+                    \item Date and Time of Transfer.
+                    \item Identification of Transferring and Receiving Parties: (e.g., names, organizations, unique identifiers).
+                    \item Transportation Details: (e.g., truck ticket number, bill of lading, GPS tracking data if available).
+                    \item Volume Transferred.
+                \end{itemize}
+            \item \textbf{Certification Information:}
+                \begin{itemize} % Corresponds to •
+                    \item Certification Scheme: (e.g., FSC, SFI, ATFS, BioMAT, BioRAM, ISCC, SBP).
+                    \item Certificate Number.
+                    \item Certification Status.
+                    \item Claims Associated with Certification.
+                    \item Verification Data: (e.g., audit reports, declarations).
+                \end{itemize}
+            \item \textbf{Sustainability Data:}
+                \begin{itemize} % Corresponds to •
+                    \item Sourcing from High Hazard Zones (HHZ) areas (if applicable).
+                    \item Information related to clear-cut restrictions (if applicable).
+                    \item Data relevant to GHG calculations (potentially from THPs).
+                \end{itemize}
+            \item \textbf{Metadata:}
+                \begin{itemize} % Corresponds to •
+                    \item Data Provider.
+                    \item Timestamp of Data Entry.
+                    \item Method of Data Collection.
+                \end{itemize}
+        \end{itemize} % End of ▪ level list
+
+    \item \textbf{Data Formats and Standards:}
+        \begin{itemize}
+            \item Specify the required formats for each data element (e.g., ISO date format, numeric precision, controlled vocabularies).
+            \item Recommend or require the use of standard codes and identifiers where available.
+            \item Address the need for uniforming address inputs and amounts claimed.
+        \end{itemize}
+
+    \item \textbf{Data Collection and Verification Procedures:}
+        \begin{itemize}
+            \item Outline recommended or required procedures for data collection at each stage of the supply chain.
+            \item Suggest methods for data verification, such as cross-referencing with existing systems (e.g., inventory systems, harvest data), third-party verification (e.g., scaling bureaus), and audits.
+            \item Acknowledge the importance of field visits for verifying sourcing claims, especially for non-certified suppliers.
+        \end{itemize}
+
+    \item \textbf{Data Sharing and Access Protocols:}
+        \begin{itemize}
+            \item Define rules and protocols for data sharing among different stakeholders (e.g., market participants, regulators).
+            \item Clearly address data privacy concerns and how the system will protect confidential or proprietary information. Consider different levels of data visibility based on user roles and permissions.
+            \item Specify which data will be shared with supporting state agencies.
+            \item Outline the process for data access requests and approvals.
+        \end{itemize}
+
+    \item \textbf{Integration with Existing Systems and Standards:}
+        \begin{itemize}
+            \item Provide guidance on how the new data standard can be implemented in conjunction with existing tracking systems and certification frameworks.
+            \item Consider how data from systems like Log Inventory and Managment System (LIMS), FPFS, BioRAM, and certification schemes (FSC, SFI, SBP) can be mapped to the new standard.
+            \item Explore the potential for leveraging existing data already included in documents like THPs and Forest Service permits.
+            \item Consider adopting or aligning with relevant external standards where appropriate (e.g., EU standards for biomass certification).
+            \item Enable automated validation of claims against other standards based on predefined rulesets and entity mappings.
+        \end{itemize}
+
+    \item \textbf{Glossary of Terms:}
+
+    \item \textbf{Appendices:}
+        \begin{itemize}
+            \item TODO Include data templates or examples.
+            \item TODO Reference relevant regulations, standards, or guidance documents.
+            \item TODO Provide a mapping of data elements to existing reporting requirements (e.g., BioRAM).
+        \end{itemize}
+
+\end{itemize} % End of ◦ level list
+
+\end{document}

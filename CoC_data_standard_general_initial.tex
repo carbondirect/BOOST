@@ -37,7 +37,8 @@ A chain of custody (CoC) data standard for California biomass should include sev
     \item \textbf{Transfer Records:} The system must track the transfer of biomass between different entities in the supply chain. This should include the identification of the sender and receiver, and a unique identifier for each consignment or transaction. Transfer records may also include quantity, prices, units, and geolocation. Much of the data present in Transfer Records can be inherited from other entities in the data standard. 
     \item \textbf{Timestamping:} Recording the date and time of each transfer or transaction is important for traceability. The preferred format would be ISO 8601. UTC encoding is also preferred to simplify reconciliation and tracking across time zones. 
     \item \textbf{Load Information:} Information from truck tickets or weighbridge tickets, including ticket numbers, truck identification, and weight data, could be incorporated. Existing log tracking systems might serve as a basis. Preference is for digitization where possible but the system may need to account for paper or physical ticketing. It could also be handled via QR code or similar identifier. Some skidders and trucks have GPS systems that could provide more granular data. 
-    \item \textbf{Mass Balance Approach:} The standard could consider a mass balance approach, as used by SBP and outlined in ISO 13662. This involves tracking the input and output of biomass with specific characteristics within a defined system boundary.
+    \item \textbf{Mass Balance / Physical Seperation Approach:} The standard incorporate support for a mass balance approach, as used by SBP and outlined in ISO 13662. This involves tracking the input and output of biomass with specific characteristics within a defined system boundary.
+    \item \textbf{Crediting / Percentage Approach:} The standard incorporate support for a crediting/percentage approach to certification tracking. This method is widely used in other CoC systems (FSC, PEFC) and requires the separation of sustainability attributes from the physical flow of material.
 \end{itemize}
 
 \section*{3. Data Management and Reporting}
@@ -87,7 +88,8 @@ Existing data transfer systems, such as that used by SBP, can help inform more s
     \item \textbf{Quantity and Units:} Standardized metrics such as bone dry tons (BDT) or m\textsuperscript{3}.
     \item \textbf{Transfer Records and Timestamping:} Unique consignment IDs, timestamps, and sender/receiver tracking.
     \item \textbf{Load Information:} Support for integration with truck ticket systems.
-    \item \textbf{Mass Balance Support:} Compatible LCFS reporting logic, external standards like FSC and SBP.
+    \item \textbf{Mass Balance Method Support:} Compatible LCFS reporting logic, external standards like FSC, PEFC, and SBP.
+    \item \textbf {Percentage/Crediting Method Support:} Compatible with external standards like FSC and PEFC.
     \item \textbf{Electronic Data Management:} API-based submissions, quarterly/annual report support, structured templates.
     \item \textbf{Access Control:} Permissions-based data sharing for sensitive business data.
     \item \textbf{Verification and Auditing:} Embedded validation, audit logs, and automated cross-checking.
@@ -178,10 +180,12 @@ Report Submitted & SB 498/SB 1383 due date & CalRecycle, CARB & Facility roll-up
 
 \subsection*{Formats}
 \begin{itemize}[noitemsep]
-    \item JSON (preferred)
+    \item JSON (for transaction records)
+    \item GeoJSON (for geolocation data)
+    \item Shapefile (for geolocation data)
     \item CSV (fallback)
     \item PDF (if actual documents are to be uploaded/transferred)
-    \item RESTful API / Secure upload
+    \item RESTful API for transfer/ Secure upload
 \end{itemize}
 
 \
