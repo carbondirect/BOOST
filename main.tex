@@ -1,0 +1,169 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\title{Biomass Chain of Custody (CoC) Data Standard}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Overview / Purpose}
+This document defines a flexible, open-access data standard for tracking biomass through a certified, auditable chain of custody (CoC) system. It is designed to support compliance with California state laws (SB 498, SB 1383), ensure regulatory transparency, and streamline reporting burdens for biomass supply chain actors.
+
+\textbf{Goals:}
+\begin{itemize}[noitemsep]
+    \item Enable secure, low-cost, and scalable biomass tracking
+    \item Support multiple regulatory reporting pathways
+    \item Promote interoperability between public and private systems
+    \item Promote interoperability between various biomass sustainability standards
+    \item Provide data structure guidance for software developers, facilities, and government agencies
+\end{itemize}
+
+\section{Scope}
+\subsection*{Covered Materials}
+Biomass types defined under CA law, including:
+\begin{itemize}[noitemsep]
+    \item 
+\end{itemize}
+
+\subsection*{Participating Entities}
+\begin{itemize}[noitemsep]
+    \item Harvesters / Collectors
+    \item Transfer Stations / Processors
+    \item Biomass Conversion Facilities
+    \item Composters, Biochar Producers, Bioenergy Facilities
+    \item Regulators (CalRecycle, CARB, LEA)
+\end{itemize}
+
+\subsection*{Supported CoC Models}
+\begin{itemize}[noitemsep]
+    \item Mass Balance
+    \item Segregation
+    \item Identity Preservation (optional)
+\end{itemize}
+
+\subsection*{Interoperable Systems}
+\begin{itemize}[noitemsep]
+    \item 
+\end{itemize}
+
+\section{Core Data Model}
+
+\subsection*{Entity Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+entity\_id & string & Unique identifier of supply chain entity \\
+entity\_type & enum & source, processor, converter, end\_user, certifier \\
+name & string & Organization name \\
+location & object & Address, lat/lon, geoJSON describing material source?? \\
+certifications & array & FSC, SFI, SBP, etc. \\
+regulatory\_ids & object & CalRecycle ID, LEA ID \\
+\hline
+\end{longtable}
+
+\subsection*{Material Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+material\_id & string & Unique batch ID \\
+material\_type & enum & wood\_waste, ag\_residues, etc. \\
+origin\_entity\_id & string & Source of material (entity\_id, location) \\
+quantity & number & Amount received \\
+unit & string & e.g. ton, dry ton \\
+attributes & dict & Moisture \%, carbon \%, etc. \\
+recovery\_efficiency & number & As reported to CalRecycle \\
+\hline
+\end{longtable}
+
+\subsection*{Transaction Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+transaction\_id & string & Unique transaction reference \\
+material\_id & string & Batch being transferred \\
+sender\_id & string & Entity sending material \\
+receiver\_id & string & Entity receiving material \\
+timestamp & datetime & Date and time of transfer \\
+documentation\_url & string & Link to manifest, weigh ticket, etc. \\
+geolocation & object & Truck/device GPS info (optional) \\
+coC\_model & enum & mass\_balance, segregation \\
+\hline
+\end{longtable}
+
+\subsection*{Certificate Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+claim\_id & string & Unique certification reference \\
+material\_id & string & Linked material batch \\
+scheme & enum & FSC, SBP, LCFS, etc. \\
+claim\_type & string & Certified, eligible, verified \\
+validity\_period & range & Start and end date \\
+GHG\_profile\_available & boolean & Yes/no \\
+issued\_by & string & Entity or system issuing the claim \\
+\hline
+\end{longtable}
+
+\section{Event \\& Reporting Framework}
+\begin{longtable}{|p{4cm}|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Event} & \textbf{Trigger} & \textbf{Reported To} & \textbf{Required Fields} \\
+\hline
+Material Created & Material batch generated & CoC System & material\_id, origin, attributes \\
+Material Transferred & Shipment leaves sender & CoC System, CalRecycle & transaction\_id, documentation, receiver\_id \\
+Certificate Issued & Facility certifies batch & CoC System & claim\_id, material\_id, scheme \\
+Report Submitted & SB 498/SB 1383 due date & CalRecycle, CARB & Facility roll-up of totals, recovery \\
+\hline
+\end{longtable}
+
+\section{System Integration Guidelines}
+\subsection*{Interfaces}
+\begin{itemize}[noitemsep]
+    \item CalRecycle RDDS: batch data upload + quarterly summaries
+    \item CARB LCFS: load-level + mass balance compliance
+    \item SBP DTS: optional plug-in for certified exporters
+\end{itemize}
+
+\subsection*{Formats}
+\begin{itemize}[noitemsep]
+    \item JSON (preferred)
+    \item CSV (fallback)
+    \item RESTful API / Secure upload
+\end{itemize}
+
+\section{Governance \\& Versioning}
+\begin{itemize}[noitemsep]
+    \item \textbf{Maintainer:} Carbon Direct (initial release)
+    \item \textbf{Versioning:} Semantic (e.g., 1.0.0)
+    \item \textbf{Update Cycle:} Semiannual review + stakeholder input
+    \item \textbf{Change Proposals:} Via GitHub issues or agency feedback portal
+\end{itemize}
+
+\section{Appendices}
+\subsection*{A. Glossary}
+\begin{itemize}[noitemsep]
+    \item \textbf{BDT:} Bone Dry Ton
+    \item \textbf{CoC:} Chain of Custody
+    \item \textbf{RDDS:} Recycling and Disposal Reporting System
+\end{itemize}
+
+\subsection*{B. Code Lists}
+\begin{itemize}[noitemsep]
+    \item Material Types: wood\_waste, ag\_residues, pulp, nonrecyclable\_paper
+    \item Entity Types: source, processor, converter, end\_user
+    \item Certification Schemes: FSC, SBP, SFI, LCFS
+\end{itemize}
+
+\subsection*{C. Example JSON Payloads}
+To be added.
+
+\subsection*{D. SB 498 \\& SB 1383 Data Crosswalk}
+To be added.
+
+\end{document}

@@ -1,0 +1,204 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{enumitem}
+\title{Elements of a Chain of Custody Data Standard for California Biomass}
+\date{}
+\begin{document}
+\maketitle
+
+A chain of custody (CoC) data standard for California biomass should include several key elements to ensure secure, scalable, open-access, and low-cost tracking while addressing the specific context of biomass management in the state. This data standard should also interact with external chain of custody standards like FSC or EU RED II. The standard should be easily interpretable by users as there is a large variety in the operational scale of expected users; some interviewees mentioned that existing systems and standards are burdensome for small supply chain participants. 
+
+
+\section{Summary of user interviews and research}
+\begin{itemize}
+    \item \textbf{Common themes} \begin{enumerate} 
+    Users expressed frustration with certain aspects of the existing Chain of Custody reporting process, including cumbersome data management and the high cost of compliance: 
+    \subitem Existing practices utilize Excel and paper-based documentation like tickets, each of which entail large amounts of user error during the input process. 
+    \subitem Aggregating information from various points in the supply chain is a challenge, as is tracking specific elements (FIND A NEW WORD) like sawmill residues. 
+    \subitem 
+    \end{enumerate}
+    
+    
+\end{itemize}
+
+
+
+\section*{1. Identification and Origin of Biomass}
+\begin{itemize}
+    \item \textbf{Source Location:} The standard should require recording the biomass's geographical origin, including the Forest Management Unit (FMU), if applicable. These data or file types could include latitude and longitude coordinates, geoJSON files, Shapefiles, timber harvest plan (THP) numbers (for forest biomass), and potentially federal or state project numbers. Location data can also be categorized further by location type to reduce ambiguity: landing, forest, mill, etc.
+    \item \textbf{Biomass Type and Category:} The standard should align with existing definitions used in California policy and regulation, such as those used by CalRecycle, which include agricultural crop residues, bark, yard waste, silviculture residue, wood waste, etc. These could be strings or enumerated categories. 
+    \item \textbf{Sustainability Characteristics:} The standard should accommodate the tracking of sustainability attributes relevant to California regulations and market incentives. This includes information related to Sustainable Forest Management (SFM), as well as alignment with programs like BioRAM. For exported biomass, alignment with international standards like FSC and SBP may be relevant.
+    \item \textbf{Quantity and Units:} Consistent units for measuring biomass quantity, wet weight, volume) should be defined. Conversion factors may be needed for different biomass types.
+\end{itemize}
+
+\section*{2. Tracking Biomass Movement}
+\begin{itemize}
+    \item \textbf{Transfer Records:} The system must track the transfer of biomass between different entities in the supply chain. This should include the identification of the sender and receiver, and a unique identifier for each consignment or transaction. Transfer records may also include quantity, prices, units, and geolocation. Much of the data present in Transfer Records can be inherited from other entities in the data standard. 
+    \item \textbf{Timestamping:} Recording the date and time of each transfer or transaction is important for traceability. The preferred format would be ISO 8601. UTC encoding is also preferred to simplify reconciliation and tracking across time zones. 
+    \item \textbf{Load Information:} Information from truck tickets or weighbridge tickets, including ticket numbers, truck identification, and weight data, could be incorporated. Existing log tracking systems might serve as a basis. Preference is for digitization where possible but the system may need to account for paper or physical ticketing. It could also be handled via QR code or similar identifier. Some skidders and trucks have GPS systems that could provide more granular data. 
+    \item \textbf{Mass Balance Approach:} The standard could consider a mass balance approach, as used by SBP and outlined in ISO 13662. This involves tracking the input and output of biomass with specific characteristics within a defined system boundary.
+\end{itemize}
+
+\section*{3. Data Management and Reporting}
+\begin{itemize}
+    \item \textbf{Electronic System:} The standard may include a default data model that can be used by various supply chain systems to improve efficiency, tracking, and transparency. 
+    \item \textbf{Standardized Data Format:} A consistent data format is essential for interoperability and ease of analysis. Templates or predefined fields for data entry could be used. An example data model is included in the appendix. 
+    \item \textbf{Reporting Frequency:} The standard should specify the required reporting frequency (e.g., quarterly, annually) to relevant agencies like CalRecycle, CalFire, or CARB. 
+    \item \textbf{Data Sharing Permissions:} The standard needs to address data-sharing concerns. Participants are hesitant to share competitive information publicly. The system should allow for controlled data sharing with authorized entities (e.g., regulators) while maintaining the confidentiality of sensitive business information such as prices or quantities. User-defined permissions for data sharing could be considered.
+\end{itemize}
+
+\section*{4. Verification and Auditing}
+\begin{itemize}
+    \item \textbf{Data Accuracy Mechanisms:} The standard should include mechanisms for verifying the accuracy of the data submitted. This could involve data validation rules within the system and potential integration with existing verification processes (e.g., third-party auditors).
+    \item \textbf{Audit Trails:} Maintaining an audit trail of data entries and modifications is crucial for accountability. Many biomass sustainability standards have third-party auditing requirements. These audit trails often cover the entire supply chain.
+    \item \textbf{Integration with Certification Schemes:} The standard should consider how it can integrate with existing sustainability certification schemes like FSC, SFI, and SBP. Utilizing certification claims and certificates could streamline data provision. Rule sets should also be defined based on how these schemes interact with each other (such as biomass being qualified under FSC automatically being qualified under EU RED). 
+    \item \textbf{Automated auditing...?}
+   \end{itemize}
+
+\section*{5. Addressing Stakeholder Concerns and Practicalities}
+\begin{itemize}
+    \item \textbf{Ease of Use:} The system should be user-friendly to encourage adoption across different scales of operations, including small farms. Minimizing the burden on truck drivers and field personnel is important. The automated or streamlined generation of compliance reports would also be beneficial. 
+    \item \textbf{Cost-Effectiveness:} The standard should aim for a low-cost system to avoid discouraging participation, given the often-thin margins in the biomass market and the existing complexity of tracking and reporting of biomass use and transfer.
+    \item \textbf{Data Privacy:} Explicit consideration of data privacy concerns is essential, particularly regarding competitive information and farm-level data. This can be handled at both the transaction level and the supply chain entity level or sub-fields thereof. 
+\end{itemize}
+
+\section*{6. Alignment with Regulations and Standards}
+\begin{itemize}
+    \item \textbf{California-Specific Regulations:} The standard must align with California regulations, including AB 498 (biomass conversion facility reporting), SB 1383 (organic waste diversion), and requirements related to renewable energy programs (e.g., BioRAM, BioMat).
+    \item \textbf{Consideration of LCFS:} Alignment with Low Carbon Fuel Standard (LCFS) reporting requirements is crucial. 
+    \item \textbf{International Standards:} For biomass intended for export markets, the standard should consider alignment with the data requirements of other biomass chain of custody standards. Based on our research, we tried to include as many relevant fields as possible in the Appendix. The ISO 13662 standard for mass balance could provide valuable guidance. International standards can also have overlap with CA-specific requirements that can be validated via specific rulesets. 
+\end{itemize}
+
+By incorporating these elements, a chain of custody data standard for California biomass can be designed to enhance transparency, streamline compliance, and support the sustainable management of this important resource. The development process should involve active engagement with various stakeholders to ensure the standard is practical, effective and addresses their diverse needs and concerns.
+
+
+
+
+\section{Appendix}
+
+
+\subsection{Example data model}
+Existing data transfer systems, such as that used by SBP, can help inform more specific data models and rule sets. 
+\begin{itemize}
+    \item \textbf{Source Location:} The standard should require the recording of the geographical origin of the biomass, including latitude and longitude coordinates, THP numbers, or agricultural site location.
+    \item \textbf{Biomass Type and Category:} Definitions aligned with CalRecycle and European standards such as FSC and SBP.
+    \item \textbf{Sustainability Characteristics:} HHZ, SFM, BioRAM alignment; support for optional international certification claims like EU RED or PEFC.
+    \item \textbf{Quantity and Units:} Standardized metrics such as bone dry tons (BDT) or m\textsuperscript{3}.
+    \item \textbf{Transfer Records and Timestamping:} Unique consignment IDs, timestamps, and sender/receiver tracking.
+    \item \textbf{Load Information:} Support for integration with truck ticket systems.
+    \item \textbf{Mass Balance Support:} Compatible LCFS reporting logic, external standards like FSC and SBP.
+    \item \textbf{Electronic Data Management:} API-based submissions, quarterly/annual report support, structured templates.
+    \item \textbf{Access Control:} Permissions-based data sharing for sensitive business data.
+    \item \textbf{Verification and Auditing:} Embedded validation, audit logs, and automated cross-checking.
+    \item \textbf{Ease of Use and Cost Efficiency:} Lightweight tools with optional integration into existing log/accounting systems.
+    \item \textbf{Alignment with Regulations:} Designed for compliance with AB 498, SB 1383, LCFS, BioRAM, and international trade norms.
+\end{itemize}
+
+\subsection*{Entity Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+entity\_id & string & Unique identifier of supply chain entity or participant\\
+entity\_type & enum & source, processor, converter, end\_user, certifier \\
+name & string & Organization name \\
+location & object & Address, lat/lon, geoJSON describing facility location? Company HQ? Source of transaction material? \\
+certifications & array & Certifications that the entity has been audited for, such as FSC \\
+regulatory\_ids & object & CalRecycle ID, CARB ID.  \\
+\hline
+\end{longtable}
+
+\subsection*{Material Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+material\_id & string & Unique batch ID \\
+material\_type & enum & wood\_waste, ag\_residues, etc. \\
+origin\_entity\_id & string & Source of material (entity\_id, location) \\
+quantity & number & Amount received \\
+unit & string & e.g. ton, dry ton \\
+attributes & dict & Moisture \%, carbon \%, etc. \\
+agency specific attributes & any & Attributes that apply to specific agencies or standards? \\
+\hline
+\end{longtable}
+
+\subsection*{Transaction Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+transaction\_id & string & Unique transaction reference \\
+material\_id & string & Batch being transferred \\
+sender\_id & string & Entity sending material \\
+receiver\_id & string & Entity receiving material \\
+timestamp & datetime & Date and time of transfer \\
+documentation\_url & string & Link to manifest, weigh ticket, etc. \\
+geolocation & object & Truck/device GPS info (optional) \\
+coC\_model & enum & mass\_balance, segregation \\
+\hline
+\end{longtable}
+
+\subsection*{Certificate Object}
+\begin{longtable}{|p{3cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Field} & \textbf{Type} & \textbf{Description} \\
+\hline
+claim\_id & string & Unique certification reference \\
+material\_id & string & Linked material batch \\
+scheme & enum & FSC, SBP, LCFS, etc. \\
+claim\_type & string & Certified, eligible, verified \\
+validity\_period & range & Start and end date \\
+GHG\_profile\_available & boolean & Yes/no \\
+issued\_by & string & Entity or system issuing the claim \\
+\hline
+\end{longtable}
+
+\section{Event \& Reporting Framework}
+\begin{longtable}{|p{4cm}|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Event} & \textbf{Trigger} & \textbf{Reported To} & \textbf{Required Fields} \\
+\hline
+Material Created & Material batch generated & CoC System & material\_id, origin, attributes \\
+Material Transferred & Shipment leaves sender & CoC System, CalRecycle & transaction\_id, documentation, receiver\_id \\
+Certificate Issued & Facility certifies batch & CoC System & claim\_id, material\_id, scheme \\
+Report Submitted & SB 498/SB 1383 due date & CalRecycle, CARB & Facility roll-up of totals, recovery \\
+\hline
+\end{longtable}
+
+\section{System Integration Guidelines}
+\subsection*{Interfaces}
+\begin{itemize}[noitemsep]
+    \item CalRecycle system
+    \item CalFire system
+    \item CARB system
+    \item LCFS system
+\end{itemize}
+
+\subsection*{Formats}
+\begin{itemize}[noitemsep]
+    \item JSON (preferred)
+    \item CSV (fallback)
+    \item PDF (if actual documents are to be uploaded/transferred)
+    \item RESTful API / Secure upload
+\end{itemize}
+
+\
+\section{Appendices}
+\subsection*{A. Glossary}
+\begin{itemize}[noitemsep]
+    \item \textbf{}
+\end{itemize}
+
+\subsection*{B. Code Lists}
+\begin{itemize}[noitemsep]
+    \item Material Types: wood\_waste, ag\_residues, pulp, nonrecyclable\_paper
+    \item Entity Types: source, processor, converter, end\_user
+    \item Certification Schemes: FSC, SBP, SFI, LCFS, EU RED II, PEFC, etc. 
+\end{itemize}
+
+
+\end{document}
+
+\end{document}
