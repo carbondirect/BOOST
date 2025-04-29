@@ -638,3 +638,495 @@ SupplyBase ||--o{ RiskAssessment : "is evaluated"
 
 #+RESULTS:
 [[file:boost_erd_plantuml.svg]]
+
+
+
+** ISO
+*** Entity-Relationship Diagram (ERD) Structure for ISO 38200:2018
+
+**** Introduction
+ISO 38200:2018 defines the Chain of Custody for wood and wood-based products. This document provides a **textual description of entities** and their **key relationships** as per the ISO 38200:2018 standard, forming the basis for data elements in a relevant system.
+
+**** Key Entities and Their Attributes
+
+- *Organization*: Represents the legal entity implementing a Chain of Custody system.
+  - *Attributes*:
+    - Name (implied)
+    - Scope of the CoC system (boundaries and applicability)
+
+- *Chain of Custody (CoC) System*: Process implemented by an Organization to track and handle material throughout the supply chain.
+  - *Attributes*:
+    - Scope (defined by the Organization)
+    - Description of the process (implied)
+
+- *Material*: Raw materials and products tracked. Categorized as Input or Output.
+  - *Attributes*:
+    - Description
+    - Quantity
+
+- *Input Material*: Material received by the Organization entering the CoC system.
+  - *Attributes*:
+    - Description
+    - Quantity delivered
+    - Date of delivery
+    - GMO indication (if applicable)
+    - Level of assurance (first, second, or third party)
+    - Link to Supplier Name and Address
+    - Input Category (Certified, Specified, Verified, Recycled)
+
+- *Output Material*: Material leaving the CoC system.
+  - *Attributes*:
+    - Name (optional)
+    - Percentage (if applicable)
+    - Quantity
+    - Output Category
+    - GMO indication (if applicable)
+    - Control Method used
+    - Level of assurance
+    - Reference to ISO 38200:2018
+
+- *Supplier*: Organization providing input material or services.
+  - *Attributes*:
+    - Name
+    - Address
+
+- *Documentation/Record*: Used as evidence of activities and results within the CoC system.
+  - *Attributes*:
+    - Unique identification number
+    - Date of issue
+    - Medium (paper, electronic, etc.)
+    - Description/Purpose
+
+- *Due Diligence System (DDS)*: Process for verifying input material characteristics.
+  - *Attributes*:
+    - Process description
+    - Defined requirements
+    - Records of assessments
+
+- *Input Category*: Classification of input material.
+  - *Attributes*:
+    - Category Name
+    - Specific requirements
+    - Evidence of compliance
+    - Evidence of third-party certification
+
+- *Control Method*: Mechanisms to handle material within operations.
+  - *Attributes*:
+    - Method Name
+    - Description of implementation
+
+**** Key Relationships Between Entities
+
+- An *Organization* implements and manages a *Chain of Custody System*. (1:1)
+- A *CoC System* tracks and handles *Material*. (1:Many)
+- An *Organization* receives *Input Material*. (1:Many)
+- An *Organization* produces/sends *Output Material*. (1:Many)
+- *Input Material* is sourced from a *Supplier*. (Many:1)
+- An *Organization* implements a *DDS*. (1:1)
+- The *DDS* assesses *Input Material*. (1:Many)
+- *Input Material* belongs to an *Input Category*. (Many:1)
+- An *Organization* uses *Control Methods*. (1:Many)
+- *Output Material* is categorized based on *Input Material* and *Control Methods*. (Many:Many)
+- The *CoC System* relies on *Documentation/Records*. (1:Many)
+- *Input Material* is associated with *Documentation*. (Many:Many)
+- *Output Material* is associated with *Documentation*. (Many:Many)
+
+This structure outlines the core data elements and their connections as presented in the ISO 38200:2018 standard.
+
+
+*** Mermaid
+#+begin_src mermaid :file boost_iso_erd_mermaid.svg
+erDiagram
+    ORGANIZATION {
+        string Name
+        string CoC_System_Scope
+    }
+    CHAIN_OF_CUSTODY_SYSTEM {
+        string Scope
+        string Process_Description
+    }
+    MATERIAL {
+        string Description
+        number Quantity
+    }
+    INPUT_MATERIAL {
+        string Description
+        number Quantity_Delivered
+        date Date_of_Delivery
+        boolean GMO_Indication
+        string Level_of_Assurance
+        string Supplier_Link
+        string Input_Category
+    }
+    OUTPUT_MATERIAL {
+        string Name
+        number Percentage
+        number Quantity
+        string Output_Category
+        boolean GMO_Indication
+        string Control_Method
+        string Level_of_Assurance
+        string ISO38200_Reference
+    }
+    SUPPLIER {
+        string Name
+        string Address
+    }
+    DOCUMENTATION_RECORD {
+        string Unique_ID
+        date Date_of_Issue
+        string Medium
+        string Description
+    }
+    DUE_DILIGENCE_SYSTEM {
+        string Process_Description
+        string Defined_Requirements
+        string Assessment_Records
+    }
+    INPUT_CATEGORY {
+        string Category_Name
+        string Specific_Requirements
+        string Compliance_Evidence
+        string Third_Party_Certification
+    }
+    CONTROL_METHOD {
+        string Method_Name
+        string Implementation_Description
+    }
+    
+    ORGANIZATION ||--|| CHAIN_OF_CUSTODY_SYSTEM : implements
+    ORGANIZATION ||--o{ MATERIAL : tracks-handles
+    ORGANIZATION ||--o{ INPUT_MATERIAL : receives
+    ORGANIZATION ||--o{ OUTPUT_MATERIAL : produces-sends
+    INPUT_MATERIAL }o--|| SUPPLIER : is_sourced_from
+    ORGANIZATION ||--|| DUE_DILIGENCE_SYSTEM : implements
+    DUE_DILIGENCE_SYSTEM ||--o{ INPUT_MATERIAL : assesses
+    INPUT_MATERIAL }o--|| INPUT_CATEGORY : belongs_to    
+    ORGANIZATION ||--o{ CONTROL_METHOD : uses
+    OUTPUT_MATERIAL }o--o{ INPUT_MATERIAL : based_on
+    OUTPUT_MATERIAL }o--o{ CONTROL_METHOD : categorized_by
+    CHAIN_OF_CUSTODY_SYSTEM ||--o{ DOCUMENTATION_RECORD : relies_on
+    INPUT_MATERIAL }o--o{ DOCUMENTATION_RECORD : associated_with
+    OUTPUT_MATERIAL }o--o{ DOCUMENTATION_RECORD : associated_with
+#+END_SRC
+
+#+RESULTS:
+[[file:boost_iso_erd_mermaid.svg]]
+
+*** Explanation:
+- **Entities** are represented as boxes, listing their attributes.
+- **Relationships** between entities are shown using lines between the entities, with the cardinality (1:1, 1:Many, etc.) indicated using symbols like ~||--||~ and ~||--o{~.
+- The script describes key entities like ~ORGANIZATION~, ~CHAIN_OF_CUSTODY_SYSTEM~, ~MATERIAL~, ~INPUT_MATERIAL~, ~OUTPUT_MATERIAL~, ~SUPPLIER~, ~DOCUMENTATION_RECORD~, ~DUE_DILIGENCE_SYSTEM~, ~INPUT_CATEGORY~, and ~CONTROL_METHOD~.
+- Relationships between entities, for example, how ~INPUT_MATERIAL~ is sourced from a ~SUPPLIER~, follow the descriptions provided in the text.
+
+** Netherlands
+
+Okay, drawing on the provided sources, particularly the "Guidance Chain of Custody sustainability criteria for solid biomass for energy applications.pdf" and relevant concepts from "ISO 382002018(en), Chain of custody of wood and wood-based products.pdf" and the "SBP Data Standard ERD Description," here is a textual description of the key entities and relationships for a data standard based on the "Guidance" document.
+
+Based on the requirements and definitions in the "Guidance" document, supplemented by aligned concepts from ISO 38200 and SBP, the core entities for this data standard would include:
+
+** Organization (Link)
+- Represents a legal entity that takes ownership of biomass within the supply chain and is part of the Chain of Custody.
+- Attributes:
+  - Name
+  - Address
+  - Role within the CoC (e.g., First Link, Energy Producer, Trading Company)
+  - Scope of the CoC system it implements
+
+** Chain of Custody (CoC) System
+- The process implemented by an Organization to track and handle biomass and corresponding information throughout the supply chain or parts of it.
+- Attributes:
+  - Scope (defined by the Organization)
+  - Description of the implemented process
+
+** Biomass Consignment
+- Represents a quantity of biomass transferred between Organizations or handled within an Organization's CoC system. This is the unit of tracking and information transfer.
+- Attributes:
+  - Quantity (Volume/Mass)
+  - Description/Type (e.g., logs, chips, straw, sawdust, pellets)
+  - Date of transaction/delivery
+
+** Input Consignment
+- A Biomass Consignment received by an Organization.
+- Attributes:
+  - All Biomass Consignment attributes, plus:
+  - Link to Supplier Organization
+  - Link to Biomass Source type
+  - Input Category (Category 1-5)
+  - Biomass Type (Sustainable or Controlled)
+  - Indication if Risk-based approach was used (for Category 2)
+  - Country of origin
+  - Data points for GHG emission calculation
+  - Reference to Verification statement (if applicable)
+  - Reference to Certification claim/evidence (if applicable)
+  - Source data details (for the first link)
+  - Evidence data for residues (Category 5)
+
+** Output Consignment
+- A Biomass Consignment transferred or sold by an Organization.
+- Attributes:
+  - All Biomass Consignment attributes, plus:
+  - Name (optional in declaration)
+  - Percentage composition
+  - Output Category/Type
+  - Biomass Type (Sustainable or Controlled)
+  - Indication if Risk-based approach was used
+  - Country of origin
+  - Data points for GHG emission calculation
+  - Reference to Verification statement (if applicable)
+  - Reference to Certification claim (if applicable)
+  - Reference to the standard (ISO 38200)
+
+** Biomass Source
+- The origin of the biomass.
+- Attributes:
+  - Type (e.g., Forest Management Unit, Predefined collection area, Company generating residual product)
+  - Location/Boundaries
+  - Name/Description
+  - Source of sustainability information
+
+** Input Category
+- Classification of biomass based on its source and characteristics (Categories 1-5).
+- Attributes:
+  - Category Name
+  - Specific Requirements associated with the category
+
+** Sustainability Information
+- A collection of data points that describe the sustainability characteristics of a Biomass Consignment.
+- Attributes:
+  - Biomass Category
+  - Risk-based approach used (yes/no)
+  - Biomass Type (Sustainable/Controlled)
+  - Country of origin
+  - GHG emission data points
+  - Reference to Verification statement
+  - Reference to Certification claim
+  - Source data details
+  - Evidence for residues (Cat 5)
+
+** Documentation/Record
+- Information in any medium serving as evidence of activities or sustainability characteristics related to the biomass.
+- Attributes:
+  - Unique identification number
+  - Date of issue
+  - Medium (paper/digital)
+  - Description/Purpose
+
+** Mass Balance Account
+- An accounting mechanism used by Organizations to track quantities of biomass with corresponding Sustainability Information over a defined period.
+- Attributes:
+  - Account identifier
+  - Linked Organization
+  - Linked Biomass Category(ies) / Biomass Type(s)
+  - Balance Period
+  - Total Incoming Quantity
+  - Total Outgoing Quantity
+  - Current Balance
+  - Conversion Factors Used
+
+** Control Method
+- Mechanisms used by the Organization to track and handle biomass through its operations. Mass balance is a key method. Physical separation is also mentioned.
+- Attributes:
+  - Method Name (e.g., Mass Balance, Physical Separation)
+  - Description of implementation
+
+** Certification Scheme
+- An external standard against which an Organization can be certified.
+- Attributes:
+  - Scheme Name (e.g., FSC, PEFC, SBP)
+  - Approval Status
+  - Scope of Approval
+
+** Certification Body (CB)
+- An independent third-party organization that performs certifications against Certification Schemes.
+- Attributes:
+  - Name
+  - Accreditation Status
+
+** Verification Body
+- An independent party or conformity assessment body that performs verification of compliance or specific information. Can sometimes overlap with a CB.
+- Attributes:
+  - Name
+  - Role
+
+** Due Diligence System (DDS)
+- A process to verify information about input material and manage associated risks. This entity is explicitly mentioned in ISO 38200 in the context of wood CoC.
+- Attributes:
+  - Process Description
+  - Defined requirements
+  - Records of assessments
+
+* Key Relationships Between Entities
+Here are some of the critical relationships linking these entities, enabling traceability and data flow within the CoC system described in the "Guidance" document:
+
+- An Organization (Link) implements and manages a Chain of Custody (CoC) System.
+- A CoC System tracks and handles Biomass Consignment(s).
+- An Organization receives Input Consignment(s) and sends/produces Output Consignment(s).
+- Input Consignment(s) originate from a Biomass Source.
+- Input Consignment(s) are supplied by an Organization (acting as a Supplier).
+- Output Consignment(s) are sent to an Organization (acting as a Recipient).
+- Biomass Consignment(s) are associated with Sustainability Information.
+- Sustainability Information includes an Input Category.
+- Biomass Consignment(s) are registered/documented using Documentation/Record.
+- An Organization maintains a Mass Balance Account(s).
+- Biomass Consignment(s) (Input and Output transactions) are recorded on a Mass Balance Account.
+- An Organization uses Control Method(s) (e.g., Mass Balance, Physical Separation) to handle biomass.
+- Output Consignment(s) are derived from Input Consignment(s) using Control Method(s).
+- An Organization may be certified by a Certification Scheme.
+- A Certification Scheme issues Claims (associated with Sustainability Information).
+- An Organization may be verified by a Verification Body.
+- A Verification Body issues Verification Statement(s) (as a type of Documentation/Record).
+- An Organization implements a Due Diligence System (DDS) (based on ISO 38200, aligning with the *Guidance*'s concepts of verification and risk-based assessment).
+- The DDS assesses and verifies Input Consignment(s).
+
+
+This is your text converted into Org mode format. Note that Org mode makes it easy to create structured lists and outlines, making it well-suited for such hierarchical data presentations.
+
+** Mermaid
+
+#+BEGIN_SRC mermaid :file boost_ned_erd_mermaid.svg
+erDiagram
+    Organization {
+        string Name
+        string Address
+        string Role
+        string ScopeOfCoC
+    }
+    
+    CoCSystem {
+        string Scope
+        string ProcessDescription
+    }
+
+    BiomassConsignment {
+        string Quantity
+        string DescriptionOrType
+        date TransactionDate
+    }
+
+    InputConsignment {
+        string Quantity
+        string DescriptionOrType
+        date TransactionDate
+        Organization Supplier
+        BiomassSource SourceType
+        int InputCategory
+        string BiomassType
+        bool RiskBasedApproach
+        string CountryOfOrigin
+        string GHGdata
+        string VerificationStatement
+        string CertificationClaim
+        string SourceDataDetails
+        string ResidueEvidence
+    }
+
+    OutputConsignment {
+        string Quantity
+        string DescriptionOrType
+        date TransactionDate
+        string Name
+        string PercentageComposition
+        string OutputCategory
+        string BiomassType
+        bool RiskBasedApproach
+        string CountryOfOrigin
+        string GHGdata
+        string VerificationStatement
+        string CertificationClaim
+        string StandardReference
+    }
+
+    BiomassSource {
+        string Type
+        string Location
+        string Name
+        string SustainabilityInformation
+    }
+
+    InputCategory {
+        string CategoryName
+        string SpecificRequirements
+    }
+
+    SustainabilityInformation {
+        string BiomassCategory
+        bool RiskBasedApproach
+        string BiomassType
+        string CountryOfOrigin
+        string GHGEmissionData
+        string VerificationStatement
+        string CertificationClaim
+        string SourceDataDetails
+        string ResidueEvidence
+    }
+
+    DocumentationRecord {
+        string UID
+        date DateOfIssue
+        string Medium
+        string Purpose
+    }
+
+    MassBalanceAccount {
+        string AccountID
+        string LinkedOrganization
+        string LinkedBiomassCategory
+        string BalancePeriod
+        string TotalIncoming
+        string TotalOutgoing
+        string CurrentBalance
+        string ConversionFactors
+    }
+
+    ControlMethod {
+        string MethodName
+        string ImplementationDescription
+    }
+
+    CertificationScheme {
+        string SchemeName
+        string ApprovalStatus
+        string ScopeOfApproval
+    }
+
+    CertificationBody {
+        string Name
+        string AccreditationStatus
+    }
+
+    VerificationBody {
+        string Name
+        string Role
+    }
+
+    DueDiligenceSystem {
+        string ProcessDescription
+        string Requirements
+        string RecordOfAssessments
+    }
+
+    Organization ||--o{ CoCSystem : "implements"
+    CoCSystem ||--o{ BiomassConsignment : "tracks"
+    Organization ||--o{ InputConsignment : "receives"
+    Organization ||--o{ OutputConsignment : "sends"
+    InputConsignment ||--o{ BiomassSource : "originatesFrom"
+    InputConsignment ||--o{ Organization : "suppliedBy"
+    OutputConsignment ||--o{ Organization : "sentTo"
+    BiomassConsignment ||--o{ SustainabilityInformation : "associatedWith"
+    SustainabilityInformation ||--o{ InputCategory : "includes"
+    BiomassConsignment ||--o{ DocumentationRecord : "documentedBy"
+    Organization ||--o{ MassBalanceAccount : "maintains"
+    BiomassConsignment ||--o{ MassBalanceAccount : "recordedOn"
+    Organization ||--o{ ControlMethod : "uses"
+    OutputConsignment ||--o{ InputConsignment : "derivedFrom"
+    Organization ||--o{ CertificationScheme : "certifiedBy"
+    CertificationScheme ||--o{ SustainabilityInformation : "issuesClaims"
+    Organization ||--o{ VerificationBody : "verifiedBy"
+    VerificationBody ||--o{ DocumentationRecord : "issuesVerification"
+    Organization ||--o{ DueDiligenceSystem : "implements"
+    DueDiligenceSystem ||--o{ InputConsignment : "assesses"
+#+END_SRC
+
+#+RESULTS:
+[[file:boost_ned_erd_mermaid.svg]]
