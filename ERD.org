@@ -821,11 +821,12 @@ erDiagram
 
 ** Netherlands
 
+*** Text ERD
 Okay, drawing on the provided sources, particularly the "Guidance Chain of Custody sustainability criteria for solid biomass for energy applications.pdf" and relevant concepts from "ISO 382002018(en), Chain of custody of wood and wood-based products.pdf" and the "SBP Data Standard ERD Description," here is a textual description of the key entities and relationships for a data standard based on the "Guidance" document.
 
 Based on the requirements and definitions in the "Guidance" document, supplemented by aligned concepts from ISO 38200 and SBP, the core entities for this data standard would include:
 
-** Organization (Link)
+**** Organization (Link)
 - Represents a legal entity that takes ownership of biomass within the supply chain and is part of the Chain of Custody.
 - Attributes:
   - Name
@@ -833,20 +834,20 @@ Based on the requirements and definitions in the "Guidance" document, supplement
   - Role within the CoC (e.g., First Link, Energy Producer, Trading Company)
   - Scope of the CoC system it implements
 
-** Chain of Custody (CoC) System
+**** Chain of Custody (CoC) System
 - The process implemented by an Organization to track and handle biomass and corresponding information throughout the supply chain or parts of it.
 - Attributes:
   - Scope (defined by the Organization)
   - Description of the implemented process
 
-** Biomass Consignment
+**** Biomass Consignment
 - Represents a quantity of biomass transferred between Organizations or handled within an Organization's CoC system. This is the unit of tracking and information transfer.
 - Attributes:
   - Quantity (Volume/Mass)
   - Description/Type (e.g., logs, chips, straw, sawdust, pellets)
   - Date of transaction/delivery
 
-** Input Consignment
+**** Input Consignment
 - A Biomass Consignment received by an Organization.
 - Attributes:
   - All Biomass Consignment attributes, plus:
@@ -862,7 +863,7 @@ Based on the requirements and definitions in the "Guidance" document, supplement
   - Source data details (for the first link)
   - Evidence data for residues (Category 5)
 
-** Output Consignment
+**** Output Consignment
 - A Biomass Consignment transferred or sold by an Organization.
 - Attributes:
   - All Biomass Consignment attributes, plus:
@@ -877,7 +878,7 @@ Based on the requirements and definitions in the "Guidance" document, supplement
   - Reference to Certification claim (if applicable)
   - Reference to the standard (ISO 38200)
 
-** Biomass Source
+**** Biomass Source
 - The origin of the biomass.
 - Attributes:
   - Type (e.g., Forest Management Unit, Predefined collection area, Company generating residual product)
@@ -885,13 +886,13 @@ Based on the requirements and definitions in the "Guidance" document, supplement
   - Name/Description
   - Source of sustainability information
 
-** Input Category
+**** Input Category
 - Classification of biomass based on its source and characteristics (Categories 1-5).
 - Attributes:
   - Category Name
   - Specific Requirements associated with the category
 
-** Sustainability Information
+**** Sustainability Information
 - A collection of data points that describe the sustainability characteristics of a Biomass Consignment.
 - Attributes:
   - Biomass Category
@@ -904,7 +905,7 @@ Based on the requirements and definitions in the "Guidance" document, supplement
   - Source data details
   - Evidence for residues (Cat 5)
 
-** Documentation/Record
+**** Documentation/Record
 - Information in any medium serving as evidence of activities or sustainability characteristics related to the biomass.
 - Attributes:
   - Unique identification number
@@ -912,7 +913,7 @@ Based on the requirements and definitions in the "Guidance" document, supplement
   - Medium (paper/digital)
   - Description/Purpose
 
-** Mass Balance Account
+**** Mass Balance Account
 - An accounting mechanism used by Organizations to track quantities of biomass with corresponding Sustainability Information over a defined period.
 - Attributes:
   - Account identifier
@@ -924,39 +925,39 @@ Based on the requirements and definitions in the "Guidance" document, supplement
   - Current Balance
   - Conversion Factors Used
 
-** Control Method
+**** Control Method
 - Mechanisms used by the Organization to track and handle biomass through its operations. Mass balance is a key method. Physical separation is also mentioned.
 - Attributes:
   - Method Name (e.g., Mass Balance, Physical Separation)
   - Description of implementation
 
-** Certification Scheme
+**** Certification Scheme
 - An external standard against which an Organization can be certified.
 - Attributes:
   - Scheme Name (e.g., FSC, PEFC, SBP)
   - Approval Status
   - Scope of Approval
 
-** Certification Body (CB)
+**** Certification Body (CB)
 - An independent third-party organization that performs certifications against Certification Schemes.
 - Attributes:
   - Name
   - Accreditation Status
 
-** Verification Body
+**** Verification Body
 - An independent party or conformity assessment body that performs verification of compliance or specific information. Can sometimes overlap with a CB.
 - Attributes:
   - Name
   - Role
 
-** Due Diligence System (DDS)
+**** Due Diligence System (DDS)
 - A process to verify information about input material and manage associated risks. This entity is explicitly mentioned in ISO 38200 in the context of wood CoC.
 - Attributes:
   - Process Description
   - Defined requirements
   - Records of assessments
 
-* Key Relationships Between Entities
+**** Key Relationships Between Entities
 Here are some of the critical relationships linking these entities, enabling traceability and data flow within the CoC system described in the "Guidance" document:
 
 - An Organization (Link) implements and manages a Chain of Custody (CoC) System.
@@ -1130,3 +1131,346 @@ erDiagram
 
 #+RESULTS:
 [[file:boost_ned_erd_mermaid.svg]]
+
+** FSC
+
+*** Text ERD
+
+Okay, I can provide a textual description of the entities and relationships for an FSC Chain of Custody (CoC) data standard, drawing upon the information in the provided sources and our conversation history, similar to the SBP ERD description.
+
+This description outlines the core components and their connections as defined or implied by the FSC Chain of Custody standards and related documents you provided. It would form the basis for a technical specification for data exchange in the FSC CoC system.
+
+Here is a textual representation of the key entities and their relationships for an FSC CoC data standard:
+
+**** Key Entities and Their Attributes
+
+***** Organization
+Represents a legal entity within the supply chain that takes legal ownership of forest-based materials and products. For an organization to maintain or change an FSC claim associated with a product, it must have FSC Chain of Custody certification. The organization is the unit of certification for the FSC Standards.
+- Attributes:
+  - Organization Name
+  - Address
+  - FSC Certificate Code (where certified)
+  - Scope of Certification (defining the materials, products, sites, and control systems covered by the certificate)
+  - Legal Entity Status
+
+***** FSC Certificate
+Represents the formal certification issued by an accredited Certification Body to an Organization confirming compliance with applicable FSC standards, including FSC-STD-40-004.
+- Attributes:
+  - Certificate Code
+  - Date of Issue
+  - Date of Expiry
+  - Scope of Certification
+  - Version Number (of the standard the organization is certified against, e.g., V3-1)
+  - Issued by a Certification Body
+
+***** Certification Body (CB)
+An independent third-party organization accredited by FSC to perform conformity assessment services, including audits and certification decisions. CBs verify whether organizations comply with the requirements of the FSC scheme.
+- Attributes:
+  - CB Name
+  - Accreditation Status (confirming they are accredited by FSC)
+  - Accreditation Scope (specifying which standards/activities they are accredited for)
+
+***** Supplier
+A legal entity from which an Organization purchases Input Material. Suppliers may or may not be FSC certified.
+- Attributes:
+  - Supplier Name
+  - Address
+  - FSC Certificate Code (if certified)
+  - Type of Supplier (e.g., forest management enterprise, manufacturer, collector, trader)
+
+***** Customer
+A legal entity to which an Organization sells Output Product with an FSC claim. Customers may be FSC certified or end-consumers.
+- Attributes:
+  - Customer Name
+  - Address
+  - FSC Certificate Code (if certified)
+
+***** Input Material
+Forest-based material sourced by the Organization for use in producing Output Product. This material is categorized based on its source and certification status.
+- Attributes:
+  - Quantity (Volume/Mass)
+  - Material Category (e.g., FSC 100%, FSC Mix x%, FSC Mix Credit, FSC Recycled x%, FSC Recycled Credit, FSC Controlled Wood, controlled material, pre-consumer reclaimed, post-consumer reclaimed, neutral materials)
+  - Species (if applicable)
+  - Origin/Sourcing Area
+
+***** Output Product
+The product sold by the Organization that may carry an FSC Claim and/or FSC Label. It is produced from Input Material.
+- Attributes:
+  - Product Description
+  - Quantity
+  - FSC Claim (e.g., FSC 100%, FSC Mix x%, FSC Recycled x%, FSC Mix Credit, FSC Recycled Credit, FSC Controlled Wood)
+  - Linked Product Group
+  - Components (for assembled products made of multiple parts)
+  - FSC Label Type (if applied)
+
+***** Product Group
+A categorization used by the Organization to group product types or materials that are managed together under a specific Control System for tracking claims.
+- Attributes:
+  - Product Group Description/Identifier
+  - Eligible Material Categories that can be included in this group
+  - Control System applied to this group
+
+***** Control System
+The specific method (Transfer, Percentage, or Credit) used by the Organization to control the quantity of materials within a Product Group that can be sold with a particular FSC Claim.
+- Attributes:
+  - System Type (Transfer, Percentage, Credit)
+  - Parameters specific to the system (e.g., defined claim periods, conversion factors, rules for calculating percentages or credits, account balances)
+
+***** FSC Claim
+A statement on Sales/Delivery Documents or product labels that identifies the certified nature of a product. This claim must correspond to the material inputs and the Control System used.
+- Attributes:
+  - Claim Type (e.g., FSC 100%, FSC Mix x%, FSC Recycled x%, FSC Mix Credit, FSC Recycled Credit, FSC Controlled Wood)
+  - Percentage or Credit Value (for Mix/Recycled claims where applicable)
+  - Linked Sales/Delivery Document ID
+
+***** Sales/Delivery Document
+An official document that accompanies the transfer of physical material or product and records a Transaction. It must include specific information to allow traceability and claim verification.
+- Attributes:
+  - Unique Document ID
+  - Date Issued
+  - Buyer Name/Address
+  - Seller Name/Address
+  - Product Description
+  - Quantity
+  - FSC Claim(s) associated with the products listed
+  - Seller's FSC Certificate Code (if applicable)
+  - Reference to any related transport documentation
+
+***** Transaction
+The transfer of legal ownership of material or product between entities in the supply chain. Each transaction should be documented.
+- Attributes:
+  - Transaction Date
+  - Seller Organization
+  - Buyer Organization
+  - Linked Sales/Delivery Document(s)
+
+***** Audit (Evaluation)
+A systematic assessment conducted by a Certification Body to verify an Organization's conformance with applicable FSC standards.
+- Attributes:
+  - Audit ID
+  - Type (e.g., initial, surveillance)
+  - Date(s)
+  - Audited Organization ID
+  - CB ID
+  - Findings (including Non-conformances)
+
+***** Non-conformance
+A failure to meet a specific requirement of the applicable FSC standard, identified during an Audit.
+- Attributes:
+  - Non-conformance ID
+  - Description of the non-conformance
+  - Applicable FSC Standard(s) and specific Requirement(s) violated
+  - Severity (Minor or Major)
+  - Linked Audit ID
+  - Required Corrective Action and deadline for resolution
+
+***** Reclaimed Material
+Material that would have otherwise been disposed of as waste but is instead collected and reclaimed as input material. Specific requirements apply to sourcing reclaimed material (FSC-STD-40-007). It is classified as either pre-consumer or post-consumer.
+- Attributes:
+  - Category (Pre-consumer, Post-consumer)
+  - Quantity
+  - Source/Point of Reclamation
+
+***** Controlled Wood
+Non-FSC certified virgin wood or lignified materials sourced in accordance with FSC-STD-40-005, assessed to avoid five unacceptable categories of wood. This material can be used as 'controlled material' input in FSC Mix product groups.
+- Attributes:
+  - Quantity
+  - Sourcing Area
+  - Documentation proving assessment against FSC-STD-40-005
+
+***** Contractor
+An individual or entity contracted by an Organization to perform specific activities (e.g., harvesting, transport, processing) under the scope of the Organization's FSC CoC certificate, without taking legal ownership of the material. The principal organization is responsible for the contractor's activities.
+- Attributes:
+  - Contractor Name
+  - Activity Performed
+
+***** Stakeholder
+Any person, group, or entity that can affect or be affected by FSC decisions or activities. While not a core data entity for transactions, engagement with stakeholders is a requirement for organizations.
+- Attributes (not specifically detailed as structured data):
+  - General contact/interest information
+
+***** Due Diligence System (DDS)
+While not an entity in itself, it is a required process described in ISO 38200:2018 and referenced in the SBP context. Organizations must establish and implement a DDS to verify information about the characteristics of all Input Material. This process determines whether input material is eligible based on defined requirements.
+- Note: In the FSC context, sourcing controlled wood or reclaimed material involves processes analogous to a DDS.
+
+**** Key Relationships Between Entities
+
+- An Organization is certified by a CB.
+- An Organization is issued an FSC Certificate.
+- An FSC Certificate defines the Scope for an Organization.
+- An Organization manages Product Group(s).
+- A Product Group is controlled by a Control System.
+- An Organization sources Input Material from Supplier(s).
+- An Organization sells Output Product(s) to Customer(s).
+- Input Material is used to produce Output Product(s) by an Organization.
+- Output Product(s) belong to Product Group(s).
+- A Control System validates FSC Claim(s) for Output Product(s) derived from Input Material.
+- An FSC Claim is stated on Sales/Delivery Document(s).
+- A Sales/Delivery Document records a Transaction.
+- A Transaction occurs between a Seller Organization and a Buyer Organization (documented on the Sales/Delivery Document).
+- A CB conducts Audit(s) of an Organization to verify conformance.
+- An Audit may identify Non-conformance(s).
+- An Organization must address Non-conformance(s) (via corrective actions).
+- Reclaimed Material is a type of Input Material, requiring specific sourcing requirements.
+- Controlled Wood is a type of Input Material (specifically 'controlled material').
+- An Organization may contract Contractor(s) to perform activities related to Input Material or Output Product handled under its CoC scope.
+- Input Material characteristics are verified through implementing a Due Diligence System or equivalent processes.
+- Information on Sales/Delivery Document(s), including the FSC Claim(s) and Seller's Certificate Code, must be linked to the specific products and be traceable upstream.
+
+*** Mermaid
+
+#+BEGIN_SRC mermaid :file boost_fsc_erd_mermaid.svg
+erDiagram
+    ORGANIZATION {
+        string OrganizationName
+        string Address
+        string FSCCertificateCode
+        string ScopeOfCertification
+        string LegalEntityStatus
+    }
+    
+    FCSCertificate {
+        string CertificateCode
+        date DateOfIssue
+        date DateOfExpiry
+        string ScopeOfCertification
+        string VersionNumber
+        string IssuedByCB
+    }
+    
+    CERTIFICATIONBODY {
+        string CBName
+        string AccreditationStatus
+        string AccreditationScope
+    }
+    
+    SUPPLIER {
+        string SupplierName
+        string Address
+        string FSCCertificateCodeOPT
+        string TypeOfSupplier
+    }
+    
+    CUSTOMER {
+        string CustomerName
+        string Address
+        string FSCCertificateCodeOPT
+    }
+    
+    INPUTMATERIAL {
+        float Quantity
+        string MaterialCategory
+        string SpeciesOPT
+        string OriginSourcingArea
+    }
+    
+    OUTPUTPRODUCT {
+        string ProductDescription
+        float Quantity
+        string FSCClaim
+        string LinkedProductGroup
+        string ComponentsOPT
+        string FSCLabelTypeOPT
+    }
+    
+    PRODUCTGROUP {
+        string ProductGroupDescriptionIdentifier
+        string EligibleMaterialCategories
+        string ControlSystem
+    }
+    
+    CONTROLSYSTEM {
+        string SystemType
+        string Parameters
+    }
+    
+    FSCCLAIM {
+        string ClaimType
+        float PercentageOrCreditValueOPT
+        string LinkedSalesDeliveryDocumentID
+    }
+    
+    SALESDELIVERYDOCUMENT {
+        string UniqueDocumentID
+        date DateIssued
+        string BuyerNameAddress
+        string SellerNameAddress
+        string ProductDescription
+        float Quantity
+        string FSCClaim
+        string SellersFSCCertificateCodeOPT
+        string ReferenceTransportDocumentationOPT
+    }
+    
+    TRANSACTION {
+        date TransactionDate
+        string SellerOrganization
+        string BuyerOrganization
+        string LinkedSalesDeliveryDocuments
+    }
+    
+    AUDIT {
+        string AuditID
+        string Type
+        date Date
+        string AuditedOrganizationID
+        string CBID
+        string Findings
+    }
+    
+    NONCONFORMANCE {
+        string NonConformanceID
+        string Description
+        string ApplicableFSCStandards
+        string Severity
+        string LinkedAuditID
+        string CorrectiveActionDeadline
+    }
+    
+    RECLAIMEDMATERIAL {
+        string Category
+        float Quantity
+        string SourcePointOfReclamation
+    }
+    
+    CONTROLLEDWOOD {
+        float Quantity
+        string SourcingArea
+        string Documentation
+    }
+    
+    CONTRACTOR {
+        string ContractorName
+        string ActivityPerformed
+    }
+    
+    ORGANIZATION ||--|{ FCSCertificate : "isIssuedBy"
+    ORGANIZATION ||--o{ SUPPLIER : "sources"
+    ORGANIZATION ||--|{ CUSTOMER : "sellsTo"
+    ORGANIZATION ||--|{ PRODUCTGROUP : "manages"
+    PRODUCTGROUP ||--|{ CONTROLSYSTEM : "isControlled By"
+    INPUTMATERIAL ||--o{ ORGANIZATION : "providedTo"
+    OUTPUTPRODUCT ||--o{ ORGANIZATION : "producedBy"
+    INPUTMATERIAL ||--|{ OUTPUTPRODUCT : "isUsedFor"
+    OUTPUTPRODUCT ||--|{ PRODUCTGROUP : "belongsTo"
+    CONTROLSYSTEM ||--|{ FSCCLAIM : "validates"
+    SALESDELIVERYDOCUMENT ||--|{ FSCCLAIM : "states"
+    SALESDELIVERYDOCUMENT ||--|{ TRANSACTION : "records"
+    CERTIFICATIONBODY ||--|{ AUDIT : "conducts"
+    AUDIT ||--o{ NONCONFORMANCE : "mayIdentify"
+    RECLAIMEDMATERIAL ||--|{ INPUTMATERIAL : "isaTypeOf"
+    CONTROLLEDWOOD ||--|{ INPUTMATERIAL : "isaTypeOf"
+    CONTRACTOR ||--o{ ORGANIZATION : "mayContract"
+
+#+END_SRC
+
+#+RESULTS:
+[[file:boost_fsc_erd_mermaid.svg]]
+
+
+**Notes:**
+- Relationships represent the connections described in the key relationships section.
+- Attributes marked with `OPT` are optional according to the context provided in the description.
+- `date` and `float` for data types have been assumed as per regular entity attributes presentation format.
+
+Mermaid.js syntax provides a straightforward way to visualize these relationships, making it easier to understand the structure and flow of the FSC CoC system from entities and their dependencies.
