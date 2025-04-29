@@ -1,0 +1,640 @@
+* ERDs
+
+** SBP Data Standard Entities and Attributes
+
+This structure was passed to ChatGPT to generate mermaid.js version
+
+*** Core Entities and Their Attributes
+
+**** Organisation
+- *Represents*: A legal entity within the biomass supply chain that takes legal ownership of feedstock or biomass with an SBP Claim.
+- *Attributes*:
+  - Organisation Name
+  - Address
+  - Unique SBP Certificate Number (SBP-XX-YY)
+  - Scope of Certification (Product Types, Processes, Accounting Methodology, Applicable SBP Standards)
+  - Legal Entity Status
+
+**** SBP Certificate
+- *Represents*: The formal certification awarded to an Organisation.
+- *Attributes*:
+  - Certificate Number
+  - Date of Issue
+  - Date of Expiry
+  - Certification Scope
+  - Version Number
+
+**** Supply Base
+- *Defines*: The boundaries of sourcing areas for a Biomass Producer (BP).
+- *Attributes*:
+  - Defined Geographical Boundaries
+  - Description of Operators involved in production, harvesting, and transport
+
+**** Supplier
+- *Represents*: A legal entity from which an Organisation purchases goods.
+- *Attributes*:
+  - Supplier Name
+  - Address
+  - SBP Certificate Code (if relevant)
+  - Type of Supplier (Producer, Collector, Trader)
+
+**** Customer
+- *Represents*: A legal entity to which an Organisation sells goods.
+- *Attributes*:
+  - Customer Name
+  - Address
+  - SBP Certificate Code (if relevant)
+
+**** Feedstock Input
+- *Represents*: Raw woody material or processing residues used in biomass production.
+- *Attributes*:
+  - Quantity (Volume/Mass)
+  - Feedstock Category (SBP-compliant, SBP-controlled, Non-eligible input)
+  - Species (for Primary/Processing Residues)
+  - Origin/Sourcing Area identifier
+
+**** Product Group
+- *Represents*: A categorization of product types (e.g., pellets, wood chips) used by BPs for mass balance and claims.
+- *Attributes*:
+  - Unique 2-digit Product Group ID
+  - Product Type Description
+  - Feedstock Classification Rules
+
+**** Mass Balance Account
+- *Represents*: An accounting mechanism used by Organisations to track eligible input and certified output.
+- *Attributes*:
+  - Linked Product Group ID
+  - Period Inputs
+  - Period Outputs
+  - Current Balance
+  - Defined Balancing Period
+  - Conversion Factors Used
+
+**** Production Batch
+- *Represents*: A unit of biomass production created by a BP, attributed with identical feedstock, energy, and carbon data.
+- *Attributes*:
+  - Unique Production Batch ID
+  - Linked Feedstock Input(s)
+  - Associated Energy and Carbon Data
+
+**** Transaction Batch
+- *Represents*: A fraction of a Production Batch transferred between legal owners.
+- *Attributes*:
+  - Linked Production Batch ID
+  - Quantity
+  - Associated Transaction Claim ID
+
+**** DTS Transaction
+- *Represents*: The formal recording of a transaction of SBP-certified biomass.
+- *Attributes*:
+  - Unique DTS Transaction ID
+  - Supplying Organisation
+  - Customer Organisation
+  - Date
+  - Linked Sales/Delivery Document ID
+
+**** SBP Claim
+- *Identifies*: The certified nature of biomass (SBP-compliant or SBP-controlled).
+- *Attributes*:
+  - Claim Type (SBP-compliant, SBP-controlled)
+  - Linked DTS Transaction ID
+
+**** SBP Standard 1 Indicator
+- *Represents*: A specific, auditable requirement from SBP Standard 1.
+- *Attributes*:
+  - Indicator ID
+  - Description
+  - Related Principle/Criterion
+
+**** Risk Assessment
+- *Represents*: The process of evaluating the risk of non-conformance against SBP Standard 1 indicators.
+- *Attributes*:
+  - Linked Supply Base ID
+  - Date of Assessment
+  - Assessor Details
+  - Risk Ratings per Indicator (Low or Specified)
+
+**** Specified Risk
+- *Represents*: An indicator rating assigned during Risk Assessment for non-negligible risks.
+- *Attributes*:
+  - Linked SBP Standard 1 Indicator ID
+  - Description of Risk
+  - Justification for Rating
+
+**** Risk Management Measure (RMM)
+- *Represents*: Actions implemented to reduce Specified Risks.
+- *Attributes*:
+  - Description of Measure
+  - Linked Specified Risk(s)
+  - Means of Verification of effectiveness
+
+**** Supply Base Report (SBR)
+- *Represents*: A public report prepared by a BP on its Supply Base and SBE findings.
+- *Attributes*:
+  - Report ID
+  - Preparation Date
+  - Linked Organisation
+  - Summary of Supply Base
+  - Summary of Risk Assessment
+  - Description of RMMs
+
+**** Supply Base Verifier (SBV)
+- *Represents*: Evidence used to assess conformance with SBP Standard 1 indicators.
+- *Attributes*:
+  - Description of SBV
+  - Linked SBP Standard 1 Indicator(s)
+  - Source/Type of Evidence
+
+**** SAR (SBP Audit Report on Energy and Carbon Data)
+- *Represents*: A report template completed by BPs containing static energy and carbon data.
+- *Attributes*:
+  - SAR Version/Type
+  - Linked BP Organisation
+  - Reporting Period ID
+  - Contains Energy and Carbon Data details
+
+**** SREG (SBP Report on Energy and Carbon for Supplied Biomass)
+- *Represents*: A report template covering transport-related energy and carbon data.
+- *Attributes*:
+  - SREG Version/Type
+  - Linked Organisation
+  - Linked Transaction Batch(es)
+  - Contains specific Energy and Carbon Data details
+
+**** Energy and Carbon Data
+- *Represents*: Specific data points required to calculate GHG emissions.
+- *Attributes*:
+  - Data Type
+  - Value
+  - Unit
+  - Source
+
+**** Sales/Delivery Document
+- *Represents*: Official documentation accompanying a transfer of biomass.
+- *Attributes*:
+  - Unique Document ID
+  - Date Issued
+  - Buyer Name/Address
+  - Seller Name/Address
+  - Product Description
+  - Quantity
+  - Linked DTS Transaction ID
+
+**** Complaint
+- *Represents*: A formal expression of dissatisfaction regarding SBP requirements.
+- *Attributes*:
+  - Complaint ID
+  - Date Received
+  - Description of Allegation
+  - Source
+  - Linked Organisation
+  - Resolution Status
+  - Date Closed
+
+**** Non-conformance
+- *Represents*: A failure to meet an applicable SBP requirement identified during an audit.
+- *Attributes*:
+  - Non-conformance ID
+  - Description
+  - Applicable SBP Standard(s) and Requirement(s)
+  - Severity (Minor/Major)
+  - Linked Audit ID
+  - Required Corrective Action
+  - Status (Open/Closed)
+
+**** Audit (Evaluation)
+- *Represents*: An assessment conducted by a CB to verify an Organisation's conformance with SBP Standards.
+- *Attributes*:
+  - Audit ID
+  - Type (Initial, Surveillance, Transfer)
+  - Date(s)
+  - Audited Organisation ID
+  - CB ID
+  - Findings
+  - Report URL/Location
+
+**** Certification Body (CB)
+- *Represents*: An independent third-party organisation accredited to perform SBP certification.
+- *Attributes*:
+  - CB Name
+  - Accreditation Status
+  - SBP Accreditation Scope
+
+**** Stakeholder
+- *Represents*: A person or organisation that can affect or be affected by a decision or activity.
+- *Attributes*:
+  - Stakeholder ID
+  - Name/Organisation
+  - Contact Information
+  - Geographical Location/Scope
+  - Interest/Expertise
+
+**** Stakeholder Engagement Plan (SEP)
+- *Represents*: A documented procedure outlining how an Organisation engages with stakeholders.
+- *Attributes*:
+  - SEP ID
+  - Linked Organisation
+  - Procedure Description
+  - List of Identified Stakeholders
+
+*** Key Relationships Between Entities
+
+- An Organisation is certified by a CB.
+- An Organisation is issued an SBP Certificate.
+- An Organisation operates Mass Balance Account(s).
+- An Organisation manages Product Group(s).
+- A BP Organisation defines a Supply Base.
+- A Supply Base is evaluated through a Risk Assessment.
+- A Risk Assessment evaluates against SBP Standard 1 Indicators.
+- A Risk Assessment identifies Specified Risk(s).
+- A Specified Risk requires Risk Management Measure(s).
+- An Organisation implements Risk Management Measure(s).
+- A SBP Standard 1 Indicator is verified using Supply Base Verifier(s).
+- A BP Organisation prepares a Supply Base Report (SBR).
+- A SBR reports on a Risk Assessment and associated RMMs.
+- An Organisation sources Feedstock Input from Supplier(s).
+- A BP Organisation creates Production Batch(es) from Feedstock Input(s).
+- A Production Batch is characterized by Energy and Carbon Data.
+- A BP Organisation completes SAR(s) containing Energy and Carbon Data.
+- A Production Batch is divided into Transaction Batch(es).
+- An Organisation registers DTS Transaction(s).
+- A DTS Transaction includes Transaction Batch(es).
+- A DTS Transaction is linked to a Sales/Delivery Document.
+- A Transaction Batch is associated with an SBP Claim.
+- An Organisation completes SREG(s) containing Energy and Carbon Data related to Transaction Batch(es).
+- Energy and Carbon Data is reported in SAR(s) or SREG(s).
+- A CB conducts Audit(s) of an Organisation.
+- An Audit identifies Non-conformance(s).
+- An Organisation has a Stakeholder Engagement Plan (SEP).
+- An Organisation engages with Stakeholder(s).
+- A Stakeholder may submit Complaint(s) against an Organisation.
+- An Organisation manages Complaint(s).
+
+
+
+
+
+
+*** Mermaid
+#+begin_src mermaid :file boost_erd_mermaid.svg
+erDiagram
+
+    Organisation {
+      string OrganisationName
+      string Address
+      string SBPCertificateNumber
+      string ScopeOfCertification
+      string LegalEntityStatus
+    }
+    
+    CB {
+      string CBName
+      string AccreditationStatus
+      string SBPAccreditationScope
+    }
+    
+    Organisation ||--o{ CB: "certified by"
+
+    SBPCertificate {
+      string CertificateNumber
+      date DateOfIssue
+      date DateOfExpiry
+      string CertificationScope
+      string VersionNumber
+    }
+    
+    Organisation ||--|{ SBPCertificate: "issued to"
+    
+    SupplyBase {
+      string DefinedGeographicalBoundaries
+      string OperatorDescription
+    }
+
+    Organisation ||--|{ SupplyBase: "defines"
+
+    Supplier {
+      string SupplierName
+      string Address
+      string SBPCertificateCode
+      string SupplierType
+    }
+    
+    Organisation ||--o{ Supplier: "sources from"
+
+    Customer {
+      string CustomerName
+      string Address
+      string SBPCertificateCode
+    }
+    
+    Organisation ||--o{ Customer: "sells to"
+
+    FeedstockInput {
+      float Quantity
+      string FeedstockCategory
+      string Species
+      string OriginIdentifier
+    }
+    
+    Supplier ||--o{ FeedstockInput: "provides"
+    Organisation ||--|{ FeedstockInput: "receives"
+
+    ProductGroup {
+      string ProductGroupID
+      string ProductTypeDescription
+      string FeedstockClassificationRules
+    }
+
+    Organisation ||--o{ ProductGroup: "manages"
+
+    MassBalanceAccount {
+      string ProductGroupID
+      string PeriodInputs
+      string PeriodOutputs
+      string CurrentBalance
+      date BalancingPeriod
+      string ConversionFactors
+    }
+    
+    Organisation ||--o{ MassBalanceAccount: "operates"
+
+    ProductionBatch {
+      string ProductionBatchID
+      string LinkedFeedstockInputs
+      string EnergyData
+      string CarbonData
+    }
+
+    Organisation ||--o{ ProductionBatch: "creates"
+    FeedstockInput ||--o{ ProductionBatch: "is part of"
+
+    TransactionBatch {
+      string TransactionBatchID
+      float Quantity
+      string TransactionClaimID
+    }
+    
+    ProductionBatch ||--o{ TransactionBatch: "is divided into"
+
+    DTSTransaction {
+      string DTSTransactionID
+      string SupplierOrg
+      string CustomerOrg
+      date Date
+      string SalesDocumentID
+    }
+    
+    Organisation ||--o{ DTSTransaction: "registers"
+    TransactionBatch ||--o{ DTSTransaction: "included in"
+    
+    SBPClaim {
+      string ClaimType
+      string LinkedDTSTransactionID
+    }
+
+    TransactionBatch ||--|| SBPClaim: "is associated with"
+
+    Audit {
+      string AuditID
+      string AuditType
+      date AuditDate
+      string AuditedOrgID
+      string CBID
+    }
+    
+    CB ||--o{ Audit: "conducts"
+    Organisation ||--o{ Audit: "undergoes"
+
+    NonConformance {
+      string NonConformanceID
+      string Description
+      string ApplicableStandards
+      string Severity
+      string LinkedAuditID
+      string CorrectiveAction
+      string Status
+    }
+    
+    Audit ||--o{ NonConformance: "identifies"
+    
+    SupplyBaseReport {
+      string ReportID
+      date PreparationDate
+      string LinkedOrg
+      string SummaryOfSupplyBase
+      string SummaryOfRiskAssessment
+      string DescriptionOfRMMs
+    }
+
+    Organisation ||--o{ SupplyBaseReport: "prepares"
+    
+    Stakeholder {
+      string StakeholderID
+      string NameOrOrg
+      string ContactInfo
+      string GeographicalScope
+    }
+    
+    Organisation ||--o{ Stakeholder: "engages with"
+
+    Complaint {
+      string ComplaintID
+      date DateReceived
+      string Description
+      string Source
+      string LinkedOrg
+      string ResolutionStatus
+    }
+    
+    Stakeholder ||--o{ Complaint: "submits"
+    Organisation ||--o{ Complaint: "manages"
+
+    RiskAssessment {
+      string SupplyBaseID
+      date DateOfAssessment
+      string AssessorDetails
+    }
+    
+    Organisation ||--o{ RiskAssessment: "conducts"
+    SupplyBase ||--o{ RiskAssessment: "is evaluated"
+
+#+end_src
+
+#+RESULTS:
+[[file:boost_erd_mermaid.svg]]
+
+
+*** PlantUML Version
+
+
+#+BEGIN_SRC plantuml :file boost_erd_plantuml.svg
+@startuml
+
+class Organisation {
+  +string OrganisationName
+  +string Address
+  +string SBPCertificateNumber
+  +string ScopeOfCertification
+  +string LegalEntityStatus
+}
+
+class CB {
+  +string CBName
+  +string AccreditationStatus
+  +string SBPAccreditationScope
+}
+
+class SBPCertificate {
+  +string CertificateNumber
+  +date DateOfIssue
+  +date DateOfExpiry
+  +string CertificationScope
+  +string VersionNumber
+}
+
+class SupplyBase {
+  +string DefinedGeographicalBoundaries
+  +string OperatorDescription
+}
+
+class Supplier {
+  +string SupplierName
+  +string Address
+  +string SBPCertificateCode
+  +string SupplierType
+}
+
+class Customer {
+  +string CustomerName
+  +string Address
+  +string SBPCertificateCode
+}
+
+class FeedstockInput {
+  +float Quantity
+  +string FeedstockCategory
+  +string Species
+  +string OriginIdentifier
+}
+
+class ProductGroup {
+  +string ProductGroupID
+  +string ProductTypeDescription
+  +string FeedstockClassificationRules
+}
+
+class MassBalanceAccount {
+  +string ProductGroupID
+  +string PeriodInputs
+  +string PeriodOutputs
+  +string CurrentBalance
+  +date BalancingPeriod
+  +string ConversionFactors
+}
+
+class ProductionBatch {
+  +string ProductionBatchID
+  +string LinkedFeedstockInputs
+  +string EnergyData
+  +string CarbonData
+}
+
+class TransactionBatch {
+  +string TransactionBatchID
+  +float Quantity
+  +string TransactionClaimID
+}
+
+class DTSTransaction {
+  +string DTSTransactionID
+  +string SupplierOrg
+  +string CustomerOrg
+  +date Date
+  +string SalesDocumentID
+}
+
+class SBPClaim {
+  +string ClaimType
+  +string LinkedDTSTransactionID
+}
+
+class Audit {
+  +string AuditID
+  +string AuditType
+  +date AuditDate
+  +string AuditedOrgID
+  +string CBID
+}
+
+class NonConformance {
+  +string NonConformanceID
+  +string Description
+  +string ApplicableStandards
+  +string Severity
+  +string LinkedAuditID
+  +string CorrectiveAction
+  +string Status
+}
+
+class SupplyBaseReport {
+  +string ReportID
+  +date PreparationDate
+  +string LinkedOrg
+  +string SummaryOfSupplyBase
+  +string SummaryOfRiskAssessment
+  +string DescriptionOfRMMs
+}
+
+class Stakeholder {
+  +string StakeholderID
+  +string NameOrOrg
+  +string ContactInfo
+  +string GeographicalScope
+}
+
+class Complaint {
+  +string ComplaintID
+  +date DateReceived
+  +string Description
+  +string Source
+  +string LinkedOrg
+  +string ResolutionStatus
+}
+
+class RiskAssessment {
+  +string SupplyBaseID
+  +date DateOfAssessment
+  +string AssessorDetails
+}
+
+
+Organisation ||--o{ CB : "certified by"
+Organisation ||--|{ SBPCertificate : "issued to"
+Organisation ||--|{ SupplyBase : "defines"
+Organisation ||--o{ Supplier : "sources from"
+Organisation ||--o{ Customer : "sells to"
+Supplier ||--o{ FeedstockInput : "provides"
+Organisation ||--|{ FeedstockInput : "receives"
+Organisation ||--o{ ProductGroup : "manages"
+Organisation ||--o{ MassBalanceAccount : "operates"
+Organisation ||--o{ ProductionBatch : "creates"
+FeedstockInput ||--o{ ProductionBatch : "is part of"
+ProductionBatch ||--o{ TransactionBatch : "is divided into"
+Organisation ||--o{ DTSTransaction : "registers"
+TransactionBatch ||--o{ DTSTransaction : "included in"
+TransactionBatch ||--|| SBPClaim : "is associated with"
+CB ||--o{ Audit : "conducts"
+Organisation ||--o{ Audit : "undergoes"
+Audit ||--o{ NonConformance : "identifies"
+Organisation ||--o{ SupplyBaseReport : "prepares"
+Organisation ||--o{ Stakeholder : "engages with"
+Stakeholder ||--o{ Complaint : "submits"
+Organisation ||--o{ Complaint : "manages"
+Organisation ||--o{ RiskAssessment : "conducts"
+SupplyBase ||--o{ RiskAssessment : "is evaluated"
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:boost_erd_plantuml.svg]]
