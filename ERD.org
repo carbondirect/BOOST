@@ -1474,3 +1474,599 @@ erDiagram
 - `date` and `float` for data types have been assumed as per regular entity attributes presentation format.
 
 Mermaid.js syntax provides a straightforward way to visualize these relationships, making it easier to understand the structure and flow of the FSC CoC system from entities and their dependencies.
+
+** RSB
+
+** Textual
+textual description of the entities and relationships for the RSB Chain of Custody system, drawing upon the information in the provided RSB Procedure for Traceability (RSB-PRO-20-001 V3.2) and the RSB Standard Amendment Woody Biomass (RSB-SA-01 V1.0), as well as the structure used for the SBP ERD description.
+
+This description outlines the core components and their connections as defined or implied by these specific RSB documents. It would form the basis for a technical specification for data exchange within an RSB-compliant system for woody biomass.
+
+Here is a textual representation of the key entities and their relationships:
+
+*** Key Entities and Their Attributes:
+
+Based on the requirements and concepts described in the RSB sources, the core entities for this data standard would include:
+
+- *Operator:* Represents a *legal entity* within the supply chain that *acquires, handles, or forwards RSB certified material*. For an operator to handle and forward RSB certified material, they must be *RSB certified*. This is the unit of certification.
+  - /Attributes:/ *Operator Name*, Address, *RSB Certificate Reference Code*, *Scope of Certification* (including processes, sites, and applicable RSB certification schemes), Legal Entity Status (implied by "legal entity"). The operator appoints a management representative.
+- *RSB Certificate:* Represents the formal *certification* issued to an *Operator* confirming compliance with applicable RSB standards, including RSB-PRO-20-001.
+  - /Attributes:/ *Certificate Reference Code*, Date of Issue (implied by validity), Date of Expiry (implied by validity), Scope (RSB certification schemes covered). Issued by a *Certification Body*.
+- *Certification Body (CB):* An *independent third-party organization* that verifies whether *Operators* comply with RSB requirements during audits. They issue RSB Certificates.
+  - /Attributes:/ *CB Name*, Accreditation Status (implied by role).
+- *Supplier:* A legal entity from which an *Operator* *acquires RSB certified material*. Suppliers are subject to *verification and monitoring* by the Operator, particularly for Processing Residues and Post-consumer feedstock.
+  - /Attributes:/ *Supplier Name*, Address, *RSB Certificate Reference Code* (if certified), *Type of Supplier* (producer, purchaser/collector from point of reclamation, trader).
+- *Customer:* A legal entity to which an *Operator* *forwards RSB certified material*. Forwarding is based on a contractual agreement.
+  - /Attributes:/ *Customer Name*, Address.
+- *RSB Certified Material:* The physical biomass or related material (e.g., chemical intermediaries) that is *eligible for certification* under the RSB system. It is tracked along the *Supply Chain*.
+  - /Attributes:/ *Quantity* (Volume/Mass, Units), *Material Type* (e.g., Roundwood, Sawmill residues, Pellets, Chips), *Raw Material Specification* (crop, production residue, end-of-life product), *Country of Origin*, *GHG Intensity*, *RSB Certification Scheme* (Global, EU RED, ICAO CORSIA, Japan), *Sustainability Claim*. (Represented in *Batch(es)* with *Product Information*).
+- *Site:* A physical location where *RSB certified material* is *acquired, handled, forwarded*, or where *internal processing steps* occur within an *Operator's* scope of certification. Operators must document all relevant sites.
+  - /Attributes:/ *Site Name/Identifier*, Address, *Activity Type* (acquisition, handling, forwarding, processing).
+- *Batch:* A unit of *RSB certified material*, typically with *identical characteristics* like GHG intensity. *Product Information* is attached to each batch. Batches are documented, especially separately in the Identity Preserved model. Has a unique ID number.
+  - /Attributes:/ *Batch ID*, *Linked Product Information*, *Quantity* (inherent to the batch size).
+- *Product Information:* Detailed information that must accompany every *Batch* of *RSB certified material* that is acquired, handled, or forwarded. Full requirements are in Annex I of RSB-PRO-20-001.
+  - /Attributes:/ *Product Description*, *Raw Material Specification*, *Origin/Country of Origin*, *Quantity*, *Date of Acquisition/Shipment*, *Supplier/Customer Name and Address*, *Last Production/Processing Site Name and Address*, *Certification Scheme*, *Sustainability Claim(s)*, *Certificate Number*, *CB Name*, *Chain of Custody Model* used by supplier, *GHG Intensity*, *Delivery Note/Invoice ID*.
+- *Sales Documentation:* Official document (e.g., invoice, bill of lading) used for transactions of *RSB certified material*. It must include the required *Product Information* and can serve as the *Proof of Sustainability*. Must have a unique number.
+  - /Attributes:/ *Unique Document ID*, *Date Issued* (implied by date of shipment), *Buyer Name/Address*, *Seller Name/Address*, *Product Description*, *Quantity*.
+- *Proof of Sustainability (PoS):* A document accompanying a batch of outgoing *RSB certified material*. It must include the required *Product Information*. It can be the regular *Sales Documentation*.
+  - /Attributes:/ (Includes all *Product Information* attributes).
+- *Chain of Custody System:* The overall system implemented by an *Operator* to track *RSB certified material* through all processing and trading steps. It must meet the requirements of RSB-PRO-20-001.
+  - /Attributes:/ *System Type* (implied by the chosen model), Operating Procedures, Necessary Infrastructures (software, tools).
+- *Chain of Custody Model:* The specific tracking method used within the *Chain of Custody System*. Options include Identity Preserved, Product Segregation, Mass Balance, Content Ratio Accounting, and Book & Claim. Different models have different rules for handling and mixing material. The model used by the supplier is part of the *Product Information*.
+  - /Attributes:/ *Model Type* (Identity Preserved, Segregation, Mass Balance, Content Ratio Accounting, Book & Claim), Specific rules/parameters based on the type.
+- *Process:* An internal processing step within an *Operator's* scope of certification where *RSB certified material* is handled.
+  - /Attributes:/ *Process Description/Identifier*. Occurs at a *Site*. May use *Conversion Factors*.
+- *Conversion Factor:* A factor used in certain *Chain of Custody Models* (Mass Balance, Content Ratio Accounting) to calculate the amount of output based on the input material quantity. It is monitored by the *Operator* and checked by the *CB*.
+  - /Attributes:/ *Ratio Value*, Input Units, Output Units. Linked to a *Process* or group of products.
+- *Point of Origin:* The starting point of traceability for certain materials, particularly waste and residue-based chains and specific woody biomass categories like Thinnings or Roundwood. The GHG calculation starts from here for these categories.
+  - /Attributes:/ *Geographical Location/Area*, Relevant Documentation (e.g., tree species collected).
+- *Feedstock Category (Woody Biomass):* Classification of the source material based on RSB-SA-01 requirements. Examples include Thinnings, Forestry Industry Processing Residues, SRWC, Roundwood, Invasive Alien Species. Specific requirements and eligibility criteria apply to each category.
+  - /Attributes:/ *Category Type* (e.g., Thinnings, Processing Residues), *Specification Details* (e.g., definition of thinning, residue type). Linked to *RSB Certified Material*.
+- *Processing Residue:* Material category defined in RSB-PRO-20-001 and specified in RSB-SA-01 (e.g., sawmill residues, black liquor). Requires verification of eligibility. Source must have CoC certification for legality (for forestry processing residues).
+  - /Attributes:/ (Inherits attributes from *RSB Certified Material*), *Verification Evidence*.
+- *Post-consumer Feedstock:* Material category defined in RSB-PRO-20-001 and RSB-STD-40-007 (adapted). Requires verification of eligibility. May be referred to as Waste from a post-consumer source.
+  - /Attributes:/ (Inherits attributes from *RSB Certified Material*), *Verification Evidence*, *Point of Reclamation* (implied by collection from end-users).
+- *Supply Chain:* The sequence of stages (*Operator* links) through which *RSB certified material* passes, involving changes in legal and/or physical control. Traceability must be ensured through the chain.
+  - /Attributes:/ Stages (feedstock production, processing, manufacturing, trading, distribution).
+- *Audit (Verification):* A process conducted by a *Certification Body* to assess an *Operator's* compliance with RSB standards. Includes checking records and systems. Supplier audits may be required.
+  - /Attributes:/ *Audit ID* (implied), *Date(s)*, *Audited Operator ID*, *CB ID*, *Findings* (including Non-conformances).
+- *Non-conformance:* A failure to comply with an applicable RSB requirement, identified during an *Audit*. Requires corrective actions.
+  - /Attributes:/ *Description*, Relevant *Requirement(s)* (implied), *Required Corrective Action*, Status (Open/Closed). Linked to an *Audit*.
+- *Supplier Audit Program:* A program required for certain *Supplier* types (Processing Residues, Post-consumer feedstock) where adequate evidence isn't available upon receipt.
+  - /Attributes:/ *Program Details* (implied). Includes specific *Supplier(s)*. Involves *Audits* of suppliers.
+- *Supply Base Evaluation (SBE):* A process required for *Operators* sourcing from a defined Supply Base not fully covered by recognised certification or RRA. It includes *Risk Assessment*. Required for certain *Feedstock Categories* (Primary/Processing Residues not certified). Documented in an *SBR*.
+  - /Attributes:/ Linked *Operator*, Date of Assessment (implied), Assessment Team Details (implied).
+- *Risk Assessment:* Part of the *SBE* process where an *Operator* evaluates the risk of non-conformance with RSB sustainability requirements (derived from Principles & Criteria) for sourced feedstock. Risks are rated as Low or Specified.
+  - /Attributes:/ Linked *Supply Base* (implied by SBE), Date, Assessor Details (implied), *Risk Ratings* (Low/Specified) per indicator/criteria.
+- *Specified Risk:* A risk rating assigned when the risk of non-conformance is not negligible. It requires implementation of *Risk Management Measures*.
+  - /Attributes:/ Linked *Requirement/Criterion* (implied), *Description of Risk* (implied), *Risk Rating* ('Specified').
+- *Risk Management Measure (RMM):* Actions implemented by an *Operator* to effectively reduce *Specified Risks* to a low level. Can include requirements from SBP-recognised schemes.
+  - /Attributes:/ *Description of Measure*, Linked *Specified Risk(s)*, Means of Verification of effectiveness (implied).
+- *Supply Base Report (SBR):* A report prepared by the *Operator* documenting the *Supply Base Definition*, *SBE*, *Risk Assessment findings*, and *RMMs*. It is made available to *Stakeholders*.
+  - /Attributes:/ Report ID (implied), Preparation Date, Linked *Operator*, Summary of Supply Base (implied), Summary of Risk Assessment findings (implied), Description of RMMs (implied).
+- *Supply Base Verifier (SBV):* Information or evidence used by an *Operator* to assess risks and conformance during the *SBE/Risk Assessment* process.
+  - /Attributes:/ *Description of Verifier*, *Type of Evidence* (e.g., document, record, interview), Linked *Requirement(s)/Risks* (implied).
+- *Stakeholder:* Any person, group, or entity engaged by the *Operator* during the *SBE process* (referencing SBP Standard 2 requirements).
+  - /Attributes:/ *Name/Organisation*, Contact Information (implied), *Engagement Records* (correspondence, comments, justification for withholding information). Feedback is provided to them.
+- *Due Diligence System (DDS):* While not formally defined as a top-level entity in these RSB excerpts, the concept is referenced via ISO 38200 and SBP Standard 2. The RSB system incorporates elements analogous to a DDS through requirements for *Supplier validation and monitoring* and the overall *risk-based approach* to feedstock sourcing. It represents a *process* used by the *Operator* to verify information about *Input Material* characteristics and compliance with requirements.
+
+*** Key Relationships Between Entities:
+
+Here are some of the critical relationships linking these entities, enabling traceability and data flow in the RSB CoC system:
+
+- An *Operator* /is certified under/ an *RSB Certification Scheme*, /issued by/ a *Certification Body (CB)* as an *RSB Certificate*.
+- An *RSB Certificate* /defines the Scope for/ an *Operator*.
+- An *Operator* /implements/ a *Chain of Custody System*.
+- A *Chain of Custody System* /uses/ one or more *Chain of Custody Model(s)*.
+- An *Operator* /manages activities at/ *Site(s)*.
+- A *Site* /may contain/ *Process(es)*.
+- A *Process* /may use/ *Conversion Factor(s)*.
+- An *Operator* /sources/ *RSB Certified Material* /from/ *Supplier(s)*.
+- An *Operator* /sells/forwards/ *RSB Certified Material* /to/ *Customer(s)*.
+- *Supplier(s)* /provide/ *RSB Certified Material* /to/ *Operator(s)*.
+- *Customer(s)* /receive/ *RSB Certified Material* /from/ *Operator(s)*.
+- *RSB Certified Material* /is represented in/ *Batch(es)*.
+- *Batch(es)* /have associated/ *Product Information*.
+- *Product Information* /is included on/ *Sales Documentation*.
+- *Sales Documentation* /may serve as/ *Proof of Sustainability (PoS)*.
+- *Sales Documentation* /records/ a *Transaction* between a selling *Operator* and a buying *Customer*.
+- An *RSB Certification Scheme* /is associated with/ *Sustainability Claim(s)*.
+- *RSB Certified Material* /carries/ a *Sustainability Claim*. The claim is validated via the *Chain of Custody System/Model*.
+- A *Certification Body (CB)* /conducts/ *Audit(s)/Verification(s)* /of/ an *Operator*.
+- An *Audit* /may identify/ *Non-conformance(s)*.
+- An *Operator* /implements/ a *Supplier Audit Program* /for/ specific *Supplier(s)* of *Processing Residues* and *Post-consumer Feedstock*.
+- An *Operator* /conducts/ a *Supply Base Evaluation (SBE)* /for sourcing/ certain *Feedstock Categories*.
+- A *Supply Base Evaluation (SBE)* /includes/ a *Risk Assessment*.
+- A *Risk Assessment* /may identify/ *Specified Risk(s)*.
+- An *Operator* /implements/ *Risk Management Measure(s)* /to mitigate/ *Specified Risk(s)*.
+- An *Operator* /uses/ *Supply Base Verifier(s)* /in the/ *SBE/Risk Assessment*.
+- An *Operator* /prepares/ a *Supply Base Report (SBR)* /documenting the/ *SBE, Risk Assessment, and RMMs*.
+- An *Operator* /engages with/ *Stakeholder(s)* /during the/ *SBE process*.
+- Specific *Feedstock Categories* (Woody Biomass) /have defined/ *Requirements* in RSB-SA-01.
+- *Processing Residues* and *Post-consumer Feedstock* /are types of/ *RSB Certified Material* requiring specific *Verification* by the Operator.
+- The *GHG Calculation* /starts from the/ *Point of Origin* /for certain/ *Feedstock Categories* (e.g., Thinnings, Roundwood).
+- An *Operator* /maintains records about/ *Supplier(s)*, materials supplied, and certificate code.
+
+This structure captures the essential components and their interconnections within the RSB Chain of Custody system, specifically referencing the details found in the provided RSB-PRO-20-001 and RSB-SA-01 sources. It highlights the flow of material, the roles of different parties, the documentation requirements, the verification processes, and the specific considerations for different types of woody biomass feedstock.
+
+** Mermaid
+
+#+BEGIN_SRC mermaid :file boost_rsb_erd_mermaid.svg
+erDiagram
+    Operator {
+        string OperatorName
+        string Address
+        string RSB_Certificate_Reference_Code
+        string Scope_of_Certification
+        string Legal_Entity_Status
+    }
+
+    RSB_Certificate {
+        string Certificate_Reference_Code
+        date Date_of_Issue
+        date Date_of_Expiry
+        string Scope
+    }
+
+    Certification_Body {
+        string CB_Name
+        string Accreditation_Status
+    }
+
+    Supplier {
+        string Supplier_Name
+        string Address
+        string RSB_Certificate_Reference_Code
+        string Type_of_Supplier
+    }
+
+    Customer {
+        string Customer_Name
+        string Address
+    }
+
+    RSB_Certified_Material {
+        float Quantity
+        string Material_Type
+        string Raw_Material_Specification
+        string Country_of_Origin
+        float GHG_Intensity
+        string RSB_Certification_Scheme
+        string Sustainability_Claim
+    }
+
+    Site {
+        string Site_Name_Identifier
+        string Address
+        string Activity_Type
+    }
+
+    Batch {
+        string Batch_ID
+        string Linked_Product_Information
+        float Quantity
+    }
+
+    Product_Information {
+        string Product_Description
+        string Raw_Material_Specification
+        string Origin_Country_of_Origin
+        float Quantity
+        date Date_of_Acquisition_Shipment
+        string Supplier_Customer_Name_and_Address
+        string Last_Production_Processing_Site_Name_and_Address
+        string Certification_Scheme
+        string Sustainability_Claim
+        string Certificate_Number
+        string CB_Name
+        string Chain_of_Custody_Model
+        float GHG_Intensity
+        string Delivery_Note_Invoice_ID
+    }
+
+    Sales_Documentation {
+        string Unique_Document_ID
+        date Date_Issued
+        string Buyer_Name_Address
+        string Seller_Name_Address
+        string Product_Description
+        float Quantity
+    }
+
+    Proof_of_Sustainability {
+        string Includes_Product_Information
+    }
+
+    Chain_of_Custody_System {
+        string System_Type
+        string Operating_Procedures
+        string Necessary_Infrastructures
+    }
+
+    Chain_of_Custody_Model {
+        string Model_Type
+        string Specific_rules_parameters
+    }
+
+    Process {
+        string Process_Description_Identifier
+    }
+
+    Conversion_Factor {
+        float Ratio_Value
+        string Input_Units
+        string Output_Units
+    }
+
+    Point_of_Origin {
+        string Geographical_Location_Area
+        string Relevant_Documentation
+    }
+
+    Feedstock_Category {
+        string Category_Type
+        string Specification_Details
+    }
+
+    Processing_Residue {
+        string Attributes_from_RSB_Certified_Material
+        string Verification_Evidence
+    }
+
+    Post_consumer_Feedstock {
+        string Attributes_from_RSB_Certified_Material
+        string Verification_Evidence
+        string Point_of_Reclamation
+    }
+
+    Supply_Chain {
+        string Stages
+    }
+
+    Audit_Verification {
+        string Audit_ID
+        date Dates
+        string Audited_Operator_ID
+        string CB_ID
+        string Findings
+    }
+
+    Non_conformance {
+        string Description
+        string Required_Corrective_Action
+        string Status
+    }
+
+    Supplier_Audit_Program {
+        string Program_Details
+    }
+
+    Supply_Base_Evaluation {
+        string Linked_Operator
+        date Date_of_Assessment
+        string Assessment_Team_Details
+    }
+
+    Risk_Assessment {
+        string Linked_Supply_Base
+        date Date
+        string Risk_Ratings
+    }
+
+    Specified_Risk {
+        string Description_of_Risk
+        string Risk_Rating
+    }
+
+    Risk_Management_Measure {
+        string Description_of_Measure
+        string Means_of_Verification
+    }
+
+    Supply_Base_Report {
+        string Report_ID
+        date Preparation_Date
+    }
+
+    Operator ||--|{ RSB_Certificate : isCertifiedUnder
+    RSB_Certificate ||--|| Certification_Body : issuedBy
+    Operator ||--|{ Chain_of_Custody_System : implements
+    Chain_of_Custody_System ||--|{ Chain_of_Custody_Model : uses
+    Operator ||--|{ Site : managesActivitiesAt
+    Site ||--o{ Process : mayContain
+    Process ||--o{ Conversion_Factor : mayUse
+    Operator ||--|{ Supplier : sourcesFrom
+    Operator ||--o{ Customer : sellsTo
+    Supplier ||--o| RSB_Certified_Material : provides
+    RSB_Certified_Material ||--o{ Batch : isRepresentedIn
+    Batch ||--|| Product_Information : has_associated
+    Product_Information ||--|| Sales_Documentation : isIncludedOn
+    Sales_Documentation ||--|| Proof_of_Sustainability : servesAs
+    Certification_Body ||--|| Audit_Verification : conducts
+    Audit_Verification ||--o{ Non_conformance : mayIdentify
+    Operator ||--|{ Supplier_Audit_Program : implements
+    Operator ||--o{ Supply_Base_Evaluation : conducts
+    Supply_Base_Evaluation ||--|| Risk_Assessment : includes
+    Risk_Assessment ||--o{ Specified_Risk : mayIdentify
+    Operator ||--o{ Risk_Management_Measure : implements
+    Operator ||--|{ Supply_Base_Report : prepares
+#+END_SRC
+
+#+RESULTS:
+[[file:boost_rsb_erd_mermaid.svg]]
+
+
+** Integrated ERD
+
+*** Textual Description
+Okay, I understand you're requesting a textual description of an Entity-Relationship Diagram (ERD) structure that integrates concepts and requirements from the provided SBP, RSB, FSC, and ISO sources, as well as the "Guidance Chain of Custody" document. This description aims to be similar in style and format to the "SBP Data Standard ERD Description" you provided, outlining key entities, their attributes, and the relationships between them.
+
+As a text-based AI, I cannot generate a visual ERD image. However, I can provide a comprehensive textual description of the entities, their attributes as defined across the sources, and the key relationships that connect them, based on the information in your sources and our conversation history.
+
+This structure represents the core components and their interactions necessary to document and transfer information about solid biomass for energy applications within a Chain of Custody system, drawing on the requirements of various standards and guidance documents.
+
+Here is a textual representation of the key entities and their relationships, integrating concepts from the provided sources:
+
+**** Key Entities and Their Attributes:
+
+Based on the data elements identified in your sources [1, 6, 7, 85, etc.], the core entities for an integrated biomass data standard would include:
+
+- *Organization:* Represents a legal entity within the biomass supply chain that takes legal ownership of feedstock or biomass. This entity is also referred to as a "link" in the Chain of Custody.
+  - /Attributes:/ *Organization Name*, *Address*, *Role* within the supply chain (e.g., source, transport, link, energy producer, Biomass Producer (BP), Trader, Energy Producer, Manufacturer), *Scope of Operations/Certification* (e.g., Product Types, Processes, Applicable Standards (SBP, FSC, RSB, etc.), Accounting Methodology like Mass Balance or Physical Separation), *Legal Entity Status*, *Unique Certificate Code/Number* (if certified) (e.g., SBP-XX-YY), *Contact Information*.
+- *Certification Scheme:* Represents a voluntary or recognized standard system related to biomass or wood Chain of Custody and sustainability. Governing or approving specific schemes is out of scope for the data standard.
+  - /Attributes:/ *Scheme Name* (e.g., FSC, PEFC, SBP, RSB, ISO 38200, Guidance), *Recognition Status* (e.g., SBP-recognised, approved for specific criteria), *Version Number* (of the scheme standard).
+- *Certificate:* The formal certification document issued by an accredited Certification Body to an Organization.
+  - /Attributes:/ *Certificate Number*, *Date of Issue*, *Date of Expiry*, *Scope of Certification*, *Version Number* (of the standard certified against). Issued by a CB.
+- *Certification Body (CB):* An independent third-party organization accredited to perform certification activities against relevant standards.
+  - /Attributes:/ *CB Name*, *Accreditation Status* (e.g., SBP accreditation in accordance with ISO 17065), *Accreditation Scope* (for specific standards like SBP Standards 1, 2, 4).
+- *Material/Feedstock:* The physical wood, wood-based products, or lignified materials (like bamboo), solid biomass, residues, or waste being tracked. This includes incoming or outgoing biomass/materials.
+  - /Attributes:/ *Quantity* (Volume/Mass), *Type* (e.g., Pellets, Wood chips, Residues, Waste, Wood-based products), *Category* (e.g., Guidance Cat 1-5, SBP-compliant, SBP-controlled, Non-eligible input, RSB material type, FSC Recycled, Post-consumer, Pre-consumer), *Species* (common and scientific name, particularly for primary feedstock/processing residues), *Origin/Country of Harvest* (or more specific location), *Source* (e.g., Forest Management Unit, nature/landscape management, agriculture, biogenic waste, point of reclamation), *Raw Material Eligibility Statement* (e.g., eligible as production residue, end-of-life product under RSB), *GMO status* (if applicable).
+- *Supplier:* A legal entity from which an Organization purchases Material/Feedstock.
+  - /Attributes:/ *Supplier Name*, *Address*, *Certificate Code* and *Claim* (if FSC/SBP/RSB certified), *Type of Supplier* (e.g., producer, collector, Trader, Forest Management Enterprise, processing site).
+- *Customer:* A legal entity to which an Organization sells Material/Biomass.
+  - /Attributes:/ *Customer Name*, *Address*.
+- *Transaction/Consignment:* Represents the transfer of a quantity of Material/Biomass between legal owners. This can be a general concept (Guidance, ISO, FSC, RSB) or a specific digital record (SBP DTS Transaction). Given the structure derived from SBP, this can be represented by *DTS Transaction* (the formal digital record) and *Transaction Batch* (the quantity within the digital record linked to claims/data). Guidance's "consignment" maps well to SBP's "transaction batch".
+  - /Attributes (DTS Transaction):/ *Unique DTS Transaction ID*, *Supplying Organization*, *Customer Organization*, *Date* (of transaction/delivery), *Linked Sales/Delivery Document ID*.
+  - /Attributes (Transaction Batch):/ *Linked Production Batch ID* (for SBP), *Quantity*, *Associated Claim ID*, *Energy & Carbon Data*. Represents physical biomass.
+- *Claim:* Identifies the certified or controlled nature of biomass associated with a transaction or product. Can be scheme-specific.
+  - /Attributes:/ *Claim Type* (e.g., SBP-compliant, SBP-controlled, FSC Mix, FSC Recycled, RSB Global, RSB EU RED), *Linked Transaction/Transaction Batch ID*, *Statement* (e.g., that feedstock qualifies as processing residues/post-consumer under SBP). Claims must be validated/verified.
+- *Sales/Delivery Document:* Official documentation accompanying a transfer of physical biomass.
+  - /Attributes:/ *Unique Document ID*, *Date Issued*, *Buyer Name/Address*, *Seller Name/Address*, *Product Description*, *Quantity*, *Linked DTS Transaction ID* (for SBP), *Seller's Certificate Code and Claim* (if applicable), *Reference to Transport Documentation*, *Supplementary Evidence Indicator/Reference* (for full claims).
+- *Sustainability Information:* Data points describing characteristics based on source and criteria. While not a distinct entity in itself, it is a collection of attributes linked to Material/Feedstock and Transaction Batch entities.
+  - /Examples:/ Biomass Category (Guidance 1-5), Risk-based approach outcome (yes/no), Regional Risk Assessment outcomes, Data demonstrating secondary/tertiary residual flows (for Category 5), GHG emissions data (raw material, transport, etc.), Linked Verification Statement ID, Proof of Sustainability (RSB), Additional compliance claims (e.g., Low ILUC Risk Biomass, no GMO).
+- *Mass Balance Account:* An accounting mechanism used by Organizations to track volumes of biomass/material with specific characteristics (claims, categories, etc.). Used to track eligible input and certified output over time.
+  - /Attributes:/ *Linked Product Group ID*, *Period Inputs*, *Period Outputs*, *Current Balance*, *Defined Balancing Period*, *Conversion Factors Used*. Managed by an Organization/Site. Must be auditable/verifiable.
+- *Product Group:* A categorization of product types used by Organizations (especially BPs) for applying Chain of Custody methods and making claims.
+  - /Attributes:/ *Unique Product Group ID*, *Product Type Description*, *Feedstock Classification Rules*. Managed by an Organization/Site.
+- *Energy & Carbon Data:* Specific data points required to calculate GHG emissions and savings.
+  - /Attributes:/ *Data Type* (e.g., moisture content, transport distance, fuel consumption figures, fossil fuel comparator), *Value*, *Unit*, *Source* (e.g., linked SAR/SREG, Measurement method, theoretical calculation). Associated with Production Batches or Transaction Batches.
+- *SAR (SBP Audit Report on Energy and Carbon Data):* A specific report template completed by SBP BPs containing static energy and carbon data for a defined Reporting Period.
+  - /Attributes:/ *SAR Version/Type* (e.g., Pellets, Woodchips Stationary, Woodchips Mobile), *Linked BP Organization*, *Reporting Period ID*, *Contains Energy and Carbon Data details*. Must be uploaded to the DTS.
+- *SREG (SBP Report on Energy and Carbon for Supplied Biomass):* A specific report template completed by SBP Organizations covering transport-related energy and carbon data not included in the SAR.
+  - /Attributes:/ *SREG Version/Type* (e.g., Inland, Sea), *Linked Organization*, *Linked Transaction Batch(es)*, *Contains specific Energy and Carbon Data details* (e.g., transport distances, fuel consumption). Uses the DTS.
+- *Verification Statement:* A statement issued by independent third parties (Conformity Assessment Bodies) to verify certain aspects of conformance. Required to be linked to the relevant consignment/biomass.
+  - /Attributes:/ *Statement ID*, *Date* (of statement/verification), *Issuing Body/Conformity Assessment Body*, *Scope* (e.g., covering specific requirements not covered by a certification scheme).
+- *Due Diligence System (DDS):* A risk management process established and implemented by Organizations to verify information regarding the characteristics of all input material and assess/mitigate risks. SBP's Supply Base Evaluation (SBE) is a form of DDS for feedstock sourcing.
+  - /Attributes:/ *Defined Requirements* (used for material inclusion/exclusion), *Assessment Process/Methodology*. Managed by an Organization. Relevant for a risk-based approach, particularly for Guidance Category 2 biomass.
+- *Supply Base (SB):* Defines the boundaries of sourcing areas for an Organization, including all relevant operators and stages from harvesting to the Organization's operations.
+  - /Attributes:/ *Defined Geographical Boundaries*, *Description of Operators* involved in the supply chain within the SB (company names, addresses, contact person, certification status, stages covered). Must be kept up-to-date.
+- *Risk Assessment:* The process of evaluating the risk of non-conformance with specific criteria (e.g., SBP Standard 1 indicators, sustainability criteria) for feedstock sourced from a Supply Base. Part of a DDS/SBE process.
+  - /Attributes:/ *Linked Supply Base ID*, *Date of Assessment*, *Assessor Details* (including demonstrated competence), *Risk Ratings per Criterion/Indicator* (e.g., Low or Specified). Undertaken by a BP Organization.
+- *Standard Indicator/Requirement:* A specific, auditable requirement from a standard (e.g., SBP Standard 1 indicator, FSC requirement, Guidance criteria). Risk Assessment evaluates against these.
+  - /Attributes:/ *Indicator/Requirement ID*, *Description*, *Related Principle/Criterion*.
+- *Specified Risk (SBP):* An indicator rating assigned during SBP Risk Assessment when the risk of non-conformance with SBP Standard 1 is not negligible.
+  - /Attributes:/ *Linked SBP Standard 1 Indicator ID*, *Description of Risk*, *Justification for Rating*. Outcome of Risk Assessment.
+- *Risk Management Measure (RMM) (SBP):* Actions implemented by a BP Organization to effectively reduce SBP Specified Risks to a low level.
+  - /Attributes:/ *Description of Measure*, *Linked Specified Risk(s)*, *Means of Verification* of effectiveness.
+- *Supply Base Verifier (SBV) (SBP):* Evidence or means of verification used to assess conformance with SBP Standard 1 indicators in the Supply Base during an SBE/Risk Assessment.
+  - /Attributes:/ *Description of SBV*, *Linked SBP Standard 1 Indicator(s)*, *Source/Type of Evidence*.
+- *Supply Base Report (SBR) (SBP):* A public report prepared by an SBP BP on its Supply Base and SBE findings. Prepared using the SBP Audit Portal.
+  - /Attributes:/ *Report ID*, *Preparation Date*, *Linked Organisation*, *Summary of Supply Base*, *Summary of Risk Assessment*, *Description of RMMs*. Must be updated annually and available to stakeholders.
+- *Stakeholder:* A person or organisation that can affect, be affected by, or perceive themselves to be affected by a decision or activity. Organisations must engage with stakeholders.
+  - /Attributes:/ *Stakeholder ID*, *Name/Organisation*, *Contact Information*, *Geographical Location/Scope*, *Interest/Expertise*. Records of engagement must be maintained.
+- *Stakeholder Engagement Plan (SEP):* A documented procedure outlining how an Organisation identifies, engages with, and responds to stakeholders.
+  - /Attributes:/ *SEP ID*, *Linked Organisation*, *Procedure Description*, *List of Identified Stakeholders*.
+- *Complaint:* A formal expression of dissatisfaction regarding conformance with requirements. Stakeholders may submit complaints.
+  - /Attributes:/ *Complaint ID*, *Date Received*, *Description of Allegation*, *Source* (Stakeholder), *Linked Organisation* (being complained against), *Resolution Status*, *Date Closed*. Managed by the Organization and CB.
+- *Audit/Evaluation:* An assessment conducted by a Certification Body (CB) to verify an Organisation's conformance with applicable standards.
+  - /Attributes:/ *Audit ID*, *Type* (e.g., Initial, Surveillance, Transfer), *Date(s)*, *Audited Organisation ID*, *CB ID*, *Findings* (e.g., Non-conformances, Opportunities for Improvement), *Report URL/Location* (e.g., Audit Portal). CBs review stakeholder comments before the audit.
+- *Non-conformance:* A failure to meet an applicable requirement identified during an Audit.
+  - /Attributes:/ *Non-conformance ID*, *Description*, *Applicable Standard(s) and Requirement(s)*, *Severity* (Minor/Major), *Linked Audit ID*, *Required Corrective Action*, *Status* (Open/Closed). Identified by a CB.
+- *Production Batch (SBP):* A unit of biomass production created by an SBP BP, attributed with identical feedstock, energy, and carbon data. Source for Transaction Batches.
+  - /Attributes:/ *Unique Production Batch ID*, *Linked Feedstock Input(s)*, *Associated Energy and Carbon Data*. Created by a BP Organization.
+- *Feedstock Input (SBP):* Represents raw woody material or processing residues used by an SBP BP in biomass production.
+  - /Attributes:/ *Quantity* (Volume/Mass), *Feedstock Category* (SBP-compliant, SBP-controlled, Non-eligible input, Primary feedstock, Processing residues, post-consumer feedstock), *Species* (for Primary/Processing Residues), *Origin/Sourcing Area identifier*, *Level of Control Required* (e.g., visual inspection, supplier audits), *Self-declaration* (from supplier, can be additional evidence). Linked to a Supplier. Contributes to a Production Batch.
+
+**** Key Relationships Between Entities:
+
+These relationships define how the entities interact and information flows or is linked across the Chain of Custody:
+
+- An *Organization* /is certified against/ *Certification Scheme(s)* and /is issued/ a *Certificate* by a *CB*.
+- An *Organization* /manages/ its *Chain of Custody System* (this system handles the management of Material, Transactions, Data, etc.).
+- An *Organization* /implements/ a *Due Diligence System (DDS)* to verify information about *Material/Feedstock*.
+- An *Organization* /operates/ *Mass Balance Account(s)*, often linked to specific *Product Group(s)*.
+- An *Organization* /manages/ *Product Group(s)*.
+- An *Organization* (BP) /defines/ its *Supply Base*.
+- A *Supply Base* /is evaluated through/ a *Risk Assessment*, which /evaluates against/ *Standard Indicator/Requirement(s)*.
+- A *Risk Assessment* /identifies/ *Specified Risk(s)* (SBP specific).
+- *Specified Risk(s)* (SBP specific) /requires/ *Risk Management Measure(s)* which are /implemented by/ the *Organization* (BP).
+- *Standard Indicator/Requirement(s)* /is verified using/ *Supply Base Verifier(s)* (SBP specific).
+- An *Organization* (BP) /prepares/ a *Supply Base Report (SBR)* (SBP specific) that /reports on/ *Risk Assessment* and *RMMs*.
+- An *Organization* /sources/ *Material/Feedstock (Feedstock Input)* /from/ *Supplier(s)*.
+- An *Organization* (BP) /creates/ *Production Batch(es)* (SBP specific) /from/ *Material/Feedstock (Feedstock Input)*.
+- *Material/Feedstock*, *Production Batch(es)*, and *Transaction Batch(es)* /are characterized by/ *Energy & Carbon Data* and *Sustainability Information*.
+- An *Organization* (BP) /completes/ *SAR(s)* (SBP specific) /containing/ *Energy & Carbon Data* /for/ *Production Batch(es)*.
+- *Production Batch(es)* (SBP specific) /are divided into/ *Transaction Batch(es)* (SBP specific).
+- An *Organization* /registers/ *Transaction(s)* with a *Customer*. This is represented in SBP by an *Organization* /registering/ *DTS Transaction(s)*.
+- A *DTS Transaction* (SBP specific) /includes/ *Transaction Batch(es)*.
+- A *Transaction/Transaction Batch* /is associated with/ a *Claim* and *Sustainability Information*.
+- A *Transaction* (or *DTS Transaction*) /is documented by/ a *Sales/Delivery Document*.
+- An *Organization* /completes/ *SREG(s)* (SBP specific) /containing/ *Energy & Carbon Data* /related to/ *Transaction Batch(es)*.
+- A *Verification Statement* /is issued by/ a *Third Party/Conformity Assessment Body* and /is linked to/ a *Transaction/Consignment/Biomass (Transaction Batch)*.
+- An *Organization* /has/ a *Stakeholder Engagement Plan (SEP)* and /engages with/ *Stakeholder(s)*.
+- A *Stakeholder* /may submit/ *Complaint(s)* /against/ an *Organization*.
+- A *CB* /conducts/ *Audit(s)/Evaluation(s)* /of/ an *Organization*.
+- An *Audit* /identifies/ *Non-conformance(s)*.
+
+This integrated structure captures the essential data elements and their interdependencies necessary to document and trace biomass through the Chain of Custody according to the principles and requirements found in the diverse set of sources you provided. Additional details like validation rules and system mappings would build upon this structure to ensure data quality and interoperability.
+
+*** Mermaid
+
+#+BEGIN_SRC mermaid :file boost_integrated_erd_mermaid.svg
+erDiagram
+    Organization {
+        string OrganizationID PK
+        string Name
+        string Address
+        string Role
+        string ScopeOfOperations
+        string LegalEntityStatus
+        string UniqueCertificateCode FK
+        string ContactInformation
+    }
+    
+    CertificationScheme {
+        string SchemeID PK
+        string SchemeName
+        string RecognitionStatus
+        int VersionNumber
+    }
+
+    Certificate {
+        string CertificateID PK
+        string CertificateNumber
+        date DateOfIssue
+        date DateOfExpiry
+        string ScopeOfCertification
+        int VersionNumber
+        string CB_ID FK
+        string OrganizationID FK
+    }
+
+    CertificationBody {
+        string CB_ID PK
+        string CBName
+        string AccreditationStatus
+        string AccreditationScope
+    }
+
+    MaterialFeedstock {
+        string MaterialID PK
+        float Quantity
+        string Type
+        string Category
+        string Species
+        string Origin
+        string Source
+        string RawMaterialEligibilityStatement
+        string GMOStatus
+    }
+    
+    Supplier {
+        string SupplierID PK
+        string SupplierName
+        string Address
+        string CertificateCode
+        string TypeOfSupplier
+    }
+
+    Customer {
+        string CustomerID PK
+        string CustomerName
+        string Address
+    }
+
+    TransactionConsignment {
+        string TransactionID PK
+        string SupplyingOrganizationID FK
+        string CustomerOrganizationID FK
+        date Date
+        string DocumentID
+    }
+
+    TransactionBatch {
+        string TransactionBatchID PK
+        string TransactionID FK
+        float Quantity
+        string AssociatedClaimID
+        string EnergyAndCarbonData
+    }
+
+    Claim {
+        string ClaimID PK
+        string ClaimType
+        string TransactionBatchID FK
+        string Statement
+    }
+
+    SaleDeliveryDocument {
+        string DocumentID PK
+        date DateIssued
+        string BuyerName
+        string SellerName
+        string ProductDescription
+        float Quantity
+        string LinkedTransactionID
+        string SellersCertificateCode
+        string ReferenceToTransportDocumentation
+        string SupplementaryEvidenceIndicator
+    }
+
+    SAR {
+        string SAR_ID PK
+        string SARType
+        string LinkedBPOrganizationID FK
+        string ReportingPeriodID
+    }
+
+    SREG {
+        string SREG_ID PK
+        string SREGType
+        string LinkedOrganizationID FK
+        string LinkedTransactionBatchID FK
+    }
+
+    VerificationStatement {
+        string StatementID PK
+        date Date
+        string IssuingBody
+        string Scope
+    }
+
+    MassBalanceAccount {
+        string AccountID PK
+        string LinkedProductGroupID
+        float PeriodInputs
+        float PeriodOutputs
+        float CurrentBalance
+        string BalancingPeriod
+        string ConversionFactorsUsed
+    }
+
+    ProductGroup {
+        string ProductGroupID PK
+        string ProductTypeDescription
+        string FeedstockClassificationRules
+    }
+    
+    %% Relationships
+    Organization ||--o{ CertificationScheme : "isCertifiedAgainst"
+    Organization ||--|{ Certificate : "isIssued"
+    Certificate }o--|| CertificationBody : "issuedBy"
+    Organization }o--|| CertificationBody : "certificationFrom"
+    Organization }o--o| Supplier : "sourcesFrom"
+    Organization ||--o{ Customer : "sellsTo"
+    Organization ||--|{ TransactionConsignment : "registers"
+    TransactionConsignment ||--|{ TransactionBatch : "includes"
+    TransactionBatch ||--o| Claim : "associatedWith"
+    TransactionConsignment ||--o| SaleDeliveryDocument : "documentedBy"
+    Organization ||--o{ MassBalanceAccount : "operates"
+    Organization ||--o{ ProductGroup : "manages"
+    TransactionBatch ||--o| SREG : "relatedTo"
+    TransactionBatch ||--o{ SAR : "containsDataOn"
+    Organization ||--o{ VerificationStatement : "has"
+    TransactionBatch ||--o{ MaterialFeedstock : "contains"
+#+END_SRC
+
+#+RESULTS:
+[[file:boost_integrated_erd_mermaid.svg]]
