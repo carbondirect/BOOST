@@ -1,0 +1,116 @@
+#+LATEX_CLASS_OPTIONS: [title=small,preset=opensansnote,par=skip]
+#+LATEX_HEADER: \usepackage{phfnote}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{draftwatermark}
+#+OPTIONS: toc:nil
+#+TITLE: Biomass Open Origin Standard for Tracking (BOOST)
+#+SUBTITLE: Community Group Charter
+#+AUTHOR: Peter Tittmann \\ Senior Scientist \\ Carbon Direct
+\maketitle
+
+
+This Charter is work in progress. To submit feedback, please use {TBD:GitHub repository URL} Issues where Charter is being developed. 
+
++ This Charter: {TBD: URI}
++ Previous Charter: {TBD: URI}
++ Start Date: {TBD: date the charter takes effect, estimate if not known. Update this if the charter is revised and include a link to the previous version of the charter.}
++ Last Modified
+#+BEGIN_SRC emacs-lisp :exports results :results value
+   (format-time-string "%Y-%m-%d")
+   #+END_SRC
+
+
+** Goals
+
+The mission and goals of this Community Group are to *develop and maintain a robust data standard for solid biomass*. This standard aims to provide a structured framework to enable the systematic collection, management, and exchange of information throughout complex supply chains and processes. The goal is to ensure accurate tracking, transparency, and compliance with sustainability criteria, facilitating the reliable transfer of essential information, including sustainability characteristics and data required for greenhouse gas (GHG) emission calculations, from the source to the end-user. This standard is intended to support the needs of organizations involved in the biomass supply chain and systems like Chain of Custody (CoC) software, referencing concepts from documents like the [[citet:&netherlandsenterpriseagencyGuidanceChainCustody2020]] and related standards such as those from Sustainable Biomass Program,  [[citet:&SBPStandard5;&SBPStandard4]], [[citet:&ISO382002018en]], [[citet:&FSCDirectiveChain2020]], [[citet:&RSBProcedureTraceability2020]]
+
+
+
+
+** Scope of Work
+
+The scope of work includes defining a data standard that specifies the format, structure, and relationships of data elements necessary to document and transfer information about solid biomass for energy applications within a Chain of Custody system.
+
+The standard shall cover the representation of key entities and their associated information as described in relevant guidance and standards, including:
+
+- *Organizations (Links)* within the supply chain that take legal ownership of the biomass, including their roles and scope.
+- *Biomass Consignments* or transactions representing quantities of biomass transferred or handled, including attributes like quantity, type, and transaction dates. This includes distinguishing between Incoming and Outgoing Consignments.
+- *Sustainability Information* linked to consignments, detailing characteristics based on source and criteria.
+- *Biomass Categories* (e.g., Category 1-5) based on source and type, and *Biomass Types* (e.g., Sustainable, Controlled).
+- Information regarding the *Biomass Source* and Country of Origin.
+- Data related to *Mass Balance Accounts* used by organizations to track volumes and manage claims.
+- Information documenting the use of *Control Methods* like Mass Balance or Physical Separation.
+- Data points necessary for *GHG emission calculations*, including energy and carbon data, and linking this data to biomass batches. This includes data collected via specific report types such as SAR and SREG.
+- References to *Certification Schemes* (e.g., FSC, PEFC, SBP) and associated *Claims* (e.g., SBP-compliant, SBP-controlled), and how these claims are linked to biomass and transactions.
+- Information related to *Verification Statements* issued by independent third parties.
+- Documentation and records used for transactions and registration.
+- Data relevant to a risk-based approach, potentially including elements of a *Due Diligence System* where applicable, particularly for Category 2 biomass.
+- The standard should consider how to represent the flow of information between suppliers and recipients and the use of documentation like sales/delivery documents.
+- Consideration of alignment or interoperability requirements with existing data transfer systems, such as the SBP Data Transfer System (DTS).
+
+The standard should be defined in a technical format suitable for software system implementation, potentially including supporting documentation such as Entity-Relationship Diagrams (ERDs).
+
+** Out of Scope
+
+Topics known in advance to be out of scope include:
+
+- Defining or modifying the sustainability criteria for solid biomass (these criteria are defined by regulatory requirements and referenced voluntary schemes like the "Guidance" and SBP Standard 1). The standard will focus on representing data /related/ to these criteria.
+- Defining the specific calculation methodologies for GHG emissions (these are defined in separate documents like the Verification Protocol and SBP Standard 6, potentially referencing methodologies like BioGrace II). The standard will define how to represent the data /required/ for these calculations.
+- Defining the processes for conducting audits, certification, or verification, or the requirements for Certification/Verification Bodies.
+- Defining the requirements for establishing or operating a complete Chain of Custody management system (these are defined in CoC standards like the "Guidance" and SBP Standard 4). The standard will define the data structure that such systems would manage and exchange.
+- Governing or approving certification schemes or their specific claims.
+- Defining the legal responsibilities of organizations (these are determined by regulations and contractual agreements).
+
+** Deliverables
+
++ Specifications :: The primary deliverable will be a *Biomass Data Standard specification*. This specification will define the structure, format, and relationships of data elements for solid biomass chain of custody information exchange. The output format (e.g., JSON Schema, XML Schema, OWL/RDF) will be determined by the group. An estimated schedule for key deliverables (e.g., first draft, candidate recommendation) will be developed by the group.
++ Non-Normative Reports :: The group may produce other Community Group Reports within the scope of this charter but that are not Specifications, for instance, use cases, requirements documents based on the analysis of sources like the "Guidance" and SBP Standards, or white papers explaining the rationale and implementation considerations for the standard.
++ Test Suites and Other Software :: The group MAY produce test suites to support the Specifications. These test suites could be used to validate data instances against the defined standard schema. The group MAY also develop reference implementations or libraries to facilitate the adoption and use of the standard. Please see the GitHub LICENSE file for test suite contribution licensing information.
+
+** Dependencies or Liaisons
+
+The group depends on the requirements and concepts defined in the "Guidance Chain of Custody sustainability criteria for solid biomass for energy applications" and its normative references, including the Verification Protocol and Dutch regulations.
+
+The group should consider potential liaisons or alignment efforts with organizations managing relevant existing standards and systems, including: * *Sustainable Biomass Program (SBP)*, particularly regarding SBP Standards 4 (CoC), 5 (Data Collection), 6 (GHG Calculation), the SBP Data Transfer System (DTS), and their recognized certification schemes (FSC, PEFC). * *International Organization for Standardization (ISO)*, specifically regarding ISO 38200:2018 Chain of custody of wood and wood-based products. * Potentially, the *Netherlands Enterprise Agency (RVO.nl)* and the *Ministry of Economic Affairs and Climate Policy* in the Netherlands, who commissioned the "Guidance" document and oversee the SDE+ scheme.
+
+** Community and Business Group Process
+
+The group operates under the Community and Business Group Process. Terms in this Charter that conflict with those of the Community and Business Group Process are void. As with other Community Groups, W3C seeks organizational licensing commitments under the W3C Community Contributor License Agreement (CLA). When people request to participate without representing their organization's legal interests, W3C will in general approve those requests for this group with the following understanding: W3C will seek and expect an organizational commitment under the CLA starting with the individual's first request to make a contribution to a group Deliverable. The section on Contribution Mechanics describes how W3C expects to monitor these contribution requests.
+
+The W3C Code of Ethics and Professional Conduct applies to participation in this group.
+
+** Work Limited to Charter Scope
+
+The group will not publish Specifications on topics other than those listed under Specifications above. See below for how to modify the charter.
+
+** Contribution Mechanics
+
+Substantive Contributions to Specifications can only be made by Community Group Participants who have agreed to the W3C Community Contributor License Agreement (CLA). Specifications created in the Community Group must use the W3C Software and Document License. All other documents produced by the group should use that License where possible.
+
+{TBD: if CG doesn't use GitHub replace the remaining paragraphs in this section with: "All Contributions are made on the groups public mail list or public contrib list"} Community Group participants agree to make all contributions in the GitHub repo the group is using for the particular document. This may be in the form of a pull request (preferred), by raising an issue, or by adding a comment to an existing issue. All Github repositories attached to the Community Group must contain a copy of the CONTRIBUTING and LICENSE files.
+
+** Transparency
+
+The group will conduct all of its technical work in public. If the group uses GitHub, all technical work will occur in its GitHub repositories (and not in mailing list discussions). This is to ensure contributions can be tracked through a software tool. Meetings may be restricted to Community Group participants, but a public summary or minutes must be posted to the group's public mailing list, or to a GitHub issue if the group uses GitHub.
+
+** Decision Process
+
+If the decision policy is documented somewhere, update this section accordingly to link to it. This group will seek to make decisions where there is consensus. Groups are free to decide how to make decisions (e.g. Participants who have earned Committer status for a history of useful contributions assess consensus, or the Chair assesses consensus, or where consensus isn't clear there is a Call for Consensus [CfC] to allow multi-day online feedback for a proposed course of action). It is expected that participants can earn Committer status through a history of valuable contributions as is common in open source projects. After discussion and due consideration of different opinions, a decision should be publicly recorded (where GitHub is used as the resolution of an Issue).
+
+Any decisions reached at any meeting are tentative and should be recorded in a GitHub Issue for groups that use GitHub and otherwise on the group's public mail list. Any group participant may object to a decision reached at an online or in-person meeting within 7 days of publication of the decision provided that they include clear technical reasons for their objection. The Chairs will facilitate discussion to try to resolve the objection according to this decision process. It is the Chairs' responsibility to ensure that the decision process is fair, respects the consensus of the CG, and does not unreasonably favour or discriminate against any group participant or their employer.
+
+** Chair Selection
+
+Participants in this group choose their Chair(s) and can replace their Chair(s) at any time using whatever means they prefer. However, if 5 participants, no two from the same organisation, call for an election, the group must use the following process to replace any current Chair(s) with a new Chair, consulting the Community Development Lead on election operations (e.g., voting infrastructure and using RFC 2777). 1. Participants announce their candidacies. Participants have 14 days to announce their candidacies, but this period ends as soon as all participants have announced their intentions. If there is only one candidate, that person becomes the Chair. If there are two or more candidates, there is a vote. Otherwise, nothing changes. 2. Participants vote. Participants have 21 days to vote for a single candidate, but this period ends as soon as all participants have voted. The individual who receives the most votes, no two from the same organisation, is elected chair. In case of a tie, RFC2777 is used to break the tie. An elected Chair may appoint co-Chairs.
+
+Participants dissatisfied with the outcome of an election may ask the Community Development Lead to intervene. The Community Development Lead, after evaluating the election, may take any action including no action.
+
+** Amendments to this Charter
+
+The group can decide to work on a proposed amended charter, editing the text using the Decision Process described above. The decision on whether to adopt the amended charter is made by conducting a 30-day vote on the proposed new charter. The new charter, if approved, takes effect on either the proposed date in the charter itself, or 7 days after the result of the election is announced, whichever is later. A new charter must receive 2/3 of the votes cast in the approval vote to pass. The group may make simple corrections to the charter such as deliverable dates by the simpler group decision process rather than this charter amendment process. The group will use the amendment process for any substantive changes to the goals, scope, deliverables, decision process or rules for amending the charter.
+
+
+** References
+
+bibliography:/Users/peter/Documents/CarbonDirectSciencePolicy.bib
+bibliographystyle:chicagolinks
