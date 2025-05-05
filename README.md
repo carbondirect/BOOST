@@ -19,7 +19,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 *entity_relationship_diagrams*: contains svg and png diagrams for specific CoC standards and associated data schemes. 
 
 
-
+TODO: remake structure to reflect that of an example [W3C report](https://github.com/w3c/cg-reports)
 ---
 
 ## Goals
