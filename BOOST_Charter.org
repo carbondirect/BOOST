@@ -2,10 +2,10 @@
 #+LATEX_HEADER: \usepackage{phfnote}
 #+LATEX_HEADER: \usepackage{amsmath}
 #+LATEX_HEADER: \usepackage{draftwatermark}
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil author:nil
 #+TITLE: Biomass Open Origin Standard for Tracking (BOOST)
-#+SUBTITLE: Community Group Charter
-#+AUTHOR: Peter Tittmann \\ Senior Scientist \\ Carbon Direct
+#+SUBTITLE: Working Group Charter
+
 \maketitle
 
 This Charter is work in progress. To submit feedback, please use [[https://github.com/carbondirect/BOOST][BOOST repository]] Issues where Charter is being developed. 
