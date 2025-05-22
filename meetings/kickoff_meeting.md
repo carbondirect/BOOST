@@ -34,10 +34,10 @@
      - Overview by: Liam Killroy
      - Issues, feedback, and open discussion
 
-### 5. **Decision Making and Action Items** (10 minutes)
-	- Review and adopt [BOOST Charter](../BOOST_Charter.org)
-	- Assign action items to members
-	- Set deadlines and responsible parties
+### 5. **Decision Making and Action Items** (10 minutes)**
+- Review and adopt [BOOST Charter](../BOOST_Charter.org)
+- Assign action items to members
+- Set deadlines and responsible parties
 
 ### 6. **Future Meetings** (15 minutes)
    - Discuss the frequency of meetings (weekly, bi-weekly, monthly)
