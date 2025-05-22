@@ -1,0 +1,12 @@
+* Meetings
+** Kickoff
+
++ Intros
++ Review Charter
++ Orientation to W3C and open standards
++ Review standard to date
+  + Document
+  + ERD
+  + JSON Outline
++ Scheduling meetings
++ Action items

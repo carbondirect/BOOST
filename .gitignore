@@ -1,4 +1,5 @@
-*~undoo-tree~
+*~undo-tree~
+#*
 
 # LaTeX intermediate files
 *.aux
