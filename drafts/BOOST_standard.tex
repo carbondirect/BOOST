@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+
+% --- Packages ---
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{datetime}
+
+% --- Metadata ---
+\title{Biomass Chain of Custody Data Standard}
+\author{California Biomass Working Group}
+\date{\today}
+
+% --- Header/Footer ---
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Biomass CoC Standard}
+\lhead{\today}
+\cfoot{\thepage}
+
+% --- Section formatting ---
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{1em}{}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+This document defines a proposed standard for the exchange of chain of custody (CoC) data for biomass materials in the California market. The goal is to enable interoperability between reporting systems, registries, and certification bodies.
+\end{abstract}
+
+\section{Scope}
+This standard defines:
+\begin{itemize}[topsep=0.5em]
+  \item A common data model for biomass custody transfers
+  \item Format constraints for serializing CoC data
+  \item Integration points with external certification systems
+\end{itemize}
+
+\section{Normative References}
+\begin{itemize}
+  \item ISO 14064 – Greenhouse Gases
+  \item California Low Carbon Fuel Standard (LCFS)
+  \item W3C Verifiable Credentials Data Model
+\end{itemize}
+
+\section{Definitions}
+\begin{itemize}
+  \item \textbf{Biomass}: Organic material used for fuel or energy
+  \item \textbf{Custody}: Legal responsibility for the material
+\end{itemize}
+
+\section{Conformance}
+Implementations claiming conformance to this standard shall adhere to the schema definitions and verification requirements defined in Section~\ref{sec:schema}.
+
+\section{Data Model}
+\label{sec:schema}
+The standard is based on an entity-relationship model which defines Producers, Facilities, Transfers, and Certification Events as core data structures.
+
+\section{Serialization Format}
+JSON-LD is the preferred format for CoC data serialization, supporting linked data semantics and compatibility with decentralized identity systems.
+
+\section{Change Log}
+\begin{itemize}
+  \item \textbf{2025-05-21}: Initial draft created.
+\end{itemize}
+
+\end{document}
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:

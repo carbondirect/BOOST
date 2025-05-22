@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Biomass Chain of Custody Record",
+  "type": "object",
+  "required": [
+    "transferId",
+    "producer",
+    "recipient",
+    "biomassType",
+    "quantity",
+    "unit",
+    "transferDate"
+  ],
+  "properties": {
+    "transferId": {
+      "type": "string",
+      "description": "Unique identifier for the biomass transfer event"
+    },
+    "producer": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "recipient": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "biomassType": {
+      "type": "string",
+      "description": "Type of biomass (e.g., wood chips, ag residue)"
+    },
+    "quantity": {
+      "type": "number",
+      "minimum": 0
+    },
+    "unit": {
+      "type": "string",
+      "enum": ["ton", "kg", "lb"]
+    },
+    "transferDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "certification": {
+      "type": "object",
+      "required": ["certifier", "certificateId"],
+      "properties": {
+        "certifier": { "type": "string" },
+        "certificateId": { "type": "string" },
+        "validUntil": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

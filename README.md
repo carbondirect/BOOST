@@ -12,15 +12,48 @@ Feedback and contributions are welcomed via GitHub Issues and Pull Requests at [
 W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 
 
-## Repo Structure:
+## 📁 Directory Structure
 
-*draft_coc_standards*: contains LaTex documents for existing chain of custody data standard definitions.
+\`\`\`
+.
+├── README.md                # This file
+├── LICENSE.md               # License info (not auto-created)
+├── CODE_OF_CONDUCT.md       # Community standards (not auto-created)
+├── CONTRIBUTING.md          # Contribution guide (not auto-created)
+├── CHARTER.md               # Group charter (not auto-created)
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   └── workflows/
+│       └── ci.yml           # Placeholder for GitHub Actions (not auto-created)
+├── drafts/                  # Location for specification drafts
+│   ├── images/              # Location for svg and png diagrams etc.
+│   └── scripts/
+├── proposals/
+├── meetings/
+│   └── templates/
+├── use-cases/
+├── presentations/
+├── tools/
+├── data/                    # Optional: Sample or test data
+└── tests/                   # Optional: Test suite
+\`\`\`
 
-*entity_relationship_diagrams*: contains svg and png diagrams for specific CoC standards and associated data schemes. 
+## 📂 Purpose of Each Directory
 
+- \`drafts/\`: Working and historical spec drafts.
+- \`proposals/\`: Early-stage ideas and design sketches.
+- \`meetings/\`: Agendas, minutes, and templates.
+- \`use-cases/\`: User scenarios guiding spec design.
+- \`presentations/\`: Slides and visual materials.
+- \`tools/\`: Scripts/utilities for spec or repo support.
+- \`data/\`, \`tests/\`: Optional—data samples and test suites.
 
-TODO: remake structure to reflect that of an example [W3C report](https://github.com/w3c/cg-reports)
----
+## 🚀 Contributing
+
+Please review \`CONTRIBUTING.md\` and our \`CODE_OF_CONDUCT.md\` before submitting PRs or issues.
+
 
 ## Goals
 The goals of the Biomass CoC Data Standard Community Group are to:
