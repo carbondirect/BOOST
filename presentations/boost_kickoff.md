@@ -70,6 +70,22 @@
 
 ---
 
+## Core Components of the CoC Data Standard So Far
+
+- Defines categories and types of biomass
+- Define participating entity types: harvesters, processors, etc.
+- Support multiple CoC tracking methodologies:
+  - Mass balance
+  - Physical seperation
+  - Crediting
+- Provides JSON-based data schemas.
+
+---
+
+
+
+
+
 ## BOOST as an "Open Origin Standard"
 
 - The full name, Biomass Open Origin Standard for Tracking, emphasizes the intention for the standard to be open
