@@ -18,6 +18,10 @@
 ### 2. **Administrative Updates** (5 minutes)
    - Review of Code of Conduct
    - Request to join BOOST group
+   - Commnications
+	 - GitHub [issues](https://github.com/carbondirect/BOOST/issues) 
+	 - Mailing list [public-boost-01@w3.org](mailto:public-boost-01@w3.org)
+	 - Website https://www.w3.org/community/boost-01/
    - Overview of today's agenda
    - Review meeting [agenda template](./templates/meeting_template.md)
 
