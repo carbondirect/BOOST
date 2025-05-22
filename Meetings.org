@@ -2,6 +2,7 @@
 ** Kickoff
 
 + Intros
+
 + Review Charter
 + Orientation to W3C and open standards
 + Review standard to date
