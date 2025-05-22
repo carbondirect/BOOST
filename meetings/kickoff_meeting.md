@@ -6,7 +6,7 @@
 
 **Date:** 05-23-2025
 **Time:** 8:00 AM to 09:00 AM PDT 
-**Location:** [Physical Location or Virtual Meeting Link]
+**Location:** [Zoom Meeting Link](https://carbon-direct.zoom.us/j/86005663902?pwd=rbGWX0c7kQRoYX2n6Vnl5IQMlwTDMx.1) Meeting ID: `86005663902` Passcode: `348634`
 
 ---
 
