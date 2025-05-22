@@ -34,7 +34,6 @@
      - Overview by: Peter Tittmann
        - Reference documents:
 	- [Rationale](../drafts/DataStandardRationale.org)
-	- [Interagency Meeting Deck](https://docs.google.com/presentation/d/1Sn3KkhrapKFj0c7pLGJKMAU8Z5UbmadtSAAesCPJWtE/edit?slide=id.g35a761ebce0_0_11#slide=id.g35a761ebce0_0_11)	 
      - Issues, feedback, and open discussion
 
    - **Topic 2: Review current draft materials**
