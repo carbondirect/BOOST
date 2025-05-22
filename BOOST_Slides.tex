@@ -1,6 +1,6 @@
-% Created 2025-05-19 Mon 17:31
+% Created 2025-05-21
 % Intended LaTeX compiler: pdflatex
-ocumentclass[presentation]{beamer}
+\documentclass[presentation]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
@@ -13,11 +13,13 @@
 \usepackage{capt-of}
 \usepackage{hyperref}
 \usepackage{lmodern}
-% Custom colors for the dolphin theme
+
+% Custom colors for the theme
 \definecolor{booststruct}{RGB}{30, 83, 50}    % Dark green color (1e5332ff)
 \definecolor{boostaccent}{RGB}{187, 203, 149}  % Beige/taupe color (bbcb95ff)
 \definecolor{boostbg}{RGB}{248, 242, 227}     % Light cream background (f8f2e3ff)
-% Override dolphin theme colors with our custom colors
+
+% Override theme colors with our custom colors
 \setbeamercolor{structure}{fg=booststruct}
 \setbeamercolor*{palette primary}{use=structure,fg=black,bg=boostbg}
 \setbeamercolor*{palette secondary}{use=structure,fg=white,bg=structure.fg!60!white}
@@ -25,6 +27,7 @@
 \setbeamercolor*{palette quaternary}{fg=white,bg=black}
 \setbeamercolor*{titlelike}{parent=structure}
 \setbeamercolor*{section in head/foot}{fg=white,bg=booststruct}
+
 % Custom footline template
 \setbeamertemplate{footline}{%
 \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm]{author in head/foot}
@@ -33,14 +36,17 @@
 \insertframenumber/\inserttotalframenumber
 \end{beamercolorbox}%
 }
+
 % Add section/subsection in header
 \setbeamertemplate{headline}{%
 \begin{beamercolorbox}[ht=2.25ex,dp=1ex,left,leftskip=.3cm,rightskip=.3cm]{section in head/foot}
 \usebeamerfont{section in head/foot}\insertsectionhead
 \end{beamercolorbox}%
 }
+
 % Add logo to the bottom right corner of all slides except the title
 \logo{\vspace{7.5cm}\hspace*{9.0cm}\includegraphics[height=1.0cm]{boost_logo.png}}
+
 \author{Peter Tittmann \and Liam Killroy}
 \date{\today}
 \title{Biomass Open Origin Standard for Tracking (BOOST)}
@@ -49,10 +55,11 @@
  pdftitle={Biomass Open Origin Standard for Tracking (BOOST)},
  pdfkeywords={},
  pdfsubject={},
- pdfcreator={Emacs 30.1 (Org mode 9.7.11)}, 
  pdflang={English}}
+
 \begin{document}
 
+% Title page
 \maketitle
 {
 \setbeamertemplate{headline}{}
@@ -60,48 +67,74 @@
 \maketitle
 }
 
+% Table of contents
 \begin{frame}{Outline}
 \tableofcontents
 \end{frame}
- ection{Introducing the BOOST Community Group}
-\label{sec:org1563742}
- ubsection{What is BOOST?}
-\label{sec:orgaee8b65}
+
+\section{Introducing the BOOST Community Group}
+\label{sec:introducing}
+
+\subsection{What is BOOST?}
+\label{sec:what-is-boost}
+
+\begin{frame}{What is BOOST?}
 \begin{itemize}
 \item BOOST stands for the Biomass Open Origin Standard for Tracking.
 \item It is a Community Group proposed and run by the community under the W3C framework.
 \item The development of the initial version of the data standard is funded through a grant from the California Department of Conservation.
 \end{itemize}
- ubsection{What is BOOST's Mission?}
-\label{sec:org5679d22}
+\end{frame}
+
+\subsection{What is BOOST's Mission?}
+\label{sec:boost-mission}
+
+\begin{frame}{What is BOOST's Mission?}
 \begin{itemize}
 \item To develop and maintain a robust data standard for solid biomass.
 \item To create interoperable data formats and protocols for tracking biomass materials from source to end-use.
 \item To improve transparency, verification, and trust in biomass supply chains through standardized digital systems.
 \item The standard is intended to support organizations, agencies, and stakeholders in the biomass economy, as well as Chain of Custody (CoC) software systems.
 \end{itemize}
- ubsection{Who is Involved?}
-\label{sec:org7373f0d}
+\end{frame}
+
+\subsection{Who is Involved?}
+\label{sec:who-is-involved}
+
+\begin{frame}{Who is Involved?}
 \begin{itemize}
 \item BOOST welcomes participation from a balanced range of stakeholders, including civil society organizations, government agencies, small and large businesses, and independent technical experts.
 \item Anyone may join this Community Group.
 \end{itemize}
- ection{Data Standards: The Foundation for Biomass Chain of Custody}
-\label{sec:orga714174}
- ubsection{What are Data Standards?}
-\label{sec:org629c6b9}
+\end{frame}
+
+\section{Data Standards: The Foundation for Biomass Chain of Custody}
+\label{sec:data-standards}
+
+\subsection{What are Data Standards?}
+\label{sec:what-are-data-standards}
+
+\begin{frame}{What are Data Standards?}
 \begin{itemize}
 \item Data standards are agreed-upon approaches that allow for consistent measurement, qualification, or exchange of information.
 \item They provide a structured framework and a common language for organizing, documenting, and formatting data, facilitating aggregation, sharing, and reuse across different systems and organizations.
 \end{itemize}
- ubsection{What is Chain of Custody (CoC)?}
-\label{sec:org490e68d}
+\end{frame}
+
+\subsection{What is Chain of Custody (CoC)?}
+\label{sec:what-is-coc}
+
+\begin{frame}{What is Chain of Custody (CoC)?}
 \begin{itemize}
 \item Chain of custody refers to the chronological documentation or paper trail showing the movement, handling, and transformation of items.
 \item In the biomass industry, CoC systems provide the framework for tracing biomass from forest or source to final use, ensuring sustainable sourcing and regulatory compliance.
 \end{itemize}
- ubsection{How do Data Standards Support CoC?}
-\label{sec:org2d531b5}
+\end{frame}
+
+\subsection{How do Data Standards Support CoC?}
+\label{sec:how-standards-support-coc}
+
+\begin{frame}{How do Data Standards Support CoC?}
 \begin{itemize}
 \item CoC software systems rely on robust data standards for accurate tracking, transparency, and compliance across complex supply chains.
 \item Data standards define what information must be captured, how it should be structured, and the rules for data exchange.
@@ -109,51 +142,87 @@
 \item Data standards enable interoperability, allowing CoC information to flow seamlessly between different organizations and systems in a supply chain.
 \item They provide validation rules necessary to ensure information meets quality and compliance requirements, which is critical for maintaining a defensible chain of custody.
 \end{itemize}
- ection{The Importance of an "Open" Standard}
-\label{sec:orgf91f411}
- ubsection{BOOST as an "Open Origin Standard"}
-\label{sec:org8fcfb13}
+\end{frame}
+
+\section{The Importance of an "Open" Standard}
+\label{sec:open-standard}
+
+\subsection{BOOST as an "Open Origin Standard"}
+\label{sec:boost-open-origin}
+
+\begin{frame}{BOOST as an "Open Origin Standard"}
 \begin{itemize}
 \item The full name, Biomass \textbf{Open} Origin Standard for Tracking, emphasizes the intention for the standard to be open.
 \item Research points to the need for a "secure, scalable, \textbf{open-source}, and low-cost chain-of-custody solution" for biomass tracking.
 \end{itemize}
- ubsection{Benefits of Openness:}
-\label{sec:org9afe1ab}
+\end{frame}
+
+\subsection{Benefits of Openness}
+\label{sec:benefits-openness}
+
+\begin{frame}{Benefits of Openness}
 \begin{itemize}
 \item An open standard promotes \textbf{interoperability} between existing traceability systems and enables digital integration across the supply chain. This is a core aim of BOOST.
 \item It facilitates \textbf{transparency} and \textbf{trust} among stakeholders in complex supply chains.
 \item An open development process allows for \textbf{broad participation} from a balanced range of stakeholders, preventing overrepresentation of any single group.
 \end{itemize}
- ubsection{Open Process in Practice:}
-\label{sec:org090c586}
+\end{frame}
+
+\subsection{Open Process in Practice}
+\label{sec:open-process-practice}
+
+\begin{frame}{Open Process in Practice}
 \begin{itemize}
 \item W3C Community Groups are \textbf{open to all} without a membership fee requirement.
 \item Technical work in the BOOST group is conducted \textbf{in public}, utilizing public mail lists and GitHub repositories.
 \item This public process ensures contributions and decisions are transparently tracked.
 \end{itemize}
- ection{Relevance of W3C Community Groups}
-\label{sec:org08f844f}
- ubsection{What are W3C Community Groups?}
-\label{sec:orgbe75d4e}
+\end{frame}
+
+\section{Relevance of W3C Community Groups}
+\label{sec:w3c-groups}
+
+\subsection{What are W3C Community Groups?}
+\label{sec:what-are-w3c-groups}
+
+\begin{frame}{What are W3C Community Groups?}
 \begin{itemize}
 \item W3C Community and Business Groups provide a place for developers, designers, and others passionate about the Web to hold discussions and publish ideas.
 \item They are proposed and run by the community itself.
 \item Community Groups are designed to promote innovation and lower barriers to individual participation.
 \item They are open to all, quick to start, public, self-determined, and without a time limit. Participation in a Community Group does not require W3C Membership.
 \end{itemize}
- ubsection{Why BOOST in a W3C Community Group?}
-\label{sec:org452c69a}
+\end{frame}
+
+\subsection{Why BOOST in a W3C Community Group?}
+\label{sec:why-w3c}
+
+\begin{frame}{Why BOOST in a W3C Community Group?}
 \begin{itemize}
 \item Community Groups enable individuals and organizations to socialize ideas for the Web at the W3C for possible future standardization.
 \item The policies for Community Groups are \textbf{tuned for transition to the standards-track}, complementing the existing standards process and aiming to facilitate this transition, although advancing to the standards track is not a requirement.
 \item Using the W3C framework means the group operates under established processes, including Intellectual Property Rights (IPR) policies designed to be balanced and requires participants to agree to the W3C Community Contributor License Agreement (CLA).
 \item While W3C hosts the group and provides a framework, the group is community-driven and its activities do not necessarily represent the views of W3C Membership or staff.
 \end{itemize}
- ection{Summary}
-\label{sec:org9024a6e}
- ubsection{BOOST and the Open Standard Approach}
-\label{sec:org64bb973}
+\end{frame}
 
+\section{BOOST: Supporting Reporting, Compliance \& Interoperability}
+\label{sec:supporting}
+
+\begin{frame}{BOOST: Supporting Reporting, Compliance \& Interoperability}
+\begin{itemize}
+    \item BOOST is designed to enable \alert{secure, low-cost, and scalable} tracking of biomass through a certified, auditable Chain of Custody (CoC) system.
+    \item BOOST is designed to reduce data duplication and administrative burden.
+    \item BOOST standards support multiple CoC models: \textit{Mass Balance}, \textit{Physical Separation}, and \textit{Crediting}, enhancing flexibility for supply chain actors.
+    \item Interoperability is a key feature, enabling integration with external systems like \textbf{FSC Trace}.
+    \item The standard provides \alert{guidance for software developers, supply chain participants, auditors, and regulatory entities}, accelerating digital implementation.
+\end{itemize}
+\end{frame}
+
+\section{Summary}
+\label{sec:summary}
+
+\begin{frame}{BOOST and the Open Standard Approach}
 \begin{itemize}
 \item The \textbf{Biomass Open Origin Standard for Tracking (BOOST)} aims to create a robust, standardized data framework for solid biomass supply chains to enhance transparency, traceability, and trust.
 \item \textbf{Data standards are essential} for effective Chain of Custody software, providing the structure, common language, interoperability, and validation needed to track biomass reliably from source to end-use.
@@ -161,13 +230,5 @@
 \item Hosting BOOST within the \textbf{W3C Community Group} framework provides an established, open process for community-driven work, balanced IPR policies, and a potential pathway for future standardization efforts.
 \end{itemize}
 \end{frame}
-\begin{frame}[label={sec:orgcocstandard}]{BOOST: Supporting Reporting, Compliance \& Interoperability}
-\begin{itemize}
-    \item BOOST is designed to enable \alert{secure, low-cost, and scalable} tracking of biomass through a certified, auditable Chain of Custody (CoC) system.
-    \item BOOST is designed to reduce data duplication and 
-    \item BOOST standards should support multiple CoC models: \textit{Mass Balance}, \textit{Physical Separation}, and \textit{Crediting}, enhancing flexibility for supply chain actors.
-    \item Interoperability is a key feature, enabling integration with external systems like \textbf{FSC Trace}.
-    \item The standard provides \alert{guidance for software developers, supply chain participants, auditors, and regulatory entities}, accelerating digital implementation.
-\end{itemize}
-\end{frame}
+
 \end{document}
