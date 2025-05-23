@@ -36,7 +36,7 @@
 - 🔥Carbon Direct team supporting this effort:
   - Whitney Johnson
   - Shannon Keanene
-  - Liam Killroy
+  - Liam Kilroy
   - Shirin Mavandad
   - Dr. Dan Sanchez
   - Dr. Bodie Cabiyo
