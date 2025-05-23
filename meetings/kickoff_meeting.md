@@ -49,7 +49,7 @@
 
 ### 4. **Discussion Topics** (20 minutes)
 
-#### Working Group Background, Rationale, Progress and Project Plan**
+#### Working Group Background, Rationale, Progress and Project Plan
 
 - by: Peter Tittmann, Liam Killroy (Carbon Direct)
 - Reference documents: 

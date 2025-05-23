@@ -88,55 +88,238 @@ For CoC software, data standards:
   - provide logic for tracking across complex processes and organizational boundaries
   - enable interoperability between systems
   - provide validation rules
-  
+
+Note: This is a note
+
+---
+
+## OPEN Standards
+
+<img src="img/open-data-institute.jpg" alt="logo" style="height: 400px;">
+<br>
+<em>Source: The Open Data Institute</em>
+
 --
-
-## Core Components of the CoC Data Standard So Far
-
-- Defines categories and types of biomass
-- Define participating entity types: harvesters, processors, etc.
-- Support multiple CoC tracking methodologies:
-  - Mass balance
-  - Physical seperation
-  - Crediting
-- Provides JSON-based data schemas.
-
----
-
-
-
-
-
-## BOOST as an "Open Origin Standard"
-
-- The full name, Biomass Open Origin Standard for Tracking, emphasizes the intention for the standard to be open
-- Research points to the need for a "secure, scalable, open-source, and low-cost chain-of-custody solution" for biomass tracking
-
----
 
 ## Benefits of Openness
 
-- An open standard promotes interoperability between existing traceability systems and enables digital integration across the supply chain
-- It facilitates transparency and trust among stakeholders in complex supply chains
-- An open development process allows for broad participation from a balanced range of stakeholders, preventing overrepresentation of any single group
+- encourages **interoperability** and digital integration across the supply chain
+- transparency and trust among stakeholders in complex supply chains
+- democratizes chain of custody data
+- software differentiates on performance not on customer coersion
 
----
+Note:
++ proprietary data formats
++ complex integration
++ data migration obstacles
++ lack of portability
+
+--
 
 ## Open Process in Practice
 
-- W3C Community Groups are open to all without a membership fee requirement
-- Technical work in the BOOST group is conducted in public, utilizing public mail lists and GitHub repositories
-- This public process ensures contributions and decisions are transparently tracked
+- W3C Community Groups are open to all
+- Technical work in the BOOST group is conducted in public, utilizing:
+  - Public mail lists 
+  - GitHub repositories
+  - Google Docs when necessary
+- Ensures contributions and decisions are transparently tracked
+- Participation does not require W3C CLA but  **we highly encourage it!**
+
+
+Note:
++ without a membership fee requirement
++ in the spirit of open collaboration
 
 ---
 
-## What are W3C Community Groups?
+## Core Components of the CoC Data Standard
 
-- W3C Community and Business Groups provide a place for developers, designers, and others passionate about the Web to hold discussions and publish ideas
-- They are proposed and run by the community itself
-- Community Groups are designed to promote innovation and lower barriers to individual participation
-- They are open to all, quick to start, public, self-determined, and without a time limit. Participation in a Community Group does not require W3C Membership
+*DRAFT*
 
+--
+
+## 🔹 Module 1: Material Identity and Specification
+
+- Key Fields: `productType`, `biomassClass`, `moistureContent`, `ashContent`, `netCalorificValue`, `originSpecies`
+- Purpose: Standardize classification of the biomass according to ISO 17225 or other relevant systems.
+- Data Sources: Lab analysis, supplier declarations, product certification documents.
+
+--
+
+## `material-spec.schema.json`
+```json
+{
+  "$id": "https://example.org/schemas/material-spec.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Material Specification",
+  "type": "object",
+  "properties": {
+    "biomassClass": {
+      "type": "string",
+      "description": "Classification according to ISO 17225 (e.g. ISO 17225-2: A1)"
+    },
+    "moistureContent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Moisture content as a percentage"
+    },
+    "ashContent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Ash content as a percentage"
+    },
+    "netCalorificValue": {
+      "type": "number",
+      "description": "Net calorific value in MJ/kg"
+    },
+    "originSpecies": {
+      "type": "string",
+      "description": "Botanical species name (e.g., Pinus radiata)"
+    }
+  },
+  "required": ["biomassClass", "moistureContent"]
+}
+```
+
+--
+## 🔹 Module 2: Chain of Custody Events (EPCIS-style)
+- Key Fields: `eventType`, `action`, `bizStep`, `disposition`, `eventTime`, `readLocation`
+- Purpose: Record each event in the biomass lifecycle—e.g., harvested, processed, stored, shipped.
+- Data Sources: ERP systems, inventory management, IoT sensors, shipping records.
+
+Note: 
+EPCIS: Electronic Product Code Information Services, is a global standard, defined by GS1, for capturing, sharing, and tracking event data about products and other assets in a supply chain
+
+-- 
+## `event.schema.json`
+
+``` json
+{
+  "$id": "https://example.org/schemas/event.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Chain of Custody Event",
+  "type": "object",
+  "properties": {
+    "eventTime": { "type": "string", "format": "date-time" },
+    "eventType": { "type": "string", "enum": ["ObjectEvent"] },
+    "action": { "type": "string", "enum": ["OBSERVE", "ADD", "DELETE"] },
+    "bizStep": { "type": "string" },
+    "disposition": { "type": "string" },
+    "readPoint": {
+      "type": "object",
+      "properties": {
+        "lat": { "type": "number" },
+        "long": { "type": "number" },
+        "locationName": { "type": "string" }
+      },
+      "required": ["lat", "long"]
+    }
+  },
+  "required": ["eventTime", "eventType", "action", "readPoint"]
+}
+```
+-- 
+
+## 🔹 Module 3: Organizations & Roles
+- Key Fields: `sender`, `receiver`, `processor`, `certifier`
+- Purpose: Identify the parties involved in each supply chain step.
+- Data Sources: Contracts, business records, certification platforms.
+
+
+--
+
+## `organization.schema.json`
+
+```json
+{
+  "$id": "https://example.org/schemas/organization.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Organization",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "role": { "type": "string" },
+    "address": {
+      "type": "object",
+      "properties": {
+        "locality": { "type": "string" },
+        "region": { "type": "string" },
+        "country": { "type": "string" }
+      }
+    }
+  },
+  "required": ["name"]
+}
+```
+
+--
+## 🔹 Module 4: Verification & Certification
+- Key Fields: `certifiedBy`, `certificateID`, `validUntil`
+- Purpose: Attach sustainability or compliance documentation.
+- Data Sources: Certification body APIs or portals (e.g., SBP, RSB, FSC).
+
+--
+
+## `verification.schema.json`
+
+```json
+{
+  "$id": "https://example.org/schemas/verification.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Verification Details",
+  "type": "object",
+  "properties": {
+    "certifiedBy": { "type": "string" },
+    "certificateID": { "type": "string" },
+    "validUntil": { "type": "string", "format": "date" }
+  },
+  "required": ["certifiedBy", "certificateID"]
+}
+```
+
+--
+
+## 🔹 Module 5: Transport & Logistics
+- Key Fields: `shipmentID`, `carrier`, `departure`, `arrival`, `route`, `vehicleType`
+- Purpose: Track movement of biomass and support emissions accounting.
+- Data Sources: Transport documents, customs declarations, GPS systems.
+
+--
+
+## `shipment.schema.json`
+```json
+{
+  "$id": "https://example.org/schemas/shipment.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Biomass Shipment",
+  "type": "object",
+  "properties": {
+    "shipmentID": { "type": "string" },
+    "productType": { "type": "string" },
+    "materialSpec": { "$ref": "material-spec.schema.json" },
+    "event": { "$ref": "event.schema.json" },
+    "sender": { "$ref": "organization.schema.json" },
+    "receiver": { "$ref": "organization.schema.json" },
+    "verification": { "$ref": "verification.schema.json" }
+  },
+  "required": ["shipmentID", "productType", "materialSpec", "event", "sender", "receiver"]
+}
+```
+
+--
+
+## Support multiple CoC tracking methodologies:
+  
+- Mass balance
+- Physical seperation
+- Crediting
+
+
+
+---
 ## The End
 
 Thanks for watching!
