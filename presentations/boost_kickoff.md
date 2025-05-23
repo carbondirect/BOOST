@@ -417,6 +417,13 @@ Certifications that have built CoC systems
 - RSB
 - others?
 
+
+--
+
+## Example: RFS 801
+
+<img src="img/rfs-801.png" data-preview-image="img/rfs-801.png">
+
 ---
 
 ## The End
