@@ -22,13 +22,13 @@
 
 --
 
-## What is BOOST's objective?
+## What is the objective?
 
 *To develop and maintain a robust interoperable data standard for solid biomass comprised of schemas, protocols, and documenation for tracking biomass materials from source to end-use*
 
 --
 
-## WHAT are BOOST's goals
+## WHAT are the goals
 
 *To improve transparency, verification and trust in biomass supply chains*
 
@@ -36,7 +36,7 @@
 
 --
 
-## Who is Involved?
+## Who is involved?
 
 - Anyone!
 - stakeholders:
@@ -46,7 +46,7 @@
   - independent technical experts
 
 ---
-## Data Standards ?
+## Data Standards ??
 
 <img src="img/dm-metadata-standards.jpg" alt="logo" style="height: 200px;">
 

@@ -1,9 +1,0 @@
-* Meeting Notes
-** Kickoff <2025-05-23 Fri 08:00>
-*** Welcome and intro
-*** Administrative updates
-**** TODO Mention GitHub
-*** Project updates and announcements
-*** Discussion topics
-*** Decision making and action items
-*** Future meetings

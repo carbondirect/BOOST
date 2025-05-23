@@ -3,7 +3,7 @@
 ## Overview
 This repository contains the working draft and artifacts of the Biomass Chain of Custody (CoC) Data Standard, which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
-- **Charter:** [BOOST_Charter.org](drafts/BOOST_CHARTER.org)
+- **Charter:** [BOOST_Charter.org](BOOST_Charter.org)
 - **Charter Effective Date:** 
 - **Last Modified:** 
 
