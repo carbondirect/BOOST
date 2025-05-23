@@ -390,9 +390,35 @@ EPCIS: Electronic Product Code Information Services, is a global standard, defin
 
 <img src="img/documentation.png" data-preview-image="img/documentation.png">
 
+---
 
+## Use Cases
+
+*Develop worked examples of key frameworks*
+
+--
+
+## Priority 1
+
+Referenced by CA bioenergy regulations
+- BioMAT, BioRAM, THPs, SB 498
+- EU RED via LCFS
+  - EU RED currently accepts 18 certifications
+  - Priority within those given forest focus: SBP, PEFC, RSB
+
+--
+
+## Priority 2
+
+Certifications that have built CoC systems
+- FSI
+- SFI
+- SBP
+- RSB
+- others?
 
 ---
+
 ## The End
 
 Thanks for watching!
