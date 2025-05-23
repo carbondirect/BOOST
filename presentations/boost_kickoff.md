@@ -185,6 +185,7 @@ Note:
 ```
 
 --
+
 ## 🔹 Module 2: Chain of Custody Events (EPCIS-style)
 - Key Fields: `eventType`, `action`, `bizStep`, `disposition`, `eventTime`, `readLocation`
 - Purpose: Record each event in the biomass lifecycle—e.g., harvested, processed, stored, shipped.
@@ -194,6 +195,7 @@ Note:
 EPCIS: Electronic Product Code Information Services, is a global standard, defined by GS1, for capturing, sharing, and tracking event data about products and other assets in a supply chain
 
 -- 
+
 ## `event.schema.json`
 
 ``` json
@@ -311,11 +313,24 @@ EPCIS: Electronic Product Code Information Services, is a global standard, defin
 
 --
 
+
 ## Support multiple CoC tracking methodologies:
   
 - Mass balance
 - Physical seperation
 - Crediting
+
+--
+
+## Entity Relationship Diagrams
+
+<img src="img/boost_integrated_erd_mermaid.svg" data-preview-image="img/boost_integrated_erd_mermaid.svg">
+
+--
+
+## Documentation
+
+<img src="img/documentation.png" data-preview-image="img/documentation.png">
 
 
 
