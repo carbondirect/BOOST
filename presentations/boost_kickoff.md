@@ -11,13 +11,12 @@
 
 ---
 
-![logo](./drafts/images/boost_logo.png)
+<img src="img/boost_logo.png" alt="logo" style="height: 400px;">
 
 --
 
 ## What is BOOST?
 
-- Biomass Open Origin Standard for Tracking
 - W3C Community Group 
 - v0.1 funded by California Department of Conservation
 
@@ -47,12 +46,16 @@
   - independent technical experts
 
 ---
+## Data Standards ?
 
+<img src="img/dm-metadata-standards.jpg" alt="logo" style="height: 200px;">
+
+--
 ## What are Data Standards?
 
 *Data standards are agreed-upon approaches that allow for consistent measurement, qualification, or exchange of information*
 
----
+--
 
 ## Why develop a Data Standard
 
@@ -64,7 +67,7 @@ Provides a structured framework and a common language for:
   
 Facilitating **aggregation**, **sharing**, and **reuse** across different systems and organizations
 
----
+--
 
 ## What is Chain of Custody (CoC)?
 
@@ -75,9 +78,8 @@ Documentation and recording of:
 
 of material through a supply chain
 
-Note: Foobar
 
----
+--
 
 ## How do Data Standards Support CoC?
 
@@ -87,7 +89,7 @@ For CoC software, data standards:
   - enable interoperability between systems
   - provide validation rules
   
----
+--
 
 ## Core Components of the CoC Data Standard So Far
 

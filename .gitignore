@@ -18,3 +18,4 @@
 *.fdb_latexmk
 _minted-*
 */~undo-tree*
+.DS_Store
