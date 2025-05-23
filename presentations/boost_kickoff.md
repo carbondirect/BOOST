@@ -128,6 +128,7 @@ Note:
 
 
 Note:
++ joining the BOOST community group will ensure you are following the development
 + without a membership fee requirement
 + in the spirit of open collaboration
 
@@ -194,7 +195,7 @@ Note:
 Note: 
 EPCIS: Electronic Product Code Information Services, is a global standard, defined by GS1, for capturing, sharing, and tracking event data about products and other assets in a supply chain
 
--- 
+--
 
 ## `event.schema.json`
 
@@ -223,6 +224,7 @@ EPCIS: Electronic Product Code Information Services, is a global standard, defin
   "required": ["eventTime", "eventType", "action", "readPoint"]
 }
 ```
+
 -- 
 
 ## 🔹 Module 3: Organizations & Roles
@@ -313,6 +315,62 @@ EPCIS: Electronic Product Code Information Services, is a global standard, defin
 
 --
 
+## Example `JSON` payload
+
+```json
+{
+  "@context": {
+    "boost": "https://example.org/boost#",
+    "schema": "https://schema.org/",
+    "epcis": "https://gs1.org/vocab/",
+    "location": "https://www.w3.org/2003/01/geo/wgs84_pos#"
+  },
+  "@type": "boost:BiomassShipment",
+  "boost:shipmentID": "SHIP-2025-0501-XYZ",
+  "boost:productType": "Wood Pellets",
+  "boost:materialSpec": {
+    "boost:biomassClass": "ISO 17225-2: A1",
+    "boost:moistureContent": 7.2,
+    "boost:ashContent": 0.5,
+    "boost:netCalorificValue": 17.2,
+    "boost:originSpecies": "Pinus radiata"
+  },
+  "epcis:eventTime": "2025-05-01T10:30:00Z",
+  "epcis:eventType": "ObjectEvent",
+  "epcis:action": "OBSERVE",
+  "epcis:bizStep": "shipping",
+  "epcis:disposition": "in_transit",
+  "epcis:readPoint": {
+    "location:lat": 37.7749,
+    "location:long": -122.4194,
+    "schema:name": "Port of San Francisco"
+  },
+  "boost:sender": {
+    "@type": "schema:Organization",
+    "schema:name": "Pacific Biomass Cooperative",
+    "schema:address": {
+      "schema:addressLocality": "Eureka",
+      "schema:addressRegion": "CA",
+      "schema:addressCountry": "USA"
+    }
+  },
+  "boost:receiver": {
+    "@type": "schema:Organization",
+    "schema:name": "GreenFuel EU",
+    "schema:address": {
+      "schema:addressLocality": "Hamburg",
+      "schema:addressCountry": "Germany"
+    }
+  },
+  "boost:verification": {
+    "boost:certifiedBy": "Sustainable Biomass Program",
+    "boost:certificateID": "SBP-2025-1004",
+    "boost:validUntil": "2026-05-01"
+  }
+}
+```
+
+--
 
 ## Support multiple CoC tracking methodologies:
   
