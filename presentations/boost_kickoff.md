@@ -5,69 +5,88 @@
 ## Outline
 
 - Introducing the BOOST Community Group
-  - What is BOOST?
-  - What is BOOST's Mission?
-  - Who is Involved?
 - Data Standards: The Foundation for Biomass Chain of Custody
-  - What are Data Standards?
-  - What is Chain of Custody (CoC)?
-  - How do Data Standards Support CoC?
 - The Importance of an "Open" Standard
-  - BOOST as an "Open Origin Standard"
-  - Benefits of Openness
-  - Open Process in Practice
 - Relevance of W3C Community Groups
-  - What are W3C Community Groups?
-  - Why BOOST in a W3C Community Group?
 
 ---
+
+![logo](./drafts/images/boost_logo.png)
+
+--
 
 ## What is BOOST?
 
-- BOOST stands for the Biomass Open Origin Standard for Tracking
-- It is a Community Group proposed and run by the community under the W3C framework
-- The development of the initial version of the data standard is funded through a grant from the California Department of Conservation
+- Biomass Open Origin Standard for Tracking
+- W3C Community Group 
+- v0.1 funded by California Department of Conservation
 
----
+--
 
-## What is BOOST's Mission?
+## What is BOOST's objective?
 
-- To develop and maintain a robust data standard for solid biomass
-- To create interoperable data formats and protocols for tracking biomass materials from source to end-use
-- To improve transparency, verification, and trust in biomass supply chains through standardized digital systems
-- The standard is intended to support organizations, agencies, and stakeholders in the biomass economy, as well as Chain of Custody (CoC) software systems
+*To develop and maintain a robust interoperable data standard for solid biomass comprised of schemas, protocols, and documenation for tracking biomass materials from source to end-use*
 
----
+--
+
+## WHAT are BOOST's goals
+
+*To improve transparency, verification and trust in biomass supply chains*
+
+*Reduce operational costs and increase access to markets for biomass producers and consumers*
+
+--
 
 ## Who is Involved?
 
-- BOOST welcomes participation from a balanced range of stakeholders, including civil society organizations, government agencies, small and large businesses, and independent technical experts
-- Anyone may join this Community Group
+- Anyone!
+- stakeholders:
+  - NGOs, independent certification bodies 
+  - fed/state agencies, 
+  - small and large businesses
+  - independent technical experts
 
 ---
 
 ## What are Data Standards?
 
-- Data standards are agreed-upon approaches that allow for consistent measurement, qualification, or exchange of information
-- They provide a structured framework and a common language for organizing, documenting, and formatting data, facilitating aggregation, sharing, and reuse across different systems and organizations
+*Data standards are agreed-upon approaches that allow for consistent measurement, qualification, or exchange of information*
+
+---
+
+## Why develop a Data Standard
+
+Provides a structured framework and a common language for:
+
+- organizing, 
+- documenting, 
+- formatting **data**
+  
+Facilitating **aggregation**, **sharing**, and **reuse** across different systems and organizations
 
 ---
 
 ## What is Chain of Custody (CoC)?
 
-- Chain of custody refers to the chronological documentation or paper trail showing the movement, handling, and transformation of items
-- In the biomass industry, CoC systems provide the framework for tracing biomass from forest or source to final use, ensuring sustainable sourcing and regulatory compliance
+Documentation and recording of:
+- movement, 
+- handling, 
+- transformation 
+
+of material through a supply chain
+
+Note: Foobar
 
 ---
 
 ## How do Data Standards Support CoC?
 
-- CoC software systems rely on robust data standards for accurate tracking, transparency, and compliance across complex supply chains
-- Data standards define what information must be captured, how it should be structured, and the rules for data exchange
-- They are foundational for enabling effective CoC software by providing the framework for consistent, reliable tracking across complex processes and organizational boundaries
-- Data standards enable interoperability, allowing CoC information to flow seamlessly between different organizations and systems in a supply chain
-- They provide validation rules necessary to ensure information meets quality and compliance requirements, which is critical for maintaining a defensible chain of custody
-
+For CoC software, data standards:
+  - provide a data framework (entities, attributes, and relationships)
+  - provide logic for tracking across complex processes and organizational boundaries
+  - enable interoperability between systems
+  - provide validation rules
+  
 ---
 
 ## Core Components of the CoC Data Standard So Far

@@ -6,10 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
-  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/solarized.css" id="theme">
+  <style>
+      .logo-corner {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 80px;   /* adjust size as needed */
+        z-index: 1000;
+      }
+    </style>
 </head>
 <body>
-
+  <!-- Logo in top-right corner -->
+  <img src="img/boost_logo.png" alt="Logo" class="logo-corner" />
   <div class="reveal">
     <div class="slides">
       <section data-markdown="boost_kickoff.md"
