@@ -1,0 +1,31 @@
+{
+    "and": [
+      { "in": [ { "var": "reportType" }, ["O", "R"] ] },
+      {
+        "and": [
+          { ">": [ { "var": "quantityDelivered" }, 0 ] },
+          { "in": [ { "var": "quantityUnits" }, ["Short Ton", "Cubic Feet", "100 Cubic Feet", "1,000,000 Cubic Feet", "Gallon", "Liter", "Cubic Meters", "Therm", "Decatherm", "Bushel", "Pounds"] ] }
+        ]
+      },
+      {
+        "if": [
+          { "==": [ { "var": "landOwnershipType" }, "Federal" ] },
+          {
+            "and": [
+              { "==": [ { "var": "approvalPathway" }, "NEPA" ] },
+              { "!!": { "var": "permitId" } }
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "==": [ { "var": "certificationStandard" }, "SFI" ] },
+          { "==": [ { "var": "supplierCertificationStatus" }, true ] },
+          true
+        ]
+      }
+    ]
+  }
+  

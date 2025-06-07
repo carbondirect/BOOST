@@ -1,0 +1,398 @@
+{
+    "$schema": "https://json-schema.org/draft/2020 -12/schema",
+    "title": "BOOST Biomass Transaction Record",
+    "description": "Harmonized transaction schema supporting multiple biomass certification and regulatory programs",
+    "type": "object",
+    "required": [
+      "documentId",
+      "quantityDelivered",
+      "quantityUnits",
+      "feedstockType"
+    ],
+    "properties": {
+      "documentId": {
+        "type": "string",
+        "description": "Unique identification number for transaction record. [Programs: SBP, FSC, SFI, RSB, PEFC, LCFS, RFS]"
+      },
+      "issueDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date the document was issued. [Programs: SBP]"
+      },
+      "reportDate": {
+        "type": "string", 
+        "format": "date",
+        "description": "Date report was submitted (RFS0801). [Programs: RFS]"
+      },
+      "reportType": {
+        "type": "string",
+        "enum": ["Original", "Resubmission", "O", "R"],
+        "description": "Report submission type - Original or Resubmission. [Programs: RFS]"
+      },
+      "compliancePeriod": {
+        "type": "string",
+        "pattern": "^(Q1|Q2|Q3|Q4)$",
+        "description": "Compliance quarter (Q1-Q4). [Programs: RFS]"
+      },
+      "reportYear": {
+        "type": "integer",
+        "minimum": 2000,
+        "maximum": 2100,
+        "description": "Compliance year for reporting. [Programs: RFS]"
+      },
+      "isConfidentialBusinessInformation": {
+        "type": "boolean",
+        "description": "Flag for CBI status under 40 CFR Part 2, subpart B. [Programs: RFS]"
+      },
+      "reportingEntityId": {
+        "type": "string",
+        "description": "EPA-assigned company/entity ID (4-digit). [Programs: RFS]"
+      },
+      "reportingCompanyName": {
+        "type": "string",
+        "maxLength": 125,
+        "description": "Reporting party's company name. [Programs: RFS]"
+      },
+      "foreignCompanyId": {
+        "type": "string",
+        "description": "EPA-assigned foreign company ID. Use 'NA' for domestic producers. [Programs: RFS]"
+      },
+      "foreignCompanyName": {
+        "type": "string",
+        "maxLength": 125,
+        "description": "Foreign company name. Use 'NA' for domestic producers. [Programs: RFS]"
+      },
+      "foreignCompanyFacilityId": {
+        "type": "string",
+        "description": "EPA-assigned foreign facility ID (5-digit). Use 'NA' for domestic producers. [Programs: RFS]"
+      },
+      "facilityId": {
+        "type": "string",
+        "pattern": "^[0-9]{5}$",
+        "description": "EPA-assigned facility ID (5-digit with leading zeros). [Programs: RFS, LCFS]"
+      },
+      "supplierName": {
+        "type": "string",
+        "description": "Full name of supplier organization. [Programs: SFI, RSB, PEFC]"
+      },
+      "supplierAddress": {
+        "type": "string",
+        "description": "Full legal address of supplier. [Programs: SFI, RSB, PEFC]"
+      },
+      "buyerName": {
+        "type": "string", 
+        "description": "Legal name of buyer organization. [Programs: SBP]"
+      },
+      "buyerAddress": {
+        "type": "string",
+        "description": "Full mailing address of buyer. [Programs: SBP]"
+      },
+      "sellerName": {
+        "type": "string",
+        "description": "Legal name of seller organization. [Programs: SBP]"
+      },
+      "sellerAddress": {
+        "type": "string",
+        "description": "Full mailing address of seller. [Programs: SBP]"
+      },
+      "supplierCertificationStatus": {
+        "type": "boolean",
+        "description": "Verification of supplier's valid certification. [Programs: SFI, RSB, PEFC, LCFS]"
+      },
+      "certificationCode": {
+        "type": "string",
+        "description": "Unique identifier from certification body. [Programs: FSC, SFI, RSB, PEFC, LCFS, SBP]"
+      },
+      "certificationStandard": {
+        "type": "string",
+        "enum": ["FSC", "SBP", "PEFC", "RSB", "SFI", "ISCC", "ISO38200"],
+        "description": "Certification standard applied. [Programs: FSC, SBP, RSB, SFI, ISCC, PEFC, ISO38200]"
+      },
+      "certificateClaim": {
+        "type": "string",
+        "description": "Specific material claim (e.g., 'FSC 100%', 'SBP-compliant'). [Programs: SBP, PEFC]"
+      },
+      "applicableStandards": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "All standards applicable to certificate scope. [Programs: FSC, PEFC]"
+      },
+      "productDescription": {
+        "type": "string",
+        "description": "Description matching invoice (e.g., 'wood pellets', 'wood chips'). [Programs: SBP, PEFC]"
+      },
+      "productGroup": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Product categorization for mass balancing. [Programs: FSC, SFI, RSB, PEFC, SBP]"
+      },
+      "materialCategory": {
+        "type": "array",
+        "items": { 
+          "type": "string",
+          "enum": ["Certified", "Recycled", "Controlled Sources", "Non-certified", "Neutral"]
+        },
+        "description": "Input material classification determining claim eligibility. [Programs: SFI, RSB, PEFC, ISO38200]"
+      },
+      "feedstockType": {
+        "type": "string",
+        "description": "Raw material classification (e.g., logging slash, mill waste, ag residues). [Programs: ISCC, SBP, BioMAT, BioRAM, LCFS, RFS, Canada CFR]"
+      },
+      "feedstockLocationName": {
+        "type": "string",
+        "maxLength": 125,
+        "description": "Specific sourcing location name (farm, forest, plantation). [Programs: RFS]"
+      },
+      "fuelSourceCategory": {
+        "type": "string",
+        "description": "General fuel source category (e.g., Biogas, Sustainable Forest Biomass). [Programs: BioMAT]"
+      },
+      "fuelSourceContentDescription": {
+        "type": "string",
+        "description": "Detailed fuel source content description. [Programs: BioMAT]"
+      },
+      "fuelSourceContentPercentage": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Percentage of declared fuel source category (≥80% BioRAM SFM, ≥60% BioRAM HHZ). [Programs: BioMAT, BioRAM]"
+      },
+      "originGeographicCoordinates": {
+        "type": "object",
+        "description": "Precise geospatial location (GPS coordinates/polygons). Required for EUDR (plot level, >4ha polygons). [Programs: BioRAM, LCFS, RFS, EUDR, Canada CFR]",
+        "oneOf": [
+          {
+            "properties": {
+              "type": { "const": "Point" },
+              "coordinates": {
+                "type": "array",
+                "items": { "type": "number" },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          },
+          {
+            "properties": {
+              "type": { "const": "Polygon" },
+              "coordinates": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": { "type": "number" },
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "originAreaReference": {
+        "type": "string",
+        "description": "Sourcing area reference (Township-Range-Section). [Programs: Interview Findings]"
+      },
+      "landOwnershipType": {
+        "type": "string",
+        "enum": ["Private", "State", "Federal", "Tribal"],
+        "description": "Land ownership classification for RFS eligibility. [Programs: RFS]"
+      },
+      "fireHazardSeverityZoneStatus": {
+        "type": "string",
+        "enum": ["Moderate", "High", "Very High"],
+        "description": "FHSZ classification required for BioRAM HHZ sourcing. [Programs: BioRAM]"
+      },
+      "managementPlanReference": {
+        "type": "string",
+        "description": "Forest management plan reference (THP, NEPA document). [Programs: CA Forest Practice Act, RFS]"
+      },
+      "permitId": {
+        "type": "string",
+        "description": "Relevant permits/authorizations (THP number, permit status). [Programs: BioRAM, RFS]"
+      },
+      "approvalPathway": {
+        "type": "string",
+        "description": "Regulatory approval pathway (NEPA, THP, BIA systems). [Programs: Interview Findings]"
+      },
+      "quantityDelivered": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Total quantity delivered/transferred. [Programs: RFS, SBP, SFI, PEFC, LCFS, BioRAM]"
+      },
+      "quantityUnits": {
+        "type": "string",
+        "enum": ["Short Ton", "Cubic Feet", "100 Cubic Feet", "1,000,000 Cubic Feet", "Gallon", "Liter", "Cubic Meters", "Therm", "Decatherm", "Bushel", "Pounds"],
+        "description": "Units for quantity measurement. RFS codes: 10=CF, 20=100CF, 30=1MMCF, 40=Gal, 50=L, 60=ST, 70=CM, 80=Therm, 90=Decatherm, 100=Bu, 110=Lbs. [Programs: RFS, BioRAM]"
+      },
+      "volumeTrackingRecords": {
+        "type": "string",
+        "description": "Reference to volume tracking documentation for mass balance. [Programs: SFI, RSB, PEFC, LCFS]"
+      },
+      "massEnergyBalanceData": {
+        "type": "string",
+        "description": "Data/reference for mass/energy balance calculations. [Programs: LCFS, SBP, ISO38200, RSB, BioRAM]"
+      },
+      "cocModel": {
+        "type": "string",
+        "enum": ["Physical Separation", "Percentage", "Credit", "Mass Balance", "Identity Preserved", "Book and Claim"],
+        "description": "Chain of Custody control method. [Programs: FSC, SBP, RSB, SFI, ISCC, PEFC, ISO38200, LCFS, RenovaBio, Canada CFR]"
+      },
+      "shipmentDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date material was loaded/shipped. [Programs: SBP]"
+      },
+      "transferDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date of material transfer/delivery."
+      },
+      "transportDocumentReference": {
+        "type": "string",
+        "description": "Transport documentation reference (trip tickets, load documents). [Programs: BioMAT, RFS, SBP]"
+      },
+      "haulDistance": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Transportation distance for GHG/feasibility assessments. [Programs: BioRAM]"
+      },
+      "traceabilityLevel": {
+        "type": "string",
+        "enum": ["Item-level", "Batch-level", "Lot-level", "Shipment-level"],
+        "description": "Granularity of traceability. EUDR emphasizes shipment-level linkage to plot. [Programs: FSC, SBP, RSB, SFI, ISCC, PEFC, ISO38200, RFS, EUDR, Canada CFR]"
+      },
+      "sustainabilityAttributes": {
+        "type": "object",
+        "description": "Compliance with sustainability criteria (biodiversity, labor rights, land use). [Programs: ISCC, SBP, RSB, SFI, PEFC, ISO38200, LCFS, RFS, EU RED III, EUDR, RenovaBio, Canada CFR]",
+        "properties": {
+          "biodiversityProtection": { "type": "boolean" },
+          "laborRightsCompliant": { "type": "boolean" },
+          "landUseChangeCompliant": { "type": "boolean" },
+          "soilProtection": { "type": "boolean" },
+          "waterQualityMaintained": { "type": "boolean" },
+          "carbonStockMaintained": { "type": "boolean" }
+        }
+      },
+      "ghgData": {
+        "type": "object",
+        "description": "GHG emissions data for supply chain calculations. [Programs: SBP, RSB, ISCC, ISO38200, LCFS, RFS, EU RED III, RenovaBio, Canada CFR]",
+        "properties": {
+          "totalEmissions": { "type": "number" },
+          "emissionsUnit": { "type": "string", "enum": ["gCO2e/MJ", "kgCO2e/t", "tCO2e"] },
+          "calculationMethod": { "type": "string" },
+          "transportEmissions": { "type": "number" }
+        }
+      },
+      "documentationReference": {
+        "type": "string",
+        "maxLength": 100,
+        "description": "Electronic documentation files (maps, permits, coordinates). Include file extension. [Programs: RFS]"
+      },
+      "internalAuditRecords": {
+        "type": "string",
+        "description": "Internal audit documentation reference. [Programs: SFI, RSB, ISO38200, PEFC, ISCC, FSC, SBP]"
+      },
+      "thirdPartyAuditReports": {
+        "type": "string",
+        "description": "Independent third-party audit report references. [Programs: SBP, RSB, SFI, ISCC, PEFC, ISO38200, LCFS, RFS]"
+      },
+      "ddsResults": {
+        "type": "string",
+        "description": "Due Diligence System risk assessment results. [Programs: ISO38200, SFI, RSB, PEFC, EUDR, BOOST]"
+      },
+      "labelUseRecords": {
+        "type": "string",
+        "description": "Certification label usage records. [Programs: SFI, RSB, PEFC]"
+      },
+      "trainingRecords": {
+        "type": "string",
+        "description": "Staff training documentation for CoC implementation. [Programs: RSB, ISO38200, SBP]"
+      },
+      "outsourcingAgreements": {
+        "type": "string",
+        "description": "Subcontractor agreements for CoC activities. [Programs: RSB, PEFC, SBP]"
+      },
+      "verificationDocuments": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Verification documents including signed attestations. [Programs: BioMAT, BioRAM]"
+      },
+      "supplyChainEntities": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Supply chain party types (haulers, processors, traders). [Programs: RSB]"
+      },
+      "processingInformation": {
+        "type": "object",
+        "description": "Processing steps data. [Programs: RSB]"
+      },
+      "economicPricingData": {
+        "type": "object",
+        "description": "Pricing/cost information (often confidential). [Programs: Interview Findings]",
+        "properties": {
+          "pricePerTon": { "type": "number" },
+          "currency": { "type": "string" },
+          "confidential": { "type": "boolean" }
+        }
+      },
+      "siteActivity": {
+        "type": "string",
+        "description": "Certified site activity (trader, processor, printer). [Programs: FSC]"
+      },
+      "conversionFactors": {
+        "type": "object",
+        "description": "Conversion ratios between biomass units/forms. [Programs: RSB, ISO38200, LCFS, SBP]"
+      },
+      "originCountry": {
+        "type": "string",
+        "description": "Country of biomass origin for EUDR risk classification. [Programs: EUDR, RenovaBio, BOOST]"
+      },
+      "verificationStatements": {
+        "type": "string",
+        "description": "Independent verifier statements. [Programs: BOOST]"
+      },
+      "complianceDocuments": {
+        "type": "string",
+        "description": "Compliance reporting documents (e.g., RFS0801). [Programs: RFS]"
+      },
+      "fuelPathwayCode": {
+        "type": "string",
+        "description": "CARB-assigned fuel pathway code. [Programs: LCFS]"
+      },
+      "jointApplicantAgreements": {
+        "type": "string",
+        "description": "Agreements between entities sharing fuel pathway responsibility. [Programs: LCFS]"
+      },
+      "bookClaimRecords": {
+        "type": "string",
+        "description": "Book-and-claim accounting documentation. [Programs: LCFS, RSB]"
+      },
+      "geographicSourcingConstraints": {
+        "type": "string",
+        "description": "Geographic restrictions on sourcing. BioMAT has no statutory locational limit. [Programs: BioMAT]"
+      },
+      "certificateOfEligibilityReference": {
+        "type": "string",
+        "description": "CEC RPS certification reference for BioMAT projects. [Programs: BioMAT]"
+      },
+      "fuelOriginReference": {
+        "type": "string",
+        "description": "Geographic coordinates or facility/source ID for BioRAM fuel origin. [Programs: BioRAM]"
+      },
+      "volumeDeliveredUnits": {
+        "type": "string",
+        "description": "Volume reporting units (e.g., Tons). [Programs: BioRAM]"
+      },
+      "fuelOwnershipDocumentationReference": {
+        "type": "string",
+        "description": "Fuel ownership documentation including CAL FIRE permit/exemption status. [Programs: BioRAM]"
+      },
+      "attestationReference": {
+        "type": "string",
+        "description": "Signed compliance attestations (monthly/quarterly). [Programs: BioMAT, BioRAM]"
+      }
+    }
+  }

@@ -1,0 +1,75 @@
+{
+    "documentId": "RFS0801-2024-001-ABCD123",
+    "reportFormId": "RFS0801",
+    "reportType": "O",
+    "isConfidentialBusinessInformation": false,
+    "reportDate": "2024-03-15",
+    "reportYear": 2024,
+    "compliancePeriod": "Q1",
+    "reportingEntityId": "1234",
+    "reportingCompanyName": "Pacific Northwest Biomass Fuels LLC",
+    "facilityId": "98765",
+    "foreignCompanyId": "NA",
+    "foreignCompanyName": "NA",
+    "foreignCompanyFacilityId": "NA",
+    
+    "supplierName": "Cascade Forest Products Inc.",
+    "supplierAddress": "123 Timber Road, Olympia, WA 98501",
+    "buyerName": "Green Energy Solutions Corp",
+    "buyerAddress": "456 Renewable Lane, Portland, OR 97201",
+    
+    "feedstockLocationName": "Olympic National Forest Unit 47",
+    "feedstockType": "logging slash",
+    "productDescription": "wood chips",
+    "materialCategory": ["Certified"],
+    "productGroup": ["Wood Chips", "Forest Residues"],
+    
+    "quantityDelivered": 2450.5,
+    "quantityUnits": "Short Ton",
+    "feedstockQuantityUnits": 60,
+    
+    "originGeographicCoordinates": {
+      "type": "Polygon",
+      "coordinates": [[
+        [-123.1234, 47.5678],
+        [-123.1200, 47.5678], 
+        [-123.1200, 47.5650],
+        [-123.1234, 47.5650],
+        [-123.1234, 47.5678]
+      ]]
+    },
+    "landOwnershipType": "Federal",
+    "managementPlanReference": "NEPA-2024-ONF-047",
+    "permitId": "USFS-THM-2024-0147",
+    "approvalPathway": "NEPA",
+    
+    "certificationStandard": "SFI",
+    "certificationCode": "SFI-COC-123456",
+    "certificateClaim": "SFI Certified",
+    "supplierCertificationStatus": true,
+    
+    "shipmentDate": "2024-03-10",
+    "transferDate": "2024-03-12",
+    "transportDocumentReference": "TT-2024-0312-001",
+    "haulDistance": 47.2,
+    
+    "cocModel": "Physical Separation",
+    "traceabilityLevel": "Batch-level",
+    "massEnergyBalanceData": "MEB-2024-Q1-001",
+    
+    "sustainabilityAttributes": {
+      "biodiversityProtection": true,
+      "soilProtection": true,
+      "waterQualityMaintained": true,
+      "carbonStockMaintained": true
+    },
+    "ghgData": {
+      "totalEmissions": 12.5,
+      "emissionsUnit": "gCO2e/MJ",
+      "calculationMethod": "GREET 2023"
+    },
+    
+    "documentationReference": "coordinates_olympic_unit47.kml",
+    "verificationDocuments": ["attestation_cascade_Q1_2024.pdf"],
+    "thirdPartyAuditReports": ["SFI_audit_cascade_2024.pdf"]
+  }
