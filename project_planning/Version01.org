@@ -1,0 +1,706 @@
+#+TITLE: BOOST Working Group Milestones: Draft Data Standard
+#+SUBTITLE: Target Release: July 31, 2025
+#+DATE: 2025-06-09
+#+OPTIONS: toc:nil
+
+To support a draft release of the BOOST data standard by the end of July, here's a milestone plan structured around four main phases: scoping, drafting, review, and release preparation. This plan assumes today is June 9 and uses a reverse timeline from a target release date of July 31, 2025.
+
+** Scoping and Alignment (June 10–June 21)
+:PROPERTIES:
+:milestone: phase1-scoping
+:due_date: 2025-06-21
+:priority: critical
+:END:
+
+*Goal:* Finalize the scope, use cases, and core architecture of the standard.
+
+*Description:* Establish the foundational elements of the BOOST data standard by defining core entities, relationships, and technical approach. This phase ensures all working group members have a shared understanding of the data model's scope and the technical decisions that will guide implementation.
+
+*** DOING Define core data entities (Organizations, Consignments, Sustainability Info)
+:PROPERTIES:
+:labels: type:schema priority:critical
+:assignee: @team:technical
+:due_date: 2025-06-17
+:END:
+
+Establish the fundamental data objects that represent supply chain participants, biomass transactions, and sustainability characteristics. Define attributes, relationships, and constraints for each entity type to ensure comprehensive coverage of biomass chain of custody requirements.
+
+*Work completed:*
+- =drafts/scripts/biomass_coc_schema.json= - Initial JSON schema with basic organization, producer, and recipient structures
+- =drafts/TransactionSchema.md= - Harmonized data model identifying key attributes across certification programs
+- =drafts/images/IntegratedERD.org= - Textual description of integrated entity relationships from multiple standards
+
+*Status:* Basic entity definitions exist but need expansion to full JSON-LD/YAML-LD schemas with complete attribute coverage.
+
+*** DONE Create entity relationship diagram for biomass CoC data model
+:PROPERTIES:
+:labels: type:documentation priority:critical
+:assignee: @ptittmann
+:due_date: 2025-06-17
+:END:
+
+Develop visual representation of how data entities relate to each other in the biomass supply chain. Include cardinalities, dependencies, and data flow patterns to guide schema design and ensure logical consistency across the standard.
+
+*Work completed:*
+- =drafts/images/IntegratedERD.org= - Comprehensive textual ERD integrating SBP, RSB, FSC, and ISO standards
+- =drafts/images/RSB_ERD.org= - RSB-specific entity relationship documentation
+- =drafts/images/ERD.org= - General ERD framework file
+- =drafts/images/boost_integrated_erd_mermaid.svg= - Visual diagram in Mermaid format
+
+*Status:* Complete ERD documentation exists covering all major certification schemes and biomass CoC requirements.
+
+*** DONE Define biomass categories (Category 1-5) and classification criteria
+:PROPERTIES:
+:labels: type:schema priority:high
+:assignee: @team:carbondirect
+:due_date: 2025-06-17
+:END:
+
+Specify the biomass categorization system based on source and risk level as defined in guidance documents. Establish clear criteria for classifying biomass types and associated data requirements for each category.
+
+*Work completed:*
+- =BOOST_Charter.org= - Defines biomass categories (Category 1-5) based on source and type requirements
+- =drafts/images/IntegratedERD.org= - Includes biomass category definitions and classification attributes
+- =drafts/TransactionSchema.md= - Documents biomass type attributes across certification programs
+
+*Status:* Biomass categorization framework is established with clear criteria for each category level.
+
+*** DONE Document GHG calculation data requirements (SAR, SREG report types)
+:PROPERTIES:
+:labels: type:documentation priority:high
+:assignee: @team:carbondirect
+:due_date: 2025-06-17
+:END:
+
+Define data points needed for greenhouse gas emission calculations including energy content, carbon data, and specific reporting requirements. Align with California LCFS and SBP methodologies for emissions tracking.
+
+*Work completed:*
+- =BOOST_Charter.org= - Specifies GHG emission calculation data requirements including SAR and SREG report types
+- =drafts/TransactionSchema.md= - Documents GHG-related attributes (energy content, carbon data, compliance periods)
+- =drafts/scripts/boost_example_payload.json= - Example payload including GHG calculation fields
+
+*Status:* GHG calculation data requirements are documented with alignment to LCFS and regulatory reporting needs.
+
+*** TODO Settle on JSON-LD/YAML-LD as serialization formats with schema structure principles
+:PROPERTIES:
+:labels: type:process priority:critical
+:assignee: @team:technical
+:due_date: 2025-06-17
+:END:
+
+Establish technical architecture decisions including data format, schema validation approach, extensibility patterns, and linked data principles. Define how the standard will support interoperability and future enhancements.
+
+*** DONE Create documentation template and structure for v0.1 specification
+:PROPERTIES:
+:labels: type:documentation priority:high
+:assignee: @ptittmann
+:due_date: 2025-06-21
+:END:
+
+*Work completed:*
+- =drafts/BOOST_standard.tex= - LaTeX template for formal specification document
+- =drafts/main.tex= - Main document structure with sections and formatting
+- =README.md= - Repository structure and contribution guidelines
+- =project_planning/Version01.org= - Milestone and task planning structure
+
+*Status:* Documentation framework and templates are established for collaborative specification development.
+
+*** DONE Assign section ownership to working group members
+:PROPERTIES:
+:labels: type:process priority:medium
+:assignee: @ptittmann
+:due_date: 2025-06-21
+:END:
+
+*Work completed:*
+- =meetings/kickoff_meeting.md= - Working group member roles and responsibilities defined
+- =project_planning/Version01.org= - Task assignments with @team:technical, @team:carbondirect, @ptittmann designations
+- =BOOST_Charter.org= - Chair responsibilities and Carbon Direct team member roles specified
+
+*Status:* Section ownership and team responsibilities are clearly defined with specific assignees for each work area.
+
+*** DONE Establish GitHub workflow for collaborative drafting
+:PROPERTIES:
+:labels: type:process priority:high
+:assignee: @team:technical
+:due_date: 2025-06-21
+:END:
+
+*Work completed:*
+- =CONTRIBUTING.md= - Contribution guidelines and workflow procedures
+- =CODE_OF_CONDUCT.md= - Community standards and behavior expectations
+- =LICENSE.md= - Licensing framework for contributions
+- =.github/= - Repository structure for issue templates and workflows
+- =w3c.json= - W3C Community Group integration configuration
+
+*Status:* Complete GitHub collaboration framework is operational with clear contribution processes and community guidelines.
+
+*** TODO Define review milestones and feedback collection process
+:PROPERTIES:
+:labels: type:process priority:medium
+:assignee: @ptittmann
+:due_date: 2025-06-21
+:END:
+
+** Drafting the Standard (June 24–July 12)
+:PROPERTIES:
+:milestone: phase2-drafting
+:due_date: 2025-07-12
+:priority: critical
+:END:
+
+*Goal:* Produce a complete, working draft of the data standard.
+
+*Description:* Transform the conceptual data model into concrete JSON-LD/YAML-LD schemas with validation rules, sample data, and reference implementations. Focus on creating interoperable, machine-readable specifications that support real-world biomass tracking use cases.
+
+*** DOING Draft JSON-LD/YAML-LD schema for Organization entities with roles and scope
+:PROPERTIES:
+:labels: type:schema priority:critical
+:assignee: @team:technical
+:due_date: 2025-06-28
+:END:
+
+Create machine-readable schemas defining organizations in the biomass supply chain including producers, processors, traders, and end users. Include roles, legal identifiers, certification status, and operational scope for comprehensive entity representation.
+
+*Work completed:*
+- =drafts/scripts/biomass_coc_schema.json= - Basic organization schema with name, address, role, and certification fields
+- =drafts/images/IntegratedERD.org= - Organization entity attributes including roles, scope, and certification details
+- =drafts/TransactionSchema.md= - Organization-related data elements across multiple certification programs
+
+*Status:* Initial organization schema exists but needs expansion to full JSON-LD format with linked data context and comprehensive attribute coverage.
+
+*** TODO Draft JSON-LD/YAML-LD schema for Consignment transactions (incoming/outgoing)
+:PROPERTIES:
+:labels: type:schema priority:critical
+:assignee: @team:technical
+:due_date: 2025-06-28
+:END:
+
+Define schema for biomass transfer transactions including quantities, dates, sustainability claims, documentation references, and chain of custody linkages. Support both incoming and outgoing consignments with full traceability data.
+
+*** TODO Draft JSON-LD/YAML-LD schema for Sustainability Information and claims
+:PROPERTIES:
+:labels: type:schema priority:critical
+:assignee: @team:carbondirect
+:due_date: 2025-06-28
+:END:
+
+Create schemas for sustainability characteristics including certification claims, environmental data, source information, and compliance status. Link claims to specific consignments and enable claim verification and transfer mechanisms.
+
+*** TODO Draft Mass Balance Account tracking data structures
+:PROPERTIES:
+:labels: type:schema priority:high
+:assignee: @team:technical
+:due_date: 2025-06-28
+:END:
+
+Define data structures for tracking volume balances and sustainability claims within organizations. Include account transactions, credit/debit tracking, claim allocation mechanisms, and reconciliation processes for managing certified vs controlled biomass volumes.
+
+*** TODO Create certification scheme integration patterns (FSC, PEFC, SBP)
+:PROPERTIES:
+:labels: type:integration priority:high
+:assignee: @team:carbondirect
+:due_date: 2025-06-28
+:END:
+
+*** TODO Merge individual schemas into unified JSON-LD/YAML-LD context document
+:PROPERTIES:
+:labels: type:schema priority:critical
+:assignee: @team:technical
+:due_date: 2025-07-03
+:END:
+
+Integrate all individual entity schemas into a cohesive linked data context document. Ensure consistent naming conventions, resolve conflicts, and establish proper semantic relationships between all data elements for system interoperability.
+
+*** TODO Validate schema relationships and identify missing links
+:PROPERTIES:
+:labels: type:validation priority:high
+:assignee: @team:technical
+:due_date: 2025-07-03
+:END:
+
+*** TODO Create sample data instances for each major entity type
+:PROPERTIES:
+:labels: type:documentation priority:high
+:assignee: @team:carbondirect
+:due_date: 2025-07-03
+:END:
+
+*** TODO Document known issues and gaps for resolution
+:PROPERTIES:
+:labels: type:documentation priority:medium
+:assignee: @ptittmann
+:due_date: 2025-07-03
+:END:
+
+*** TODO Add comprehensive definitions and terminology section
+:PROPERTIES:
+:labels: type:documentation priority:critical
+:assignee: @team:carbondirect
+:due_date: 2025-07-12
+:END:
+
+Develop comprehensive glossary and terminology section defining all technical terms, biomass categories, sustainability concepts, and data relationships. Ensure alignment with existing standards and regulations for consistent interpretation.
+
+*** TODO Create metadata requirements for versioning and provenance
+:PROPERTIES:
+:labels: type:schema priority:high
+:assignee: @team:technical
+:due_date: 2025-07-12
+:END:
+
+*** TODO Develop reference implementation examples in Python/JavaScript
+:PROPERTIES:
+:labels: type:validation priority:high
+:assignee: @team:technical
+:due_date: 2025-07-12
+:END:
+
+*** TODO Build validation rules and constraints for data integrity
+:PROPERTIES:
+:labels: type:validation priority:high
+:assignee: @team:technical
+:due_date: 2025-07-12
+:END:
+
+*** TODO Document California LCFS compliance mapping
+:PROPERTIES:
+:labels: type:integration priority:critical
+:assignee: @team:carbondirect
+:due_date: 2025-07-12
+:END:
+
+Create detailed mapping between BOOST data elements and California Low Carbon Fuel Standard requirements. Document how the standard supports LCFS reporting, verification, and compliance processes for biomass fuel pathways.
+
+** Community Review and Refinement (July 15–25)
+:PROPERTIES:
+:milestone: phase3-review
+:due_date: 2025-07-25
+:priority: critical
+:END:
+
+*Goal:* Validate the draft through testing and community feedback.
+
+*Description:* Conduct comprehensive community review of the draft standard through structured feedback collection, use case validation, and compatibility testing. Refine the specification based on stakeholder input to ensure practical applicability and adoption readiness.
+
+*** TODO Publish draft v0.0 to GitHub repository with documentation
+:PROPERTIES:
+:labels: type:process priority:critical
+:assignee: @ptittmann
+:due_date: 2025-07-15
+:END:
+
+Release the complete draft v0.0 specification to the public GitHub repository with full documentation, examples, and usage guidelines. Ensure all schemas, validation rules, and reference materials are accessible for community review.
+
+*** TODO Create structured feedback template for GitHub issues
+:PROPERTIES:
+:labels: type:process priority:high
+:assignee: @team:technical
+:due_date: 2025-07-15
+:END:
+
+*** TODO Distribute review requests to working group and stakeholders
+:PROPERTIES:
+:labels: type:review priority:critical
+:assignee: @ptittmann
+:due_date: 2025-07-18
+:END:
+
+Coordinate distribution of review requests to all working group members, California agencies, certification bodies, and industry stakeholders. Provide structured review guidelines and feedback collection templates for comprehensive evaluation.
+
+*** TODO Host community review session for live Q&A and feedback
+:PROPERTIES:
+:labels: type:review priority:high
+:assignee: @ptittmann
+:due_date: 2025-07-18
+:END:
+
+*** TODO Collect and categorize all feedback by priority and impact
+:PROPERTIES:
+:labels: type:review priority:high
+:assignee: @team:carbondirect
+:due_date: 2025-07-18
+:END:
+
+*** TODO Address critical feedback items that affect core functionality
+:PROPERTIES:
+:labels: type:validation priority:critical
+:assignee: @team:technical
+:due_date: 2025-07-25
+:END:
+
+Implement changes to address critical feedback that impacts core data model functionality, schema structure, or interoperability. Prioritize fixes that affect system integration, validation logic, or compliance requirements for v0.1 release readiness.
+
+*** TODO Test schema validation against California biomass use cases
+:PROPERTIES:
+:labels: type:validation priority:critical
+:assignee: @team:carbondirect
+:due_date: 2025-07-25
+:END:
+
+Validate schema functionality using real California biomass supply chain scenarios including forestry residues, agricultural waste, and energy crops. Test data completeness, validation rules, and compliance reporting capabilities against actual use cases.
+
+*** TODO Validate SBP Data Transfer System compatibility
+:PROPERTIES:
+:labels: type:integration priority:high
+:assignee: @team:technical
+:due_date: 2025-07-25
+:END:
+
+*** TODO Update documentation based on usability feedback
+:PROPERTIES:
+:labels: type:documentation priority:high
+:assignee: @team:carbondirect
+:due_date: 2025-07-25
+:END:
+
+*** TODO Create migration guide for existing systems
+:PROPERTIES:
+:labels: type:documentation priority:medium
+:assignee: @team:technical
+:due_date: 2025-07-25
+:END:
+
+** Release Preparation and Publication (July 28–31)
+:PROPERTIES:
+:milestone: phase4-release
+:due_date: 2025-07-31
+:priority: critical
+:END:
+
+*Goal:* Finalize and release the draft publicly.
+
+*Description:* Complete final preparation activities including documentation finalization, working group consensus, and public release coordination. Ensure the v0.1 standard is production-ready with comprehensive documentation, validation tools, and community engagement processes.
+
+*** TODO Complete API documentation with usage examples
+:PROPERTIES:
+:labels: type:documentation priority:critical
+:assignee: @team:technical
+:due_date: 2025-07-28
+:END:
+
+Finalize comprehensive API documentation including endpoint specifications, request/response examples, error handling, and integration patterns. Provide clear implementation guidance for developers adopting the BOOST standard in their systems.
+
+*** TODO Add versioning strategy and changelog for v0.1
+:PROPERTIES:
+:labels: type:documentation priority:high
+:assignee: @ptittmann
+:due_date: 2025-07-28
+:END:
+
+*** TODO Create comprehensive test suite with validation examples
+:PROPERTIES:
+:labels: type:validation priority:high
+:assignee: @team:technical
+:due_date: 2025-07-28
+:END:
+
+*** TODO Conduct final working group review meeting
+:PROPERTIES:
+:labels: type:review priority:critical
+:assignee: @ptittmann
+:due_date: 2025-07-29
+:END:
+
+Host final working group meeting to review the complete v0.1 specification, address any remaining concerns, and ensure consensus on release readiness. Document final decisions and prepare for formal approval vote.
+
+*** TODO Approve v0.1 release with formal working group vote
+:PROPERTIES:
+:labels: type:process priority:critical
+:assignee: @ptittmann
+:due_date: 2025-07-29
+:END:
+
+Conduct formal working group vote to approve the v0.1 standard for public release. Follow W3C Community Group consensus procedures and document the decision with any dissenting opinions or conditions for future versions.
+
+*** TODO Share pre-release with California agencies (PUC, IOUs)
+:PROPERTIES:
+:labels: type:review priority:high
+:assignee: @team:stakeholders
+:due_date: 2025-07-30
+:END:
+
+*** TODO Publish v0.1 specification to GitHub with release notes
+:PROPERTIES:
+:labels: type:process priority:critical
+:assignee: @ptittmann
+:due_date: 2025-07-31
+:END:
+
+Execute the official v0.1 release including GitHub release creation, version tagging, and comprehensive release notes. Ensure all documentation, schemas, examples, and tools are properly packaged and accessible to the public.
+
+*** TODO Create W3C Community Group announcement and summary
+:PROPERTIES:
+:labels: type:documentation priority:critical
+:assignee: @ptittmann
+:due_date: 2025-07-31
+:END:
+
+Draft and publish official W3C Community Group announcement summarizing the v0.1 release, key features, implementation guidance, and next steps. Communicate the standard's value proposition and adoption pathway to the broader community.
+
+*** TODO Share on public mailing list with implementation guidance
+:PROPERTIES:
+:labels: type:process priority:high
+:assignee: @ptittmann
+:due_date: 2025-07-31
+:END:
+
+*** TODO Set up feedback collection process for post-release improvements
+:PROPERTIES:
+:labels: type:process priority:medium
+:assignee: @team:technical
+:due_date: 2025-07-31
+:END:
+
+*** TODO Initiate working group leadership transition process
+:PROPERTIES:
+:labels: type:process priority:high
+:assignee: @ptittmann
+:due_date: 2025-07-31
+:END:
+
+Begin the formal transition of working group leadership as specified in the BOOST Charter. Initiate the chair selection process, document handoff procedures, and ensure continuity of governance for post-v0.1 development phases.
+
+* Supporting Activities (Ongoing)
+
+- *Weekly Standups (every Tuesday):* Track progress, unblock contributors.
+- *Shared Drive / Git Repo:* Centralized working location for all contributions.
+- *Async Comment Review:* Use commentable Google Docs or GitHub PRs.
+
+* GitHub Integration
+
+** Sync Project Plan to GitHub Issues and Milestones
+
+#+BEGIN_SRC bash :results output
+#!/bin/bash
+
+# BOOST GitHub Project Sync Script
+# Parses this org file and creates/updates GitHub issues and milestones
+
+set -e
+
+REPO="carbondirect/BOOST"
+PROJECT_ID="7"
+ORG_FILE="/Users/peter/src/BOOST/project_planning/Version01.org"
+DRY_RUN=${DRY_RUN:-false}
+
+echo "🚀 BOOST GitHub Project Sync"
+echo "Repository: $REPO"
+echo "Project: #$PROJECT_ID"
+echo "Dry run: $DRY_RUN"
+echo "----------------------------------------"
+
+# Function to create milestone
+create_milestone() {
+    local title="$1"
+    local due_date="$2"
+    local description="$3"
+    
+    if [ "$DRY_RUN" = "true" ]; then
+        echo "[DRY RUN] Would create milestone: $title (due: $due_date)"
+        return 0
+    fi
+    
+    # Check if milestone exists
+    if gh api "repos/$REPO/milestones" --jq ".[] | select(.title == \"$title\") | .number" | grep -q .; then
+        echo "✓ Milestone exists: $title"
+        return 0
+    fi
+    
+    echo "📅 Creating milestone: $title"
+    gh api "repos/$REPO/milestones" --method POST \
+        --field title="$title" \
+        --field due_on="$due_date" \
+        --field description="$description"
+}
+
+# Function to create issue
+create_issue() {
+    local title="$1"
+    local body="$2"
+    local labels="$3"
+    local assignee="$4"
+    local milestone="$5"
+    local state="$6"
+    
+    if [ "$DRY_RUN" = "true" ]; then
+        echo "[DRY RUN] Would create issue: $title"
+        echo "  Labels: $labels"
+        echo "  Assignee: $assignee"
+        echo "  Milestone: $milestone"
+        echo "  State: $state"
+        return 0
+    fi
+    
+    # Check if issue with this title already exists
+    if gh issue list --repo "$REPO" --search "\"$title\"" --json title | jq -r '.[].title' | grep -Fxq "$title"; then
+        echo "✓ Issue exists: $title"
+        return 0
+    fi
+    
+    echo "🔖 Creating issue: $title"
+    
+    # Get milestone number if specified
+    milestone_number=""
+    if [ -n "$milestone" ]; then
+        milestone_number=$(gh api "repos/$REPO/milestones" --jq ".[] | select(.title == \"$milestone\") | .number")
+    fi
+    
+    # Create issue
+    issue_url=$(gh issue create --repo "$REPO" \
+        --title "$title" \
+        --body "$body" \
+        --label "$labels" \
+        ${milestone_number:+--milestone "$milestone_number"})
+    
+    # Add to project
+    if [ -n "$issue_url" ]; then
+        echo "📋 Adding to project #$PROJECT_ID"
+        gh project item-add "$PROJECT_ID" --owner carbondirect --url "$issue_url"
+    fi
+    
+    # Close if DONE
+    if [ "$state" = "DONE" ]; then
+        echo "✅ Closing completed issue"
+        gh issue close "$issue_url" --reason completed
+    fi
+}
+
+# Parse milestones from org file
+echo "📋 Parsing milestones..."
+while IFS= read -r line; do
+    if [[ $line =~ ^\*\*\ (.+)\ \((.+)\)$ ]]; then
+        milestone_title="${BASH_REMATCH[1]}"
+        milestone_dates="${BASH_REMATCH[2]}"
+        
+        # Extract due date from properties (next few lines)
+        due_date=""
+        description=""
+        while IFS= read -r prop_line; do
+            if [[ $prop_line =~ :due_date:\ (.+) ]]; then
+                due_date="${BASH_REMATCH[1]}T23:59:59Z"
+            elif [[ $prop_line =~ ^\*Description:\*\ (.+) ]]; then
+                description="${BASH_REMATCH[1]}"
+                break
+            elif [[ $prop_line =~ ^\*\*\* ]]; then
+                break
+            fi
+        done
+        
+        if [ -n "$due_date" ]; then
+            create_milestone "$milestone_title" "$due_date" "$description"
+        fi
+    fi
+done < "$ORG_FILE"
+
+echo ""
+echo "🔖 Parsing tasks..."
+
+# Parse tasks from org file
+current_milestone=""
+while IFS= read -r line; do
+    # Track current milestone
+    if [[ $line =~ ^\*\*\ (.+)\ \( ]]; then
+        current_milestone="${BASH_REMATCH[1]}"
+        continue
+    fi
+    
+    # Parse tasks
+    if [[ $line =~ ^\*\*\*\ (TODO|DOING|DONE)\ (.+)$ ]]; then
+        task_state="${BASH_REMATCH[1]}"
+        task_title="${BASH_REMATCH[2]}"
+        
+        # Skip DONE tasks for now
+        if [ "$task_state" = "DONE" ]; then
+            echo "⏭️  Skipping completed task: $task_title"
+            continue
+        fi
+        
+        # Extract properties
+        labels=""
+        assignee=""
+        due_date=""
+        description=""
+        
+        # Read properties and description
+        while IFS= read -r prop_line; do
+            if [[ $prop_line =~ :labels:\ (.+) ]]; then
+                labels="${BASH_REMATCH[1]}"
+                # Convert spaces to commas for GitHub labels
+                labels=$(echo "$labels" | sed 's/ /,/g')
+            elif [[ $prop_line =~ :assignee:\ (.+) ]]; then
+                assignee="${BASH_REMATCH[1]}"
+                # Convert team tags to individual assignees (would need mapping)
+                if [[ $assignee =~ @team: ]]; then
+                    assignee="" # Skip team assignments for now
+                elif [[ $assignee =~ @(.+) ]]; then
+                    assignee="${BASH_REMATCH[1]}"
+                fi
+            elif [[ $prop_line =~ :due_date:\ (.+) ]]; then
+                due_date="${BASH_REMATCH[1]}"
+            elif [[ $prop_line =~ :END: ]]; then
+                # Start reading description
+                while IFS= read -r desc_line; do
+                    if [[ $desc_line =~ ^\*\*\* ]] || [[ $desc_line =~ ^\*\* ]] || [[ $desc_line =~ ^\* ]]; then
+                        break
+                    fi
+                    if [ -n "$desc_line" ] && [[ ! $desc_line =~ ^\*Work\ completed:\* ]] && [[ ! $desc_line =~ ^\*Status:\* ]]; then
+                        if [ -n "$description" ]; then
+                            description="$description\n$desc_line"
+                        else
+                            description="$desc_line"
+                        fi
+                    fi
+                done
+                break
+            fi
+        done
+        
+        # Build issue body
+        issue_body="$description"
+        if [ -n "$due_date" ]; then
+            issue_body="$issue_body\n\n**Due Date:** $due_date"
+        fi
+        if [ -n "$current_milestone" ]; then
+            issue_body="$issue_body\n**Milestone:** $current_milestone"
+        fi
+        
+        create_issue "$task_title" "$issue_body" "$labels" "$assignee" "$current_milestone" "$task_state"
+    fi
+done < "$ORG_FILE"
+
+echo ""
+echo "✅ Sync complete!"
+echo ""
+echo "🔗 View project: https://github.com/orgs/carbondirect/projects/$PROJECT_ID"
+echo "🔗 View issues: https://github.com/$REPO/issues"
+
+#+END_SRC
+
+** Usage Instructions
+
+To sync the project plan with GitHub:
+
+1. *Dry run (preview changes):*
+   #+BEGIN_EXAMPLE
+   DRY_RUN=true bash
+   #+END_EXAMPLE
+
+2. *Execute sync:*
+   #+BEGIN_EXAMPLE
+   DRY_RUN=false bash
+   #+END_EXAMPLE
+
+3. *From org-mode:*
+   - Place cursor in source block
+   - =C-c C-c= to execute
+
+** Notes
+
+- Script creates milestones from H2 sections with due dates
+- Creates issues from TODO/DOING tasks (skips DONE)
+- Applies labels and assigns to project #7
+- Handles existing milestones/issues gracefully
+- Team assignments (@team:*) are skipped (add individual mapping as needed)
+
+
