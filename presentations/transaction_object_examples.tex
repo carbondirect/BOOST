@@ -1,0 +1,111 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+
+\title{BOOST Transaction Object Examples}
+\author{Liam Kilroy}
+\date{June 2025}
+
+\begin{document}
+
+% Slide 1: Intro
+\begin{frame}{What is a Structured Machine-Readable Data Object?}
+\begin{itemize}
+  \item A structured machine-readable data object is a human-readable format that can be easily processed by computers.
+  \item Examples: \textbf{JSON} (JavaScript Object Notation), \textbf{YAML} (YAML Ain't Markup Language).
+  \item They are used for configuration files, data exchange between systems, and APIs.
+  \item Key-value pairs, arrays/lists, and nested structures are commonly supported. 
+\end{itemize}
+\end{frame}
+
+% Slide 2: Metadata
+\begin{frame}{Report Metadata}
+\begin{itemize}
+  \item \textbf{documentId:} RFS0801-2024-001-ABCD123
+  \item \textbf{reportFormId:} RFS0801
+  \item \textbf{reportType:} O (Original)
+  \item \textbf{isConfidential:} false
+  \item \textbf{reportDate:} 2024-03-15
+  \item \textbf{reportYear:} 2024
+  \item \textbf{compliancePeriod:} Q1
+\end{itemize}
+\end{frame}
+
+% Slide 3: Entity Info
+\begin{frame}{Entities Involved}
+\begin{itemize}
+  \item \textbf{reportingEntityId:} 1234
+  \item \textbf{reportingCompanyName:} Pacific Northwest Biomass Fuels LLC
+  \item \textbf{facilityId:} 98765
+  \item \textbf{foreignCompanyId/Name:} NA
+\end{itemize}
+\end{frame}
+
+% Slide 4: Supply Chain Parties
+\begin{frame}{Supply Chain Parties}
+\begin{itemize}
+  \item \textbf{Supplier:} Cascade Forest Products Inc.
+  \item \textbf{Supplier Address:} 123 Timber Road, Olympia, WA
+  \item \textbf{Buyer:} Green Energy Solutions Corp
+  \item \textbf{Buyer Address:} 456 Renewable Lane, Portland, OR
+\end{itemize}
+\end{frame}
+
+% Slide 5: Feedstock Info
+\begin{frame}{Feedstock and Product Information}
+\begin{itemize}
+  \item \textbf{Feedstock Location:} Olympic National Forest Unit 47
+  \item \textbf{Feedstock Type:} logging slash
+  \item \textbf{Product Description:} wood chips
+  \item \textbf{Material Category:} Certified
+  \item \textbf{Product Group:} Wood Chips, Forest Residues
+\end{itemize}
+\end{frame}
+
+% Slide 6: Quantities and Logistics
+\begin{frame}{Quantities and Logistics}
+\begin{itemize}
+  \item \textbf{Quantity Delivered:} 2450.5 Short Ton
+  \item \textbf{Feedstock Quantity Units:} 60
+  \item \textbf{Shipment Date:} 2024-03-10
+  \item \textbf{Transfer Date:} 2024-03-12
+  \item \textbf{Transport Doc Ref:} TT-2024-0312-001
+  \item \textbf{Haul Distance:} 47.2 km
+\end{itemize}
+\end{frame}
+
+% Slide 7: Certification and Compliance
+\begin{frame}{Certification and Compliance}
+\begin{itemize}
+  \item \textbf{Certification Standard:} SFI
+  \item \textbf{Certification Code:} SFI-COC-123456
+  \item \textbf{Certificate Claim:} SFI Certified
+  \item \textbf{Supplier Certification Status:} true
+  \item \textbf{CoC Model:} Physical Separation
+  \item \textbf{Traceability Level:} Batch-level
+\end{itemize}
+\end{frame}
+
+% Slide 8: Sustainability and GHG
+\begin{frame}{Sustainability and Emissions Data}
+\begin{itemize}
+  \item \textbf{Sustainability Attributes:}
+    \begin{itemize}
+      \item Biodiversity Protection: true
+      \item Soil Protection: true
+      \item Water Quality Maintained: true
+      \item Carbon Stock Maintained: true
+    \end{itemize}
+  \item \textbf{GHG Data:} 12.5 gCO2e/MJ (GREET 2023)
+\end{itemize}
+\end{frame}
+
+% Slide 9: Documentation
+\begin{frame}{Supporting Documentation}
+\begin{itemize}
+  \item \textbf{Documentation Reference:} coordinates\_olympic\_unit47.kml
+  \item \textbf{Verification Documents:} attestation\_cascade\_Q1\_2024.pdf
+  \item \textbf{Third Party Audit:} SFI\_audit\_cascade\_2024.pdf
+\end{itemize}
+\end{frame}
+
+\end{document}

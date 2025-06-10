@@ -52,6 +52,7 @@
     "transferDate": "2024-03-12",
     "transportDocumentReference": "TT-2024-0312-001",
     "haulDistance": 47.2,
+    "haulDistanceUnits": "km",
     
     "cocModel": "Physical Separation",
     "traceabilityLevel": "Batch-level",
