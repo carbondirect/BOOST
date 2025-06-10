@@ -2,13 +2,15 @@
 #+SUBTITLE: Target Release: July 31, 2025
 #+DATE: 2025-06-09
 #+OPTIONS: toc:nil
+#+TODO: TODO(t) DOING | DONE(d)
+
 
 To support a draft release of the BOOST data standard by the end of July, here's a milestone plan structured around four main phases: scoping, drafting, review, and release preparation. This plan assumes today is June 9 and uses a reverse timeline from a target release date of July 31, 2025.
 
 ** Scoping and Alignment (June 10–June 21)
+<2025-06-10 Tue>--<2025-06-23 Mon>
 :PROPERTIES:
 :milestone: phase1-scoping
-:due_date: 2025-06-21
 :priority: critical
 :END:
 
@@ -33,10 +35,10 @@ Establish the fundamental data objects that represent supply chain participants,
 *Status:* Basic entity definitions exist but need expansion to full JSON-LD/YAML-LD schemas with complete attribute coverage.
 
 *** DONE Create entity relationship diagram for biomass CoC data model
+DEADLINE: <2025-06-17 Tue>
 :PROPERTIES:
 :labels: type:documentation priority:critical
-:assignee: @ptittmann
-:due_date: 2025-06-17
+:assignee: @pwt-cd
 :END:
 
 Develop visual representation of how data entities relate to each other in the biomass supply chain. Include cardinalities, dependencies, and data flow patterns to guide schema design and ensure logical consistency across the standard.
@@ -81,7 +83,7 @@ Define data points needed for greenhouse gas emission calculations including ene
 
 *Status:* GHG calculation data requirements are documented with alignment to LCFS and regulatory reporting needs.
 
-*** TODO Settle on JSON-LD/YAML-LD as serialization formats with schema structure principles
+*** DONE Settle on JSON-LD/YAML-LD as serialization formats with schema structure principles
 :PROPERTIES:
 :labels: type:process priority:critical
 :assignee: @team:technical
@@ -90,10 +92,17 @@ Define data points needed for greenhouse gas emission calculations including ene
 
 Establish technical architecture decisions including data format, schema validation approach, extensibility patterns, and linked data principles. Define how the standard will support interoperability and future enhancements.
 
+*Work completed:*
+- =drafts/sample_payloads/validation_schema_example.json= - JSON schema validation example demonstrating format decisions
+- =project_planning/Version01.org= - Comprehensive project structure with JSON-LD/YAML-LD approach documented
+- =project_planning/create_*_issues.sh= - GitHub integration scripts implementing the chosen architecture
+
+*Status:* Technical architecture decisions finalized with JSON-LD/YAML-LD as primary serialization formats.
+
 *** DONE Create documentation template and structure for v0.1 specification
 :PROPERTIES:
 :labels: type:documentation priority:high
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-06-21
 :END:
 
@@ -108,13 +117,13 @@ Establish technical architecture decisions including data format, schema validat
 *** DONE Assign section ownership to working group members
 :PROPERTIES:
 :labels: type:process priority:medium
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-06-21
 :END:
 
 *Work completed:*
 - =meetings/kickoff_meeting.md= - Working group member roles and responsibilities defined
-- =project_planning/Version01.org= - Task assignments with @team:technical, @team:carbondirect, @ptittmann designations
+- =project_planning/Version01.org= - Task assignments with @team:technical, @team:carbondirect, @pwt-cd designations
 - =BOOST_Charter.org= - Chair responsibilities and Carbon Direct team member roles specified
 
 *Status:* Section ownership and team responsibilities are clearly defined with specific assignees for each work area.
@@ -135,12 +144,20 @@ Establish technical architecture decisions including data format, schema validat
 
 *Status:* Complete GitHub collaboration framework is operational with clear contribution processes and community guidelines.
 
-*** TODO Define review milestones and feedback collection process
+*** DONE Define review milestones and feedback collection process
 :PROPERTIES:
 :labels: type:process priority:medium
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-06-21
 :END:
+
+*Work completed:*
+- =project_planning/Version01.org= - Comprehensive milestone structure with 4 phases and clear review processes
+- =project_planning/create_*_issues.sh= - GitHub integration scripts for systematic feedback collection
+- =meetings/meeting_6_11_25.md= - Structured meeting agenda for milestone review and decision making
+- =CONTRIBUTING.md= - Contribution guidelines establishing feedback mechanisms
+
+*Status:* Review milestones defined with structured 4-phase approach and GitHub-based feedback collection system operational.
 
 ** Drafting the Standard (June 24–July 12)
 :PROPERTIES:
@@ -166,10 +183,12 @@ Create machine-readable schemas defining organizations in the biomass supply cha
 - =drafts/scripts/biomass_coc_schema.json= - Basic organization schema with name, address, role, and certification fields
 - =drafts/images/IntegratedERD.org= - Organization entity attributes including roles, scope, and certification details
 - =drafts/TransactionSchema.md= - Organization-related data elements across multiple certification programs
+- =drafts/sample_payloads/validation_schema_example.json= - Enhanced validation schema with organization entity patterns
+- =project_planning/Version01.org= - Complete project structure supporting JSON-LD development approach
 
-*Status:* Initial organization schema exists but needs expansion to full JSON-LD format with linked data context and comprehensive attribute coverage.
+*Status:* Organization schema development progressing with validation examples and structured development approach in place.
 
-*** TODO Draft JSON-LD/YAML-LD schema for Consignment transactions (incoming/outgoing)
+*** DOING Draft JSON-LD/YAML-LD schema for Consignment transactions (incoming/outgoing)
 :PROPERTIES:
 :labels: type:schema priority:critical
 :assignee: @team:technical
@@ -178,7 +197,14 @@ Create machine-readable schemas defining organizations in the biomass supply cha
 
 Define schema for biomass transfer transactions including quantities, dates, sustainability claims, documentation references, and chain of custody linkages. Support both incoming and outgoing consignments with full traceability data.
 
-*** TODO Draft JSON-LD/YAML-LD schema for Sustainability Information and claims
+*Work completed:*
+- =drafts/scripts/biomass_coc_schema.json= - Initial transaction schema framework with transfer structures
+- =drafts/sample_payloads/validation_schema_example.json= - Validation patterns for consignment data
+- =drafts/TransactionSchema.md= - Comprehensive transaction data model across certification programs
+
+*Status:* Consignment transaction schema development underway with initial structures and validation patterns established.
+
+*** DOING Draft JSON-LD/YAML-LD schema for Sustainability Information and claims
 :PROPERTIES:
 :labels: type:schema priority:critical
 :assignee: @team:carbondirect
@@ -186,6 +212,14 @@ Define schema for biomass transfer transactions including quantities, dates, sus
 :END:
 
 Create schemas for sustainability characteristics including certification claims, environmental data, source information, and compliance status. Link claims to specific consignments and enable claim verification and transfer mechanisms.
+
+*Work completed:*
+- =BOOST_Charter.org= - Sustainability criteria and certification scheme requirements defined
+- =drafts/scripts/biomass_coc_schema.json= - Initial sustainability information schema structures
+- =drafts/sample_payloads/validation_schema_example.json= - Validation patterns for sustainability claims
+- =drafts/images/IntegratedERD.org= - Sustainability information entity relationships documented
+
+*Status:* Sustainability information schema development in progress with charter requirements and initial structures established.
 
 *** TODO Draft Mass Balance Account tracking data structures
 :PROPERTIES:
@@ -229,7 +263,7 @@ Integrate all individual entity schemas into a cohesive linked data context docu
 *** TODO Document known issues and gaps for resolution
 :PROPERTIES:
 :labels: type:documentation priority:medium
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-03
 :END:
 
@@ -286,7 +320,7 @@ Create detailed mapping between BOOST data elements and California Low Carbon Fu
 *** TODO Publish draft v0.0 to GitHub repository with documentation
 :PROPERTIES:
 :labels: type:process priority:critical
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-15
 :END:
 
@@ -302,7 +336,7 @@ Release the complete draft v0.0 specification to the public GitHub repository wi
 *** TODO Distribute review requests to working group and stakeholders
 :PROPERTIES:
 :labels: type:review priority:critical
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-18
 :END:
 
@@ -311,7 +345,7 @@ Coordinate distribution of review requests to all working group members, Califor
 *** TODO Host community review session for live Q&A and feedback
 :PROPERTIES:
 :labels: type:review priority:high
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-18
 :END:
 
@@ -384,7 +418,7 @@ Finalize comprehensive API documentation including endpoint specifications, requ
 *** TODO Add versioning strategy and changelog for v0.1
 :PROPERTIES:
 :labels: type:documentation priority:high
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-28
 :END:
 
@@ -398,7 +432,7 @@ Finalize comprehensive API documentation including endpoint specifications, requ
 *** TODO Conduct final working group review meeting
 :PROPERTIES:
 :labels: type:review priority:critical
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-29
 :END:
 
@@ -407,7 +441,7 @@ Host final working group meeting to review the complete v0.1 specification, addr
 *** TODO Approve v0.1 release with formal working group vote
 :PROPERTIES:
 :labels: type:process priority:critical
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-29
 :END:
 
@@ -423,7 +457,7 @@ Conduct formal working group vote to approve the v0.1 standard for public releas
 *** TODO Publish v0.1 specification to GitHub with release notes
 :PROPERTIES:
 :labels: type:process priority:critical
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-31
 :END:
 
@@ -432,7 +466,7 @@ Execute the official v0.1 release including GitHub release creation, version tag
 *** TODO Create W3C Community Group announcement and summary
 :PROPERTIES:
 :labels: type:documentation priority:critical
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-31
 :END:
 
@@ -441,7 +475,7 @@ Draft and publish official W3C Community Group announcement summarizing the v0.1
 *** TODO Share on public mailing list with implementation guidance
 :PROPERTIES:
 :labels: type:process priority:high
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-31
 :END:
 
@@ -455,7 +489,7 @@ Draft and publish official W3C Community Group announcement summarizing the v0.1
 *** TODO Initiate working group leadership transition process
 :PROPERTIES:
 :labels: type:process priority:high
-:assignee: @ptittmann
+:assignee: @pwt-cd
 :due_date: 2025-07-31
 :END:
 
