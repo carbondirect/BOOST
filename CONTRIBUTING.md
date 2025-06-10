@@ -58,4 +58,4 @@ If you encounter issues or want to change your signup, feel free to:
 If you don’t want to sign up for a task yet but want to participate:
 - Review an open [issues](https://github.com/carbondirect/BOOST/issues) leave comments
 - Add feedback in GitHub Discussions
-- Send an email to the [BOOST Mailing List](mailto:public-boost-01@w3.org
+- Send an email to the [BOOST Mailing List](mailto:public-boost-01@w3.org)
