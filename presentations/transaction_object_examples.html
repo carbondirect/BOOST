@@ -15,6 +15,29 @@
         width: 80px;   /* adjust size as needed */
         z-index: 1000;
       }
+      
+      /* JSON Display Styles */
+      .json-display {
+        background-color: #fdf6e3;  /* Light solarized background */
+        border: 1px solid #93a1a1;
+        border-radius: 8px;
+        padding: 20px;
+        max-height: 500px;
+        overflow-y: auto;
+        font-size: 0.6em;
+        text-align: left;
+      }
+      .json-display pre {
+        margin: 0;
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        line-height: 1.3;
+        color: #586e75;
+      }
+      .json-key { color: #268bd2; }
+      .json-string { color: #2aa198; }
+      .json-number { color: #d33682; }
+      .json-boolean { color: #859900; }
+      .json-null { color: #6c71c4; }
     </style>
 </head>
 <body>
@@ -37,6 +60,14 @@
     <li>They are used for configuration files, data exchange between systems, and APIs.</li>
     <li>Key-value pairs, arrays/lists, and nested structures are commonly supported.</li>
   </ul>
+</section>
+
+<!-- NEW SLIDE: Complete JSON Structure -->
+<section>
+  <h2>Complete RFS Woodchip Transaction JSON Structure</h2>
+  <div class="json-display">
+    <pre id="complete-json"></pre>
+  </div>
 </section>
 
 <section>
@@ -141,9 +172,105 @@
   <script src="https://unpkg.com/reveal.js/plugin/notes/notes.js"></script>
 
   <script>
+    // JSON Data and Syntax Highlighting
+    const jsonData = {
+      "documentId": "RFS0801-2024-001-ABCD123",
+      "reportFormId": "RFS0801",
+      "reportType": "O",
+      "isConfidentialBusinessInformation": false,
+      "reportDate": "2024-03-15",
+      "reportYear": 2024,
+      "compliancePeriod": "Q1",
+      "reportingEntityId": "1234",
+      "reportingCompanyName": "Pacific Northwest Biomass Fuels LLC",
+      "facilityId": "98765",
+      "foreignCompanyId": "NA",
+      "foreignCompanyName": "NA",
+      "foreignCompanyFacilityId": "NA",
+      "supplierName": "Cascade Forest Products Inc.",
+      "supplierAddress": "123 Timber Road, Olympia, WA 98501",
+      "buyerName": "Green Energy Solutions Corp",
+      "buyerAddress": "456 Renewable Lane, Portland, OR 97201",
+      "feedstockLocationName": "Olympic National Forest Unit 47",
+      "feedstockType": "logging slash",
+      "productDescription": "wood chips",
+      "materialCategory": ["Certified"],
+      "productGroup": ["Wood Chips", "Forest Residues"],
+      "quantityDelivered": 2450.5,
+      "quantityUnits": "Short Ton",
+      "feedstockQuantityUnits": 60,
+      "originGeographicCoordinates": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-123.1234, 47.5678],
+          [-123.1200, 47.5678], 
+          [-123.1200, 47.5650],
+          [-123.1234, 47.5650],
+          [-123.1234, 47.5678]
+        ]]
+      },
+      "landOwnershipType": "Federal",
+      "managementPlanReference": "NEPA-2024-ONF-047",
+      "permitId": "USFS-THM-2024-0147",
+      "approvalPathway": "NEPA",
+      "certificationStandard": "SFI",
+      "certificationCode": "SFI-COC-123456",
+      "certificateClaim": "SFI Certified",
+      "supplierCertificationStatus": true,
+      "shipmentDate": "2024-03-10",
+      "transferDate": "2024-03-12",
+      "transportDocumentReference": "TT-2024-0312-001",
+      "haulDistance": 47.2,
+      "haulDistanceUnits": "km",
+      "cocModel": "Physical Separation",
+      "traceabilityLevel": "Batch-level",
+      "massEnergyBalanceData": "MEB-2024-Q1-001",
+      "sustainabilityAttributes": {
+        "biodiversityProtection": true,
+        "soilProtection": true,
+        "waterQualityMaintained": true,
+        "carbonStockMaintained": true
+      },
+      "ghgData": {
+        "totalEmissions": 12.5,
+        "emissionsUnit": "gCO2e/MJ",
+        "calculationMethod": "GREET 2023"
+      },
+      "documentationReference": "coordinates_olympic_unit47.kml",
+      "verificationDocuments": ["attestation_cascade_Q1_2024.pdf"],
+      "thirdPartyAuditReports": ["SFI_audit_cascade_2024.pdf"]
+    };
+
+    function syntaxHighlight(json) {
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'json-number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'json-key';
+          } else {
+            cls = 'json-string';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+          cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
+
     Reveal.initialize({
       hash: true,
       plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+
+    // Add JSON display after Reveal.js initializes
+    Reveal.on( 'ready', event => {
+      const jsonDisplay = document.getElementById('complete-json');
+      if (jsonDisplay) {
+        jsonDisplay.innerHTML = syntaxHighlight(JSON.stringify(jsonData, null, 2));
+      }
     });
   </script>
 
