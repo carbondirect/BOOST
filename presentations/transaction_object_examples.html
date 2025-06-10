@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Liam Kilroy">
+  <title>BOOST Transaction Object Examples</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">BOOST Transaction Object Examples</h1>
+  <p class="author">Liam Kilroy</p>
+  <p class="date">June 2025</p>
+</section>
+
+<section class="slide level6">
+
+<div class="frame">
+<p><span>What is a Structured Machine-Readable Data Object?</span></p>
+<ul>
+<li><p>A structured machine-readable data object is a human-readable
+format that can be easily processed by computers.</p></li>
+<li><p>Examples: <strong>JSON</strong> (JavaScript Object Notation),
+<strong>YAML</strong> (YAML Ain’t Markup Language).</p></li>
+<li><p>They are used for configuration files, data exchange between
+systems, and APIs.</p></li>
+<li><p>Key-value pairs, arrays/lists, and nested structures are commonly
+supported.</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Report Metadata</span></p>
+<ul>
+<li><p><strong>documentId:</strong> RFS0801-2024-001-ABCD123</p></li>
+<li><p><strong>reportFormId:</strong> RFS0801</p></li>
+<li><p><strong>reportType:</strong> O (Original)</p></li>
+<li><p><strong>isConfidential:</strong> false</p></li>
+<li><p><strong>reportDate:</strong> 2024-03-15</p></li>
+<li><p><strong>reportYear:</strong> 2024</p></li>
+<li><p><strong>compliancePeriod:</strong> Q1</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Entities Involved</span></p>
+<ul>
+<li><p><strong>reportingEntityId:</strong> 1234</p></li>
+<li><p><strong>reportingCompanyName:</strong> Pacific Northwest Biomass
+Fuels LLC</p></li>
+<li><p><strong>facilityId:</strong> 98765</p></li>
+<li><p><strong>foreignCompanyId/Name:</strong> NA</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Supply Chain Parties</span></p>
+<ul>
+<li><p><strong>Supplier:</strong> Cascade Forest Products Inc.</p></li>
+<li><p><strong>Supplier Address:</strong> 123 Timber Road, Olympia,
+WA</p></li>
+<li><p><strong>Buyer:</strong> Green Energy Solutions Corp</p></li>
+<li><p><strong>Buyer Address:</strong> 456 Renewable Lane, Portland,
+OR</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Feedstock and Product Information</span></p>
+<ul>
+<li><p><strong>Feedstock Location:</strong> Olympic National Forest Unit
+47</p></li>
+<li><p><strong>Feedstock Type:</strong> logging slash</p></li>
+<li><p><strong>Product Description:</strong> wood chips</p></li>
+<li><p><strong>Material Category:</strong> Certified</p></li>
+<li><p><strong>Product Group:</strong> Wood Chips, Forest
+Residues</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Quantities and Logistics</span></p>
+<ul>
+<li><p><strong>Quantity Delivered:</strong> 2450.5 Short Ton</p></li>
+<li><p><strong>Feedstock Quantity Units:</strong> 60</p></li>
+<li><p><strong>Shipment Date:</strong> 2024-03-10</p></li>
+<li><p><strong>Transfer Date:</strong> 2024-03-12</p></li>
+<li><p><strong>Transport Doc Ref:</strong> TT-2024-0312-001</p></li>
+<li><p><strong>Haul Distance:</strong> 47.2 km</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Certification and Compliance</span></p>
+<ul>
+<li><p><strong>Certification Standard:</strong> SFI</p></li>
+<li><p><strong>Certification Code:</strong> SFI-COC-123456</p></li>
+<li><p><strong>Certificate Claim:</strong> SFI Certified</p></li>
+<li><p><strong>Supplier Certification Status:</strong> true</p></li>
+<li><p><strong>CoC Model:</strong> Physical Separation</p></li>
+<li><p><strong>Traceability Level:</strong> Batch-level</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Sustainability and Emissions Data</span></p>
+<ul>
+<li><p><strong>Sustainability Attributes:</strong></p>
+<ul>
+<li><p>Biodiversity Protection: true</p></li>
+<li><p>Soil Protection: true</p></li>
+<li><p>Water Quality Maintained: true</p></li>
+<li><p>Carbon Stock Maintained: true</p></li>
+</ul></li>
+<li><p><strong>GHG Data:</strong> 12.5 gCO2e/MJ (GREET 2023)</p></li>
+</ul>
+</div>
+<div class="frame">
+<p><span>Supporting Documentation</span></p>
+<ul>
+<li><p><strong>Documentation Reference:</strong>
+coordinates_olympic_unit47.kml</p></li>
+<li><p><strong>Verification Documents:</strong>
+attestation_cascade_Q1_2024.pdf</p></li>
+<li><p><strong>Third Party Audit:</strong>
+SFI_audit_cascade_2024.pdf</p></li>
+</ul>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
