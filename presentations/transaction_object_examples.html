@@ -46,8 +46,7 @@
 
 <section id="title-slide">
   <h1 class="title">BOOST Transaction Object Examples</h1>
-  <p class="author">Liam Kilroy</p>
-  <p class="date">June 2025</p>
+  <p class="date">June 11 2025</p>
 </section>
 
 <section>
@@ -69,8 +68,112 @@
 
 <section>
   <h2>BOOST Integrated ERD</h2>
-  <img src="drafts/images/boost_integrated_erd_mermaid.svg" alt="BOOST ERD" style="width:95%; max-height:650px; border: 1px solid #ccc; border-radius: 8px;" />
+  <img src="img/boost_integrated_erd_mermaid.svg" alt="BOOST ERD" style="width:95%; max-height:650px; border: 1px solid #ccc; border-radius: 8px;" />
   <p style="font-size: 0.6em;">This diagram shows how the payload connects to key ERD entities like Transaction, Certificate, Material, Organization.</p>
+</section>
+
+<section>
+  <h2>Mapping Payload to ERD Entities</h2>
+  <ul>
+    <li><code>reportingCompanyName</code> → <strong>Organization.name</strong></li>
+    <li><code>certificationCode</code> → <strong>Certificate.code</strong></li>
+    <li><code>productGroup</code> → <strong>ProductGroup.name</strong></li>
+    <li><code>quantityDelivered</code> → <strong>TransactionBatch.quantity</strong></li>
+    <li><code>shipmentDate</code> → <strong>Transaction.date_shipped</strong></li>
+    <li><code>verificationDocuments</code> → <strong>VerificationStatement.file_reference</strong></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Report Metadata</h2>
+  <ul>
+    <li><strong>documentId:</strong> RFS0801-2024-001-ABCD123</li>
+    <li><strong>reportFormId:</strong> RFS0801</li>
+    <li><strong>reportType:</strong> O (Original)</li>
+    <li><strong>isConfidential:</strong> false</li>
+    <li><strong>reportDate:</strong> 2024-03-15</li>
+    <li><strong>reportYear:</strong> 2024</li>
+    <li><strong>compliancePeriod:</strong> Q1</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Entities Involved</h2>
+  <ul>
+    <li><strong>reportingEntityId:</strong> 1234</li>
+    <li><strong>reportingCompanyName:</strong> Pacific Northwest Biomass Fuels LLC</li>
+    <li><strong>facilityId:</strong> 98765</li>
+    <li><strong>foreignCompanyId/Name:</strong> NA</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Supply Chain Parties</h2>
+  <ul>
+    <li><strong>Supplier:</strong> Cascade Forest Products Inc.</li>
+    <li><strong>Supplier Address:</strong> 123 Timber Road, Olympia, WA</li>
+    <li><strong>Buyer:</strong> Green Energy Solutions Corp</li>
+    <li><strong>Buyer Address:</strong> 456 Renewable Lane, Portland, OR</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Feedstock and Product Information</h2>
+  <ul>
+    <li><strong>Feedstock Location:</strong> Olympic National Forest Unit 47</li>
+    <li><strong>Feedstock Type:</strong> logging slash</li>
+    <li><strong>Product Description:</strong> wood chips</li>
+    <li><strong>Material Category:</strong> Certified</li>
+    <li><strong>Product Group:</strong> Wood Chips, Forest Residues</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Quantities and Logistics</h2>
+  <ul>
+    <li><strong>Quantity Delivered:</strong> 2450.5 Short Ton</li>
+    <li><strong>Feedstock Quantity Units:</strong> 60</li>
+    <li><strong>Shipment Date:</strong> 2024-03-10</li>
+    <li><strong>Transfer Date:</strong> 2024-03-12</li>
+    <li><strong>Transport Doc Ref:</strong> TT-2024-0312-001</li>
+    <li><strong>Haul Distance:</strong> 47.2 km</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Certification and Compliance</h2>
+  <ul>
+    <li><strong>Certification Standard:</strong> SFI</li>
+    <li><strong>Certification Code:</strong> SFI-COC-123456</li>
+    <li><strong>Certificate Claim:</strong> SFI Certified</li>
+    <li><strong>Supplier Certification Status:</strong> true</li>
+    <li><strong>CoC Model:</strong> Physical Separation</li>
+    <li><strong>Traceability Level:</strong> Batch-level</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Sustainability and Emissions Data</h2>
+  <ul>
+    <li><strong>Sustainability Attributes:</strong>
+      <ul>
+        <li>Biodiversity Protection: true</li>
+        <li>Soil Protection: true</li>
+        <li>Water Quality Maintained: true</li>
+        <li>Carbon Stock Maintained: true</li>
+      </ul>
+    </li>
+    <li><strong>GHG Data:</strong> 12.5 gCO2e/MJ (GREET 2023)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Supporting Documentation</h2>
+  <ul>
+    <li><strong>Documentation Reference:</strong> coordinates_olympic_unit47.kml</li>
+    <li><strong>Verification Documents:</strong> attestation_cascade_Q1_2024.pdf</li>
+    <li><strong>Third Party Audit:</strong> SFI_audit_cascade_2024.pdf</li>
+  </ul>
 </section>
 
 <section>
