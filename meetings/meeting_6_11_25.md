@@ -12,6 +12,8 @@
 
 ### 1. **Welcome and Introductions** (5 minutes)
    - Roll call and attendance
+      - BOOST Group
+      - Email list
    - Welcome any new members
 
 ### 2. **Administrative Updates** (5 minutes)
