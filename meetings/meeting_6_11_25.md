@@ -24,7 +24,6 @@
    - Phase 1 milestone progress review (due June 21)
    - Current status of DONE and DOING tasks
    - Contributiong: Issues Sign-up
-   - Upcoming deadlines and deliverables
 
 ### 4. **Discussion Topics** (35 minutes)
 
