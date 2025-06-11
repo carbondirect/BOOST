@@ -21,7 +21,7 @@
    - Overview of today's agenda
 
 ### 3. **Project Updates and Announcements** (10 minutes)
-   - Phase 1 milestone progress review (due June 21)
+   - Phase 1 milestone progress review
    - Current status of DONE and DOING tasks
    - Contributiong: Issues Sign-up
 
