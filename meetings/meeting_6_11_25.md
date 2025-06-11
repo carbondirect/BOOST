@@ -4,9 +4,12 @@
 
 **Biomass Open Origin Standard for Tracking (BOOST)**
 
-**Date:** June 11, 2025  
-**Time:** 11:00 AM to 12:00 PM PDT  
-**Location:** [Zoom Meeting Link] Meeting ID: TBD
+**Date:** June 11, 2025
+**Time:** 11:00 AM to 12:00 PM PDT
+**Location:** [Zoom Meeting Link](https://carbon-direct.zoom.us/j/84254112929?pwd=aaX9mOkJFUO1NLT0UaAiThTyLh5Vrj.1) 
+**Meeting ID:** `842 5411 2929` 
+**Passcode:** `231646`
+
 
 ---
 
