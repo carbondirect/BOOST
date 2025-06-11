@@ -15,8 +15,9 @@
    - Welcome any new members
 
 ### 2. **Administrative Updates** (5 minutes)
-   - Review of W3C Code of Conduct
-   - Approval of previous meeting minutes (if applicable)
+   - Kickoff meeting review
+      - [Notes](https://github.com/carbondirect/BOOST/blob/main/meetings/kickoff_meeting_notes.md)
+      - [Slides](https://carbondirect.github.io/BOOST/presentations/boost_kickoff.html) 
    - Overview of today's agenda
 
 ### 3. **Project Updates and Announcements** (10 minutes)
