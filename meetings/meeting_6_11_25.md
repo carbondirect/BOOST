@@ -27,16 +27,19 @@
 
 ### 4. **Discussion Topics** (35 minutes)
 
-   - **Topic 1: JSON-LD/YAML-LD Serialization Format Decision** (15 minutes)
-     - Overview by: Technical team
-     - Review format options and trade-offs
-     - Discussion and consensus building on serialization approach
-
-   - **Topic 2: Core Data Entity Schema Expansion** (20 minutes)
-     - Overview by: @team:technical
+   - **Topic 1: Core Data Entity Schema Expansion** (20 minutes)
+     - Overview
+     - Attribute [dictionary review](https://github.com/carbondirect/BOOST/blob/main/drafts/TransactionSchema.md).
      - Review current biomass_coc_schema.json progress
      - Discuss expansion to full JSON-LD schemas for Organizations, Consignments, Sustainability Info
      - Identify gaps and next steps for Phase 2 drafting
+       
+   - **Topic 2: JSON-LD/YAML-LD Serialization Format Decision** (15 minutes)
+     - Overview by: Technical team
+     - Review format options and trade-offs
+     - Discussion and consensus building on serialization approach
+        - JSON vs YAML
+        - Linked Data ? (Schema.org)
 
 ### 5. **Decision Making and Action Items** (10 minutes)
    - Finalize serialization format decision
