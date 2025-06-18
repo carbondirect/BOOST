@@ -1,0 +1,143 @@
+#+LATEX_CLASS_OPTIONS: [title=small,preset=opensansnote,par=skip]
+#+LATEX_HEADER: \usepackage{phfnote}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+OPTIONS: toc:nil
+#+TITLE: BOOST Project Update
+#+SUBTITLE: Interagency Working Group
+#+AUTHOR: Carbon Direct Team
+\maketitle
+
+
+* BOOST Update
+:PROPERTIES:
+:CUSTOM_ID: boost-project-update
+:END:
+*Biomass Open Origin Standard for Tracking (BOOST) Data Standard*
+
+*Prepared for:* Funders and policy partners
+
+*Date:* June 2025
+
+** Summary
+:PROPERTIES:
+:CUSTOM_ID: summary
+:END:
+The BOOST project is developing a shared data standard for tracking biomass through complex supply chains -- a critical enabler of credible climate action. Designed to support regulatory oversight, sustainability assurance, and market transparency, BOOST aims to become a foundational infrastructure for the rapidly growing bioeconomy.
+
+** Why it Matters
+:PROPERTIES:
+:CUSTOM_ID: why-it-matters
+:END:
+As global climate policy increasingly leans on nature-based and bio-based solutions, biomass has emerged as a key input across energy, materials, and carbon removal sectors. Yet today, there is no common system to verify where biomass comes from, how it moves, or how it is transformed.
+
+This lack of traceability undermines both environmental integrity and policy credibility. BOOST addresses this gap by building a transparent, verifiable, and interoperable data model -- one that aligns with public sector priorities such as:
+
+- Ensuring environmental and social safeguards
+
+- Enabling robust monitoring, reporting, and verification (MRV)
+
+- Supporting harmonized standards and cross-border coordination
+
+** Project Progress
+:PROPERTIES:
+:CUSTOM_ID: project-progress
+:END:
+The BOOST working group, operating as an open W3C Community Group, has established the technical and collaborative foundation for the standard:
+
+- *Data Model Architecture:* Draft definitions for key entities such as biomass assets, custody transfers, organizations, and verification certificates
+
+- *Use Case Alignment:* Real-world scenarios are shaping the model to reflect on-the-ground complexities and needs
+
+- *Governance and Process:* Established contribution guidelines, community norms, and templates to support scalable participation
+
+- *Validation Infrastructure:* Early tooling is in place for schema validation, aiding adoption and compliance
+
+** Policy-Relevant Features
+:PROPERTIES:
+:CUSTOM_ID: policy-relevant-features
+:END:
+BOOST is designed with policy alignment in mind:
+
+- *Auditability:* Each record in the chain of custody includes provenance metadata and version tracking
+
+- *Adaptability:* Modular components can reflect jurisdiction-specific rules or regulatory frameworks
+
+- *Transparency:* Open governance and W3C affiliation ensure public interest orientation and long-term accessibility
+
+** What's Next
+:PROPERTIES:
+:CUSTOM_ID: whats-next
+:END:
+In the coming months, the BOOST group will:
+
+- Finalize a stable draft of the standard for broader review
+
+- Conduct pilot implementations with supply chain actors and policymakers
+
+- Refine validation tooling and guidance for integration into digital MRV systems
+
+- Continue stakeholder outreach to inform governance and field-readiness
+
+
+* Key Questions
+** Q1. /In non-technical terms, what will BOOST look like when complete?/
+
+Imagine a “digital passport” for every batch of biomass. When a truckload of biomass is filled and ready to depart a landing, imagine that a new passport is minted for that load with a standardized set of fields. Just like a passport carries unique identifiers (Passport Number) and distinctive characteristics of a person (height, weight, eye-color, etc.), the biomass “passport” includes a unique identifier for the load and characteristics such as the piece size, moisture content, and information about the provenance of the material (type of silviculture, land ownership, etc.). Just as a passport is stamped when the holder passes through immigration to enter a country, environmental environmental performance certificate numbers such as NEPA permit or THP number, management certificates such as SFI or FSC, etc. are “stamped” on the biomass passport.
+
+It's important to clarify: BOOST itself is not a software platform. It is a data standard---a set of shared rules for how information should be structured and exchanged across systems. When it is complete, *BOOST will define a comprehensive set of fields that will be used when a new biomass passport is minted*. An open comprehensive and robust set of attributes will enable:
+
+- *Seamless data handoffs:* Software tools built on the BOOST standard will allow a truck driver to scan or upload a QR-coded manifest at harvest, with the same data following the biomass through processing and into the biofuel plant, without re-keying
+
+- *Automated compliance checks:* Regulatory software platforms can be built to accept BOOST-compliant records, enabling them to display origin, transport, and sustainability info on timelines and maps.
+
+- *Plug-and-play tools:* Forest owners use one mobile app to generate BOOST-compliant harvest records; transport companies use another to append shipment data; certifiers use their audit software to verify compliance, all speaking the same “language” -- the BOOST format.
+
+- *Transparent dashboards:* Public-facing dashboards can be developed using BOOST-compliant data to show aggregate insights, backed by tamper-evident, standardized records.
+
+Think of BOOST as moving from paper logbooks and incompatible spreadsheets to a universal “language” for biomass data -- enabling the creation of interoperable tools, but not providing those tools itself.
+
+** Q2. /What does it mean that BOOST is an open standard, and what decisions will agencies need to make as they implement the standard?/
+
+BOOST is an open standard, vendor-agnostic data standard, not a software product. This means:
+
+- *Maintains vendor-agnosticism:* BOOST does not prescribe or favor any specific software platform. It defines open specifications that anyone can implement.
+
+- *Encourages interoperability:* Its specifications are openly published (via W3C), allowing any tool or registry to adopt the same schemas.
+
+- *Consensus-based governance:* All updates to the standard are driven by broad stakeholder agreement, preventing capture by any single interest group.
+
+Decisions for policymakers and implementers:
+
+1. *What to mandate:* Choose which parts of the BOOST schema to require (e.g., harvest, transport, processing) and when.
+
+2. *Data access policies:* Define which fields are “public” versus “confidential,” and establish redaction or encryption requirements.
+
+3. *Certification integration:* Choose how third-party certifiers or auditors will ingest BOOST documents via existing audit platforms, custom APIs, or web portals.
+
+4. *Version governance:* Determine how often to update to new BOOST versions and whether older versions remain acceptable or preferred.
+
+The key point: BOOST provides the *rules of the road*, not the vehicles. Agencies and software vendors decide how and what vehicles to build.
+
+** Q3. /How is BOOST/W3C governance structured today?/
+
+BOOST operates as a W3C Community Group under W3C's open-membership model. Key elements include:
+
+- *Chairs and technical editors.* Carbon Direct is funded to chair, provide development support and facilitation through the initial release of BOOST. This support includes facilitating meetings, setting agendas, contributing to the technical standard and managing the GitHub repos where specifications live. Technical editors maintain the CoC schema, update documentation and merge pull requests.
+
+- *Open participation.* Any organization or individual can join mailing lists, attend calls and contribute issues or pull requests, ensuring a broad base of voices.
+
+- *Consensus-driven decision making.* Changes are only made when there is broad agreement across stakeholders, ensuring inclusivity and neutrality. A transparent decision process has been formalized in the [[https://github.com/carbondirect/BOOST/blob/main/BOOST_Charter.org#decision-process][_BOOST Charter_]].
+
+- *Versioned releases.* BOOST versions are tagged in GitHub, with change logs published alongside each release to track how the schema evolves over time.
+
+** Q4. /What influence do industry players have today, and how will their role change when Carbon Direct is no longer chair?/
+
+Today, industry participants -- feedstock suppliers, transporters, bioenergy producers and certification bodies -- play a central role in shaping BOOST's specifications. As active members of the W3C Community Group, they propose data fields, validate real-world workflows and pilot reference implementations. Carbon Direct, as the initial chair, facilitates consensus, aligns diverse interests and shepherds releases.
+
+While BOOST is currently stewarded by Carbon Direct, its long-term governance remains an open and important question, especially as adoption by California state agencies becomes more likely. When Carbon Direct steps down as chair, governance will need to evolve. Key considerations include:
+
+1. *State representation*: Agencies like those in California could have liaison seats to ensure regulatory needs are heard in schema updates.
+
+2. *Continuity of the open standard*: Ensuring ongoing development and leadership of the Open Standard.
+
+Ultimately, BOOST remains a data standard shaped by a community, not a software product owned by one party. Its continued neutrality depends on balanced, transparent governance.
