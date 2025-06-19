@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOST Entity Schema Navigator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f6f8fa;
+            color: #24292e;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e1e4e8;
+            padding-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            color: #0366d6;
+        }
+        .header p {
+            margin: 0;
+            color: #586069;
+            font-size: 16px;
+        }
+        .instructions {
+            background-color: #f1f8ff;
+            border: 1px solid #c8e1ff;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 30px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #0366d6;
+        }
+        .erd-container {
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 20px;
+            overflow: auto;
+        }
+        .erd-svg {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        .entity-box {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .entity-box:hover {
+            opacity: 0.8;
+        }
+        .entity-links {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .entity-link {
+            display: block;
+            padding: 12px 16px;
+            background-color: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #24292e;
+            transition: all 0.2s;
+        }
+        .entity-link:hover {
+            background-color: #e1e4e8;
+            border-color: #c8e1ff;
+            text-decoration: none;
+        }
+        .entity-link strong {
+            color: #0366d6;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #586069;
+            font-size: 14px;
+            border-top: 1px solid #e1e4e8;
+            padding-top: 20px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0366d6;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../" class="back-link">← Back to BOOST Specification</a>
+        
+        <div class="header">
+            <h1>🗂️ BOOST Entity Schema Navigator</h1>
+            <p>Interactive Entity Relationship Diagram for Stakeholder Feedback</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 How to Provide Feedback</h3>
+            <p><strong>Click on any entity</strong> in the diagram below or use the links to jump directly to its discussion thread. No GitHub account or technical knowledge required - just share your thoughts on each entity schema!</p>
+            <p><strong>💡 What we're looking for:</strong> Field completeness, data types, real-world applicability, missing attributes, and any other insights from your biomass supply chain experience.</p>
+        </div>
+
+        <div class="erd-container">
+            <object data="../drafts/images/boost_integrated_erd_mermaid.svg" type="image/svg+xml" class="erd-svg" id="erd-svg">
+                <img src="../drafts/images/boost_integrated_erd_mermaid.svg" alt="BOOST Entity Relationship Diagram" class="erd-svg">
+            </object>
+        </div>
+
+        <div class="entity-links">
+            <a href="https://github.com/carbondirect/BOOST/discussions/90" class="entity-link" target="_blank">
+                <strong>Organization</strong><br>
+                Legal entities in biomass supply chain
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/91" class="entity-link" target="_blank">
+                <strong>CertificationScheme</strong><br>
+                Standards (FSC, SBP, RSB, ISO 38200, etc.)
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/92" class="entity-link" target="_blank">
+                <strong>Certificate</strong><br>
+                Formal certification documents
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/93" class="entity-link" target="_blank">
+                <strong>CertificationBody</strong><br>
+                Independent third-party certification organizations
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/94" class="entity-link" target="_blank">
+                <strong>MaterialFeedstock</strong><br>
+                Physical biomass/materials with quantity, type, species data
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/95" class="entity-link" target="_blank">
+                <strong>Supplier</strong><br>
+                Legal entities providing materials
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/96" class="entity-link" target="_blank">
+                <strong>Customer</strong><br>
+                Legal entities receiving materials
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/97" class="entity-link" target="_blank">
+                <strong>TransactionConsignment</strong><br>
+                Material transfers between organizations
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/98" class="entity-link" target="_blank">
+                <strong>TransactionBatch</strong><br>
+                Specific quantities within transactions
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/99" class="entity-link" target="_blank">
+                <strong>Claim</strong><br>
+                Certification claims (SBP-compliant, FSC Mix, RSB Global)
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/100" class="entity-link" target="_blank">
+                <strong>SaleDeliveryDocument</strong><br>
+                Official transfer documentation
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/101" class="entity-link" target="_blank">
+                <strong>SAR</strong><br>
+                SBP Audit Reports on Energy and Carbon Data
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/102" class="entity-link" target="_blank">
+                <strong>SREG</strong><br>
+                SBP Reports on Energy and Carbon for Supplied Biomass
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/103" class="entity-link" target="_blank">
+                <strong>VerificationStatement</strong><br>
+                Third-party verification documents
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/104" class="entity-link" target="_blank">
+                <strong>MassBalanceAccount</strong><br>
+                Accounting mechanism for certified material tracking
+            </a>
+            <a href="https://github.com/carbondirect/BOOST/discussions/105" class="entity-link" target="_blank">
+                <strong>ProductGroup</strong><br>
+                Categorization for chain of custody methods
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>This ERD navigator is part of the BOOST data standard development process.<br>
+            Your feedback helps ensure the standard meets real-world biomass chain of custody needs.</p>
+            <p><a href="https://github.com/carbondirect/BOOST">📂 View full repository</a> | 
+            <a href="https://github.com/carbondirect/BOOST/issues/61">🎯 Parent Issue #61</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Add click handlers for SVG elements if loaded as object
+        document.addEventListener('DOMContentLoaded', function() {
+            const svgObject = document.getElementById('erd-svg');
+            
+            svgObject.addEventListener('load', function() {
+                const svgDoc = svgObject.contentDocument;
+                if (svgDoc) {
+                    // Try to make SVG elements clickable
+                    // This would require modifying the SVG to add click handlers
+                    console.log('SVG loaded successfully');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
