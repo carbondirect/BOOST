@@ -76,6 +76,39 @@
             pointer-events: none;
             user-select: none;
         }
+        .entity-overlay {
+            cursor: pointer;
+            background-color: rgba(0, 123, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            z-index: 5;
+        }
+        .entity-overlay:hover {
+            background-color: rgba(0, 123, 255, 0.2);
+            border-color: rgba(0, 123, 255, 0.6);
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+        }
+        .entity-overlay::after {
+            content: attr(data-entity);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+        .entity-overlay:hover::after {
+            opacity: 1;
+        }
         .zoom-controls {
             position: absolute;
             top: 10px;
@@ -192,6 +225,23 @@
             </div>
             <div class="svg-wrapper" id="svg-wrapper">
                 <img src="../drafts/images/boost_integrated_erd_mermaid.svg" alt="BOOST Entity Relationship Diagram" class="erd-svg" id="erd-svg">
+                <!-- Clickable overlays for entities -->
+                <div class="entity-overlay" data-entity="Organization" data-discussion="90" style="position: absolute; left: 41.8%; top: 10.1%; width: 7.8%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="CertificationScheme" data-discussion="91" style="position: absolute; left: 3.6%; top: 29.1%; width: 7.3%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="Certificate" data-discussion="92" style="position: absolute; left: 14.4%; top: 24.9%; width: 7.3%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="CertificationBody" data-discussion="93" style="position: absolute; left: 29.8%; top: 57.4%; width: 8.1%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="MaterialFeedstock" data-discussion="94" style="position: absolute; left: 94.9%; top: 78.1%; width: 7.3%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="Supplier" data-discussion="95" style="position: absolute; left: 25.1%; top: 28.1%; width: 6.8%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="Customer" data-discussion="96" style="position: absolute; left: 35.2%; top: 30.3%; width: 6.8%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="TransactionConsignment" data-discussion="97" style="position: absolute; left: 83.0%; top: 28.1%; width: 8.9%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="TransactionBatch" data-discussion="98" style="position: absolute; left: 76.7%; top: 54.7%; width: 8.4%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="Claim" data-discussion="99" style="position: absolute; left: 59.4%; top: 83.4%; width: 5.2%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="SaleDeliveryDocument" data-discussion="100" style="position: absolute; left: 89.3%; top: 49.3%; width: 8.9%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="SAR" data-discussion="101" style="position: absolute; left: 82.5%; top: 83.4%; width: 4.7%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="SREG" data-discussion="102" style="position: absolute; left: 70.7%; top: 83.4%; width: 5.2%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="VerificationStatement" data-discussion="103" style="position: absolute; left: 48.3%; top: 29.1%; width: 8.4%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="MassBalanceAccount" data-discussion="104" style="position: absolute; left: 58.8%; top: 26.0%; width: 8.4%; height: 19.4%;"></div>
+                <div class="entity-overlay" data-entity="ProductGroup" data-discussion="105" style="position: absolute; left: 70.9%; top: 30.3%; width: 7.8%; height: 19.4%;"></div>
             </div>
         </div>
 
@@ -309,7 +359,36 @@
                 // Prevent context menu on right click
                 this.svgWrapper.addEventListener('contextmenu', (e) => e.preventDefault());
                 
+                // Entity click handlers
+                this.initEntityClickHandlers();
+                
                 this.updateTransform();
+            }
+            
+            initEntityClickHandlers() {
+                const entityOverlays = document.querySelectorAll('.entity-overlay');
+                entityOverlays.forEach(overlay => {
+                    overlay.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const discussionNumber = overlay.getAttribute('data-discussion');
+                        const entityName = overlay.getAttribute('data-entity');
+                        const discussionUrl = `https://github.com/carbondirect/BOOST/discussions/${discussionNumber}`;
+                        
+                        // Add a visual click effect
+                        overlay.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            overlay.style.transform = 'scale(1)';
+                        }, 150);
+                        
+                        // Open discussion in new tab
+                        window.open(discussionUrl, '_blank');
+                    });
+                    
+                    // Prevent pan when hovering over entity
+                    overlay.addEventListener('mousedown', (e) => {
+                        e.stopPropagation();
+                    });
+                });
             }
             
             zoomIn() {
