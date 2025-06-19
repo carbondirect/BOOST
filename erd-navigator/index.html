@@ -57,15 +57,24 @@
             height: 600px;
             min-height: 400px;
         }
-        .erd-svg {
-            max-width: none;
-            height: auto;
+        .svg-wrapper {
+            width: 100%;
+            height: 100%;
             cursor: grab;
             transition: transform 0.1s ease;
             transform-origin: 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .erd-svg:active {
+        .svg-wrapper:active {
             cursor: grabbing;
+        }
+        .erd-svg {
+            max-width: none;
+            height: auto;
+            pointer-events: none;
+            user-select: none;
         }
         .zoom-controls {
             position: absolute;
@@ -181,9 +190,9 @@
             <div class="zoom-info" id="zoom-info">
                 Zoom: 100% | 🖱️ Drag to pan, scroll to zoom
             </div>
-            <object data="../drafts/images/boost_integrated_erd_mermaid.svg" type="image/svg+xml" class="erd-svg" id="erd-svg">
-                <img src="../drafts/images/boost_integrated_erd_mermaid.svg" alt="BOOST Entity Relationship Diagram" class="erd-svg">
-            </object>
+            <div class="svg-wrapper" id="svg-wrapper">
+                <img src="../drafts/images/boost_integrated_erd_mermaid.svg" alt="BOOST Entity Relationship Diagram" class="erd-svg" id="erd-svg">
+            </div>
         </div>
 
         <div class="entity-links">
@@ -271,6 +280,7 @@
                 this.startX = 0;
                 this.startY = 0;
                 this.container = document.getElementById('erd-container');
+                this.svgWrapper = document.getElementById('svg-wrapper');
                 this.svgElement = document.getElementById('erd-svg');
                 this.zoomInfo = document.getElementById('zoom-info');
                 
@@ -287,17 +297,17 @@
                 this.container.addEventListener('wheel', (e) => this.handleWheel(e));
                 
                 // Pan functionality
-                this.svgElement.addEventListener('mousedown', (e) => this.startDrag(e));
+                this.svgWrapper.addEventListener('mousedown', (e) => this.startDrag(e));
                 document.addEventListener('mousemove', (e) => this.drag(e));
                 document.addEventListener('mouseup', () => this.endDrag());
                 
                 // Touch support for mobile
-                this.svgElement.addEventListener('touchstart', (e) => this.startTouch(e));
-                this.svgElement.addEventListener('touchmove', (e) => this.moveTouch(e));
-                this.svgElement.addEventListener('touchend', () => this.endDrag());
+                this.svgWrapper.addEventListener('touchstart', (e) => this.startTouch(e));
+                this.svgWrapper.addEventListener('touchmove', (e) => this.moveTouch(e));
+                this.svgWrapper.addEventListener('touchend', () => this.endDrag());
                 
                 // Prevent context menu on right click
-                this.svgElement.addEventListener('contextmenu', (e) => e.preventDefault());
+                this.svgWrapper.addEventListener('contextmenu', (e) => e.preventDefault());
                 
                 this.updateTransform();
             }
@@ -374,7 +384,7 @@
             
             updateTransform() {
                 const transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
-                this.svgElement.style.transform = transform;
+                this.svgWrapper.style.transform = transform;
                 
                 const zoomPercent = Math.round(this.scale * 100);
                 this.zoomInfo.textContent = `Zoom: ${zoomPercent}% | 🖱️ Drag to pan, scroll to zoom`;
