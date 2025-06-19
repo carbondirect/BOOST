@@ -52,12 +52,59 @@
             border: 1px solid #e1e4e8;
             border-radius: 6px;
             padding: 20px;
-            overflow: auto;
+            overflow: hidden;
+            position: relative;
+            height: 600px;
+            min-height: 400px;
         }
         .erd-svg {
-            max-width: 100%;
+            max-width: none;
             height: auto;
+            cursor: grab;
+            transition: transform 0.1s ease;
+            transform-origin: 0 0;
+        }
+        .erd-svg:active {
+            cursor: grabbing;
+        }
+        .zoom-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .zoom-btn {
+            background: #f6f8fa;
+            border: 1px solid #d1d5da;
+            border-radius: 4px;
+            padding: 6px 12px;
+            margin: 2px;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #24292e;
+            display: inline-block;
+            min-width: 32px;
+            text-align: center;
+        }
+        .zoom-btn:hover {
+            background: #e1e4e8;
+            border-color: #c8e1ff;
+        }
+        .zoom-info {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #586069;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .entity-box {
             cursor: pointer;
@@ -125,7 +172,15 @@
             <p><strong>💡 What we're looking for:</strong> Field completeness, data types, real-world applicability, missing attributes, and any other insights from your biomass supply chain experience.</p>
         </div>
 
-        <div class="erd-container">
+        <div class="erd-container" id="erd-container">
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoom-in" title="Zoom In">+</button>
+                <button class="zoom-btn" id="zoom-out" title="Zoom Out">−</button>
+                <button class="zoom-btn" id="zoom-reset" title="Reset View">⌂</button>
+            </div>
+            <div class="zoom-info" id="zoom-info">
+                Zoom: 100% | 🖱️ Drag to pan, scroll to zoom
+            </div>
             <object data="../drafts/images/boost_integrated_erd_mermaid.svg" type="image/svg+xml" class="erd-svg" id="erd-svg">
                 <img src="../drafts/images/boost_integrated_erd_mermaid.svg" alt="BOOST Entity Relationship Diagram" class="erd-svg">
             </object>
@@ -207,16 +262,135 @@
     </div>
 
     <script>
-        // Add click handlers for SVG elements if loaded as object
-        document.addEventListener('DOMContentLoaded', function() {
-            const svgObject = document.getElementById('erd-svg');
+        class ERDNavigator {
+            constructor() {
+                this.scale = 1;
+                this.translateX = 0;
+                this.translateY = 0;
+                this.isDragging = false;
+                this.startX = 0;
+                this.startY = 0;
+                this.container = document.getElementById('erd-container');
+                this.svgElement = document.getElementById('erd-svg');
+                this.zoomInfo = document.getElementById('zoom-info');
+                
+                this.init();
+            }
             
+            init() {
+                // Zoom controls
+                document.getElementById('zoom-in').addEventListener('click', () => this.zoomIn());
+                document.getElementById('zoom-out').addEventListener('click', () => this.zoomOut());
+                document.getElementById('zoom-reset').addEventListener('click', () => this.resetView());
+                
+                // Mouse wheel zoom
+                this.container.addEventListener('wheel', (e) => this.handleWheel(e));
+                
+                // Pan functionality
+                this.svgElement.addEventListener('mousedown', (e) => this.startDrag(e));
+                document.addEventListener('mousemove', (e) => this.drag(e));
+                document.addEventListener('mouseup', () => this.endDrag());
+                
+                // Touch support for mobile
+                this.svgElement.addEventListener('touchstart', (e) => this.startTouch(e));
+                this.svgElement.addEventListener('touchmove', (e) => this.moveTouch(e));
+                this.svgElement.addEventListener('touchend', () => this.endDrag());
+                
+                // Prevent context menu on right click
+                this.svgElement.addEventListener('contextmenu', (e) => e.preventDefault());
+                
+                this.updateTransform();
+            }
+            
+            zoomIn() {
+                this.scale = Math.min(this.scale * 1.2, 5);
+                this.updateTransform();
+            }
+            
+            zoomOut() {
+                this.scale = Math.max(this.scale / 1.2, 0.1);
+                this.updateTransform();
+            }
+            
+            resetView() {
+                this.scale = 1;
+                this.translateX = 0;
+                this.translateY = 0;
+                this.updateTransform();
+            }
+            
+            handleWheel(e) {
+                e.preventDefault();
+                const rect = this.container.getBoundingClientRect();
+                const centerX = (rect.width / 2 - this.translateX) / this.scale;
+                const centerY = (rect.height / 2 - this.translateY) / this.scale;
+                
+                const scaleFactor = e.deltaY > 0 ? 0.9 : 1.1;
+                const newScale = Math.max(0.1, Math.min(5, this.scale * scaleFactor));
+                
+                this.translateX += (centerX * this.scale - centerX * newScale);
+                this.translateY += (centerY * this.scale - centerY * newScale);
+                this.scale = newScale;
+                
+                this.updateTransform();
+            }
+            
+            startDrag(e) {
+                this.isDragging = true;
+                this.startX = e.clientX - this.translateX;
+                this.startY = e.clientY - this.translateY;
+                e.preventDefault();
+            }
+            
+            startTouch(e) {
+                if (e.touches.length === 1) {
+                    this.isDragging = true;
+                    this.startX = e.touches[0].clientX - this.translateX;
+                    this.startY = e.touches[0].clientY - this.translateY;
+                    e.preventDefault();
+                }
+            }
+            
+            drag(e) {
+                if (!this.isDragging) return;
+                
+                this.translateX = e.clientX - this.startX;
+                this.translateY = e.clientY - this.startY;
+                this.updateTransform();
+            }
+            
+            moveTouch(e) {
+                if (!this.isDragging || e.touches.length !== 1) return;
+                
+                this.translateX = e.touches[0].clientX - this.startX;
+                this.translateY = e.touches[0].clientY - this.startY;
+                this.updateTransform();
+                e.preventDefault();
+            }
+            
+            endDrag() {
+                this.isDragging = false;
+            }
+            
+            updateTransform() {
+                const transform = `translate(${this.translateX}px, ${this.translateY}px) scale(${this.scale})`;
+                this.svgElement.style.transform = transform;
+                
+                const zoomPercent = Math.round(this.scale * 100);
+                this.zoomInfo.textContent = `Zoom: ${zoomPercent}% | 🖱️ Drag to pan, scroll to zoom`;
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const navigator = new ERDNavigator();
+            
+            // Also try to handle SVG loading for potential click handlers
+            const svgObject = document.getElementById('erd-svg');
             svgObject.addEventListener('load', function() {
                 const svgDoc = svgObject.contentDocument;
                 if (svgDoc) {
-                    // Try to make SVG elements clickable
-                    // This would require modifying the SVG to add click handlers
-                    console.log('SVG loaded successfully');
+                    console.log('SVG loaded successfully - ready for potential entity click handlers');
                 }
             });
         });
