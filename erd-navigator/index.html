@@ -110,6 +110,38 @@
             background-color: #0860ca;
             text-decoration: none;
         }
+        .connector-legend {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        .connector-legend h4 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #0366d6;
+            font-size: 14px;
+        }
+        .connector-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .connector-visual {
+            font-family: monospace;
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 4px 8px;
+            margin-right: 12px;
+            border-radius: 3px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .connector-description {
+            color: #555;
+        }
         .erd-container {
             text-align: center;
             background-color: #fff;
@@ -301,6 +333,32 @@
             <p><strong>Entities</strong> represent the core data objects in biomass supply chains - things like Organizations, Certificates, Material Feedstock, and Transactions. Each entity captures specific information needed for chain of custody tracking.</p>
             <p><strong>Attributes</strong> are the data fields within each entity (like organization name, certificate expiry date, or biomass quantity). These define what information must be recorded and tracked.</p>
             <p><strong>Relationships</strong> show how entities connect to each other - for example, how a Certificate relates to an Organization, or how Material Feedstock flows through Transactions. These connections enable complete supply chain traceability.</p>
+            <p style="margin-left: 20px; font-size: 14px; color: #555;">
+                <strong>Reading the Diagram:</strong> Entities are shown as rectangular boxes containing their names (like Organization, Certificate, MaterialFeedstock). Lines connect related entities to show how they interact - for example, an Organization "is issued" a Certificate, or a Supplier "provides" MaterialFeedstock. Text along the lines describes the nature of each relationship in the biomass supply chain.
+            </p>
+            <div class="connector-legend">
+                <h4>🔗 Relationship Connectors</h4>
+                <div class="connector-item">
+                    <div class="connector-visual">--||-||</div>
+                    <div class="connector-description">One-to-one relationship (e.g., Organization has one Certificate)</div>
+                </div>
+                <div class="connector-item">
+                    <div class="connector-visual">--||o{</div>
+                    <div class="connector-description">One-to-many relationship (e.g., Organization has many Transactions)</div>
+                </div>
+                <div class="connector-item">
+                    <div class="connector-visual">}|--||</div>
+                    <div class="connector-description">Many-to-one relationship (e.g., many Materials from one Supplier)</div>
+                </div>
+                <div class="connector-item">
+                    <div class="connector-visual">}|--|{</div>
+                    <div class="connector-description">Many-to-many relationship (e.g., Materials can have multiple Claims)</div>
+                </div>
+                <div class="connector-item">
+                    <div class="connector-visual">--||o|</div>
+                    <div class="connector-description">Optional relationship (e.g., Organization may have Certificate)</div>
+                </div>
+            </div>
             <p style="margin-bottom: 0;"><strong>Purpose:</strong> This diagram maps the complete data structure needed to track biomass from source to end use, supporting regulatory compliance, sustainability verification, and carbon accounting.</p>
         </div>
 
