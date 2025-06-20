@@ -46,6 +46,70 @@
             margin-top: 0;
             color: #0366d6;
         }
+        .info-section {
+            background-color: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .info-section h3 {
+            margin-top: 0;
+            color: #0366d6;
+            font-size: 18px;
+        }
+        .legend {
+            background-color: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 25px;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #c53030;
+            font-size: 16px;
+        }
+        .legend-item {
+            display: inline-block;
+            margin-right: 25px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .priority-high {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .priority-medium {
+            color: #e36209;
+            font-weight: bold;
+        }
+        .github-guide {
+            background-color: #f0f4ff;
+            border: 1px solid #b6d7ff;
+            border-radius: 6px;
+            padding: 18px;
+            margin-bottom: 25px;
+        }
+        .github-guide h3 {
+            margin-top: 0;
+            color: #0969da;
+            font-size: 17px;
+        }
+        .github-guide .signup-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #0969da;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 10px 10px 10px 0;
+        }
+        .github-guide .signup-link:hover {
+            background-color: #0860ca;
+            text-decoration: none;
+        }
         .erd-container {
             text-align: center;
             background-color: #fff;
@@ -207,11 +271,46 @@
             <p>Interactive Entity Relationship Diagram for Stakeholder Feedback</p>
         </div>
 
+        <div class="legend">
+            <h3>📊 Priority Legend</h3>
+            <div class="legend-item">
+                <span class="priority-high">⭐ High Priority</span> - Essential entities for this stakeholder domain
+            </div>
+            <div class="legend-item">
+                <span class="priority-medium">• Medium Priority</span> - Important supporting entities for this domain
+            </div>
+            <p style="margin-top: 12px; margin-bottom: 0; font-size: 13px; color: #666;">
+                <strong>Visual Indicators:</strong> Green left border = high priority, Orange left border = medium priority. 
+                Entities may appear in multiple domains based on their relevance to different stakeholder groups.
+            </p>
+        </div>
+
+        <div class="github-guide">
+            <h3>💬 Join the Discussion</h3>
+            <p><strong>Why GitHub?</strong> We use GitHub Discussions to collect structured feedback from stakeholders across the biomass supply chain. It's free, open, and designed for collaborative input on technical standards.</p>
+            <p><strong>New to GitHub?</strong> No problem! Creating an account takes just 2 minutes:</p>
+            <a href="https://github.com/signup" target="_blank" class="signup-link">Create Free GitHub Account →</a>
+            <p style="margin-top: 15px; margin-bottom: 0; font-size: 14px;">
+                <strong>Prefer email?</strong> You can also send feedback to the BOOST working group at 
+                <a href="mailto:public-boost-01@w3.org">public-boost-01@w3.org</a>
+            </p>
+        </div>
+
+        <div class="info-section">
+            <h3>🏗️ Understanding the Entity Relationship Diagram</h3>
+            <p><strong>Entities</strong> represent the core data objects in biomass supply chains - things like Organizations, Certificates, Material Feedstock, and Transactions. Each entity captures specific information needed for chain of custody tracking.</p>
+            <p><strong>Attributes</strong> are the data fields within each entity (like organization name, certificate expiry date, or biomass quantity). These define what information must be recorded and tracked.</p>
+            <p><strong>Relationships</strong> show how entities connect to each other - for example, how a Certificate relates to an Organization, or how Material Feedstock flows through Transactions. These connections enable complete supply chain traceability.</p>
+            <p style="margin-bottom: 0;"><strong>Purpose:</strong> This diagram maps the complete data structure needed to track biomass from source to end use, supporting regulatory compliance, sustainability verification, and carbon accounting.</p>
+        </div>
+
         <div class="instructions">
-            <h3>📋 How to Provide Feedback</h3>
+            <h3>📋 How to Provide Feedback & Discussion Goals</h3>
+            <p><strong>Our Goal:</strong> Collect real-world input from a broad range of stakeholders to ensure the BOOST data standard meets practical supply chain needs. Your expertise helps us identify missing fields, clarify data relationships, and validate that the standard works for actual biomass tracking scenarios.</p>
             <p><strong>Explore the diagram below</strong> to understand the complete BOOST data model. You can zoom in/out and pan around to examine entity relationships in detail.</p>
-            <p><strong>To provide feedback on a specific entity</strong>, use the navigation buttons below the diagram to jump directly to its discussion thread. No GitHub account or technical knowledge required - just share your thoughts on each entity schema!</p>
-            <p><strong>💡 What we're looking for:</strong> Field completeness, data types, real-world applicability, missing attributes, and any other insights from your biomass supply chain experience.</p>
+            <p><strong>To provide feedback on a specific entity</strong>, use the domain-focused navigation sections below the diagram to jump directly to relevant discussion threads. Share your insights on entity schemas based on your experience with biomass supply chains.</p>
+            <p><strong>💡 What we're looking for:</strong> Field completeness, data types, real-world applicability, missing attributes, validation requirements, integration challenges, and any other insights from your biomass supply chain experience.</p>
+            <p style="margin-bottom: 0;"><strong>Impact:</strong> Your feedback directly improves the standard's design and ensures it supports diverse stakeholder needs - from forest managers to environmental agencies to certification bodies.</p>
         </div>
 
         <div class="erd-container" id="erd-container">
