@@ -41,8 +41,14 @@ All 16 entities from the integrated ERD are included:
 ## Maintenance
 
 This navigator is automatically updated when:
-- ERD diagram changes (SVG file updates)
+- ERD diagram changes (boost_erd.svg file updates)
 - New discussions are created
 - Entity schemas are modified
+
+## ERD File Structure
+
+The ERD is maintained as:
+- `boost_erd.mermaid` - Source Mermaid script (edit this to update the diagram)
+- `boost_erd.svg` - Generated SVG diagram (regenerate with `mmdc -i boost_erd.mermaid -o boost_erd.svg`)
 
 The site integrates with the existing GitHub Pages setup without overriding the main specification page.

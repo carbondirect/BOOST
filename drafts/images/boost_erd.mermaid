@@ -1,0 +1,439 @@
+erDiagram
+    %% BOOST Integrated Biomass Chain of Custody ERD
+    %% Consolidates RSB, SBP, FSC, ISO entities and relationships
+    
+    %% Core Organizations and Certification
+    Organization {
+        string organizationId PK
+        string name
+        string address
+        string role "BP, Trader, Energy Producer"
+        string scopeOfOperations
+        string legalEntityStatus
+        string certificateCode FK
+        string contactInfo
+    }
+    
+    CertificationScheme {
+        string schemeId PK
+        string schemeName "FSC, PEFC, SBP, RSB, ISO38200"
+        string recognitionStatus
+        string versionNumber
+    }
+    
+    Certificate {
+        string certificateNumber PK
+        date dateOfIssue
+        date dateOfExpiry
+        string scopeOfCertification
+        string versionNumber
+        string cbId FK
+        string organizationId FK
+    }
+    
+    CertificationBody {
+        string cbId PK
+        string cbName
+        string accreditationStatus
+        string accreditationScope
+    }
+    
+    %% Material and Supply Chain
+    Material {
+        string materialId PK
+        decimal quantity
+        string unit "ton, kg, lb"
+        string materialType "Pellets, Chips, Residues"
+        string category "SBP-compliant, Category 1-5"
+        string species
+        string countryOfOrigin
+        string source
+        string rawMaterialEligibility
+        boolean gmoStatus
+    }
+    
+    Supplier {
+        string supplierId PK
+        string supplierName
+        string address
+        string certificateCode
+        string claim
+        string supplierType
+    }
+    
+    Customer {
+        string customerId PK
+        string customerName
+        string address
+    }
+    
+    %% Transaction Management
+    DTSTransaction {
+        string dtsTransactionId PK
+        string supplyingOrganizationId FK
+        string customerOrganizationId FK
+        date transactionDate
+        string salesDocumentId FK
+    }
+    
+    TransactionBatch {
+        string transactionBatchId PK
+        string dtsTransactionId FK
+        string productionBatchId FK
+        decimal quantity
+        string claimId FK
+    }
+    
+    Claim {
+        string claimId PK
+        string claimType "SBP-compliant, FSC Mix, RSB Global"
+        string transactionBatchId FK
+        string statement
+        boolean validated
+    }
+    
+    SalesDeliveryDocument {
+        string documentId PK
+        date dateIssued
+        string buyerName
+        string buyerAddress
+        string sellerName
+        string sellerAddress
+        string productDescription
+        decimal quantity
+        string dtsTransactionId FK
+        string certificateCode
+        string transportReference
+    }
+    
+    %% Mass Balance and Product Management
+    MassBalanceAccount {
+        string accountId PK
+        string organizationId FK
+        string productGroupId FK
+        decimal periodInputs
+        decimal periodOutputs
+        decimal currentBalance
+        string balancingPeriod
+        decimal conversionFactors
+    }
+    
+    ProductGroup {
+        string productGroupId PK
+        string organizationId FK
+        string productTypeDescription
+        string feedstockClassificationRules
+    }
+    
+    %% Production and Batches (SBP specific)
+    ProductionBatch {
+        string productionBatchId PK
+        string organizationId FK
+        string feedstockInputId FK
+        string energyCarbonDataId FK
+    }
+    
+    FeedstockInput {
+        string feedstockInputId PK
+        string supplierId FK
+        decimal quantity
+        string feedstockCategory
+        string species
+        string originIdentifier
+        string controlLevel
+        boolean selfDeclaration
+    }
+    
+    %% Energy and Carbon Data
+    EnergyCarbonData {
+        string energyCarbonDataId PK
+        string dataType "moisture, transport, fuel consumption"
+        decimal value
+        string unit
+        string source
+        string measurementMethod
+    }
+    
+    SAR {
+        string sarId PK
+        string organizationId FK
+        string sarVersion "Pellets, Woodchips"
+        string reportingPeriod
+        string energyCarbonDataId FK
+    }
+    
+    SREG {
+        string sregId PK
+        string organizationId FK
+        string sregVersion "Inland, Sea"
+        string transactionBatchId FK
+        string energyCarbonDataId FK
+    }
+    
+    %% Risk Management and Supply Base
+    SupplyBase {
+        string supplyBaseId PK
+        string organizationId FK
+        string geographicalBoundaries
+        string operatorDescription
+        date lastUpdated
+    }
+    
+    RiskAssessment {
+        string riskAssessmentId PK
+        string supplyBaseId FK
+        date assessmentDate
+        string assessorDetails
+        string riskRatings
+    }
+    
+    SpecifiedRisk {
+        string specifiedRiskId PK
+        string riskAssessmentId FK
+        string indicatorId FK
+        string riskDescription
+        string justification
+    }
+    
+    RiskManagementMeasure {
+        string rmmId PK
+        string specifiedRiskId FK
+        string measureDescription
+        string verificationMeans
+    }
+    
+    StandardIndicator {
+        string indicatorId PK
+        string indicatorDescription
+        string relatedPrinciple
+        string applicableStandard "SBP, FSC, RSB"
+    }
+    
+    SupplyBaseVerifier {
+        string sbvId PK
+        string indicatorId FK
+        string verifierDescription
+        string evidenceType
+    }
+    
+    SupplyBaseReport {
+        string sbrId PK
+        string organizationId FK
+        date preparationDate
+        string supplyBaseSummary
+        string riskAssessmentSummary
+        string rmmDescription
+    }
+    
+    %% Verification and Compliance
+    VerificationStatement {
+        string statementId PK
+        date verificationDate
+        string issuingBody
+        string scope
+        string transactionBatchId FK
+    }
+    
+    DueDiligenceSystem {
+        string ddsId PK
+        string organizationId FK
+        string definedRequirements
+        string assessmentMethodology
+    }
+    
+    %% Stakeholder Management
+    Stakeholder {
+        string stakeholderId PK
+        string name
+        string contactInfo
+        string geographicalLocation
+        string interests
+    }
+    
+    StakeholderEngagementPlan {
+        string sepId PK
+        string organizationId FK
+        string procedureDescription
+        string identifiedStakeholders
+    }
+    
+    Complaint {
+        string complaintId PK
+        string stakeholderId FK
+        string organizationId FK
+        date dateReceived
+        string allegationDescription
+        string resolutionStatus
+        date dateClosed
+    }
+    
+    %% Audit and Compliance
+    Audit {
+        string auditId PK
+        string auditType "Initial, Surveillance, Transfer"
+        date auditDate
+        string organizationId FK
+        string cbId FK
+        string findings
+        string reportUrl
+    }
+    
+    NonConformance {
+        string nonConformanceId PK
+        string auditId FK
+        string description
+        string applicableStandards
+        string severity "Minor, Major"
+        string correctiveAction
+        string status "Open, Closed"
+    }
+    
+    %% RSB Specific Entities
+    RSBCertificate {
+        string rsb_certificateReferenceCode PK
+        date rsb_dateOfIssue
+        date rsb_dateOfExpiry
+        string rsb_scope
+        string rsb_cbId FK
+        string rsb_operatorId FK
+    }
+    
+    RSBCertifiedMaterial {
+        string rsb_materialId PK
+        decimal rsb_quantity
+        string rsb_materialType
+        string rsb_rawMaterialSpec
+        string rsb_countryOfOrigin
+        decimal rsb_ghgIntensity
+        string rsb_certificationScheme
+        string rsb_sustainabilityClaim
+    }
+    
+    RSBBatch {
+        string rsb_batchId PK
+        string rsb_materialId FK
+        string rsb_productInfoId FK
+        decimal rsb_quantity
+    }
+    
+    RSBProductInfo {
+        string rsb_productInfoId PK
+        string rsb_productDescription
+        string rsb_rawMaterialSpec
+        string rsb_origin
+        decimal rsb_quantity
+        date rsb_acquisitionDate
+        string rsb_supplierName
+        string rsb_certificationScheme
+        string rsb_sustainabilityClaim
+        string rsb_certificateNumber
+        string rsb_cbName
+        string rsb_cocModel
+        decimal rsb_ghgIntensity
+        string rsb_deliveryNoteId
+    }
+    
+    ChainOfCustodyModel {
+        string rsb_cocModelId PK
+        string rsb_modelType "Identity Preserved, Mass Balance, Book & Claim"
+        string rsb_specificRules
+    }
+    
+    ProcessingResidue {
+        string rsb_residueId PK
+        string rsb_materialId FK
+        string rsb_verificationEvidence
+    }
+    
+    PostConsumerFeedstock {
+        string rsb_postConsumerId PK
+        string rsb_materialId FK
+        string rsb_verificationEvidence
+        string rsb_pointOfReclamation
+    }
+    
+    PointOfOrigin {
+        string rsb_pointOfOriginId PK
+        string rsb_geographicalLocation
+        string rsb_relevantDocumentation
+    }
+    
+    FeedstockCategory {
+        string rsb_feedstockCategoryId PK
+        string rsb_categoryType "Thinnings, Processing Residues, SRWC"
+        string rsb_specificationDetails
+    }
+    
+    %% Core Relationships
+    Organization ||--o{ Certificate : "has"
+    Certificate }o--|| CertificationScheme : "certifies_against"
+    Certificate }o--|| CertificationBody : "issued_by"
+    CertificationBody ||--o{ Audit : "conducts"
+    
+    %% Supply Chain Relationships
+    Organization ||--o{ Material : "handles"
+    Organization ||--o{ DTSTransaction : "creates"
+    Organization ||--o{ Supplier : "sources_from"
+    Organization ||--o{ Customer : "sells_to"
+    
+    Supplier ||--o{ FeedstockInput : "supplies"
+    Customer ||--o{ DTSTransaction : "receives"
+    
+    %% Transaction and Batch Relationships
+    DTSTransaction ||--o{ TransactionBatch : "contains"
+    DTSTransaction ||--|| SalesDeliveryDocument : "documented_by"
+    TransactionBatch }o--|| ProductionBatch : "derived_from"
+    TransactionBatch ||--|| Claim : "associated_with"
+    TransactionBatch ||--o{ VerificationStatement : "verified_by"
+    
+    %% Production Relationships
+    Organization ||--o{ ProductionBatch : "produces"
+    ProductionBatch }o--|| FeedstockInput : "made_from"
+    ProductionBatch ||--|| EnergyCarbonData : "characterized_by"
+    
+    %% Mass Balance Relationships
+    Organization ||--o{ MassBalanceAccount : "manages"
+    Organization ||--o{ ProductGroup : "defines"
+    MassBalanceAccount }o--|| ProductGroup : "tracks"
+    
+    %% Energy and Carbon Relationships
+    Organization ||--o{ SAR : "completes"
+    Organization ||--o{ SREG : "completes"
+    SAR ||--|| EnergyCarbonData : "contains"
+    SREG ||--|| EnergyCarbonData : "contains"
+    SREG }o--|| TransactionBatch : "relates_to"
+    
+    %% Supply Base and Risk Management
+    Organization ||--o{ SupplyBase : "defines"
+    SupplyBase ||--|| RiskAssessment : "evaluated_by"
+    RiskAssessment ||--o{ SpecifiedRisk : "identifies"
+    SpecifiedRisk ||--o{ RiskManagementMeasure : "mitigated_by"
+    RiskAssessment }o--|| StandardIndicator : "evaluates_against"
+    StandardIndicator ||--o{ SupplyBaseVerifier : "verified_by"
+    Organization ||--|| SupplyBaseReport : "prepares"
+    
+    %% Due Diligence and Stakeholder Management
+    Organization ||--|| DueDiligenceSystem : "implements"
+    Organization ||--|| StakeholderEngagementPlan : "has"
+    StakeholderEngagementPlan }o--|| Stakeholder : "engages_with"
+    Stakeholder ||--o{ Complaint : "submits"
+    Complaint }o--|| Organization : "against"
+    
+    %% Audit Relationships
+    Audit }o--|| Organization : "audits"
+    Audit ||--o{ NonConformance : "identifies"
+    
+    %% RSB Specific Relationships
+    Organization ||--o{ RSBCertificate : "holds"
+    RSBCertificate }o--|| CertificationBody : "issued_by"
+    
+    Organization ||--o{ RSBCertifiedMaterial : "handles"
+    RSBCertifiedMaterial ||--o{ RSBBatch : "represented_in"
+    RSBBatch ||--|| RSBProductInfo : "has"
+    
+    RSBCertifiedMaterial ||--o{ ProcessingResidue : "may_be"
+    RSBCertifiedMaterial ||--o{ PostConsumerFeedstock : "may_be"
+    RSBCertifiedMaterial }o--|| FeedstockCategory : "classified_as"
+    RSBCertifiedMaterial }o--|| PointOfOrigin : "originates_from"
+    
+    Organization ||--|| ChainOfCustodyModel : "uses"
