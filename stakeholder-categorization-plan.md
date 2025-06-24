@@ -44,8 +44,7 @@ Move these discussions:
 ### Public Health Category  
 Move these discussions:
 - #94 MaterialFeedstock (GMO status, contamination)
-- #101 SAR (air quality impacts)
-- #102 SREG (emission impacts)
+- #101 EnergyCarbonData (air quality impacts)
 - #98 TransactionBatch (health incident traceability)
 - #100 SaleDeliveryDocument (emergency response)
 - #90 Organization (facility oversight)
@@ -53,8 +52,7 @@ Move these discussions:
 
 ### Environmental Category
 Move these discussions:
-- #101 SAR (GHG emissions reporting)
-- #102 SREG (carbon intensity data)
+- #101 EnergyCarbonData (GHG emissions and carbon intensity data)
 - #94 MaterialFeedstock (biodiversity impact)
 - #99 Claim (environmental claims verification)
 - #104 MassBalanceAccount (environmental credits)
@@ -81,8 +79,7 @@ Move these discussions:
 - #91 CertificationScheme (audit requirements)
 - #103 VerificationStatement (audit trails)
 - #99 Claim (claims verification)
-- #101 SAR (audit reporting)
-- #102 SREG (carbon data verification)
+- #101 EnergyCarbonData (energy and carbon data verification)
 - #90 Organization (compliance status)
 - #104 MassBalanceAccount (volume reconciliation)
 - #98 TransactionBatch (traceability audits)
