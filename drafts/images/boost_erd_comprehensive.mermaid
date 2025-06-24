@@ -1,7 +1,8 @@
 erDiagram
-    %% BOOST Core Biomass Chain of Custody ERD
-    %% Focused model with essential entities for practical implementation
-    %% For comprehensive model with risk management, see boost_erd_comprehensive.mermaid
+    %% BOOST Comprehensive Biomass Chain of Custody ERD
+    %% SANDBOX VERSION - Full model with risk management and stakeholder entities
+    %% For production use, see boost_erd.mermaid (core 17-entity model)
+    %% This comprehensive model includes all entities for future expansion
     
     %% Core Organizations and Certification
     Organization {
@@ -136,15 +137,59 @@ erDiagram
         string measurementMethod
     }
     
-    %% Essential Reporting and Compliance
+    %% Risk Management and Supply Base
+    SupplyBase {
+        string supplyBaseId PK
+        string organizationId FK
+        string geographicalBoundaries
+        string operatorDescription
+        date lastUpdated
+    }
+    
+    RiskAssessment {
+        string riskAssessmentId PK
+        string supplyBaseId FK
+        date assessmentDate
+        string assessorDetails
+        string riskRatings
+    }
+    
+    SpecifiedRisk {
+        string specifiedRiskId PK
+        string riskAssessmentId FK
+        string indicatorId FK
+        string riskDescription
+        string justification
+    }
+    
+    RiskManagementMeasure {
+        string rmmId PK
+        string specifiedRiskId FK
+        string measureDescription
+        string verificationMeans
+    }
+    
+    StandardIndicator {
+        string indicatorId PK
+        string indicatorDescription
+        string relatedPrinciple
+        string applicableStandard "SBP, FSC, RSB"
+    }
+    
+    SupplyBaseVerifier {
+        string sbvId PK
+        string indicatorId FK
+        string verifierDescription
+        string evidenceType
+    }
+    
     SupplyBaseReport {
         string sbrId PK
         string organizationId FK
         date preparationDate
         string supplyBaseSummary
-        string sourcingPractices
-        string sustainabilityMeasures
-        string publicationUrl
+        string riskAssessmentSummary
+        string rmmDescription
     }
     
     %% Verification and Compliance
@@ -156,6 +201,38 @@ erDiagram
         string transactionBatchId FK
     }
     
+    DueDiligenceSystem {
+        string ddsId PK
+        string organizationId FK
+        string definedRequirements
+        string assessmentMethodology
+    }
+    
+    %% Stakeholder Management
+    Stakeholder {
+        string stakeholderId PK
+        string name
+        string contactInfo
+        string geographicalLocation
+        string interests
+    }
+    
+    StakeholderEngagementPlan {
+        string sepId PK
+        string organizationId FK
+        string procedureDescription
+        string identifiedStakeholders
+    }
+    
+    Complaint {
+        string complaintId PK
+        string stakeholderId FK
+        string organizationId FK
+        date dateReceived
+        string allegationDescription
+        string resolutionStatus
+        date dateClosed
+    }
     
     %% Audit and Compliance
     Audit {
@@ -168,6 +245,15 @@ erDiagram
         string reportUrl
     }
     
+    NonConformance {
+        string nonConformanceId PK
+        string auditId FK
+        string description
+        string applicableStandards
+        string severity "Minor, Major"
+        string correctiveAction
+        string status "Open, Closed"
+    }
     
     
     %% Core Relationships
@@ -199,8 +285,22 @@ erDiagram
     Material ||--o{ EnergyCarbonData : "characterized_by"
     TransactionBatch ||--o{ EnergyCarbonData : "associated_with"
     
-    %% Essential Reporting and Compliance
-    Organization ||--o{ SupplyBaseReport : "prepares"
+    %% Supply Base and Risk Management
+    Organization ||--o{ SupplyBase : "defines"
+    SupplyBase ||--|| RiskAssessment : "evaluated_by"
+    RiskAssessment ||--o{ SpecifiedRisk : "identifies"
+    SpecifiedRisk ||--o{ RiskManagementMeasure : "mitigated_by"
+    RiskAssessment }o--|| StandardIndicator : "evaluates_against"
+    StandardIndicator ||--o{ SupplyBaseVerifier : "verified_by"
+    Organization ||--|| SupplyBaseReport : "prepares"
+    
+    %% Due Diligence and Stakeholder Management
+    Organization ||--|| DueDiligenceSystem : "implements"
+    Organization ||--|| StakeholderEngagementPlan : "has"
+    StakeholderEngagementPlan }o--|| Stakeholder : "engages_with"
+    Stakeholder ||--o{ Complaint : "submits"
+    Complaint }o--|| Organization : "against"
     
     %% Audit Relationships
     Audit }o--|| Organization : "audits"
+    Audit ||--o{ NonConformance : "identifies"
