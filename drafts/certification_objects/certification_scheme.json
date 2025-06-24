@@ -1,77 +1,25 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://boost.org/schemas/certification_scheme.json",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/certification_scheme.json",
   "title": "Certification Scheme",
-  "description": "Represents a voluntary or recognized standard system related to biomass or wood Chain of Custody and sustainability",
   "type": "object",
   "properties": {
-    "schemeId": {
-      "type": "string",
-      "description": "Unique identifier for the certification scheme",
-      "pattern": "^[A-Za-z0-9_-]+$"
-    },
-    "schemeName": {
-      "type": "string",
-      "description": "Name of the certification scheme",
-      "examples": ["FSC", "PEFC", "SBP", "RSB", "ISO 38200"]
-    },
+    "schemeId": { "type": "string" },
+    "schemeName": { "type": "string" },
+    "versionNumber": { "type": "integer", "minimum": 1 },
     "recognitionStatus": {
       "type": "string",
-      "description": "Recognition or approval status of the scheme",
       "enum": [
-        "SBP-recognised",
-        "EU-RED-approved", 
-        "ICAO-CORSIA-approved",
-        "nationally-approved",
-        "internationally-recognized",
-        "pending-approval",
-        "not-recognized"
+        "internationally-recognized", "nationally-approved", "pending-approval", "not-recognized"
       ]
     },
-    "versionNumber": {
-      "type": "integer",
-      "description": "Version number of the scheme standard",
-      "minimum": 1
-    },
-    "description": {
-      "type": "string",
-      "description": "Detailed description of the certification scheme"
-    },
-    "website": {
-      "type": "string",
-      "format": "uri",
-      "description": "Official website URL of the certification scheme"
-    },
-    "applicableRegions": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Regions where this certification scheme is applicable"
-    },
-    "sustainabilityCriteria": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "List of sustainability criteria covered by this scheme"
-    },
-    "dateEstablished": {
-      "type": "string",
-      "format": "date",
-      "description": "Date when the certification scheme was established"
-    },
-    "lastUpdated": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Timestamp when this record was last updated"
-    }
+    "description": { "type": "string" },
+    "website": { "type": "string", "format": "uri" },
+    "sustainabilityCriteria": { "type": "array", "items": { "type": "string" } },
+    "applicableRegions": { "type": "array", "items": { "type": "string" } },
+    "dateEstablished": { "type": "string", "format": "date" },
+    "lastUpdated": { "type": "string", "format": "date-time" },
+    "certificationBodyId": { "type": "string" }
   },
-  "required": [
-    "schemeId",
-    "schemeName",
-    "recognitionStatus",
-    "versionNumber"
-  ],
-  "additionalProperties": false
-} 
+  "required": ["schemeId", "schemeName", "versionNumber", "certificationBodyId"]
+}

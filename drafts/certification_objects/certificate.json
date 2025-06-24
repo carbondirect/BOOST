@@ -1,148 +1,101 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://boost.org/schemas/certificate.json",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/certificate.json",
   "title": "Certificate",
-  "description": "The formal certification document issued by an accredited Certification Body to an Organization",
   "type": "object",
   "properties": {
-    "certificateId": {
-      "type": "string",
-      "description": "Unique identifier for the certificate",
-      "pattern": "^[A-Za-z0-9_-]+$"
-    },
-    "certificateNumber": {
-      "type": "string",
-      "description": "Official certificate number as issued by the certification body",
-      "examples": ["SBP-01-001", "FSC-C123456", "RSB-CERT-001"]
-    },
-    "dateOfIssue": {
-      "type": "string",
-      "format": "date",
-      "description": "Date when the certificate was issued"
-    },
-    "dateOfExpiry": {
-      "type": "string",
-      "format": "date",
-      "description": "Date when the certificate expires"
-    },
-    "scopeOfCertification": {
-      "type": "string",
-      "description": "Detailed description of what is covered by this certification"
-    },
-    "versionNumber": {
-      "type": "integer",
-      "description": "Version number of the standard this certificate is issued against",
-      "minimum": 1
-    },
-    "certificationBodyId": {
-      "type": "string",
-      "description": "Reference to the certification body that issued this certificate"
-    },
-    "organizationId": {
-      "type": "string",
-      "description": "Reference to the organization that holds this certificate"
-    },
-    "certificationSchemeId": {
-      "type": "string",
-      "description": "Reference to the certification scheme this certificate is issued under"
-    },
+    "certificateId": { "type": "string" },
+    "certificateNumber": { "type": "string" },
+    "certificationSchemeId": { "type": "string" },
+    "certificationBodyId": { "type": "string" },
+    "organizationId": { "type": "string" },
+    "dateOfIssue": { "type": "string", "format": "date" },
+    "dateOfExpiry": { "type": "string", "format": "date" },
     "status": {
       "type": "string",
-      "description": "Current status of the certificate",
-      "enum": [
-        "active",
-        "expired",
-        "suspended",
-        "revoked",
-        "pending"
-      ]
+      "enum": ["active", "expired", "revoked", "suspended", "pending"]
     },
-    "productTypes": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Types of products covered by this certificate"
-    },
-    "processes": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Processes covered by this certificate"
-    },
-    "sites": {
+    "scopeOfCertification": { "type": "string" },
+    "versionNumber": { "type": "integer", "minimum": 1 },
+    "productGroups": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "siteId": {
-            "type": "string"
+          "productType": { "type": "string" },
+          "materialCategories": {
+            "type": "array",
+            "items": { "type": "string" }
           },
-          "siteName": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
+          "controlSystems": {
+            "type": "array",
+            "items": { "type": "string" }
           }
         },
-        "required": ["siteId", "siteName"]
-      },
-      "description": "Sites covered by this certificate"
+        "required": ["productType"]
+      }
     },
-    "accountingMethodology": {
-      "type": "string",
-      "description": "Accounting methodology used",
-      "enum": [
-        "Mass Balance",
-        "Physical Separation",
-        "Credit System",
-        "Book and Claim"
-      ]
+    "volumeTrackingRecord": {
+      "type": "object",
+      "properties": {
+        "inputVolumeByCategory": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        },
+        "outputVolumeByCategory": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        }
+      }
     },
-    "applicableStandards": {
+    "labelUseRecord": {
       "type": "array",
       "items": {
-        "type": "string"
-      },
-      "description": "List of applicable standards referenced in this certificate"
+        "type": "object",
+        "properties": {
+          "product": { "type": "string" },
+          "claimType": { "type": "string" },
+          "approvalReference": { "type": "string" }
+        }
+      }
+    },
+    "supplierInfo": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" }
+      }
+    },
+    "supplierRiskRatingDDS": {
+      "type": "object",
+      "properties": {
+        "riskRating": { "type": "string" },
+        "mitigationMeasures": { "type": "string" }
+      }
     },
     "attachments": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "fileName": {
-            "type": "string"
-          },
-          "fileUrl": {
-            "type": "string",
-            "format": "uri"
-          },
-          "fileType": {
-            "type": "string"
-          }
-        },
-        "required": ["fileName", "fileUrl"]
-      },
-      "description": "Certificate documents and attachments"
+          "fileName": { "type": "string" },
+          "fileUrl": { "type": "string", "format": "uri" },
+          "fileType": { "type": "string" }
+        }
+      }
     },
-    "lastUpdated": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Timestamp when this record was last updated"
-    }
+    "lastUpdated": { "type": "string", "format": "date-time" }
   },
   "required": [
     "certificateId",
     "certificateNumber",
-    "dateOfIssue",
-    "dateOfExpiry",
-    "scopeOfCertification",
-    "versionNumber",
+    "certificationSchemeId",
     "certificationBodyId",
     "organizationId",
-    "certificationSchemeId"
-  ],
-  "additionalProperties": false
-} 
+    "dateOfIssue",
+    "dateOfExpiry",
+    "status",
+    "scopeOfCertification",
+    "versionNumber"
+  ]
+}

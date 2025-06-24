@@ -1,0 +1,14 @@
+{
+    "schemeId": "SFI-CoC",
+    "schemeName": "SFI Chain of Custody",
+    "versionNumber": 2022,
+    "recognitionStatus": "internationally-recognized",
+    "description": "SFI Chain of Custody Standard for forest-based products",
+    "website": "https://forests.org",
+    "sustainabilityCriteria": ["Legal Harvest", "Biodiversity", "Worker Safety"],
+    "applicableRegions": ["USA", "Canada"],
+    "dateEstablished": "1995-01-01",
+    "lastUpdated": "2025-06-24T09:00:00Z",
+    "certificationBodyId": "SFI"
+  }
+  

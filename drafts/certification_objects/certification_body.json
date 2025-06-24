@@ -1,161 +1,35 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://boost.org/schemas/certification_body.json",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/certification_body.json",
   "title": "Certification Body",
-  "description": "An independent third-party organization accredited to perform certification activities against relevant standards",
   "type": "object",
   "properties": {
-    "certificationBodyId": {
-      "type": "string",
-      "description": "Unique identifier for the certification body",
-      "pattern": "^[A-Za-z0-9_-]+$"
-    },
-    "name": {
-      "type": "string",
-      "description": "Official name of the certification body"
-    },
-    "accreditationStatus": {
-      "type": "string",
-      "description": "Current accreditation status of the certification body",
-      "enum": [
-        "accredited",
-        "accredited-conditional",
-        "suspended",
-        "withdrawn",
-        "pending-accreditation",
-        "not-accredited"
-      ]
-    },
-    "accreditationScope": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Scope of accreditation specifying which standards/activities they are accredited for",
-      "examples": [
-        ["SBP Standards 1, 2, 4"],
-        ["FSC-STD-40-004", "FSC-STD-20-007"],
-        ["RSB-STD-01-002", "RSB-STD-01-009"],
-        ["ISO 38200"]
-      ]
-    },
-    "accreditationBody": {
-      "type": "string",
-      "description": "The accreditation body that accredited this certification body",
-      "examples": ["FSC", "SBP", "RSB", "PEFC", "National Accreditation Body"]
-    },
-    "accreditationNumber": {
-      "type": "string",
-      "description": "Official accreditation number"
-    },
-    "accreditationDate": {
-      "type": "string",
-      "format": "date",
-      "description": "Date when accreditation was granted"
-    },
-    "accreditationExpiryDate": {
-      "type": "string",
-      "format": "date",
-      "description": "Date when current accreditation expires"
-    },
+    "certificationBodyId": { "type": "string" },
+    "name": { "type": "string" },
     "contactInformation": {
       "type": "object",
       "properties": {
         "address": {
           "type": "object",
           "properties": {
-            "street": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string"
-            },
-            "state": {
-              "type": "string"
-            },
-            "postalCode": {
-              "type": "string"
-            },
-            "country": {
-              "type": "string"
-            }
+            "street": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "country": { "type": "string" }
           },
           "required": ["city", "country"]
         },
-        "phone": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "website": {
-          "type": "string",
-          "format": "uri"
-        }
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "website": { "type": "string", "format": "uri" }
       },
       "required": ["address"]
     },
-    "operatingRegions": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Geographical regions where this certification body operates"
-    },
-    "certificationSchemes": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "List of certification schemes this body is authorized to certify against"
-    },
-    "auditLanguages": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Languages in which this certification body can conduct audits"
-    },
-    "technicalCompetencies": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Technical areas of competency for this certification body"
-    },
-    "qualityManagementSystem": {
-      "type": "string",
-      "description": "Quality management system standard implemented",
-      "examples": ["ISO 9001", "ISO 17065"]
-    },
-    "lastSurveillanceDate": {
-      "type": "string",
-      "format": "date",
-      "description": "Date of last surveillance audit by accreditation body"
-    },
-    "nextSurveillanceDate": {
-      "type": "string",
-      "format": "date",
-      "description": "Scheduled date for next surveillance audit"
-    },
-    "isActive": {
-      "type": "boolean",
-      "description": "Whether this certification body is currently active",
-      "default": true
-    },
-    "lastUpdated": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Timestamp when this record was last updated"
-    }
+    "jurisdictions": { "type": "array", "items": { "type": "string" } },
+    "sectorsServed": { "type": "array", "items": { "type": "string" } },
+    "isActive": { "type": "boolean" },
+    "lastUpdated": { "type": "string", "format": "date-time" }
   },
-  "required": [
-    "certificationBodyId",
-    "name",
-    "accreditationStatus",
-    "accreditationScope",
-    "contactInformation"
-  ],
-  "additionalProperties": false
-} 
+  "required": ["certificationBodyId", "name", "contactInformation"]
+}

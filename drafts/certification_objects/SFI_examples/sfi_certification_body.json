@@ -1,0 +1,20 @@
+{
+    "certificationBodyId": "SFI",
+    "name": "Sustainable Forestry Initiative",
+    "contactInformation": {
+      "address": {
+        "street": "2121 K Street NW",
+        "city": "Washington",
+        "state": "DC",
+        "postalCode": "20037",
+        "country": "USA"
+      },
+      "email": "info@forests.org",
+      "phone": "+1-202-596-3450",
+      "website": "https://forests.org"
+    },
+    "jurisdictions": ["USA", "Canada"],
+    "sectorsServed": ["Forestry", "Pulp & Paper"],
+    "isActive": true,
+    "lastUpdated": "2025-06-24T09:00:00Z"
+  }
