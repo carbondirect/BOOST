@@ -76,14 +76,6 @@
             margin-bottom: 8px;
             font-size: 14px;
         }
-        .priority-high {
-            color: #28a745;
-            font-weight: bold;
-        }
-        .priority-medium {
-            color: #e36209;
-            font-weight: bold;
-        }
         .github-guide {
             background-color: #f0f4ff;
             border: 1px solid #b6d7ff;
@@ -263,18 +255,6 @@
             color: #0366d6;
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
         }
-        .entity-link.high-priority {
-            border-left: 4px solid #28a745;
-        }
-        .entity-link.high-priority strong {
-            color: #28a745;
-        }
-        .entity-link.medium-priority {
-            border-left: 4px solid #ffa500;
-        }
-        .entity-link.medium-priority strong {
-            color: #e36209;
-        }
         .footer {
             margin-top: 40px;
             text-align: center;
@@ -303,19 +283,6 @@
             <p>Interactive Entity Relationship Diagram for Stakeholder Feedback</p>
         </div>
 
-        <div class="legend">
-            <h3>📊 Priority Legend</h3>
-            <div class="legend-item">
-                <span class="priority-high">⭐ High Priority</span> - Essential entities for this stakeholder domain
-            </div>
-            <div class="legend-item">
-                <span class="priority-medium">• Medium Priority</span> - Important supporting entities for this domain
-            </div>
-            <p style="margin-top: 12px; margin-bottom: 0; font-size: 13px; color: #666;">
-                <strong>Visual Indicators:</strong> Green left border = high priority, Orange left border = medium priority. 
-                Entities may appear in multiple domains based on their relevance to different stakeholder groups.
-            </p>
-        </div>
 
         <div class="github-guide">
             <h3>💬 Join the Discussion</h3>
@@ -363,12 +330,11 @@
         </div>
 
         <div class="instructions">
-            <h3>📋 How to Provide Feedback & Discussion Goals</h3>
-            <p><strong>Our Goal:</strong> Collect real-world input from a broad range of stakeholders to ensure the BOOST data standard meets practical supply chain needs. Your expertise helps us identify missing fields, clarify data relationships, and validate that the standard works for actual biomass tracking scenarios.</p>
+            <h3>📋 How to Provide Feedback</h3>
+            <p><strong>Our Goal:</strong> Collect real-world input from stakeholders to ensure the BOOST data standard meets practical biomass supply chain needs.</p>
             <p><strong>Explore the diagram below</strong> to understand the complete BOOST data model. You can zoom in/out and pan around to examine entity relationships in detail.</p>
-            <p><strong>To provide feedback on a specific entity</strong>, use the domain-focused navigation sections below the diagram to jump directly to relevant discussion threads. Share your insights on entity schemas based on your experience with biomass supply chains.</p>
-            <p><strong>💡 What we're looking for:</strong> Field completeness, data types, real-world applicability, missing attributes, validation requirements, integration challenges, and any other insights from your biomass supply chain experience.</p>
-            <p style="margin-bottom: 0;"><strong>Impact:</strong> Your feedback directly improves the standard's design and ensures it supports diverse stakeholder needs - from forest managers to environmental agencies to certification bodies.</p>
+            <p><strong>To provide feedback on a specific entity</strong>, click on any entity link below the diagram to jump directly to its discussion thread.</p>
+            <p><strong>💡 What we're looking for:</strong> Field completeness, data types, real-world applicability, missing attributes, validation requirements, and integration challenges.</p>
         </div>
 
         <div class="erd-container" id="erd-container">
@@ -385,225 +351,15 @@
             </div>
         </div>
 
-        <h2 style="text-align: center; margin: 40px 0 20px 0; color: #0366d6;">💬 Entity Discussion Navigation</h2>
-        <p style="text-align: center; margin-bottom: 30px; color: #586069;">Navigate to entity discussions by stakeholder domain or view all entities:</p>
+        <h2 style="text-align: center; margin: 40px 0 20px 0; color: #0366d6;">💬 Entity Schema Discussions</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: #586069;">Click on any entity below to provide feedback on its schema design:</p>
 
-        <!-- Land Management Domain -->
+        <!-- Entity Links Section -->
         <div class="domain-section">
-            <h3 class="domain-header">🌍 Land Management Focus</h3>
-            <p class="domain-description">For forestry agencies, land managers, and sustainability oversight</p>
             <div class="entity-links">
-                <a href="https://github.com/carbondirect/BOOST/discussions/94" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ MaterialFeedstock</strong><br>
-                    Biomass origin, species identification, and sourcing practices
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/90" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ Organization</strong><br>
-                    Land owners, forest managers, and biomass producers
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/92" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ Certificate</strong><br>
-                    Sustainable land management practice verification
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/91" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ CertificationScheme</strong><br>
-                    FSC forest management and SBP sustainability standards
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/95" class="entity-link medium-priority" target="_blank">
-                    <strong>• Supplier</strong><br>
-                    Upstream land management verification
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/103" class="entity-link medium-priority" target="_blank">
-                    <strong>• VerificationStatement</strong><br>
-                    Independent land use assessments
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/105" class="entity-link medium-priority" target="_blank">
-                    <strong>• ProductGroup</strong><br>
-                    Forest product classification and sourcing rules
-                </a>
-            </div>
-        </div>
-
-        <!-- Public Health Domain -->
-        <div class="domain-section">
-            <h3 class="domain-header">🏥 Public Health Focus</h3>
-            <p class="domain-description">For health agencies, contamination tracking, and safety compliance</p>
-            <div class="entity-links">
-                <a href="https://github.com/carbondirect/BOOST/discussions/94" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ MaterialFeedstock</strong><br>
-                    GMO status, contamination tracking, species verification
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/101" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SAR</strong><br>
-                    Air quality impact from biomass processing facilities
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/102" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SREG</strong><br>
-                    Transportation and processing emission impacts
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/98" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ TransactionBatch</strong><br>
-                    Traceability for health incident investigation
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/100" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SaleDeliveryDocument</strong><br>
-                    Chain of custody for health emergency response
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/90" class="entity-link medium-priority" target="_blank">
-                    <strong>• Organization</strong><br>
-                    Facility location and operational oversight
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/93" class="entity-link medium-priority" target="_blank">
-                    <strong>• CertificationBody</strong><br>
-                    Health and safety compliance verification
-                </a>
-            </div>
-        </div>
-
-        <!-- Environmental Domain -->
-        <div class="domain-section">
-            <h3 class="domain-header">🌱 Environmental Focus</h3>
-            <p class="domain-description">For environmental agencies, emissions tracking, and impact assessment</p>
-            <div class="entity-links">
-                <a href="https://github.com/carbondirect/BOOST/discussions/101" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SAR</strong><br>
-                    Energy consumption and GHG emissions reporting
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/102" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SREG</strong><br>
-                    Carbon intensity and lifecycle environmental impact
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/94" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ MaterialFeedstock</strong><br>
-                    Biodiversity impact and invasive species tracking
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/99" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ Claim</strong><br>
-                    Environmental claims verification and enforcement
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/104" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ MassBalanceAccount</strong><br>
-                    Certified vs conventional material for environmental credits
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/97" class="entity-link medium-priority" target="_blank">
-                    <strong>• TransactionConsignment</strong><br>
-                    Cross-border environmental compliance
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/92" class="entity-link medium-priority" target="_blank">
-                    <strong>• Certificate</strong><br>
-                    Environmental standard compliance verification
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/103" class="entity-link medium-priority" target="_blank">
-                    <strong>• VerificationStatement</strong><br>
-                    Independent environmental impact validation
-                </a>
-            </div>
-        </div>
-
-        <!-- Commercial Domain -->
-        <div class="domain-section">
-            <h3 class="domain-header">💼 Commercial Focus</h3>
-            <p class="domain-description">For private sector, supply chain management, and business operations</p>
-            <div class="entity-links">
-                <a href="https://github.com/carbondirect/BOOST/discussions/90" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ Organization</strong><br>
-                    Legal entity management and business relationships
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/97" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ TransactionConsignment</strong><br>
-                    Supply chain logistics and material transfers
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/98" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ TransactionBatch</strong><br>
-                    Inventory management and traceability systems
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/100" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SaleDeliveryDocument</strong><br>
-                    Commercial documentation and compliance
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/104" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ MassBalanceAccount</strong><br>
-                    Accounting systems and certified material tracking
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/95" class="entity-link medium-priority" target="_blank">
-                    <strong>• Supplier</strong><br>
-                    Business relationship management
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/96" class="entity-link medium-priority" target="_blank">
-                    <strong>• Customer</strong><br>
-                    Customer relationship and delivery management
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/92" class="entity-link medium-priority" target="_blank">
-                    <strong>• Certificate</strong><br>
-                    Product certification and market access
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/99" class="entity-link medium-priority" target="_blank">
-                    <strong>• Claim</strong><br>
-                    Marketing claims and product differentiation
-                </a>
-            </div>
-        </div>
-
-        <!-- Auditors & Certification Domain -->
-        <div class="domain-section">
-            <h3 class="domain-header">🔍 Auditors & Certification Focus</h3>
-            <p class="domain-description">For certification bodies, auditors, and verification specialists</p>
-            <div class="entity-links">
-                <a href="https://github.com/carbondirect/BOOST/discussions/92" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ Certificate</strong><br>
-                    Core certification documents and validity tracking
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/93" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ CertificationBody</strong><br>
-                    Organizational verification and accreditation status
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/91" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ CertificationScheme</strong><br>
-                    Standards compliance and audit requirements
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/103" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ VerificationStatement</strong><br>
-                    Third-party verification and audit trails
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/99" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ Claim</strong><br>
-                    Claims verification and compliance checking
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/101" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SAR</strong><br>
-                    Audit reporting and energy data verification
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/102" class="entity-link high-priority" target="_blank">
-                    <strong>⭐ SREG</strong><br>
-                    Carbon data verification and audit trails
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/90" class="entity-link medium-priority" target="_blank">
-                    <strong>• Organization</strong><br>
-                    Entity verification and compliance status
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/104" class="entity-link medium-priority" target="_blank">
-                    <strong>• MassBalanceAccount</strong><br>
-                    Accounting system audits and volume reconciliation
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/98" class="entity-link medium-priority" target="_blank">
-                    <strong>• TransactionBatch</strong><br>
-                    Chain of custody verification and traceability audits
-                </a>
-            </div>
-        </div>
-
-        <!-- All Entities Section -->
-        <div class="domain-section">
-            <h3 class="domain-header">📊 All Entities</h3>
-            <p class="domain-description">Comprehensive view of all entity schemas in the BOOST data model</p>
-            <div class="entity-links">
-                <a href="https://github.com/carbondirect/BOOST/discussions/90" class="entity-link" target="_blank">
-                    <strong>Organization</strong><br>
-                    Legal entities in biomass supply chain
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/91" class="entity-link" target="_blank">
-                    <strong>CertificationScheme</strong><br>
-                    Standards (FSC, SBP, RSB, ISO 38200, etc.)
+                <a href="https://github.com/carbondirect/BOOST/discussions/107" class="entity-link" target="_blank">
+                    <strong>Audit</strong><br>
+                    Third-party verification and compliance assessment
                 </a>
                 <a href="https://github.com/carbondirect/BOOST/discussions/92" class="entity-link" target="_blank">
                     <strong>Certificate</strong><br>
@@ -613,53 +369,61 @@
                     <strong>CertificationBody</strong><br>
                     Independent third-party certification organizations
                 </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/94" class="entity-link" target="_blank">
-                    <strong>MaterialFeedstock</strong><br>
-                    Physical biomass/materials with quantity, type, species data
+                <a href="https://github.com/carbondirect/BOOST/discussions/91" class="entity-link" target="_blank">
+                    <strong>CertificationScheme</strong><br>
+                    Forest management and biomass sustainability standards
                 </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/95" class="entity-link" target="_blank">
-                    <strong>Supplier</strong><br>
-                    Legal entities providing materials
+                <a href="https://github.com/carbondirect/BOOST/discussions/99" class="entity-link" target="_blank">
+                    <strong>Claim</strong><br>
+                    Sustainability and certification claims
                 </a>
                 <a href="https://github.com/carbondirect/BOOST/discussions/96" class="entity-link" target="_blank">
                     <strong>Customer</strong><br>
                     Legal entities receiving materials
                 </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/97" class="entity-link" target="_blank">
-                    <strong>TransactionConsignment</strong><br>
-                    Material transfers between organizations
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/98" class="entity-link" target="_blank">
-                    <strong>TransactionBatch</strong><br>
-                    Specific quantities within transactions
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/99" class="entity-link" target="_blank">
-                    <strong>Claim</strong><br>
-                    Certification claims (SBP-compliant, FSC Mix, RSB Global)
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/100" class="entity-link" target="_blank">
-                    <strong>SaleDeliveryDocument</strong><br>
-                    Official transfer documentation
-                </a>
                 <a href="https://github.com/carbondirect/BOOST/discussions/101" class="entity-link" target="_blank">
-                    <strong>SAR</strong><br>
-                    SBP Audit Reports on Energy and Carbon Data
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/102" class="entity-link" target="_blank">
-                    <strong>SREG</strong><br>
-                    SBP Reports on Energy and Carbon for Supplied Biomass
-                </a>
-                <a href="https://github.com/carbondirect/BOOST/discussions/103" class="entity-link" target="_blank">
-                    <strong>VerificationStatement</strong><br>
-                    Third-party verification documents
+                    <strong>EnergyCarbonData</strong><br>
+                    Energy and carbon data for GHG calculations and reporting
                 </a>
                 <a href="https://github.com/carbondirect/BOOST/discussions/104" class="entity-link" target="_blank">
                     <strong>MassBalanceAccount</strong><br>
                     Accounting mechanism for certified material tracking
                 </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/94" class="entity-link" target="_blank">
+                    <strong>Material</strong><br>
+                    Physical biomass/materials with quantity, type, species data
+                </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/90" class="entity-link" target="_blank">
+                    <strong>Organization</strong><br>
+                    Legal entities in biomass supply chain
+                </a>
                 <a href="https://github.com/carbondirect/BOOST/discussions/105" class="entity-link" target="_blank">
                     <strong>ProductGroup</strong><br>
                     Categorization for chain of custody methods
+                </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/100" class="entity-link" target="_blank">
+                    <strong>SalesDeliveryDocument</strong><br>
+                    Official transfer documentation
+                </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/95" class="entity-link" target="_blank">
+                    <strong>Supplier</strong><br>
+                    Legal entities providing materials
+                </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/106" class="entity-link" target="_blank">
+                    <strong>SupplyBaseReport</strong><br>
+                    Public reporting on sourcing practices and sustainability measures
+                </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/98" class="entity-link" target="_blank">
+                    <strong>TransactionBatch</strong><br>
+                    Specific quantities within transactions
+                </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/97" class="entity-link" target="_blank">
+                    <strong>DTSTransaction</strong><br>
+                    Material transfers between organizations
+                </a>
+                <a href="https://github.com/carbondirect/BOOST/discussions/103" class="entity-link" target="_blank">
+                    <strong>VerificationStatement</strong><br>
+                    Third-party verification documents
                 </a>
             </div>
         </div>
