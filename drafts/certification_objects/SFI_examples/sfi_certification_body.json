@@ -1,20 +1,22 @@
 {
-    "certificationBodyId": "SFI",
-    "name": "Sustainable Forestry Initiative",
+    "cbId": "SFI",
+    "cbName": "Sustainable Forestry Initiative",
+    "accreditationStatus": "accredited",
+    "accreditationScope": "Forestry and Chain of Custody",
     "contactInformation": {
       "address": {
-        "street": "2121 K Street NW",
+        "street": "123 Forest Stewardship Rd",
         "city": "Washington",
         "state": "DC",
-        "postalCode": "20037",
+        "postalCode": "20005",
         "country": "USA"
       },
-      "email": "info@forests.org",
+      "email": "info@sfiprogram.org",
       "phone": "+1-202-596-3450",
-      "website": "https://forests.org"
+      "website": "https://www.sfiprogram.org"
     },
     "jurisdictions": ["USA", "Canada"],
     "sectorsServed": ["Forestry", "Pulp & Paper"],
     "isActive": true,
-    "lastUpdated": "2025-06-24T09:00:00Z"
+    "lastUpdated": "2025-06-24T10:00:00Z"
   }

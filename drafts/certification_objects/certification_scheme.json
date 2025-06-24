@@ -6,7 +6,7 @@
   "properties": {
     "schemeId": { "type": "string" },
     "schemeName": { "type": "string" },
-    "versionNumber": { "type": "integer", "minimum": 1 },
+    "versionNumber": { "type": "string" },
     "recognitionStatus": {
       "type": "string",
       "enum": [
@@ -15,11 +15,15 @@
     },
     "description": { "type": "string" },
     "website": { "type": "string", "format": "uri" },
+    "materialCategories": { "type": "array", "items": { "type": "string" } },
+    "controlSystems": { "type": "array", "items": { "type": "string" } },
+    "labelUseRequirements": { "type": "string" },
+    "volumeTrackingRequirements": { "type": "string" },
+    "dueDiligenceRequirements": { "type": "string" },
     "sustainabilityCriteria": { "type": "array", "items": { "type": "string" } },
     "applicableRegions": { "type": "array", "items": { "type": "string" } },
     "dateEstablished": { "type": "string", "format": "date" },
-    "lastUpdated": { "type": "string", "format": "date-time" },
-    "certificationBodyId": { "type": "string" }
+    "lastUpdated": { "type": "string", "format": "date-time" }
   },
-  "required": ["schemeId", "schemeName", "versionNumber", "certificationBodyId"]
+  "required": ["schemeId", "schemeName", "versionNumber", "recognitionStatus"]
 }

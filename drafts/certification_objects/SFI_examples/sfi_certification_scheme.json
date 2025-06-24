@@ -1,14 +1,18 @@
 {
     "schemeId": "SFI-CoC",
     "schemeName": "SFI Chain of Custody",
-    "versionNumber": 2022,
+    "versionNumber": "2022",
     "recognitionStatus": "internationally-recognized",
-    "description": "SFI Chain of Custody Standard for forest-based products",
-    "website": "https://forests.org",
-    "sustainabilityCriteria": ["Legal Harvest", "Biodiversity", "Worker Safety"],
-    "applicableRegions": ["USA", "Canada"],
+    "description": "The SFI Chain of Custody Standard tracks forest fiber content through production and manufacturing to the end product.",
+    "website": "https://www.sfiprogram.org/standards/chain-of-custody-standard/",
+    "materialCategories": ["Certified Forest Content", "Recycled Content", "Certified Sourcing", "Non-Certified Content"],
+    "controlSystems": ["transfer", "credit", "percentage"],
+    "labelUseRequirements": "Labels must be approved by SFI and must accurately reflect product claims.",
+    "volumeTrackingRequirements": "Organizations must maintain records of input and output volumes by material category.",
+    "dueDiligenceRequirements": "Organizations must assess the risk of non-certified inputs and apply mitigation where required.",
+    "sustainabilityCriteria": ["Sustainable harvest levels", "Biodiversity protection"],
+    "applicableRegions": ["North America"],
     "dateEstablished": "1995-01-01",
-    "lastUpdated": "2025-06-24T09:00:00Z",
-    "certificationBodyId": "SFI"
+    "lastUpdated": "2025-06-24T10:00:00Z"
   }
   

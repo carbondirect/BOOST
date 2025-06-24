@@ -7,7 +7,7 @@
     "certificateId": { "type": "string" },
     "certificateNumber": { "type": "string" },
     "certificationSchemeId": { "type": "string" },
-    "certificationBodyId": { "type": "string" },
+    "cbId": { "type": "string" },
     "organizationId": { "type": "string" },
     "dateOfIssue": { "type": "string", "format": "date" },
     "dateOfExpiry": { "type": "string", "format": "date" },
@@ -16,7 +16,7 @@
       "enum": ["active", "expired", "revoked", "suspended", "pending"]
     },
     "scopeOfCertification": { "type": "string" },
-    "versionNumber": { "type": "integer", "minimum": 1 },
+    "versionNumber": { "type": "string" },
     "productGroups": {
       "type": "array",
       "items": {
@@ -87,10 +87,9 @@
     "lastUpdated": { "type": "string", "format": "date-time" }
   },
   "required": [
-    "certificateId",
     "certificateNumber",
     "certificationSchemeId",
-    "certificationBodyId",
+    "cbId",
     "organizationId",
     "dateOfIssue",
     "dateOfExpiry",

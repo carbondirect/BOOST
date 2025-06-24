@@ -4,8 +4,10 @@
   "title": "Certification Body",
   "type": "object",
   "properties": {
-    "certificationBodyId": { "type": "string" },
-    "name": { "type": "string" },
+    "cbId": { "type": "string" },
+    "cbName": { "type": "string" },
+    "accreditationStatus": { "type": "string" },
+    "accreditationScope": { "type": "string" },
     "contactInformation": {
       "type": "object",
       "properties": {
@@ -31,5 +33,5 @@
     "isActive": { "type": "boolean" },
     "lastUpdated": { "type": "string", "format": "date-time" }
   },
-  "required": ["certificationBodyId", "name", "contactInformation"]
+  "required": ["cbId", "cbName", "contactInformation"]
 }

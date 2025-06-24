@@ -3,21 +3,21 @@
 ## Certificate
 
 ### Overview
-The `Certificate` object represents a formal record of certification issued by a certification body to an organization under a specific certification scheme. It includes key metadata, audit traceability, and compliance indicators.
+The `Certificate` object represents a formal record of certification issued by a certification body (cbId) to an organization under a specific certification scheme. The primary key is `certificateNumber`.
 
 ### Fields
 | Field | Type | Required | Description | Examples |
 |-------|------|----------|-------------|----------|
-| `certificateId` | string | Yes | Unique internal identifier | `SFI-CERT-001` |
-| `certificateNumber` | string | Yes | Official certificate number | `SFI-2025-12345` |
+| `certificateId` | string | No | Optional internal identifier | `SFI-CERT-001` |
+| `certificateNumber` | string | Yes | Official certificate number (primary key) | `SFI-2025-12345` |
 | `certificationSchemeId` | string | Yes | FK to Certification Scheme | `SFI-CoC` |
-| `certificationBodyId` | string | Yes | FK to Certification Body | `SFI` |
+| `cbId` | string | Yes | FK to Certification Body | `SFI` |
 | `organizationId` | string | Yes | FK to Organization receiving the certificate | `ORG-FORESTCO-001` |
 | `dateOfIssue` | string (date) | Yes | Date of issuance | `2025-01-01` |
 | `dateOfExpiry` | string (date) | Yes | Expiry date | `2030-01-01` |
 | `status` | string | Yes | Current certificate status | `active`, `expired`, `revoked`, etc. |
 | `scopeOfCertification` | string | Yes | Summary of certification coverage | `Chain of Custody for lumber and pulp` |
-| `versionNumber` | integer | Yes | Version of standard applied | `2022` |
+| `versionNumber` | string | Yes | Version of standard applied | `2022` |
 | `productGroups` | array<object> | No | List of covered products | See Product Group Object |
 | `volumeTrackingRecord` | object | No | Input/output tracking by category | See Volume Tracking Object |
 | `labelUseRecord` | array<object> | No | On/off-product label usage | See Label Use Object |
@@ -63,8 +63,10 @@ The `Certification Body` object captures the organization that governs and manag
 ### Fields
 | Field | Type | Required | Description | Examples |
 |-------|------|----------|-------------|----------|
-| `certificationBodyId` | string | Yes | Unique identifier | `SFI` |
-| `name` | string | Yes | Full legal name | `Sustainable Forestry Initiative` |
+| `cbId` | string | Yes | Unique identifier | `SFI` |
+| `cbName` | string | Yes | Full legal name | `Sustainable Forestry Initiative` |
+| `accreditationStatus` | string | No | Accreditation status | `accredited` |
+| `accreditationScope` | string | No | Scope of accreditation | `Forestry and Chain of Custody` |
 | `contactInformation` | object | Yes | Contact and website details | See Contact Info Object |
 | `jurisdictions` | array<string> | No | Countries or regions covered | `USA`, `Canada` |
 | `sectorsServed` | array<string> | No | Focus sectors | `Forestry`, `Pulp & Paper` |
@@ -100,7 +102,7 @@ The `Certification Scheme` object represents the standard or framework used to c
 |-------|------|----------|-------------|----------|
 | `schemeId` | string | Yes | Unique scheme identifier | `SFI-CoC` |
 | `schemeName` | string | Yes | Full name of the scheme | `SFI Chain of Custody` |
-| `versionNumber` | integer | Yes | Version of the standard | `2022` |
+| `versionNumber` | string | Yes | Version of the standard | `2022` |
 | `recognitionStatus` | string | Yes | Status or tier | `internationally-recognized` |
 | `description` | string | No | Scheme summary | — |
 | `website` | string (uri) | No | URL for scheme homepage | — |
@@ -113,4 +115,3 @@ The `Certification Scheme` object represents the standard or framework used to c
 | `applicableRegions` | array<string> | No | Jurisdictional boundaries | — |
 | `dateEstablished` | string (date) | No | Launch date of scheme | `1995-01-01` |
 | `lastUpdated` | string (date-time) | No | Most recent update | `2025-06-24T09:00:00Z` |
-| `certificationBodyId` | string | Yes | FK to issuing body | `SFI` |
