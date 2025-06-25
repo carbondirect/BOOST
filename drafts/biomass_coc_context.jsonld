@@ -1,0 +1,152 @@
+{
+    "@context": {
+      "schema": "http://schema.org/",
+      "prov": "http://www.w3.org/ns/prov#",
+      "gs1": "https://gs1.org/voc/",
+      "biomass": "http://example.org/biomass#",
+      "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+  
+      "transferId": "biomass:transferId",
+      "transferDate": {
+        "@id": "schema:dateIssued",
+        "@type": "http://www.w3.org/2001/XMLSchema#date"
+      },
+      "shipmentDate": {
+        "@id": "schema:dateShipped",
+        "@type": "http://www.w3.org/2001/XMLSchema#date"
+      },
+  
+      "producer": {
+        "@id": "schema:provider",
+        "@type": "@id"
+      },
+      "recipient": {
+        "@id": "schema:customer",
+        "@type": "@id"
+      },
+      "supplier": {
+        "@id": "schema:supplier",
+        "@type": "@id"
+      },
+      "buyer": {
+        "@id": "schema:buyer",
+        "@type": "@id"
+      },
+  
+      "id": "schema:identifier",
+      "name": "schema:name",
+      "address": "schema:address",
+      "role": "schema:jobTitle",
+      "supplierCertificationStatus": "biomass:supplierCertificationStatus",
+  
+      "biomassType": "biomass:type",
+      "feedstockType": "biomass:feedstockType",
+      "feedstockOrigin": "biomass:feedstockOrigin",
+      "feedstockLocationName": "biomass:feedstockLocationName",
+      "moistureContent": "biomass:moistureContent",
+      "energyContent": "biomass:energyContent",
+      "landUseChange": "biomass:landUseChange",
+      "productDescription": "schema:description",
+      "productGroup": "biomass:productGroup",
+      "materialCategory": "biomass:materialCategory",
+  
+      "originGeographicCoordinates": {
+        "@id": "geo:geometry",
+        "@type": "@id"
+      },
+      "landOwnershipType": "biomass:landOwnershipType",
+      "managementPlanReference": "biomass:managementPlanReference",
+      "permitId": "biomass:permitId",
+      "approvalPathway": "biomass:approvalPathway",
+  
+      "quantity": {
+        "@id": "schema:amount",
+        "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+      },
+      "unit": "schema:unitText",
+      "quantityDelivered": {
+        "@id": "biomass:quantityDelivered",
+        "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+      },
+      "quantityUnits": "biomass:quantityUnits",
+  
+      "certification": "biomass:certification",
+      "certifier": "schema:issuer",
+      "certificateId": "schema:serialNumber",
+      "certificationStandard": "biomass:certificationStandard",
+      "certificationCode": "biomass:certificationCode",
+      "certificateClaim": "biomass:certificateClaim",
+      "applicableStandards": "biomass:applicableStandards",
+      "validUntil": {
+        "@id": "schema:validThrough",
+        "@type": "http://www.w3.org/2001/XMLSchema#date"
+      },
+  
+      "transportDetails": "biomass:transportDetails",
+      "carrier": "schema:carrier",
+      "mode": "schema:deliveryMethod",
+      "vehicleId": "schema:vehicleIdentificationNumber",
+      "transportDocumentReference": "biomass:transportDocumentReference",
+      "haulDistance": {
+        "@id": "biomass:haulDistance",
+        "@type": "http://www.w3.org/2001/XMLSchema#decimal"
+      },
+      "haulDistanceUnits": "biomass:haulDistanceUnits",
+  
+      "batchTracking": "biomass:batchTracking",
+      "batchId": "gs1:batchLotNumber",
+      "packagingId": "gs1:packageCode",
+      "traceabilityLevel": "biomass:traceabilityLevel",
+      "cocModel": "biomass:cocModel",
+  
+      "sustainabilityAttributes": {
+        "@id": "biomass:sustainabilityAttributes",
+        "@type": "@id"
+      },
+      "ghgData": {
+        "@id": "biomass:ghgData",
+        "@type": "@id"
+      },
+      "massEnergyBalanceData": "biomass:massEnergyBalanceData",
+      "volumeTrackingRecords": "biomass:volumeTrackingRecords",
+  
+      "documentationReference": "biomass:documentationReference",
+      "verificationDocuments": "biomass:verificationDocuments",
+      "thirdPartyAuditReports": "biomass:thirdPartyAuditReports",
+      "internalAuditRecords": "biomass:internalAuditRecords",
+      "complianceDocuments": "biomass:complianceDocuments",
+      "verificationStatements": "biomass:verificationStatements",
+  
+      "reportingEntityId": "biomass:reportingEntityId",
+      "reportingCompanyName": "biomass:reportingCompanyName",
+      "facilityId": "biomass:facilityId",
+      "documentId": "biomass:documentId",
+      "reportType": "biomass:reportType",
+      "compliancePeriod": "biomass:compliancePeriod",
+      "reportYear": {
+        "@id": "biomass:reportYear",
+        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+      },
+      "isConfidentialBusinessInformation": {
+        "@id": "biomass:isConfidentialBusinessInformation",
+        "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+      },
+  
+      "supplyChainEntities": "biomass:supplyChainEntities",
+      "processingInformation": "biomass:processingInformation",
+      "conversionFactors": "biomass:conversionFactors",
+      "originCountry": "schema:addressCountry",
+      "fuelPathwayCode": "biomass:fuelPathwayCode",
+      "jointApplicantAgreements": "biomass:jointApplicantAgreements",
+      "bookClaimRecords": "biomass:bookClaimRecords",
+  
+      "digitalSignature": "schema:DigitalDocument",
+      "signedAt": {
+        "@id": "schema:dateModified",
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      },
+      "signer": "schema:signatory",
+      "checksum": "schema:checksum"
+    }
+  }
+  

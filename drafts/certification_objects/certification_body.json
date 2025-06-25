@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/certification_body.json",
+  "title": "Certification Body",
+  "type": "object",
+  "properties": {
+    "cbId": { "type": "string" },
+    "cbName": { "type": "string" },
+    "accreditationStatus": { "type": "string" },
+    "accreditationScope": { "type": "string" },
+    "contactInformation": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": { "type": "string" },
+            "city": { "type": "string" },
+            "state": { "type": "string" },
+            "postalCode": { "type": "string" },
+            "country": { "type": "string" }
+          },
+          "required": ["city", "country"]
+        },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "website": { "type": "string", "format": "uri" }
+      },
+      "required": ["address"]
+    },
+    "jurisdictions": { "type": "array", "items": { "type": "string" } },
+    "sectorsServed": { "type": "array", "items": { "type": "string" } },
+    "isActive": { "type": "boolean" },
+    "lastUpdated": { "type": "string", "format": "date-time" }
+  },
+  "required": ["cbId", "cbName", "contactInformation"]
+}

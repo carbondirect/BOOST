@@ -17,19 +17,34 @@ erDiagram
     
     CertificationScheme {
         string schemeId PK
-        string schemeName "FSC, PEFC, SBP, RSB, ISO38200"
+        string schemeName
         string recognitionStatus
         string versionNumber
+        string description
+        uri website
+        string[] materialCategories
+        string[] controlSystems
+        string labelUseRequirements
+        string volumeTrackingRequirements
+        string dueDiligenceRequirements
+        string[] sustainabilityCriteria
+        string[] applicableRegions
+        date dateEstablished
+        datetime lastUpdated
     }
     
     Certificate {
         string certificateNumber PK
+        string certificateId
         date dateOfIssue
         date dateOfExpiry
         string scopeOfCertification
+        string status
         string versionNumber
         string cbId FK
         string organizationId FK
+        string certificationSchemeId FK
+        datetime lastUpdated
     }
     
     CertificationBody {
@@ -37,6 +52,11 @@ erDiagram
         string cbName
         string accreditationStatus
         string accreditationScope
+        object contactInformation
+        string[] jurisdictions
+        string[] sectorsServed
+        boolean isActive
+        datetime lastUpdated
     }
     
     %% Material and Supply Chain

@@ -1,0 +1,94 @@
+erDiagram
+
+  Certificate {
+    string certificateNumber PK
+    string certificateId
+    string certificationSchemeId FK
+    string cbId FK
+    string organizationId FK
+    date dateOfIssue
+    date dateOfExpiry
+    string status
+    string scopeOfCertification
+    string versionNumber
+    datetime lastUpdated
+  }
+
+  ProductGroup {
+    string certificateNumber FK
+    string productType
+    string[] materialCategories
+    string[] controlSystems
+  }
+
+  VolumeTrackingRecord {
+    string certificateNumber FK
+    string inputVolumeByCategory
+    string outputVolumeByCategory
+  }
+
+  LabelUseRecord {
+    string certificateNumber FK
+    string product
+    string claimType
+    string approvalReference
+  }
+
+  SupplierInfo {
+    string certificateNumber FK
+    string name
+    string address
+  }
+
+  SupplierRiskRatingDDS {
+    string certificateNumber FK
+    string riskRating
+    string mitigationMeasures
+  }
+
+  Attachment {
+    string certificateNumber FK
+    string fileName
+    string fileUrl
+    string fileType
+  }
+
+  CertificationBody {
+    string cbId PK
+    string cbName
+    string accreditationStatus
+    string accreditationScope
+    object contactInformation
+    string[] jurisdictions
+    string[] sectorsServed
+    boolean isActive
+    datetime lastUpdated
+  }
+
+  CertificationScheme {
+    string schemeId PK
+    string schemeName
+    string versionNumber
+    string recognitionStatus
+    string description
+    uri website
+    string[] materialCategories
+    string[] controlSystems
+    string labelUseRequirements
+    string volumeTrackingRequirements
+    string dueDiligenceRequirements
+    string[] sustainabilityCriteria
+    string[] applicableRegions
+    date dateEstablished
+    datetime lastUpdated
+  }
+
+  Certificate ||--|| CertificationBody : "cbId"
+  Certificate ||--|| CertificationScheme : "certificationSchemeId"
+  Certificate ||--|| Organization : "organizationId"
+  Certificate ||--o{ ProductGroup : has
+  Certificate ||--o{ VolumeTrackingRecord : tracks
+  Certificate ||--o{ LabelUseRecord : labels
+  Certificate ||--o{ SupplierInfo : sources_from
+  Certificate ||--o{ SupplierRiskRatingDDS : assesses
+  Certificate ||--o{ Attachment : includes

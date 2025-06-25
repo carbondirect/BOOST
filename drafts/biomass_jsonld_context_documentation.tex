@@ -1,0 +1,482 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{url}
+
+% Code listing style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{BOOST Biomass Chain of Custody JSON-LD Context Schema}
+\author{BOOST Working Group}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Executive Summary}
+
+This document describes the JSON-LD context schema developed for the BOOST (Biomass Open-Source Traceability) data standard. The schema provides a comprehensive semantic framework for representing biomass chain of custody transactions, enabling interoperability across multiple certification programs and regulatory frameworks including FSC, SBP, RSB, PEFC, RFS, LCFS, and EUDR.
+
+The JSON-LD context maps biomass-specific terms to standardized vocabularies (Schema.org, W3C PROV, GS1) while maintaining compatibility with existing industry systems and regulatory requirements.
+
+\textbf{Key Features:}
+\begin{itemize}[noitemsep]
+    \item Comprehensive coverage of major certification schemes and regulatory frameworks
+    \item Semantic interoperability through linked data principles
+    \item Support for complex supply chains with multiple participants and processing steps
+    \item Geospatial tracking capabilities for origin verification
+    \item Extensible structure for future requirements
+\end{itemize}
+
+\section{Introduction to JSON-LD for Biomass Tracking}
+
+\subsection{What is JSON-LD?}
+
+JSON-LD (JavaScript Object Notation for Linked Data) is a method of encoding linked data using JSON. It provides a way to express structured data in a format that is both human-readable and machine-processable, while maintaining semantic meaning through the use of contexts that map terms to IRIs (Internationalized Resource Identifiers).
+
+\subsection{Benefits for Biomass Chain of Custody}
+
+JSON-LD offers several advantages for biomass tracking systems:
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Semantic Clarity:} Terms have precise, machine-readable definitions
+    \item \textbf{Interoperability:} Different systems can understand and exchange data seamlessly
+    \item \textbf{Extensibility:} New terms can be added without breaking existing systems
+    \item \textbf{Standards Compliance:} Leverages established vocabularies like Schema.org
+    \item \textbf{Future-Proofing:} Linked data principles ensure long-term data usability
+\end{itemize}
+
+\section{Schema Architecture}
+
+\subsection{Namespace Declarations}
+
+The schema utilizes several established vocabularies:
+
+\begin{itemize}[noitemsep]
+    \item \textbf{schema:} Schema.org vocabulary for general business concepts
+    \item \textbf{prov:} W3C Provenance Ontology for tracking data lineage
+    \item \textbf{gs1:} GS1 Web Vocabulary for supply chain identifiers
+    \item \textbf{geo:} W3C Basic Geo Vocabulary for geospatial data
+    \item \textbf{biomass:} Custom namespace for biomass-specific terms
+\end{itemize}
+
+\subsection{Core Entity Types}
+
+The schema supports several fundamental entity types in biomass supply chains:
+
+\begin{longtable}{|p{3cm}|p{4cm}|p{7cm}|}
+\hline
+\textbf{Entity Type} & \textbf{JSON-LD Mapping} & \textbf{Description} \\
+\hline
+Producer & schema:provider & Original biomass producer or harvester \\
+Supplier & schema:supplier & Entity supplying biomass in a transaction \\
+Buyer & schema:buyer & Entity purchasing biomass in a transaction \\
+Recipient & schema:customer & Final recipient of biomass transfer \\
+Carrier & schema:carrier & Transportation provider \\
+Certifier & schema:issuer & Certification body issuing certificates \\
+\hline
+\end{longtable}
+
+\section{Detailed Field Documentation}
+
+\subsection{Transaction Identification}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+transferId & biomass:transferId & Unique identifier for the biomass transfer event \\
+documentId & biomass:documentId & Reference to associated documentation \\
+transferDate & schema:dateIssued & Date when the transfer occurred \\
+shipmentDate & schema:dateShipped & Date when material was shipped \\
+\hline
+\end{longtable}
+
+\subsection{Participant Information}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+name & schema:name & Organization or individual name \\
+address & schema:address & Physical address \\
+role & schema:jobTitle & Role in the supply chain \\
+supplierCertification Status & biomass:supplier CertificationStatus & Certification status verification \\
+\hline
+\end{longtable}
+
+\subsection{Material Characteristics}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+biomassType & biomass:type & General biomass category \\
+feedstockType & biomass:feedstockType & Specific feedstock classification \\
+productDescription & schema:description & Detailed product description \\
+productGroup & biomass:productGroup & Product grouping for mass balance \\
+materialCategory & biomass:materialCategory & Certification category classification \\
+moistureContent & biomass:moistureContent & Moisture percentage \\
+energyContent & biomass:energyContent & Energy content measurement \\
+\hline
+\end{longtable}
+
+\subsection{Geospatial and Origin Data}
+
+Critical for regulatory compliance and sustainability verification:
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+originGeographic Coordinates & geo:geometry & GPS coordinates or polygon boundaries \\
+feedstockLocationName & biomass:feedstock LocationName & Named location where feedstock was sourced \\
+landOwnershipType & biomass:land OwnershipType & Private, State, Federal, Tribal classification \\
+managementPlan Reference & biomass:management PlanReference & Reference to forest management plan \\
+permitId & biomass:permitId & Associated permits or authorizations \\
+approvalPathway & biomass:approval Pathway & Regulatory approval process used \\
+originCountry & schema:addressCountry & Country of origin for EUDR compliance \\
+\hline
+\end longtable}
+
+\subsection{Quantity and Measurement}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+quantity & schema:amount & General quantity measurement \\
+quantityDelivered & biomass:quantity Delivered & Specific delivery quantity \\
+unit & schema:unitText & Unit of measurement \\
+quantityUnits & biomass:quantityUnits & Specific quantity units \\
+\hline
+\end longtable}
+
+\subsection{Certification and Claims}
+
+Comprehensive support for multiple certification schemes:
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+certificationStandard & biomass:certification Standard & FSC, SBP, RSB, PEFC, etc. \\
+certificationCode & biomass:certification Code & Unique certification identifier \\
+certificateClaim & biomass:certificate Claim & Specific claim type \\
+applicableStandards & biomass:applicable Standards & List of relevant standards \\
+certifier & schema:issuer & Certification body \\
+certificateId & schema:serialNumber & Certificate identifier \\
+validUntil & schema:validThrough & Certificate expiration date \\
+\hline
+\end longtable}
+
+\subsection{Transportation and Logistics}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+carrier & schema:carrier & Transportation provider \\
+mode & schema:deliveryMethod & Transportation method \\
+vehicleId & schema:vehicle IdentificationNumber & Vehicle identifier \\
+transportDocument Reference & biomass:transport DocumentReference & Transport documentation reference \\
+haulDistance & biomass:haulDistance & Transportation distance \\
+haulDistanceUnits & biomass:haulDistance Units & Distance measurement units \\
+\hline
+\end longtable}
+
+\subsection{Traceability and Chain of Custody}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+batchId & gs1:batchLotNumber & Batch tracking identifier \\
+traceabilityLevel & biomass:traceability Level & Granularity of traceability \\
+cocModel & biomass:cocModel & Chain of custody control method \\
+massEnergyBalance Data & biomass:massEnergy BalanceData & Mass balance calculation data \\
+volumeTracking Records & biomass:volume TrackingRecords & Volume tracking documentation \\
+\hline
+\end longtable}
+
+\subsection{Sustainability and Environmental Data}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+sustainabilityAttributes & biomass:sustainability Attributes & Sustainability compliance data \\
+ghgData & biomass:ghgData & Greenhouse gas emissions data \\
+landUseChange & biomass:landUseChange & Land use change information \\
+\hline
+\end longtable}
+
+\subsection{Documentation and Verification}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+verificationDocuments & biomass:verification Documents & Verification documentation references \\
+thirdPartyAudit Reports & biomass:thirdParty AuditReports & External audit reports \\
+internalAuditRecords & biomass:internal AuditRecords & Internal audit documentation \\
+complianceDocuments & biomass:compliance Documents & Regulatory compliance documents \\
+verificationStatements & biomass:verification Statements & Independent verification statements \\
+\hline
+\end longtable}
+
+\section{Regulatory Compliance Support}
+
+\subsection{RFS (Renewable Fuel Standard) Fields}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+reportingEntityId & biomass:reporting EntityId & EPA registered entity identifier \\
+reportingCompanyName & biomass:reporting CompanyName & Reporting company name \\
+facilityId & biomass:facilityId & Facility registration identifier \\
+reportType & biomass:reportType & Original or resubmission \\
+compliancePeriod & biomass:compliance Period & Compliance quarter or period \\
+reportYear & biomass:reportYear & Compliance year \\
+isConfidentialBusiness Information & biomass:isConfidential BusinessInformation & CBI designation flag \\
+\hline
+\end longtable}
+
+\subsection{LCFS (Low Carbon Fuel Standard) Fields}
+
+\begin{longtable}{|p{3.5cm}|p{3cm}|p{7.5cm}|}
+\hline
+\textbf{Field} & \textbf{Mapping} & \textbf{Description} \\
+\hline
+fuelPathwayCode & biomass:fuelPathway Code & CARB assigned pathway code \\
+jointApplicant Agreements & biomass:jointApplicant Agreements & Shared responsibility agreements \\
+bookClaimRecords & biomass:bookClaim Records & Book and claim documentation \\
+\hline
+\end longtable}
+
+\section{Usage Examples}
+
+\subsection{Basic Transaction Example}
+
+\begin{lstlisting}[language=json, caption=Basic biomass transfer transaction]
+{
+  "@context": "https://example.org/biomass_coc_context.jsonld",
+  "transferId": "TXN-2024-001-ABC",
+  "transferDate": "2024-03-15",
+  "producer": {
+    "id": "ORG-FOREST-001",
+    "name": "Pacific Forest Products",
+    "address": "123 Timber Road, Olympia, WA 98501",
+    "role": "harvester"
+  },
+  "recipient": {
+    "id": "ORG-MILL-002", 
+    "name": "Green Energy Mill",
+    "address": "456 Industrial Way, Portland, OR 97201",
+    "role": "processor"
+  },
+  "biomassType": "wood chips",
+  "feedstockType": "logging slash",
+  "quantity": 45.5,
+  "unit": "tons",
+  "originGeographicCoordinates": {
+    "type": "Polygon",
+    "coordinates": [[[-123.1234, 47.5678], [-123.1200, 47.5678], 
+                     [-123.1200, 47.5650], [-123.1234, 47.5650], 
+                     [-123.1234, 47.5678]]]
+  },
+  "certificationStandard": "SFI",
+  "certificateId": "SFI-COC-123456",
+  "cocModel": "Physical Separation"
+}
+\end{lstlisting}
+
+\subsection{Advanced Multi-Standard Transaction}
+
+\begin{lstlisting}[language=json, caption=Complex transaction with multiple certifications]
+{
+  "@context": "https://example.org/biomass_coc_context.jsonld",
+  "transferId": "TXN-2024-002-XYZ",
+  "documentId": "RFS0801-2024-001-ABCD123",
+  "transferDate": "2024-03-20",
+  "shipmentDate": "2024-03-18",
+  "supplier": {
+    "id": "ORG-BIOMASS-003",
+    "name": "Sustainable Biomass Corp",
+    "supplierCertificationStatus": true
+  },
+  "buyer": {
+    "id": "ORG-ENERGY-004",
+    "name": "Regional Energy Plant"
+  },
+  "feedstockType": "agricultural residues",
+  "productDescription": "wheat straw pellets",
+  "quantityDelivered": 125.0,
+  "quantityUnits": "Short Ton",
+  "originGeographicCoordinates": {
+    "type": "Point",
+    "coordinates": [-120.5123, 46.7891]
+  },
+  "landOwnershipType": "Private",
+  "managementPlanReference": "FARM-PLAN-2024-001",
+  "applicableStandards": ["RSB", "ISCC"],
+  "certificateClaim": "RSB certified",
+  "sustainabilityAttributes": {
+    "biodiversityProtection": true,
+    "soilProtection": true,
+    "waterQualityMaintained": true
+  },
+  "ghgData": {
+    "totalEmissions": 8.2,
+    "emissionsUnit": "gCO2e/MJ",
+    "calculationMethod": "GREET 2023"
+  },
+  "transportDocumentReference": "BOL-2024-0320-001",
+  "haulDistance": 89.5,
+  "haulDistanceUnits": "km",
+  "traceabilityLevel": "Batch-level",
+  "cocModel": "Mass Balance"
+}
+\end{lstlisting}
+
+\section{Implementation Guidelines}
+
+\subsection{System Integration}
+
+Organizations implementing this schema should consider:
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Context Hosting:} Host the JSON-LD context at a stable, versioned URL
+    \item \textbf{Validation:} Implement JSON Schema validation alongside JSON-LD context
+    \item \textbf{API Design:} Use RESTful APIs that accept and return JSON-LD formatted data
+    \item \textbf{Database Storage:} Consider graph databases for optimal linked data storage
+    \item \textbf{Backward Compatibility:} Version contexts carefully to maintain compatibility
+\end{itemize}
+
+\subsection{Data Quality Requirements}
+
+\begin{itemize}[noitemsep]
+    \item Required fields must be populated for regulatory compliance
+    \item Geographic coordinates should use WGS84 coordinate system
+    \item Dates must follow ISO 8601 format
+    \item Quantities must include appropriate units
+    \item Certificate references must be verifiable
+\end{itemize}
+
+\subsection{Privacy and Security Considerations}
+
+\begin{itemize}[noitemsep]
+    \item Implement appropriate access controls for sensitive data
+    \item Consider data anonymization for geographic coordinates if required
+    \item Encrypt sensitive commercial information
+    \item Implement audit trails for all data modifications
+    \item Comply with relevant data protection regulations
+\end{itemize}
+
+\section{Standards Alignment}
+
+\subsection{Certification Program Mapping}
+
+The schema provides comprehensive coverage for major certification programs:
+
+\begin{longtable}{|p{2cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Program} & \textbf{Coverage} & \textbf{Key Supported Elements} \\
+\hline
+FSC & Full & Certificate claims, product groups, chain of custody models \\
+SBP & Full & Mass balance, energy data, verification statements \\
+RSB & Full & Sustainability criteria, processing information, conversion factors \\
+PEFC & Full & Certificate claims, product descriptions, audit records \\
+ISCC & Partial & Sustainability attributes, GHG data, traceability \\
+ISO 38200 & Full & Material categories, mass balance, sustainability information \\
+\hline
+\end{longtable}
+
+\subsection{Regulatory Framework Support}
+
+\begin{longtable}{|p{2cm}|p{3cm}|p{8cm}|}
+\hline
+\textbf{Framework} & \textbf{Coverage} & \textbf{Key Supported Elements} \\
+\hline
+RFS & Full & Reporting entities, facility IDs, compliance periods, CBI handling \\
+LCFS & Full & Fuel pathway codes, book and claim, joint applicant agreements \\
+EUDR & Full & Geographic coordinates, origin country, land ownership \\
+EU RED III & Partial & Sustainability criteria, GHG data, verification \\
+Canada CFR & Partial & Geographic coordinates, management plans, sustainability \\
+\hline
+\end longtable}
+
+\section{Future Development}
+
+\subsection{Planned Enhancements}
+
+\begin{itemize}[noitemsep]
+    \item Additional vocabulary mappings for emerging standards
+    \item Enhanced support for circular economy indicators
+    \item Integration with blockchain-based verification systems
+    \item Expanded geospatial data types for precision agriculture
+    \item Support for IoT sensor data integration
+\end{itemize}
+
+\subsection{Community Involvement}
+
+The BOOST JSON-LD context is developed as an open standard with community input:
+
+\begin{itemize}[noitemsep]
+    \item Regular stakeholder consultation periods
+    \item Public comment processes for major changes
+    \item GitHub-based issue tracking and enhancement requests
+    \item Working group participation from industry and government
+    \item Alignment with international standardization efforts
+\end{itemize}
+
+\section{Conclusion}
+
+The BOOST Biomass Chain of Custody JSON-LD Context Schema provides a comprehensive, standards-based approach to biomass traceability that supports both current regulatory requirements and future industry needs. By leveraging linked data principles and established vocabularies, the schema enables semantic interoperability while maintaining the flexibility needed for diverse supply chain configurations.
+
+The schema's comprehensive coverage of certification programs, regulatory frameworks, and operational requirements makes it suitable for implementation across the full spectrum of biomass supply chain participants, from small-scale producers to large industrial facilities.
+
+\section{References}
+
+\begin{itemize}[noitemsep]
+    \item BOOST Working Group. "Biomass Chain of Custody Data Standard Requirements." 2024.
+    \item Schema.org Community. "Schema.org Vocabulary." \url{https://schema.org}
+    \item W3C. "PROV-O: The PROV Ontology." \url{https://www.w3.org/TR/prov-o/}
+    \item GS1. "GS1 Web Vocabulary." \url{https://www.gs1.org/voc/}
+    \item W3C. "Basic Geo Vocabulary." \url{https://www.w3.org/2003/01/geo/}
+    \item JSON-LD Working Group. "JSON-LD 1.1 Specification." \url{https://www.w3.org/TR/json-ld11/}
+\end{itemize}
+
+\end{document} 

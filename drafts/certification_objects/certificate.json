@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/certificate.json",
+  "title": "Certificate",
+  "type": "object",
+  "properties": {
+    "certificateId": { "type": "string" },
+    "certificateNumber": { "type": "string" },
+    "certificationSchemeId": { "type": "string" },
+    "cbId": { "type": "string" },
+    "organizationId": { "type": "string" },
+    "dateOfIssue": { "type": "string", "format": "date" },
+    "dateOfExpiry": { "type": "string", "format": "date" },
+    "status": {
+      "type": "string",
+      "enum": ["active", "expired", "revoked", "suspended", "pending"]
+    },
+    "scopeOfCertification": { "type": "string" },
+    "versionNumber": { "type": "string" },
+    "productGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "productType": { "type": "string" },
+          "materialCategories": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "controlSystems": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["productType"]
+      }
+    },
+    "volumeTrackingRecord": {
+      "type": "object",
+      "properties": {
+        "inputVolumeByCategory": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        },
+        "outputVolumeByCategory": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        }
+      }
+    },
+    "labelUseRecord": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product": { "type": "string" },
+          "claimType": { "type": "string" },
+          "approvalReference": { "type": "string" }
+        }
+      }
+    },
+    "supplierInfo": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" }
+      }
+    },
+    "supplierRiskRatingDDS": {
+      "type": "object",
+      "properties": {
+        "riskRating": { "type": "string" },
+        "mitigationMeasures": { "type": "string" }
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "fileName": { "type": "string" },
+          "fileUrl": { "type": "string", "format": "uri" },
+          "fileType": { "type": "string" }
+        }
+      }
+    },
+    "lastUpdated": { "type": "string", "format": "date-time" }
+  },
+  "required": [
+    "certificateNumber",
+    "certificationSchemeId",
+    "cbId",
+    "organizationId",
+    "dateOfIssue",
+    "dateOfExpiry",
+    "status",
+    "scopeOfCertification",
+    "versionNumber"
+  ]
+}
