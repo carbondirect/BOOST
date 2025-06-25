@@ -17,11 +17,11 @@
    - Approval of [previous meeting minutes](https://github.com/carbondirect/BOOST/blob/main/meetings/meetingNotes_6_11_25.md)
 	 - Follow up meeting on linked data 6/24
 
-    > Key Takeaways
-    >
-    >   - Linked data presents challenges for supply chains due to their graphical nature, but remains the best available approach for interoperability standards
-    >   - Flexibility in naming conventions and data structures is crucial due to varying terminology across regulatory bodies and markets
-    >   - The BOOST standard could provide value by offering a common framework for reporting and documentation across different markets and regulations
+> Key Takeaways
+>
+>   - Linked data presents challenges for supply chains due to their graphical nature, but remains the best available approach for interoperability standards
+>   - Flexibility in naming conventions and data structures is crucial due to varying terminology across regulatory bodies and markets
+>   - The BOOST standard could provide value by offering a common framework for reporting and documentation across different markets and regulations
 
 
    - Overview of today's agenda
