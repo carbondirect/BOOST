@@ -23,7 +23,7 @@
      - Impact: Improved stakeholder engagement and feedback collection
    
    - **New Membership Page**
-     - Added comprehensive membership section to main site
+     - Added comprehensive [membership section to main site]([url](https://carbondirect.github.io/BOOST/#membership))
      - Complete lists of W3C Community Group members and mailing list recipients
    
    - **Stakeholder Engagement Progress**
