@@ -14,7 +14,7 @@
 
 ### 2. **Administrative Updates** (3 minutes)
    - Review of Code of Conduct
-   - Approval of previous meeting minutes
+   - Approval of [previous meeting minutes](https://github.com/carbondirect/BOOST/blob/main/meetings/meetingNotes_6_11_25.md)
    - Overview of today's agenda
 
 ### 3. **Project Updates and Announcements** (12 minutes)
