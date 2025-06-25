@@ -1,0 +1,349 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://boost.carbondirect.io/schema/",
+    "@base": "https://boost.carbondirect.io/data/",
+    
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "gs1": "https://gs1.org/voc/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "time": "http://www.w3.org/2006/time#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    
+    "_comment": "BOOST Core Entity Types",
+    "Organization": {
+      "@id": "boost:Organization",
+      "@type": "@id"
+    },
+    "Material": {
+      "@id": "boost:Material", 
+      "@type": "@id"
+    },
+    "DTSTransaction": {
+      "@id": "boost:DTSTransaction",
+      "@type": "@id"
+    },
+    "TransactionBatch": {
+      "@id": "boost:TransactionBatch",
+      "@type": "@id"
+    },
+    "Certificate": {
+      "@id": "boost:Certificate",
+      "@type": "@id"
+    },
+    "CertificationScheme": {
+      "@id": "boost:CertificationScheme",
+      "@type": "@id"
+    },
+    "CertificationBody": {
+      "@id": "boost:CertificationBody",
+      "@type": "@id"
+    },
+    "Supplier": {
+      "@id": "boost:Supplier",
+      "@type": "@id"
+    },
+    "Customer": {
+      "@id": "boost:Customer",
+      "@type": "@id"  
+    },
+    "Claim": {
+      "@id": "boost:Claim",
+      "@type": "@id"
+    },
+    "SalesDeliveryDocument": {
+      "@id": "boost:SalesDeliveryDocument",
+      "@type": "@id"
+    },
+    "MassBalanceAccount": {
+      "@id": "boost:MassBalanceAccount",
+      "@type": "@id"
+    },
+    "ProductGroup": {
+      "@id": "boost:ProductGroup",
+      "@type": "@id"
+    },
+    "EnergyCarbonData": {
+      "@id": "boost:EnergyCarbonData",
+      "@type": "@id"
+    },
+    "SupplyBaseReport": {
+      "@id": "boost:SupplyBaseReport",
+      "@type": "@id"
+    },
+    "VerificationStatement": {
+      "@id": "boost:VerificationStatement",
+      "@type": "@id"
+    },
+    "Audit": {
+      "@id": "boost:Audit",
+      "@type": "@id"
+    },
+    
+    "_comment": "Primary Keys as @id",
+    "organizationId": "@id",
+    "materialId": "@id", 
+    "dtsTransactionId": "@id",
+    "transactionBatchId": "@id",
+    "certificateNumber": "@id",
+    "schemeId": "@id",
+    "cbId": "@id",
+    "supplierId": "@id",
+    "customerId": "@id",
+    "claimId": "@id",
+    "documentId": "@id",
+    "accountId": "@id",
+    "productGroupId": "@id",
+    "energyCarbonDataId": "@id",
+    "sbrId": "@id",
+    "statementId": "@id",
+    "auditId": "@id",
+    
+    "_comment": "Common Properties with Schema.org Mapping",
+    "name": "schema:name",
+    "description": "schema:description",
+    "address": {
+      "@id": "schema:address",
+      "@type": "schema:PostalAddress"
+    },
+    "telephone": "schema:telephone",
+    "email": "schema:email",
+    "url": "schema:url",
+    "website": "schema:url",
+    
+    "_comment": "Organization Properties", 
+    "role": "boost:organizationRole",
+    "scopeOfOperations": "boost:scopeOfOperations",
+    "legalEntityStatus": "boost:legalEntityStatus",
+    "certificateCode": {
+      "@id": "boost:certificateCode",
+      "@type": "@id"
+    },
+    "contactInfo": "schema:contactPoint",
+    "jurisdictions": "boost:operatingJurisdictions",
+    "sectorsServed": "boost:sectorsServed",
+    "isActive": {
+      "@id": "boost:isActive",
+      "@type": "xsd:boolean"
+    },
+    
+    "_comment": "Material Properties",
+    "quantity": {
+      "@id": "schema:quantityValue",
+      "@type": "schema:QuantitativeValue",
+      "@context": {
+        "value": {
+          "@id": "schema:value",
+          "@type": "xsd:decimal"
+        },
+        "unit": "schema:unitCode",
+        "unitText": "schema:unitText"
+      }
+    },
+    "materialType": "boost:materialType",
+    "category": "boost:materialCategory", 
+    "species": "boost:species",
+    "countryOfOrigin": {
+      "@id": "boost:countryOfOrigin",
+      "@type": "@id"
+    },
+    "source": "boost:materialSource",
+    "rawMaterialEligibility": "boost:rawMaterialEligibility",
+    "gmoStatus": {
+      "@id": "boost:gmoStatus",
+      "@type": "xsd:boolean"
+    },
+    
+    "_comment": "Transaction Properties",
+    "transactionDate": {
+      "@id": "boost:transactionDate",
+      "@type": "xsd:dateTime"
+    },
+    "supplyingOrganizationId": {
+      "@id": "boost:suppliedBy",
+      "@type": "@id"
+    },
+    "customerOrganizationId": {
+      "@id": "boost:receivedBy", 
+      "@type": "@id"
+    },
+    "salesDocumentId": {
+      "@id": "boost:documentedBy",
+      "@type": "@id"
+    },
+    "productionBatchId": {
+      "@id": "boost:productionBatch",
+      "@type": "@id"
+    },
+    
+    "_comment": "Certification Properties",
+    "dateOfIssue": {
+      "@id": "boost:dateOfIssue",
+      "@type": "xsd:date"
+    },
+    "dateOfExpiry": {
+      "@id": "boost:dateOfExpiry", 
+      "@type": "xsd:date"
+    },
+    "scopeOfCertification": "boost:scopeOfCertification",
+    "status": "boost:certificateStatus",
+    "versionNumber": "boost:versionNumber",
+    "schemeName": "boost:schemeName",
+    "recognitionStatus": "boost:recognitionStatus",
+    "materialCategories": "boost:materialCategories",
+    "controlSystems": "boost:controlSystems",
+    "labelUseRequirements": "boost:labelUseRequirements", 
+    "volumeTrackingRequirements": "boost:volumeTrackingRequirements",
+    "dueDiligenceRequirements": "boost:dueDiligenceRequirements",
+    "sustainabilityCriteria": "boost:sustainabilityCriteria",
+    "applicableRegions": "boost:applicableRegions",
+    "dateEstablished": {
+      "@id": "boost:dateEstablished",
+      "@type": "xsd:date"
+    },
+    "accreditationStatus": "boost:accreditationStatus",
+    "accreditationScope": "boost:accreditationScope",
+    "contactInformation": "schema:contactPoint",
+    
+    "_comment": "Claim Properties",
+    "claimType": "boost:claimType",
+    "statement": "boost:claimStatement", 
+    "validated": {
+      "@id": "boost:validated",
+      "@type": "xsd:boolean"
+    },
+    
+    "_comment": "Document Properties",
+    "dateIssued": {
+      "@id": "boost:dateIssued",
+      "@type": "xsd:date"
+    },
+    "buyerName": "boost:buyerName",
+    "buyerAddress": "boost:buyerAddress",
+    "sellerName": "boost:sellerName", 
+    "sellerAddress": "boost:sellerAddress",
+    "productDescription": "boost:productDescription",
+    "transportReference": "boost:transportReference",
+    
+    "_comment": "Mass Balance Properties",
+    "periodInputs": {
+      "@id": "boost:periodInputs",
+      "@type": "xsd:decimal"
+    },
+    "periodOutputs": {
+      "@id": "boost:periodOutputs",
+      "@type": "xsd:decimal"
+    },
+    "currentBalance": {
+      "@id": "boost:currentBalance",
+      "@type": "xsd:decimal"
+    },
+    "balancingPeriod": "boost:balancingPeriod",
+    "conversionFactors": {
+      "@id": "boost:conversionFactors",
+      "@type": "xsd:decimal"
+    },
+    "productTypeDescription": "boost:productTypeDescription",
+    "feedstockClassificationRules": "boost:feedstockClassificationRules",
+    
+    "_comment": "Energy and Carbon Properties",
+    "dataType": "boost:dataType",
+    "value": {
+      "@id": "schema:value",
+      "@type": "xsd:decimal"
+    },
+    "unit": "schema:unitCode",
+    "measurementMethod": "boost:measurementMethod",
+    
+    "_comment": "Reporting Properties", 
+    "preparationDate": {
+      "@id": "boost:preparationDate",
+      "@type": "xsd:date"
+    },
+    "supplyBaseSummary": "boost:supplyBaseSummary",
+    "sourcingPractices": "boost:sourcingPractices",
+    "sustainabilityMeasures": "boost:sustainabilityMeasures",
+    "publicationUrl": {
+      "@id": "boost:publicationUrl",
+      "@type": "@id"
+    },
+    
+    "_comment": "Verification Properties",
+    "verificationDate": {
+      "@id": "boost:verificationDate",
+      "@type": "xsd:date"
+    },
+    "issuingBody": "boost:issuingBody",
+    "scope": "boost:verificationScope",
+    
+    "_comment": "Audit Properties",
+    "auditType": "boost:auditType",
+    "auditDate": {
+      "@id": "boost:auditDate", 
+      "@type": "xsd:date"
+    },
+    "findings": "boost:auditFindings",
+    "reportUrl": {
+      "@id": "boost:reportUrl",
+      "@type": "@id"
+    },
+    
+    "_comment": "Temporal Properties",
+    "lastUpdated": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:dateTime"
+    },
+    
+    "_comment": "Relationship Properties",
+    "has": "boost:has",
+    "certifies_against": "boost:certifiesAgainst",
+    "issued_by": "boost:issuedBy",
+    "conducts": "boost:conducts",
+    "handles": "boost:handles",
+    "creates": "boost:creates",
+    "sources_from": "boost:sourcesFrom",
+    "sells_to": "boost:sellsTo",
+    "receives": "boost:receives",
+    "contains": "boost:contains",
+    "documented_by": "boost:documentedBy",
+    "associated_with": "boost:associatedWith",
+    "verified_by": "boost:verifiedBy",
+    "manages": "boost:manages",
+    "defines": "boost:defines",
+    "tracks": "boost:tracks",
+    "characterized_by": "boost:characterizedBy",
+    "prepares": "boost:prepares",
+    "audits": "boost:audits",
+    
+    "_comment": "Provenance Properties (PROV-O)",
+    "wasGeneratedBy": "prov:wasGeneratedBy",
+    "wasAssociatedWith": "prov:wasAssociatedWith",
+    "startedAtTime": "prov:startedAtTime",
+    "endedAtTime": "prov:endedAtTime",
+    "wasInformedBy": "prov:wasInformedBy",
+    "wasDerivedFrom": "prov:wasDerivedFrom",
+    "wasAttributedTo": "prov:wasAttributedTo",
+    
+    "_comment": "Geographic Properties",
+    "location": {
+      "@id": "schema:location",
+      "@type": "schema:Place"
+    },
+    "latitude": {
+      "@id": "geo:lat",
+      "@type": "xsd:decimal"
+    },
+    "longitude": {
+      "@id": "geo:long", 
+      "@type": "xsd:decimal"
+    },
+    
+    "_comment": "GS1 Integration",
+    "gtin": "gs1:gtin",
+    "globalLocationNumber": "gs1:globalLocationNumber",
+    "productClass": "gs1:ProductClass"
+  }
+}

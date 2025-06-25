@@ -1,0 +1,558 @@
+@prefix boost: <https://boost.carbondirect.io/schema/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <https://schema.org/> .
+@prefix gs1: <https://gs1.org/voc/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# ====================================================================
+# BOOST ONTOLOGY: Biomass Open Origin Standard for Tracking
+# ====================================================================
+
+boost: a owl:Ontology ;
+    dcterms:title "BOOST: Biomass Open Origin Standard for Tracking Ontology" ;
+    dcterms:description "An ontology for tracking biomass materials through supply chains with certification and sustainability claims" ;
+    dcterms:created "2025-06-25"^^xsd:date ;
+    dcterms:modified "2025-06-25"^^xsd:date ;
+    dcterms:version "1.0.0" ;
+    dcterms:creator "BOOST Working Group" ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+    owl:versionIRI <https://boost.carbondirect.io/schema/1.0.0/> ;
+    rdfs:seeAlso <https://carbondirect.github.io/BOOST/> .
+
+# ====================================================================
+# CORE CLASSES
+# ====================================================================
+
+# Supply Chain Entities
+boost:Organization a owl:Class ;
+    rdfs:label "Organization" ;
+    rdfs:comment "A legal entity operating in the biomass supply chain (biomass producer, trader, energy producer)" ;
+    rdfs:subClassOf schema:Organization, gs1:Organization ;
+    rdfs:isDefinedBy boost: .
+
+boost:Supplier a owl:Class ;
+    rdfs:label "Supplier" ;
+    rdfs:comment "An organization that provides biomass materials to other supply chain participants" ;
+    rdfs:subClassOf boost:Organization ;
+    rdfs:isDefinedBy boost: .
+
+boost:Customer a owl:Class ;
+    rdfs:label "Customer" ;
+    rdfs:comment "An organization that receives biomass materials from suppliers" ;
+    rdfs:subClassOf boost:Organization ;
+    rdfs:isDefinedBy boost: .
+
+# Material Classes
+boost:Material a owl:Class ;
+    rdfs:label "Material" ;
+    rdfs:comment "Physical biomass material with quantity, type, and origin information" ;
+    rdfs:subClassOf schema:Product, gs1:Product ;
+    rdfs:isDefinedBy boost: .
+
+boost:ProductGroup a owl:Class ;
+    rdfs:label "Product Group" ;
+    rdfs:comment "A categorization of biomass products for mass balance tracking" ;
+    rdfs:subClassOf schema:ProductGroup ;
+    rdfs:isDefinedBy boost: .
+
+# Transaction Classes
+boost:DTSTransaction a owl:Class ;
+    rdfs:label "DTS Transaction" ;
+    rdfs:comment "A material transfer transaction between organizations in the supply chain" ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:isDefinedBy boost: .
+
+boost:TransactionBatch a owl:Class ;
+    rdfs:label "Transaction Batch" ;
+    rdfs:comment "A specific quantity of material within a transaction with associated claims" ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy boost: .
+
+# Certification Classes
+boost:CertificationScheme a owl:Class ;
+    rdfs:label "Certification Scheme" ;
+    rdfs:comment "A sustainability certification standard (FSC, PEFC, SBP, etc.)" ;
+    rdfs:subClassOf schema:DefinedTerm ;
+    rdfs:isDefinedBy boost: .
+
+boost:Certificate a owl:Class ;
+    rdfs:label "Certificate" ;
+    rdfs:comment "A formal certification document issued to an organization" ;
+    rdfs:subClassOf schema:EducationalOccupationalCredential ;
+    rdfs:isDefinedBy boost: .
+
+boost:CertificationBody a owl:Class ;
+    rdfs:label "Certification Body" ;
+    rdfs:comment "An independent organization that issues certificates" ;
+    rdfs:subClassOf boost:Organization ;
+    rdfs:isDefinedBy boost: .
+
+# Claims and Verification
+boost:Claim a owl:Class ;
+    rdfs:label "Claim" ;
+    rdfs:comment "A sustainability or certification claim about biomass materials" ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy boost: .
+
+boost:VerificationStatement a owl:Class ;
+    rdfs:label "Verification Statement" ;
+    rdfs:comment "Third-party verification of claims or transactions" ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy boost: .
+
+boost:Audit a owl:Class ;
+    rdfs:label "Audit" ;
+    rdfs:comment "Third-party assessment of organization compliance" ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:isDefinedBy boost: .
+
+# Documentation
+boost:SalesDeliveryDocument a owl:Class ;
+    rdfs:label "Sales Delivery Document" ;
+    rdfs:comment "Official documentation of material transfers" ;
+    rdfs:subClassOf schema:DigitalDocument ;
+    rdfs:isDefinedBy boost: .
+
+# Operational Classes
+boost:MassBalanceAccount a owl:Class ;
+    rdfs:label "Mass Balance Account" ;
+    rdfs:comment "Accounting mechanism for tracking certified material flows" ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy boost: .
+
+boost:EnergyCarbonData a owl:Class ;
+    rdfs:label "Energy Carbon Data" ;
+    rdfs:comment "Energy consumption and carbon emission data for lifecycle assessments" ;
+    rdfs:subClassOf schema:PropertyValue ;
+    rdfs:isDefinedBy boost: .
+
+boost:SupplyBaseReport a owl:Class ;
+    rdfs:label "Supply Base Report" ;
+    rdfs:comment "Public reporting on sourcing practices and sustainability measures" ;
+    rdfs:subClassOf schema:Report ;
+    rdfs:isDefinedBy boost: .
+
+# ====================================================================
+# OBJECT PROPERTIES (Relationships)
+# ====================================================================
+
+# Supply Chain Relationships
+boost:suppliedBy a owl:ObjectProperty ;
+    rdfs:label "supplied by" ;
+    rdfs:comment "Material is supplied by an organization" ;
+    rdfs:domain boost:Material ;
+    rdfs:range boost:Organization ;
+    rdfs:isDefinedBy boost: .
+
+boost:receivedBy a owl:ObjectProperty ;
+    rdfs:label "received by" ;
+    rdfs:comment "Transaction is received by a customer organization" ;
+    rdfs:domain boost:DTSTransaction ;
+    rdfs:range boost:Customer ;
+    rdfs:isDefinedBy boost: .
+
+boost:contains a owl:ObjectProperty ;
+    rdfs:label "contains" ;
+    rdfs:comment "Transaction contains transaction batches" ;
+    rdfs:domain boost:DTSTransaction ;
+    rdfs:range boost:TransactionBatch ;
+    rdfs:isDefinedBy boost: .
+
+boost:documentedBy a owl:ObjectProperty ;
+    rdfs:label "documented by" ;
+    rdfs:comment "Transaction is documented by sales delivery document" ;
+    rdfs:domain boost:DTSTransaction ;
+    rdfs:range boost:SalesDeliveryDocument ;
+    owl:inverseOf boost:documents ;
+    rdfs:isDefinedBy boost: .
+
+boost:documents a owl:ObjectProperty ;
+    rdfs:label "documents" ;
+    rdfs:comment "Document documents a transaction" ;
+    rdfs:domain boost:SalesDeliveryDocument ;
+    rdfs:range boost:DTSTransaction ;
+    owl:inverseOf boost:documentedBy ;
+    rdfs:isDefinedBy boost: .
+
+# Certification Relationships
+boost:certifiedUnder a owl:ObjectProperty ;
+    rdfs:label "certified under" ;
+    rdfs:comment "Organization is certified under a certification scheme" ;
+    rdfs:domain boost:Organization ;
+    rdfs:range boost:CertificationScheme ;
+    rdfs:isDefinedBy boost: .
+
+boost:issuedBy a owl:ObjectProperty ;
+    rdfs:label "issued by" ;
+    rdfs:comment "Certificate is issued by a certification body" ;
+    rdfs:domain boost:Certificate ;
+    rdfs:range boost:CertificationBody ;
+    rdfs:isDefinedBy boost: .
+
+boost:certifiesAgainst a owl:ObjectProperty ;
+    rdfs:label "certifies against" ;
+    rdfs:comment "Certificate certifies against a certification scheme" ;
+    rdfs:domain boost:Certificate ;
+    rdfs:range boost:CertificationScheme ;
+    rdfs:isDefinedBy boost: .
+
+boost:conducts a owl:ObjectProperty ;
+    rdfs:label "conducts" ;
+    rdfs:comment "Certification body conducts audits" ;
+    rdfs:domain boost:CertificationBody ;
+    rdfs:range boost:Audit ;
+    rdfs:isDefinedBy boost: .
+
+boost:audits a owl:ObjectProperty ;
+    rdfs:label "audits" ;
+    rdfs:comment "Audit examines an organization" ;
+    rdfs:domain boost:Audit ;
+    rdfs:range boost:Organization ;
+    rdfs:isDefinedBy boost: .
+
+# Verification and Claims
+boost:associatedWith a owl:ObjectProperty ;
+    rdfs:label "associated with" ;
+    rdfs:comment "Transaction batch is associated with claims or data" ;
+    rdfs:domain boost:TransactionBatch ;
+    rdfs:range [ owl:unionOf ( boost:Claim boost:EnergyCarbonData ) ] ;
+    rdfs:isDefinedBy boost: .
+
+boost:verifiedBy a owl:ObjectProperty ;
+    rdfs:label "verified by" ;
+    rdfs:comment "Transaction batch is verified by verification statement" ;
+    rdfs:domain boost:TransactionBatch ;
+    rdfs:range boost:VerificationStatement ;
+    rdfs:isDefinedBy boost: .
+
+# Mass Balance
+boost:manages a owl:ObjectProperty ;
+    rdfs:label "manages" ;
+    rdfs:comment "Organization manages mass balance accounts" ;
+    rdfs:domain boost:Organization ;
+    rdfs:range boost:MassBalanceAccount ;
+    rdfs:isDefinedBy boost: .
+
+boost:tracks a owl:ObjectProperty ;
+    rdfs:label "tracks" ;
+    rdfs:comment "Mass balance account tracks product group" ;
+    rdfs:domain boost:MassBalanceAccount ;
+    rdfs:range boost:ProductGroup ;
+    rdfs:isDefinedBy boost: .
+
+boost:characterizedBy a owl:ObjectProperty ;
+    rdfs:label "characterized by" ;
+    rdfs:comment "Material is characterized by energy/carbon data" ;
+    rdfs:domain boost:Material ;
+    rdfs:range boost:EnergyCarbonData ;
+    rdfs:isDefinedBy boost: .
+
+boost:prepares a owl:ObjectProperty ;
+    rdfs:label "prepares" ;
+    rdfs:comment "Organization prepares supply base reports" ;
+    rdfs:domain boost:Organization ;
+    rdfs:range boost:SupplyBaseReport ;
+    rdfs:isDefinedBy boost: .
+
+# ====================================================================
+# DATATYPE PROPERTIES
+# ====================================================================
+
+# Organization Properties
+boost:organizationRole a owl:DatatypeProperty ;
+    rdfs:label "organization role" ;
+    rdfs:comment "Role of organization in supply chain (BP, Trader, Energy Producer)" ;
+    rdfs:domain boost:Organization ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:scopeOfOperations a owl:DatatypeProperty ;
+    rdfs:label "scope of operations" ;
+    rdfs:comment "Geographic or operational scope of organization" ;
+    rdfs:domain boost:Organization ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:legalEntityStatus a owl:DatatypeProperty ;
+    rdfs:label "legal entity status" ;
+    rdfs:comment "Legal status of organization (Corporation, LLC, etc.)" ;
+    rdfs:domain boost:Organization ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:isActive a owl:DatatypeProperty ;
+    rdfs:label "is active" ;
+    rdfs:comment "Whether the organization is currently active" ;
+    rdfs:domain boost:Organization ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy boost: .
+
+# Material Properties
+boost:materialType a owl:DatatypeProperty ;
+    rdfs:label "material type" ;
+    rdfs:comment "Type of biomass material (Pellets, Chips, Residues)" ;
+    rdfs:domain boost:Material ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:materialCategory a owl:DatatypeProperty ;
+    rdfs:label "material category" ;
+    rdfs:comment "Category classification (SBP-compliant, Category 1-5)" ;
+    rdfs:domain boost:Material ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:species a owl:DatatypeProperty ;
+    rdfs:label "species" ;
+    rdfs:comment "Biological species of biomass material" ;
+    rdfs:domain boost:Material ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:countryOfOrigin a owl:DatatypeProperty ;
+    rdfs:label "country of origin" ;
+    rdfs:comment "Country where biomass material originated" ;
+    rdfs:domain boost:Material ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:materialSource a owl:DatatypeProperty ;
+    rdfs:label "material source" ;
+    rdfs:comment "Source type of material (Managed forest, Agricultural residue)" ;
+    rdfs:domain boost:Material ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:rawMaterialEligibility a owl:DatatypeProperty ;
+    rdfs:label "raw material eligibility" ;
+    rdfs:comment "Eligibility classification for raw materials" ;
+    rdfs:domain boost:Material ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:gmoStatus a owl:DatatypeProperty ;
+    rdfs:label "GMO status" ;
+    rdfs:comment "Whether material contains genetically modified organisms" ;
+    rdfs:domain boost:Material ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy boost: .
+
+# Transaction Properties
+boost:transactionDate a owl:DatatypeProperty ;
+    rdfs:label "transaction date" ;
+    rdfs:comment "Date when transaction occurred" ;
+    rdfs:domain boost:DTSTransaction ;
+    rdfs:range xsd:dateTime ;
+    rdfs:isDefinedBy boost: .
+
+# Certification Properties
+boost:dateOfIssue a owl:DatatypeProperty ;
+    rdfs:label "date of issue" ;
+    rdfs:comment "Date when certificate was issued" ;
+    rdfs:domain boost:Certificate ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy boost: .
+
+boost:dateOfExpiry a owl:DatatypeProperty ;
+    rdfs:label "date of expiry" ;
+    rdfs:comment "Date when certificate expires" ;
+    rdfs:domain boost:Certificate ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy boost: .
+
+boost:scopeOfCertification a owl:DatatypeProperty ;
+    rdfs:label "scope of certification" ;
+    rdfs:comment "Scope covered by the certificate" ;
+    rdfs:domain boost:Certificate ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:certificateStatus a owl:DatatypeProperty ;
+    rdfs:label "certificate status" ;
+    rdfs:comment "Current status of certificate (Valid, Suspended, Expired)" ;
+    rdfs:domain boost:Certificate ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:versionNumber a owl:DatatypeProperty ;
+    rdfs:label "version number" ;
+    rdfs:comment "Version number of certificate or scheme" ;
+    rdfs:domain [ owl:unionOf ( boost:Certificate boost:CertificationScheme ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:schemeName a owl:DatatypeProperty ;
+    rdfs:label "scheme name" ;
+    rdfs:comment "Name of certification scheme" ;
+    rdfs:domain boost:CertificationScheme ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:recognitionStatus a owl:DatatypeProperty ;
+    rdfs:label "recognition status" ;
+    rdfs:comment "Recognition status of certification scheme" ;
+    rdfs:domain boost:CertificationScheme ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:accreditationStatus a owl:DatatypeProperty ;
+    rdfs:label "accreditation status" ;
+    rdfs:comment "Accreditation status of certification body" ;
+    rdfs:domain boost:CertificationBody ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:accreditationScope a owl:DatatypeProperty ;
+    rdfs:label "accreditation scope" ;
+    rdfs:comment "Scope of certification body accreditation" ;
+    rdfs:domain boost:CertificationBody ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+# Claims Properties
+boost:claimType a owl:DatatypeProperty ;
+    rdfs:label "claim type" ;
+    rdfs:comment "Type of sustainability claim" ;
+    rdfs:domain boost:Claim ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:claimStatement a owl:DatatypeProperty ;
+    rdfs:label "claim statement" ;
+    rdfs:comment "Text of the sustainability claim" ;
+    rdfs:domain boost:Claim ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:validated a owl:DatatypeProperty ;
+    rdfs:label "validated" ;
+    rdfs:comment "Whether the claim has been validated" ;
+    rdfs:domain boost:Claim ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy boost: .
+
+# Mass Balance Properties
+boost:periodInputs a owl:DatatypeProperty ;
+    rdfs:label "period inputs" ;
+    rdfs:comment "Material inputs during balance period" ;
+    rdfs:domain boost:MassBalanceAccount ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy boost: .
+
+boost:periodOutputs a owl:DatatypeProperty ;
+    rdfs:label "period outputs" ;
+    rdfs:comment "Material outputs during balance period" ;
+    rdfs:domain boost:MassBalanceAccount ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy boost: .
+
+boost:currentBalance a owl:DatatypeProperty ;
+    rdfs:label "current balance" ;
+    rdfs:comment "Current balance in mass balance account" ;
+    rdfs:domain boost:MassBalanceAccount ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy boost: .
+
+boost:balancingPeriod a owl:DatatypeProperty ;
+    rdfs:label "balancing period" ;
+    rdfs:comment "Time period for mass balance calculation" ;
+    rdfs:domain boost:MassBalanceAccount ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:conversionFactors a owl:DatatypeProperty ;
+    rdfs:label "conversion factors" ;
+    rdfs:comment "Conversion factors used in mass balance" ;
+    rdfs:domain boost:MassBalanceAccount ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy boost: .
+
+# Energy/Carbon Properties
+boost:dataType a owl:DatatypeProperty ;
+    rdfs:label "data type" ;
+    rdfs:comment "Type of energy or carbon data" ;
+    rdfs:domain boost:EnergyCarbonData ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:measurementMethod a owl:DatatypeProperty ;
+    rdfs:label "measurement method" ;
+    rdfs:comment "Method used for measurement" ;
+    rdfs:domain boost:EnergyCarbonData ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+# Audit Properties
+boost:auditType a owl:DatatypeProperty ;
+    rdfs:label "audit type" ;
+    rdfs:comment "Type of audit (Initial, Surveillance, Transfer)" ;
+    rdfs:domain boost:Audit ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+boost:auditDate a owl:DatatypeProperty ;
+    rdfs:label "audit date" ;
+    rdfs:comment "Date when audit was conducted" ;
+    rdfs:domain boost:Audit ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy boost: .
+
+boost:auditFindings a owl:DatatypeProperty ;
+    rdfs:label "audit findings" ;
+    rdfs:comment "Summary of audit findings" ;
+    rdfs:domain boost:Audit ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy boost: .
+
+# ====================================================================
+# CONTROLLED VOCABULARIES
+# ====================================================================
+
+# Organization Roles
+boost:BiomassProducer a boost:Organization ;
+    rdfs:label "Biomass Producer" ;
+    rdfs:comment "Organization that produces biomass materials" .
+
+boost:Trader a boost:Organization ;
+    rdfs:label "Trader" ;
+    rdfs:comment "Organization that trades biomass materials" .
+
+boost:EnergyProducer a boost:Organization ;
+    rdfs:label "Energy Producer" ;
+    rdfs:comment "Organization that converts biomass to energy" .
+
+# Material Types
+boost:Pellets a skos:Concept ;
+    skos:prefLabel "Pellets" ;
+    skos:definition "Compressed biomass pellets" .
+
+boost:Chips a skos:Concept ;
+    skos:prefLabel "Chips" ;
+    skos:definition "Wood chips from biomass processing" .
+
+boost:Residues a skos:Concept ;
+    skos:prefLabel "Residues" ;
+    skos:definition "Agricultural or forestry residues" .
+
+# Certification Schemes
+boost:FSC a boost:CertificationScheme ;
+    boost:schemeName "Forest Stewardship Council" ;
+    rdfs:label "FSC" .
+
+boost:PEFC a boost:CertificationScheme ;
+    boost:schemeName "Programme for the Endorsement of Forest Certification" ;
+    rdfs:label "PEFC" .
+
+boost:SBP a boost:CertificationScheme ;
+    boost:schemeName "Sustainable Biomass Program" ;
+    rdfs:label "SBP" .
+
+boost:RSB a boost:CertificationScheme ;
+    boost:schemeName "Roundtable on Sustainable Biomaterials" ;
+    rdfs:label "RSB" .
