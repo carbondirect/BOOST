@@ -15,6 +15,15 @@
 ### 2. **Administrative Updates** (3 minutes)
    - Review of Code of Conduct
    - Approval of [previous meeting minutes](https://github.com/carbondirect/BOOST/blob/main/meetings/meetingNotes_6_11_25.md)
+	 - Follow up meeting on linked data 6/24
+
+    > Key Takeaways
+    >
+    >   - Linked data presents challenges for supply chains due to their graphical nature, but remains the best available approach for interoperability standards
+    >   - Flexibility in naming conventions and data structures is crucial due to varying terminology across regulatory bodies and markets
+    >   - The BOOST standard could provide value by offering a common framework for reporting and documentation across different markets and regulations
+
+
    - Overview of today's agenda
 
 ### 3. **Project Updates and Announcements** (12 minutes)
@@ -25,10 +34,7 @@
    - **New Membership Page**
      - Added comprehensive [membership section to main site]([url](https://carbondirect.github.io/BOOST/#membership))
      - Complete lists of W3C Community Group members and mailing list recipients
-   
-   - **Stakeholder Engagement Progress**
      - Current participation: 16 official W3C members + 37 mailing list recipients
-     - Continued growth in community engagement
 	 
    - **Interagency Group Update** (Dan Sanchez)
 
