@@ -31,14 +31,14 @@
    - **Stakeholder Engagement Progress**
      - Current participation: 16 official W3C members + 37 mailing list recipients
      - Continued growth in community engagement
+	 
+   - **Interagency Group Update** (Dan Sanchez)
 
 ### 4. **Discussion Topics** (45-60 minutes)
    - **Topic 1: ERD Navigator and Stakeholder Feedback**  (Peter Tittmann)
 
-
    - **Topic 2: Review of Certification Entities** (Liam Kilroy)
      - Focus on CertificationScheme, Certificate, CertificationBody, and Audit entities
-     - Integration with real-world certification workflows
      - Schema validation and practical implementation considerations
      - Issues, feedback, and open discussion
 

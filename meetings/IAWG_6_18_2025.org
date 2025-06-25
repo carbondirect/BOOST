@@ -141,3 +141,4 @@ While BOOST is currently stewarded by Carbon Direct, its long-term governance re
 2. *Continuity of the open standard*: Ensuring ongoing development and leadership of the Open Standard.
 
 Ultimately, BOOST remains a data standard shaped by a community, not a software product owned by one party. Its continued neutrality depends on balanced, transparent governance.
+
