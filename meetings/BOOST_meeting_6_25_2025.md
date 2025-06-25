@@ -10,16 +10,16 @@
 
 ---
 
-### 1. **Welcome and Introductions** (5-10 minutes)
+### 1. **Welcome and Introductions** (5 minutes)
    - Roll Call
    - Welcome new members
 
-### 2. **Administrative Updates** (5 minutes)
+### 2. **Administrative Updates** (3 minutes)
    - Review of Code of Conduct
    - Approval of previous meeting minutes
    - Overview of today's agenda
 
-### 3. **Project Updates and Announcements** (15-20 minutes)
+### 3. **Project Updates and Announcements** (12 minutes)
    - **Major Milestone: Scoping and Alingment Complete**
      - Overview: Standardized discussions for ERD entities in GitHub discussions
      - Impact: Improved stakeholder engagement and feedback collection
@@ -34,29 +34,30 @@
 	 
    - **Interagency Group Update** (Dan Sanchez)
 
-### 4. **Discussion Topics** (45-60 minutes)
-   - **Topic 1: ERD Navigator and Stakeholder Feedback**  (Peter Tittmann)
+### 4. **Discussion Topics** (30 minutes)
+   - **Topic 1: ERD Navigator and Stakeholder Feedback** (10 minutes) (Peter Tittmann)
+	 - Discussion: *Are these the right entities, in the right structure?*
 
-   - **Topic 2: Review of Certification Entities** (Liam Kilroy)
+   - **Topic 2: Review of Certification Entities** (15 minutes) (Liam Kilroy)
      - Focus on CertificationScheme, Certificate, CertificationBody, and Audit entities
      - Schema validation and practical implementation considerations
      - Issues, feedback, and open discussion
 
-   - **Topic 3: Technical Progress Update**
+   - **Topic 3: Technical Progress Update** (5 minutes)
      - Next phase: JSON schema development and validation rules
 
-### 5. **Decision Making and Action Items** (10-15 minutes)
+### 5. **Decision Making and Action Items** (7 minutes)
    - Review decisions made during the meeting
    - Assign action items to members
    - Set deadlines and responsible parties
    - Timeline for JSON schema development phase
 
-### 6. **Future Meetings** (5 minutes)
+### 6. **Future Meetings** (3 minutes)
    - Discuss the frequency of meetings (weekly, bi-weekly, monthly)
    - Set the date and time for the next meeting
    - Planning for upcoming certification scheme integration workshops
 
-### 7. **Any Other Business (AOB)** (5-10 minutes)
+### 7. **Any Other Business (AOB)** (5 minutes)
    - Open floor for any additional topics from members
    - Community outreach strategies
    - Pilot implementation planning
