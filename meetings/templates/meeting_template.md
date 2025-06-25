@@ -1,8 +1,6 @@
----
+# W3C Community Group Meeting Agenda
 
-**W3C Community Group Meeting Agenda**
-
-**Biomass Open Origin Standard for Tracking**
+## Biomass Open Origin Standard for Tracking
 
 **Date:** [Month, Day, Year]  
 **Time:** [Start Time] to [End Time] [Time Zone]  

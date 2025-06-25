@@ -1,11 +1,9 @@
----
+# W3C Community Group Meeting Agenda
 
-**W3C Community Group Meeting Agenda**
+## Biomass Open Origin Standard for Tracking
 
-**Biomass Open Origin Standard for Tracking**
-
-**Date:** June 25, 2025
-**Time:** 11AM to 12PM PDT
+**Date:** June 25, 2025  
+**Time:** 11AM to 12PM PDT  
 **Location:** Zoom [https://carbon-direct.zoom.us/j/84254112929?pwd=aaX9mOkJFUO1NLT0UaAiThTyLh5Vrj.1&jst=2](https://carbon-direct.zoom.us/j/84254112929?pwd=aaX9mOkJFUO1NLT0UaAiThTyLh5Vrj.1&jst=2) 
 
 ---
