@@ -94,9 +94,9 @@ Your experience with [relevant domain expertise] will help create a [adjective],
 - Add Related Links section with Issue #75
 - Current has navigator: ❌
 
-**Discussion #97 - DTSTransaction**
-- Current title: "Entity Schema Review: `DTSTransaction`"
-- Should be: "DTSTransaction Entity Schema Review"  
+**Discussion #97 - Transaction**
+- Current title: "Entity Schema Review: `Transaction`"
+- Should be: "Transaction Entity Schema Review"  
 - Add Related Links section with Issue #110
 - Current has navigator: ❌
 
@@ -149,7 +149,7 @@ Your experience with [relevant domain expertise] will help create a [adjective],
 | Material | #94 | #78 | ⚠️ Name fix needed |
 | Supplier | #95 | #79 | ✅ Good |
 | Customer | #96 | #80 | ✅ Good |
-| DTSTransaction | #97 | #110 | ❌ Fix needed |
+| Transaction | #97 | #110 | ❌ Fix needed |
 | TransactionBatch | #98 | #82 | ✅ Good |
 | Claim | #99 | #83 | ❌ Fix needed |
 | SalesDeliveryDocument | #100 | #111 | ⚠️ Name fix needed |
@@ -189,7 +189,7 @@ Your experience with [relevant domain expertise] will help create a [adjective],
 *Successfully optimized to perfect 7-section template compliance*
 
 - ✅ #91 (CertificationScheme): **OPTIMIZED** - Removed extra sections, enhanced Success Criteria
-- ✅ #97 (DTSTransaction): **OPTIMIZED** - Consolidated content, streamlined structure
+- ✅ #97 (Transaction): **OPTIMIZED** - Consolidated content, streamlined structure
 - ✅ #101 (EnergyCarbonData): **OPTIMIZED** - Perfect template compliance achieved
 - ✅ #106 (SupplyBaseReport): **OPTIMIZED** - Removed extra sections, integrated content
 

@@ -70,8 +70,8 @@ erDiagram
     }
     
     %% Transaction Management
-    DTSTransaction {
-        string dtsTransactionId PK
+    Transaction {
+        string transactionId PK
         string supplyingOrganizationId FK
         string customerOrganizationId FK
         date transactionDate
@@ -80,7 +80,7 @@ erDiagram
     
     TransactionBatch {
         string transactionBatchId PK
-        string dtsTransactionId FK
+        string transactionId FK
         string productionBatchId FK
         decimal quantity
         string claimId FK
@@ -103,7 +103,7 @@ erDiagram
         string sellerAddress
         string productDescription
         decimal quantity
-        string dtsTransactionId FK
+        string transactionId FK
         string certificateCode
         string transportReference
     }
@@ -264,15 +264,15 @@ erDiagram
     
     %% Supply Chain Relationships
     Organization ||--o{ Material : "handles"
-    Organization ||--o{ DTSTransaction : "creates"
+    Organization ||--o{ Transaction : "creates"
     Organization ||--o{ Supplier : "sources_from"
     Organization ||--o{ Customer : "sells_to"
     
-    Customer ||--o{ DTSTransaction : "receives"
+    Customer ||--o{ Transaction : "receives"
     
     %% Transaction and Batch Relationships
-    DTSTransaction ||--o{ TransactionBatch : "contains"
-    DTSTransaction ||--|| SalesDeliveryDocument : "documented_by"
+    Transaction ||--o{ TransactionBatch : "contains"
+    Transaction ||--|| SalesDeliveryDocument : "documented_by"
     TransactionBatch ||--|| Claim : "associated_with"
     TransactionBatch ||--o{ VerificationStatement : "verified_by"
     

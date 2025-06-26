@@ -376,20 +376,20 @@ erDiagram
     
     ProductionBatch ||--o{ TransactionBatch: "is divided into"
 
-    DTSTransaction {
-      string DTSTransactionID
+    Transaction {
+      string TransactionID
       string SupplierOrg
       string CustomerOrg
       date Date
       string SalesDocumentID
     }
     
-    Organisation ||--o{ DTSTransaction: "registers"
-    TransactionBatch ||--o{ DTSTransaction: "included in"
+    Organisation ||--o{ Transaction: "registers"
+    TransactionBatch ||--o{ Transaction: "included in"
     
     SBPClaim {
       string ClaimType
-      string LinkedDTSTransactionID
+      string LinkedTransactionID
     }
 
     TransactionBatch ||--|| SBPClaim: "is associated with"
@@ -545,8 +545,8 @@ class TransactionBatch {
   +string TransactionClaimID
 }
 
-class DTSTransaction {
-  +string DTSTransactionID
+class Transaction {
+  +string TransactionID
   +string SupplierOrg
   +string CustomerOrg
   +date Date
@@ -555,7 +555,7 @@ class DTSTransaction {
 
 class SBPClaim {
   +string ClaimType
-  +string LinkedDTSTransactionID
+  +string LinkedTransactionID
 }
 
 class Audit {
@@ -620,8 +620,8 @@ Organisation ||--o{ MassBalanceAccount : "operates"
 Organisation ||--o{ ProductionBatch : "creates"
 FeedstockInput ||--o{ ProductionBatch : "is part of"
 ProductionBatch ||--o{ TransactionBatch : "is divided into"
-Organisation ||--o{ DTSTransaction : "registers"
-TransactionBatch ||--o{ DTSTransaction : "included in"
+Organisation ||--o{ Transaction : "registers"
+TransactionBatch ||--o{ Transaction : "included in"
 TransactionBatch ||--|| SBPClaim : "is associated with"
 CB ||--o{ Audit : "conducts"
 Organisation ||--o{ Audit : "undergoes"

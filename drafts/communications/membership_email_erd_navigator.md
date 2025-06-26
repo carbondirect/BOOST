@@ -21,7 +21,7 @@ We're excited to share a significant milestone in the development of the Biomass
 BOOST is currently in the **entity schema design phase**. We've consolidated our research from multiple certification programs (SBP, FSC, PEFC, RSB, LCFS, RFS, and others) into a focused set of 17 core entities that capture the essential data needed for biomass supply chain tracking:
 
 - **Organizations & Certification:** Organization, Certificate, CertificationScheme, CertificationBody
-- **Materials & Supply Chain:** Material, Supplier, Customer, DTSTransaction, TransactionBatch
+- **Materials & Supply Chain:** Material, Supplier, Customer, Transaction, TransactionBatch
 - **Claims & Verification:** Claim, SalesDeliveryDocument, VerificationStatement
 - **Mass Balance & Tracking:** MassBalanceAccount, ProductGroup, EnergyCarbonData
 - **Compliance & Reporting:** SupplyBaseReport, Audit
@@ -33,7 +33,7 @@ This represents a practical, implementable model that balances comprehensive tra
 **We're not expecting everyone to comment on everything.** Instead, we encourage you to engage where your expertise and interests align:
 
 ### 🎯 **Engage Where You Have Expertise**
-- **Supply chain operators:** Focus on entities like Material, DTSTransaction, Supplier/Customer
+- **Supply chain operators:** Focus on entities like Material, Transaction, Supplier/Customer
 - **Certification bodies:** Review Certificate, CertificationScheme, Audit entities
 - **Software developers:** Examine data types, relationships, and integration challenges
 - **Regulatory experts:** Assess compliance-related entities like VerificationStatement, SupplyBaseReport
