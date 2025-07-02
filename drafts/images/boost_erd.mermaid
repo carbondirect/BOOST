@@ -13,6 +13,8 @@ erDiagram
         string legalEntityStatus
         string certificateCode FK
         string contactInfo
+        string lcfsRegistrationId
+        string regulatedEntityType "producer, importer, blender, distributor"
     }
     
     CertificationScheme {
@@ -88,13 +90,19 @@ erDiagram
         string address
     }
     
-    %% Transaction Management
+    %% Transaction Management - Enhanced for LCFS
     Transaction {
         string transactionId PK
         string supplyingOrganizationId FK
         string customerOrganizationId FK
         date transactionDate
         string salesDocumentId FK
+        decimal fuelVolume
+        string fuelVolumeUnit "gallons, liters, GGE"
+        string fuelCategory "gasoline, diesel, renewable_diesel, ethanol, hydrogen"
+        string reportingPeriod "YYYY-QN"
+        string lcfsPathwayId FK
+        string regulatedPartyRole "producer, importer, blender, distributor"
     }
     
     TransactionBatch {
@@ -146,14 +154,18 @@ erDiagram
         string feedstockClassificationRules
     }
     
-    %% Energy and Carbon Data
+    %% Energy and Carbon Data - Enhanced for LCFS
     EnergyCarbonData {
         string energyCarbonDataId PK
-        string dataType "moisture, transport, fuel consumption"
+        string dataCategory "carbon_intensity, energy_content, emissions"
         decimal value
         string unit
         string source
-        string measurementMethod
+        string measurementMethod "CA-GREET3.0, GREET2023, Direct Measurement"
+        string lcfsPathwayType "Lookup_Table, Tier_1, Tier_2, Not_LCFS"
+        decimal energyEconomyRatio
+        string lifeCycleStage "feedstock, production, transport, distribution, combustion"
+        decimal regulatoryBenchmark
     }
     
     %% Essential Reporting and Compliance
@@ -186,6 +198,34 @@ erDiagram
         string cbId FK
         string findings
         string reportUrl
+    }
+    
+    %% LCFS-Specific Entities
+    LCFSPathway {
+        string pathwayId PK
+        string pathwayType "Lookup_Table, Tier_1, Tier_2"
+        string feedstockCategory "corn, sugarcane, forest_residue, agricultural_residue"
+        string fuelProduct "ethanol, renewable_diesel, sustainable_aviation_fuel"
+        string facilityLocation
+        decimal carbonIntensity "gCO2e/MJ"
+        decimal energyEconomyRatio
+        date certificationDate
+        date expirationDate
+        string verificationStatus "active, suspended, expired"
+        string caGreetVersion
+    }
+    
+    LCFSReporting {
+        string reportingId PK
+        string regulatedEntityId FK
+        string reportingPeriod "YYYY-QN"
+        decimal totalFuelVolume
+        decimal totalCreditsGenerated
+        decimal totalDeficitsIncurred
+        decimal netPosition
+        string complianceStatus "compliant, deficit, pending"
+        datetime submissionDate
+        datetime verificationDate
     }
     
     
@@ -224,3 +264,10 @@ erDiagram
     
     %% Audit Relationships
     Audit }o--|| Organization : "audits"
+    
+    %% LCFS Relationships
+    Transaction }o--|| LCFSPathway : "uses_pathway"
+    LCFSPathway ||--o{ EnergyCarbonData : "has_carbon_data"
+    Organization ||--o{ LCFSReporting : "submits"
+    LCFSReporting ||--o{ Transaction : "includes"
+    LCFSPathway }o--|| Certificate : "certified_by"

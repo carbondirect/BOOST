@@ -30,6 +30,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ├── drafts/                  # Location for specification drafts
 │   ├── images/              # Location for svg and png diagrams etc.
 │   └── scripts/
+├── programs/                # Program-specific implementations (LCFS, RFS, FSC)
 ├── proposals/
 ├── meetings/
 │   └── templates/
@@ -43,6 +44,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ## 📂 Purpose of Each Directory
 
 - `drafts/`: Working and historical spec drafts.
+- `programs/`: Program-specific implementations (LCFS, RFS, FSC, etc.).
 - `proposals/`: Early-stage ideas and design sketches.
 - `meetings/`: Agendas, minutes, and templates.
 - `use-cases/`: User scenarios guiding spec design.
