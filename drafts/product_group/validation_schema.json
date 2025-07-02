@@ -18,51 +18,65 @@
       "productGroupId": {
         "type": "string"
       },
-      "productTypeDescription": {
+      "productGroupName": {
         "type": "string"
       },
-      "feedstockClassificationRules": {
+      "productCategory": {
+        "type": "string",
+        "enum": ["solid_biomass", "liquid_biofuel", "biogas"]
+      },
+      "classification": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "typicalUses": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "qualityStandards": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "certificationRequirements": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "regulatoryClassification": {
         "type": "string"
       },
       "lastUpdated": {
         "type": "string",
         "format": "date-time"
       },
-      "relatedTransactionConsignments": {
+      "relatedMaterials": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
-            "@type": { "const": "TransactionConsignment" },
-            "id": { "type": "string" }
-          },
-          "required": ["@type", "id"]
-        }
-      },
-      "relatedMaterialFeedstocks": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "@type": { "const": "MaterialFeedstock" },
-            "id": { "type": "string" }
-          },
-          "required": ["@type", "id"]
-        }
-      },
-      "relatedCertificates": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "@type": { "const": "Certificate" },
+            "@type": { "const": "Material" },
             "id": { "type": "string" }
           },
           "required": ["@type", "id"]
         }
       }
     },
-    "required": ["@context", "@type", "@id", "productGroupId", "productTypeDescription", "feedstockClassificationRules"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "productGroupId",
+      "productGroupName",
+      "productCategory",
+      "description"
+    ]
   },
   "rules": {
     "and": [
@@ -70,81 +84,62 @@
         "!!": { "var": "productGroupId" }
       },
       {
-        "!!": { "var": "productTypeDescription" }
+        "!!": { "var": "productGroupName" }
       },
       {
-        "!!": { "var": "feedstockClassificationRules" }
+        "!!": { "var": "productCategory" }
+      },
+      {
+        "!!": { "var": "description" }
       },
       {
         "if": [
+          { "var": "typicalUses" },
           {
-            "in": [
-              { "var": "productTypeDescription" },
-              [
-                "Pelletized Biofuel from Forest Slash",
-                "Engineered Hardwood Flooring",
-                "Bagasse Pellets",
-                "Biochar",
-                "Renewable Diesel",
-                "Biogenic Fuel Oil"
-              ]
+            "and": [
+              { ">": [ { "var": "typicalUses.length" }, 0 ] }
             ]
-          },
-          {
-            "!!": { "var": "feedstockClassificationRules" }
           },
           true
         ]
       },
       {
         "if": [
-          { "var": "relatedCertificates" },
+          { "var": "qualityStandards" },
           {
             "and": [
-              { ">": [ { "var": "relatedCertificates.length" }, 0 ] },
+              { ">": [ { "var": "qualityStandards.length" }, 0 ] }
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "certificationRequirements" },
+          {
+            "and": [
+              { ">": [ { "var": "certificationRequirements.length" }, 0 ] }
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "relatedMaterials" },
+          {
+            "and": [
+              { ">": [ { "var": "relatedMaterials.length" }, 0 ] },
               { "all": [
-                { "var": "relatedCertificates" },
+                { "var": "relatedMaterials" },
                 {
                   "and": [
                     { "!!": { "var": "id" } },
-                    { "==": [ { "var": "@type" }, "Certificate" ] }
+                    { "==": [ { "var": "@type" }, "Material" ] }
                   ]
                 }
               ]}
-            ]
-          },
-          true
-        ]
-      },
-      {
-        "if": [
-          { "var": "relatedTransactionConsignments" },
-          {
-            "all": [
-              { "var": "relatedTransactionConsignments" },
-              {
-                "and": [
-                  { "!!": { "var": "id" } },
-                  { "==": [ { "var": "@type" }, "TransactionConsignment" ] }
-                ]
-              }
-            ]
-          },
-          true
-        ]
-      },
-      {
-        "if": [
-          { "var": "relatedMaterialFeedstocks" },
-          {
-            "all": [
-              { "var": "relatedMaterialFeedstocks" },
-              {
-                "and": [
-                  { "!!": { "var": "id" } },
-                  { "==": [ { "var": "@type" }, "MaterialFeedstock" ] }
-                ]
-              }
             ]
           },
           true

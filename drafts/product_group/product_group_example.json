@@ -2,36 +2,45 @@
   "@context": {
     "ProductGroup": "https://github.com/carbondirect/BOOST/schemas#ProductGroup",
     "productGroupId": "https://github.com/carbondirect/BOOST/schemas#productGroupId",
-    "productTypeDescription": "https://github.com/carbondirect/BOOST/schemas#productTypeDescription",
-    "feedstockClassificationRules": "https://github.com/carbondirect/BOOST/schemas#feedstockClassificationRules",
-    "TransactionConsignment": "https://github.com/carbondirect/BOOST/schemas#TransactionConsignment",
-    "MaterialFeedstock": "https://github.com/carbondirect/BOOST/schemas#MaterialFeedstock",
-    "Certificate": "https://github.com/carbondirect/BOOST/schemas#Certificate",
+    "productGroupName": "https://github.com/carbondirect/BOOST/schemas#productGroupName",
+    "productCategory": "https://github.com/carbondirect/BOOST/schemas#productCategory",
+    "classification": "https://github.com/carbondirect/BOOST/schemas#classification",
+    "description": "https://github.com/carbondirect/BOOST/schemas#description",
+    "typicalUses": "https://github.com/carbondirect/BOOST/schemas#typicalUses",
+    "qualityStandards": "https://github.com/carbondirect/BOOST/schemas#qualityStandards",
+    "certificationRequirements": "https://github.com/carbondirect/BOOST/schemas#certificationRequirements",
+    "regulatoryClassification": "https://github.com/carbondirect/BOOST/schemas#regulatoryClassification",
     "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "Material": "https://github.com/carbondirect/BOOST/schemas#Material",
+    "relatedMaterials": "https://github.com/carbondirect/BOOST/schemas#relatedMaterials",
     "id": "@id"
   },
   "@type": "ProductGroup",
   "@id": "https://github.com/carbondirect/BOOST/schemas/product-group/PG-FS-BIOCHAR-001",
   "lastUpdated": "2025-07-01T15:00:00Z",
   "productGroupId": "PG-FS-BIOCHAR-001",
-  "productTypeDescription": "Forest Slash-Derived Biochar (Western U.S., Wildfire Mitigation)",
-  "feedstockClassificationRules": "Feedstock must originate from non-merchantable forest slash (tops, limbs, small-diameter trees) collected during U.S. Forest Service-approved wildfire fuel reduction projects in California or Oregon. Material must be sourced from areas classified as low biodiversity risk, as defined under FSC Controlled Wood (CW) Category 3. Acceptable documentation includes: USFS project permit ID, biomass removal maps, and NEPA approval. No material may be sourced from old-growth stands, critical habitats, or tribal lands without documented FPIC (Free, Prior, and Informed Consent).",
-  "relatedTransactionConsignments": [
-    {
-      "@type": "TransactionConsignment",
-      "id": "TC-2025-FS-WM-001"
-    }
+  "productGroupName": "Forest Slash-Derived Biochar",
+  "productCategory": "solid_biomass",
+  "classification": "ISO 17225-8",
+  "description": "Forest Slash-Derived Biochar (Western U.S., Wildfire Mitigation)",
+  "typicalUses": [
+    "Soil amendment",
+    "Carbon sequestration",
+    "Agricultural applications"
   ],
-  "relatedMaterialFeedstocks": [
-    {
-      "@type": "MaterialFeedstock",
-      "id": "MF-USFS-CA-Klamath-Ridge-04"
-    }
+  "qualityStandards": [
+    "IBI Biochar Standards",
+    "EBC Premium Grade"
   ],
-  "relatedCertificates": [
+  "certificationRequirements": [
+    "FSC Controlled Wood",
+    "SBP-compliant biomass"
+  ],
+  "regulatoryClassification": "Biomass Byproduct - CAR Protocol",
+  "relatedMaterials": [
     {
-      "@type": "Certificate",
-      "id": "CERT-FSC-CW-9543-CA2025"
+      "@type": "Material",
+      "id": "MAT-USFS-CA-Klamath-Ridge-04"
     }
   ]
 }
