@@ -1,0 +1,89 @@
+{
+    "and": [
+      {
+        "!!": { "var": "productGroupId" }
+      },
+      {
+        "!!": { "var": "productTypeDescription" }
+      },
+      {
+        "!!": { "var": "feedstockClassificationRules" }
+      },
+      {
+        "if": [
+          {
+            "in": [
+              { "var": "productTypeDescription" },
+              [
+                "Pelletized Biofuel from Forest Slash",
+                "Engineered Hardwood Flooring",
+                "Bagasse Pellets",
+                "Biochar",
+                "Renewable Diesel",
+                "Biogenic Fuel Oil"
+              ]
+            ]
+          },
+          {
+            "!!": { "var": "feedstockClassificationRules" }
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "relatedCertificates" },
+          {
+            "and": [
+              { ">": [ { "var": "relatedCertificates.length" }, 0 ] },
+              { "all": [
+                { "var": "relatedCertificates" },
+                {
+                  "and": [
+                    { "!!": { "var": "id" } },
+                    { "==": [ { "var": "@type" }, "Certificate" ] }
+                  ]
+                }
+              ]}
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "relatedTransactionConsignments" },
+          {
+            "all": [
+              { "var": "relatedTransactionConsignments" },
+              {
+                "and": [
+                  { "!!": { "var": "id" } },
+                  { "==": [ { "var": "@type" }, "TransactionConsignment" ] }
+                ]
+              }
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "relatedMaterialFeedstocks" },
+          {
+            "all": [
+              { "var": "relatedMaterialFeedstocks" },
+              {
+                "and": [
+                  { "!!": { "var": "id" } },
+                  { "==": [ { "var": "@type" }, "MaterialFeedstock" ] }
+                ]
+              }
+            ]
+          },
+          true
+        ]
+      }
+    ]
+  }
+  

@@ -1,0 +1,36 @@
+{
+    "@context": {
+      "ProductGroup": "https://example.org/boost#ProductGroup",
+      "ProductGroupID": "https://example.org/boost#ProductGroupID",
+      "ProductTypeDescription": "https://example.org/boost#ProductTypeDescription",
+      "FeedstockClassificationRules": "https://example.org/boost#FeedstockClassificationRules",
+      "TransactionConsignment": "https://example.org/boost#TransactionConsignment",
+      "MaterialFeedstock": "https://example.org/boost#MaterialFeedstock",
+      "Certificate": "https://example.org/boost#Certificate",
+      "type": "@type",
+      "id": "@id"
+    },
+    "@type": "ProductGroup",
+    "ProductGroupID": "PG-001",
+    "ProductTypeDescription": "Refined Bio-oil derived from used cooking oil",
+    "FeedstockClassificationRules": "Must originate from post-consumer waste oils verified by chain of custody documents",
+    "relatedTransactionConsignments": [
+      {
+        "@type": "TransactionConsignment",
+        "id": "TC-1001"
+      }
+    ],
+    "relatedMaterialFeedstocks": [
+      {
+        "@type": "MaterialFeedstock",
+        "id": "MF-2001"
+      }
+    ],
+    "relatedCertificates": [
+      {
+        "@type": "Certificate",
+        "id": "CERT-3001"
+      }
+    ]
+  }
+  
