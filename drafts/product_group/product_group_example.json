@@ -1,19 +1,21 @@
 {
   "@context": {
     "ProductGroup": "https://example.org/boost#ProductGroup",
-    "ProductGroupID": "https://example.org/boost#ProductGroupID",
-    "ProductTypeDescription": "https://example.org/boost#ProductTypeDescription",
-    "FeedstockClassificationRules": "https://example.org/boost#FeedstockClassificationRules",
+    "productGroupId": "https://example.org/boost#productGroupId",
+    "productTypeDescription": "https://example.org/boost#productTypeDescription",
+    "feedstockClassificationRules": "https://example.org/boost#feedstockClassificationRules",
     "TransactionConsignment": "https://example.org/boost#TransactionConsignment",
     "MaterialFeedstock": "https://example.org/boost#MaterialFeedstock",
     "Certificate": "https://example.org/boost#Certificate",
-    "type": "@type",
+    "lastUpdated": "https://example.org/boost#lastUpdated",
     "id": "@id"
   },
   "@type": "ProductGroup",
-  "ProductGroupID": "PG-FS-BIOCHAR-001",
-  "ProductTypeDescription": "Forest Slash-Derived Biochar (Western U.S., Wildfire Mitigation)",
-  "FeedstockClassificationRules": "Feedstock must originate from non-merchantable forest slash (tops, limbs, small-diameter trees) collected during U.S. Forest Service-approved wildfire fuel reduction projects in California or Oregon. Material must be sourced from areas classified as low biodiversity risk, as defined under FSC Controlled Wood (CW) Category 3. Acceptable documentation includes: USFS project permit ID, biomass removal maps, and NEPA approval. No material may be sourced from old-growth stands, critical habitats, or tribal lands without documented FPIC (Free, Prior, and Informed Consent).",
+  "@id": "https://example.org/boost/product-group/PG-FS-BIOCHAR-001",
+  "lastUpdated": "2025-07-01T15:00:00Z",
+  "productGroupId": "PG-FS-BIOCHAR-001",
+  "productTypeDescription": "Forest Slash-Derived Biochar (Western U.S., Wildfire Mitigation)",
+  "feedstockClassificationRules": "Feedstock must originate from non-merchantable forest slash (tops, limbs, small-diameter trees) collected during U.S. Forest Service-approved wildfire fuel reduction projects in California or Oregon. Material must be sourced from areas classified as low biodiversity risk, as defined under FSC Controlled Wood (CW) Category 3. Acceptable documentation includes: USFS project permit ID, biomass removal maps, and NEPA approval. No material may be sourced from old-growth stands, critical habitats, or tribal lands without documented FPIC (Free, Prior, and Informed Consent).",
   "relatedTransactionConsignments": [
     {
       "@type": "TransactionConsignment",

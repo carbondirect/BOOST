@@ -15,7 +15,7 @@ The `ProductGroup` object represents a distinct category of materials or product
 | `relatedTransactionConsignments` | array<object> | No       | Links to transactions using this product group                             | See Transaction Consignment Object below     |
 | `relatedMaterialFeedstocks`  | array<object>    | No       | Raw material feedstocks included in this group                             | See Material Feedstock Object below          |
 | `relatedCertificates`        | array<object>    | No       | Certifications relevant to this product group                              | See Certificate Object below                 |
-| `lastUpdated`                | string (date-time) | No     | Timestamp of the most recent schema or data update                         | `2025-07-01T15:00:00Z`                       |
+| `lastUpdated`                | string (date-time) | No     | Timestamp of the most recent data update                         | `2025-07-01T15:00:00Z`                       |
 
 ---
 

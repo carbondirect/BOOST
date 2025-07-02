@@ -1,4 +1,69 @@
 {
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["ProductGroup"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "productGroupId": {
+        "type": "string"
+      },
+      "productTypeDescription": {
+        "type": "string"
+      },
+      "feedstockClassificationRules": {
+        "type": "string"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "relatedTransactionConsignments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "@type": { "const": "TransactionConsignment" },
+            "id": { "type": "string" }
+          },
+          "required": ["@type", "id"]
+        }
+      },
+      "relatedMaterialFeedstocks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "@type": { "const": "MaterialFeedstock" },
+            "id": { "type": "string" }
+          },
+          "required": ["@type", "id"]
+        }
+      },
+      "relatedCertificates": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "@type": { "const": "Certificate" },
+            "id": { "type": "string" }
+          },
+          "required": ["@type", "id"]
+        }
+      }
+    },
+    "required": ["@context", "@type", "@id", "productGroupId", "productTypeDescription", "feedstockClassificationRules"]
+  },
+  "rules": {
     "and": [
       {
         "!!": { "var": "productGroupId" }
@@ -86,4 +151,5 @@
       }
     ]
   }
+}
   

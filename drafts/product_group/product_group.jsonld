@@ -1,19 +1,21 @@
 {
     "@context": {
       "ProductGroup": "https://example.org/boost#ProductGroup",
-      "ProductGroupID": "https://example.org/boost#ProductGroupID",
-      "ProductTypeDescription": "https://example.org/boost#ProductTypeDescription",
-      "FeedstockClassificationRules": "https://example.org/boost#FeedstockClassificationRules",
+      "productGroupId": "https://example.org/boost#productGroupId",
+      "productTypeDescription": "https://example.org/boost#productTypeDescription",
+      "feedstockClassificationRules": "https://example.org/boost#feedstockClassificationRules",
       "TransactionConsignment": "https://example.org/boost#TransactionConsignment",
       "MaterialFeedstock": "https://example.org/boost#MaterialFeedstock",
       "Certificate": "https://example.org/boost#Certificate",
-      "type": "@type",
+      "lastUpdated": "https://example.org/boost#lastUpdated",
       "id": "@id"
     },
     "@type": "ProductGroup",
-    "ProductGroupID": "PG-001",
-    "ProductTypeDescription": "Refined Bio-oil derived from used cooking oil",
-    "FeedstockClassificationRules": "Must originate from post-consumer waste oils verified by chain of custody documents",
+    "@id": "https://example.org/boost/product-group/PG-001",
+    "lastUpdated": "2025-07-01T15:00:00Z",
+    "productGroupId": "PG-001",
+    "productTypeDescription": "Refined Bio-oil derived from used cooking oil",
+    "feedstockClassificationRules": "Must originate from post-consumer waste oils verified by chain of custody documents",
     "relatedTransactionConsignments": [
       {
         "@type": "TransactionConsignment",
