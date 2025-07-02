@@ -1,0 +1,57 @@
+{
+    "certificateId": "FSC-CERT-001",
+    "certificateNumber": "FSC-C123456",
+    "certificationSchemeId": "FSC-CoC",
+    "certificationBodyId": "FSC-ACCREDITED-CB",
+    "organizationId": "ORG-FORESTCO-001",
+    "dateOfIssue": "2025-01-01",
+    "dateOfExpiry": "2030-01-01",
+    "status": "active",
+    "scopeOfCertification": "Chain of Custody for lumber and pulp",
+    "versionNumber": "FSC-STD-40-004 v3-1",
+    "productGroups": [
+      {
+        "productType": "Softwood Lumber",
+        "materialCategories": ["FSC 100%", "FSC Mix", "Controlled Wood"],
+        "controlSystems": ["transfer system", "percentage system", "credit system"]
+      }
+    ],
+    "volumeTrackingRecord": {
+      "inputVolumeByCategory": {
+        "FSC 100%": 2000,
+        "FSC Mix": 2000,
+        "Controlled Wood": 1000
+      },
+      "outputVolumeByCategory": {
+        "FSC 100%": 1900,
+        "FSC Mix": 1900,
+        "FSC Mix Credit": 1000
+      }
+    },
+    "labelUseRecord": [
+      {
+        "product": "Lumber 2x4",
+        "claimType": "FSC Mix",
+        "approvalReference": "FSC-TRADEMARK-001",
+        "percentage": 60
+      }
+    ],
+    "supplierInfo": {
+      "name": "WoodSource Inc.",
+      "address": "789 Forest Drive, Oregon, USA"
+    },
+    "supplierRiskAssessment": {
+      "riskRating": "Low",
+      "mitigationMeasures": "Annual audit and document review",
+      "controlledWoodCompliance": "verified"
+    },
+    "attachments": [
+      {
+        "fileName": "fsc_certificate.pdf",
+        "fileUrl": "https://example.org/docs/fsc_certificate.pdf",
+        "fileType": "application/pdf"
+      }
+    ],
+    "lastUpdated": "2025-06-24T10:00:00Z"
+  }
+  

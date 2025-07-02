@@ -1,0 +1,19 @@
+{
+    "schemeId": "FSC-CoC",
+    "schemeName": "FSC Chain of Custody",
+    "versionNumber": "FSC-STD-40-004 v3-1",
+    "recognitionStatus": "internationally-recognized",
+    "description": "The FSC Chain of Custody Standard tracks forest-based material and fiber through the supply chain to the end product.",
+    "website": "https://fsc.org/en/document-centre/documents/resource/392",
+    "materialCategories": ["FSC 100%", "FSC Mix", "Controlled Wood", "FSC Recycled"],
+    "controlSystems": ["transfer system", "percentage system", "credit system"],
+    "labelUseRequirements": "Labels must be approved by FSC and comply with FSC trademark requirements. Organizations must hold valid FSC chain of custody certificates.",
+    "volumeTrackingRequirements": "Organizations must maintain accurate records of input and output volumes by FSC material category and implement proper volume accounting systems.",
+    "dueDiligenceRequirements": "Organizations must implement controlled wood due diligence system (DDS) to ensure non-FSC inputs meet FSC controlled wood requirements.",
+    "sustainabilityCriteria": ["Responsible forest management", "Environmental protection", "Social benefits", "Economic viability"],
+    "applicableRegions": ["Global"],
+    "administeredBy": "Forest Stewardship Council International",
+    "dateEstablished": "1993-01-01",
+    "lastUpdated": "2025-06-24T10:00:00Z"
+  }
+  
