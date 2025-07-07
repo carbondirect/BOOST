@@ -1,0 +1,39 @@
+graph TB
+    %% Clean styling
+    classDef transactionClass fill:#f9f9f9,stroke:#f57c00,stroke-width:2px
+    classDef summaryClass fill:#f9f9f9,stroke:#7b1fa2,stroke-width:3px
+    
+    %% BOOST Transaction Entities
+    subgraph PRODUCTION["BOOST Transaction Entities"]
+        TXN_SUMMARY["Transaction Summary<br/>fuelVolume: 5,075,000 gallons<br/>totalEnergyMJ: 703,902,500<br/>reportingPeriod: 2025-Q1"]
+        
+        subgraph DETAILS[" "]
+            direction TB
+            DETAILS_TITLE["Individual Transaction Entities<br/>Q1 2025 Fuel Sales"]
+            TXN1["Transaction Entity<br/>fuelVolume: 875,000 gallons<br/>lcfsPathwayId: CA-RD-2025-LMR-001"]
+            TXN2["Transaction Entity<br/>fuelVolume: 1,250,000 gallons<br/>lcfsPathwayId: CA-RD-2025-AGR-001"]
+            TXN3["Transaction Entity<br/>fuelVolume: 650,000 gallons<br/>lcfsPathwayId: CA-RD-2025-GRW-001"]
+            TXN4["Transaction Entity<br/>fuelVolume: 425,000 gallons<br/>lcfsPathwayId: CA-RD-2025-FHR-001"]
+            TXN5["Transaction Entity<br/>fuelVolume: 1,100,000 gallons<br/>lcfsPathwayId: CA-RD-2025-AGR-001"]
+            TXN6["Transaction Entity<br/>fuelVolume: 775,000 gallons<br/>lcfsPathwayId: CA-RD-2025-LMR-001"]
+        end
+    end
+    
+    %% BOOST LCFSReporting Entity
+    subgraph QUARTERLY["BOOST LCFSReporting Entity"]
+        SUMMARY["LCFSReporting Entity<br/>totalFuelVolume: 703,902,500 MJ<br/>totalCreditsGenerated: 55,177,391,275<br/>portfolioWeightedCI: 17.22 gCO2e/MJ<br/>complianceStatus: compliant"]
+    end
+    
+    %% Relationships
+    TXN_SUMMARY -->|"quarterly aggregation"| SUMMARY
+    TXN1 -->|"includes"| TXN_SUMMARY
+    TXN2 -->|"includes"| TXN_SUMMARY
+    TXN3 -->|"includes"| TXN_SUMMARY
+    TXN4 -->|"includes"| TXN_SUMMARY
+    TXN5 -->|"includes"| TXN_SUMMARY
+    TXN6 -->|"includes"| TXN_SUMMARY
+    
+    %% Apply styles
+    class TXN1,TXN2,TXN3,TXN4,TXN5,TXN6,TXN_SUMMARY transactionClass
+    class SUMMARY summaryClass
+    class DETAILS_TITLE fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px

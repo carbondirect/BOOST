@@ -52,6 +52,23 @@ Where:
 5. **Generate Reports** - Create quarterly compliance reports
 6. **Submit to CARB** - Automated submission to LRT-CBTS system
 
+## Examples
+
+### Pacific Renewable Fuels Case Study
+
+A complete real-world LCFS implementation example featuring a fuel producer using lignocellulosic biomass feedstocks:
+
+- **[Visual Workflow](./examples/pacific_renewable_fuels_boost_entity_flow.md)** - Three-part diagram showing feedstock flow, production workflow, and compliance pipeline
+- **[Attribute Mapping](./examples/pacific_renewable_fuels_attribute_flow.md)** - Detailed attribute flow from materials to CARB submission  
+- **[Literate Programming](./examples/pacific_renewable_fuels_lcfs_example.org)** - Executable org-mode document with Python analysis
+- **[Sample Data](./examples/data/)** - JSON payloads for all entity types (organizations, materials, pathways, transactions)
+
+**Key Metrics from Example:**
+- 5.075M gallons renewable diesel produced (Q1 2025)
+- 55.2B LCFS credits generated (~$11B value)
+- 78.39 gCO2e/MJ improvement vs regulatory benchmark
+- 4 lignocellulosic feedstock types with dedicated CARB pathways
+
 ## Documentation
 
 ### Primary Documentation
@@ -62,8 +79,8 @@ Where:
 
 ### Supporting Resources
 - **Entity Relationship Diagram**: `../../drafts/images/boost_erd.mermaid`
-- **Sample Payloads**: `./examples/` (coming soon)
-- **JSON Schemas**: `./schemas/` (coming soon)
+- **Working Examples**: `./examples/` - Complete Pacific Renewable Fuels example with visual workflows
+- **Sample Data**: JSON payloads for organizations, materials, pathways, and transactions
 
 ## LCFS Program Background
 
@@ -145,9 +162,10 @@ Where:
 ## Getting Started Checklist
 
 - [ ] Review LCFS Implementation Guide
-- [ ] Understand entity relationship model  
+- [ ] Study Pacific Renewable Fuels example workflow
+- [ ] Understand entity relationship model from examples  
 - [ ] Set up development environment
-- [ ] Implement core LCFS entities
+- [ ] Implement core LCFS entities (use sample JSON as reference)
 - [ ] Load CARB pathway database
 - [ ] Build credit calculation engine
 - [ ] Create test transaction data
@@ -158,11 +176,13 @@ Where:
 
 ## Status
 
-**Current Status**: ✅ **Documentation Complete**
+**Current Status**: ✅ **Documentation & Examples Complete**
 - Comprehensive implementation guide
 - Complete workflow specification  
 - Detailed entity mapping
 - Validation checklist ready
+- Working real-world example with visual workflows
+- Sample JSON data for all entity types
 
 **Next Steps**: 🚧 **Implementation Phase**
 - Code implementation of entities
