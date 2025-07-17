@@ -2,7 +2,7 @@
 
 ## Enhanced Entity Framework Based on MECE Analysis
 
-This document provides comprehensive mapping between BOOST entities and California LCFS (Low Carbon Fuel Standard) reporting requirements, ensuring mutually exclusive and collectively exhaustive (MECE) attribute coverage.
+This document provides comprehensive mapping between BOOST entities and California LCFS (Low Carbon Fuel Standard) reporting requirements.
 
 ---
 
