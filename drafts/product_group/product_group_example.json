@@ -1,0 +1,46 @@
+{
+  "@context": {
+    "ProductGroup": "https://github.com/carbondirect/BOOST/schemas#ProductGroup",
+    "productGroupId": "https://github.com/carbondirect/BOOST/schemas#productGroupId",
+    "productGroupName": "https://github.com/carbondirect/BOOST/schemas#productGroupName",
+    "productCategory": "https://github.com/carbondirect/BOOST/schemas#productCategory",
+    "classification": "https://github.com/carbondirect/BOOST/schemas#classification",
+    "description": "https://github.com/carbondirect/BOOST/schemas#description",
+    "typicalUses": "https://github.com/carbondirect/BOOST/schemas#typicalUses",
+    "qualityStandards": "https://github.com/carbondirect/BOOST/schemas#qualityStandards",
+    "certificationRequirements": "https://github.com/carbondirect/BOOST/schemas#certificationRequirements",
+    "regulatoryClassification": "https://github.com/carbondirect/BOOST/schemas#regulatoryClassification",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "Material": "https://github.com/carbondirect/BOOST/schemas#Material",
+    "relatedMaterials": "https://github.com/carbondirect/BOOST/schemas#relatedMaterials",
+    "id": "@id"
+  },
+  "@type": "ProductGroup",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/product-group/PG-FS-BIOCHAR-001",
+  "lastUpdated": "2025-07-01T15:00:00Z",
+  "productGroupId": "PG-FS-BIOCHAR-001",
+  "productGroupName": "Forest Slash-Derived Biochar",
+  "productCategory": "solid_biomass",
+  "classification": "ISO 17225-8",
+  "description": "Forest Slash-Derived Biochar (Western U.S., Wildfire Mitigation)",
+  "typicalUses": [
+    "Soil amendment",
+    "Carbon sequestration",
+    "Agricultural applications"
+  ],
+  "qualityStandards": [
+    "IBI Biochar Standards",
+    "EBC Premium Grade"
+  ],
+  "certificationRequirements": [
+    "FSC Controlled Wood",
+    "SBP-compliant biomass"
+  ],
+  "regulatoryClassification": "Biomass Byproduct - CAR Protocol",
+  "relatedMaterials": [
+    {
+      "@type": "Material",
+      "id": "MAT-USFS-CA-Klamath-Ridge-04"
+    }
+  ]
+}
