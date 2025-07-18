@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Reveal.js Markdown Presentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/solarized.css" id="theme">
+  <style>
+      .logo-corner {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 80px;   /* adjust size as needed */
+        z-index: 1000;
+      }
+    </style>
+</head>
+<body>
+  <!-- Logo in top-right corner -->
+  <img src="img/boost_logo.png" alt="Logo" class="logo-corner" />
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown="ae_doc.md"
+               data-separator="^---$"
+               data-separator-vertical="^--$"
+               data-separator-notes="^Note:"
+               data-charset="utf-8">
+      </section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/markdown/markdown.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-light.css" />
+  <script src="https://unpkg.com/reveal.js/plugin/highlight/highlight.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+	plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+  </script>
+
+</body>
+</html>

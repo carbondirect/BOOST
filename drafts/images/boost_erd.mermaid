@@ -149,9 +149,16 @@ erDiagram
     
     ProductGroup {
         string productGroupId PK
-        string organizationId FK
-        string productTypeDescription
-        string feedstockClassificationRules
+        string productGroupName
+        string productCategory "solid_biomass, liquid_biofuel, biogas"
+        string classification
+        string description
+        string[] typicalUses
+        string[] qualityStandards
+        string[] certificationRequirements
+        string regulatoryClassification
+        uri id "@id - unique identifier"
+        datetime lastUpdated
     }
     
     %% Energy and Carbon Data - Enhanced for LCFS
@@ -187,7 +194,6 @@ erDiagram
         string scope
         string transactionBatchId FK
     }
-    
     
     %% Audit and Compliance
     Audit {
@@ -250,10 +256,12 @@ erDiagram
     TransactionBatch ||--|| Claim : "associated_with"
     TransactionBatch ||--o{ VerificationStatement : "verified_by"
     
-    %% Mass Balance Relationships
+    %% Mass Balance and Product Management Relationships
     Organization ||--o{ MassBalanceAccount : "manages"
     Organization ||--o{ ProductGroup : "defines"
     MassBalanceAccount }o--|| ProductGroup : "tracks"
+    ProductGroup ||--o{ Material : "categorizes"
+    Certificate ||--o{ ProductGroup : "certifies"
     
     %% Energy and Carbon Relationships
     Material ||--o{ EnergyCarbonData : "characterized_by"
