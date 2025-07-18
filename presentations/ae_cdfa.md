@@ -23,11 +23,13 @@ Note:
 
 --
 
-## What is BOOST?
+## What BOOST is
 
-- W3C Community Group
-- A "Data Standard" for biomass
-- v0.1 funded by California Department of Conservation
+
+- A specification defining data formats, field definitions, and validation rules
+- A common vocabulary enabling consistent interpretation of biomass chain-of-custody information
+- A framework establishing relationships between different types of information
+- A validation mechanism ensuring data quality and consistency
 
 --
 
