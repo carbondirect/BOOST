@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "CertificationScheme": "https://github.com/carbondirect/BOOST/schemas#CertificationScheme",
+    "certificationSchemeId": "https://github.com/carbondirect/BOOST/schemas#certificationSchemeId",
+    "schemeName": "https://github.com/carbondirect/BOOST/schemas#schemeName",
+    "schemeType": "https://github.com/carbondirect/BOOST/schemas#schemeType",
+    "schemeStandard": "https://github.com/carbondirect/BOOST/schemas#schemeStandard",
+    "issuingOrganizationId": "https://github.com/carbondirect/BOOST/schemas#issuingOrganizationId",
+    "schemeDescription": "https://github.com/carbondirect/BOOST/schemas#schemeDescription",
+    "applicableGeographicAreas": "https://github.com/carbondirect/BOOST/schemas#applicableGeographicAreas",
+    "eligibleMaterialTypes": "https://github.com/carbondirect/BOOST/schemas#eligibleMaterialTypes",
+    "claimTypes": "https://github.com/carbondirect/BOOST/schemas#claimTypes",
+    "auditRequirements": "https://github.com/carbondirect/BOOST/schemas#auditRequirements",
+    "chainOfCustodyRequirements": "https://github.com/carbondirect/BOOST/schemas#chainOfCustodyRequirements",
+    "documentationRequirements": "https://github.com/carbondirect/BOOST/schemas#documentationRequirements",
+    "validityPeriod": "https://github.com/carbondirect/BOOST/schemas#validityPeriod",
+    "website": "https://github.com/carbondirect/BOOST/schemas#website",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "CertificationScheme",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/certification-scheme/CERT-SCHEME-FSC-COC-US-001",
+  "certificationSchemeId": "CERT-SCHEME-FSC-COC-US-001",
+  "schemeName": "FSC Chain of Custody Standard for United States",
+  "schemeType": "chain_of_custody",
+  "schemeStandard": "FSC-STD-40-004 V3-1 EN",
+  "issuingOrganizationId": "ORG-FSC-US-001",
+  "schemeDescription": "FSC Chain of Custody certification ensures that FSC-certified material is identified or kept separate from non-certified and controversial material throughout the supply chain, from the forest to the consumer, including all successive stages of processing, transformation, manufacturing and distribution.",
+  "applicableGeographicAreas": [
+    "GEO-COUNTRY-USA",
+    "GEO-REGION-NORTH-AMERICA"
+  ],
+  "eligibleMaterialTypes": [
+    "softwood",
+    "hardwood",
+    "mixed",
+    "non_wood_forest_products"
+  ],
+  "claimTypes": [
+    "FSC Mix",
+    "FSC 100%",
+    "FSC Recycled",
+    "FSC Controlled Wood"
+  ],
+  "auditRequirements": "Initial certification audit followed by annual surveillance audits. Full re-assessment every 5 years. Risk-based surveillance frequency may apply.",
+  "chainOfCustodyRequirements": "Organizations must implement either physical separation, percentage system, or credit system. Volume tracking, claim calculations, and proper labeling required. Minimum 70% threshold for FSC Mix claims.",
+  "documentationRequirements": [
+    "purchase_records",
+    "sales_invoices",
+    "volume_tracking",
+    "claim_calculations",
+    "supplier_certificates",
+    "training_records",
+    "controlled_wood_verification",
+    "product_specifications"
+  ],
+  "validityPeriod": "5 years",
+  "website": "https://us.fsc.org/en-us/certification/chain-of-custody-certification",
+  "lastUpdated": "2025-07-21T17:30:00Z"
+}

@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/operator",
+  "title": "Operator",
+  "description": "Operator entity with certification tracking and geographic assignment capabilities for Phase 2 Kaulen framework enhancements",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "object",
+      "description": "JSON-LD context for semantic web compatibility"
+    },
+    "@type": {
+      "type": "string",
+      "const": "Operator",
+      "description": "JSON-LD type identifier"
+    },
+    "@id": {
+      "type": "string",
+      "format": "uri",
+      "description": "Unique URI identifier for the operator"
+    },
+    "operatorId": {
+      "type": "string",
+      "description": "Unique identifier for the operator",
+      "minLength": 1,
+      "pattern": "^OP-[A-Z0-9-_]+$",
+      "examples": ["OP-001", "OP-JOHN-SMITH-HARVESTER"]
+    },
+    "operatorName": {
+      "type": "string",
+      "description": "Full name of the operator",
+      "minLength": 1,
+      "examples": ["John Smith", "Maria Rodriguez"]
+    },
+    "employeeId": {
+      "type": "string",
+      "description": "Employee identification number",
+      "examples": ["EMP-12345", "PACIFIC-FOREST-001"]
+    },
+    "organizationId": {
+      "type": "string",
+      "description": "Foreign key to employing organization",
+      "pattern": "^ORG-[A-Z0-9-_]+$",
+      "examples": ["ORG-PACIFIC-FOREST-001", "ORG-KLAMATH-HARVEST"]
+    },
+    "operatorRole": {
+      "type": "string",
+      "description": "Primary role or job function",
+      "enum": ["harvester", "truck_driver", "mill_operator", "quality_inspector", "scale_operator", "equipment_operator", "supervisor", "technician"]
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of operator certifications and licenses",
+      "examples": [["CDL-A", "CERTIFIED-LOGGER", "CRANE-OPERATOR"]]
+    },
+    "equipmentQualifications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Equipment the operator is qualified to use",
+      "examples": [["harvester_head", "log_loader", "scale_system"]]
+    },
+    "primaryWorkLocationId": {
+      "type": "string",
+      "description": "Foreign key to primary work location",
+      "pattern": "^GEO-[A-Z0-9-_]+$",
+      "examples": ["GEO-MILL-PACIFIC-001", "GEO-HARVEST-SITE-KLA"]
+    },
+    "assignedTrackingPoints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TP-[A-Z0-9-_]+$"
+      },
+      "description": "List of tracking points assigned to operator",
+      "examples": [["TP-MILL-ENTRANCE-001", "TP-SCALE-STATION-001"]]
+    },
+    "contactPhone": {
+      "type": "string",
+      "description": "Operator contact phone number",
+      "examples": ["+1-555-123-4567", "555-OPERATOR"]
+    },
+    "contactEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "Operator contact email address",
+      "examples": ["j.smith@pacificforest.com", "operator001@company.com"]
+    },
+    "hireDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date operator was hired",
+      "examples": ["2020-03-15", "2018-07-01"]
+    },
+    "trainingRecords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of completed training programs",
+      "examples": [["SAFETY-TRAINING-2025", "BIOMETRIC-SCANNER-CERT"]]
+    },
+    "activeStatus": {
+      "type": "boolean",
+      "description": "Whether operator is currently active",
+      "default": true
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the most recent data update"
+    }
+  },
+  "required": [
+    "@type",
+    "@id",
+    "operatorId", 
+    "operatorName",
+    "organizationId",
+    "operatorRole"
+  ],
+  "additionalProperties": false
+}

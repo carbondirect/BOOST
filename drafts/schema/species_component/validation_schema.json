@@ -1,0 +1,183 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/species-component",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["SpeciesComponent"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "componentId": {
+        "type": "string",
+        "description": "Unique identifier for the species component"
+      },
+      "traceableUnitId": {
+        "type": "string",
+        "description": "Foreign key back reference to TraceableUnit"
+      },
+      "species": {
+        "type": "string",
+        "description": "Species name (common or scientific)"
+      },
+      "volumeM3": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Volume of this species within the TRU in cubic meters"
+      },
+      "percentageByVolume": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Percentage of total TRU volume for this species"
+      },
+      "qualityGrade": {
+        "type": "string",
+        "description": "Species-specific quality grade"
+      },
+      "sourceGeographicDataId": {
+        "type": "string",
+        "description": "Foreign key to geographic origin of this species"
+      },
+      "harvestingMethod": {
+        "type": "string",
+        "enum": ["chainsaw", "harvester", "manual", "mechanical"],
+        "description": "Method used to harvest this species"
+      },
+      "harvestTimestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When this species was harvested"
+      },
+      "carbonStorage": {
+        "type": "string",
+        "description": "CO2 data for this species component"
+      },
+      "scientificName": {
+        "type": "string",
+        "description": "Scientific/Latin name of the species"
+      },
+      "dbhCm": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Diameter at breast height in centimeters"
+      },
+      "heightM": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Average tree height in meters"
+      },
+      "ageYears": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Estimated age in years"
+      },
+      "moistureContent": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Moisture content as percentage"
+      },
+      "defects": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of defects or quality issues"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of the most recent data update"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "componentId",
+      "traceableUnitId",
+      "species",
+      "volumeM3",
+      "percentageByVolume"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "componentId" }
+      },
+      {
+        "!!": { "var": "traceableUnitId" }
+      },
+      {
+        "!!": { "var": "species" }
+      },
+      {
+        "!!": { "var": "volumeM3" }
+      },
+      {
+        ">": [{ "var": "volumeM3" }, 0]
+      },
+      {
+        "!!": { "var": "percentageByVolume" }
+      },
+      {
+        ">": [{ "var": "percentageByVolume" }, 0]
+      },
+      {
+        "<=": [{ "var": "percentageByVolume" }, 100]
+      },
+      {
+        "if": [
+          { "var": "dbhCm" },
+          {
+            ">": [{ "var": "dbhCm" }, 0]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "heightM" },
+          {
+            ">": [{ "var": "heightM" }, 0]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "ageYears" },
+          {
+            ">=": [{ "var": "ageYears" }, 0]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "moistureContent" },
+          {
+            "and": [
+              {
+                ">=": [{ "var": "moistureContent" }, 0]
+              },
+              {
+                "<=": [{ "var": "moistureContent" }, 100]
+              }
+            ]
+          },
+          true
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/material-enhanced",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["Material"] },
+      "@id": { "type": "string", "format": "uri" },
+      "materialTypeId": { "type": "string" },
+      "materialName": { "type": "string" },
+      "materialCategory": {
+        "type": "string",
+        "enum": ["softwood", "hardwood", "mixed"]
+      },
+      "defaultAssortmentTypes": { "type": "string" },
+      "standardQualityGrades": { "type": "string" },
+      "carbonStorageRate": { "type": "string" },
+      "density": { "type": "string" },
+      "applicableProcessingTypes": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "typicalSpecies": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "standardMoistureContent": { "type": "string" },
+      "energyContent": { "type": "string" },
+      "lastUpdated": { "type": "string", "format": "date-time" }
+    },
+    "required": ["@context", "@type", "@id", "materialTypeId", "materialName", "materialCategory"]
+  },
+  "rules": {
+    "and": [
+      { "!!": { "var": "materialTypeId" } },
+      { "!!": { "var": "materialName" } },
+      { "!!": { "var": "materialCategory" } },
+      {
+        "if": [
+          { "var": "applicableProcessingTypes" },
+          { ">": [{ "var": "applicableProcessingTypes.length" }, 0] },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "typicalSpecies" },
+          { ">": [{ "var": "typicalSpecies.length" }, 0] },
+          true
+        ]
+      }
+    ]
+  }
+}

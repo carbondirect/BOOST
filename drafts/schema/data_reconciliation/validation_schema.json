@@ -1,0 +1,61 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/data-reconciliation",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["DataReconciliation"] },
+      "@id": { "type": "string", "format": "uri" },
+      "reconciliationId": { "type": "string" },
+      "traceableUnitId": { "type": "string" },
+      "transactionId": { "type": "string" },
+      "forestMeasurement": { "type": "number", "minimum": 0 },
+      "millMeasurement": { "type": "number", "minimum": 0 },
+      "discrepancy": { "type": "number" },
+      "reconciliationStatus": {
+        "type": "string",
+        "enum": ["pending", "resolved", "disputed"]
+      },
+      "discrepancyReason": { "type": "string" },
+      "reconciliationDate": { "type": "string", "format": "date-time" },
+      "reconciliationOperator": { "type": "string" },
+      "speciesDiscrepancies": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "tolerancePercentage": { "type": "number", "minimum": 0, "maximum": 100 },
+      "resolutionNotes": { "type": "string" },
+      "lastUpdated": { "type": "string", "format": "date-time" }
+    },
+    "required": ["@context", "@type", "@id", "reconciliationId", "traceableUnitId", "forestMeasurement", "millMeasurement", "discrepancy", "reconciliationStatus", "reconciliationDate"]
+  },
+  "rules": {
+    "and": [
+      { "!!": { "var": "reconciliationId" } },
+      { "!!": { "var": "traceableUnitId" } },
+      { "!!": { "var": "forestMeasurement" } },
+      { "!!": { "var": "millMeasurement" } },
+      { "!!": { "var": "reconciliationStatus" } },
+      { "!!": { "var": "reconciliationDate" } },
+      {
+        ">=": [{ "var": "forestMeasurement" }, 0]
+      },
+      {
+        ">=": [{ "var": "millMeasurement" }, 0]
+      },
+      {
+        "if": [
+          { "var": "tolerancePercentage" },
+          {
+            "and": [
+              { ">=": [{ "var": "tolerancePercentage" }, 0] },
+              { "<=": [{ "var": "tolerancePercentage" }, 100] }
+            ]
+          },
+          true
+        ]
+      }
+    ]
+  }
+}

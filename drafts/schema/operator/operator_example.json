@@ -1,0 +1,58 @@
+{
+  "@context": {
+    "Operator": "https://github.com/carbondirect/BOOST/schemas#Operator",
+    "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "operatorName": "https://github.com/carbondirect/BOOST/schemas#operatorName",
+    "employeeId": "https://github.com/carbondirect/BOOST/schemas#employeeId",
+    "organizationId": "https://github.com/carbondirect/BOOST/schemas#organizationId",
+    "operatorRole": "https://github.com/carbondirect/BOOST/schemas#operatorRole",
+    "certifications": "https://github.com/carbondirect/BOOST/schemas#certifications",
+    "equipmentQualifications": "https://github.com/carbondirect/BOOST/schemas#equipmentQualifications",
+    "primaryWorkLocationId": "https://github.com/carbondirect/BOOST/schemas#primaryWorkLocationId",
+    "assignedTrackingPoints": "https://github.com/carbondirect/BOOST/schemas#assignedTrackingPoints",
+    "contactPhone": "https://github.com/carbondirect/BOOST/schemas#contactPhone",
+    "contactEmail": "https://github.com/carbondirect/BOOST/schemas#contactEmail",
+    "hireDate": "https://github.com/carbondirect/BOOST/schemas#hireDate",
+    "trainingRecords": "https://github.com/carbondirect/BOOST/schemas#trainingRecords",
+    "activeStatus": "https://github.com/carbondirect/BOOST/schemas#activeStatus",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "Operator",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/operator/OP-MIKE-JOHNSON-HARVESTER-001",
+  "operatorId": "OP-MIKE-JOHNSON-HARVESTER-001",
+  "operatorName": "Mike Johnson",
+  "employeeId": "PACIFIC-FOREST-EMP-1247",
+  "organizationId": "ORG-PACIFIC-FOREST-001",
+  "operatorRole": "harvester",
+  "certifications": [
+    "CDL-A-OREGON-2027",
+    "CERTIFIED-LOGGER-OREGON-2026",
+    "OSHA-10-HOUR-SAFETY-2025",
+    "FIRST-AID-CPR-2025"
+  ],
+  "equipmentQualifications": [
+    "harvester_head",
+    "feller_buncher",
+    "delimber",
+    "optical_scanner",
+    "biometric_scanner",
+    "GPS"
+  ],
+  "primaryWorkLocationId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "assignedTrackingPoints": [
+    "TP-HARVEST-KLAMATH-04",
+    "TP-SKID-ROAD-KLAMATH-04-A"
+  ],
+  "contactPhone": "+1-541-555-7832",
+  "contactEmail": "m.johnson@pacificforest.com",
+  "hireDate": "2018-04-15",
+  "trainingRecords": [
+    "HARVESTER-OPERATION-TRAINING-2024",
+    "BIOMETRIC-SCANNER-CERTIFICATION-2025",
+    "KAULEN-FRAMEWORK-TRAINING-2025",
+    "CHAIN-OF-CUSTODY-TRAINING-2024"
+  ],
+  "activeStatus": true,
+  "lastUpdated": "2025-07-21T17:15:00Z"
+}

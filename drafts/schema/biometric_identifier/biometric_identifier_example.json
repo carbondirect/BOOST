@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "BiometricIdentifier": "https://github.com/carbondirect/BOOST/schemas#BiometricIdentifier",
+    "biometricId": "https://github.com/carbondirect/BOOST/schemas#biometricId",
+    "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
+    "biometricSignature": "https://github.com/carbondirect/BOOST/schemas#biometricSignature",
+    "captureMethod": "https://github.com/carbondirect/BOOST/schemas#captureMethod",
+    "captureGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#captureGeographicDataId",
+    "captureTimestamp": "https://github.com/carbondirect/BOOST/schemas#captureTimestamp",
+    "trackingPointId": "https://github.com/carbondirect/BOOST/schemas#trackingPointId",
+    "speciesBiometrics": "https://github.com/carbondirect/BOOST/schemas#speciesBiometrics",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "BiometricIdentifier",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/biometric-identifier/BIO-PILE-KLA-042-001",
+  "biometricId": "BIO-PILE-KLA-042-001",
+  "traceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "biometricSignature": "SHA256:a3b2c1d4e5f6789012345678901234567890abcdef123456789012345678901234",
+  "captureMethod": "optical_scanner",
+  "captureGeographicDataId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "captureTimestamp": "2025-07-15T06:50:00Z",
+  "trackingPointId": "TP-HARVEST-KLAMATH-04",
+  "speciesBiometrics": [
+    "Douglas Fir: SHA256:df45e2c3a1b0987654321098765432109876543210fedcba098765432109876543",
+    "Ponderosa Pine: SHA256:pp12b3c4d5e6f7890123456789012345678901234567890abcdef123456789012",
+    "Western Hemlock: SHA256:wh78c9d0e1f2a34567890123456789012345678901234567890abcdef123456789"
+  ],
+  "lastUpdated": "2025-07-21T16:15:00Z"
+}

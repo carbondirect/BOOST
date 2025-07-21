@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/certification-scheme",
+  "title": "CertificationScheme",
+  "description": "CertificationScheme entity defining certification standards and requirements with geographic applicability for Phase 2 Kaulen framework enhancements",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "object",
+      "description": "JSON-LD context for semantic web compatibility"
+    },
+    "@type": {
+      "type": "string",
+      "const": "CertificationScheme",
+      "description": "JSON-LD type identifier"
+    },
+    "@id": {
+      "type": "string",
+      "format": "uri",
+      "description": "Unique URI identifier for the certification scheme"
+    },
+    "certificationSchemeId": {
+      "type": "string",
+      "description": "Unique identifier for the certification scheme",
+      "minLength": 1,
+      "pattern": "^CERT-SCHEME-[A-Z0-9-_]+$",
+      "examples": ["CERT-SCHEME-FSC-001", "CERT-SCHEME-SFI-COC"]
+    },
+    "schemeName": {
+      "type": "string",
+      "description": "Official name of the certification scheme",
+      "minLength": 1,
+      "examples": ["FSC Chain of Custody", "SFI Chain of Custody", "PEFC Chain of Custody"]
+    },
+    "schemeType": {
+      "type": "string",
+      "description": "Type of certification scheme",
+      "enum": ["forest_management", "chain_of_custody", "controlled_wood", "biomass_sustainability", "carbon_offset", "environmental_management"]
+    },
+    "schemeStandard": {
+      "type": "string",
+      "description": "Standard or version identifier",
+      "examples": ["FSC-STD-40-004 V3-1", "SFI-2015-2019 COC", "PEFC ST 2002:2020"]
+    },
+    "issuingOrganizationId": {
+      "type": "string",
+      "description": "Foreign key to organization that issues this scheme",
+      "pattern": "^ORG-[A-Z0-9-_]+$",
+      "examples": ["ORG-FSC-INTERNATIONAL", "ORG-SFI-INC"]
+    },
+    "schemeDescription": {
+      "type": "string",
+      "description": "Detailed description of the certification scheme",
+      "examples": ["Ensures responsible forest management and chain of custody tracking"]
+    },
+    "applicableGeographicAreas": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$"
+      },
+      "description": "Geographic areas where this scheme is applicable",
+      "examples": [["GEO-REGION-NORTH-AMERICA", "GEO-COUNTRY-USA"]]
+    },
+    "eligibleMaterialTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Material types eligible for this certification scheme",
+      "examples": [["softwood", "hardwood", "mixed", "biomass"]]
+    },
+    "claimTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Types of claims supported by this scheme",
+      "examples": [["FSC Mix", "FSC 100%", "FSC Recycled", "FSC Controlled Wood"]]
+    },
+    "auditRequirements": {
+      "type": "string",
+      "description": "Audit and verification requirements",
+      "examples": ["Annual surveillance audits with 3-year certification cycle"]
+    },
+    "chainOfCustodyRequirements": {
+      "type": "string",
+      "description": "Chain of custody tracking and documentation requirements",
+      "examples": ["Physical or percentage-based system with complete traceability"]
+    },
+    "documentationRequirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Required documentation and record-keeping",
+      "examples": [["purchase_records", "sales_invoices", "volume_tracking", "claim_validation"]]
+    },
+    "validityPeriod": {
+      "type": "string",
+      "description": "Typical validity period for certifications under this scheme",
+      "examples": ["3 years", "5 years", "Annual renewal"]
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "description": "Official website for the certification scheme",
+      "examples": ["https://fsc.org/", "https://www.sfiprogram.org/"]
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the most recent data update"
+    }
+  },
+  "required": [
+    "@type",
+    "@id",
+    "certificationSchemeId",
+    "schemeName",
+    "schemeType",
+    "issuingOrganizationId"
+  ],
+  "additionalProperties": false
+}
