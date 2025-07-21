@@ -1,0 +1,140 @@
+{
+  "reportHeader": {
+    "reportingPeriod": "2025-Q1",
+    "regulatedEntity": "pacific-renewable-fuels-001",
+    "entityName": "Pacific Renewable Fuels Corp",
+    "submissionDate": "2025-04-15T10:30:00Z",
+    "calculationDate": "2025-04-14T16:45:00Z",
+    "verificationStatus": "verified"
+  },
+  "calculationParameters": {
+    "conversionFactor": 138.7,
+    "conversionFactorUnit": "MJ/gallon",
+    "regulatoryBenchmark": 98.47,
+    "benchmarkUnit": "gCO2e/MJ",
+    "defaultEER": 1.0
+  },
+  "transactionCalculations": [
+    {
+      "transactionId": "TXN-2025-Q1-001",
+      "fuelVolume": 875000.0,
+      "fuelVolumeUnit": "gallons",
+      "volumeMJ": 121362500.0,
+      "pathwayId": "CA-RD-2025-LMR-001",
+      "pathwayCarbonIntensity": 19.85,
+      "ciDifference": 78.62,
+      "energyEconomyRatio": 1.0,
+      "creditsGenerated": 9543945.25
+    },
+    {
+      "transactionId": "TXN-2025-Q1-002", 
+      "fuelVolume": 1250000.0,
+      "fuelVolumeUnit": "gallons",
+      "volumeMJ": 173375000.0,
+      "pathwayId": "CA-RD-2025-AGR-001",
+      "pathwayCarbonIntensity": 22.14,
+      "ciDifference": 76.33,
+      "energyEconomyRatio": 1.0,
+      "creditsGenerated": 13237617.75
+    },
+    {
+      "transactionId": "TXN-2025-Q1-003",
+      "fuelVolume": 650000.0,
+      "fuelVolumeUnit": "gallons", 
+      "volumeMJ": 90155000.0,
+      "pathwayId": "CA-RD-2025-GRW-001",
+      "pathwayCarbonIntensity": 18.92,
+      "ciDifference": 79.55,
+      "energyEconomyRatio": 1.0,
+      "creditsGenerated": 7171332.25
+    },
+    {
+      "transactionId": "TXN-2025-Q1-004",
+      "fuelVolume": 425000.0,
+      "fuelVolumeUnit": "gallons",
+      "volumeMJ": 58947500.0,
+      "pathwayId": "CA-RD-2025-FHR-001", 
+      "pathwayCarbonIntensity": 21.67,
+      "ciDifference": 76.80,
+      "energyEconomyRatio": 1.0,
+      "creditsGenerated": 4527240.00
+    },
+    {
+      "transactionId": "TXN-2025-Q1-005",
+      "fuelVolume": 1100000.0,
+      "fuelVolumeUnit": "gallons",
+      "volumeMJ": 152570000.0,
+      "pathwayId": "CA-RD-2025-AGR-001",
+      "pathwayCarbonIntensity": 22.14,
+      "ciDifference": 76.33,
+      "energyEconomyRatio": 1.0,
+      "creditsGenerated": 11649103.10
+    },
+    {
+      "transactionId": "TXN-2025-Q1-006",
+      "fuelVolume": 775000.0,
+      "fuelVolumeUnit": "gallons",
+      "volumeMJ": 107492500.0,
+      "pathwayId": "CA-RD-2025-LMR-001",
+      "pathwayCarbonIntensity": 19.85,
+      "ciDifference": 78.62,
+      "energyEconomyRatio": 1.0,
+      "creditsGenerated": 8451238.75
+    }
+  ],
+  "quarterlyTotals": {
+    "totalTransactions": 6,
+    "totalFuelVolume": 5075000.0,
+    "totalFuelVolumeUnit": "gallons", 
+    "totalVolumeMJ": 703902500.0,
+    "totalCreditsGenerated": 54580477.10,
+    "totalDeficitsIncurred": 0.0,
+    "netPosition": 54580477.10,
+    "complianceStatus": "compliant",
+    "averageCarbonIntensity": 20.08,
+    "averageCIReduction": 78.39
+  },
+  "pathwaySummary": [
+    {
+      "pathwayId": "CA-RD-2025-LMR-001",
+      "feedstockType": "logging_and_mill_residue",
+      "transactionCount": 2,
+      "totalVolume": 1650000.0,
+      "creditsGenerated": 17995184.00
+    },
+    {
+      "pathwayId": "CA-RD-2025-AGR-001", 
+      "feedstockType": "agricultural_residue",
+      "transactionCount": 2,
+      "totalVolume": 2350000.0,
+      "creditsGenerated": 24886720.85
+    },
+    {
+      "pathwayId": "CA-RD-2025-GRW-001",
+      "feedstockType": "grass_residue_waste",
+      "transactionCount": 1,
+      "totalVolume": 650000.0,
+      "creditsGenerated": 7171332.25
+    },
+    {
+      "pathwayId": "CA-RD-2025-FHR-001",
+      "feedstockType": "forest_harvest_residue", 
+      "transactionCount": 1,
+      "totalVolume": 425000.0,
+      "creditsGenerated": 4527240.00
+    }
+  ],
+  "complianceMetrics": {
+    "creditValue": {
+      "estimatedValue": 109160954.20,
+      "valueUnit": "USD",
+      "creditPrice": 2.00,
+      "priceUnit": "USD_per_credit"
+    },
+    "environmentalImpact": {
+      "co2ReductionMT": 55249.19,
+      "co2ReductionUnit": "metric_tons",
+      "equivalentCarsRemoved": 12011
+    }
+  }
+}
