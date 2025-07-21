@@ -14,46 +14,22 @@ California's carbon reduction program for transportation fuels.
 - Complete LCFS entity framework
 
 **Documentation:**
-- [Implementation Guide](./lcfs/docs/lcfs_implementation_guide.md) - Developer quick-start
-- [Workflow Specification](./lcfs/docs/lcfs_workflow_specification.md) - Complete process
-- [Entity Mapping](./lcfs/docs/lcfs_entity_mapping.md) - Detailed data model
-- [Validation Checklist](./lcfs/docs/lcfs_validation_checklist.md) - Quality assurance
-
-### [RFS - Renewable Fuel Standard](./rfs/)
-US EPA biofuel program for renewable fuel identification and tracking.
-
-**Key Features:**
-- RIN (Renewable Identification Number) tracking
-- Quarterly and annual reporting to EPA
-- Feedstock qualification and pathway verification
-
-### [FSC - Forest Stewardship Council](./fsc/)
-International forest certification and chain of custody tracking.
-
-**Key Features:**
-- FSC-certified material tracking
-- Chain of custody documentation
-- Mixed percentage claims and verification
+- [Entity Specification](./lcfs/lcfs_entity_specification.md) - LCFS data model and entity definitions
+- [Pacific Renewable Fuels Example](./lcfs/pacific_renewable_fuels_example/) - Complete worked example
 
 ## Directory Structure
 
-Each program follows a consistent structure:
+The LCFS program follows this structure:
 
 ```
-program_name/
-├── README.md              # Program overview and quick start
-├── docs/                  # Detailed documentation
-│   ├── implementation_guide.md
-│   ├── workflow_specification.md
-│   ├── entity_mapping.md
-│   └── validation_checklist.md
-├── examples/              # Sample data and payloads
-│   ├── sample_transactions.json
-│   └── report_templates.json
-├── schemas/               # JSON schemas and validation rules
-│   └── program_extensions.json
-└── images/                # Diagrams and visualizations
-    └── workflow_diagrams.mermaid
+lcfs/
+├── README.md                           # Program overview and quick start
+├── lcfs_entity_specification.md        # LCFS data model and entity definitions
+└── pacific_renewable_fuels_example/    # Complete worked example
+    ├── README.md
+    ├── calculated_results.json
+    ├── organization.json
+    └── transactions_q1_2025.json
 ```
 
 ## Implementation Guidelines
@@ -100,7 +76,5 @@ When adding new programs:
 
 For program-specific questions:
 - **LCFS**: Contact CARB or approved LCFS verifiers
-- **RFS**: Contact EPA RFS program staff
-- **FSC**: Contact FSC International or local FSC offices
 
 For technical implementation questions, see the main BOOST documentation.
