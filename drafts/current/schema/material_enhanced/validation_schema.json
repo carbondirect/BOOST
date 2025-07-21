@@ -27,6 +27,46 @@
       },
       "standardMoistureContent": { "type": "string" },
       "energyContent": { "type": "string" },
+      "applicablePlantParts": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["trunk", "branches", "twigs", "bark", "heartwood", "sapwood", "leaves", "needles", "seeds", "nuts", "cones", "stalks", "straw", "husks", "hulls", "chaff", "stubble"]
+        },
+        "description": "Plant parts included in this material type"
+      },
+      "excludedPlantParts": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["trunk", "branches", "twigs", "bark", "heartwood", "sapwood", "leaves", "needles", "seeds", "nuts", "cones", "stalks", "straw", "husks", "hulls", "chaff", "stubble"]
+        },
+        "description": "Plant parts excluded from this material type"
+      },
+      "plantPartProcessingSpecs": {
+        "type": "object",
+        "patternProperties": {
+          "^(trunk|branches|twigs|bark|heartwood|sapwood|leaves|needles|seeds|nuts|cones|stalks|straw|husks|hulls|chaff|stubble)$": {
+            "type": "object",
+            "properties": {
+              "processingMethods": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["sawing", "chipping", "pelletizing", "veneer", "pulping", "mulching", "composting", "burning"]
+                }
+              },
+              "qualityGrades": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "moistureRange": { "type": "string" },
+              "energyContent": { "type": "string" }
+            }
+          }
+        },
+        "description": "Processing specifications by plant part"
+      },
       "lastUpdated": { "type": "string", "format": "date-time" }
     },
     "required": ["@context", "@type", "@id", "materialTypeId", "materialName", "materialCategory"]

@@ -92,6 +92,49 @@
         },
         "description": "List of defects or quality issues"
       },
+      "plantPartComposition": {
+        "type": "object",
+        "patternProperties": {
+          "^(trunk|branches|twigs|bark|heartwood|sapwood|leaves|needles|seeds|nuts|cones|stalks|straw|husks|hulls|chaff|stubble)$": {
+            "type": "object",
+            "properties": {
+              "volume": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Volume of this plant part in cubic meters"
+              },
+              "percentage": {
+                "type": "number", 
+                "minimum": 0,
+                "maximum": 100,
+                "description": "Percentage of this species component"
+              },
+              "qualityGrade": {
+                "type": "string",
+                "description": "Quality grade specific to this plant part"
+              },
+              "moistureContent": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "description": "Plant part specific moisture content"
+              }
+            },
+            "required": ["volume", "percentage"]
+          }
+        },
+        "description": "Plant part breakdown within this species component"
+      },
+      "primaryPlantPart": {
+        "type": "string",
+        "enum": ["trunk", "branches", "twigs", "bark", "heartwood", "sapwood", "leaves", "needles", "seeds", "nuts", "cones", "stalks", "straw", "husks", "hulls", "chaff", "stubble"],
+        "description": "Primary plant part represented by this species component"
+      },
+      "structuralClassification": {
+        "type": "string",
+        "enum": ["structural", "protective", "metabolic", "reproductive", "storage"],
+        "description": "Functional classification of the primary plant part"
+      },
       "lastUpdated": {
         "type": "string",
         "format": "date-time",

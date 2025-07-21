@@ -41,5 +41,39 @@
     "small_branch_knots",
     "minor_fiber_deviation"
   ],
+  "plantPartComposition": {
+    "trunk": {
+      "volume": 34.31,
+      "percentage": 75.0,
+      "qualityGrade": "Grade A Structural",
+      "moistureContent": 13.8
+    },
+    "heartwood": {
+      "volume": 22.88,
+      "percentage": 50.0,
+      "qualityGrade": "Premium Select",
+      "moistureContent": 12.5
+    },
+    "sapwood": {
+      "volume": 11.44,
+      "percentage": 25.0,
+      "qualityGrade": "Grade A Structural", 
+      "moistureContent": 15.2
+    },
+    "bark": {
+      "volume": 4.58,
+      "percentage": 10.0,
+      "qualityGrade": "Fuel Grade",
+      "moistureContent": 18.5
+    },
+    "branches": {
+      "volume": 6.86,
+      "percentage": 15.0,
+      "qualityGrade": "Chip Grade",
+      "moistureContent": 16.8
+    }
+  },
+  "primaryPlantPart": "trunk",
+  "structuralClassification": "structural",
   "lastUpdated": "2025-07-21T14:30:00Z"
 }

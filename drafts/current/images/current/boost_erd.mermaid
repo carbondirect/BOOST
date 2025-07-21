@@ -77,6 +77,9 @@ erDiagram
         string carbonStorageRate "Standard CO2 storage rate per m3"
         string density "Standard density values"
         string[] applicableProcessingTypes "Valid processing types"
+        string[] applicablePlantParts "Plant parts included in material type"
+        string[] excludedPlantParts "Plant parts excluded from material type"
+        object plantPartProcessingSpecs "Processing specifications by plant part"
     }
 
     %% Phase 1: Core Traceability Infrastructure
@@ -123,6 +126,9 @@ erDiagram
         string harvestingMethod "chainsaw, harvester, manual"
         datetime harvestTimestamp "When this species was harvested"
         string carbonStorage "CO2 data for this species component"
+        object plantPartComposition "Plant part breakdown within species"
+        string primaryPlantPart "Primary plant part for this component"
+        string structuralClassification "Functional plant part classification"
     }
 
     MaterialProcessing {
@@ -140,6 +146,10 @@ erDiagram
         decimal volumeLoss "Volume lost during processing"
         string qualityMetrics
         string equipmentUsed
+        object inputPlantParts "Plant parts in input TRU"
+        object outputPlantParts "Plant parts in output TRU"
+        object[] plantPartTransformations "Plant part transformations during processing"
+        object plantPartLosses "Volume losses by plant part"
     }
 
     MeasurementRecord {

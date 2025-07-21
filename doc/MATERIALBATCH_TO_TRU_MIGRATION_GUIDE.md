@@ -32,6 +32,7 @@ This guide describes the conceptual changes when migrating from the MaterialBatc
 
 #### New TRU Capabilities
 - **Multi-species support** - `isMultiSpecies`, `speciesComponents` array
+- **Plant part categorization** - Detailed plant part composition and transformation tracking
 - **Biometric identification** - `uniqueIdentifier` with biometric signatures
 - **Processing history** - Complete audit trail through MaterialProcessing entities
 - **Parent/child relationships** - Support for split/merge operations
@@ -50,8 +51,9 @@ This guide describes the conceptual changes when migrating from the MaterialBatc
 - **Organization** - Companies and institutions with geographic operational areas
 - **Operator** - Individual workers with certifications and equipment qualifications
 - **GeographicData** - Spatial data with GeoJSON compliance
-- **SpeciesComponent** - Individual species within multi-species TRUs
+- **SpeciesComponent** - Individual species within multi-species TRUs with plant part composition
 - **CertificationScheme** - Certification standard definitions and requirements
+- **Material (Enhanced)** - Material types with plant part specifications and processing methods
 
 ## Key Functional Changes
 
@@ -65,6 +67,7 @@ This guide describes the conceptual changes when migrating from the MaterialBatc
 - **Three critical tracking points** - Standardized measurement and verification locations
 - **Media-interruption-free** - Optical identification prevents traceability gaps
 - **Multi-species composition** - Species-level tracking within mixed material TRUs
+- **Plant part categorization** - Detailed tracking of plant components and transformations
 - **Geographic integration** - Spatial data throughout the supply chain
 
 ### Sustainability Claim Evolution
@@ -103,6 +106,7 @@ This guide describes the conceptual changes when migrating from the MaterialBatc
 
 ### Processing Operations
 - **Input/output TRU tracking** for every processing step
+- **Plant part transformations** tracking changes in plant components during processing
 - **Volume conservation** validation with reconciliation procedures
 - **Quality transformation** documentation through processing chain
 - **Split/merge operations** with proper TRU genealogy tracking
@@ -126,6 +130,7 @@ This guide describes the conceptual changes when migrating from the MaterialBatc
 - **Continuous identification** without physical attachment dependencies
 - **Complete audit trails** from standing tree to final product
 - **Multi-species visibility** within mixed material flows
+- **Plant part composition tracking** enabling circular economy and waste optimization
 
 ### Improved Data Quality
 - **Structured validation** with comprehensive business rules
@@ -141,4 +146,4 @@ This guide describes the conceptual changes when migrating from the MaterialBatc
 
 ## Conclusion
 
-The migration from MaterialBatch to TraceableUnit represents a fundamental evolution from batch-centric to individual entity-centric traceability. This transformation enables media-interruption-free tracking, species-specific sustainability claims, and comprehensive supply chain visibility while maintaining data integrity and supporting scalable operations.
+The migration from MaterialBatch to TraceableUnit represents a fundamental evolution from batch-centric to individual entity-centric traceability. This transformation enables media-interruption-free tracking, species-specific sustainability claims, comprehensive plant part categorization, and complete supply chain visibility while maintaining data integrity and supporting scalable operations.

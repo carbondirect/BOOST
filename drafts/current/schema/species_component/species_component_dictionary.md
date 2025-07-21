@@ -25,6 +25,9 @@ The `SpeciesComponent` entity enables detailed species-level tracking within mul
 | `ageYears`              | integer          | No       | Estimated age in years                                                   | `65`, `85`, `45`                          |
 | `moistureContent`       | number           | No       | Moisture content as percentage (0-100)                                   | `12.5`, `18.2`, `8.7`                     |
 | `defects`               | array<string>    | No       | List of defects or quality issues                                        | `["small_knots", "slight_bow"]`, `["bark_beetle_damage"]` |
+| `plantPartComposition`  | object           | No       | Plant part breakdown within this species component                       | `{"trunk": {"volume": 18.5, "percentage": 75}}` |
+| `primaryPlantPart`      | string           | No       | Primary plant part represented by this species component                 | `trunk`, `heartwood`, `bark`              |
+| `structuralClassification` | string        | No       | Functional classification of the primary plant part                      | `structural`, `protective`, `metabolic`   |
 | `@id`                   | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                       | `https://github.com/carbondirect/BOOST/schemas/species-component/SC-001` |
 | `lastUpdated`           | string (date-time)| No      | Timestamp of the most recent data update                                | `2025-07-21T15:45:00Z`                    |
 

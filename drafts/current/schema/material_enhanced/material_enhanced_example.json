@@ -36,5 +36,36 @@
   ],
   "standardMoistureContent": "8-19% (kiln dried to air dried)",
   "energyContent": "18.5 MJ/kg (dry basis)",
+  "applicablePlantParts": [
+    "trunk",
+    "heartwood", 
+    "sapwood"
+  ],
+  "excludedPlantParts": [
+    "bark",
+    "branches",
+    "needles",
+    "twigs"
+  ],
+  "plantPartProcessingSpecs": {
+    "trunk": {
+      "processingMethods": ["sawing", "veneer"],
+      "qualityGrades": ["Select Structural", "No. 1", "No. 2"],
+      "moistureRange": "8-19%",
+      "energyContent": "18.5 MJ/kg"
+    },
+    "heartwood": {
+      "processingMethods": ["sawing", "veneer"],
+      "qualityGrades": ["Select Structural", "Premium"],
+      "moistureRange": "8-12%",
+      "energyContent": "19.2 MJ/kg"
+    },
+    "sapwood": {
+      "processingMethods": ["sawing"],
+      "qualityGrades": ["No. 1", "No. 2", "Construction"],
+      "moistureRange": "12-19%",
+      "energyContent": "18.0 MJ/kg"
+    }
+  },
   "lastUpdated": "2025-07-21T16:30:00Z"
 }

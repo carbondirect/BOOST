@@ -2,6 +2,42 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.1.1] - 2025-07-21 - Drafts Folder Reorganization
+
+### Changed
+- **Drafts folder restructure** - Major reorganization for improved navigation and maintainability
+- **Active content separation** - Current working files moved to `drafts/current/` structure
+- **Legacy content archival** - Historical files organized in `drafts/archive/` with clear categorization
+- **Communications organization** - California agency materials grouped by agency type
+- **Examples reorganization** - Sample payloads restructured by transaction/validation type
+- **Images cleanup** - Current ERD files separated from historical versions
+- **Tools consolidation** - Development utilities moved from scripts/ to tools/ structure
+
+### Removed
+- **Temporary files cleanup** - Removed .~undo-tree~, #files#, and auto-generated LaTeX files
+- **Duplicate content** - Consolidated multiple ERD versions with clear current vs. archive separation
+
+### Updated  
+- **README.md paths** - Updated all file references to reflect new directory structure
+- **Documentation links** - Getting started guides now point to correct current/ locations
+
+## [2.1.0] - 2025-07-21 - Plant Part Categorization Integration
+
+### Added
+- **Plant part categorization system** - Comprehensive semantic categorization of plant components
+- **Material entity plant part specs** - applicablePlantParts, excludedPlantParts, plantPartProcessingSpecs
+- **SpeciesComponent plant tracking** - plantPartComposition with volume/percentage by plant part
+- **MaterialProcessing plant transformations** - inputPlantParts, outputPlantParts, plantPartTransformations
+- **Standardized plant part taxonomy** - 17 plant parts across woody, foliage, reproductive, agricultural categories
+- **Processing method compatibility** - Plant part-specific processing methods and quality grades
+- **Plant part transformation tracking** - Recovery rates, quality changes, and waste stream documentation
+
+### Enhanced
+- **Value chain optimization** - Route materials based on plant part composition for optimal processing
+- **Circular economy support** - Track byproduct utilization (bark→mulch, sawdust→pellets)
+- **Premium product tracking** - Heartwood vs sapwood quality differentiation
+- **Waste stream management** - Detailed tracking of plant part losses and disposal methods
+
 ## [2.0.0] - 2025-07-21 - Kaulen Framework Implementation
 
 ### Added

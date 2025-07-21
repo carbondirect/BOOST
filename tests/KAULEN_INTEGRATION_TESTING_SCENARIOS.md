@@ -11,8 +11,9 @@ This document defines comprehensive integration testing scenarios for the Kaulen
 - Operator (harvester, truck_driver, mill_operator)
 - TrackingPoint (harvest_site, skid_road, forest_road, mill_entrance)
 - GeographicData (harvest locations, transport routes, mill facilities)
-- Material (enhanced with processing specifications)
+- Material (enhanced with plant part specifications and processing methods)
 - CertificationScheme (FSC, SFI standards)
+- SpeciesComponent (with plant part composition tracking)
 
 ### Test Data Prerequisites
 - Established organizations with certifications
@@ -74,7 +75,25 @@ This document defines comprehensive integration testing scenarios for the Kaulen
      "processType": "felling",
      "inputVolume": 28.5,
      "outputVolume": 26.8,
-     "volumeLoss": 1.7
+     "volumeLoss": 1.7,
+     "plantPartTransformations": [
+       {
+         "inputPart": "trunk",
+         "outputPart": "trunk",
+         "transformationType": "form_change",
+         "inputVolume": 24.2,
+         "outputVolume": 22.8,
+         "recoveryRate": 94.2
+       },
+       {
+         "inputPart": "branches",
+         "outputPart": "chips",
+         "transformationType": "size_reduction",
+         "inputVolume": 2.8,
+         "outputVolume": 2.4,
+         "recoveryRate": 85.7
+       }
+     ]
    }
    ```
 
@@ -126,17 +145,30 @@ This document defines comprehensive integration testing scenarios for the Kaulen
        {
          "speciesId": "douglas_fir",
          "volume": 45.25,
-         "percentage": 53.4
+         "percentage": 53.4,
+         "plantPartComposition": {
+           "trunk": {"volume": 38.4, "percentage": 85.0},
+           "branches": {"volume": 4.5, "percentage": 10.0},
+           "bark": {"volume": 2.35, "percentage": 5.0}
+         }
        },
        {
          "speciesId": "ponderosa_pine", 
          "volume": 21.75,
-         "percentage": 25.7
+         "percentage": 25.7,
+         "plantPartComposition": {
+           "trunk": {"volume": 19.6, "percentage": 90.0},
+           "branches": {"volume": 2.15, "percentage": 10.0}
+         }
        },
        {
          "speciesId": "western_hemlock",
          "volume": 17.75,
-         "percentage": 20.9
+         "percentage": 20.9,
+         "plantPartComposition": {
+           "trunk": {"volume": 15.1, "percentage": 85.0},
+           "branches": {"volume": 2.65, "percentage": 15.0}
+         }
        }
      ]
    }
@@ -178,7 +210,25 @@ This document defines comprehensive integration testing scenarios for the Kaulen
      "outputTraceableUnitId": "TRU-SORTED-PILE-DF-042",
      "processType": "assortment",
      "inputComposition": "Mixed: DF 53.4%, PP 25.7%, WH 20.9%",
-     "outputComposition": "Douglas Fir: 100%"
+     "outputComposition": "Douglas Fir: 100%",
+     "plantPartTransformations": [
+       {
+         "inputPart": "trunk",
+         "outputPart": "trunk",
+         "transformationType": "separation",
+         "inputVolume": 73.1,
+         "outputVolume": 38.4,
+         "recoveryRate": 52.5
+       },
+       {
+         "inputPart": "bark",
+         "outputPart": "bark",
+         "transformationType": "separation", 
+         "inputVolume": 2.35,
+         "outputVolume": 2.35,
+         "recoveryRate": 100.0
+       }
+     ]
    }
    ```
 
@@ -196,9 +246,10 @@ This document defines comprehensive integration testing scenarios for the Kaulen
 
 **Expected Outcomes**:
 - Species composition tracking maintained through processing
+- Plant part composition preserved and transformed correctly
 - Claim percentages correctly inherited and calculated
 - Multi-species biometric patterns preserved
-- Volume conservation across species components
+- Volume conservation across species components and plant parts
 - Proper claim scope limitation by species
 
 ### Scenario 3: Media Break Prevention and Recovery
@@ -309,6 +360,8 @@ This document defines comprehensive integration testing scenarios for the Kaulen
 - ✅ All foreign key relationships valid
 - ✅ Volume conservation maintained through processing
 - ✅ Species composition accuracy preserved
+- ✅ Plant part composition tracking maintained
+- ✅ Plant part transformation accuracy verified
 - ✅ Timestamp chronological consistency
 - ✅ Geographic location continuity
 
@@ -336,11 +389,12 @@ This document defines comprehensive integration testing scenarios for the Kaulen
 ## Automated Testing Implementation
 
 ### Test Data Generation
-- Realistic TRU creation scenarios
+- Realistic TRU creation scenarios with plant part specifications
 - Multi-organization test environments
 - Geographic boundary test cases
-- Processing operation sequences
+- Processing operation sequences with plant part transformations
 - Claim and certification combinations
+- Plant part composition and transformation scenarios
 
 ### Validation Scripts
 - Entity relationship verification

@@ -20,6 +20,9 @@ The enhanced `Material` entity serves as a reference table for material types wi
 | `typicalSpecies`            | array<string>    | No       | Species typically included in this material type                          | `["douglas_fir", "ponderosa_pine"]`       |
 | `standardMoistureContent`   | string           | No       | Standard moisture content ranges                                          | `8-12%`, `15-20%`                        |
 | `energyContent`             | string           | No       | Energy content specifications for biomass applications                    | `18.5 MJ/kg`, `16.2-19.8 MJ/kg`          |
+| `applicablePlantParts`      | array<string>    | No       | Plant parts included in this material type                                | `["trunk", "heartwood", "sapwood"]`      |
+| `excludedPlantParts`        | array<string>    | No       | Plant parts excluded from this material type                              | `["bark", "branches", "needles"]`        |
+| `plantPartProcessingSpecs`  | object           | No       | Processing specifications by plant part                                   | `{"trunk": {"processingMethods": ["sawing"]}}`|
 | `@id`                       | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                        | `https://github.com/carbondirect/BOOST/schemas/material-enhanced/MAT-TYPE-001` |
 | `lastUpdated`               | string (date-time)| No      | Timestamp of the most recent data update                                 | `2025-07-21T15:45:00Z`                    |
 
@@ -45,6 +48,33 @@ The enhanced `Material` entity serves as a reference table for material types wi
    - Variable composition by harvest location
    - Averaged characteristics across species
    - Common processing: chipping, pelletizing
+
+### Plant Part Categories
+
+#### **Woody Components**
+- **trunk** - Main structural wood, highest value for lumber
+- **heartwood** - Inner non-living wood, premium lumber applications
+- **sapwood** - Outer living wood, structural lumber with treatment
+- **branches** - Secondary woody growth, suitable for chips and fuel
+- **twigs** - Small terminal branches, primarily fuel applications
+- **bark** - Outer protective layer, mulch and fuel applications
+
+#### **Foliage Components**  
+- **leaves** - Deciduous photosynthetic organs, composting applications
+- **needles** - Coniferous leaves, mulch and soil amendment
+
+#### **Reproductive Components**
+- **seeds** - Propagation material, food and oil applications
+- **nuts** - Hard-shelled seeds, food and specialty products
+- **cones** - Coniferous reproductive structures, decorative and fuel
+
+#### **Agricultural Components**
+- **stalks** - Main stems of crops, biomass and building materials
+- **straw** - Dried stalks after harvest, animal bedding and fuel
+- **husks** - Outer seed coverings, fuel and industrial applications
+- **hulls** - Hard outer shells, fuel and abrasive applications
+- **chaff** - Seed casings, animal feed and fuel
+- **stubble** - Remaining stalks, soil amendment and fuel
 
 ### Key Features
 
