@@ -28,7 +28,7 @@
     "id": "@id"
   },
   "@type": "TransactionBatch",
-  "@id": "https://github.com/carbondirect/BOOST/schemas/transaction-batch-enhanced/TXB-KLA-042-001",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/transaction-batch/TXB-KLA-042-001",
   "transactionBatchId": "TXB-KLA-042-001",
   "transactionId": "TXN-PACIFIC-KLAMATH-2025-042",
   "productionBatchId": "PROD-BATCH-KLA-2025-Q3-015",

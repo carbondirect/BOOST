@@ -1,7 +1,7 @@
 {
   "schema": {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://github.com/carbondirect/BOOST/schemas/transaction-enhanced",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/transaction",
     "type": "object",
     "properties": {
       "@context": { "type": "object" },

@@ -1,7 +1,7 @@
 {
   "schema": {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://github.com/carbondirect/BOOST/schemas/claim-enhanced",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/claim",
     "type": "object",
     "properties": {
       "@context": { "type": "object" },

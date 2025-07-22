@@ -16,7 +16,7 @@
     "id": "@id"
   },
   "@type": "Material",
-  "@id": "https://github.com/carbondirect/BOOST/schemas/material-enhanced/MAT-TYPE-DOUGLAS-FIR-SAWTIMBER",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/material/MAT-TYPE-DOUGLAS-FIR-SAWTIMBER",
   "materialTypeId": "MAT-TYPE-DOUGLAS-FIR-SAWTIMBER",
   "materialName": "Douglas Fir Sawtimber",
   "materialCategory": "softwood",

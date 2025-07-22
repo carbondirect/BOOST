@@ -21,7 +21,7 @@
     "id": "@id"
   },
   "@type": "Transaction",
-  "@id": "https://github.com/carbondirect/BOOST/schemas/transaction-enhanced/TXN-PACIFIC-KLAMATH-2025-042",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/transaction/TXN-PACIFIC-KLAMATH-2025-042",
   "transactionId": "TXN-PACIFIC-KLAMATH-2025-042",
   "supplyingOrganizationId": "ORG-KLAMATH-HARVEST-OPERATIONS-001",
   "customerOrganizationId": "ORG-PACIFIC-FOREST-PRODUCTS-001",

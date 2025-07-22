@@ -19,7 +19,7 @@
     "id": "@id"
   },
   "@type": "Claim",
-  "@id": "https://github.com/carbondirect/BOOST/schemas/claim-enhanced/CLAIM-FSC-MIX-KLA-042-001",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/claim/CLAIM-FSC-MIX-KLA-042-001",
   "claimId": "CLAIM-FSC-MIX-KLA-042-001",
   "traceableUnitId": "TRU-PILE-CA-Klamath-042",
   "claimType": "FSC Mix",

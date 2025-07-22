@@ -1,9 +1,9 @@
 # Data Dictionary
 
-## Claim (Enhanced)
+## Claim
 
 ### Overview
-The enhanced `Claim` entity enables species-specific sustainability claims with TRU references and inheritance tracking for comprehensive certification chain-of-custody in the Kaulen framework. This entity supports multiple certification schemes and enables granular tracking of sustainability claims through the processing chain, including parent-child TRU inheritance.
+The `Claim` entity enables species-specific sustainability claims with TRU references and inheritance tracking for comprehensive certification chain-of-custody in the Kaulen framework. This entity supports multiple certification schemes and enables granular tracking of sustainability claims through the processing chain, including parent-child TRU inheritance.
 
 ### Fields
 
@@ -23,7 +23,7 @@ The enhanced `Claim` entity enables species-specific sustainability claims with 
 | `evidenceDocumentId`    | string (FK)      | No       | Foreign key to supporting evidence document                               | `DOC-CERT-FSC-001`, `DOC-AUDIT-RPT-042`  |
 | `claimExpiry`           | string (date-time)| No      | When the claim expires                                                   | `2026-07-15T23:59:59Z`                   |
 | `inheritedFromTRU`      | array<string>    | No       | TRU IDs from which this claim was inherited                              | `["TRU-PARENT-001", "TRU-PARENT-002"]`   |
-| `@id`                   | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                        | `https://github.com/carbondirect/BOOST/schemas/claim-enhanced/CLAIM-001` |
+| `@id`                   | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                        | `https://github.com/carbondirect/BOOST/schemas/claim/CLAIM-001` |
 | `lastUpdated`           | string (date-time)| No      | Timestamp of the most recent data update                                 | `2025-07-21T15:45:00Z`                    |
 
 ### Claim Types

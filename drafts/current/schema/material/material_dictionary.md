@@ -1,9 +1,9 @@
 # Data Dictionary
 
-## Material (Enhanced)
+## Material
 
 ### Overview
-The enhanced `Material` entity serves as a reference table for material types with geographic data references and processing specifications to support species-specific sustainability claims in the Kaulen framework. This entity has been refactored from a traceable entity to a reference table, with TraceableUnit now serving as the primary traceable entity for individual wood pieces.
+The `Material` entity serves as a reference table for material types with geographic data references and processing specifications to support species-specific sustainability claims in the Kaulen framework. This entity has been refactored from a traceable entity to a reference table, with TraceableUnit now serving as the primary traceable entity for individual wood pieces.
 
 ### Fields
 
@@ -23,7 +23,7 @@ The enhanced `Material` entity serves as a reference table for material types wi
 | `applicablePlantParts`      | array<string>    | No       | Plant parts included in this material type                                | `["trunk", "heartwood", "sapwood"]`      |
 | `excludedPlantParts`        | array<string>    | No       | Plant parts excluded from this material type                              | `["bark", "branches", "needles"]`        |
 | `plantPartProcessingSpecs`  | object           | No       | Processing specifications by plant part                                   | `{"trunk": {"processingMethods": ["sawing"]}}`|
-| `@id`                       | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                        | `https://github.com/carbondirect/BOOST/schemas/material-enhanced/MAT-TYPE-001` |
+| `@id`                       | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                        | `https://github.com/carbondirect/BOOST/schemas/material/MAT-TYPE-001` |
 | `lastUpdated`               | string (date-time)| No      | Timestamp of the most recent data update                                 | `2025-07-21T15:45:00Z`                    |
 
 ### Material Categories
