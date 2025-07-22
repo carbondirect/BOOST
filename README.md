@@ -91,7 +91,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
   - `archive/`: Historical content preserved for reference
   - `tools/`: Development utilities for schema generation and validation
 - `proposals/`: Early-stage ideas and design sketches
-- `meetings/`: Agendas, minutes, and templates  
+- `meetings/`: Agendas, minutes, and templates
 - `use-cases/`: User scenarios guiding spec design
 - `presentations/`: Slides and visual materials
 - `tests/`: Integration testing scenarios for Kaulen Framework validation

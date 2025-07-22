@@ -1,0 +1,186 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/transaction-batch-enhanced",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["TransactionBatch"] },
+      "@id": { "type": "string", "format": "uri" },
+      "transactionBatchId": {
+        "type": "string",
+        "description": "Unique identifier for the physical material batch"
+      },
+      "transactionId": {
+        "type": "string",
+        "description": "Foreign key to parent business transaction"
+      },
+      "productionBatchId": {
+        "type": ["string", "null"],
+        "description": "Foreign key to source production batch"
+      },
+      "quantity": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Physical quantity of material in this batch"
+      },
+      "quantityUnit": {
+        "type": "string",
+        "enum": ["cubic_meters", "metric_tons", "board_feet", "cord", "stere", "green_tons", "dry_tons"],
+        "description": "Unit of measurement for quantity"
+      },
+      "traceableUnitIds": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 1,
+        "description": "Array of TRU IDs included in this batch"
+      },
+      "claimId": {
+        "type": ["string", "null"],
+        "description": "Foreign key to primary sustainability claim"
+      },
+      "additionalClaimIds": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Array of secondary claim IDs"
+      },
+      "speciesComposition": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "species": { "type": "string" },
+            "percentage": { "type": "number", "minimum": 0, "maximum": 100 },
+            "volume": { "type": "number", "minimum": 0 }
+          },
+          "required": ["species", "percentage"]
+        },
+        "description": "Species breakdown with percentages"
+      },
+      "qualityGrade": {
+        "type": "string",
+        "enum": ["Grade_A", "Grade_B", "Grade_C", "Structural", "Fuel", "Pulpwood", "Sawlog", "Veneer", "Mixed"],
+        "description": "Overall quality grade for the batch"
+      },
+      "processingHistoryIds": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Array of processing history record IDs"
+      },
+      "reconciliationStatus": {
+        "type": "string",
+        "enum": ["pending", "in_progress", "resolved", "disputed", "escalated"],
+        "description": "Status of volume/quality reconciliation"
+      },
+      "trackingHistory": {
+        "type": "string",
+        "description": "Complete location trail summary"
+      },
+      "measurementRecordIds": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Array of measurement record IDs"
+      },
+      "mediaBreakDetected": {
+        "type": "boolean",
+        "description": "Flag indicating if traceability continuity was broken"
+      },
+      "batchStatus": {
+        "type": "string",
+        "enum": ["prepared", "in_transit", "delivered", "accepted", "rejected", "partially_delivered"],
+        "description": "Current status of the physical batch"
+      },
+      "batchCreatedDate": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When the batch was prepared/created"
+      },
+      "deliveryDate": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "Actual delivery timestamp"
+      },
+      "deliveryGeographicDataId": {
+        "type": ["string", "null"],
+        "description": "Foreign key to delivery location"
+      },
+      "qualityMetrics": {
+        "type": "object",
+        "properties": {
+          "moistureContent": { "type": "number", "minimum": 0, "maximum": 100 },
+          "density": { "type": "number", "minimum": 0 },
+          "defectRate": { "type": "number", "minimum": 0, "maximum": 100 },
+          "contaminationLevel": { 
+            "type": "string", 
+            "enum": ["none", "minimal", "moderate", "significant", "unacceptable"]
+          },
+          "gradingMethod": { 
+            "type": "string",
+            "enum": ["visual", "mechanical", "optical", "combination"]
+          },
+          "qualityAssessmentDate": { "type": "string", "format": "date-time" },
+          "assessorId": { "type": "string" }
+        },
+        "description": "Detailed quality assessment metrics"
+      },
+      "plantPartComposition": {
+        "type": "object",
+        "patternProperties": {
+          "^(trunk|branches|twigs|bark|heartwood|sapwood|leaves|needles|seeds|nuts|cones|stalks|straw|husks|hulls|chaff|stubble)$": {
+            "type": "object",
+            "properties": {
+              "volume": { "type": "number", "minimum": 0 },
+              "percentage": { "type": "number", "minimum": 0, "maximum": 100 }
+            },
+            "required": ["volume", "percentage"]
+          }
+        },
+        "description": "Plant part composition breakdown"
+      },
+      "transportationData": {
+        "type": "object",
+        "properties": {
+          "carrierOrganizationId": { "type": "string" },
+          "transportMethod": { 
+            "type": "string",
+            "enum": ["truck", "rail", "ship", "barge", "conveyor", "pipeline"]
+          },
+          "vehicleId": { "type": "string" },
+          "driverOperatorId": { "type": "string" },
+          "pickupDate": { "type": "string", "format": "date-time" },
+          "estimatedArrival": { "type": "string", "format": "date-time" },
+          "routeOptimization": { 
+            "type": "string",
+            "enum": ["shortest_distance", "fastest_time", "fuel_efficient", "regulatory_compliant"]
+          }
+        },
+        "description": "Transportation and logistics information"
+      },
+      "certificationValidation": {
+        "type": "object",
+        "properties": {
+          "certificateIds": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "validationRequired": { "type": "boolean" },
+          "validationCompleted": { "type": "boolean" },
+          "validationDate": { "type": "string", "format": "date-time" },
+          "validatorId": { "type": "string" },
+          "validationNotes": { "type": "string" }
+        },
+        "description": "Certification and compliance validation data"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of last modification"
+      }
+    },
+    "required": [
+      "@context", "@type", "@id", "transactionBatchId", 
+      "transactionId", "quantity", "quantityUnit", 
+      "traceableUnitIds", "batchStatus"
+    ]
+  }
+}

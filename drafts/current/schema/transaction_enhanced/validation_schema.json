@@ -1,0 +1,120 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/transaction-enhanced",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["Transaction"] },
+      "@id": { "type": "string", "format": "uri" },
+      "transactionId": {
+        "type": "string",
+        "description": "Unique identifier for the business transaction"
+      },
+      "supplyingOrganizationId": {
+        "type": "string",
+        "description": "Foreign key to selling organization"
+      },
+      "customerOrganizationId": {
+        "type": "string", 
+        "description": "Foreign key to buying organization"
+      },
+      "transactionDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date of business agreement"
+      },
+      "salesDocumentId": {
+        "type": "string",
+        "description": "Foreign key to sales/delivery documentation"
+      },
+      "contractValue": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Total monetary value of the transaction"
+      },
+      "contractCurrency": {
+        "type": "string",
+        "enum": ["USD", "EUR", "GBP", "CAD", "JPY", "AUD", "CHF", "SEK", "NOK"],
+        "description": "Currency code for contract value"
+      },
+      "contractTerms": {
+        "type": "string",
+        "enum": ["FOB", "CIF", "DDP", "EXW", "FCA", "CPT", "DAP", "FAS"],
+        "description": "Incoterms delivery conditions"
+      },
+      "paymentTerms": {
+        "type": "string",
+        "description": "Payment conditions and timeline"
+      },
+      "transactionStatus": {
+        "type": "string",
+        "enum": ["pending", "confirmed", "delivered", "completed", "cancelled", "disputed"],
+        "description": "Current status of business transaction"
+      },
+      "transactionGeographicDataId": {
+        "type": "string",
+        "description": "Foreign key to primary transaction location"
+      },
+      "brokerOrganizationId": {
+        "type": ["string", "null"],
+        "description": "Foreign key to intermediary broker organization"
+      },
+      "contractSignedDate": {
+        "type": ["string", "null"],
+        "format": "date",
+        "description": "Date when contract was executed"
+      },
+      "expectedDeliveryDate": {
+        "type": ["string", "null"],
+        "format": "date", 
+        "description": "Expected completion/delivery date"
+      },
+      "complianceRequirements": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["FSC_Chain_of_Custody", "SBP_DTS_Registration", "PEFC_Certification", "RSB_Compliance", "LCFS_Reporting", "RFS_Reporting", "EU_RED_Compliance"]
+        },
+        "description": "Regulatory compliance requirements for transaction"
+      },
+      "financialTerms": {
+        "type": "object",
+        "properties": {
+          "downPaymentAmount": { "type": "number", "minimum": 0 },
+          "downPaymentPercentage": { "type": "number", "minimum": 0, "maximum": 100 },
+          "retentionAmount": { "type": "number", "minimum": 0 },
+          "lateFeePercentage": { "type": "number", "minimum": 0 },
+          "discountTerms": { "type": "string" },
+          "creditLimit": { "type": "number", "minimum": 0 },
+          "collateralRequired": { "type": "boolean" }
+        },
+        "description": "Detailed financial terms and conditions"
+      },
+      "riskManagement": {
+        "type": "object",
+        "properties": {
+          "forceMarjeureClause": { "type": "boolean" },
+          "qualityGuarantees": { "type": "array", "items": { "type": "string" } },
+          "deliveryPenalties": { "type": "string" },
+          "insuranceRequirements": { "type": "string" },
+          "disputeResolutionMethod": { 
+            "type": "string",
+            "enum": ["arbitration", "mediation", "litigation", "negotiation"]
+          }
+        },
+        "description": "Risk management and mitigation terms"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of last modification"
+      }
+    },
+    "required": [
+      "@context", "@type", "@id", "transactionId", 
+      "supplyingOrganizationId", "customerOrganizationId", 
+      "transactionDate", "contractValue", "contractCurrency", "transactionStatus"
+    ]
+  }
+}

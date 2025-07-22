@@ -1,0 +1,65 @@
+{
+  "@context": {
+    "Transaction": "https://github.com/carbondirect/BOOST/schemas#Transaction",
+    "transactionId": "https://github.com/carbondirect/BOOST/schemas#transactionId",
+    "supplyingOrganizationId": "https://github.com/carbondirect/BOOST/schemas#supplyingOrganizationId",
+    "customerOrganizationId": "https://github.com/carbondirect/BOOST/schemas#customerOrganizationId",
+    "transactionDate": "https://github.com/carbondirect/BOOST/schemas#transactionDate",
+    "salesDocumentId": "https://github.com/carbondirect/BOOST/schemas#salesDocumentId",
+    "contractValue": "https://github.com/carbondirect/BOOST/schemas#contractValue",
+    "contractCurrency": "https://github.com/carbondirect/BOOST/schemas#contractCurrency",
+    "contractTerms": "https://github.com/carbondirect/BOOST/schemas#contractTerms",
+    "paymentTerms": "https://github.com/carbondirect/BOOST/schemas#paymentTerms",
+    "transactionStatus": "https://github.com/carbondirect/BOOST/schemas#transactionStatus",
+    "transactionGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#transactionGeographicDataId",
+    "contractSignedDate": "https://github.com/carbondirect/BOOST/schemas#contractSignedDate",
+    "expectedDeliveryDate": "https://github.com/carbondirect/BOOST/schemas#expectedDeliveryDate",
+    "complianceRequirements": "https://github.com/carbondirect/BOOST/schemas#complianceRequirements",
+    "financialTerms": "https://github.com/carbondirect/BOOST/schemas#financialTerms",
+    "riskManagement": "https://github.com/carbondirect/BOOST/schemas#riskManagement",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "Transaction",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/transaction-enhanced/TXN-PACIFIC-KLAMATH-2025-042",
+  "transactionId": "TXN-PACIFIC-KLAMATH-2025-042",
+  "supplyingOrganizationId": "ORG-KLAMATH-HARVEST-OPERATIONS-001",
+  "customerOrganizationId": "ORG-PACIFIC-FOREST-PRODUCTS-001",
+  "transactionDate": "2025-07-15",
+  "salesDocumentId": "SALES-DOC-KLA-2025-0715-042",
+  "contractValue": 125000.00,
+  "contractCurrency": "USD",
+  "contractTerms": "FOB",
+  "paymentTerms": "Net 30 days from delivery acceptance",
+  "transactionStatus": "confirmed",
+  "transactionGeographicDataId": "GEO-KLAMATH-HARVEST-REGION-001",
+  "brokerOrganizationId": null,
+  "contractSignedDate": "2025-07-12",
+  "expectedDeliveryDate": "2025-07-22",
+  "complianceRequirements": [
+    "FSC_Chain_of_Custody",
+    "SBP_DTS_Registration",
+    "LCFS_Reporting"
+  ],
+  "financialTerms": {
+    "downPaymentAmount": 0,
+    "downPaymentPercentage": 0,
+    "retentionAmount": 2500.00,
+    "lateFeePercentage": 1.5,
+    "discountTerms": "2% discount for payment within 10 days",
+    "creditLimit": 150000.00,
+    "collateralRequired": false
+  },
+  "riskManagement": {
+    "forceMarjeureClause": true,
+    "qualityGuarantees": [
+      "Grade A sawlog minimum 70% of delivered volume",
+      "Moisture content below 20%",
+      "No contamination from foreign materials"
+    ],
+    "deliveryPenalties": "$500 per day for deliveries more than 5 days late",
+    "insuranceRequirements": "Carrier liability insurance minimum $1M",
+    "disputeResolutionMethod": "arbitration"
+  },
+  "lastUpdated": "2025-07-21T16:45:00Z"
+}
