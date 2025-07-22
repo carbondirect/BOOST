@@ -3,7 +3,7 @@ erDiagram
     %% Enhanced model with media-interruption-free traceability and TRU support
     %% Implements Phases 1-3 from BOOST Data Standard Enhancement Plan
     
-    %% Core Organizations and Certification (Enhanced Phase 2)
+    %% Core Organizations and Certification
     Organization {
         string organizationId PK
         string name
@@ -51,7 +51,7 @@ erDiagram
         string cbId FK
         string organizationId FK
         string certificationSchemeId FK
-        string certificateGeographicDataId FK "Geographic scope of certificate (Phase 2)"
+        string certificateGeographicDataId FK "Geographic scope of certificate"
         datetime lastUpdated
     }
     
@@ -88,6 +88,9 @@ erDiagram
         string unitType "individual_log, pile, volume_aggregation, processed_batch"
         string uniqueIdentifier "biometric_signature, RFID_tag, QR_code"
         decimal totalVolumeM3 "Total volume of the traceable unit"
+        decimal currentMoistureContent "Current moisture content percentage"
+        datetime moistureContentTimestamp "When moisture content was last measured"
+        string moistureContentSource "measurement, calculation, estimate"
         string currentGeographicDataId FK "Current location of TRU"
         string harvestGeographicDataId FK "Harvest location of TRU"
         datetime createdTimestamp
@@ -98,12 +101,12 @@ erDiagram
         string qualityGrade "A, B, C, structural, fuel"
         boolean isMultiSpecies "True if contains multiple species"
         string[] attachedInformation "All data linked to this TRU"
-        string[] processingHistory "Complete processing chain (Phase 2)"
-        string parentTraceableUnitId FK "For split/merge operations (Phase 2)"
-        string[] childTraceableUnitIds "For split/merge operations (Phase 2)"
-        string currentStatus "active, processed, delivered, consumed (Phase 2)"
-        string sustainabilityCertification "FSC, PEFC, etc. claims (Phase 2)"
-        string[] mediaBreakFlags "Points where data continuity was lost (Phase 2)"
+        string[] processingHistory "Complete processing chain"
+        string parentTraceableUnitId FK "For split/merge operations"
+        string[] childTraceableUnitIds "For split/merge operations"
+        string currentStatus "active, processed, delivered, consumed"
+        string sustainabilityCertification "FSC, PEFC, etc. claims"
+        string[] mediaBreakFlags "Points where data continuity was lost"
     }
 
     TrackingPoint {
@@ -158,6 +161,9 @@ erDiagram
         decimal measuredVolume
         decimal measuredLength
         decimal measuredDiameter
+        decimal moistureContent "Moisture content percentage (0-100)"
+        string moistureMeasurementMethod "oven_dry, electrical_resistance, microwave, near_infrared"
+        string moistureEquipmentUsed "Moisture meter model/type used"
         string measurementMethod "harvester, mill, manual, optical"
         string measurementGeographicDataId FK "Location where measurement taken"
         datetime measurementTimestamp
@@ -193,6 +199,35 @@ erDiagram
         string[] verificationMethods "GPS, RFID, visual_confirmation, biometric_scan"
     }
 
+    ProcessingHistory {
+        string processingHistoryId PK
+        string traceableUnitId FK "TRU this history belongs to"
+        string materialProcessingId FK "Processing operation reference"
+        datetime timestamp "When this processing step occurred"
+        integer processSequenceNumber "Sequential order for this TRU"
+        string processingEventType "transformation, split, merge, quality_change, loading, drying"
+        string[] inputTRUIds "Input TRU IDs (multiple for merge)"
+        string[] outputTRUIds "Output TRU IDs (multiple for split)"
+        string processingDuration "ISO 8601 duration format"
+        string qualityChangeDescription "Description of quality changes"
+        decimal inputMoistureContent "Input moisture content percentage"
+        decimal outputMoistureContent "Output moisture content percentage"
+        decimal moistureChangeRatio "Output/input moisture ratio"
+        string moistureChangeReason "drying, wetting, natural_loss, processing"
+        string operatorId FK "Operator who performed processing"
+        string equipmentUsed "Equipment used for processing"
+        decimal volumeChangeRatio "Output/input volume ratio"
+        string speciesCompositionChange "unchanged, separated, mixed, filtered"
+        string plantPartTransformation "Summary of plant part changes"
+        boolean isCurrentProcessingState "True if current state"
+        string processingGeographicDataId FK "Processing location"
+        string previousProcessingHistoryId FK "Previous processing step"
+        string[] nextProcessingHistoryIds "Next processing steps"
+        object volumeConservationData "Volume conservation validation"
+        object mediaBreakData "Media break detection and recovery"
+        object claimInheritanceData "Sustainability claim inheritance"
+    }
+
     DataReconciliation {
         string reconciliationId PK
         string traceableUnitId FK "TRU being reconciled"
@@ -222,44 +257,60 @@ erDiagram
         string certificateCode
         string claim
         string supplierType
-        string supplierGeographicDataId FK "Geographic location of supplier (Phase 2)"
+        string supplierGeographicDataId FK "Geographic location of supplier"
     }
     
     Customer {
         string customerId PK
         string customerName
         string address
-        string customerGeographicDataId FK "Geographic location of customer (Phase 2)"
+        string customerGeographicDataId FK "Geographic location of customer"
     }
     
-    %% Transaction Management (Enhanced Phase 2)
+    %% Transaction Management (Separated Business/Physical Model)
     Transaction {
-        string transactionId PK
-        string supplyingOrganizationId FK
-        string customerOrganizationId FK
-        date transactionDate
-        string salesDocumentId FK
-        string[] traceableUnitIds "TRUs included in this transaction (Phase 2)"
-        string reconciliationStatus "pending, resolved, disputed (Phase 2)"
-        datetime[] manipulationTimestamps "Time-stamping array (Phase 2)"
-        string[] trackingPoints "Location trail references (Phase 2)"
-        boolean[] mediaBreaksDetected "Continuity flags (Phase 2)"
-        string[] speciesCompositionAtTransaction "Species breakdown (Phase 2)"
-        string transactionGeographicDataId FK "Geographic location (Phase 2)"
+        string transactionId PK "Business transaction identifier"
+        string supplyingOrganizationId FK "Seller organization"
+        string customerOrganizationId FK "Buyer organization"
+        date transactionDate "Date of business agreement"
+        string salesDocumentId FK "Legal sales documentation"
+        decimal contractValue "Total transaction value"
+        string contractCurrency "Currency of transaction"
+        string contractTerms "FOB, CIF, delivery terms"
+        string paymentTerms "Net 30, cash on delivery"
+        string transactionStatus "pending, confirmed, delivered, completed, cancelled"
+        string transactionGeographicDataId FK "Primary transaction location"
+        string brokerOrganizationId FK "Intermediary broker (optional)"
+        date contractSignedDate "When contract was executed"
+        date expectedDeliveryDate "Expected completion date"
+        string[] complianceRequirements "Regulatory compliance needed"
+        object financialTerms "Detailed financial terms and conditions"
+        datetime lastUpdated "Last modification timestamp"
     }
     
     TransactionBatch {
-        string transactionBatchId PK
-        string transactionId FK
-        string productionBatchId FK
-        decimal quantity
-        string claimId FK
-        string[] traceableUnitIds "TRUs included in this batch (Phase 2)"
-        string trackingHistory "Complete location trail summary (Phase 2)"
-        string locationTrail "GPS breadcrumbs and movement history (Phase 2)"
-        string[] processingSteps "Transformation record references (Phase 2)"
-        string measurementRecords "Volume/quality data references (Phase 2)"
-        string[] speciesComposition "Species breakdown for this batch (Phase 2)"
+        string transactionBatchId PK "Physical batch identifier"
+        string transactionId FK "Parent business transaction"
+        string productionBatchId FK "Source production batch"
+        decimal quantity "Physical quantity of material"
+        string quantityUnit "cubic_meters, metric_tons, board_feet"
+        string[] traceableUnitIds "TRUs included in this batch"
+        string claimId FK "Primary sustainability claim"
+        string[] additionalClaimIds "Secondary claims"
+        string[] speciesComposition "Species breakdown with percentages"
+        string qualityGrade "A, B, C, structural, fuel"
+        string[] processingHistoryIds "Complete processing chain references"
+        string reconciliationStatus "pending, resolved, disputed"
+        string trackingHistory "Complete location trail summary"
+        string[] measurementRecordIds "Volume/quality measurements"
+        boolean mediaBreakDetected "Traceability continuity flag"
+        string batchStatus "prepared, in_transit, delivered, accepted"
+        datetime batchCreatedDate "When batch was prepared"
+        datetime deliveryDate "Actual delivery date"
+        string deliveryGeographicDataId FK "Delivery location"
+        object qualityMetrics "Detailed quality assessments"
+        object plantPartComposition "Plant part breakdown if applicable"
+        datetime lastUpdated "Last modification timestamp"
     }
     
     %% Enhanced for TRU-Centric Sustainability Tracking (Phase 1)
@@ -325,12 +376,19 @@ erDiagram
         string energyCarbonDataId PK
         string dataType "moisture, transport, fuel consumption"
         decimal value
-        string unit
-        string source
-        string measurementMethod
+        string unit "percentage, kg_CO2e, liters, MJ"
+        string source "field_measurement, laboratory_analysis, default_values, calculated"
+        string measurementMethod "oven_dry, electrical_resistance, microwave, near_infrared, gravimetric"
+        string traceableUnitId FK "TRU this data applies to"
+        string measurementRecordId FK "Related measurement record"
+        datetime measurementTimestamp "When measurement was taken"
+        string measurementGeographicDataId FK "Location of measurement"
+        decimal temperatureConditions "Temperature during measurement (Celsius)"
+        decimal humidityConditions "Relative humidity during measurement (%)"
+        string qualityAssurance "QA/QC procedures followed"
     }
     
-    %% Essential Reporting and Compliance (Enhanced Phase 2)
+    %% Essential Reporting and Compliance
     SupplyBaseReport {
         string sbrId PK
         string organizationId FK
@@ -339,7 +397,7 @@ erDiagram
         string sourcingPractices
         string sustainabilityMeasures
         string publicationUrl
-        string reportGeographicDataId FK "Geographic coverage of report (Phase 2)"
+        string reportGeographicDataId FK "Geographic coverage of report"
     }
     
     %% Verification and Compliance
@@ -351,7 +409,7 @@ erDiagram
         string transactionBatchId FK
     }
     
-    %% Audit and Compliance (Enhanced Phase 2)
+    %% Audit and Compliance
     Audit {
         string auditId PK
         string auditType "Initial, Surveillance, Transfer"
@@ -360,10 +418,10 @@ erDiagram
         string cbId FK
         string findings
         string reportUrl
-        string auditGeographicDataId FK "Geographic location of audit (Phase 2)"
+        string auditGeographicDataId FK "Geographic location of audit"
     }
 
-    %% Supply Base Management (Enhanced Phase 2)
+    %% Supply Base Management
     SupplyBase {
         string supplyBaseId PK
         string organizationId FK
@@ -387,7 +445,10 @@ erDiagram
     %% Phase 1: Core Traceability Relationships
     TraceableUnit ||--o{ SpeciesComponent : "contains_species"
     TraceableUnit ||--o{ MaterialProcessing : "undergoes_processing"
+    TraceableUnit ||--o{ ProcessingHistory : "has_processing_timeline"
     MaterialProcessing ||--o{ MeasurementRecord : "generates_measurements"
+    MaterialProcessing ||--o{ ProcessingHistory : "documented_by"
+    ProcessingHistory ||--o{ ProcessingHistory : "forms_processing_chain"
     TraceableUnit ||--o{ BiometricIdentifier : "identified_by"
     TraceableUnit ||--o{ DataReconciliation : "reconciled_through"
     TraceableUnit ||--o{ LocationHistory : "has_location_history"
@@ -413,6 +474,7 @@ erDiagram
     GeographicData ||--o{ Audit : "locates_audit"
     GeographicData ||--o{ SpeciesComponent : "defines_origin"
     GeographicData ||--o{ MaterialProcessing : "locates_processing"
+    GeographicData ||--o{ ProcessingHistory : "locates_processing_history"
     GeographicData ||--o{ MeasurementRecord : "locates_measurement"
     GeographicData ||--o{ BiometricIdentifier : "locates_capture"
     
@@ -431,7 +493,13 @@ erDiagram
     SupplyBase ||--o{ TraceableUnit : "originates_tru"
     Organization ||--o{ SupplyBase : "manages_supply_base"
     
-    %% Enhanced Transaction Relationships (Phase 2 & 3)
+    %% Operator Relationships (Phase 3)
+    Organization ||--o{ Operator : "employs"
+    Operator ||--o{ MaterialProcessing : "performs_processing"
+    Operator ||--o{ ProcessingHistory : "documents_processing"
+    Operator ||--o{ LocationHistory : "manages_movement"
+    
+    %% Enhanced Transaction Relationships
     Transaction ||--o{ TraceableUnit : "includes_tru"
     TransactionBatch ||--o{ TraceableUnit : "contains_tru"
     Transaction ||--o{ TransactionBatch : "contains"
@@ -455,6 +523,8 @@ erDiagram
     Material ||--o{ EnergyCarbonData : "characterized_by"
     TransactionBatch ||--o{ EnergyCarbonData : "associated_with"
     TraceableUnit ||--o{ EnergyCarbonData : "characterized_by"
+    MeasurementRecord ||--o{ EnergyCarbonData : "generates_moisture_data"
+    ProcessingHistory ||--o{ EnergyCarbonData : "tracks_moisture_changes"
     
     %% Essential Reporting and Compliance
     Organization ||--o{ SupplyBaseReport : "prepares"

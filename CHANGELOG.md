@@ -2,6 +2,26 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.1.2] - 2025-07-22 - Comprehensive Moisture Content Integration
+
+### Added
+- **Comprehensive moisture content tracking** - End-to-end moisture monitoring from harvest through delivery
+- **MeasurementRecord moisture fields** - moistureContent, moistureMeasurementMethod, moistureEquipmentUsed
+- **TraceableUnit moisture status** - currentMoistureContent, moistureContentTimestamp, moistureContentSource
+- **ProcessingHistory moisture tracking** - Input/output moisture content with change ratios and reasons
+- **EnergyCarbonData moisture enhancement** - Environmental conditions, quality assurance, measurement context
+- **Moisture validation schema** - Comprehensive business rules and regulatory compliance validation
+- **Quality grade moisture requirements** - Grade-specific moisture thresholds (Grade A: ≤18%, Grade B: ≤22%, etc.)
+- **Regulatory compliance integration** - LCFS, FSC, SBP moisture tracking requirements
+- **Processing event type expansion** - Added "drying" as explicit moisture reduction operation
+- **Moisture content documentation** - Complete specification with measurement methods and standards
+
+### Enhanced
+- **ERD relationship modeling** - Added MeasurementRecord and ProcessingHistory moisture data relationships
+- **Validation algorithms** - Moisture consistency checks, quality grade validation, volume adjustment formulas
+- **Data quality assurance** - Equipment calibration tracking, measurement accuracy standards, environmental monitoring
+- **Business rule enforcement** - Automated validation of moisture content against quality grades and regulatory limits
+
 ## [2.1.1] - 2025-07-21 - Drafts Folder Reorganization
 
 ### Changed
