@@ -22,3 +22,6 @@ _minted-*
 
 # California agencies directory - keep local but don't track
 drafts/current/communications/california_agencies/
+
+# CD report directory - keep local but don't track
+cd_report/
