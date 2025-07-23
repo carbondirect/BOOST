@@ -1,17 +1,17 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/carbondirect/BOOST/schemas/operator",
-  "title": "Operator",
-  "description": "Operator entity with certification tracking and geographic assignment capabilities for Phase 2 Kaulen framework enhancements",
   "type": "object",
+  "title": "BOOST Operator Entity Validation Schema",
+  "description": "Validation schema for personnel and operator management within the BOOST biomass chain of custody system",
   "properties": {
     "@context": {
       "type": "object",
-      "description": "JSON-LD context for semantic web compatibility"
+      "description": "JSON-LD context for linked data interoperability"
     },
     "@type": {
       "type": "string",
-      "const": "Operator",
+      "enum": ["Operator"],
       "description": "JSON-LD type identifier"
     },
     "@id": {
@@ -21,107 +21,119 @@
     },
     "operatorId": {
       "type": "string",
-      "description": "Unique identifier for the operator",
-      "minLength": 1,
-      "pattern": "^OP-[A-Z0-9-_]+$",
-      "examples": ["OP-001", "OP-JOHN-SMITH-HARVESTER"]
-    },
-    "operatorName": {
-      "type": "string",
-      "description": "Full name of the operator",
-      "minLength": 1,
-      "examples": ["John Smith", "Maria Rodriguez"]
-    },
-    "employeeId": {
-      "type": "string",
-      "description": "Employee identification number",
-      "examples": ["EMP-12345", "PACIFIC-FOREST-001"]
+      "pattern": "^OP-[A-Z0-9-]{6,50}$",
+      "description": "Unique identifier for the operator (Primary Key)",
+      "examples": ["OP-KLAMATH-HARVEST-001", "OP-PACIFIC-MILL-QA-042"]
     },
     "organizationId": {
       "type": "string",
-      "description": "Foreign key to employing organization",
-      "pattern": "^ORG-[A-Z0-9-_]+$",
-      "examples": ["ORG-PACIFIC-FOREST-001", "ORG-KLAMATH-HARVEST"]
+      "description": "Foreign key reference to employing organization",
+      "examples": ["ORG-KLAMATH-HARVEST-OPERATIONS-001"]
     },
-    "operatorRole": {
+    "operatorName": {
       "type": "string",
-      "description": "Primary role or job function",
-      "enum": ["harvester", "truck_driver", "mill_operator", "quality_inspector", "scale_operator", "equipment_operator", "supervisor", "technician"]
+      "minLength": 2,
+      "maxLength": 100,
+      "description": "Full name of the operator",
+      "examples": ["John Anderson", "Maria Rodriguez-Chen"]
+    },
+    "employeeId": {
+      "type": ["string", "null"],
+      "description": "Internal employee identification number",
+      "examples": ["EMP-001234", "H-5678"]
+    },
+    "operatorType": {
+      "type": "string",
+      "enum": [
+        "harvester_operator",
+        "mill_operator", 
+        "transport_driver",
+        "quality_inspector",
+        "processing_technician",
+        "equipment_maintenance",
+        "loading_operator",
+        "scaling_specialist",
+        "environmental_monitor",
+        "safety_coordinator"
+      ],
+      "description": "Type/role of operator within the supply chain"
     },
     "certifications": {
       "type": "array",
       "items": {
-        "type": "string"
-      },
-      "description": "List of operator certifications and licenses",
-      "examples": [["CDL-A", "CERTIFIED-LOGGER", "CRANE-OPERATOR"]]
-    },
-    "equipmentQualifications": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Equipment the operator is qualified to use",
-      "examples": [["harvester_head", "log_loader", "scale_system"]]
-    },
-    "primaryWorkLocationId": {
-      "type": "string",
-      "description": "Foreign key to primary work location",
-      "pattern": "^GEO-[A-Z0-9-_]+$",
-      "examples": ["GEO-MILL-PACIFIC-001", "GEO-HARVEST-SITE-KLA"]
-    },
-    "assignedTrackingPoints": {
-      "type": "array",
-      "items": {
         "type": "string",
-        "pattern": "^TP-[A-Z0-9-_]+$"
+        "enum": [
+          "CDL_Class_A",
+          "CDL_Class_B", 
+          "Forklift_Operator",
+          "Crane_Operator",
+          "Heavy_Equipment_Operator",
+          "Chainsaw_Safety",
+          "First_Aid_CPR",
+          "OSHA_10",
+          "OSHA_30",
+          "Hazmat_Transport",
+          "DOT_Medical_Certificate",
+          "Equipment_Specific_Training",
+          "Quality_Control_Certified",
+          "Environmental_Compliance",
+          "FSC_Chain_of_Custody",
+          "SBP_Data_Transfer_System"
+        ]
       },
-      "description": "List of tracking points assigned to operator",
-      "examples": [["TP-MILL-ENTRANCE-001", "TP-SCALE-STATION-001"]]
+      "description": "Array of certifications held by the operator"
     },
-    "contactPhone": {
-      "type": "string",
-      "description": "Operator contact phone number",
-      "examples": ["+1-555-123-4567", "555-OPERATOR"]
+    "equipmentAuthorizations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Equipment the operator is authorized to operate",
+      "examples": ["HARVESTER-001", "MILL-SCALE-A", "LOG-TRUCK-042"]
     },
-    "contactEmail": {
-      "type": "string",
-      "format": "email",
-      "description": "Operator contact email address",
-      "examples": ["j.smith@pacificforest.com", "operator001@company.com"]
+    "contactInfo": {
+      "type": ["string", "null"],
+      "description": "Phone/email contact information",
+      "examples": ["555-0123, john.anderson@klamathops.com"]
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Current employment status - true if actively employed"
     },
     "hireDate": {
       "type": "string",
       "format": "date",
-      "description": "Date operator was hired",
-      "examples": ["2020-03-15", "2018-07-01"]
+      "description": "Date when operator started employment"
     },
-    "trainingRecords": {
+    "skillsQualifications": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of completed training programs",
-      "examples": [["SAFETY-TRAINING-2025", "BIOMETRIC-SCANNER-CERT"]]
+      "description": "Relevant skills and qualifications",
+      "examples": ["10 years harvesting experience", "Bilingual English/Spanish", "Mechanical troubleshooting"]
     },
-    "activeStatus": {
-      "type": "boolean",
-      "description": "Whether operator is currently active",
-      "default": true
+    "supervisorOperatorId": {
+      "type": ["string", "null"],
+      "description": "Foreign key reference to direct supervisor operator (optional)"
     },
     "lastUpdated": {
       "type": "string",
       "format": "date-time",
-      "description": "Timestamp of the most recent data update"
+      "description": "Timestamp of last record modification"
     }
   },
   "required": [
-    "@type",
+    "@context",
+    "@type", 
     "@id",
-    "operatorId", 
-    "operatorName",
+    "operatorId",
     "organizationId",
-    "operatorRole"
+    "operatorName",
+    "operatorType",
+    "isActive",
+    "hireDate",
+    "lastUpdated"
   ],
   "additionalProperties": false
 }

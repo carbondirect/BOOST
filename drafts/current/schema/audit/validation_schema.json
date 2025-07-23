@@ -1,0 +1,72 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/audit",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["Audit"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "auditId": {
+        "type": "string"
+      },
+      "auditType": {
+        "type": "string",
+        "enum": ["Initial", "Surveillance", "Transfer"]
+      },
+      "auditDate": {
+        "type": "string",
+        "format": "date"
+      },
+      "organizationId": {
+        "type": "string"
+      },
+      "cbId": {
+        "type": "string"
+      },
+      "findings": {
+        "type": "string"
+      },
+      "reportUrl": {
+        "type": "string",
+        "format": "uri"
+      },
+      "auditGeographicDataId": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "auditId",
+      "auditType",
+      "auditDate",
+      "organizationId"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "auditId" }
+      },
+      {
+        "!!": { "var": "auditType" }
+      },
+      {
+        "!!": { "var": "auditDate" }
+      },
+      {
+        "!!": { "var": "organizationId" }
+      }
+    ]
+  }
+}

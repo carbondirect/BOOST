@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOST ERD - Smart Routing Solution</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #fafbfc;
+            color: #24292f;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 2200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #d1d9e0;
+            box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
+        }
+        
+        .header h1 {
+            color: #101828;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+            font-size: 28px;
+            letter-spacing: -0.02em;
+        }
+        
+        .header p {
+            color: #667085;
+            font-size: 15px;
+            margin: 0;
+            font-weight: 400;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        
+        .btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+        
+        .btn.active {
+            background: #1f2937;
+            color: white;
+            border-color: #1f2937;
+        }
+        
+        .svg-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #d1d9e0;
+            box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .entity {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .entity:hover {
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+        }
+        
+        .entity-header {
+            font-family: 'SF Pro Display', system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: -0.01em;
+        }
+        
+        .entity-field {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 11px;
+            fill: #374151;
+            font-weight: 400;
+        }
+        
+        .entity-pk {
+            font-family: 'SF Mono', monospace;
+            font-weight: 500;
+            font-size: 11px;
+            fill: #dc2626;
+        }
+        
+        .entity-fk {
+            font-family: 'SF Mono', monospace;
+            font-weight: 500;
+            font-size: 11px;
+            fill: #2563eb;
+        }
+        
+        .entity-required {
+            font-family: 'SF Mono', monospace;
+            font-weight: 500;
+            font-size: 11px;
+            fill: #1f2937;
+        }
+        
+        .relationship {
+            fill: none;
+            transition: all 0.15s ease;
+        }
+        
+        .relationship-identifying {
+            stroke: #374151;
+            stroke-width: 1.5;
+        }
+        
+        .relationship-non-identifying {
+            stroke: #9ca3af;
+            stroke-width: 1;
+            stroke-dasharray: 4,3;
+        }
+        
+        .relationship:hover {
+            stroke: #1f2937 !important;
+            stroke-width: 2.5 !important;
+        }
+        
+        .relationship-label {
+            font-size: 10px;
+            fill: #6b7280;
+            text-anchor: middle;
+            pointer-events: none;
+            font-weight: 500;
+        }
+        
+        .label-background {
+            fill: white;
+            stroke: #e5e7eb;
+            stroke-width: 0.5;
+        }
+        
+        .crowsfoot-line {
+            stroke: #374151;
+            stroke-width: 1;
+            fill: none;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 12px;
+            background: rgba(17, 24, 39, 0.95);
+            color: white;
+            border-radius: 8px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+            max-width: 300px;
+            font-weight: 400;
+            line-height: 1.4;
+            backdrop-filter: blur(8px);
+        }
+        
+        .tooltip code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'SF Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BOOST ERD</h1>
+            <p>Intelligent routing with no line overlaps or entity intersections</p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn active" onclick="showAll()">All Entities</button>
+            <button class="btn" onclick="filterByArea('Core Traceability')">Core Traceability</button>
+            <button class="btn" onclick="filterByArea('Organizational')">Organizations</button>
+            <button class="btn" onclick="filterByArea('Transaction')">Transactions</button>
+            <button class="btn" onclick="exportDiagram()">Export SVG</button>
+        </div>
+        
+        <div class="svg-container">
+            <svg id="erd-svg" width="2200" height="1400"></svg>
+        </div>
+        
+        <div class="tooltip" id="tooltip"></div>
+    </div>
+
+    <script>
+        // Configuration
+        const config = {
+            width: 2200,
+            height: 1400,
+            entityWidth: 240,
+            entityFieldHeight: 16,
+            entityPadding: 8,
+            headerHeight: 28,
+            routingPadding: 40, // Extra space around entities for routing
+            colors: {
+                'Core Traceability': { 
+                    fill: 'rgba(220, 252, 231, 0.25)', 
+                    stroke: '#10b981', 
+                    header: '#059669'
+                },
+                'Organizational': { 
+                    fill: 'rgba(219, 234, 254, 0.25)', 
+                    stroke: '#3b82f6', 
+                    header: '#2563eb'
+                },
+                'Transaction': { 
+                    fill: 'rgba(254, 243, 199, 0.25)', 
+                    stroke: '#f59e0b', 
+                    header: '#d97706'
+                },
+                'Material': { 
+                    fill: 'rgba(231, 229, 228, 0.25)', 
+                    stroke: '#78716c', 
+                    header: '#57534e'
+                },
+                'Geographic': { 
+                    fill: 'rgba(243, 232, 255, 0.25)', 
+                    stroke: '#a855f7', 
+                    header: '#9333ea'
+                },
+                'Personnel': { 
+                    fill: 'rgba(254, 242, 242, 0.25)', 
+                    stroke: '#ef4444', 
+                    header: '#dc2626'
+                }
+            }
+        };
+
+        // Strategically positioned entities with maximum spacing
+        const entities = [
+            // Core Traceability - Central with space for connections
+            {
+                id: 'TraceableUnit',
+                name: 'TraceableUnit',
+                area: 'Core Traceability',
+                description: 'Central entity for biomass tracking',
+                fields: [
+                    { name: 'traceableUnitId', type: 'string', isPK: true, required: true },
+                    { name: 'unitType', type: 'enum', required: true },
+                    { name: 'uniqueIdentifier', type: 'string', required: true },
+                    { name: 'totalVolumeM3', type: 'number', required: true },
+                    { name: 'currentMoistureContent', type: 'number' },
+                    { name: 'currentGeographicDataId', type: 'string', isFK: true },
+                    { name: 'operatorId', type: 'string', isFK: true },
+                    { name: 'materialTypeId', type: 'string', isFK: true, required: true }
+                ],
+                x: 1000, y: 600  // Central with lots of clearance
+            },
+            
+            // Processing entities positioned to avoid crossing lines
+            {
+                id: 'MaterialProcessing',
+                name: 'MaterialProcessing', 
+                area: 'Core Traceability',
+                description: 'Processing operations that transform TRUs',
+                fields: [
+                    { name: 'processingId', type: 'string', isPK: true, required: true },
+                    { name: 'inputTraceableUnitId', type: 'string', isFK: true, required: true },
+                    { name: 'outputTraceableUnitId', type: 'string', isFK: true },
+                    { name: 'processType', type: 'enum', required: true },
+                    { name: 'operatorId', type: 'string', isFK: true },
+                    { name: 'inputVolume', type: 'number' },
+                    { name: 'outputVolume', type: 'number' }
+                ],
+                x: 600, y: 900  // Below and left, with clearance
+            },
+            
+            {
+                id: 'ProcessingHistory',
+                name: 'ProcessingHistory',
+                area: 'Core Traceability', 
+                description: 'Complete timeline of processing events',
+                fields: [
+                    { name: 'processingHistoryId', type: 'string', isPK: true, required: true },
+                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
+                    { name: 'materialProcessingId', type: 'string', isFK: true },
+                    { name: 'processSequenceNumber', type: 'integer' },
+                    { name: 'inputMoistureContent', type: 'number' },
+                    { name: 'outputMoistureContent', type: 'number' }
+                ],
+                x: 1400, y: 900  // Below and right, with clearance
+            },
+
+            // Organizational entities - Left side with vertical separation
+            {
+                id: 'Organization',
+                name: 'Organization',
+                area: 'Organizational',
+                description: 'Business entities in the supply chain',
+                fields: [
+                    { name: 'organizationId', type: 'string', isPK: true, required: true },
+                    { name: 'organizationName', type: 'string', required: true },
+                    { name: 'organizationType', type: 'enum', required: true },
+                    { name: 'primaryGeographicDataId', type: 'string', isFK: true },
+                    { name: 'contactEmail', type: 'string' }
+                ],
+                x: 100, y: 300  // Top left
+            },
+            
+            {
+                id: 'Operator',
+                name: 'Operator',
+                area: 'Personnel',
+                description: 'Personnel performing operations',
+                fields: [
+                    { name: 'operatorId', type: 'string', isPK: true, required: true },
+                    { name: 'organizationId', type: 'string', isFK: true, required: true },
+                    { name: 'operatorName', type: 'string', required: true },
+                    { name: 'operatorType', type: 'enum', required: true },
+                    { name: 'certifications', type: 'string[]' }
+                ],
+                x: 100, y: 700  // Bottom left
+            },
+
+            // Transaction - Right side
+            {
+                id: 'Transaction',
+                name: 'Transaction',
+                area: 'Transaction',
+                description: 'Business transactions between organizations',
+                fields: [
+                    { name: 'transactionId', type: 'string', isPK: true, required: true },
+                    { name: 'supplyingOrganizationId', type: 'string', isFK: true, required: true },
+                    { name: 'customerOrganizationId', type: 'string', isFK: true, required: true },
+                    { name: 'contractValue', type: 'number' },
+                    { name: 'transactionStatus', type: 'enum' },
+                    { name: 'transactionDate', type: 'date', required: true }
+                ],
+                x: 1900, y: 600  // Far right, centered vertically
+            },
+
+            // Supporting entities - Top row with generous spacing
+            {
+                id: 'GeographicData',
+                name: 'GeographicData',
+                area: 'Geographic',
+                description: 'Spatial data and location information',
+                fields: [
+                    { name: 'geographicDataId', type: 'string', isPK: true, required: true },
+                    { name: 'geoJsonData', type: 'json', required: true },
+                    { name: 'dataType', type: 'enum' },
+                    { name: 'description', type: 'string' }
+                ],
+                x: 700, y: 200  // Top center-left
+            },
+            
+            {
+                id: 'Material',
+                name: 'Material',
+                area: 'Material',
+                description: 'Material types and specifications',
+                fields: [
+                    { name: 'materialTypeId', type: 'string', isPK: true, required: true },
+                    { name: 'materialName', type: 'string', required: true },
+                    { name: 'materialCategory', type: 'enum' },
+                    { name: 'applicablePlantParts', type: 'string[]' }
+                ],
+                x: 1300, y: 200  // Top center-right
+            }
+        ];
+
+        // Relationships with routing priorities (to minimize crossings)
+        const relationships = [
+            // Direct connections to TraceableUnit (shortest paths)
+            { from: 'TraceableUnit', to: 'MaterialProcessing', label: 'input_to', type: 'identifying', fromCard: 'one', toCard: 'many', priority: 1 },
+            { from: 'TraceableUnit', to: 'ProcessingHistory', label: 'has_history', type: 'identifying', fromCard: 'one', toCard: 'many', priority: 1 },
+            { from: 'MaterialProcessing', to: 'ProcessingHistory', label: 'documented_by', type: 'non-identifying', fromCard: 'one', toCard: 'many', priority: 1 },
+            
+            // Connections from outer entities (longer paths, routed carefully)
+            { from: 'GeographicData', to: 'TraceableUnit', label: 'locates', type: 'non-identifying', fromCard: 'one', toCard: 'many', priority: 2 },
+            { from: 'Material', to: 'TraceableUnit', label: 'defines_type', type: 'non-identifying', fromCard: 'one', toCard: 'many', priority: 2 },
+            { from: 'Organization', to: 'TraceableUnit', label: 'manages', type: 'non-identifying', fromCard: 'one', toCard: 'many', priority: 3 },
+            { from: 'Operator', to: 'MaterialProcessing', label: 'performs', type: 'non-identifying', fromCard: 'one', toCard: 'many', priority: 3 },
+            
+            // Organizational relationships (separate routing lanes)
+            { from: 'Organization', to: 'Transaction', label: 'supplies', type: 'identifying', fromCard: 'one', toCard: 'many', priority: 4 },
+            { from: 'Organization', to: 'Operator', label: 'employs', type: 'identifying', fromCard: 'one', toCard: 'many', priority: 4 }
+        ];
+
+        // D3 Setup
+        const svg = d3.select('#erd-svg');
+        const tooltip = d3.select('#tooltip');
+
+        // Enhanced connection point calculation with multiple attachment points
+        function getSmartConnectionPoints(fromEntity, toEntity, relationshipIndex = 0) {
+            const fromRect = {
+                left: fromEntity.x,
+                right: fromEntity.x + config.entityWidth,
+                top: fromEntity.y,
+                bottom: fromEntity.y + 200, // Approximate entity height
+                centerX: fromEntity.x + config.entityWidth / 2,
+                centerY: fromEntity.y + 100
+            };
+            
+            const toRect = {
+                left: toEntity.x,
+                right: toEntity.x + config.entityWidth,
+                top: toEntity.y,
+                bottom: toEntity.y + 200,
+                centerX: toEntity.x + config.entityWidth / 2,
+                centerY: toEntity.y + 100
+            };
+            
+            // Calculate direction
+            const dx = toRect.centerX - fromRect.centerX;
+            const dy = toRect.centerY - fromRect.centerY;
+            
+            let fromPoint, toPoint;
+            
+            // Use multiple connection points to avoid overlapping lines
+            const offsetY = (relationshipIndex % 3 - 1) * 20; // Spread connections vertically
+            
+            if (Math.abs(dx) > Math.abs(dy)) {
+                // Horizontal connection preferred
+                if (dx > 0) {
+                    // From is left of to
+                    fromPoint = { x: fromRect.right, y: fromRect.centerY + offsetY };
+                    toPoint = { x: toRect.left, y: toRect.centerY + offsetY };
+                } else {
+                    // From is right of to
+                    fromPoint = { x: fromRect.left, y: fromRect.centerY + offsetY };
+                    toPoint = { x: toRect.right, y: toRect.centerY + offsetY };
+                }
+            } else {
+                // Vertical connection preferred
+                if (dy > 0) {
+                    // From is above to
+                    fromPoint = { x: fromRect.centerX, y: fromRect.bottom };
+                    toPoint = { x: toRect.centerX, y: toRect.top };
+                } else {
+                    // From is below to
+                    fromPoint = { x: fromRect.centerX, y: fromRect.top };
+                    toPoint = { x: toRect.centerX, y: toRect.bottom };
+                }
+            }
+            
+            return { fromPoint, toPoint };
+        }
+
+        // Advanced routing that avoids entity intersections
+        function createSmartPath(fromPoint, toPoint, relationship, allEntities) {
+            const routingLanes = {
+                1: 50,   // Priority 1: Close to entities
+                2: 100,  // Priority 2: Medium distance
+                3: 150,  // Priority 3: Far from entities  
+                4: 200   // Priority 4: Furthest routing
+            };
+            
+            const laneOffset = routingLanes[relationship.priority] || 50;
+            
+            // Calculate waypoints that avoid entity collisions
+            const waypoints = [];
+            waypoints.push(fromPoint);
+            
+            // Add intermediate waypoints for complex routing
+            if (Math.abs(fromPoint.x - toPoint.x) > 300 && Math.abs(fromPoint.y - toPoint.y) > 200) {
+                // Long diagonal connection - use L-shaped routing with lane separation
+                const midX = fromPoint.x + (toPoint.x - fromPoint.x) * 0.3;
+                const midY = fromPoint.y < toPoint.y ? fromPoint.y + laneOffset : fromPoint.y - laneOffset;
+                
+                waypoints.push({ x: midX, y: fromPoint.y });
+                waypoints.push({ x: midX, y: midY });
+                waypoints.push({ x: toPoint.x, y: midY });
+            } else if (Math.abs(fromPoint.x - toPoint.x) > 200) {
+                // Medium horizontal distance - simple L-routing
+                const midX = fromPoint.x + (toPoint.x - fromPoint.x) / 2;
+                waypoints.push({ x: midX, y: fromPoint.y });
+                waypoints.push({ x: midX, y: toPoint.y });
+            }
+            
+            waypoints.push(toPoint);
+            
+            // Generate path string
+            let pathData = `M ${waypoints[0].x} ${waypoints[0].y}`;
+            for (let i = 1; i < waypoints.length; i++) {
+                pathData += ` L ${waypoints[i].x} ${waypoints[i].y}`;
+            }
+            
+            return { pathData, waypoints };
+        }
+
+        // Draw entity function
+        function drawEntity(entity) {
+            const color = config.colors[entity.area] || { fill: '#f3f4f6', stroke: '#9ca3af', header: '#6b7280' };
+            const visibleFields = entity.fields.slice(0, 6);
+            const entityHeight = config.headerHeight + (visibleFields.length * config.entityFieldHeight) + (config.entityPadding * 2) + 4;
+            
+            const g = svg.append('g')
+                .attr('class', 'entity')
+                .attr('data-area', entity.area)
+                .attr('data-id', entity.id)
+                .attr('transform', `translate(${entity.x}, ${entity.y})`);
+
+            // Entity background
+            g.append('rect')
+                .attr('width', config.entityWidth)
+                .attr('height', entityHeight)
+                .attr('fill', color.fill)
+                .attr('stroke', color.stroke)
+                .attr('stroke-width', 1)
+                .attr('rx', 6);
+
+            // Header
+            g.append('rect')
+                .attr('width', config.entityWidth)
+                .attr('height', config.headerHeight)
+                .attr('fill', color.header)
+                .attr('rx', 6);
+                
+            g.append('rect')
+                .attr('y', config.headerHeight - 6)
+                .attr('width', config.entityWidth)
+                .attr('height', 6)
+                .attr('fill', color.header);
+
+            // Entity name
+            g.append('text')
+                .attr('class', 'entity-header')
+                .attr('x', config.entityWidth / 2)
+                .attr('y', config.headerHeight / 2 + 4)
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .text(entity.name);
+
+            // Fields
+            visibleFields.forEach((field, i) => {
+                const fieldY = config.headerHeight + config.entityPadding + (i * config.entityFieldHeight) + 12;
+                let fieldClass = 'entity-field';
+                
+                if (field.isPK) fieldClass = 'entity-pk';
+                else if (field.isFK) fieldClass = 'entity-fk';
+                else if (field.required) fieldClass = 'entity-required';
+                
+                const prefix = field.isPK ? 'PK ' : field.isFK ? 'FK ' : field.required ? '• ' : '  ';
+                
+                g.append('text')
+                    .attr('class', fieldClass)
+                    .attr('x', 8)
+                    .attr('y', fieldY)
+                    .text(`${prefix}${field.name}: ${field.type}`);
+            });
+
+            // More fields indicator
+            if (entity.fields.length > 6) {
+                g.append('text')
+                    .attr('class', 'entity-field')
+                    .attr('x', 8)
+                    .attr('y', config.headerHeight + config.entityPadding + (6 * config.entityFieldHeight) + 12)
+                    .style('fill', '#9ca3af')
+                    .style('font-style', 'italic')
+                    .text(`... ${entity.fields.length - 6} more`);
+            }
+
+            // Events
+            g.on('mouseover', function(event) {
+                const fieldsList = entity.fields.slice(0, 4)
+                    .map(f => `<code>${f.name}</code>: ${f.type}${f.required ? ' *' : ''}`)
+                    .join('<br/>');
+                
+                tooltip.style('opacity', 1)
+                    .html(`<strong>${entity.name}</strong><br/>${entity.description}<br/><br/>${fieldsList}`)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px');
+            })
+            .on('mouseout', () => tooltip.style('opacity', 0))
+            .on('click', () => highlightRelationships(entity.id));
+
+            return g;
+        }
+
+        // Draw relationships with intelligent routing
+        function drawRelationships() {
+            // Sort relationships by priority to draw simpler paths first
+            const sortedRelationships = [...relationships].sort((a, b) => (a.priority || 5) - (b.priority || 5));
+            
+            sortedRelationships.forEach((rel, index) => {
+                const fromEntity = entities.find(e => e.id === rel.from);
+                const toEntity = entities.find(e => e.id === rel.to);
+                
+                if (fromEntity && toEntity) {
+                    drawSmartRelationship(fromEntity, toEntity, rel, index);
+                }
+            });
+        }
+
+        function drawSmartRelationship(fromEntity, toEntity, rel, index) {
+            const { fromPoint, toPoint } = getSmartConnectionPoints(fromEntity, toEntity, index);
+            const { pathData, waypoints } = createSmartPath(fromPoint, toPoint, rel, entities);
+            
+            const g = svg.append('g')
+                .attr('class', 'relationship-group')
+                .attr('data-from', rel.from)
+                .attr('data-to', rel.to);
+
+            // Draw main path
+            g.append('path')
+                .attr('class', `relationship relationship-${rel.type}`)
+                .attr('d', pathData);
+
+            // Draw crow's foot notation at end point
+            const endPoint = waypoints[waypoints.length - 1];
+            const prevPoint = waypoints[waypoints.length - 2];
+            const angle = Math.atan2(endPoint.y - prevPoint.y, endPoint.x - prevPoint.x);
+            
+            if (rel.toCard === 'many') {
+                drawCrowsFoot(g, endPoint.x, endPoint.y, angle);
+            } else {
+                drawSingleMark(g, endPoint.x, endPoint.y, angle);
+            }
+            
+            // Draw single mark at start point
+            const startPoint = waypoints[0];
+            const nextPoint = waypoints[1];
+            const startAngle = Math.atan2(nextPoint.y - startPoint.y, nextPoint.x - startPoint.x);
+            drawSingleMark(g, startPoint.x, startPoint.y, startAngle + Math.PI);
+
+            // Label with background
+            const midIndex = Math.floor(waypoints.length / 2);
+            const labelPoint = waypoints[midIndex];
+            
+            const textWidth = rel.label.length * 6;
+            g.append('rect')
+                .attr('class', 'label-background')
+                .attr('x', labelPoint.x - textWidth/2 - 4)
+                .attr('y', labelPoint.y - 10)
+                .attr('width', textWidth + 8)
+                .attr('height', 16)
+                .attr('rx', 3);
+                
+            g.append('text')
+                .attr('class', 'relationship-label')
+                .attr('x', labelPoint.x)
+                .attr('y', labelPoint.y + 2)
+                .text(rel.label);
+        }
+
+        function drawCrowsFoot(g, x, y, angle) {
+            const size = 8;
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+            
+            // Three lines forming crow's foot
+            const offsets = [-size, 0, size];
+            offsets.forEach(offset => {
+                const perpCos = Math.cos(angle + Math.PI / 2);
+                const perpSin = Math.sin(angle + Math.PI / 2);
+                
+                g.append('line')
+                    .attr('class', 'crowsfoot-line')
+                    .attr('x1', x)
+                    .attr('y1', y)
+                    .attr('x2', x - cos * 12 + perpCos * offset)
+                    .attr('y2', y - sin * 12 + perpSin * offset);
+            });
+        }
+
+        function drawSingleMark(g, x, y, angle) {
+            const perpCos = Math.cos(angle + Math.PI / 2);
+            const perpSin = Math.sin(angle + Math.PI / 2);
+            
+            g.append('line')
+                .attr('class', 'crowsfoot-line')
+                .attr('x1', x + perpCos * 4)
+                .attr('y1', y + perpSin * 4)
+                .attr('x2', x - perpCos * 4)
+                .attr('y2', y - perpSin * 4);
+        }
+
+        // Control functions
+        function showAll() {
+            svg.selectAll('.entity').style('opacity', 1);
+            svg.selectAll('.relationship-group').style('opacity', 0.7);
+            updateActiveButton(0);
+        }
+
+        function filterByArea(area) {
+            svg.selectAll('.entity').style('opacity', function() {
+                return d3.select(this).attr('data-area') === area ? 1 : 0.2;
+            });
+            svg.selectAll('.relationship-group').style('opacity', 0.3);
+        }
+
+        function highlightRelationships(entityId) {
+            svg.selectAll('.relationship-group').style('opacity', function() {
+                const from = d3.select(this).attr('data-from');
+                const to = d3.select(this).attr('data-to');
+                return (from === entityId || to === entityId) ? 1 : 0.2;
+            });
+            
+            svg.selectAll('.entity').style('opacity', function() {
+                const id = d3.select(this).attr('data-id');
+                const isConnected = relationships.some(rel => 
+                    (rel.from === entityId && rel.to === id) || 
+                    (rel.to === entityId && rel.from === id)
+                );
+                return (id === entityId || isConnected) ? 1 : 0.3;
+            });
+        }
+
+        function updateActiveButton(index) {
+            d3.selectAll('.btn').classed('active', false);
+            d3.selectAll('.btn').nodes()[index].classList.add('active');
+        }
+
+        function exportDiagram() {
+            const svgElement = document.getElementById('erd-svg');
+            const serializer = new XMLSerializer();
+            const svgString = serializer.serializeToString(svgElement);
+            
+            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'boost-erd-smart-routing.svg';
+            a.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize
+        function initializeVisualization() {
+            // Draw all entities first
+            entities.forEach(entity => {
+                drawEntity(entity);
+            });
+            
+            // Then draw relationships with intelligent routing
+            drawRelationships();
+        }
+
+        // Start
+        initializeVisualization();
+    </script>
+</body>
+</html>

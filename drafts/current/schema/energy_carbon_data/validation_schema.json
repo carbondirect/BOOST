@@ -1,0 +1,93 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/energy-carbon-data",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["EnergyCarbonData"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "energyCarbonDataId": {
+        "type": "string"
+      },
+      "dataType": {
+        "type": "string",
+        "enum": ["moisture", "transport", "fuel consumption"]
+      },
+      "value": {
+        "type": "number"
+      },
+      "unit": {
+        "type": "string",
+        "enum": ["percentage", "kg_CO2e", "liters", "MJ"]
+      },
+      "source": {
+        "type": "string",
+        "enum": ["field_measurement", "laboratory_analysis", "default_values", "calculated"]
+      },
+      "measurementMethod": {
+        "type": "string",
+        "enum": ["oven_dry", "electrical_resistance", "microwave", "near_infrared", "gravimetric"]
+      },
+      "traceableUnitId": {
+        "type": "string"
+      },
+      "measurementRecordId": {
+        "type": "string"
+      },
+      "measurementTimestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "measurementGeographicDataId": {
+        "type": "string"
+      },
+      "temperatureConditions": {
+        "type": "number"
+      },
+      "humidityConditions": {
+        "type": "number"
+      },
+      "qualityAssurance": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "energyCarbonDataId",
+      "dataType",
+      "value",
+      "unit",
+      "source"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "energyCarbonDataId" }
+      },
+      {
+        "!!": { "var": "dataType" }
+      },
+      {
+        "!!": { "var": "value" }
+      },
+      {
+        "!!": { "var": "unit" }
+      },
+      {
+        "!!": { "var": "source" }
+      }
+    ]
+  }
+}

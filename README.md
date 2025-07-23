@@ -3,7 +3,7 @@
 ## Overview
 This repository contains the working draft and artifacts of the Biomass Chain of Custody (CoC) Data Standard, which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
-**Current Version: v2.1.0** - Enhanced with the Kaulen Framework for media-interruption-free timber traceability and comprehensive plant part categorization system.
+**Current Version: v2.2.0** - Interactive ERD Navigator with dynamic visualization, GitHub discussion integration, and comprehensive 29-entity coverage across 7 thematic areas.
 
 - **Charter:** [BOOST_Charter.org](BOOST_Charter.org)
 - **Charter Effective Date:** 
@@ -33,8 +33,9 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 - **Supply Base Management** - Infrastructure mapping with harvest sites and transportation routes
 
 ### Comprehensive Entity System
-- **15+ Interconnected Entities** - Complete data model covering all aspects of biomass supply chains
+- **29 Interconnected Entities** - Complete data model covering all aspects of biomass supply chains across 7 thematic areas
 - **JSON-LD Validation** - Structured schemas with business rules and examples
+- **Interactive ERD Navigator** - Dynamic exploration with GitHub discussion integration
 - **Sustainability Claims** - Species-specific claims with inheritance through processing
 
 ## 📁 Directory Structure
@@ -52,17 +53,20 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 │   │   └── feature_request.md
 │   └── workflows/
 │       └── ci.yml           # Placeholder for GitHub Actions (not auto-created)
+├── erd-navigator/           # Interactive ERD Navigator for stakeholder feedback
+│   ├── index.html                   # Main interactive ERD interface
+│   └── README.md                    # Navigator documentation
 ├── drafts/                  # Organized draft content
 │   ├── current/             # Active working content
 │   │   ├── specifications/        # Current spec documents
-│   │   ├── schema/               # Entity schemas and validation
+│   │   ├── schema/               # Entity schemas and validation (29 entities)
 │   │   │   ├── traceable_unit/        # Core TRU entity with examples
 │   │   │   ├── species_component/     # Multi-species tracking
 │   │   │   ├── material_processing/   # Processing operations
-│   │   │   └── [11 additional entities] # Complete Kaulen Framework
+│   │   │   └── [26 additional entities] # Complete Kaulen Framework
 │   │   ├── images/
-│   │   │   ├── current/              # Master ERD and current visuals
-│   │   │   └── archive/              # Historical ERD versions
+│   │   │   ├── current/              # Interactive ERD and current visuals
+│   │   │   └── archive/              # Historical ERD iterations and deprecated files
 │   │   ├── examples/             # Sample payloads and validation
 │   │   └── communications/       # Agency outreach materials
 │   ├── archive/             # Historical content
@@ -100,7 +104,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ## 🚀 Getting Started
 
 ### For Developers
-1. **Explore the ERD**: Start with `drafts/current/images/current/boost_erd.mermaid` for the complete data model
+1. **Explore the Interactive ERD**: Use the [Interactive ERD Navigator](erd-navigator/index.html) to explore all 29 entities with dynamic filtering and GitHub discussion integration
 2. **Review Entity Schemas**: Check `drafts/current/schema/` for JSON validation schemas and examples
 3. **Understand Implementation**: Read `doc/KAULEN_FRAMEWORK_IMPLEMENTATION_SUMMARY.md`
 4. **Migration Guide**: See `doc/MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md` for conceptual changes
@@ -116,11 +120,42 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 - **Multi-Species Cases**: Check species component tracking in `drafts/current/schema/species_component/`
 - **Transaction Examples**: See `drafts/current/examples/transactions/`
 
+## 🎯 Interactive ERD Navigator
+
+The [Interactive ERD Navigator](erd-navigator/index.html) provides a comprehensive, stakeholder-friendly way to explore the BOOST data model:
+
+### 🔍 Key Features
+- **29 Entity Coverage**: Complete visualization of all entities across 7 thematic areas
+- **Dynamic Filtering**: Focus on specific domains (Core Traceability, Organizational, Material & Supply, etc.)
+- **Direct Discussion Access**: Purple 💬 icons in each entity header link directly to GitHub discussions
+- **TraceableUnit Focus Mode**: 🎯 button to reduce visual complexity and highlight essential relationships
+- **Schema Integration**: Real-time loading of entity definitions from JSON schema files
+
+### 🎨 Thematic Organization
+- 🟢 **Core Traceability** (9 entities): TraceableUnit, MaterialProcessing, DataReconciliation, etc.
+- 🔵 **Organizational** (4 entities): Organization, Certificate, CertificationScheme, CertificationBody
+- 🟤 **Material & Supply** (4 entities): Material, SupplyBase, Supplier, Customer
+- 🟠 **Transactions** (3 entities): Transaction, TransactionBatch, SalesDeliveryDocument
+- 🟡 **Sustainability** (1 entity): Claim
+- 🟣 **Geographic** (1 entity): GeographicData
+- 🔴 **Reporting** (3 entities): SupplyBaseReport, VerificationStatement, Audit
+- ⚫ **Analytics** (2 entities): EnergyCarbonData, MoistureContent
+- 👥 **Personnel** (2 entities): Operator, ProductGroup
+
+### 💬 Community Feedback
+Each entity has a dedicated GitHub discussion thread accessible via the ERD. This enables:
+- **Structured feedback** on schema definitions and relationships
+- **Real-world validation** from supply chain stakeholders
+- **Iterative improvement** based on implementation experience
+
+**Access**: Visit the [Live Interactive ERD Navigator](https://carbondirect.github.io/BOOST/erd-navigator/) or use the local version at `erd-navigator/index.html`
+
 ## 📊 Current Status
 
 - **✅ Complete**: Kaulen Framework Phases 1-3 implementation
 - **✅ Complete**: Plant part categorization system 
-- **✅ Complete**: 15+ entity schemas with validation and examples
+- **✅ Complete**: 29 entity schemas with validation and examples
+- **✅ Complete**: Interactive ERD Navigator with GitHub discussion integration
 - **✅ Complete**: Integration testing scenarios and migration documentation
 - **🔄 Active**: Community feedback integration and use case expansion
 

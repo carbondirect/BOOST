@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOOST Entity Schema Navigator</title>
+    <title>BOOST ERD - Blueprint Based v2.2 - Complete Attributes</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -12,135 +12,67 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f6f8fa;
-            color: #24292e;
+            padding: 24px;
+            background: #fafbfc;
+            color: #24292f;
+            font-size: 14px;
+            line-height: 1.5;
         }
+        
         .container {
             max-width: 3200px;
             margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         }
+        
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #e1e4e8;
-            padding-bottom: 20px;
+            margin-bottom: 24px;
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #d1d9e0;
+            box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
         }
+        
         .header h1 {
-            margin: 0 0 10px 0;
-            color: #0366d6;
+            color: #101828;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+            font-size: 32px;
+            letter-spacing: -0.02em;
         }
+        
         .header p {
+            color: #667085;
+            font-size: 16px;
             margin: 0;
-            color: #586069;
-            font-size: 16px;
+            font-weight: 400;
         }
-        .instructions {
-            background-color: #f1f8ff;
-            border: 1px solid #c8e1ff;
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 30px;
-        }
-        .instructions h3 {
-            margin-top: 0;
-            color: #0366d6;
-        }
-        .info-section {
-            background-color: #f6f8fa;
-            border: 1px solid #e1e4e8;
-            border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-        .info-section h3 {
-            margin-top: 0;
-            color: #0366d6;
-            font-size: 18px;
-        }
-        .legend {
-            background-color: #fff5f5;
-            border: 1px solid #fed7d7;
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 25px;
-        }
-        .legend h3 {
-            margin-top: 0;
-            color: #c53030;
-            font-size: 16px;
-        }
-        .legend-item {
-            display: inline-block;
-            margin-right: 25px;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        .github-guide {
-            background-color: #f0f4ff;
-            border: 1px solid #b6d7ff;
-            border-radius: 6px;
-            padding: 18px;
-            margin-bottom: 25px;
-        }
-        .github-guide h3 {
-            margin-top: 0;
-            color: #0969da;
-            font-size: 17px;
-        }
-        .github-guide .signup-link {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #0969da;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            margin: 10px 10px 10px 0;
-        }
-        .github-guide .signup-link:hover {
-            background-color: #0860ca;
-            text-decoration: none;
-        }
-        .connector-legend {
-            background-color: #f8f9fa;
-            border: 1px solid #e1e4e8;
-            border-radius: 6px;
-            padding: 16px;
-            margin: 15px 0;
-            font-size: 13px;
-        }
-        .connector-legend h4 {
-            margin-top: 0;
-            margin-bottom: 12px;
-            color: #0366d6;
-            font-size: 14px;
-        }
-        .connector-item {
+
+        .stats {
             display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 8px;
+            gap: 4px;
         }
-        .connector-visual {
-            font-family: monospace;
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 4px 8px;
-            margin-right: 12px;
-            border-radius: 3px;
-            min-width: 60px;
-            text-align: center;
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
         }
-        .connector-description {
-            color: #555;
-        }
-        /* Interactive ERD Styles */
+        
         .controls {
             display: flex;
             justify-content: center;
@@ -173,6 +105,48 @@
             border-color: #1f2937;
         }
         
+        .toggle-labels {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #d1d9e0;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .toggle-labels:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+        
+        .labels-hidden .relationship-label,
+        .labels-hidden .label-background {
+            display: none;
+        }
+        
+        .tru-focus .relationship-group {
+            opacity: 0.2;
+        }
+        
+        .tru-focus .relationship-group[data-essential="true"] {
+            opacity: 1;
+            stroke-width: 2;
+        }
+        
+        .tru-focus .entity {
+            opacity: 0.4;
+        }
+        
+        .tru-focus .entity[data-id="TraceableUnit"],
+        .tru-focus .entity[data-essential="true"] {
+            opacity: 1;
+        }
+        
         .svg-container {
             background: white;
             border-radius: 12px;
@@ -181,8 +155,6 @@
             overflow: hidden;
             position: relative;
             cursor: grab;
-            height: 800px;
-            margin-bottom: 30px;
         }
         
         .svg-container.panning {
@@ -424,169 +396,27 @@
             height: 12px;
             border-radius: 2px;
         }
-        
-        .labels-hidden .relationship-label,
-        .labels-hidden .label-background {
-            display: none;
-        }
-        
-        .tru-focus .relationship-group {
-            opacity: 0.2;
-        }
-        
-        .tru-focus .relationship-group[data-essential="true"] {
-            opacity: 1;
-            stroke-width: 2;
-        }
-        
-        .tru-focus .entity {
-            opacity: 0.4;
-        }
-        
-        .tru-focus .entity[data-id="TraceableUnit"],
-        .tru-focus .entity[data-essential="true"] {
-            opacity: 1;
-        }
-        .entity-box {
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .entity-box:hover {
-            opacity: 0.8;
-        }
-        .domain-section {
-            margin-bottom: 40px;
-            padding: 25px;
-            background-color: #f8f9fa;
-            border: 1px solid #e1e4e8;
-            border-radius: 8px;
-        }
-        .domain-header {
-            margin: 0 0 10px 0;
-            color: #0366d6;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        .domain-description {
-            margin: 0 0 20px 0;
-            color: #586069;
-            font-style: italic;
-            font-size: 14px;
-        }
-        .entity-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-        }
-        .entity-link {
-            display: block;
-            padding: 12px 16px;
-            background-color: #ffffff;
-            border: 1px solid #e1e4e8;
-            border-radius: 6px;
-            text-decoration: none;
-            color: #24292e;
-            transition: all 0.2s;
-        }
-        .entity-link:hover {
-            background-color: #f6f8fa;
-            border-color: #c8e1ff;
-            text-decoration: none;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .entity-link strong {
-            color: #0366d6;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-        }
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #586069;
-            font-size: 14px;
-            border-top: 1px solid #e1e4e8;
-            padding-top: 20px;
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #0366d6;
-            text-decoration: none;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="../" class="back-link">← Back to BOOST Specification</a>
-        
         <div class="header">
-            <h1>🗂️ BOOST Entity Schema Navigator</h1>
-            <p>Interactive Entity Relationship Diagram for Stakeholder Feedback</p>
-        </div>
-
-
-        <div class="github-guide">
-            <h3>💬 Join the Discussion</h3>
-            <p><strong>Why GitHub?</strong> We use GitHub Discussions to collect structured feedback from stakeholders across the biomass supply chain. It's free, open, and designed for collaborative input on technical standards.</p>
-            <p><strong>New to GitHub?</strong> No problem! Creating an account takes just 2 minutes:</p>
-            <a href="https://github.com/signup" target="_blank" class="signup-link">Create Free GitHub Account →</a>
-            <p style="margin-top: 15px; margin-bottom: 0; font-size: 14px;">
-                <strong>Prefer email?</strong> You can also send feedback to the BOOST working group at 
-                <a href="mailto:public-boost-01@w3.org">public-boost-01@w3.org</a>
-            </p>
-        </div>
-
-        <div class="info-section">
-            <h3>🏗️ Understanding the Entity Relationship Diagram</h3>
-            <p><strong>Entities</strong> represent the core data objects in biomass supply chains - things like Organizations, Certificates, Material Feedstock, and Transactions. Each entity captures specific information needed for chain of custody tracking.</p>
-            <p><strong>Attributes</strong> are the data fields within each entity (like organization name, certificate expiry date, or biomass quantity). These define what information must be recorded and tracked.</p>
-            <p><strong>Relationships</strong> show how entities connect to each other - for example, how a Certificate relates to an Organization, or how Material Feedstock flows through Transactions. These connections enable complete supply chain traceability.</p>
-            <p style="margin-left: 20px; font-size: 14px; color: #555;">
-                <strong>Reading the Diagram:</strong> Entities are shown as rectangular boxes containing their names (like Organization, Certificate, MaterialFeedstock). Lines connect related entities to show how they interact - for example, an Organization "is issued" a Certificate, or a Supplier "provides" MaterialFeedstock. Text along the lines describes the nature of each relationship in the biomass supply chain.
-            </p>
-            <div class="connector-legend">
-                <h4>🔗 Relationship Connectors</h4>
-                <div class="connector-item">
-                    <div class="connector-visual">--||-||</div>
-                    <div class="connector-description">One-to-one relationship (e.g., Organization has one Certificate)</div>
+            <h1>BOOST ERD v2.2 - Complete Attributes</h1>
+            <p>Based exactly on boost_erd.mermaid with all entity attributes displayed comprehensively</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">29</div>
+                    <div>Entities</div>
                 </div>
-                <div class="connector-item">
-                    <div class="connector-visual">--||o{</div>
-                    <div class="connector-description">One-to-many relationship (e.g., Organization has many Transactions)</div>
+                <div class="stat">
+                    <div class="stat-number">7</div>
+                    <div>Thematic Areas</div>
                 </div>
-                <div class="connector-item">
-                    <div class="connector-visual">}|--||</div>
-                    <div class="connector-description">Many-to-one relationship (e.g., many Materials from one Supplier)</div>
-                </div>
-                <div class="connector-item">
-                    <div class="connector-visual">}|--|{</div>
-                    <div class="connector-description">Many-to-many relationship (e.g., Materials can have multiple Claims)</div>
-                </div>
-                <div class="connector-item">
-                    <div class="connector-visual">--||o|</div>
-                    <div class="connector-description">Optional relationship (e.g., Organization may have Certificate)</div>
+                <div class="stat">
+                    <div class="stat-number">55+</div>
+                    <div>Relationships</div>
                 </div>
             </div>
-            <p style="margin-bottom: 0;"><strong>Purpose:</strong> This diagram maps the complete data structure needed to track biomass from source to end use, supporting regulatory compliance, sustainability verification, and carbon accounting.</p>
-        </div>
-
-        <div class="instructions">
-            <h3>📋 How to Provide Feedback</h3>
-            <p><strong>Our Goal:</strong> Collect real-world input from stakeholders to ensure the BOOST data standard meets practical biomass supply chain needs.</p>
-            <p><strong>Explore the interactive diagram below</strong> to understand the complete BOOST data model. You can zoom in/out, pan around, and use the filtering controls to examine entity relationships in detail.</p>
-            <p><strong>To provide feedback on a specific entity</strong>, click on the purple 💬 discussion icon in any entity header to jump directly to its GitHub discussion thread.</p>
-            <p><strong>💡 What we're looking for:</strong> Field completeness, data types, real-world applicability, missing attributes, validation requirements, and integration challenges.</p>
-        </div>
-
-        <div class="info-section">
-            <h3>🎯 Using the Interactive ERD</h3>
-            <p><strong>Navigation:</strong> Use your mouse wheel to zoom, click and drag to pan around the diagram. The purple 💬 icons in entity headers link directly to GitHub discussions for that entity.</p>
-            <p><strong>Filtering:</strong> Use the colored filter buttons to focus on specific areas of the data model (Core Traceability, Organizational, Material & Supply, etc.).</p>
-            <p><strong>Focus Mode:</strong> Click the 🎯 button in the controls to highlight only essential TraceableUnit relationships, reducing visual clutter.</p>
-            <p><strong>Field Legend:</strong> PK = Primary Key (red), FK = Foreign Key (blue), ● = Required Field, ○ = Optional Field</p>
         </div>
         
         <div class="controls">
@@ -601,8 +431,9 @@
             <button class="btn" onclick="filterByArea('analytics_data')">⚫ Analytics</button>
             <button class="btn" onclick="filterByArea('personnel')">👥 Personnel</button>
             <button class="btn" onclick="fitToScreen()">Fit to Screen</button>
+            <button class="btn" onclick="exportDiagram()">Export SVG</button>
         </div>
-
+        
         <div class="svg-container" id="svg-container">
             <div class="zoom-controls">
                 <button class="control-btn" onclick="zoomIn()" title="Zoom In">🔍+</button>
@@ -652,48 +483,6 @@
         </div>
         
         <div class="tooltip" id="tooltip"></div>
-
-        <div class="info-section">
-            <h3>💬 Entity Discussion Access</h3>
-            <p><strong>Direct Links in ERD:</strong> Each entity in the interactive diagram above has a purple 💬 discussion icon in its header. Click these icons to go directly to the GitHub discussion for that specific entity.</p>
-            <p><strong>Complete Coverage:</strong> All 29 entities in the BOOST data model have dedicated discussion threads where you can provide feedback on schemas, relationships, and real-world applicability.</p>
-            <p style="text-align: center; margin-top: 20px;">
-                <strong>💡 Pro Tip:</strong> Use the thematic filter buttons above the diagram to focus on specific areas, then click the discussion icons for targeted feedback.
-            </p>
-        </div>
-
-        <!-- General Feedback Section -->
-        <div class="info-section">
-            <h3>🏗️ General ERD Structure Feedback</h3>
-            <p><strong>Beyond Individual Entities:</strong> While the entity links above are for specific schema feedback, we also welcome input on the overall data model structure and organization.</p>
-            <p><strong>Structural Questions:</strong> Are these the right entities in the right relationships? Should any entities be consolidated or split? Are there missing supply chain stages or processes?</p>
-            <p><strong>Implementation Considerations:</strong> Will this structure work well for real-world deployments? How does it compare to existing industry data models?</p>
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="https://github.com/carbondirect/BOOST/discussions/117" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: #0969da; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
-                    💬 Discuss Overall ERD Structure →
-                </a>
-            </div>
-        </div>
-
-        <!-- Q&A Section -->
-        <div class="info-section">
-            <h3>❓ Questions & Answers</h3>
-            <p><strong>Have Questions?</strong> Use our Q&A section for general questions about the BOOST data model, implementation guidance, or clarifications about entity relationships.</p>
-            <p><strong>Examples:</strong> "How do I implement mass balance tracking?" or "What's the difference between Claim and VerificationStatement?" or "How does BOOST compare to other standards?"</p>
-            <p><strong>Community Support:</strong> Get help from other stakeholders, implementers, and the BOOST working group.</p>
-            <div style="text-align: center; margin-top: 20px;">
-                <a href="https://github.com/carbondirect/BOOST/discussions/categories/q-a" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: #6f42c1; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">
-                    🙋 Ask a Question →
-                </a>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>This ERD navigator is part of the BOOST data standard development process.<br>
-            Your feedback helps ensure the standard meets real-world biomass chain of custody needs.</p>
-            <p><a href="https://github.com/carbondirect/BOOST">📂 View full repository</a> | 
-            <a href="https://github.com/carbondirect/BOOST/issues/61">🎯 Parent Issue #61</a></p>
-        </div>
     </div>
 
     <script>
@@ -808,7 +597,7 @@
         // Schema loading functions
         async function loadSchemaFile(entityName) {
             try {
-                const schemaPath = `../drafts/current/schema/${entityName.toLowerCase().replace(/([A-Z])/g, '_$1').substring(1)}/validation_schema.json`;
+                const schemaPath = `../../schema/${entityName.toLowerCase().replace(/([A-Z])/g, '_$1').substring(1)}/validation_schema.json`;
                 const response = await fetch(schemaPath);
                 if (!response.ok) {
                     console.warn(`Could not load schema for ${entityName}: ${response.status}`);

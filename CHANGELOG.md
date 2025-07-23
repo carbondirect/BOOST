@@ -2,6 +2,38 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.2.0] - 2025-07-23 - Interactive ERD Navigator
+
+### Added
+- **Interactive ERD Navigator** - Complete replacement of static Mermaid diagram with dynamic D3.js-based interactive visualization
+- **29 Entity Coverage** - Full visualization of all entities across 7 thematic areas with real-time schema loading
+- **GitHub Discussion Integration** - Purple 💬 chat icons in each entity header providing direct access to entity-specific discussions
+- **Dynamic Thematic Filtering** - 9 filter buttons for focusing on specific domains (Core Traceability, Organizational, Material & Supply, etc.)
+- **TraceableUnit Focus Mode** - 🎯 button to reduce visual complexity by highlighting only essential TraceableUnit relationships
+- **Advanced Zoom & Pan Controls** - Mouse wheel zoom, click-and-drag panning for detailed exploration
+- **Smart Relationship Routing** - Intelligent path routing to minimize visual clutter with 300px avoidance zones around TraceableUnit
+- **Schema-Driven Architecture** - Dynamic entity definition loading from JSON validation schema files
+- **Professional Styling** - GitHub-style design with SF Pro Display fonts and responsive layout
+
+### Enhanced
+- **Stakeholder Experience** - Comprehensive instructions and tooltips for non-technical users
+- **Discussion Accessibility** - All 29 entities now have direct discussion access (#90-107, #166-179)
+- **Visual Decluttering** - Advanced label positioning and collision detection for improved readability
+- **Mobile Responsiveness** - Touch-friendly controls and responsive design for all device sizes
+- **Documentation Integration** - Real-time integration with schema files eliminates manual diagram maintenance
+
+### Changed
+- **ERD Navigator Migration** - Replaced static SVG-based navigator with fully interactive implementation
+- **Entity Link Organization** - Removed redundant entity link sections in favor of direct ERD access
+- **Documentation Updates** - Updated README.md and navigator documentation to reflect interactive capabilities
+- **Repository Cleanup** - Removed outdated GitHub discussion management scripts and temporary files
+
+### Technical Improvements
+- **D3.js v7 Integration** - Modern interactive SVG manipulation with advanced zoom and pan functionality  
+- **Dynamic Path Adjustment** - Real-time schema path resolution for different deployment contexts
+- **Performance Optimization** - Efficient rendering of complex relationship networks with selective hiding
+- **Cross-browser Compatibility** - Tested functionality across modern web browsers with fallback support
+
 ## [2.1.2] - 2025-07-22 - Comprehensive Moisture Content Integration
 
 ### Added

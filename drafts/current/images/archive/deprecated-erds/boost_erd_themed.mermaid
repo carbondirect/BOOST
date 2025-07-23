@@ -1,0 +1,557 @@
+erDiagram
+
+    %% BOOST Core Biomass Chain of Custody ERD - Thematically Organized
+    %% Enhanced model with media-interruption-free traceability and TRU support
+    %% Implements comprehensive thematic clustering for improved readability
+    
+    %% ============================================================================
+    %% 🟢 CORE TRACEABILITY - The Heart of BOOST (Central Positioning)
+    %% Primary entities for biomass tracking and processing chain management
+    %% ============================================================================
+    
+    TraceableUnit {
+        string traceableUnitId PK "🔑 Unique ID for each TRU"
+        string unitType "individual_log, pile, volume_aggregation, processed_batch"
+        string uniqueIdentifier "biometric_signature, RFID_tag, QR_code"
+        decimal totalVolumeM3 "Total volume of the traceable unit"
+        decimal currentMoistureContent "Current moisture content percentage"
+        datetime moistureContentTimestamp "When moisture content was last measured"
+        string moistureContentSource "measurement, calculation, estimate"
+        string currentGeographicDataId FK "Current location of TRU"
+        string harvestGeographicDataId FK "Harvest location of TRU"
+        datetime createdTimestamp
+        string harvesterId FK
+        string operatorId FK
+        string materialTypeId FK "Reference to Material entity"
+        string assortmentType "sawlog, pulpwood, biomass, chips"
+        string qualityGrade "A, B, C, structural, fuel"
+        boolean isMultiSpecies "True if contains multiple species"
+        string[] attachedInformation "All data linked to this TRU"
+        string[] processingHistory "Complete processing chain"
+        string parentTraceableUnitId FK "For split/merge operations"
+        string[] childTraceableUnitIds "For split/merge operations"
+        string currentStatus "active, processed, delivered, consumed"
+        string sustainabilityCertification "FSC, PEFC, etc. claims"
+        string[] mediaBreakFlags "Points where data continuity was lost"
+    }
+
+    MaterialProcessing {
+        string processingId PK "🔑 Processing operation identifier"
+        string inputTraceableUnitId FK "Input TRU being processed"
+        string outputTraceableUnitId FK "Output TRU created"
+        string processType "felling, delimbing, crosscutting, chipping, debarking, assortment"
+        datetime processTimestamp
+        string processingGeographicDataId FK "Location where processing occurred"
+        string operatorId FK
+        string inputComposition "Species composition before processing"
+        string outputComposition "Species composition after processing"
+        decimal inputVolume "Input volume before processing"
+        decimal outputVolume "Output volume after processing"
+        decimal volumeLoss "Volume lost during processing"
+        string qualityMetrics
+        string equipmentUsed
+        object inputPlantParts "Plant parts in input TRU"
+        object outputPlantParts "Plant parts in output TRU"
+        object[] plantPartTransformations "Plant part transformations during processing"
+        object plantPartLosses "Volume losses by plant part"
+    }
+
+    ProcessingHistory {
+        string processingHistoryId PK "🔑 Processing timeline identifier"
+        string traceableUnitId FK "TRU this history belongs to"
+        string materialProcessingId FK "Processing operation reference"
+        datetime timestamp "When this processing step occurred"
+        integer processSequenceNumber "Sequential order for this TRU"
+        string processingEventType "transformation, split, merge, quality_change, loading, drying"
+        string[] inputTRUIds "Input TRU IDs (multiple for merge)"
+        string[] outputTRUIds "Output TRU IDs (multiple for split)"
+        string processingDuration "ISO 8601 duration format"
+        string qualityChangeDescription "Description of quality changes"
+        decimal inputMoistureContent "Input moisture content percentage"
+        decimal outputMoistureContent "Output moisture content percentage"
+        decimal moistureChangeRatio "Output/input moisture ratio"
+        string moistureChangeReason "drying, wetting, natural_loss, processing"
+        string operatorId FK "Operator who performed processing"
+        string equipmentUsed "Equipment used for processing"
+        decimal volumeChangeRatio "Output/input volume ratio"
+        string speciesCompositionChange "unchanged, separated, mixed, filtered"
+        string plantPartTransformation "Summary of plant part changes"
+        boolean isCurrentProcessingState "True if current state"
+        string processingGeographicDataId FK "Processing location"
+        string previousProcessingHistoryId FK "Previous processing step"
+        string[] nextProcessingHistoryIds "Next processing steps"
+        object volumeConservationData "Volume conservation validation"
+        object mediaBreakData "Media break detection and recovery"
+        object claimInheritanceData "Sustainability claim inheritance"
+    }
+
+    SpeciesComponent {
+        string componentId PK "🔑 Species component identifier"
+        string traceableUnitId FK "Back reference to TraceableUnit"
+        string species "pine, fir, oak, etc."
+        decimal volumeM3 "Volume of this species within the TRU"
+        decimal percentageByVolume "Percentage of total TRU volume"
+        string qualityGrade "Species-specific quality grade"
+        string sourceGeographicDataId FK "Geographic origin of this species"
+        string harvestingMethod "chainsaw, harvester, manual"
+        datetime harvestTimestamp "When this species was harvested"
+        string carbonStorage "CO2 data for this species component"
+        object plantPartComposition "Plant part breakdown within species"
+        string primaryPlantPart "Primary plant part for this component"
+        string structuralClassification "Functional plant part classification"
+    }
+
+    MeasurementRecord {
+        string recordId PK "🔑 Measurement record identifier"
+        string traceableUnitId FK "TRU being measured"
+        decimal measuredVolume
+        decimal measuredLength
+        decimal measuredDiameter
+        decimal moistureContent "Moisture content percentage (0-100)"
+        string moistureMeasurementMethod "oven_dry, electrical_resistance, microwave, near_infrared"
+        string moistureEquipmentUsed "Moisture meter model/type used"
+        string measurementMethod "harvester, mill, manual, optical"
+        string measurementGeographicDataId FK "Location where measurement taken"
+        datetime measurementTimestamp
+        string operatorId FK
+        string trackingPointId FK
+        string[] speciesMeasurements "Individual species measurements"
+    }
+
+    LocationHistory {
+        string locationHistoryId PK "🔑 Location history identifier"
+        string traceableUnitId FK "TRU being tracked"
+        string geographicDataId FK "Location at this point in time"
+        datetime timestamp "When TRU was at this location"
+        string locationEventType "arrival, departure, processing, storage, measurement"
+        string materialProcessingId FK "Processing event reference (optional)"
+        string operatorId FK "Operator responsible for location change"
+        string equipmentUsed "harvester, forwarder, truck, crane, etc."
+        string notes "Additional context about location event"
+        decimal distanceTraveled "Distance from previous location (optional)"
+        string transportMethod "truck, rail, ship, conveyor, manual"
+        boolean isCurrentLocation "True if this is the current location"
+        string[] verificationMethods "GPS, RFID, visual_confirmation, biometric_scan"
+    }
+
+    BiometricIdentifier {
+        string biometricId PK "🔑 Biometric identifier"
+        string traceableUnitId FK "TRU being identified"
+        string biometricSignature "optical pattern data"
+        string captureMethod "optical_scanner, photo_analysis"
+        string captureGeographicDataId FK "Location where biometric captured"
+        datetime captureTimestamp
+        string trackingPointId FK
+        string[] speciesBiometrics "Individual species biometric data"
+    }
+
+    TrackingPoint {
+        string trackingPointId PK "🔑 Tracking point identifier"
+        string pointType "harvest_site, skid_road, forest_road, mill_entrance"
+        string geographicDataId FK "Location of tracking point"
+        string equipmentUsed "RFID_reader, QR_scanner, biometric_system, GPS"
+        string operatorId FK
+        datetime establishedTimestamp
+    }
+
+    DataReconciliation {
+        string reconciliationId PK "🔑 Reconciliation record identifier"
+        string traceableUnitId FK "TRU being reconciled"
+        string transactionId FK
+        decimal forestMeasurement
+        decimal millMeasurement
+        decimal discrepancy
+        string reconciliationStatus "pending, resolved, disputed"
+        string discrepancyReason
+        datetime reconciliationDate
+        string reconciliationOperator
+        string[] speciesDiscrepancies "Per-species discrepancies"
+    }
+
+    %% ============================================================================
+    %% 🔵 ORGANIZATIONAL FOUNDATION - Business Structure & Certification
+    %% Core organizational entities and certification framework
+    %% ============================================================================
+    
+    Organization {
+        string organizationId PK "🔑 Organization identifier"
+        string name
+        string address
+        string role "BP, Trader, Energy Producer"
+        string scopeOfOperations
+        string legalEntityStatus
+        string certificateCode FK
+        string contactInfo
+        string[] equipmentIds "Harvester/machine tracking"
+        string[] operatorIds "Personnel tracking"
+        string[] harvestSites "Operational locations"
+        string[] skidRoads "Infrastructure mapping"
+        string[] forestRoads "Transportation routes"
+        string[] traceableUnitIds "TRUs managed"
+        string[] geographicDataIds FK "Geographic areas of operation"
+    }
+
+    Certificate {
+        string certificateNumber PK "🔑 Certificate identifier"
+        string certificateId
+        date dateOfIssue
+        date dateOfExpiry
+        string scopeOfCertification
+        string status
+        string versionNumber
+        string cbId FK
+        string organizationId FK
+        string certificationSchemeId FK
+        string certificateGeographicDataId FK "Geographic scope of certificate"
+        datetime lastUpdated
+    }
+
+    CertificationScheme {
+        string schemeId PK "🔑 Certification scheme identifier"
+        string schemeName
+        string recognitionStatus
+        string versionNumber
+        string description
+        uri website
+        string[] materialCategories
+        string[] controlSystems
+        string labelUseRequirements
+        string volumeTrackingRequirements
+        string dueDiligenceRequirements
+        string[] sustainabilityCriteria
+        string[] applicableRegions
+        date dateEstablished
+        datetime lastUpdated
+    }
+
+    CertificationBody {
+        string cbId PK "🔑 Certification body identifier"
+        string cbName
+        string accreditationStatus
+        string accreditationScope
+        object contactInformation
+        string[] jurisdictions
+        string[] sectorsServed
+        boolean isActive
+        datetime lastUpdated
+    }
+
+    %% ============================================================================
+    %% 🟤 MATERIAL & SUPPLY CHAIN - Physical Materials & Supply Network
+    %% Material types, supply base, and supply chain participants
+    %% ============================================================================
+
+    Material {
+        string materialTypeId PK "🔑 Material type identifier"
+        string materialName "Pine, Fir, Oak, Mixed Wood, etc."
+        string materialCategory "softwood, hardwood, mixed"
+        string defaultAssortmentTypes "Applicable assortment types"
+        string standardQualityGrades "Standard quality grades"
+        string carbonStorageRate "Standard CO2 storage rate per m3"
+        string density "Standard density values"
+        string[] applicableProcessingTypes "Valid processing types"
+        string[] applicablePlantParts "Plant parts included in material type"
+        string[] excludedPlantParts "Plant parts excluded from material type"
+        object plantPartProcessingSpecs "Processing specifications by plant part"
+    }
+
+    SupplyBase {
+        string supplyBaseId PK "🔑 Supply base identifier"
+        string organizationId FK
+        string supplyBaseName
+        string description
+        string[] harvestSites "Specific harvest locations within supply base"
+        string[] skidRoads "Infrastructure references for transportation"
+        string[] forestRoads "Transportation network within supply base"
+        string[] equipmentDeployment "Machinery allocation and positioning"
+        string[] traceableUnitIds "TRUs originating from this supply base"
+        string[] speciesAvailable "Species present in this supply base"
+        string supplyBaseGeographicDataId FK "Geographic boundaries definition"
+    }
+
+    Supplier {
+        string supplierId PK "🔑 Supplier identifier"
+        string supplierName
+        string address
+        string certificateCode
+        string claim
+        string supplierType
+        string supplierGeographicDataId FK "Geographic location of supplier"
+    }
+
+    Customer {
+        string customerId PK "🔑 Customer identifier"
+        string customerName
+        string address
+        string customerGeographicDataId FK "Geographic location of customer"
+    }
+
+    %% ============================================================================
+    %% 🟠 TRANSACTION MANAGEMENT - Business Transactions & Physical Batches
+    %% Commercial transactions and physical material batch handling
+    %% ============================================================================
+
+    Transaction {
+        string transactionId PK "🔑 Business transaction identifier"
+        string supplyingOrganizationId FK "Seller organization"
+        string customerOrganizationId FK "Buyer organization"
+        date transactionDate "Date of business agreement"
+        string salesDocumentId FK "Legal sales documentation"
+        decimal contractValue "Total transaction value"
+        string contractCurrency "Currency of transaction"
+        string contractTerms "FOB, CIF, delivery terms"
+        string paymentTerms "Net 30, cash on delivery"
+        string transactionStatus "pending, confirmed, delivered, completed, cancelled"
+        string transactionGeographicDataId FK "Primary transaction location"
+        string brokerOrganizationId FK "Intermediary broker (optional)"
+        date contractSignedDate "When contract was executed"
+        date expectedDeliveryDate "Expected completion date"
+        string[] complianceRequirements "Regulatory compliance needed"
+        object financialTerms "Detailed financial terms and conditions"
+        datetime lastUpdated "Last modification timestamp"
+    }
+
+    TransactionBatch {
+        string transactionBatchId PK "🔑 Physical batch identifier"
+        string transactionId FK "Parent business transaction"
+        string productionBatchId FK "Source production batch"
+        decimal quantity "Physical quantity of material"
+        string quantityUnit "cubic_meters, metric_tons, board_feet"
+        string[] traceableUnitIds "TRUs included in this batch"
+        string claimId FK "Primary sustainability claim"
+        string[] additionalClaimIds "Secondary claims"
+        string[] speciesComposition "Species breakdown with percentages"
+        string qualityGrade "A, B, C, structural, fuel"
+        string[] processingHistoryIds "Complete processing chain references"
+        string reconciliationStatus "pending, resolved, disputed"
+        string trackingHistory "Complete location trail summary"
+        string[] measurementRecordIds "Volume/quality measurements"
+        boolean mediaBreakDetected "Traceability continuity flag"
+        string batchStatus "prepared, in_transit, delivered, accepted"
+        datetime batchCreatedDate "When batch was prepared"
+        datetime deliveryDate "Actual delivery date"
+        string deliveryGeographicDataId FK "Delivery location"
+        object qualityMetrics "Detailed quality assessments"
+        object plantPartComposition "Plant part breakdown if applicable"
+        datetime lastUpdated "Last modification timestamp"
+    }
+
+    SalesDeliveryDocument {
+        string documentId PK "🔑 Sales document identifier"
+        date dateIssued
+        string buyerName
+        string buyerAddress
+        string sellerName
+        string sellerAddress
+        string productDescription
+        decimal quantity
+        string transactionId FK
+        string certificateCode
+        string transportReference
+    }
+
+    %% ============================================================================
+    %% 🟡 SUSTAINABILITY & CLAIMS - Environmental Claims & Certification
+    %% Sustainability claims and certification tracking
+    %% ============================================================================
+
+    Claim {
+        string claimId PK "🔑 Sustainability claim identifier"
+        string traceableUnitId FK "TRU with this sustainability claim"
+        string claimType "SBP-compliant, FSC Mix, RSB Global, PEFC, organic"
+        string certificationSchemeId FK "Link to certification scheme"
+        string statement "Detailed claim description"
+        boolean validated "Verification status"
+        string validatedBy "Organization/auditor validating claim"
+        datetime validationDate "When claim was validated"
+        string[] applicableSpecies "Species this claim applies to"
+        decimal claimPercentage "Percentage of TRU volume covered by this claim"
+        string claimScope "harvest, processing, transport, full_chain"
+        string evidenceDocumentId "Supporting documentation reference"
+        datetime claimExpiry "When claim expires (if applicable)"
+        string[] inheritedFromTRU "Parent TRU claims that contributed to this claim"
+    }
+
+    %% ============================================================================
+    %% 🟣 GEOGRAPHIC & LOCATION - Spatial Data & Geographic References
+    %% Geographic information system integration and spatial data management
+    %% ============================================================================
+
+    GeographicData {
+        string geographicDataId PK "🔑 Geographic data identifier"
+        json geoJsonData "Valid GeoJSON object (Point, Polygon, etc.)"
+        string dataType "harvest_site, processing_location, administrative_boundary, supply_base_area"
+        string description "Human-readable description of the geographic area"
+        datetime lastUpdated
+    }
+
+    %% ============================================================================
+    %% 🔴 REPORTING & COMPLIANCE - Reports, Audits & Verification
+    %% Regulatory compliance, reporting, and audit trail management
+    %% ============================================================================
+
+    SupplyBaseReport {
+        string sbrId PK "🔑 Supply base report identifier"
+        string organizationId FK
+        date preparationDate
+        string supplyBaseSummary
+        string sourcingPractices
+        string sustainabilityMeasures
+        string publicationUrl
+        string reportGeographicDataId FK "Geographic coverage of report"
+    }
+
+    VerificationStatement {
+        string statementId PK "🔑 Verification statement identifier"
+        date verificationDate
+        string issuingBody
+        string scope
+        string transactionBatchId FK
+    }
+
+    Audit {
+        string auditId PK "🔑 Audit identifier"
+        string auditType "Initial, Surveillance, Transfer"
+        date auditDate
+        string organizationId FK
+        string cbId FK
+        string findings
+        string reportUrl
+        string auditGeographicDataId FK "Geographic location of audit"
+    }
+
+    %% ============================================================================
+    %% ⚫ ANALYTICS & DATA MANAGEMENT - Product Groups, Mass Balance & Environmental Data
+    %% Business intelligence, analytics, and environmental data tracking
+    %% ============================================================================
+
+    ProductGroup {
+        string productGroupId PK "🔑 Product group identifier"
+        string productGroupName
+        string productCategory "solid_biomass, liquid_biofuel, biogas"
+        string classification
+        string description
+        string[] typicalUses
+        string[] qualityStandards
+        string[] certificationRequirements
+        string regulatoryClassification
+        uri id "@id - unique identifier"
+        datetime lastUpdated
+    }
+
+    MassBalanceAccount {
+        string accountId PK "🔑 Mass balance account identifier"
+        string organizationId FK
+        string productGroupId FK
+        decimal periodInputs
+        decimal periodOutputs
+        decimal currentBalance
+        string balancingPeriod
+        decimal conversionFactors
+    }
+
+    EnergyCarbonData {
+        string energyCarbonDataId PK "🔑 Energy/carbon data identifier"
+        string dataType "moisture, transport, fuel consumption"
+        decimal value
+        string unit "percentage, kg_CO2e, liters, MJ"
+        string source "field_measurement, laboratory_analysis, default_values, calculated"
+        string measurementMethod "oven_dry, electrical_resistance, microwave, near_infrared, gravimetric"
+        string traceableUnitId FK "TRU this data applies to"
+        string measurementRecordId FK "Related measurement record"
+        datetime measurementTimestamp "When measurement was taken"
+        string measurementGeographicDataId FK "Location of measurement"
+        decimal temperatureConditions "Temperature during measurement (Celsius)"
+        decimal humidityConditions "Relative humidity during measurement (%)"
+        string qualityAssurance "QA/QC procedures followed"
+    }
+
+    %% ============================================================================
+    %% RELATIONSHIPS - Entity Connections Organized by Theme
+    %% ============================================================================
+
+    %% 🔵 ORGANIZATIONAL FOUNDATION RELATIONSHIPS
+    Organization ||--o{ Certificate : "has"
+    Certificate }o--|| CertificationScheme : "certifies_against"
+    Certificate }o--|| CertificationBody : "issued_by"
+    CertificationBody ||--o{ Audit : "conducts"
+
+    %% 🟢 CORE TRACEABILITY RELATIONSHIPS - Primary Data Flow
+    TraceableUnit ||--o{ SpeciesComponent : "contains_species"
+    TraceableUnit ||--o{ MaterialProcessing : "undergoes_processing"
+    TraceableUnit ||--o{ ProcessingHistory : "has_processing_timeline"
+    MaterialProcessing ||--o{ MeasurementRecord : "generates_measurements"
+    MaterialProcessing ||--o{ ProcessingHistory : "documented_by"
+    ProcessingHistory ||--o{ ProcessingHistory : "forms_processing_chain"
+    TraceableUnit ||--o{ BiometricIdentifier : "identified_by"
+    TraceableUnit ||--o{ DataReconciliation : "reconciled_through"
+    TraceableUnit ||--o{ LocationHistory : "has_location_history"
+    TraceableUnit ||--|| Claim : "has_sustainability_claims"
+    TrackingPoint ||--o{ MeasurementRecord : "captures_at"
+    TrackingPoint ||--o{ BiometricIdentifier : "scanned_at"
+    TraceableUnit ||--o{ TraceableUnit : "parent_child_relationship"
+
+    %% 🟤 MATERIAL & SUPPLY CHAIN RELATIONSHIPS
+    Material ||--o{ TraceableUnit : "material_type_reference"
+    Organization ||--o{ SupplyBase : "manages_supply_base"
+    SupplyBase ||--o{ TraceableUnit : "originates_tru"
+    Organization ||--o{ Supplier : "sources_from"
+    Organization ||--o{ Customer : "sells_to"
+
+    %% 🟠 TRANSACTION MANAGEMENT RELATIONSHIPS
+    Transaction ||--o{ TraceableUnit : "includes_tru"
+    TransactionBatch ||--o{ TraceableUnit : "contains_tru"
+    Transaction ||--o{ TransactionBatch : "contains"
+    Transaction ||--|| SalesDeliveryDocument : "documented_by"
+    TransactionBatch ||--o{ VerificationStatement : "verified_by"
+    Transaction ||--o{ DataReconciliation : "validated_by"
+    Organization ||--o{ Transaction : "creates"
+    Customer ||--o{ Transaction : "receives"
+
+    %% 🟡 SUSTAINABILITY & CLAIMS RELATIONSHIPS
+    Claim }o--|| CertificationScheme : "references_scheme"
+    Claim }o--o{ TraceableUnit : "inherited_from_parent_tru"
+
+    %% 🟣 GEOGRAPHIC & LOCATION RELATIONSHIPS - Spatial Integration
+    GeographicData ||--o{ TraceableUnit : "provides_harvest_location"
+    GeographicData ||--o{ TraceableUnit : "provides_current_location"
+    GeographicData ||--o{ Organization : "defines_operational_area"
+    GeographicData ||--o{ Transaction : "locates_transaction"
+    GeographicData ||--o{ SupplyBase : "defines_boundaries"
+    GeographicData ||--o{ Supplier : "locates_supplier"
+    GeographicData ||--o{ Customer : "locates_customer"
+    GeographicData ||--o{ Certificate : "defines_scope"
+    GeographicData ||--o{ SupplyBaseReport : "covers_area"
+    GeographicData ||--o{ Audit : "locates_audit"
+    GeographicData ||--o{ SpeciesComponent : "defines_origin"
+    GeographicData ||--o{ MaterialProcessing : "locates_processing"
+    GeographicData ||--o{ ProcessingHistory : "locates_processing_history"
+    GeographicData ||--o{ MeasurementRecord : "locates_measurement"
+    GeographicData ||--o{ BiometricIdentifier : "locates_capture"
+    LocationHistory }o--|| GeographicData : "references_location"
+    LocationHistory }o--o| MaterialProcessing : "triggered_by_processing"
+    LocationHistory }o--|| TraceableUnit : "tracks_movement_of"
+
+    %% 🔴 REPORTING & COMPLIANCE RELATIONSHIPS
+    Organization ||--o{ SupplyBaseReport : "prepares"
+    Audit }o--|| Organization : "audits"
+
+    %% ⚫ ANALYTICS & DATA MANAGEMENT RELATIONSHIPS
+    Organization ||--o{ MassBalanceAccount : "manages"
+    Organization ||--o{ ProductGroup : "defines"
+    MassBalanceAccount }o--|| ProductGroup : "tracks"
+    ProductGroup ||--o{ Material : "categorizes"
+    Certificate ||--o{ ProductGroup : "certifies"
+    Material ||--o{ EnergyCarbonData : "characterized_by"
+    TransactionBatch ||--o{ EnergyCarbonData : "associated_with"
+    TraceableUnit ||--o{ EnergyCarbonData : "characterized_by"
+    MeasurementRecord ||--o{ EnergyCarbonData : "generates_moisture_data"
+    ProcessingHistory ||--o{ EnergyCarbonData : "tracks_moisture_changes"
+
+    %% 🟢 ORGANIZATIONAL-TRU MANAGEMENT RELATIONSHIPS
+    Organization ||--o{ TrackingPoint : "operates"
+    Organization ||--o{ TraceableUnit : "manages"
+    Organization ||--o{ Operator : "employs"
+    Operator ||--o{ MaterialProcessing : "performs_processing"
+    Operator ||--o{ ProcessingHistory : "documents_processing"
+    Operator ||--o{ LocationHistory : "manages_movement"

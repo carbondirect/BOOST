@@ -1,0 +1,96 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/supply-base",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["SupplyBase"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "supplyBaseId": {
+        "type": "string"
+      },
+      "organizationId": {
+        "type": "string"
+      },
+      "supplyBaseName": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "harvestSites": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "skidRoads": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "forestRoads": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "equipmentDeployment": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "traceableUnitIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "speciesAvailable": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "supplyBaseGeographicDataId": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "supplyBaseId",
+      "organizationId",
+      "supplyBaseName",
+      "description"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "supplyBaseId" }
+      },
+      {
+        "!!": { "var": "organizationId" }
+      },
+      {
+        "!!": { "var": "supplyBaseName" }
+      },
+      {
+        "!!": { "var": "description" }
+      }
+    ]
+  }
+}

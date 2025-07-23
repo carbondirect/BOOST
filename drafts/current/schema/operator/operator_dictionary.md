@@ -3,39 +3,37 @@
 ## Operator
 
 ### Overview
-The `Operator` entity manages individual workers with certification tracking and geographic assignment capabilities as part of Phase 2 Kaulen framework enhancements. This entity represents the individual people responsible for operating equipment, taking measurements, and performing activities throughout the timber supply chain with accountability and traceability.
+The `Operator` entity represents personnel within the BOOST biomass chain of custody system, tracking individual workers who perform critical operations throughout the supply chain. This entity manages certification requirements, equipment authorizations, and operational responsibilities to ensure accountability, safety, and regulatory compliance across all biomass tracking and processing activities.
 
 ### Fields
 
-| Field                       | Type             | Required | Description                                                                 | Examples                                    |
+| Field                      | Type             | Required | Description                                                                 | Examples                                    |
 |----------------------------|------------------|----------|-----------------------------------------------------------------------------|---------------------------------------------|
-| `operatorId`               | string           | Yes      | Unique identifier for the operator (primary key)                          | `OP-001`, `OP-JOHN-SMITH-HARVESTER`       |
-| `operatorName`             | string           | Yes      | Full name of the operator                                                  | `John Smith`, `Maria Rodriguez`            |
-| `employeeId`               | string           | No       | Employee identification number                                             | `EMP-12345`, `PACIFIC-FOREST-001`         |
-| `organizationId`           | string (FK)      | Yes      | Foreign key to employing organization                                      | `ORG-PACIFIC-FOREST-001`                  |
-| `operatorRole`             | string           | Yes      | Primary role or job function (enum)                                       | `harvester`, `mill_operator`, `truck_driver` |
-| `certifications`           | array<string>    | No       | List of operator certifications and licenses                               | `["CDL-A", "CERTIFIED-LOGGER"]`           |
-| `equipmentQualifications`  | array<string>    | No       | Equipment the operator is qualified to use                                 | `["harvester_head", "log_loader"]`        |
-| `primaryWorkLocationId`    | string (FK)      | No       | Foreign key to primary work location                                       | `GEO-MILL-PACIFIC-001`                    |
-| `assignedTrackingPoints`   | array<string>    | No       | List of tracking points assigned to operator                               | `["TP-MILL-ENTRANCE-001"]`                |
-| `contactPhone`             | string           | No       | Operator contact phone number                                              | `+1-555-123-4567`                         |
-| `contactEmail`             | string (email)   | No       | Operator contact email address                                             | `j.smith@pacificforest.com`               |
-| `hireDate`                 | string (date)    | No       | Date operator was hired                                                    | `2020-03-15`                              |
-| `trainingRecords`          | array<string>    | No       | List of completed training programs                                        | `["SAFETY-TRAINING-2025"]`                |
-| `activeStatus`             | boolean          | No       | Whether operator is currently active                                       | `true`, `false`                           |
-| `@id`                      | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                         | `https://github.com/carbondirect/BOOST/schemas/operator/OP-001` |
-| `lastUpdated`              | string (date-time)| No      | Timestamp of the most recent data update                                  | `2025-07-21T15:45:00Z`                    |
+| `operatorId`               | string           | Yes      | Unique identifier for the operator (primary key)                          | `OP-ANDERSON-HARVEST-001`, `OP-PACIFIC-MILL-QA-042` |
+| `organizationId`           | string (FK)      | Yes      | Foreign key reference to employing organization                            | `ORG-KLAMATH-HARVEST-OPERATIONS-001`      |
+| `operatorName`             | string           | Yes      | Full name of the operator                                                  | `John Anderson`, `Maria Rodriguez-Chen`    |
+| `employeeId`               | string           | No       | Internal employee identification number                                    | `EMP-001234`, `H-5678`                     |
+| `operatorType`             | string           | Yes      | Type/role of operator within the supply chain (enum)                      | `harvester_operator`, `quality_inspector`  |
+| `certifications`           | array<string>    | No       | Array of certifications held by the operator                              | `["CDL_Class_A", "Chainsaw_Safety"]`      |
+| `equipmentAuthorizations`  | array<string>    | No       | Equipment the operator is authorized to operate                            | `["HARVESTER-001", "MILL-SCALE-A"]`       |
+| `contactInfo`              | string           | No       | Phone/email contact information                                            | `555-0123, john.anderson@klamathops.com`  |
+| `isActive`                 | boolean          | Yes      | Current employment status - true if actively employed                     | `true`, `false`                           |
+| `hireDate`                 | string (date)    | Yes      | Date when operator started employment                                      | `2018-04-15`                              |
+| `skillsQualifications`     | array<string>    | No       | Relevant skills and qualifications                                         | `["10+ years experience", "Bilingual"]`   |
+| `supervisorOperatorId`     | string (FK)      | No       | Foreign key reference to direct supervisor operator (optional)             | `OP-SUPERVISOR-HARVEST-001`               |
+| `@id`                      | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                         | `https://github.com/carbondirect/BOOST/schemas/operator/OP-ANDERSON-HARVEST-001` |
+| `lastUpdated`              | string (date-time)| Yes     | Timestamp of last record modification                                      | `2025-07-22T09:15:00Z`                    |
 
-### Operator Roles
+### Operator Types
 
-1. **harvester**
+1. **harvester_operator**
    - Operates harvesting equipment and machinery
    - Responsible for tree felling and initial processing
    - Creates initial TRU records and biometric captures
    - Manages harvest site operations and safety
    - Examples: Feller buncher operators, chainsaw operators
 
-2. **truck_driver**
+2. **transport_driver**
    - Responsible for timber transportation
    - Manages chain of custody during transport
    - Operates tracking point check-ins and check-outs
@@ -56,33 +54,47 @@ The `Operator` entity manages individual workers with certification tracking and
    - Documents quality metrics and defects
    - Examples: Lumber graders, quality control technicians
 
-5. **scale_operator**
+5. **processing_technician**
+   - Operates specialized processing equipment
+   - Manages technical processing operations
+   - Documents processing steps and quality metrics
+   - Maintains equipment calibration and performance
+   - Examples: Delimbing technicians, sorting specialists
+
+6. **equipment_maintenance**
+   - Maintains and repairs operational equipment
+   - Ensures equipment calibration and accuracy
+   - Manages preventive maintenance schedules
+   - Troubleshoots equipment malfunctions
+   - Examples: Mechanic technicians, calibration specialists
+
+7. **loading_operator**
+   - Operates loading and material handling equipment
+   - Manages TRU loading and unloading operations
+   - Documents material transfer activities
+   - Ensures safe and efficient material handling
+   - Examples: Crane operators, loader operators
+
+8. **scaling_specialist**
    - Operates weighing and measurement systems
    - Manages tracking point measurement activities
    - Documents volume and weight measurements
    - Maintains scale calibration and accuracy
    - Examples: Truck scale operators, volume measurement technicians
 
-6. **equipment_operator**
-   - Operates specialized equipment and machinery
-   - Maintains equipment performance and calibration
-   - Manages equipment-based data collection
-   - Ensures proper equipment operation and safety
-   - Examples: Crane operators, loader operators
+9. **environmental_monitor**
+   - Monitors environmental compliance and conditions
+   - Documents environmental impact assessments
+   - Ensures regulatory compliance adherence
+   - Manages environmental data collection
+   - Examples: Air quality monitors, soil impact assessors
 
-7. **supervisor**
-   - Manages teams and operations
-   - Oversees quality control and compliance
-   - Responsible for training and certification management
-   - Coordinates multi-operator activities
-   - Examples: Harvest supervisors, mill shift supervisors
-
-8. **technician**
-   - Maintains and calibrates technical equipment
-   - Supports technology-based identification and measurement
-   - Troubleshoots system issues and malfunctions
-   - Provides technical training and support
-   - Examples: Biometric system technicians, GPS technicians
+10. **safety_coordinator**
+    - Oversees workplace safety and compliance
+    - Manages safety training and certification programs
+    - Conducts safety inspections and audits
+    - Coordinates emergency response procedures
+    - Examples: Safety officers, training coordinators
 
 ### Key Features
 

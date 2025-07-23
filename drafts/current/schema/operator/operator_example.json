@@ -2,57 +2,51 @@
   "@context": {
     "Operator": "https://github.com/carbondirect/BOOST/schemas#Operator",
     "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "organizationId": "https://github.com/carbondirect/BOOST/schemas#organizationId",
     "operatorName": "https://github.com/carbondirect/BOOST/schemas#operatorName",
     "employeeId": "https://github.com/carbondirect/BOOST/schemas#employeeId",
-    "organizationId": "https://github.com/carbondirect/BOOST/schemas#organizationId",
-    "operatorRole": "https://github.com/carbondirect/BOOST/schemas#operatorRole",
+    "operatorType": "https://github.com/carbondirect/BOOST/schemas#operatorType",
     "certifications": "https://github.com/carbondirect/BOOST/schemas#certifications",
-    "equipmentQualifications": "https://github.com/carbondirect/BOOST/schemas#equipmentQualifications",
-    "primaryWorkLocationId": "https://github.com/carbondirect/BOOST/schemas#primaryWorkLocationId",
-    "assignedTrackingPoints": "https://github.com/carbondirect/BOOST/schemas#assignedTrackingPoints",
-    "contactPhone": "https://github.com/carbondirect/BOOST/schemas#contactPhone",
-    "contactEmail": "https://github.com/carbondirect/BOOST/schemas#contactEmail",
+    "equipmentAuthorizations": "https://github.com/carbondirect/BOOST/schemas#equipmentAuthorizations",
+    "contactInfo": "https://github.com/carbondirect/BOOST/schemas#contactInfo",
+    "isActive": "https://github.com/carbondirect/BOOST/schemas#isActive",
     "hireDate": "https://github.com/carbondirect/BOOST/schemas#hireDate",
-    "trainingRecords": "https://github.com/carbondirect/BOOST/schemas#trainingRecords",
-    "activeStatus": "https://github.com/carbondirect/BOOST/schemas#activeStatus",
+    "skillsQualifications": "https://github.com/carbondirect/BOOST/schemas#skillsQualifications",
+    "supervisorOperatorId": "https://github.com/carbondirect/BOOST/schemas#supervisorOperatorId",
     "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
     "id": "@id"
   },
   "@type": "Operator",
-  "@id": "https://github.com/carbondirect/BOOST/schemas/operator/OP-MIKE-JOHNSON-HARVESTER-001",
-  "operatorId": "OP-MIKE-JOHNSON-HARVESTER-001",
-  "operatorName": "Mike Johnson",
-  "employeeId": "PACIFIC-FOREST-EMP-1247",
-  "organizationId": "ORG-PACIFIC-FOREST-001",
-  "operatorRole": "harvester",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/operator/OP-ANDERSON-HARVEST-001",
+  "operatorId": "OP-ANDERSON-HARVEST-001",
+  "organizationId": "ORG-KLAMATH-HARVEST-OPERATIONS-001",
+  "operatorName": "John Anderson",
+  "employeeId": "EMP-001234",
+  "operatorType": "harvester_operator",
   "certifications": [
-    "CDL-A-OREGON-2027",
-    "CERTIFIED-LOGGER-OREGON-2026",
-    "OSHA-10-HOUR-SAFETY-2025",
-    "FIRST-AID-CPR-2025"
+    "CDL_Class_A",
+    "Heavy_Equipment_Operator",
+    "Chainsaw_Safety",
+    "First_Aid_CPR",
+    "OSHA_10",
+    "Equipment_Specific_Training"
   ],
-  "equipmentQualifications": [
-    "harvester_head",
-    "feller_buncher",
-    "delimber",
-    "optical_scanner",
-    "biometric_scanner",
-    "GPS"
+  "equipmentAuthorizations": [
+    "HARVESTER-KLAMATH-001",
+    "DELIMBER-KLAMATH-A",
+    "LOG-LOADER-001",
+    "GPS-TRACKER-HANDHELD"
   ],
-  "primaryWorkLocationId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
-  "assignedTrackingPoints": [
-    "TP-HARVEST-KLAMATH-04",
-    "TP-SKID-ROAD-KLAMATH-04-A"
-  ],
-  "contactPhone": "+1-541-555-7832",
-  "contactEmail": "m.johnson@pacificforest.com",
+  "contactInfo": "555-0123, john.anderson@klamathops.com",
+  "isActive": true,
   "hireDate": "2018-04-15",
-  "trainingRecords": [
-    "HARVESTER-OPERATION-TRAINING-2024",
-    "BIOMETRIC-SCANNER-CERTIFICATION-2025",
-    "KAULEN-FRAMEWORK-TRAINING-2025",
-    "CHAIN-OF-CUSTODY-TRAINING-2024"
+  "skillsQualifications": [
+    "10+ years forest harvesting experience",
+    "Biometric scanner operation certified",
+    "Mechanical troubleshooting skills",
+    "Safety training instructor qualified",
+    "Bilingual English/Spanish"
   ],
-  "activeStatus": true,
-  "lastUpdated": "2025-07-21T17:15:00Z"
+  "supervisorOperatorId": "OP-SUPERVISOR-HARVEST-001",
+  "lastUpdated": "2025-07-22T09:15:00Z"
 }

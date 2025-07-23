@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOOST ERD - Schema-Driven with Crow's Foot Notation</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&family=SF+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            margin: 0;
+            padding: 24px;
+            background: #fafbfc;
+            color: #24292f;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid #d1d9e0;
+            box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
+        }
+        
+        .header h1 {
+            color: #101828;
+            margin: 0 0 8px 0;
+            font-weight: 600;
+            font-size: 32px;
+            letter-spacing: -0.02em;
+        }
+        
+        .header p {
+            color: #667085;
+            font-size: 16px;
+            margin: 0;
+            font-weight: 400;
+        }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #d1d9e0;
+            box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            background: #f8fafc;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+        
+        .legend-item:hover {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid;
+            flex-shrink: 0;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+        
+        .btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+        
+        .btn.active {
+            background: #1f2937;
+            color: white;
+            border-color: #1f2937;
+        }
+        
+        .svg-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #d1d9e0;
+            box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #667085;
+            font-size: 16px;
+        }
+        
+        .entity {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .entity:hover {
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+        }
+        
+        .entity-header {
+            font-family: 'SF Pro Display', system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: -0.01em;
+        }
+        
+        .entity-field {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 11px;
+            fill: #374151;
+            font-weight: 400;
+        }
+        
+        .entity-pk {
+            font-family: 'SF Mono', monospace;
+            font-weight: 500;
+            font-size: 11px;
+            fill: #dc2626;
+        }
+        
+        .entity-fk {
+            font-family: 'SF Mono', monospace;
+            font-weight: 500;
+            font-size: 11px;
+            fill: #2563eb;
+        }
+        
+        .entity-required {
+            font-family: 'SF Mono', monospace;
+            font-weight: 500;
+            font-size: 11px;
+            fill: #1f2937;
+        }
+        
+        .relationship {
+            fill: none;
+            transition: all 0.15s ease;
+        }
+        
+        .relationship-identifying {
+            stroke: #374151;
+            stroke-width: 1.5;
+        }
+        
+        .relationship-non-identifying {
+            stroke: #9ca3af;
+            stroke-width: 1;
+            stroke-dasharray: 3,3;
+        }
+        
+        .relationship:hover {
+            stroke: #1f2937 !important;
+            stroke-width: 2 !important;
+        }
+        
+        .relationship-label {
+            font-size: 10px;
+            fill: #6b7280;
+            text-anchor: middle;
+            pointer-events: none;
+            font-weight: 500;
+        }
+        
+        .crowsfoot-line {
+            stroke: #374151;
+            stroke-width: 1;
+            fill: none;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 12px;
+            background: rgba(17, 24, 39, 0.95);
+            color: white;
+            border-radius: 8px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+            max-width: 300px;
+            font-weight: 400;
+            line-height: 1.4;
+            backdrop-filter: blur(8px);
+        }
+        
+        .tooltip code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'SF Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BOOST ERD</h1>
+            <p>Schema-driven visualization with crow's foot notation</p>
+        </div>
+        
+        <div class="loading" id="loading">Loading schema files...</div>
+        
+        <div class="legend" id="legend" style="display: none;"></div>
+        
+        <div class="controls" id="controls" style="display: none;">
+            <button class="btn active" onclick="showAll()">All Entities</button>
+            <button class="btn" onclick="filterByArea('Core Traceability')">Core Traceability</button>
+            <button class="btn" onclick="filterByArea('Organizational')">Organizations</button>
+            <button class="btn" onclick="filterByArea('Transaction')">Transactions</button>
+            <button class="btn" onclick="exportDiagram()">Export SVG</button>
+        </div>
+        
+        <div class="svg-container" id="svg-container" style="display: none;">
+            <svg id="erd-svg" width="1600" height="1000"></svg>
+        </div>
+        
+        <div class="tooltip" id="tooltip"></div>
+    </div>
+
+    <script>
+        // Configuration with refined aesthetics
+        const config = {
+            width: 1600,
+            height: 1000,
+            entityWidth: 200,
+            entityFieldHeight: 16,
+            entityPadding: 8,
+            headerHeight: 28,
+            colors: {
+                'Core Traceability': { 
+                    fill: 'rgba(220, 252, 231, 0.4)', 
+                    stroke: '#10b981', 
+                    header: '#059669'
+                },
+                'Organizational': { 
+                    fill: 'rgba(219, 234, 254, 0.4)', 
+                    stroke: '#3b82f6', 
+                    header: '#2563eb'
+                },
+                'Transaction': { 
+                    fill: 'rgba(254, 243, 199, 0.4)', 
+                    stroke: '#f59e0b', 
+                    header: '#d97706'
+                },
+                'Material': { 
+                    fill: 'rgba(231, 229, 228, 0.4)', 
+                    stroke: '#78716c', 
+                    header: '#57534e'
+                },
+                'Geographic': { 
+                    fill: 'rgba(243, 232, 255, 0.4)', 
+                    stroke: '#a855f7', 
+                    header: '#9333ea'
+                },
+                'Personnel': { 
+                    fill: 'rgba(254, 242, 242, 0.4)', 
+                    stroke: '#ef4444', 
+                    header: '#dc2626'
+                }
+            }
+        };
+
+        // Schema loading and parsing
+        const schemaFiles = [
+            'traceable_unit/validation_schema.json',
+            'organization/validation_schema.json',
+            'operator/validation_schema.json',
+            'processing_history/validation_schema.json',
+            'transaction/validation_schema.json'
+        ];
+
+        let entities = [];
+        let relationships = [];
+
+        async function loadSchemaFile(path) {
+            try {
+                const response = await fetch(`../schema/${path}`);
+                if (!response.ok) {
+                    console.warn(`Could not load ${path}`);
+                    return null;
+                }
+                return await response.json();
+            } catch (error) {
+                console.warn(`Error loading ${path}:`, error);
+                return null;
+            }
+        }
+
+        function extractEntityFromSchema(schema, filename) {
+            // Handle different schema structures
+            const schemaData = schema.schema || schema;
+            if (!schemaData || !schemaData.properties) return null;
+
+            // Determine entity name from filename or schema
+            const entityName = filename.split('/')[0]
+                .split('_')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join('');
+
+            // Categorize entity
+            let area = 'Other';
+            if (['TraceableUnit', 'ProcessingHistory', 'MaterialProcessing'].includes(entityName)) {
+                area = 'Core Traceability';
+            } else if (['Organization', 'Certificate'].includes(entityName)) {
+                area = 'Organizational';
+            } else if (['Transaction', 'TransactionBatch'].includes(entityName)) {
+                area = 'Transaction';
+            } else if (entityName === 'Operator') {
+                area = 'Personnel';
+            }
+
+            // Extract fields
+            const fields = [];
+            const required = schemaData.required || [];
+            
+            Object.entries(schemaData.properties).forEach(([fieldName, fieldDef]) => {
+                if (fieldName.startsWith('@')) return; // Skip JSON-LD fields
+                
+                let fieldType = fieldDef.type || 'string';
+                let isFK = false;
+                let isPK = false;
+                
+                // Detect primary keys
+                if (fieldName.toLowerCase().includes('id') && 
+                    fieldName.toLowerCase().includes(entityName.toLowerCase())) {
+                    isPK = true;
+                }
+                
+                // Detect foreign keys
+                if (fieldName.toLowerCase().endsWith('id') && 
+                    !isPK && 
+                    fieldDef.description && 
+                    (fieldDef.description.toLowerCase().includes('foreign key') ||
+                     fieldDef.description.toLowerCase().includes('reference'))) {
+                    isFK = true;
+                }
+                
+                // Handle enums
+                if (fieldDef.enum) {
+                    fieldType = `enum(${fieldDef.enum.length})`;
+                }
+                
+                fields.push({
+                    name: fieldName,
+                    type: fieldType,
+                    isPK,
+                    isFK,
+                    required: required.includes(fieldName),
+                    description: fieldDef.description || ''
+                });
+            });
+
+            return {
+                id: entityName,
+                name: entityName,
+                area,
+                description: schemaData.description || `${entityName} entity`,
+                fields,
+                x: Math.random() * 1200 + 100,
+                y: Math.random() * 600 + 100
+            };
+        }
+
+        function detectRelationships(entities) {
+            const rels = [];
+            
+            entities.forEach(entity => {
+                entity.fields.forEach(field => {
+                    if (field.isFK) {
+                        // Try to find target entity
+                        const targetEntityName = field.name
+                            .replace(/Id$/, '')
+                            .split(/(?=[A-Z])/)
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join('');
+                        
+                        const targetEntity = entities.find(e => 
+                            e.name === targetEntityName || 
+                            e.name.toLowerCase() === targetEntityName.toLowerCase()
+                        );
+                        
+                        if (targetEntity) {
+                            rels.push({
+                                from: targetEntity.id,
+                                to: entity.id,
+                                label: field.name.replace(/Id$/, ''),
+                                type: field.required ? 'identifying' : 'non-identifying',
+                                fromCard: 'one',
+                                toCard: 'many'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            return rels;
+        }
+
+        async function loadAllSchemas() {
+            const loadingEl = document.getElementById('loading');
+            loadingEl.textContent = 'Loading schema files...';
+            
+            for (const schemaFile of schemaFiles) {
+                const schema = await loadSchemaFile(schemaFile);
+                if (schema) {
+                    const entity = extractEntityFromSchema(schema, schemaFile);
+                    if (entity) {
+                        entities.push(entity);
+                    }
+                }
+            }
+            
+            // Detect relationships
+            relationships = detectRelationships(entities);
+            
+            // Position entities better
+            positionEntities();
+            
+            loadingEl.style.display = 'none';
+            document.getElementById('legend').style.display = 'grid';
+            document.getElementById('controls').style.display = 'flex';
+            document.getElementById('svg-container').style.display = 'block';
+            
+            initializeVisualization();
+        }
+
+        function positionEntities() {
+            const areas = ['Core Traceability', 'Organizational', 'Transaction', 'Personnel'];
+            const cols = 3;
+            const spacing = { x: 250, y: 200 };
+            
+            let currentArea = '';
+            let areaIndex = 0;
+            let entityIndex = 0;
+            
+            entities.sort((a, b) => a.area.localeCompare(b.area));
+            
+            entities.forEach((entity, i) => {
+                if (entity.area !== currentArea) {
+                    currentArea = entity.area;
+                    areaIndex++;
+                    entityIndex = 0;
+                }
+                
+                const col = entityIndex % cols;
+                const row = Math.floor(entityIndex / cols);
+                
+                entity.x = 50 + (areaIndex * 400) + (col * spacing.x);
+                entity.y = 50 + (row * spacing.y);
+                
+                entityIndex++;
+            });
+        }
+
+        // D3 Visualization
+        const svg = d3.select('#erd-svg');
+        const tooltip = d3.select('#tooltip');
+        let currentFilter = null;
+
+        function createLegend() {
+            const legend = d3.select('#legend');
+            const areas = [...new Set(entities.map(e => e.area))];
+            
+            areas.forEach(area => {
+                const count = entities.filter(e => e.area === area).length;
+                const item = legend.append('div')
+                    .attr('class', 'legend-item')
+                    .on('click', () => filterByArea(area));
+                
+                const color = config.colors[area] || config.colors['Other'];
+                
+                item.append('div')
+                    .attr('class', 'legend-color')
+                    .style('background-color', color.fill)
+                    .style('border-color', color.stroke);
+                
+                item.append('span')
+                    .text(`${area} (${count})`);
+            });
+        }
+
+        function drawEntity(entity) {
+            const color = config.colors[entity.area] || config.colors['Other'];
+            const visibleFields = entity.fields.slice(0, 6);
+            const entityHeight = config.headerHeight + (visibleFields.length * config.entityFieldHeight) + (config.entityPadding * 2) + 4;
+            
+            const g = svg.append('g')
+                .attr('class', 'entity')
+                .attr('data-area', entity.area)
+                .attr('data-id', entity.id);
+
+            // Entity background
+            g.append('rect')
+                .attr('x', entity.x)
+                .attr('y', entity.y)
+                .attr('width', config.entityWidth)
+                .attr('height', entityHeight)
+                .attr('fill', color.fill)
+                .attr('stroke', color.stroke)
+                .attr('stroke-width', 1)
+                .attr('rx', 6);
+
+            // Header
+            g.append('rect')
+                .attr('x', entity.x)
+                .attr('y', entity.y)
+                .attr('width', config.entityWidth)
+                .attr('height', config.headerHeight)
+                .attr('fill', color.header)
+                .attr('rx', 6);
+                
+            // Fix header bottom corners
+            g.append('rect')
+                .attr('x', entity.x)
+                .attr('y', entity.y + config.headerHeight - 6)
+                .attr('width', config.entityWidth)
+                .attr('height', 6)
+                .attr('fill', color.header);
+
+            // Entity name
+            g.append('text')
+                .attr('class', 'entity-header')
+                .attr('x', entity.x + config.entityWidth / 2)
+                .attr('y', entity.y + config.headerHeight / 2 + 4)
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .text(entity.name);
+
+            // Fields
+            visibleFields.forEach((field, i) => {
+                const fieldY = entity.y + config.headerHeight + config.entityPadding + (i * config.entityFieldHeight) + 12;
+                let fieldClass = 'entity-field';
+                
+                if (field.isPK) fieldClass = 'entity-pk';
+                else if (field.isFK) fieldClass = 'entity-fk';
+                else if (field.required) fieldClass = 'entity-required';
+                
+                const prefix = field.isPK ? '🔑 ' : field.isFK ? '🔗 ' : field.required ? '• ' : '  ';
+                
+                g.append('text')
+                    .attr('class', fieldClass)
+                    .attr('x', entity.x + 8)
+                    .attr('y', fieldY)
+                    .text(`${prefix}${field.name}: ${field.type}`);
+            });
+
+            // Show more indicator
+            if (entity.fields.length > 6) {
+                g.append('text')
+                    .attr('class', 'entity-field')
+                    .attr('x', entity.x + 8)
+                    .attr('y', entity.y + config.headerHeight + config.entityPadding + (6 * config.entityFieldHeight) + 12)
+                    .style('fill', '#9ca3af')
+                    .style('font-style', 'italic')
+                    .text(`... ${entity.fields.length - 6} more fields`);
+            }
+
+            // Hover events
+            g.on('mouseover', function(event) {
+                const fieldsList = entity.fields.slice(0, 4)
+                    .map(f => `<code>${f.name}</code> (${f.type})${f.required ? ' *' : ''}`)
+                    .join('<br/>');
+                
+                tooltip.style('opacity', 1)
+                    .html(`<strong>${entity.name}</strong><br/>${entity.description}<br/><br/>${fieldsList}`)
+                    .style('left', (event.pageX + 10) + 'px')
+                    .style('top', (event.pageY - 10) + 'px');
+            })
+            .on('mouseout', () => tooltip.style('opacity', 0))
+            .on('click', () => highlightRelationships(entity.id));
+
+            return entityHeight;
+        }
+
+        function drawCrowsFootRelationships() {
+            relationships.forEach(rel => {
+                const fromEntity = entities.find(e => e.id === rel.from);
+                const toEntity = entities.find(e => e.id === rel.to);
+                
+                if (fromEntity && toEntity) {
+                    drawRelationship(fromEntity, toEntity, rel);
+                }
+            });
+        }
+
+        function drawRelationship(fromEntity, toEntity, rel) {
+            const g = svg.append('g')
+                .attr('class', 'relationship-group')
+                .attr('data-from', rel.from)
+                .attr('data-to', rel.to);
+
+            // Calculate connection points
+            const fromX = fromEntity.x + config.entityWidth;
+            const fromY = fromEntity.y + 50;
+            const toX = toEntity.x;
+            const toY = toEntity.y + 50;
+
+            // Draw main line
+            const line = g.append('path')
+                .attr('class', `relationship relationship-${rel.type}`)
+                .attr('d', `M ${fromX} ${fromY} L ${toX} ${toY}`);
+
+            // Draw crow's foot at "many" end
+            if (rel.toCard === 'many') {
+                drawCrowsFoot(g, toX, toY, true);
+            }
+            
+            // Draw single line at "one" end
+            drawSingleMark(g, fromX, fromY, false);
+
+            // Label
+            g.append('text')
+                .attr('class', 'relationship-label')
+                .attr('x', (fromX + toX) / 2)
+                .attr('y', (fromY + toY) / 2 - 4)
+                .text(rel.label);
+        }
+
+        function drawCrowsFoot(g, x, y, isEnd) {
+            const size = 8;
+            const direction = isEnd ? -1 : 1;
+            
+            // Three lines forming crow's foot
+            ['M', 'L', 'M', 'L', 'M', 'L'].forEach((cmd, i) => {
+                if (i % 2 === 0) {
+                    const offset = (i === 0) ? -size : (i === 2) ? 0 : size;
+                    g.append('path')
+                        .attr('class', 'crowsfoot-line')
+                        .attr('d', `M ${x} ${y} L ${x + (direction * 10)} ${y + offset}`);
+                }
+            });
+        }
+
+        function drawSingleMark(g, x, y, isEnd) {
+            const direction = isEnd ? -1 : 1;
+            g.append('line')
+                .attr('class', 'crowsfoot-line')
+                .attr('x1', x + (direction * 6))
+                .attr('y1', y - 4)
+                .attr('x2', x + (direction * 6))
+                .attr('y2', y + 4);
+        }
+
+        function showAll() {
+            currentFilter = null;
+            svg.selectAll('.entity').style('opacity', 1);
+            svg.selectAll('.relationship-group').style('opacity', 0.7);
+            updateActiveButton(0);
+        }
+
+        function filterByArea(area) {
+            currentFilter = area;
+            svg.selectAll('.entity').style('opacity', function() {
+                return d3.select(this).attr('data-area') === area ? 1 : 0.2;
+            });
+            svg.selectAll('.relationship-group').style('opacity', 0.3);
+        }
+
+        function highlightRelationships(entityId) {
+            svg.selectAll('.relationship-group').style('opacity', function() {
+                const from = d3.select(this).attr('data-from');
+                const to = d3.select(this).attr('data-to');
+                return (from === entityId || to === entityId) ? 1 : 0.2;
+            });
+            
+            svg.selectAll('.entity').style('opacity', function() {
+                const id = d3.select(this).attr('data-id');
+                const isConnected = relationships.some(rel => 
+                    (rel.from === entityId && rel.to === id) || 
+                    (rel.to === entityId && rel.from === id)
+                );
+                return (id === entityId || isConnected) ? 1 : 0.3;
+            });
+        }
+
+        function updateActiveButton(index) {
+            d3.selectAll('.btn').classed('active', false);
+            d3.selectAll('.btn').nodes()[index].classList.add('active');
+        }
+
+        function exportDiagram() {
+            const svgElement = document.getElementById('erd-svg');
+            const serializer = new XMLSerializer();
+            const svgString = serializer.serializeToString(svgElement);
+            
+            const blob = new Blob([svgString], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'boost-erd-schema-driven.svg';
+            a.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        function initializeVisualization() {
+            createLegend();
+            entities.forEach(entity => drawEntity(entity));
+            drawCrowsFootRelationships();
+        }
+
+        // Start the application
+        loadAllSchemas();
+    </script>
+</body>
+</html>

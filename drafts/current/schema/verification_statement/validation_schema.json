@@ -1,0 +1,57 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/verification-statement",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["VerificationStatement"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "statementId": {
+        "type": "string"
+      },
+      "verificationDate": {
+        "type": "string",
+        "format": "date"
+      },
+      "issuingBody": {
+        "type": "string"
+      },
+      "scope": {
+        "type": "string"
+      },
+      "transactionBatchId": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "statementId",
+      "verificationDate",
+      "issuingBody"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "statementId" }
+      },
+      {
+        "!!": { "var": "verificationDate" }
+      },
+      {
+        "!!": { "var": "issuingBody" }
+      }
+    ]
+  }
+}
