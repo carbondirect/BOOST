@@ -83,8 +83,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ├── data/                    # Optional: Sample or test data
 ├── tests/                   # Integration testing scenarios
 │   └── BOOST_INTEGRATION_TESTING_SCENARIOS.md
-└── doc/                     # Implementation documentation
-    ├── BOOST_TRACEABILITY_SYSTEM_IMPLEMENTATION_SUMMARY.md
+└── drafts/current/specifications/  # Technical specifications and migration guides
     └── MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md
 ```
 
@@ -99,15 +98,15 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 - `use-cases/`: User scenarios guiding spec design
 - `presentations/`: Slides and visual materials
 - `tests/`: Integration testing scenarios for BOOST Traceability System validation
-- `doc/`: Implementation guides and migration documentation
+- `drafts/current/specifications/`: Technical specifications and migration guides
 
 ## 🚀 Getting Started
 
 ### For Developers
 1. **Explore the Interactive ERD**: Use the [Interactive ERD Navigator](erd-navigator/index.html) to explore all 29 entities with dynamic filtering and GitHub discussion integration
 2. **Review Entity Schemas**: Check `drafts/current/schema/` for JSON validation schemas and examples
-3. **Understand Implementation**: Read `doc/BOOST_TRACEABILITY_SYSTEM_IMPLEMENTATION_SUMMARY.md`
-4. **Migration Guide**: See `doc/MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md` for conceptual changes
+3. **Review Schema Organization**: Check entity schemas in `drafts/current/schema/` for implementation details
+4. **Migration Guide**: See `drafts/current/specifications/MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md` for conceptual changes
 
 ### For Standards Organizations
 - **California Agencies**: GeoJSON spatial data ready for regulatory integration
