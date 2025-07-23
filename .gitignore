@@ -19,3 +19,6 @@
 _minted-*
 */~undo-tree*
 .DS_Store
+
+# California agencies directory - keep local but don't track
+drafts/current/communications/california_agencies/
