@@ -3,7 +3,7 @@
 ## Claim
 
 ### Overview
-The `Claim` entity enables species-specific sustainability claims with TRU references and inheritance tracking for comprehensive certification chain-of-custody in the Kaulen framework. This entity supports multiple certification schemes and enables granular tracking of sustainability claims through the processing chain, including parent-child TRU inheritance.
+The `Claim` entity enables species-specific sustainability claims with TRU references and inheritance tracking for comprehensive certification chain-of-custody in the BOOST traceability system. This entity supports multiple certification schemes and enables granular tracking of sustainability claims through the processing chain, including parent-child TRU inheritance.
 
 ### Fields
 

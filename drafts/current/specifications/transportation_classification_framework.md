@@ -224,9 +224,9 @@ Use this matrix to determine the appropriate classification:
 3. **Mixed Loads**: Claims for different TRUs must be maintained separately
 4. **Quality Changes**: Claims may be invalidated if quality standards are compromised
 
-## Integration with Kaulen Framework
+## Integration with BOOST Traceability System
 
-The transportation framework directly supports Kaulen framework requirements:
+The transportation framework directly supports BOOST traceability system requirements:
 
 ### Three Critical Tracking Points
 - **Harvest Site → Skid Road**: Often involves loading (transformative)
@@ -272,4 +272,4 @@ The transportation framework directly supports Kaulen framework requirements:
 
 The transportation classification framework provides a systematic approach to handling the complexity of modern supply chain transportation while maintaining the precision required for comprehensive traceability. By distinguishing between pure movement and transformative transport, the framework ensures that all relevant information is captured without over-complicating simple operations.
 
-This approach supports the media-interruption-free traceability requirements of the Kaulen framework while providing the flexibility needed for diverse transportation scenarios in biomass supply chains.
+This approach supports the media-interruption-free traceability requirements of the BOOST traceability system while providing the flexibility needed for diverse transportation scenarios in biomass supply chains.

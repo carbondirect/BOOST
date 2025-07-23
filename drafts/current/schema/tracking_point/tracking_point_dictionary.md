@@ -3,7 +3,7 @@
 ## TrackingPoint
 
 ### Overview
-The `TrackingPoint` entity implements the three critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the Kaulen framework for media-interruption-free traceability. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using various equipment and identification technologies.
+The `TrackingPoint` entity implements the three critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the BOOST traceability system for media-interruption-free traceability. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using various equipment and identification technologies.
 
 ### Fields
 
@@ -56,7 +56,7 @@ The `TrackingPoint` entity implements the three critical tracking points (harves
 ### Key Features
 
 1. **Critical Point Infrastructure**
-   - Implements Kaulen framework's three critical points
+   - Implements BOOST traceability system's three critical points
    - Equipment redundancy for media break prevention
    - Location-based verification capabilities
    - Operator accountability and management

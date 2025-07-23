@@ -3,7 +3,7 @@
 ## MaterialProcessing
 
 ### Overview
-The `MaterialProcessing` entity tracks all technical manipulations with input/output TRU references and species composition changes to support complete audit trails in the Kaulen framework. This entity captures every processing operation that transforms, moves, or modifies TRUs throughout the supply chain, maintaining complete traceability and volume conservation validation.
+The `MaterialProcessing` entity tracks all technical manipulations with input/output TRU references and species composition changes to support complete audit trails in the BOOST traceability system. This entity captures every processing operation that transforms, moves, or modifies TRUs throughout the supply chain, maintaining complete traceability and volume conservation validation.
 
 ### Fields
 

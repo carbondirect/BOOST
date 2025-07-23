@@ -697,7 +697,7 @@
     </div>
 
     <script>
-        // Configuration based on blueprint
+        // Configuration based on schema
         const config = {
             width: 3200,
             height: 2000,
@@ -890,7 +890,7 @@
         const entityMetadata = {
             'TraceableUnit': { 
                 area: 'core_traceability', 
-                description: '🔑 CENTRAL: Unique biomass tracking unit with Kaulen framework integration',
+                description: '🔑 CENTRAL: Unique biomass tracking unit with BOOST traceability system integration',
                 position: { x: 1600, y: 1000 }
             },
             'MaterialProcessing': { 
@@ -1057,13 +1057,13 @@
             return entities;
         }
 
-        // Complete entities based on boost_erd.mermaid blueprint - will be replaced by dynamic loading
+        // Complete entities based on schema definitions - will be replaced by dynamic loading
         const staticEntities = [
             {
                 id: 'TraceableUnit',
                 name: 'TraceableUnit',
                 area: 'core_traceability',
-                description: '🔑 CENTRAL: Unique biomass tracking unit with Kaulen framework integration',
+                description: '🔑 CENTRAL: Unique biomass tracking unit with BOOST traceability system integration',
                 fields: [
                     { name: 'traceableUnitId', type: 'string', isPK: true, required: true },
                     { name: 'unitType', type: 'enum', required: true },
@@ -1600,7 +1600,7 @@
             y: entityPositions[entity.id]?.y || 1000
         }));
 
-        // Relationships based exactly on boost_erd.mermaid blueprint
+        // Relationships based on schema definitions
         const relationships = [
             // 🔵 ORGANIZATIONAL FOUNDATION RELATIONSHIPS
             { from: 'Organization', to: 'Certificate', label: 'has', type: 'identifying', fromCard: 'one', toCard: 'many' },
@@ -3035,7 +3035,7 @@
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'boost-erd-blueprint-based-v2-2-smart-routing.svg';
+            a.download = 'boost-erd-interactive-v2-2-smart-routing.svg';
             a.click();
             
             URL.revokeObjectURL(url);

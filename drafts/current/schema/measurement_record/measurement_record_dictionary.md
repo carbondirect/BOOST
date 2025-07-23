@@ -3,7 +3,7 @@
 ## MeasurementRecord
 
 ### Overview
-The `MeasurementRecord` entity captures measurements at different tracking points with TRU references and species-specific data to support automated reconciliation between forest and mill measurements. This entity enables complete volume tracking, quality assessment, and measurement validation throughout the supply chain as required by the Kaulen framework.
+The `MeasurementRecord` entity captures measurements at different tracking points with TRU references and species-specific data to support automated reconciliation between forest and mill measurements. This entity enables complete volume tracking, quality assessment, and measurement validation throughout the supply chain as required by the BOOST traceability system.
 
 ### Fields
 

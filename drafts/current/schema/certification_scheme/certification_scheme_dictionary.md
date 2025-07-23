@@ -3,7 +3,7 @@
 ## CertificationScheme
 
 ### Overview
-The `CertificationScheme` entity defines certification standards and requirements with geographic applicability as part of Phase 2 Kaulen framework enhancements. This entity provides the foundational definitions for sustainability certifications, their requirements, and applicable contexts for use throughout the timber supply chain.
+The `CertificationScheme` entity defines certification standards and requirements with geographic applicability as part of Phase 2 BOOST traceability system enhancements. This entity provides the foundational definitions for sustainability certifications, their requirements, and applicable contexts for use throughout the timber supply chain.
 
 ### Fields
 

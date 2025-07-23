@@ -3,7 +3,7 @@
 ## LocationHistory
 
 ### Overview
-The `LocationHistory` entity implements comprehensive location history tracking for TRUs with timestamps, processing links, and verification methods to support complete movement audit trails. This entity enables tracking every location change, transport method, and verification approach throughout the TRU lifecycle as required by the Kaulen framework for media-interruption-free traceability.
+The `LocationHistory` entity implements comprehensive location history tracking for TRUs with timestamps, processing links, and verification methods to support complete movement audit trails. This entity enables tracking every location change, transport method, and verification approach throughout the TRU lifecycle as required by the BOOST traceability system for media-interruption-free traceability.
 
 ### Fields
 

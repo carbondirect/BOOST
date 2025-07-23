@@ -3,7 +3,7 @@
 ## Material
 
 ### Overview
-The `Material` entity serves as a reference table for material types with geographic data references and processing specifications to support species-specific sustainability claims in the Kaulen framework. This entity has been refactored from a traceable entity to a reference table, with TraceableUnit now serving as the primary traceable entity for individual wood pieces.
+The `Material` entity serves as a reference table for material types with geographic data references and processing specifications to support species-specific sustainability claims in the BOOST traceability system. This entity has been refactored from a traceable entity to a reference table, with TraceableUnit now serving as the primary traceable entity for individual wood pieces.
 
 ### Fields
 

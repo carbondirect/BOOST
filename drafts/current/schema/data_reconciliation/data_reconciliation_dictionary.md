@@ -3,7 +3,7 @@
 ## DataReconciliation
 
 ### Overview
-The `DataReconciliation` entity reconciles measurements between forest and mill with TRU references and species-specific discrepancies to ensure data accuracy and prevent media breaks. This entity enables automated comparison of harvest measurements with mill scale measurements, identifies discrepancies, and tracks resolution status as required by the Kaulen framework for measurement validation.
+The `DataReconciliation` entity reconciles measurements between forest and mill with TRU references and species-specific discrepancies to ensure data accuracy and prevent media breaks. This entity enables automated comparison of harvest measurements with mill scale measurements, identifies discrepancies, and tracks resolution status as required by the BOOST traceability system for measurement validation.
 
 ### Fields
 

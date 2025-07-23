@@ -3,7 +3,7 @@
 ## Organization
 
 ### Overview
-The `Organization` entity manages companies and institutions with geographic data references and certification management capabilities as part of Phase 2 Kaulen framework enhancements. This entity serves as the foundational record for all organizational entities participating in the timber supply chain, including harvesters, processors, certifiers, and other stakeholders.
+The `Organization` entity manages companies and institutions with geographic data references and certification management capabilities as part of the BOOST traceability system enhancements. This entity serves as the foundational record for all organizational entities participating in the timber supply chain, including harvesters, processors, certifiers, and other stakeholders.
 
 ### Fields
 

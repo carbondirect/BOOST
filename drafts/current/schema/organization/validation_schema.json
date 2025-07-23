@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/carbondirect/BOOST/schemas/organization",
   "title": "Organization",
-  "description": "Organization entity with geographic data references and certification management capabilities for Phase 2 Kaulen framework enhancements",
+  "description": "Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements",
   "type": "object",
   "properties": {
     "@context": {

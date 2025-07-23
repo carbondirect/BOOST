@@ -50,9 +50,9 @@ These ERD files have been deprecated in favor of the new Interactive ERD Navigat
 ## Replacement Files
 
 ### Current Active Files
-- **`boost_erd_comprehensive.html`** - Main interactive ERD v2.0
-- **`boost_erd_entities_complete.json`** - Complete entity definitions
-- **`BOOST_ERD_COMPREHENSIVE_README.md`** - Full documentation
+- **`/erd-navigator/index.html`** - Main ERD Navigator (current system)
+- **`/erd-navigator/README.md`** - ERD Navigator documentation
+- **Schema directory** - Entity definitions at `/drafts/current/schema/*/validation_schema.json`
 
 ### Features Evolution
 
@@ -68,9 +68,9 @@ These ERD files have been deprecated in favor of the new Interactive ERD Navigat
 ## Migration Guide
 
 ### For Developers
-1. Update references to use `boost_erd_comprehensive.html`
-2. Use `boost_erd_entities_complete.json` for entity definitions
-3. Reference schema files in `/schema/` for validation
+1. Use the main ERD Navigator at `/erd-navigator/index.html`
+2. Reference entity definitions from `/drafts/current/schema/*/validation_schema.json`
+3. All legacy ERD files have been removed - use only the main ERD Navigator
 
 ### For Documentation
 1. Replace ERD images with exports from v2.0
@@ -121,6 +121,6 @@ These deprecated files are preserved for:
 ---
 
 **Superseded by**: BOOST Data Standard v2.2 Interactive ERD Navigator  
-**New main file**: `../current/boost_erd_blueprint_based.html` (Interactive ERD)  
+**Current system**: `/erd-navigator/index.html` (Main ERD Navigator)  
 **Stakeholder Interface**: `../../../../erd-navigator/index.html` (Navigator)  
 **Documentation**: `../current/BOOST_ERD_COMPREHENSIVE_README.md`

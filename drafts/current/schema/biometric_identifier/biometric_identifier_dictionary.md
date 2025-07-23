@@ -3,7 +3,7 @@
 ## BiometricIdentifier
 
 ### Overview
-The `BiometricIdentifier` entity provides optical biometric identification for TRUs with multi-species support to enable attachment-free wood identification as required by the Kaulen framework. This entity captures unique optical patterns from individual pieces of wood without requiring physical attachments, supporting media-interruption-free traceability through natural wood characteristics.
+The `BiometricIdentifier` entity provides optical biometric identification for TRUs with multi-species support to enable attachment-free wood identification as required by the BOOST traceability system. This entity captures unique optical patterns from individual pieces of wood without requiring physical attachments, supporting media-interruption-free traceability through natural wood characteristics.
 
 ### Fields
 

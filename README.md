@@ -3,7 +3,7 @@
 ## Overview
 This repository contains the working draft and artifacts of the Biomass Chain of Custody (CoC) Data Standard, which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
-**Current Version: v2.2.0** - Interactive ERD Navigator with dynamic visualization, GitHub discussion integration, and comprehensive 29-entity coverage across 7 thematic areas.
+**Current Version: v2.2.1** - Repository cleanup and ERD consolidation with single source of truth ERD Navigator, eliminated redundant code, and consistent terminology.
 
 - **Charter:** [BOOST_Charter.org](BOOST_Charter.org)
 - **Charter Effective Date:** 
@@ -15,7 +15,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 
 ## 🌟 Key Features
 
-### Kaulen Framework Implementation
+### BOOST Traceability System Implementation
 - **Media-Interruption-Free Traceability** - TraceableUnit (TRU) entities with biometric identification
 - **Three Critical Tracking Points** - harvest_site, skid_road, forest_road, mill_entrance infrastructure
 - **Multi-Species Support** - Species-specific tracking within mixed material flows
@@ -63,7 +63,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 │   │   │   ├── traceable_unit/        # Core TRU entity with examples
 │   │   │   ├── species_component/     # Multi-species tracking
 │   │   │   ├── material_processing/   # Processing operations
-│   │   │   └── [26 additional entities] # Complete Kaulen Framework
+│   │   │   └── [26 additional entities] # Complete BOOST Traceability System
 │   │   ├── images/
 │   │   │   ├── current/              # Interactive ERD and current visuals
 │   │   │   └── archive/              # Historical ERD iterations and deprecated files
@@ -82,9 +82,9 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ├── tools/
 ├── data/                    # Optional: Sample or test data
 ├── tests/                   # Integration testing scenarios
-│   └── KAULEN_INTEGRATION_TESTING_SCENARIOS.md
+│   └── BOOST_INTEGRATION_TESTING_SCENARIOS.md
 └── doc/                     # Implementation documentation
-    ├── KAULEN_FRAMEWORK_IMPLEMENTATION_SUMMARY.md
+    ├── BOOST_TRACEABILITY_SYSTEM_IMPLEMENTATION_SUMMARY.md
     └── MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md
 ```
 
@@ -98,7 +98,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 - `meetings/`: Agendas, minutes, and templates
 - `use-cases/`: User scenarios guiding spec design
 - `presentations/`: Slides and visual materials
-- `tests/`: Integration testing scenarios for Kaulen Framework validation
+- `tests/`: Integration testing scenarios for BOOST Traceability System validation
 - `doc/`: Implementation guides and migration documentation
 
 ## 🚀 Getting Started
@@ -106,7 +106,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ### For Developers
 1. **Explore the Interactive ERD**: Use the [Interactive ERD Navigator](erd-navigator/index.html) to explore all 29 entities with dynamic filtering and GitHub discussion integration
 2. **Review Entity Schemas**: Check `drafts/current/schema/` for JSON validation schemas and examples
-3. **Understand Implementation**: Read `doc/KAULEN_FRAMEWORK_IMPLEMENTATION_SUMMARY.md`
+3. **Understand Implementation**: Read `doc/BOOST_TRACEABILITY_SYSTEM_IMPLEMENTATION_SUMMARY.md`
 4. **Migration Guide**: See `doc/MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md` for conceptual changes
 
 ### For Standards Organizations
@@ -115,7 +115,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 - **Supply Chain Partners**: TRU-centric design for seamless data exchange
 
 ### For Implementation Testing
-- **Integration Scenarios**: See `tests/KAULEN_INTEGRATION_TESTING_SCENARIOS.md`
+- **Integration Scenarios**: See `tests/BOOST_INTEGRATION_TESTING_SCENARIOS.md`
 - **Plant Part Examples**: Review processing transformations in `drafts/current/schema/material_processing/`
 - **Multi-Species Cases**: Check species component tracking in `drafts/current/schema/species_component/`
 - **Transaction Examples**: See `drafts/current/examples/transactions/`
@@ -152,7 +152,7 @@ Each entity has a dedicated GitHub discussion thread accessible via the ERD. Thi
 
 ## 📊 Current Status
 
-- **✅ Complete**: Kaulen Framework Phases 1-3 implementation
+- **✅ Complete**: BOOST Traceability System Phases 1-3 implementation
 - **✅ Complete**: Plant part categorization system 
 - **✅ Complete**: 29 entity schemas with validation and examples
 - **✅ Complete**: Interactive ERD Navigator with GitHub discussion integration
@@ -163,5 +163,5 @@ Each entity has a dedicated GitHub discussion thread accessible via the ERD. Thi
 
 Please review `CONTRIBUTING.md` and our `CODE_OF_CONDUCT.md` before submitting PRs or issues.
 
-For technical discussions about the Kaulen Framework implementation or plant part categorization, please use GitHub Issues with appropriate labels.
+For technical discussions about the BOOST Traceability System implementation or plant part categorization, please use GitHub Issues with appropriate labels.
 

@@ -3,7 +3,7 @@
 ## SpeciesComponent
 
 ### Overview
-The `SpeciesComponent` entity enables detailed species-level tracking within multi-species TraceableUnits (TRUs). This entity supports biodiversity compliance, species-specific sustainability claims, and detailed forest composition analysis as required by the Kaulen framework for comprehensive timber traceability. Each component represents a distinct species within a TRU with specific volume, quality, and origin data.
+The `SpeciesComponent` entity enables detailed species-level tracking within multi-species TraceableUnits (TRUs). This entity supports biodiversity compliance, species-specific sustainability claims, and detailed forest composition analysis as required by the BOOST traceability system for comprehensive timber traceability. Each component represents a distinct species within a TRU with specific volume, quality, and origin data.
 
 ### Fields
 

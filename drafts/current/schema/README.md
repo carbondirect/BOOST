@@ -29,7 +29,7 @@ schema/
 
 ## Schema Integration with ERD
 
-The BOOST ERD visualization (`../images/current/boost_erd_blueprint_based.html`) **dynamically loads these schema files** instead of using hardcoded definitions. This means:
+The BOOST ERD Navigator (`../../erd-navigator/index.html`) **dynamically loads these schema files** instead of using hardcoded definitions. This means:
 
 ✅ **Schema changes automatically appear in the ERD**  
 ✅ **Field additions/removals are immediately reflected**  
@@ -49,7 +49,7 @@ When you modify a `validation_schema.json` file:
 To see your schema changes in the ERD:
 
 1. **Edit any `validation_schema.json` file** in this directory
-2. **Refresh the ERD page** (`../images/current/boost_erd_blueprint_based.html`)
+2. **Refresh the ERD Navigator** (`../../erd-navigator/index.html`)
 3. **Changes appear automatically** - no manual updates needed
 
 ### Example: Adding a Field
@@ -98,7 +98,8 @@ The ERD will automatically show `newField` in the entity with appropriate stylin
 ```
 /drafts/current/
 ├── images/current/
-│   ├── boost_erd_blueprint_based.html  # ERD with dynamic loading
+├── erd-navigator/
+│   └── index.html                      # Main ERD Navigator with dynamic loading
 │   └── DYNAMIC_SCHEMA_LOADING.md       # This documentation
 └── schema/
     ├── traceable_unit/

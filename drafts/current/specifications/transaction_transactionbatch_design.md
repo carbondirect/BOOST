@@ -252,11 +252,11 @@ FROM TransactionBatch
 GROUP BY qualityGrade;
 ```
 
-## Integration with Kaulen Framework
+## Integration with BOOST Traceability System
 
 ### Media-Interruption-Free Traceability
 
-The separated model enhances Kaulen framework compliance:
+The separated model enhances BOOST traceability system compliance:
 
 **Transaction Level**:
 - Commercial agreements maintain business continuity
@@ -345,4 +345,4 @@ interface LegacyTransactionView {
 
 The separated Transaction/TransactionBatch model provides a robust foundation for managing the complex interplay between business and physical aspects of biomass supply chains. By eliminating overlap and clearly defining responsibilities, this approach supports both operational efficiency and regulatory compliance while maintaining the flexibility needed for diverse business models and supply chain configurations.
 
-This design directly supports the Kaulen framework's media-interruption-free traceability requirements while providing the business transaction management capabilities needed for commercial biomass operations.
+This design directly supports the BOOST traceability system's media-interruption-free traceability requirements while providing the business transaction management capabilities needed for commercial biomass operations.

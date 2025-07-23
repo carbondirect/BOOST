@@ -3,7 +3,7 @@
 ## ProcessingHistory
 
 ### Overview
-The `ProcessingHistory` entity provides chronological tracking of all processing operations that affect a TracableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting media-interruption-free traceability requirements of the Kaulen framework.
+The `ProcessingHistory` entity provides chronological tracking of all processing operations that affect a TracableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting media-interruption-free traceability requirements of the BOOST traceability system.
 
 ProcessingHistory serves as the TRU-centric complement to the operation-centric MaterialProcessing entity, providing a unified timeline view of how materials evolve through the supply chain.
 
@@ -200,9 +200,9 @@ See transportation classification documentation for detailed decision framework.
 5. **Geographic Consistency**: Processing location should be consistent with LocationHistory records
 6. **Temporal Ordering**: Timestamp sequence should align with processSequenceNumber ordering
 
-### Integration with Kaulen Framework
+### Integration with BOOST Traceability System
 
-ProcessingHistory directly supports Kaulen framework requirements:
+ProcessingHistory directly supports BOOST traceability system requirements:
 
 - **Media-Interruption-Free Traceability**: Complete chronological processing chain
 - **Volume Conservation**: Detailed tracking of volume changes and losses  

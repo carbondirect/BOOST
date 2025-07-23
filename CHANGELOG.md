@@ -2,6 +2,28 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.2.1] - 2025-07-23 - Repository Cleanup and ERD Consolidation
+
+### Removed
+- **Legacy ERD Files** - Eliminated 10 redundant D3.js ERD implementations from deprecated directory
+- **Interactive ERD Duplication** - Removed `boost_erd_interactive.html` to eliminate code duplication with main ERD Navigator
+- **GitHub Scripts** - Removed obsolete GitHub issue creation scripts from project_planning directory
+- **Outdated Documentation** - Removed `BOOST_ERD_COMPREHENSIVE_README.md` and `boost_erd_styling_guide.md`
+- **Redundant JSON Definitions** - Removed `boost_erd_entities_complete.json` (superseded by schema directory)
+
+### Changed
+- **Framework References** - Replaced all "Kaulen framework" references with "BOOST traceability system" 
+- **Blueprint Terminology** - Updated "blueprint" references to "schema-based" or "interactive" as appropriate
+- **Single ERD System** - Consolidated to single ERD Navigator as authoritative visualization system
+- **File Naming** - Renamed `boost_erd_blueprint_based.html` to `boost_erd_interactive.html` (then removed)
+- **Documentation Updates** - Updated all ERD references to point to main ERD Navigator (`/erd-navigator/index.html`)
+
+### Technical Improvements
+- **Reduced Maintenance Burden** - Eliminated ~25,000+ lines of redundant D3.js ERD code
+- **Clear Architecture** - Single source of truth for ERD visualization with schema-driven approach
+- **Simplified References** - All documentation now consistently points to main ERD Navigator
+- **Repository Organization** - Cleaner file structure with removal of outdated and redundant files
+
 ## [2.2.0] - 2025-07-23 - Interactive ERD Navigator
 
 ### Added

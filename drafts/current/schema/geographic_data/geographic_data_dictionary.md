@@ -3,7 +3,7 @@
 ## GeographicData
 
 ### Overview
-The `GeographicData` entity provides comprehensive spatial data support for the BOOST framework using GeoJSON standards. This entity enables precise location tracking, geographic boundaries definition, and spatial relationship management throughout the biomass supply chain. It supports the Kaulen framework's requirement for complete location-based traceability and addresses California agency engagement commitments for spatial data integration.
+The `GeographicData` entity provides comprehensive spatial data support for the BOOST framework using GeoJSON standards. This entity enables precise location tracking, geographic boundaries definition, and spatial relationship management throughout the biomass supply chain. It supports the BOOST traceability system's requirement for complete location-based traceability and addresses California agency engagement commitments for spatial data integration.
 
 ### Fields
 
@@ -91,7 +91,7 @@ The `GeographicData` entity provides comprehensive spatial data support for the 
 6. **mill_entrance**
    - Specific points where TRUs enter processing facilities
    - Point geometries at facility gates
-   - Final tracking points in Kaulen framework
+   - Final tracking points in BOOST traceability system
 
 ### Key Features
 
