@@ -1,0 +1,45 @@
+{
+  "@context": {
+    "Claim": "https://github.com/carbondirect/BOOST/schemas#Claim",
+    "claimId": "https://github.com/carbondirect/BOOST/schemas#claimId",
+    "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
+    "claimType": "https://github.com/carbondirect/BOOST/schemas#claimType",
+    "certificationSchemeId": "https://github.com/carbondirect/BOOST/schemas#certificationSchemeId",
+    "statement": "https://github.com/carbondirect/BOOST/schemas#statement",
+    "validated": "https://github.com/carbondirect/BOOST/schemas#validated",
+    "validatedBy": "https://github.com/carbondirect/BOOST/schemas#validatedBy",
+    "validationDate": "https://github.com/carbondirect/BOOST/schemas#validationDate",
+    "applicableSpecies": "https://github.com/carbondirect/BOOST/schemas#applicableSpecies",
+    "claimPercentage": "https://github.com/carbondirect/BOOST/schemas#claimPercentage",
+    "claimScope": "https://github.com/carbondirect/BOOST/schemas#claimScope",
+    "evidenceDocumentId": "https://github.com/carbondirect/BOOST/schemas#evidenceDocumentId",
+    "claimExpiry": "https://github.com/carbondirect/BOOST/schemas#claimExpiry",
+    "inheritedFromTRU": "https://github.com/carbondirect/BOOST/schemas#inheritedFromTRU",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "Claim",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/claim/CLAIM-FSC-MIX-KLA-042-001",
+  "claimId": "CLAIM-FSC-MIX-KLA-042-001",
+  "traceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "claimType": "FSC Mix",
+  "certificationSchemeId": "CERT-FSC-US-WEST-001",
+  "statement": "FSC Mix 70% - Multi-species forest management unit certified under FSC-US Forest Management Standard v1.1",
+  "validated": true,
+  "validatedBy": "ORG-FSC-CERTIFIER-SGS-001",
+  "validationDate": "2025-07-10T14:30:00Z",
+  "applicableSpecies": [
+    "douglas_fir",
+    "ponderosa_pine"
+  ],
+  "claimPercentage": 70.0,
+  "claimScope": "full_chain",
+  "evidenceDocumentId": "DOC-FSC-CERT-US-KLAMATH-FMU-2025",
+  "claimExpiry": "2030-07-10T23:59:59Z",
+  "inheritedFromTRU": [
+    "TRU-LOG-CA-Klamath-042-A",
+    "TRU-LOG-CA-Klamath-042-B",
+    "TRU-LOG-CA-Klamath-042-C"
+  ],
+  "lastUpdated": "2025-07-21T16:45:00Z"
+}

@@ -1,0 +1,71 @@
+{
+  "@context": {
+    "Material": "https://github.com/carbondirect/BOOST/schemas#Material",
+    "materialTypeId": "https://github.com/carbondirect/BOOST/schemas#materialTypeId",
+    "materialName": "https://github.com/carbondirect/BOOST/schemas#materialName",
+    "materialCategory": "https://github.com/carbondirect/BOOST/schemas#materialCategory",
+    "defaultAssortmentTypes": "https://github.com/carbondirect/BOOST/schemas#defaultAssortmentTypes",
+    "standardQualityGrades": "https://github.com/carbondirect/BOOST/schemas#standardQualityGrades",
+    "carbonStorageRate": "https://github.com/carbondirect/BOOST/schemas#carbonStorageRate",
+    "density": "https://github.com/carbondirect/BOOST/schemas#density",
+    "applicableProcessingTypes": "https://github.com/carbondirect/BOOST/schemas#applicableProcessingTypes",
+    "typicalSpecies": "https://github.com/carbondirect/BOOST/schemas#typicalSpecies",
+    "standardMoistureContent": "https://github.com/carbondirect/BOOST/schemas#standardMoistureContent",
+    "energyContent": "https://github.com/carbondirect/BOOST/schemas#energyContent",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "Material",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/material/MAT-TYPE-DOUGLAS-FIR-SAWTIMBER",
+  "materialTypeId": "MAT-TYPE-DOUGLAS-FIR-SAWTIMBER",
+  "materialName": "Douglas Fir Sawtimber",
+  "materialCategory": "softwood",
+  "defaultAssortmentTypes": "sawtimber, dimension lumber, structural timber",
+  "standardQualityGrades": "Select Structural, No. 1, No. 2, Construction, Standard, Utility",
+  "carbonStorageRate": "0.47 tCO2/m3",
+  "density": "450 kg/m3 (12% moisture content)",
+  "applicableProcessingTypes": [
+    "felling",
+    "delimbing", 
+    "crosscutting",
+    "debarking",
+    "assortment"
+  ],
+  "typicalSpecies": [
+    "douglas_fir"
+  ],
+  "standardMoistureContent": "8-19% (kiln dried to air dried)",
+  "energyContent": "18.5 MJ/kg (dry basis)",
+  "applicablePlantParts": [
+    "trunk",
+    "heartwood", 
+    "sapwood"
+  ],
+  "excludedPlantParts": [
+    "bark",
+    "branches",
+    "needles",
+    "twigs"
+  ],
+  "plantPartProcessingSpecs": {
+    "trunk": {
+      "processingMethods": ["sawing", "veneer"],
+      "qualityGrades": ["Select Structural", "No. 1", "No. 2"],
+      "moistureRange": "8-19%",
+      "energyContent": "18.5 MJ/kg"
+    },
+    "heartwood": {
+      "processingMethods": ["sawing", "veneer"],
+      "qualityGrades": ["Select Structural", "Premium"],
+      "moistureRange": "8-12%",
+      "energyContent": "19.2 MJ/kg"
+    },
+    "sapwood": {
+      "processingMethods": ["sawing"],
+      "qualityGrades": ["No. 1", "No. 2", "Construction"],
+      "moistureRange": "12-19%",
+      "energyContent": "18.0 MJ/kg"
+    }
+  },
+  "lastUpdated": "2025-07-21T16:30:00Z"
+}

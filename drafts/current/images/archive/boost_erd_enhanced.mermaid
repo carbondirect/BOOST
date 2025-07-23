@@ -1,0 +1,327 @@
+erDiagram
+    %% BOOST Enhanced Biomass Chain of Custody ERD
+    %% Beautiful styling with color-coded entity groups and enhanced visual hierarchy
+    %% Created: 2025-07-03
+    
+    %% ===========================================
+    %% CORE ORGANIZATION & CERTIFICATION CLUSTER
+    %% ===========================================
+    
+    Organization {
+        string organizationId PK "🏢 Unique organization identifier"
+        string name "📛 Legal entity name"
+        string address "📍 Business address"
+        string role "🔄 BP, Trader, Energy Producer"
+        string scopeOfOperations "🌍 Geographic/operational scope"
+        string legalEntityStatus "⚖️ Legal registration status"
+        string certificateCode FK "📜 Certificate reference"
+        string contactInfo "📞 Contact details"
+        string lcfsRegistrationId "🌱 LCFS system entity ID"
+        string regulatedEntityType "🏛️ producer, importer, blender, distributor"
+    }
+    
+    CertificationScheme {
+        string schemeId PK "🎯 Unique scheme identifier"
+        string schemeName "📋 FSC, SFI, PEFC, LCFS"
+        string recognitionStatus "✅ International recognition"
+        string versionNumber "🔢 Scheme version"
+        string description "📄 Scheme overview"
+        uri website "🌐 Official website"
+        string[] materialCategories "🌿 Tracked material types"
+        string[] controlSystems "⚙️ Control mechanisms"
+        string labelUseRequirements "🏷️ Labeling rules"
+        string volumeTrackingRequirements "📊 Volume tracking rules"
+        string dueDiligenceRequirements "🔍 Due diligence rules"
+        string[] sustainabilityCriteria "🌱 Sustainability metrics"
+        string[] applicableRegions "🗺️ Geographic coverage"
+        date dateEstablished "📅 Establishment date"
+        datetime lastUpdated "🔄 Last modification"
+    }
+    
+    Certificate {
+        string certificateNumber PK "📜 Certificate number"
+        string certificateId "🆔 Certificate identifier"
+        date dateOfIssue "📅 Issue date"
+        date dateOfExpiry "⏰ Expiry date"
+        string scopeOfCertification "📋 Certification scope"
+        string status "🔄 active, suspended, expired"
+        string versionNumber "🔢 Certificate version"
+        string cbId FK "🏛️ Certification body"
+        string organizationId FK "🏢 Certified organization"
+        string certificationSchemeId FK "📋 Certification scheme"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    CertificationBody {
+        string cbId PK "🏛️ Certification body ID"
+        string cbName "📛 Certification body name"
+        string accreditationStatus "✅ Accredited status"
+        string accreditationScope "📋 Accreditation scope"
+        string contactInformation "📞 Contact details"
+        string[] jurisdictions "🗺️ Operating regions"
+        string[] sectorsServed "🏭 Industry sectors"
+        boolean isActive "🔄 Active status"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    %% ===========================================
+    %% SUPPLY CHAIN & MATERIALS CLUSTER
+    %% ===========================================
+    
+    Material {
+        string materialId PK "🌿 Material identifier"
+        string materialType "🏷️ Material classification"
+        string description "📝 Material description"
+        string specification "📊 Technical specifications"
+        string origin "📍 Source location"
+        decimal quantity "📦 Material quantity"
+        string unit "📏 Measurement unit"
+        string supplier "🏭 Supplier information"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    Supplier {
+        string supplierId PK "🏭 Supplier identifier"
+        string name "📛 Supplier name"
+        string address "📍 Supplier address"
+        string supplierType "🏷️ Supplier category"
+        string materialCategory "🌿 Supplied materials"
+        string contactInfo "📞 Contact information"
+        string sustainabilityRating "⭐ Sustainability score"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    Customer {
+        string customerId PK "🛒 Customer identifier"
+        string name "📛 Customer name"
+        string address "📍 Customer address"
+        string customerType "🏷️ Customer category"
+        string contactInfo "📞 Contact information"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    %% ===========================================
+    %% TRANSACTION & BATCH PROCESSING CLUSTER
+    %% ===========================================
+    
+    Transaction {
+        string transactionId PK "💱 Transaction identifier"
+        string supplyingOrganizationId FK "🏭 Supplier organization"
+        string customerOrganizationId FK "🛒 Customer organization"
+        string transactionType "🔄 Transaction category"
+        decimal quantity "📦 Transaction quantity"
+        string unit "📏 Measurement unit"
+        date transactionDate "📅 Transaction date"
+        string fuelVolume "⛽ Fuel volume (LCFS)"
+        string fuelVolumeUnit "📏 Fuel unit (LCFS)"
+        string fuelCategory "🏷️ Fuel type (LCFS)"
+        string reportingPeriod "📊 Reporting period (LCFS)"
+        string lcfsPathwayId FK "🛣️ LCFS pathway (LCFS)"
+        string regulatedPartyRole "🏛️ Party role (LCFS)"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    TransactionBatch {
+        string batchId PK "📦 Batch identifier"
+        string transactionId FK "💱 Parent transaction"
+        decimal quantity "📊 Batch quantity"
+        string unit "📏 Measurement unit"
+        string materialType "🌿 Material type"
+        string claimPercentage "📈 Claim percentage"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    SalesDeliveryDocument {
+        string documentId PK "📄 Document identifier"
+        string transactionId FK "💱 Related transaction"
+        string documentType "🏷️ Document category"
+        string documentUrl "🔗 Document location"
+        date deliveryDate "🚚 Delivery date"
+        string deliveryLocation "📍 Delivery address"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    %% ===========================================
+    %% CLAIMS & VERIFICATION CLUSTER
+    %% ===========================================
+    
+    Claim {
+        string claimId PK "🏆 Claim identifier"
+        string claimType "🏷️ Claim category"
+        string claimValue "📊 Claim value"
+        string certificationSchemeId FK "📋 Certification scheme"
+        string materialType "🌿 Material type"
+        decimal claimPercentage "📈 Claim percentage"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    VerificationStatement {
+        string verificationId PK "✅ Verification identifier"
+        string verifierId "🔍 Verifier identifier"
+        string verificationScope "📋 Verification scope"
+        date verificationDate "📅 Verification date"
+        string verificationResult "🏆 Verification outcome"
+        string reportUrl "🔗 Report location"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    Audit {
+        string auditId PK "🔍 Audit identifier"
+        string auditType "🏷️ Audit category"
+        string auditScope "📋 Audit scope"
+        date auditDate "📅 Audit date"
+        string auditResult "🏆 Audit outcome"
+        string auditorId "👤 Auditor identifier"
+        string reportUrl "🔗 Report location"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    %% ===========================================
+    %% CARBON & ENERGY DATA CLUSTER
+    %% ===========================================
+    
+    EnergyCarbonData {
+        string energyCarbonDataId PK "⚡ Energy/carbon data ID"
+        string dataCategory "🏷️ carbon_intensity, energy_content, emissions"
+        decimal value "📊 Measured value"
+        string unit "📏 gCO2e/MJ, MJ/kg, etc."
+        string source "📚 Data source"
+        string measurementMethod "🔬 CA-GREET3.0, GREET2023"
+        string lcfsPathwayType "🛣️ Lookup_Table, Tier_1, Tier_2"
+        decimal energyEconomyRatio "⚙️ LCFS efficiency multiplier"
+        string lifeCycleStage "🔄 feedstock, production, transport"
+        decimal regulatoryBenchmark "📏 Regulatory comparison value"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    %% ===========================================
+    %% MASS BALANCE & PRODUCT TRACKING CLUSTER
+    %% ===========================================
+    
+    MassBalanceAccount {
+        string accountId PK "⚖️ Account identifier"
+        string organizationId FK "🏢 Organization"
+        string accountType "🏷️ Account category"
+        string materialCategory "🌿 Material type"
+        decimal inputVolume "📥 Input quantity"
+        decimal outputVolume "📤 Output quantity"
+        decimal balance "⚖️ Current balance"
+        string reportingPeriod "📊 Reporting period"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    ProductGroup {
+        string productGroupId PK "📦 Product group ID"
+        string productGroupName "📛 Product group name"
+        string description "📝 Group description"
+        string[] materialTypes "🌿 Included materials"
+        string trackingMethod "📊 Tracking methodology"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    SupplyBaseReport {
+        string reportId PK "📊 Report identifier"
+        string organizationId FK "🏢 Reporting organization"
+        string reportingPeriod "📅 Reporting period"
+        string reportType "🏷️ Report category"
+        string reportScope "📋 Report scope"
+        string reportStatus "🔄 Report status"
+        string reportUrl "🔗 Report location"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    %% ===========================================
+    %% LCFS-SPECIFIC ENTITIES CLUSTER
+    %% ===========================================
+    
+    LCFSPathway {
+        string pathwayId PK "🛣️ LCFS pathway identifier"
+        string pathwayType "🏷️ Lookup_Table, Tier_1, Tier_2"
+        string feedstockCategory "🌿 corn, sugarcane, forest_residue"
+        string fuelProduct "⛽ ethanol, renewable_diesel, SAF"
+        string facilityLocation "📍 Production facility"
+        decimal carbonIntensity "📊 gCO2e/MJ"
+        decimal energyEconomyRatio "⚙️ LCFS efficiency ratio"
+        date certificationDate "📅 CARB certification date"
+        date expirationDate "⏰ Pathway expiration"
+        string verificationStatus "🔄 active, suspended, expired"
+        string caGreetVersion "🔬 CA-GREET model version"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    LCFSReporting {
+        string reportingId PK "📊 LCFS reporting identifier"
+        string regulatedEntityId FK "🏛️ Regulated organization"
+        string reportingPeriod "📅 YYYY-QN format"
+        decimal totalFuelVolume "⛽ Total fuel reported"
+        decimal totalCreditsGenerated "🏆 Credits earned"
+        decimal totalDeficitsIncurred "❌ Deficits incurred"
+        decimal netPosition "⚖️ Net credits/deficits"
+        string complianceStatus "🔄 compliant, deficit, pending"
+        datetime submissionDate "📤 CARB submission date"
+        datetime verificationDate "✅ Verification date"
+        datetime lastUpdated "🔄 Last update"
+    }
+    
+    %% ===========================================
+    %% ENTITY RELATIONSHIPS WITH ENHANCED STYLING
+    %% ===========================================
+    
+    %% Core Certification Relationships
+    Organization ||--o{ Certificate : "🏢 holds 📜"
+    Certificate }o--|| CertificationScheme : "📜 certified against 📋"
+    Certificate }o--|| CertificationBody : "📜 issued by 🏛️"
+    CertificationBody ||--o{ Audit : "🏛️ conducts 🔍"
+    
+    %% Supply Chain Flow
+    Organization ||--o{ Material : "🏢 handles 🌿"
+    Organization ||--o{ Transaction : "🏢 creates 💱"
+    Organization ||--o{ Supplier : "🏢 sources from 🏭"
+    Organization ||--o{ Customer : "🏢 sells to 🛒"
+    Customer ||--o{ Transaction : "🛒 receives 💱"
+    
+    %% Transaction Processing
+    Transaction ||--o{ TransactionBatch : "💱 contains 📦"
+    Transaction ||--|| SalesDeliveryDocument : "💱 documented by 📄"
+    TransactionBatch ||--|| Claim : "📦 associated with 🏆"
+    TransactionBatch ||--o{ VerificationStatement : "📦 verified by ✅"
+    
+    %% Mass Balance Operations
+    Organization ||--o{ MassBalanceAccount : "🏢 manages ⚖️"
+    Organization ||--o{ ProductGroup : "🏢 defines 📦"
+    MassBalanceAccount }o--|| ProductGroup : "⚖️ tracks 📦"
+    
+    %% Energy & Carbon Tracking
+    Material ||--o{ EnergyCarbonData : "🌿 characterized by ⚡"
+    TransactionBatch ||--o{ EnergyCarbonData : "📦 associated with ⚡"
+    
+    %% Reporting & Compliance
+    Organization ||--o{ SupplyBaseReport : "🏢 prepares 📊"
+    Audit }o--|| Organization : "🔍 audits 🏢"
+    
+    %% LCFS-Specific Relationships
+    Transaction }o--|| LCFSPathway : "💱 uses pathway 🛣️"
+    LCFSPathway ||--o{ EnergyCarbonData : "🛣️ has carbon data ⚡"
+    Organization ||--o{ LCFSReporting : "🏢 submits 📊"
+    LCFSReporting ||--o{ Transaction : "📊 includes 💱"
+    LCFSPathway }o--|| Certificate : "🛣️ certified by 📜"
+
+    %% ===========================================
+    %% ENHANCED STYLING & COLOR THEMES
+    %% ===========================================
+    
+    %%{init: {
+        'theme': 'base',
+        'themeVariables': {
+            'primaryColor': '#e3f2fd',
+            'primaryTextColor': '#0d47a1',
+            'primaryBorderColor': '#1976d2',
+            'lineColor': '#1976d2',
+            'secondaryColor': '#fff3e0',
+            'tertiaryColor': '#f3e5f5',
+            'background': '#fafafa',
+            'mainBkg': '#ffffff',
+            'secondBkg': '#e8f5e8',
+            'tertiaryBkg': '#fce4ec'
+        }
+    }}%%

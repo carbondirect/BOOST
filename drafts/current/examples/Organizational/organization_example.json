@@ -1,0 +1,41 @@
+{
+  "@context": {
+    "Organization": "https://github.com/carbondirect/BOOST/schemas#Organization",
+    "organizationId": "https://github.com/carbondirect/BOOST/schemas#organizationId",
+    "organizationName": "https://github.com/carbondirect/BOOST/schemas#organizationName",
+    "organizationType": "https://github.com/carbondirect/BOOST/schemas#organizationType",
+    "primaryGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#primaryGeographicDataId",
+    "operationalAreas": "https://github.com/carbondirect/BOOST/schemas#operationalAreas",
+    "contactEmail": "https://github.com/carbondirect/BOOST/schemas#contactEmail",
+    "contactPhone": "https://github.com/carbondirect/BOOST/schemas#contactPhone",
+    "certifications": "https://github.com/carbondirect/BOOST/schemas#certifications",
+    "establishedDate": "https://github.com/carbondirect/BOOST/schemas#establishedDate",
+    "taxId": "https://github.com/carbondirect/BOOST/schemas#taxId",
+    "website": "https://github.com/carbondirect/BOOST/schemas#website",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "Organization",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/organization/ORG-PACIFIC-FOREST-001",
+  "organizationId": "ORG-PACIFIC-FOREST-001",
+  "organizationName": "Pacific Forest Products LLC",
+  "organizationType": "processor",
+  "primaryGeographicDataId": "GEO-MILL-PACIFIC-HEADQUARTERS-001",
+  "operationalAreas": [
+    "GEO-MILL-SITE-PACIFIC-001",
+    "GEO-MILL-SITE-PACIFIC-002",
+    "GEO-STORAGE-YARD-PACIFIC-001",
+    "GEO-OFFICE-PACIFIC-001"
+  ],
+  "contactEmail": "operations@pacificforest.com",
+  "contactPhone": "+1-541-555-0123",
+  "certifications": [
+    "CERT-FSC-COC-PACIFIC-001",
+    "CERT-SFI-COC-PACIFIC-001",
+    "CERT-PEFC-COC-PACIFIC-001"
+  ],
+  "establishedDate": "1985-06-15",
+  "taxId": "93-1234567",
+  "website": "https://www.pacificforest.com",
+  "lastUpdated": "2025-07-21T17:00:00Z"
+}

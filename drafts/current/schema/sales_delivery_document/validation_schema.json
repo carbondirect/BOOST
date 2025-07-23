@@ -1,0 +1,87 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/sales-delivery-document",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["SalesDeliveryDocument"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "documentId": {
+        "type": "string"
+      },
+      "dateIssued": {
+        "type": "string",
+        "format": "date"
+      },
+      "buyerName": {
+        "type": "string"
+      },
+      "buyerAddress": {
+        "type": "string"
+      },
+      "sellerName": {
+        "type": "string"
+      },
+      "sellerAddress": {
+        "type": "string"
+      },
+      "productDescription": {
+        "type": "string"
+      },
+      "quantity": {
+        "type": "number"
+      },
+      "transactionId": {
+        "type": "string"
+      },
+      "certificateCode": {
+        "type": "string"
+      },
+      "transportReference": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "documentId",
+      "dateIssued",
+      "buyerName",
+      "sellerName",
+      "productDescription",
+      "quantity"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "documentId" }
+      },
+      {
+        "!!": { "var": "dateIssued" }
+      },
+      {
+        "!!": { "var": "buyerName" }
+      },
+      {
+        "!!": { "var": "sellerName" }
+      },
+      {
+        "!!": { "var": "productDescription" }
+      },
+      {
+        "!!": { "var": "quantity" }
+      }
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/processing-history",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["ProcessingHistory"] },
+      "@id": { "type": "string", "format": "uri" },
+      "processingHistoryId": { 
+        "type": "string",
+        "description": "Unique identifier for the processing history record"
+      },
+      "traceableUnitId": { 
+        "type": "string",
+        "description": "Foreign key to TRU this history record belongs to"
+      },
+      "materialProcessingId": { 
+        "type": "string",
+        "description": "Foreign key to MaterialProcessing operation"
+      },
+      "timestamp": { 
+        "type": "string", 
+        "format": "date-time",
+        "description": "When this processing step occurred"
+      },
+      "processSequenceNumber": { 
+        "type": "integer", 
+        "minimum": 1,
+        "description": "Sequential order of this processing step for the TRU"
+      },
+      "processingEventType": {
+        "type": "string",
+        "enum": ["transformation", "split", "merge", "quality_change", "loading", "transport_processing", "measurement"],
+        "description": "Type of processing event"
+      },
+      "inputTRUIds": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 1,
+        "description": "Array of input TRU IDs (multiple for merge operations)"
+      },
+      "outputTRUIds": {
+        "type": "array", 
+        "items": { "type": "string" },
+        "minItems": 1,
+        "description": "Array of output TRU IDs (multiple for split operations)"
+      },
+      "processingDuration": {
+        "type": "string",
+        "pattern": "^P(?:\\d+Y)?(?:\\d+M)?(?:\\d+D)?(?:T(?:\\d+H)?(?:\\d+M)?(?:\\d+(?:\\.\\d+)?S)?)?$",
+        "description": "ISO 8601 duration format for processing time"
+      },
+      "qualityChangeDescription": {
+        "type": "string",
+        "description": "Description of quality changes during processing"
+      },
+      "operatorId": {
+        "type": "string", 
+        "description": "Foreign key to operator who performed processing"
+      },
+      "equipmentUsed": {
+        "type": "string",
+        "description": "Equipment used for this processing step"
+      },
+      "volumeChangeRatio": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 2.0,
+        "description": "Ratio of output volume to input volume (1.0 = no change)"
+      },
+      "speciesCompositionChange": {
+        "type": "string",
+        "enum": ["unchanged", "separated", "mixed", "filtered", "transformed"],
+        "description": "How species composition changed during processing"
+      },
+      "plantPartTransformation": {
+        "type": "string",
+        "description": "Summary of plant part changes during processing"
+      },
+      "isCurrentProcessingState": {
+        "type": "boolean",
+        "description": "True if this represents the current processing state"
+      },
+      "processingGeographicDataId": {
+        "type": "string",
+        "description": "Foreign key to location where processing occurred"
+      },
+      "previousProcessingHistoryId": {
+        "type": ["string", "null"],
+        "description": "Foreign key to previous processing history record (forms chain)"
+      },
+      "nextProcessingHistoryIds": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Array of next processing history record IDs (for split operations)"
+      },
+      "volumeConservationData": {
+        "type": "object",
+        "properties": {
+          "totalInputVolume": { "type": "number", "minimum": 0 },
+          "totalOutputVolume": { "type": "number", "minimum": 0 },
+          "volumeLoss": { "type": "number", "minimum": 0 },
+          "lossReason": { 
+            "type": "string",
+            "enum": ["sawdust", "trimming", "moisture_loss", "handling_damage", "sorting_loss", "measurement_variance"]
+          },
+          "conservationValidated": { "type": "boolean" }
+        },
+        "required": ["totalInputVolume", "totalOutputVolume"],
+        "description": "Volume conservation validation data"
+      },
+      "mediaBreakData": {
+        "type": "object", 
+        "properties": {
+          "mediaBreakOccurred": { "type": "boolean" },
+          "breakDuration": { "type": "string" },
+          "breakReason": { "type": "string" },
+          "recoveryMethod": { "type": "string" },
+          "dataIntegrityValidated": { "type": "boolean" }
+        },
+        "required": ["mediaBreakOccurred"],
+        "description": "Media break detection and recovery information"
+      },
+      "claimInheritanceData": {
+        "type": "object",
+        "properties": {
+          "inheritedClaims": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Array of claim IDs inherited from input TRUs"
+          },
+          "newClaims": {
+            "type": "array", 
+            "items": { "type": "string" },
+            "description": "Array of new claim IDs created during processing"
+          },
+          "claimValidationRequired": { "type": "boolean" },
+          "claimValidationCompleted": { "type": "boolean" }
+        },
+        "description": "Sustainability claim inheritance tracking"
+      }
+    },
+    "required": [
+      "@context", "@type", "@id", "processingHistoryId", "traceableUnitId", 
+      "materialProcessingId", "timestamp", "processSequenceNumber", 
+      "processingEventType", "inputTRUIds", "outputTRUIds"
+    ]
+  }
+}

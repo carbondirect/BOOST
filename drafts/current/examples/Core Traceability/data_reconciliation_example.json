@@ -1,0 +1,40 @@
+{
+  "@context": {
+    "DataReconciliation": "https://github.com/carbondirect/BOOST/schemas#DataReconciliation",
+    "reconciliationId": "https://github.com/carbondirect/BOOST/schemas#reconciliationId",
+    "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
+    "transactionId": "https://github.com/carbondirect/BOOST/schemas#transactionId",
+    "forestMeasurement": "https://github.com/carbondirect/BOOST/schemas#forestMeasurement",
+    "millMeasurement": "https://github.com/carbondirect/BOOST/schemas#millMeasurement",
+    "discrepancy": "https://github.com/carbondirect/BOOST/schemas#discrepancy",
+    "reconciliationStatus": "https://github.com/carbondirect/BOOST/schemas#reconciliationStatus",
+    "discrepancyReason": "https://github.com/carbondirect/BOOST/schemas#discrepancyReason",
+    "reconciliationDate": "https://github.com/carbondirect/BOOST/schemas#reconciliationDate",
+    "reconciliationOperator": "https://github.com/carbondirect/BOOST/schemas#reconciliationOperator",
+    "speciesDiscrepancies": "https://github.com/carbondirect/BOOST/schemas#speciesDiscrepancies",
+    "tolerancePercentage": "https://github.com/carbondirect/BOOST/schemas#tolerancePercentage",
+    "resolutionNotes": "https://github.com/carbondirect/BOOST/schemas#resolutionNotes",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "DataReconciliation",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/data-reconciliation/DR-KLA-042-RECON-001",
+  "reconciliationId": "DR-KLA-042-RECON-001",
+  "traceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "transactionId": "TXN-PACIFIC-MILL-KLA-042",
+  "forestMeasurement": 85.25,
+  "millMeasurement": 84.75,
+  "discrepancy": 0.50,
+  "reconciliationStatus": "resolved",
+  "discrepancyReason": "Natural moisture loss during transport - within acceptable range for 3-day transport period",
+  "reconciliationDate": "2025-07-21T15:00:00Z",
+  "reconciliationOperator": "OP-QUALITY-TECH-PACIFIC-001",
+  "speciesDiscrepancies": [
+    "Douglas Fir: +0.25m3 (0.55% increase due to moisture equilibration)",
+    "Ponderosa Pine: +0.15m3 (0.69% acceptable variance)",
+    "Western Hemlock: +0.10m3 (0.56% within tolerance)"
+  ],
+  "tolerancePercentage": 2.0,
+  "resolutionNotes": "Discrepancy of 0.59% is well within the 2.0% tolerance for mixed softwood loads. Moisture content analysis confirms natural drying during 3-day transport period. No equipment calibration issues identified. Approved for processing.",
+  "lastUpdated": "2025-07-21T15:15:00Z"
+}

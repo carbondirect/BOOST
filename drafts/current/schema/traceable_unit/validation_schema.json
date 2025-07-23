@@ -1,0 +1,191 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/traceable-unit",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["TraceableUnit"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "traceableUnitId": {
+        "type": "string",
+        "description": "Unique ID for each TRU"
+      },
+      "unitType": {
+        "type": "string",
+        "enum": ["individual_log", "pile", "volume_aggregation", "processed_batch"],
+        "description": "Type of traceable unit"
+      },
+      "uniqueIdentifier": {
+        "type": "string",
+        "description": "Biometric signature, RFID tag, or QR code"
+      },
+      "totalVolumeM3": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Total volume of the traceable unit in cubic meters"
+      },
+      "currentGeographicDataId": {
+        "type": "string",
+        "description": "Foreign key to current location"
+      },
+      "harvestGeographicDataId": {
+        "type": "string",
+        "description": "Foreign key to harvest location"
+      },
+      "createdTimestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "When the TRU was created"
+      },
+      "harvesterId": {
+        "type": "string",
+        "description": "Foreign key to harvesting organization"
+      },
+      "operatorId": {
+        "type": "string",
+        "description": "Foreign key to operator"
+      },
+      "materialTypeId": {
+        "type": "string",
+        "description": "Foreign key to Material entity (reference table)"
+      },
+      "assortmentType": {
+        "type": "string",
+        "enum": ["sawlog", "pulpwood", "biomass", "chips"],
+        "description": "Type of wood assortment"
+      },
+      "qualityGrade": {
+        "type": "string",
+        "enum": ["A", "B", "C", "structural", "fuel"],
+        "description": "Quality grade classification"
+      },
+      "isMultiSpecies": {
+        "type": "boolean",
+        "description": "True if contains multiple species"
+      },
+      "attachedInformation": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "All data linked to this TRU"
+      },
+      "processingHistory": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Complete processing chain references (Phase 2)"
+      },
+      "parentTraceableUnitId": {
+        "type": "string",
+        "description": "For split/merge operations (Phase 2)"
+      },
+      "childTraceableUnitIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "For split/merge operations (Phase 2)"
+      },
+      "currentStatus": {
+        "type": "string",
+        "enum": ["active", "processed", "delivered", "consumed"],
+        "description": "Current status of the TRU (Phase 2)"
+      },
+      "sustainabilityCertification": {
+        "type": "string",
+        "description": "FSC, PEFC, etc. claims (Phase 2)"
+      },
+      "mediaBreakFlags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Points where data continuity was lost (Phase 2)"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of the most recent data update"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "traceableUnitId",
+      "unitType",
+      "uniqueIdentifier",
+      "totalVolumeM3",
+      "createdTimestamp",
+      "harvesterId",
+      "materialTypeId",
+      "isMultiSpecies"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "traceableUnitId" }
+      },
+      {
+        "!!": { "var": "unitType" }
+      },
+      {
+        "!!": { "var": "uniqueIdentifier" }
+      },
+      {
+        "!!": { "var": "totalVolumeM3" }
+      },
+      {
+        ">": [{ "var": "totalVolumeM3" }, 0]
+      },
+      {
+        "!!": { "var": "createdTimestamp" }
+      },
+      {
+        "!!": { "var": "harvesterId" }
+      },
+      {
+        "!!": { "var": "materialTypeId" }
+      },
+      {
+        "if": [
+          { "var": "isMultiSpecies" },
+          {
+            "!!": { "var": "currentGeographicDataId" }
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "processingHistory" },
+          {
+            ">": [ { "var": "processingHistory.length" }, 0 ]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "childTraceableUnitIds" },
+          {
+            ">": [ { "var": "childTraceableUnitIds.length" }, 0 ]
+          },
+          true
+        ]
+      }
+    ]
+  }
+}
