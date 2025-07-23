@@ -1,0 +1,36 @@
+{
+  "@context": {
+    "MeasurementRecord": "https://github.com/carbondirect/BOOST/schemas#MeasurementRecord",
+    "recordId": "https://github.com/carbondirect/BOOST/schemas#recordId",
+    "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
+    "measuredVolume": "https://github.com/carbondirect/BOOST/schemas#measuredVolume",
+    "measuredLength": "https://github.com/carbondirect/BOOST/schemas#measuredLength",
+    "measuredDiameter": "https://github.com/carbondirect/BOOST/schemas#measuredDiameter",
+    "measurementMethod": "https://github.com/carbondirect/BOOST/schemas#measurementMethod",
+    "measurementGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#measurementGeographicDataId",
+    "measurementTimestamp": "https://github.com/carbondirect/BOOST/schemas#measurementTimestamp",
+    "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "trackingPointId": "https://github.com/carbondirect/BOOST/schemas#trackingPointId",
+    "speciesMeasurements": "https://github.com/carbondirect/BOOST/schemas#speciesMeasurements",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "MeasurementRecord",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/measurement-record/MR-MILL-KLA-042-001",
+  "recordId": "MR-MILL-KLA-042-001",
+  "traceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "measuredVolume": 84.75,
+  "measuredLength": null,
+  "measuredDiameter": null,
+  "measurementMethod": "mill",
+  "measurementGeographicDataId": "GEO-MILL-ENTRANCE-Pacific-001",
+  "measurementTimestamp": "2025-07-21T14:15:00Z",
+  "operatorId": "OP-SCALE-TECH-PACIFIC-02",
+  "trackingPointId": "TP-MILL-ENTRANCE-Pacific-001",
+  "speciesMeasurements": [
+    "Douglas Fir: 45.25m3 (53.4%)",
+    "Ponderosa Pine: 21.75m3 (25.7%)",
+    "Western Hemlock: 17.75m3 (20.9%)"
+  ],
+  "lastUpdated": "2025-07-21T14:15:30Z"
+}

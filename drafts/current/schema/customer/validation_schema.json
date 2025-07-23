@@ -1,0 +1,49 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/customer",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["Customer"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "customerId": {
+        "type": "string"
+      },
+      "customerName": {
+        "type": "string"
+      },
+      "address": {
+        "type": "string"
+      },
+      "customerGeographicDataId": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "customerId",
+      "customerName"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "customerId" }
+      },
+      {
+        "!!": { "var": "customerName" }
+      }
+    ]
+  }
+}

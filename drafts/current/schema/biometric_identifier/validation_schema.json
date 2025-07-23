@@ -1,0 +1,27 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/biometric-identifier",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["BiometricIdentifier"] },
+      "@id": { "type": "string", "format": "uri" },
+      "biometricId": { "type": "string" },
+      "traceableUnitId": { "type": "string" },
+      "biometricSignature": { "type": "string" },
+      "captureMethod": {
+        "type": "string", 
+        "enum": ["optical_scanner", "photo_analysis"]
+      },
+      "captureGeographicDataId": { "type": "string" },
+      "captureTimestamp": { "type": "string", "format": "date-time" },
+      "trackingPointId": { "type": "string" },
+      "speciesBiometrics": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "required": ["@context", "@type", "@id", "biometricId", "traceableUnitId", "biometricSignature", "captureMethod", "captureTimestamp"]
+  }
+}

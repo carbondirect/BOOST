@@ -1,54 +1,117 @@
-# BOOST ERD Navigator
+# BOOST Interactive ERD Navigator
 
-This directory contains an interactive Entity Relationship Diagram navigator for stakeholder feedback on the BOOST data standard.
+This directory contains the interactive Entity Relationship Diagram navigator for stakeholder feedback on the BOOST data standard.
 
 ## Purpose
 
-The ERD Navigator provides a user-friendly interface for stakeholders to:
-- View the complete BOOST entity relationship diagram
-- Navigate directly to discussion threads for each entity
-- Provide feedback without requiring GitHub repository access or version control knowledge
-
-## Structure
-
-- `index.html` - Main interactive page with ERD display and entity links
-- Links to 16 entity-specific GitHub Discussions (#90-#105)
-- Connected to corresponding GitHub Issues (#74-#89)
+The Interactive ERD Navigator provides a comprehensive interface for stakeholders to:
+- **Explore** the complete BOOST data model with 29 entities across 7 thematic areas
+- **Navigate** directly to GitHub discussions via purple chat icons in each entity
+- **Filter** entities by thematic areas (Core Traceability, Organizational, Material & Supply, etc.)
+- **Provide feedback** without requiring deep technical knowledge of GitHub or version control
 
 ## Features
 
-- **Visual Navigation**: Interactive ERD diagram showing all entities and relationships
-- **Direct Links**: Click-through navigation to entity-specific discussion threads
-- **Stakeholder Friendly**: No technical knowledge required
-- **Mobile Responsive**: Works on all device sizes
-- **Professional Styling**: GitHub-style design for consistency
+### 🎯 Interactive Exploration
+- **Zoom & Pan**: Mouse wheel zoom, click-and-drag panning for detailed exploration
+- **Smart Filtering**: 9 thematic filter buttons to focus on specific domain areas
+- **TraceableUnit Focus Mode**: 🎯 button to highlight only essential relationships, reducing visual clutter
+- **Dynamic Labels**: Toggle relationship labels on/off for cleaner viewing
+
+### 💬 Direct Discussion Access
+- **Purple Chat Icons**: Each entity header has a 💬 icon linking directly to its GitHub discussion
+- **Complete Coverage**: All 29 entities have dedicated discussion threads (#90-107, #166-179)
+- **Schema Integration**: Discussions include complete field definitions and validation requirements
+
+### 🏗️ Advanced Visualization
+- **Dynamic Schema Loading**: Entity definitions loaded from JSON schema files
+- **Field Type Legend**: Clear indication of Primary Keys (PK), Foreign Keys (FK), Required/Optional fields
+- **Relationship Highlighting**: Click relationships to see focus information
+- **Professional Styling**: Clean, GitHub-style design with responsive layout
+
+## Structure
+
+- `index.html` - Complete interactive ERD with embedded functionality
+- Integrates directly with schema files in `../drafts/current/schema/`
+- Links to 29 entity-specific GitHub Discussions
+
+## Entity Coverage (29 Total)
+
+### 🟢 Core Traceability (9 entities)
+TraceableUnit, MaterialProcessing, ProcessingHistory, SpeciesComponent, MeasurementRecord, LocationHistory, BiometricIdentifier, TrackingPoint, DataReconciliation
+
+### 🔵 Organizational Foundation (4 entities)  
+Organization, Certificate, CertificationScheme, CertificationBody
+
+### 🟤 Material & Supply Chain (4 entities)
+Material, SupplyBase, Supplier, Customer
+
+### 🟠 Transaction Management (3 entities)
+Transaction, TransactionBatch, SalesDeliveryDocument
+
+### 🟡 Sustainability & Claims (1 entity)
+Claim
+
+### 🟣 Geographic & Location (1 entity)
+GeographicData
+
+### 🔴 Reporting & Compliance (3 entities)
+SupplyBaseReport, VerificationStatement, Audit
+
+### ⚫ Analytics & Data (2 entities)
+EnergyCarbonData, MoistureContent
+
+### 👥 Personnel (2 entities)
+Operator, ProductGroup
 
 ## Access
 
-The ERD Navigator is available at:
+The Interactive ERD Navigator is available at:
 - **Live Site**: https://carbondirect.github.io/BOOST/erd-navigator/
 - **Main Site**: https://carbondirect.github.io/BOOST/ (includes link to navigator)
 
-## Entity Coverage
+## Technical Architecture
 
-All 16 entities from the integrated ERD are included:
-- Organization, CertificationScheme, Certificate, CertificationBody
-- MaterialFeedstock, Supplier, Customer
-- TransactionConsignment, TransactionBatch, Claim
-- SaleDeliveryDocument, SAR, SREG
-- VerificationStatement, MassBalanceAccount, ProductGroup
+### Data Sources
+- **Schema Files**: Loads entity definitions from `../drafts/current/schema/*/validation_schema.json`
+- **Discussion Mapping**: Direct links to GitHub discussions embedded in entity headers
+- **Dynamic Rendering**: D3.js-based interactive visualization with real-time updates
+
+### Key Technologies
+- **D3.js v7**: Interactive SVG manipulation and zooming
+- **JSON Schema**: Entity validation and field definitions
+- **GitHub Discussions API**: Direct integration for feedback collection
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
+
+## Usage Instructions
+
+### For Stakeholders
+1. **Navigate**: Use filter buttons to focus on relevant thematic areas
+2. **Explore**: Zoom and pan to examine entity relationships in detail  
+3. **Feedback**: Click purple 💬 icons in entity headers to access discussions
+4. **Focus**: Use 🎯 button to reduce visual complexity around TraceableUnit
+
+### For Developers
+- Entity definitions are dynamically loaded from schema files
+- Discussion links are embedded directly in the ERD
+- The navigator automatically reflects schema updates without manual intervention
 
 ## Maintenance
 
-This navigator is automatically updated when:
-- ERD diagram changes (boost_erd.svg file updates)
-- New discussions are created
-- Entity schemas are modified
+The navigator automatically updates when:
+- **Schema files** are modified in `../drafts/current/schema/`
+- **New entities** are added to the schema structure
+- **Discussion links** are updated in the codebase
 
-## ERD File Structure
+No manual diagram generation is required - the ERD is dynamically rendered from live schema data.
 
-The ERD is maintained as:
-- `boost_erd.mermaid` - Source Mermaid script (edit this to update the diagram)
-- `boost_erd.svg` - Generated SVG diagram (regenerate with `mmdc -i boost_erd.mermaid -o boost_erd.svg`)
+## Migration from Static Version
 
-The site integrates with the existing GitHub Pages setup without overriding the main specification page.
+This interactive navigator replaced the previous static Mermaid-based ERD system, providing:
+- **Dynamic schema integration** vs static entity definitions
+- **Interactive filtering and exploration** vs fixed view
+- **Direct discussion access** vs separate entity link sections  
+- **29 entities** vs previous 16 entities
+- **Advanced decluttering** with TraceableUnit focus mode
+
+The site maintains full backward compatibility and integrates seamlessly with the existing GitHub Pages setup.

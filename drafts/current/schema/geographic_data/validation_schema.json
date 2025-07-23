@@ -1,0 +1,123 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/geographic-data",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["GeographicData"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "geographicDataId": {
+        "type": "string",
+        "description": "Unique identifier for the geographic data"
+      },
+      "geoJsonData": {
+        "type": "object",
+        "description": "Valid GeoJSON object (Point, Polygon, LineString, etc.)",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["Point", "Polygon", "LineString", "MultiPoint", "MultiPolygon", "MultiLineString", "GeometryCollection"]
+          },
+          "coordinates": {
+            "type": "array"
+          },
+          "properties": {
+            "type": "object"
+          }
+        },
+        "required": ["type", "coordinates"]
+      },
+      "dataType": {
+        "type": "string",
+        "enum": ["harvest_site", "processing_location", "administrative_boundary", "supply_base_area", "skid_road", "forest_road", "mill_entrance"],
+        "description": "Type of geographic data"
+      },
+      "description": {
+        "type": "string",
+        "description": "Human-readable description of the geographic area"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of the most recent data update"
+      },
+      "coordinateSystem": {
+        "type": "string",
+        "description": "Coordinate reference system (e.g., WGS84, UTM Zone 10N)",
+        "default": "WGS84"
+      },
+      "accuracy": {
+        "type": "number",
+        "description": "GPS accuracy in meters",
+        "minimum": 0
+      },
+      "elevationM": {
+        "type": "number",
+        "description": "Elevation in meters above sea level"
+      },
+      "administrativeRegion": {
+        "type": "string",
+        "description": "Administrative region or jurisdiction"
+      },
+      "accessRestrictions": {
+        "type": "string",
+        "description": "Any access restrictions or special conditions"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "geographicDataId",
+      "geoJsonData",
+      "dataType",
+      "description"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "geographicDataId" }
+      },
+      {
+        "!!": { "var": "geoJsonData" }
+      },
+      {
+        "!!": { "var": "dataType" }
+      },
+      {
+        "!!": { "var": "description" }
+      },
+      {
+        "!!": { "var": "geoJsonData.type" }
+      },
+      {
+        "!!": { "var": "geoJsonData.coordinates" }
+      },
+      {
+        "if": [
+          { "var": "accuracy" },
+          {
+            ">=": [{ "var": "accuracy" }, 0]
+          },
+          true
+        ]
+      },
+      {
+        "in": [
+          { "var": "geoJsonData.type" },
+          ["Point", "Polygon", "LineString", "MultiPoint", "MultiPolygon", "MultiLineString", "GeometryCollection"]
+        ]
+      }
+    ]
+  }
+}

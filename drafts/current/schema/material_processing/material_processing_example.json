@@ -1,0 +1,70 @@
+{
+  "@context": {
+    "MaterialProcessing": "https://github.com/carbondirect/BOOST/schemas#MaterialProcessing",
+    "processingId": "https://github.com/carbondirect/BOOST/schemas#processingId",
+    "inputTraceableUnitId": "https://github.com/carbondirect/BOOST/schemas#inputTraceableUnitId",
+    "outputTraceableUnitId": "https://github.com/carbondirect/BOOST/schemas#outputTraceableUnitId",
+    "processType": "https://github.com/carbondirect/BOOST/schemas#processType",
+    "processTimestamp": "https://github.com/carbondirect/BOOST/schemas#processTimestamp",
+    "processingGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#processingGeographicDataId",
+    "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "inputComposition": "https://github.com/carbondirect/BOOST/schemas#inputComposition",
+    "outputComposition": "https://github.com/carbondirect/BOOST/schemas#outputComposition",
+    "inputVolume": "https://github.com/carbondirect/BOOST/schemas#inputVolume",
+    "outputVolume": "https://github.com/carbondirect/BOOST/schemas#outputVolume",
+    "volumeLoss": "https://github.com/carbondirect/BOOST/schemas#volumeLoss",
+    "qualityMetrics": "https://github.com/carbondirect/BOOST/schemas#qualityMetrics",
+    "equipmentUsed": "https://github.com/carbondirect/BOOST/schemas#equipmentUsed",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "MaterialProcessing",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/material-processing/PROC-CROSSCUT-KLA-042-015",
+  "processingId": "PROC-CROSSCUT-KLA-042-015",
+  "inputTraceableUnitId": "TRU-LOG-CA-Klamath-042",
+  "outputTraceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "processType": "crosscutting",
+  "processTimestamp": "2025-07-15T08:30:00Z",
+  "processingGeographicDataId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "operatorId": "OP-HARVESTER-KLAMATH-001",
+  "inputComposition": "Douglas Fir: 100%",
+  "outputComposition": "Douglas Fir: 100% (3 logs: 8m, 8m, 6m)",
+  "inputVolume": 25.5,
+  "outputVolume": 24.2,
+  "volumeLoss": 1.3,
+  "qualityMetrics": "Grade A: 16.8 m³ (70%), Grade B: 7.4 m³ (30%), Defects: minimal knots",
+  "equipmentUsed": "harvester_head",
+  "inputPlantParts": {
+    "trunk": {
+      "volume": 25.5,
+      "percentage": 100.0,
+      "qualityGrade": "Mixed Grade Raw Log"
+    }
+  },
+  "outputPlantParts": {
+    "trunk": {
+      "volume": 24.2,
+      "percentage": 100.0,
+      "qualityGrade": "Grade A: 16.8m³, Grade B: 7.4m³"
+    }
+  },
+  "plantPartTransformations": [
+    {
+      "inputPart": "trunk",
+      "outputPart": "trunk",
+      "transformationType": "size_reduction",
+      "inputVolume": 25.5,
+      "outputVolume": 24.2,
+      "recoveryRate": 94.9,
+      "qualityChange": "Length optimization improved grade recovery"
+    }
+  ],
+  "plantPartLosses": {
+    "trunk": {
+      "volume": 1.3,
+      "lossReason": "sawdust",
+      "disposalMethod": "byproduct_sale"
+    }
+  },
+  "lastUpdated": "2025-07-21T16:20:00Z"
+}

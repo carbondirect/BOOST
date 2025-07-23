@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/organization",
+  "title": "Organization",
+  "description": "Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "object",
+      "description": "JSON-LD context for semantic web compatibility"
+    },
+    "@type": {
+      "type": "string",
+      "const": "Organization",
+      "description": "JSON-LD type identifier"
+    },
+    "@id": {
+      "type": "string",
+      "format": "uri",
+      "description": "Unique URI identifier for the organization"
+    },
+    "organizationId": {
+      "type": "string",
+      "description": "Unique identifier for the organization",
+      "minLength": 1,
+      "pattern": "^ORG-[A-Z0-9-_]+$",
+      "examples": ["ORG-001", "ORG-FORESTCO-PACIFIC"]
+    },
+    "organizationName": {
+      "type": "string",
+      "description": "Legal name of the organization",
+      "minLength": 1,
+      "examples": ["Pacific Forest Products LLC", "Klamath Sustainable Forestry"]
+    },
+    "organizationType": {
+      "type": "string",
+      "description": "Type of organization",
+      "enum": ["harvester", "processor", "certifier", "transporter", "supplier", "manufacturer"]
+    },
+    "primaryGeographicDataId": {
+      "type": "string",
+      "description": "Foreign key to primary operational location",
+      "pattern": "^GEO-[A-Z0-9-_]+$",
+      "examples": ["GEO-MILL-PACIFIC-001", "GEO-OFFICE-KLAMATH"]
+    },
+    "operationalAreas": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$"
+      },
+      "description": "List of geographic areas where organization operates",
+      "examples": [["GEO-FOREST-AREA-01", "GEO-MILL-SITE-02"]]
+    },
+    "contactEmail": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary contact email address",
+      "examples": ["operations@pacificforest.com", "info@klamathforestry.org"]
+    },
+    "contactPhone": {
+      "type": "string",
+      "description": "Primary contact phone number",
+      "examples": ["+1-555-123-4567", "+1-800-FOREST-1"]
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of certification IDs held by organization",
+      "examples": [["CERT-FSC-001", "CERT-SFI-002"]]
+    },
+    "establishedDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date organization was established",
+      "examples": ["1995-03-15", "2010-07-01"]
+    },
+    "taxId": {
+      "type": "string",
+      "description": "Tax identification number",
+      "examples": ["12-3456789", "98-7654321"]
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "description": "Organization website URL",
+      "examples": ["https://www.pacificforest.com", "https://klamathforestry.org"]
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the most recent data update"
+    }
+  },
+  "required": [
+    "@type",
+    "@id", 
+    "organizationId",
+    "organizationName",
+    "organizationType"
+  ],
+  "additionalProperties": false
+}

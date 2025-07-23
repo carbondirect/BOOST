@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "GeographicData": "https://github.com/carbondirect/BOOST/schemas#GeographicData",
+    "geographicDataId": "https://github.com/carbondirect/BOOST/schemas#geographicDataId",
+    "geoJsonData": "https://github.com/carbondirect/BOOST/schemas#geoJsonData",
+    "dataType": "https://github.com/carbondirect/BOOST/schemas#dataType",
+    "description": "https://github.com/carbondirect/BOOST/schemas#description",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "coordinateSystem": "https://github.com/carbondirect/BOOST/schemas#coordinateSystem",
+    "accuracy": "https://github.com/carbondirect/BOOST/schemas#accuracy",
+    "elevationM": "https://github.com/carbondirect/BOOST/schemas#elevationM",
+    "administrativeRegion": "https://github.com/carbondirect/BOOST/schemas#administrativeRegion",
+    "accessRestrictions": "https://github.com/carbondirect/BOOST/schemas#accessRestrictions",
+    "id": "@id"
+  },
+  "@type": "GeographicData",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/geographic-data/GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "geographicDataId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "geoJsonData": {
+    "type": "Polygon",
+    "coordinates": [[
+      [-123.456789, 41.234567],
+      [-123.456000, 41.234567],
+      [-123.456000, 41.234000],
+      [-123.456789, 41.234000],
+      [-123.456789, 41.234567]
+    ]],
+    "properties": {
+      "name": "Klamath Ridge Harvest Unit 4",
+      "harvestMethod": "selective_cut",
+      "slope": "moderate",
+      "soilType": "clay_loam",
+      "drainageClass": "well_drained"
+    }
+  },
+  "dataType": "harvest_site",
+  "description": "Klamath Ridge Harvest Site Unit 4 - Selective harvest of mature Douglas Fir and Ponderosa Pine stands with 30% retention",
+  "lastUpdated": "2025-07-21T08:15:00Z",
+  "coordinateSystem": "WGS84",
+  "accuracy": 2.5,
+  "elevationM": 1280.5,
+  "administrativeRegion": "Humboldt County, California, USA",
+  "accessRestrictions": "Seasonal road closure November 15 - April 1. Permit required for public access."
+}

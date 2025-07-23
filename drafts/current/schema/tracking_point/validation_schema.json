@@ -1,0 +1,30 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/tracking-point",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["TrackingPoint"] },
+      "@id": { "type": "string", "format": "uri" },
+      "trackingPointId": { "type": "string" },
+      "pointType": {
+        "type": "string",
+        "enum": ["harvest_site", "skid_road", "forest_road", "mill_entrance"]
+      },
+      "geographicDataId": { "type": "string" },
+      "equipmentUsed": { "type": "string" },
+      "operatorId": { "type": "string" },
+      "establishedTimestamp": { "type": "string", "format": "date-time" }
+    },
+    "required": ["@context", "@type", "@id", "trackingPointId", "pointType", "geographicDataId", "equipmentUsed", "establishedTimestamp"]
+  },
+  "rules": {
+    "and": [
+      { "!!": { "var": "trackingPointId" } },
+      { "!!": { "var": "pointType" } },
+      { "!!": { "var": "geographicDataId" } },
+      { "!!": { "var": "equipmentUsed" } }
+    ]
+  }
+}

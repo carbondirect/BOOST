@@ -1,0 +1,69 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/mass-balance-account",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["MassBalanceAccount"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "accountId": {
+        "type": "string"
+      },
+      "organizationId": {
+        "type": "string"
+      },
+      "productGroupId": {
+        "type": "string"
+      },
+      "periodInputs": {
+        "type": "number"
+      },
+      "periodOutputs": {
+        "type": "number"
+      },
+      "currentBalance": {
+        "type": "number"
+      },
+      "balancingPeriod": {
+        "type": "string"
+      },
+      "conversionFactors": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "accountId",
+      "organizationId",
+      "productGroupId",
+      "currentBalance"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "accountId" }
+      },
+      {
+        "!!": { "var": "organizationId" }
+      },
+      {
+        "!!": { "var": "productGroupId" }
+      },
+      {
+        "!!": { "var": "currentBalance" }
+      }
+    ]
+  }
+}

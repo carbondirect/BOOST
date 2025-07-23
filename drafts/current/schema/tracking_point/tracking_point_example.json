@@ -1,0 +1,22 @@
+{
+  "@context": {
+    "TrackingPoint": "https://github.com/carbondirect/BOOST/schemas#TrackingPoint",
+    "trackingPointId": "https://github.com/carbondirect/BOOST/schemas#trackingPointId",
+    "pointType": "https://github.com/carbondirect/BOOST/schemas#pointType",
+    "geographicDataId": "https://github.com/carbondirect/BOOST/schemas#geographicDataId",
+    "equipmentUsed": "https://github.com/carbondirect/BOOST/schemas#equipmentUsed",
+    "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "establishedTimestamp": "https://github.com/carbondirect/BOOST/schemas#establishedTimestamp",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "TrackingPoint",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/tracking-point/TP-MILL-ENTRANCE-Pacific-001",
+  "trackingPointId": "TP-MILL-ENTRANCE-Pacific-001",
+  "pointType": "mill_entrance",
+  "geographicDataId": "GEO-MILL-ENTRANCE-Pacific-001",
+  "equipmentUsed": "RFID_reader, scale_system, optical_scanner, GPS",
+  "operatorId": "OP-MILL-GATE-PACIFIC-001",
+  "establishedTimestamp": "2025-06-01T08:00:00Z",
+  "lastUpdated": "2025-07-21T16:00:00Z"
+}

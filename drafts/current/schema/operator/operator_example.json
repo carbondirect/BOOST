@@ -1,0 +1,52 @@
+{
+  "@context": {
+    "Operator": "https://github.com/carbondirect/BOOST/schemas#Operator",
+    "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "organizationId": "https://github.com/carbondirect/BOOST/schemas#organizationId",
+    "operatorName": "https://github.com/carbondirect/BOOST/schemas#operatorName",
+    "employeeId": "https://github.com/carbondirect/BOOST/schemas#employeeId",
+    "operatorType": "https://github.com/carbondirect/BOOST/schemas#operatorType",
+    "certifications": "https://github.com/carbondirect/BOOST/schemas#certifications",
+    "equipmentAuthorizations": "https://github.com/carbondirect/BOOST/schemas#equipmentAuthorizations",
+    "contactInfo": "https://github.com/carbondirect/BOOST/schemas#contactInfo",
+    "isActive": "https://github.com/carbondirect/BOOST/schemas#isActive",
+    "hireDate": "https://github.com/carbondirect/BOOST/schemas#hireDate",
+    "skillsQualifications": "https://github.com/carbondirect/BOOST/schemas#skillsQualifications",
+    "supervisorOperatorId": "https://github.com/carbondirect/BOOST/schemas#supervisorOperatorId",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "Operator",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/operator/OP-ANDERSON-HARVEST-001",
+  "operatorId": "OP-ANDERSON-HARVEST-001",
+  "organizationId": "ORG-KLAMATH-HARVEST-OPERATIONS-001",
+  "operatorName": "John Anderson",
+  "employeeId": "EMP-001234",
+  "operatorType": "harvester_operator",
+  "certifications": [
+    "CDL_Class_A",
+    "Heavy_Equipment_Operator",
+    "Chainsaw_Safety",
+    "First_Aid_CPR",
+    "OSHA_10",
+    "Equipment_Specific_Training"
+  ],
+  "equipmentAuthorizations": [
+    "HARVESTER-KLAMATH-001",
+    "DELIMBER-KLAMATH-A",
+    "LOG-LOADER-001",
+    "GPS-TRACKER-HANDHELD"
+  ],
+  "contactInfo": "555-0123, john.anderson@klamathops.com",
+  "isActive": true,
+  "hireDate": "2018-04-15",
+  "skillsQualifications": [
+    "10+ years forest harvesting experience",
+    "Biometric scanner operation certified",
+    "Mechanical troubleshooting skills",
+    "Safety training instructor qualified",
+    "Bilingual English/Spanish"
+  ],
+  "supervisorOperatorId": "OP-SUPERVISOR-HARVEST-001",
+  "lastUpdated": "2025-07-22T09:15:00Z"
+}

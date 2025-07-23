@@ -1,0 +1,158 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/moisture-content-validation",
+    "title": "BOOST Moisture Content Validation Rules",
+    "description": "Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard",
+    "definitions": {
+      "moistureContentValue": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Moisture content as percentage of weight contributed by water (0-100%)"
+      },
+      "moistureMeasurementMethod": {
+        "type": "string",
+        "enum": [
+          "oven_dry",
+          "electrical_resistance", 
+          "microwave",
+          "near_infrared",
+          "gravimetric",
+          "capacitive",
+          "calculated",
+          "estimated"
+        ],
+        "description": "Method used to determine moisture content"
+      },
+      "moistureQualityAssurance": {
+        "type": "object",
+        "properties": {
+          "calibrationDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last calibration date of measurement equipment"
+          },
+          "standardReference": {
+            "type": "string",
+            "enum": ["ASTM_D4442", "ASTM_D2016", "ISO_13061", "CEN_EN_14774", "local_standard"],
+            "description": "Standard procedure followed for measurement"
+          },
+          "sampleSize": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of measurement points taken"
+          },
+          "measurementAccuracy": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Estimated accuracy of measurement (± percentage points)"
+          },
+          "environmentalConditions": {
+            "type": "object",
+            "properties": {
+              "temperature": { "type": "number", "description": "Temperature during measurement (Celsius)" },
+              "humidity": { "type": "number", "minimum": 0, "maximum": 100, "description": "Relative humidity (%)" }
+            }
+          }
+        }
+      }
+    },
+    "businessRules": {
+      "qualityGradeRequirements": {
+        "description": "Moisture content requirements by quality grade",
+        "rules": {
+          "Grade_A": { "maxMoisture": 18, "description": "Premium grade requires moisture below 18%" },
+          "Grade_B": { "maxMoisture": 22, "description": "Standard grade allows moisture up to 22%" },
+          "Grade_C": { "maxMoisture": 30, "description": "Utility grade allows moisture up to 30%" },
+          "Structural": { "maxMoisture": 19, "description": "Structural lumber requires moisture below 19%" },
+          "Fuel": { "maxMoisture": 50, "description": "Fuel grade allows higher moisture content" },
+          "Pulpwood": { "maxMoisture": 60, "description": "Pulpwood can have high moisture content" }
+        }
+      },
+      "processingValidation": {
+        "description": "Moisture content validation during processing operations",
+        "rules": {
+          "drying": {
+            "moistureDecrease": true,
+            "minReduction": 2,
+            "description": "Drying operations must reduce moisture by at least 2%"
+          },
+          "storage": {
+            "moistureIncrease": "allowed",
+            "maxIncrease": 5,
+            "timeLimit": "P30D",
+            "description": "Storage may increase moisture up to 5% over 30 days"
+          },
+          "transport": {
+            "moistureChange": "minimal",
+            "maxChange": 2,
+            "description": "Transportation should not change moisture by more than 2%"
+          }
+        }
+      },
+      "regulatoryCompliance": {
+        "description": "Regulatory requirements for moisture content reporting",
+        "rules": {
+          "LCFS": {
+            "required": true,
+            "measurementRequired": "at_delivery",
+            "standardMethod": ["oven_dry", "near_infrared"],
+            "maxMoisture": 65,
+            "description": "LCFS requires moisture measurement at delivery, max 65%"
+          },
+          "FSC": {
+            "trackingRequired": true,
+            "qualityAssurance": "required",
+            "description": "FSC chain of custody requires moisture tracking"
+          },
+          "SBP": {
+            "measurementFrequency": "per_batch",
+            "validationRequired": true,
+            "description": "SBP requires per-batch moisture validation"
+          }
+        }
+      },
+      "dataConsistency": {
+        "description": "Data consistency rules for moisture content",
+        "rules": {
+          "measurementFrequency": {
+            "minimumInterval": "P7D",
+            "description": "Moisture should be measured at least every 7 days for active TRUs"
+          },
+          "outlierDetection": {
+            "maxDailyChange": 10,
+            "flagThreshold": 15,
+            "description": "Flag moisture changes >10% per day, investigate changes >15%"
+          },
+          "crossValidation": {
+            "requireSecondMeasurement": "when_change_exceeds_10_percent",
+            "description": "Require second measurement for changes exceeding 10%"
+          }
+        }
+      }
+    },
+    "validationAlgorithms": {
+      "moistureConsistencyCheck": {
+        "description": "Algorithm to validate moisture content consistency across processing chain",
+        "inputs": ["processingHistory", "moistureContent", "processingEventType"],
+        "logic": {
+          "drying": "outputMoisture < inputMoisture",
+          "storage_outdoor": "outputMoisture >= inputMoisture - 2",
+          "storage_covered": "outputMoisture <= inputMoisture + 3",
+          "transport": "abs(outputMoisture - inputMoisture) <= 2"
+        }
+      },
+      "qualityGradeValidation": {
+        "description": "Validate that moisture content meets quality grade requirements",
+        "inputs": ["moistureContent", "qualityGrade"],
+        "logic": "moistureContent <= qualityGradeRequirements[qualityGrade].maxMoisture"
+      },
+      "volumeAdjustment": {
+        "description": "Adjust volume measurements based on moisture content",
+        "inputs": ["measuredVolume", "moistureContent", "standardMoisture"],
+        "formula": "adjustedVolume = measuredVolume × (1 + (standardMoisture - moistureContent) × shrinkageFactor)"
+      }
+    }
+  }
+}
