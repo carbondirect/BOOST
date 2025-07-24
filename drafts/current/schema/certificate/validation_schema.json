@@ -64,7 +64,7 @@
     "status": {
       "type": "string",
       "enum": ["active", "expired", "revoked", "suspended", "pending"],
-      "description": "Current certificate status"
+      "description": "Current certificate status. Use 'pending' for certificates that are in the process of being reviewed or approved but are not yet active."
     },
     "scopeOfCertification": {
       "type": "string",
