@@ -970,6 +970,75 @@
             };
         }
 
+        // Generate automatic relationships from FK fields using EntityNameId convention
+        function generateAutomaticFKRelationships(entities, existingRelationships) {
+            const automaticRelationships = [];
+            const entityNameSet = new Set(entities.map(e => e.id));
+            
+            // Create lookup for existing relationships to avoid duplicates
+            const existingRelLookup = new Set(
+                existingRelationships.map(rel => `${rel.from}-${rel.to}`)
+            );
+            
+            for (const entity of entities) {
+                // Find all FK fields in this entity
+                const fkFields = entity.fields.filter(field => field.isFK);
+                
+                for (const fkField of fkFields) {
+                    // Use EntityNameId convention for trivial matching
+                    const targetEntityName = inferTargetEntityFromFK(fkField.name, entityNameSet);
+                    
+                    if (targetEntityName) {
+                        const relationshipKey = `${entity.id}-${targetEntityName}`;
+                        
+                        // Skip if relationship already exists from metadata
+                        if (!existingRelLookup.has(relationshipKey)) {
+                            const semanticLabel = convertToSemanticRelationship(fkField.name);
+                            const isRequired = entity.schema?.required?.includes(fkField.name);
+                            
+                            automaticRelationships.push({
+                                from: entity.id,
+                                to: targetEntityName,
+                                label: semanticLabel,
+                                type: isRequired ? 'identifying' : 'non-identifying',
+                                fromCard: 'many',
+                                toCard: 'one'
+                            });
+                        }
+                    }
+                }
+            }
+            
+            return automaticRelationships;
+        }
+        
+        // Convert FK field name to semantic relationship label
+        function convertToSemanticRelationship(fieldName) {
+            // Remove 'Id' suffix if present
+            const baseName = fieldName.replace(/Id$/, '');
+            
+            // Convert PascalCase to snake_case semantic form
+            const semantic = baseName
+                .replace(/([A-Z])/g, '_$1')  // Insert underscore before capitals
+                .toLowerCase()               // Convert to lowercase
+                .replace(/^_/, '');          // Remove leading underscore if present
+            
+            // Return semantic relationship name
+            return `references_${semantic}`;
+        }
+        
+        // Trivial FK matching using EntityNameId convention
+        function inferTargetEntityFromFK(fieldName, entityNameSet) {
+            // EntityNameId convention: remove 'Id' suffix to get entity name
+            if (!fieldName.endsWith('Id')) {
+                return null;
+            }
+            
+            const targetName = fieldName.slice(0, -2);
+            
+            // O(1) lookup - if EntityName exists, this FK references it
+            return entityNameSet.has(targetName) ? targetName : null;
+        }
 
         // Load entities from schema files with auto-discovery
         async function loadEntitiesFromSchema() {
@@ -1037,10 +1106,15 @@
             
             // No fallback needed - all entities must have boost_metadata in their schema files
             
-            // Merge discovered relationships with static relationships
-            if (discoveredRelationships.length > 0) {
-                console.log(`Merging ${discoveredRelationships.length} relationships from schema metadata with ${relationships.length} static relationships`);
-                relationships.push(...discoveredRelationships);
+            // Generate automatic relationships from FK fields using generic conventions
+            const automaticRelationships = generateAutomaticFKRelationships(entities, discoveredRelationships);
+            console.log(`Generated ${automaticRelationships.length} automatic FK relationships`);
+            
+            // Merge all relationships: static + metadata + automatic FK
+            const allDiscoveredRelationships = [...discoveredRelationships, ...automaticRelationships];
+            if (allDiscoveredRelationships.length > 0) {
+                console.log(`Merging ${allDiscoveredRelationships.length} relationships (${discoveredRelationships.length} from metadata, ${automaticRelationships.length} from FKs) with ${relationships.length} static relationships`);
+                relationships.push(...allDiscoveredRelationships);
                 console.log(`Total relationships after merge: ${relationships.length}`);
             }
             

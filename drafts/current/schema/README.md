@@ -27,6 +27,7 @@ This directory contains JSON schema definitions for all BOOST entities. These sc
 - ✅ Directory names use snake_case (e.g., "lcfs_pathway")
 - ✅ boost_metadata is required for ERD integration
 - ✅ Update `directories.json` manifest when adding new entities
+- ✅ Foreign key fields must use `EntityNameId` convention
 
 ### Schema Directory Manifest
 The `directories.json` file contains a comprehensive list of all schema directories for reliable ERD Navigator discovery across all platforms (GitHub Pages, local development, etc.). 
@@ -37,6 +38,49 @@ The `directories.json` file contains a comprehensive list of all schema director
 3. Update the `total_entities` count and `last_updated` timestamp
 
 This ensures the ERD Navigator can discover all entities regardless of deployment environment.
+
+### EntityNameId Foreign Key Convention
+
+BOOST uses a standardized `EntityNameId` convention for foreign key fields that enables automatic relationship detection in the ERD Navigator with zero configuration.
+
+**Convention Rule:** Foreign key fields must be named exactly `EntityNameId` where `EntityName` matches the target entity's PascalCase name.
+
+**Examples:**
+```json
+{
+  "properties": {
+    "OrganizationId": {
+      "type": "string", 
+      "description": "References Organization entity"
+    },
+    "TraceableUnitId": {
+      "type": "string",
+      "description": "References TraceableUnit entity" 
+    },
+    "CertificationBodyId": {
+      "type": "string",
+      "description": "References CertificationBody entity"
+    }
+  }
+}
+```
+
+**Benefits:**
+  - ✅ **Automatic relationship detection** - ERD Navigator creates relationships without manual boost_metadata
+  - ✅ **Semantic relationship labels** - Converts to meaningful names like `references_organization`
+  - ✅ **Identifying vs non-identifying** - Uses `required` array to determine relationship type
+  - ✅ **Zero maintenance** - No hardcoded mappings or complex matching logic
+  - ✅ **Linked data ready** - Follows semantic web conventions for future JSON-LD integration
+
+**Relationship Types:**
+  - Fields in `required` array → **identifying relationships** (solid lines)
+  - Optional fields → **non-identifying relationships** (dashed lines)
+
+**Migration from Legacy FK Names:**
+  - `organizationId` → `OrganizationId`
+  - `traceableUnitId` → `TraceableUnitId`  
+  - `cbId` → `CertificationBodyId`
+  - `geographicDataId` → `GeographicDataId`
 
 ## Overview
 

@@ -47,9 +47,9 @@
           "PEFC/12-34-567"
         ]
       },
-      "certificationSchemeId": {
+      "CertificationSchemeId": {
         "type": "string",
-        "description": "Foreign key to Certification Scheme",
+        "description": "Uses EntityNameId convention referencing CertificationScheme",
         "minLength": 1,
         "examples": [
           "SFI-CoC",
@@ -57,9 +57,9 @@
           "PEFC-CoC"
         ]
       },
-      "cbId": {
+      "CertificationBodyId": {
         "type": "string",
-        "description": "Foreign key to Certification Body",
+        "description": "Uses EntityNameId convention referencing CertificationBody",
         "minLength": 1,
         "examples": [
           "SFI",
@@ -67,9 +67,9 @@
           "PEFC-001"
         ]
       },
-      "organizationId": {
+      "OrganizationId": {
         "type": "string",
-        "description": "Foreign key to Organization receiving the certificate",
+        "description": "Uses EntityNameId convention referencing Organization receiving the certificate",
         "minLength": 1,
         "pattern": "^ORG-[A-Z0-9-_]+$",
         "examples": [
@@ -197,9 +197,9 @@
     },
     "required": [
       "certificateNumber",
-      "certificationSchemeId",
-      "cbId",
-      "organizationId",
+      "CertificationSchemeId",
+      "CertificationBodyId",
+      "OrganizationId",
       "dateOfIssue",
       "dateOfExpiry",
       "status",

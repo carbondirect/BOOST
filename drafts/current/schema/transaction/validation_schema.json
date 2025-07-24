@@ -21,13 +21,13 @@
         "type": "string",
         "description": "Unique identifier for the business transaction"
       },
-      "supplyingOrganizationId": {
+      "OrganizationId": {
         "type": "string",
-        "description": "Foreign key to selling organization"
+        "description": "Primary organization involved in transaction (seller/supplier)"
       },
-      "customerOrganizationId": {
-        "type": "string",
-        "description": "Foreign key to buying organization"
+      "CustomerOrganizationId": {
+        "type": "string", 
+        "description": "Customer organization (buyer) - uses EntityNameId convention referencing Organization"
       },
       "transactionDate": {
         "type": "string",
@@ -88,11 +88,11 @@
         ],
         "description": "Current status of business transaction"
       },
-      "transactionGeographicDataId": {
+      "GeographicDataId": {
         "type": "string",
-        "description": "Foreign key to primary transaction location"
+        "description": "Primary transaction location - uses EntityNameId convention referencing GeographicData"
       },
-      "brokerOrganizationId": {
+      "BrokerOrganizationId": {
         "type": [
           "string",
           "null"
@@ -256,8 +256,8 @@
       "@type",
       "@id",
       "transactionId",
-      "supplyingOrganizationId",
-      "customerOrganizationId",
+      "OrganizationId",
+      "CustomerOrganizationId",
       "transactionDate",
       "contractValue",
       "contractCurrency",
