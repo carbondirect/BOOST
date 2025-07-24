@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "SpeciesComponent": "https://github.com/carbondirect/BOOST/schemas#SpeciesComponent",
+    "componentId": "https://github.com/carbondirect/BOOST/schemas#componentId",
+    "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
+    "species": "https://github.com/carbondirect/BOOST/schemas#species",
+    "volumeM3": "https://github.com/carbondirect/BOOST/schemas#volumeM3",
+    "percentageByVolume": "https://github.com/carbondirect/BOOST/schemas#percentageByVolume",
+    "qualityGrade": "https://github.com/carbondirect/BOOST/schemas#qualityGrade",
+    "sourceGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#sourceGeographicDataId",
+    "harvestingMethod": "https://github.com/carbondirect/BOOST/schemas#harvestingMethod",
+    "harvestTimestamp": "https://github.com/carbondirect/BOOST/schemas#harvestTimestamp",
+    "carbonStorage": "https://github.com/carbondirect/BOOST/schemas#carbonStorage",
+    "scientificName": "https://github.com/carbondirect/BOOST/schemas#scientificName",
+    "dbhCm": "https://github.com/carbondirect/BOOST/schemas#dbhCm",
+    "heightM": "https://github.com/carbondirect/BOOST/schemas#heightM",
+    "ageYears": "https://github.com/carbondirect/BOOST/schemas#ageYears",
+    "moistureContent": "https://github.com/carbondirect/BOOST/schemas#moistureContent",
+    "defects": "https://github.com/carbondirect/BOOST/schemas#defects",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "SpeciesComponent",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/species-component/SC-DOUGLAS-FIR-KLA-042-001",
+  "componentId": "SC-DOUGLAS-FIR-KLA-042-001",
+  "traceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "species": "Douglas Fir",
+  "volumeM3": 45.75,
+  "percentageByVolume": 53.7,
+  "qualityGrade": "Grade A Structural",
+  "sourceGeographicDataId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "harvestingMethod": "harvester",
+  "harvestTimestamp": "2025-07-15T06:45:00Z",
+  "carbonStorage": "15.2 tons CO2/m3 stored",
+  "scientificName": "Pseudotsuga menziesii",
+  "dbhCm": 52.3,
+  "heightM": 32.5,
+  "ageYears": 78,
+  "moistureContent": 14.2,
+  "defects": [
+    "small_branch_knots",
+    "minor_fiber_deviation"
+  ],
+  "plantPartComposition": {
+    "trunk": {
+      "volume": 34.31,
+      "percentage": 75.0,
+      "qualityGrade": "Grade A Structural",
+      "moistureContent": 13.8
+    },
+    "heartwood": {
+      "volume": 22.88,
+      "percentage": 50.0,
+      "qualityGrade": "Premium Select",
+      "moistureContent": 12.5
+    },
+    "sapwood": {
+      "volume": 11.44,
+      "percentage": 25.0,
+      "qualityGrade": "Grade A Structural", 
+      "moistureContent": 15.2
+    },
+    "bark": {
+      "volume": 4.58,
+      "percentage": 10.0,
+      "qualityGrade": "Fuel Grade",
+      "moistureContent": 18.5
+    },
+    "branches": {
+      "volume": 6.86,
+      "percentage": 15.0,
+      "qualityGrade": "Chip Grade",
+      "moistureContent": 16.8
+    }
+  },
+  "primaryPlantPart": "trunk",
+  "structuralClassification": "structural",
+  "lastUpdated": "2025-07-21T14:30:00Z"
+}

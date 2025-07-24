@@ -1,0 +1,123 @@
+{
+  "@context": {
+    "TransactionBatch": "https://github.com/carbondirect/BOOST/schemas#TransactionBatch",
+    "transactionBatchId": "https://github.com/carbondirect/BOOST/schemas#transactionBatchId",
+    "transactionId": "https://github.com/carbondirect/BOOST/schemas#transactionId",
+    "productionBatchId": "https://github.com/carbondirect/BOOST/schemas#productionBatchId",
+    "quantity": "https://github.com/carbondirect/BOOST/schemas#quantity",
+    "quantityUnit": "https://github.com/carbondirect/BOOST/schemas#quantityUnit",
+    "traceableUnitIds": "https://github.com/carbondirect/BOOST/schemas#traceableUnitIds",
+    "claimId": "https://github.com/carbondirect/BOOST/schemas#claimId",
+    "additionalClaimIds": "https://github.com/carbondirect/BOOST/schemas#additionalClaimIds",
+    "speciesComposition": "https://github.com/carbondirect/BOOST/schemas#speciesComposition",
+    "qualityGrade": "https://github.com/carbondirect/BOOST/schemas#qualityGrade",
+    "processingHistoryIds": "https://github.com/carbondirect/BOOST/schemas#processingHistoryIds",
+    "reconciliationStatus": "https://github.com/carbondirect/BOOST/schemas#reconciliationStatus",
+    "trackingHistory": "https://github.com/carbondirect/BOOST/schemas#trackingHistory",
+    "measurementRecordIds": "https://github.com/carbondirect/BOOST/schemas#measurementRecordIds",
+    "mediaBreakDetected": "https://github.com/carbondirect/BOOST/schemas#mediaBreakDetected",
+    "batchStatus": "https://github.com/carbondirect/BOOST/schemas#batchStatus",
+    "batchCreatedDate": "https://github.com/carbondirect/BOOST/schemas#batchCreatedDate",
+    "deliveryDate": "https://github.com/carbondirect/BOOST/schemas#deliveryDate",
+    "deliveryGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#deliveryGeographicDataId",
+    "qualityMetrics": "https://github.com/carbondirect/BOOST/schemas#qualityMetrics",
+    "plantPartComposition": "https://github.com/carbondirect/BOOST/schemas#plantPartComposition",
+    "transportationData": "https://github.com/carbondirect/BOOST/schemas#transportationData",
+    "certificationValidation": "https://github.com/carbondirect/BOOST/schemas#certificationValidation",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "TransactionBatch",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/transaction-batch/TXB-KLA-042-001",
+  "transactionBatchId": "TXB-KLA-042-001",
+  "transactionId": "TXN-PACIFIC-KLAMATH-2025-042",
+  "productionBatchId": "PROD-BATCH-KLA-2025-Q3-015",
+  "quantity": 387.5,
+  "quantityUnit": "cubic_meters",
+  "traceableUnitIds": [
+    "TRU-LOG-CA-Klamath-042-001",
+    "TRU-LOG-CA-Klamath-042-002", 
+    "TRU-PILE-DF-SORTED-043-001",
+    "TRU-PILE-PP-SORTED-043-002"
+  ],
+  "claimId": "CLAIM-FSC-MIX-MULTISPECIES-042",
+  "additionalClaimIds": [
+    "CLAIM-SBP-COMPLIANT-042",
+    "CLAIM-LCFS-ELIGIBLE-042"
+  ],
+  "speciesComposition": [
+    {
+      "species": "Douglas Fir",
+      "percentage": 62.5,
+      "volume": 242.2
+    },
+    {
+      "species": "Ponderosa Pine", 
+      "percentage": 37.5,
+      "volume": 145.3
+    }
+  ],
+  "qualityGrade": "Grade_A",
+  "processingHistoryIds": [
+    "PROC-HIST-TRU-042-001-003",
+    "PROC-HIST-TRU-042-002-002",
+    "PROC-HIST-SPLIT-043-001",
+    "PROC-HIST-LOADING-043-002"
+  ],
+  "reconciliationStatus": "resolved",
+  "trackingHistory": "Harvest Site → Skid Road → Forest Road → Processing Yard → Loading Bay → Delivery",
+  "measurementRecordIds": [
+    "MEAS-HARVEST-042-001",
+    "MEAS-MILL-ENTRANCE-042-001",
+    "MEAS-FINAL-ACCEPTANCE-042-001"
+  ],
+  "mediaBreakDetected": false,
+  "batchStatus": "delivered",
+  "batchCreatedDate": "2025-07-16T06:00:00Z",
+  "deliveryDate": "2025-07-18T14:30:00Z",
+  "deliveryGeographicDataId": "GEO-PACIFIC-MILL-ENTRANCE-001",
+  "qualityMetrics": {
+    "moistureContent": 18.5,
+    "density": 450.2,
+    "defectRate": 5.2,
+    "contaminationLevel": "minimal",
+    "gradingMethod": "combination",
+    "qualityAssessmentDate": "2025-07-16T08:00:00Z",
+    "assessorId": "OP-QUALITY-INSPECTOR-KLA-003"
+  },
+  "plantPartComposition": {
+    "trunk": {
+      "volume": 350.8,
+      "percentage": 90.5
+    },
+    "branches": {
+      "volume": 28.2,
+      "percentage": 7.3
+    },
+    "bark": {
+      "volume": 8.5,
+      "percentage": 2.2
+    }
+  },
+  "transportationData": {
+    "carrierOrganizationId": "ORG-PACIFIC-LOGISTICS-001",
+    "transportMethod": "truck",
+    "vehicleId": "TRUCK-LOG-HAULER-042",
+    "driverOperatorId": "OP-DRIVER-ANDERSON-001",
+    "pickupDate": "2025-07-17T07:00:00Z",
+    "estimatedArrival": "2025-07-18T13:00:00Z",
+    "routeOptimization": "fuel_efficient"
+  },
+  "certificationValidation": {
+    "certificateIds": [
+      "CERT-FSC-KLAMATH-2025-001",
+      "CERT-SBP-KLAMATH-2025-002"
+    ],
+    "validationRequired": true,
+    "validationCompleted": true,
+    "validationDate": "2025-07-18T15:00:00Z",
+    "validatorId": "OP-CERT-VALIDATOR-PACIFIC-001",
+    "validationNotes": "All certificates verified, chain of custody maintained, no discrepancies found."
+  },
+  "lastUpdated": "2025-07-21T16:50:00Z"
+}

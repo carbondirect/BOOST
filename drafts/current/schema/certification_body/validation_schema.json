@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/certification_body",
+  "title": "CertificationBody",
+  "description": "Certification Body entity representing independent organizations authorized to issue certificates",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "object",
+      "description": "JSON-LD context for semantic web compatibility"
+    },
+    "@type": {
+      "type": "string",
+      "const": "CertificationBody",
+      "description": "JSON-LD type identifier"
+    },
+    "@id": {
+      "type": "string",
+      "format": "uri",
+      "description": "Unique URI identifier for the certification body"
+    },
+    "cbId": {
+      "type": "string",
+      "description": "Unique identifier for the certification body (primary key)",
+      "minLength": 1,
+      "examples": ["SFI", "FSC-US", "PEFC-001", "ANSI-ASQ"]
+    },
+    "cbName": {
+      "type": "string",
+      "description": "Official name of the certification body",
+      "minLength": 1,
+      "examples": ["Sustainable Forestry Initiative", "Forest Stewardship Council US", "Programme for Endorsement of Forest Certification"]
+    },
+    "cbType": {
+      "type": "string",
+      "enum": ["scheme-owner", "third-party", "accredited-body", "regulatory-body"],
+      "description": "Type or category of certification body"
+    },
+    "accreditationStatus": {
+      "type": "string",
+      "enum": ["active", "suspended", "expired", "pending", "revoked"],
+      "description": "Current accreditation status"
+    },
+    "authorizedSchemes": {
+      "type": "array",
+      "description": "List of certification schemes the CB can certify under",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "examples": [["SFI-CoC", "SFI-FM"], ["FSC-CoC", "FSC-FM"]]
+    },
+    "contactInformation": {
+      "type": "object",
+      "description": "Contact details for the certification body",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {"type": "string"},
+            "city": {"type": "string"},
+            "state": {"type": "string"},
+            "postalCode": {"type": "string"},
+            "country": {"type": "string"}
+          }
+        },
+        "website": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["email"]
+    },
+    "operationalRegions": {
+      "type": "array",
+      "description": "Geographic regions where CB operates (ISO country codes)",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2,3}$"
+      },
+      "minItems": 1,
+      "examples": [["US", "CA", "MX"], ["GB", "DE", "FR"]]
+    },
+    "accreditationBody": {
+      "type": "string",
+      "description": "Organization that accredited this CB",
+      "examples": ["ANSI-ASQ National Accreditation Board", "UKAS", "DAkkS"]
+    },
+    "validityPeriod": {
+      "type": "object",
+      "description": "Period of CB authorization",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date"
+        },
+        "end": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": ["start", "end"]
+    },
+    "specializations": {
+      "type": "array",
+      "description": "Specific areas of certification expertise",
+      "items": {
+        "type": "string"
+      },
+      "examples": [["forestry", "chain-of-custody", "controlled-wood"]]
+    },
+    "performanceMetrics": {
+      "type": "object",
+      "description": "CB performance and quality indicators",
+      "properties": {
+        "certificatesIssued": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "averageAuditDuration": {
+          "type": "number",
+          "minimum": 0
+        },
+        "customerSatisfactionScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        }
+      }
+    }
+  },
+  "required": [
+    "cbId",
+    "cbName",
+    "cbType", 
+    "accreditationStatus",
+    "authorizedSchemes",
+    "contactInformation",
+    "operationalRegions",
+    "validityPeriod"
+  ],
+  "additionalProperties": false
+}

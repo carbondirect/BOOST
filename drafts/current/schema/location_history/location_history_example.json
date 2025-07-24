@@ -1,0 +1,40 @@
+{
+  "@context": {
+    "LocationHistory": "https://github.com/carbondirect/BOOST/schemas#LocationHistory",
+    "locationHistoryId": "https://github.com/carbondirect/BOOST/schemas#locationHistoryId",
+    "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
+    "geographicDataId": "https://github.com/carbondirect/BOOST/schemas#geographicDataId",
+    "timestamp": "https://github.com/carbondirect/BOOST/schemas#timestamp",
+    "locationEventType": "https://github.com/carbondirect/BOOST/schemas#locationEventType",
+    "materialProcessingId": "https://github.com/carbondirect/BOOST/schemas#materialProcessingId",
+    "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "equipmentUsed": "https://github.com/carbondirect/BOOST/schemas#equipmentUsed",
+    "notes": "https://github.com/carbondirect/BOOST/schemas#notes",
+    "distanceTraveled": "https://github.com/carbondirect/BOOST/schemas#distanceTraveled",
+    "transportMethod": "https://github.com/carbondirect/BOOST/schemas#transportMethod",
+    "isCurrentLocation": "https://github.com/carbondirect/BOOST/schemas#isCurrentLocation",
+    "verificationMethods": "https://github.com/carbondirect/BOOST/schemas#verificationMethods",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "LocationHistory",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/location-history/LH-KLA-042-ARRIVAL-MILL-001",
+  "locationHistoryId": "LH-KLA-042-ARRIVAL-MILL-001",
+  "traceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "geographicDataId": "GEO-MILL-ENTRANCE-Pacific-001",
+  "timestamp": "2025-07-21T14:00:00Z",
+  "locationEventType": "arrival",
+  "materialProcessingId": null,
+  "operatorId": "OP-TRUCK-DRIVER-PACIFIC-03",
+  "equipmentUsed": "logging_truck_trailer",
+  "notes": "Delivered full load from Klamath Ridge harvest site. Load inspected and approved for processing. No visible defects or damage during transport.",
+  "distanceTraveled": 67.5,
+  "transportMethod": "truck",
+  "isCurrentLocation": true,
+  "verificationMethods": [
+    "GPS",
+    "RFID",
+    "visual_confirmation"
+  ],
+  "lastUpdated": "2025-07-21T14:05:00Z"
+}

@@ -1,0 +1,62 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/location-history",
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "enum": ["LocationHistory"] },
+      "@id": { "type": "string", "format": "uri" },
+      "locationHistoryId": { "type": "string" },
+      "traceableUnitId": { "type": "string" },
+      "geographicDataId": { "type": "string" },
+      "timestamp": { "type": "string", "format": "date-time" },
+      "locationEventType": {
+        "type": "string",
+        "enum": ["arrival", "departure", "processing", "storage", "measurement"]
+      },
+      "materialProcessingId": { "type": ["string", "null"] },
+      "operatorId": { "type": "string" },
+      "equipmentUsed": { "type": "string" },
+      "notes": { "type": "string" },
+      "distanceTraveled": { "type": "number", "minimum": 0 },
+      "transportMethod": {
+        "type": "string",
+        "enum": ["truck", "rail", "ship", "conveyor", "manual"]
+      },
+      "isCurrentLocation": { "type": "boolean" },
+      "verificationMethods": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["GPS", "RFID", "visual_confirmation", "biometric_scan"]
+        }
+      },
+      "lastUpdated": { "type": "string", "format": "date-time" }
+    },
+    "required": ["@context", "@type", "@id", "locationHistoryId", "traceableUnitId", "geographicDataId", "timestamp", "locationEventType", "isCurrentLocation"]
+  },
+  "rules": {
+    "and": [
+      { "!!": { "var": "locationHistoryId" } },
+      { "!!": { "var": "traceableUnitId" } },
+      { "!!": { "var": "geographicDataId" } },
+      { "!!": { "var": "timestamp" } },
+      { "!!": { "var": "locationEventType" } },
+      {
+        "if": [
+          { "var": "distanceTraveled" },
+          { ">=": [{ "var": "distanceTraveled" }, 0] },
+          true
+        ]
+      },
+      {
+        "if": [
+          { "var": "verificationMethods" },
+          { ">": [{ "var": "verificationMethods.length" }, 0] },
+          true
+        ]
+      }
+    ]
+  }
+}

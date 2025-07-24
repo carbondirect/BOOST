@@ -1,0 +1,67 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/supply-base-report",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": ["SupplyBaseReport"]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "sbrId": {
+        "type": "string"
+      },
+      "organizationId": {
+        "type": "string"
+      },
+      "preparationDate": {
+        "type": "string",
+        "format": "date"
+      },
+      "supplyBaseSummary": {
+        "type": "string"
+      },
+      "sourcingPractices": {
+        "type": "string"
+      },
+      "sustainabilityMeasures": {
+        "type": "string"
+      },
+      "publicationUrl": {
+        "type": "string",
+        "format": "uri"
+      },
+      "reportGeographicDataId": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "sbrId",
+      "organizationId",
+      "preparationDate"
+    ]
+  },
+  "rules": {
+    "and": [
+      {
+        "!!": { "var": "sbrId" }
+      },
+      {
+        "!!": { "var": "organizationId" }
+      },
+      {
+        "!!": { "var": "preparationDate" }
+      }
+    ]
+  }
+}

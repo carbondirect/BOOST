@@ -19,3 +19,12 @@
 _minted-*
 */~undo-tree*
 .DS_Store
+
+# California agencies directory - keep local but don't track
+drafts/current/communications/california_agencies/
+
+# CD report directory - keep local but don't track
+cd_report/
+
+# IAWG notes - keep local but don't track
+meetings/IAWG_NOTES_*.md

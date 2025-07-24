@@ -1,0 +1,81 @@
+{
+  "@context": {
+    "ProcessingHistory": "https://github.com/carbondirect/BOOST/schemas#ProcessingHistory",
+    "processingHistoryId": "https://github.com/carbondirect/BOOST/schemas#processingHistoryId",
+    "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
+    "materialProcessingId": "https://github.com/carbondirect/BOOST/schemas#materialProcessingId",
+    "timestamp": "https://github.com/carbondirect/BOOST/schemas#timestamp",
+    "processSequenceNumber": "https://github.com/carbondirect/BOOST/schemas#processSequenceNumber",
+    "processingEventType": "https://github.com/carbondirect/BOOST/schemas#processingEventType",
+    "inputTRUIds": "https://github.com/carbondirect/BOOST/schemas#inputTRUIds",
+    "outputTRUIds": "https://github.com/carbondirect/BOOST/schemas#outputTRUIds",
+    "processingDuration": "https://github.com/carbondirect/BOOST/schemas#processingDuration",
+    "qualityChangeDescription": "https://github.com/carbondirect/BOOST/schemas#qualityChangeDescription",
+    "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
+    "equipmentUsed": "https://github.com/carbondirect/BOOST/schemas#equipmentUsed",
+    "volumeChangeRatio": "https://github.com/carbondirect/BOOST/schemas#volumeChangeRatio",
+    "speciesCompositionChange": "https://github.com/carbondirect/BOOST/schemas#speciesCompositionChange",
+    "plantPartTransformation": "https://github.com/carbondirect/BOOST/schemas#plantPartTransformation",
+    "isCurrentProcessingState": "https://github.com/carbondirect/BOOST/schemas#isCurrentProcessingState",
+    "processingGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#processingGeographicDataId",
+    "previousProcessingHistoryId": "https://github.com/carbondirect/BOOST/schemas#previousProcessingHistoryId",
+    "nextProcessingHistoryIds": "https://github.com/carbondirect/BOOST/schemas#nextProcessingHistoryIds",
+    "volumeConservationData": "https://github.com/carbondirect/BOOST/schemas#volumeConservationData",
+    "mediaBreakData": "https://github.com/carbondirect/BOOST/schemas#mediaBreakData",
+    "claimInheritanceData": "https://github.com/carbondirect/BOOST/schemas#claimInheritanceData",
+    "id": "@id"
+  },
+  "@type": "ProcessingHistory",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/processing-history/PROC-HIST-SPLIT-PILE-042-001",
+  "processingHistoryId": "PROC-HIST-SPLIT-PILE-042-001",
+  "traceableUnitId": "TRU-PILE-MIXED-Klamath-042",
+  "materialProcessingId": "PROC-SPLIT-ASSORTMENT-KLA-042-020",
+  "timestamp": "2025-07-15T14:15:00Z",
+  "processSequenceNumber": 3,
+  "processingEventType": "split",
+  "inputTRUIds": ["TRU-PILE-MIXED-Klamath-042"],
+  "outputTRUIds": [
+    "TRU-PILE-GRADE-A-042",
+    "TRU-PILE-GRADE-B-042", 
+    "TRU-PILE-PULPWOOD-042"
+  ],
+  "processingDuration": "PT2H15M",
+  "qualityChangeDescription": "Mixed pile sorted by quality grade: Grade A sawlogs (45%), Grade B sawlogs (35%), Pulpwood (20%). Visual and measurement-based quality assessment completed.",
+  "operatorId": "OP-SORTER-KLAMATH-003",
+  "equipmentUsed": "loader_CAT_320_002, quality_scanner_MIKROTRON_001",
+  "volumeChangeRatio": 0.98,
+  "speciesCompositionChange": "separated",
+  "plantPartTransformation": "trunk→trunk (quality-separated by grades)",
+  "isCurrentProcessingState": false,
+  "processingGeographicDataId": "GEO-PROCESSING-YARD-CA-Klamath-002",
+  "previousProcessingHistoryId": "PROC-HIST-PILE-MIXED-042-002",
+  "nextProcessingHistoryIds": [
+    "PROC-HIST-PILE-GRADE-A-042-001",
+    "PROC-HIST-PILE-GRADE-B-042-001",
+    "PROC-HIST-PILE-PULPWOOD-042-001"
+  ],
+  "volumeConservationData": {
+    "totalInputVolume": 84.5,
+    "totalOutputVolume": 82.8,
+    "volumeLoss": 1.7,
+    "lossReason": "handling_damage",
+    "conservationValidated": true
+  },
+  "mediaBreakData": {
+    "mediaBreakOccurred": false,
+    "breakDuration": null,
+    "breakReason": null,
+    "recoveryMethod": null,
+    "dataIntegrityValidated": true
+  },
+  "claimInheritanceData": {
+    "inheritedClaims": ["CLAIM-FSC-MIX-MULTI-SPECIES-042"],
+    "newClaims": [
+      "CLAIM-GRADE-A-QUALITY-042",
+      "CLAIM-GRADE-B-QUALITY-042",
+      "CLAIM-PULPWOOD-QUALITY-042"
+    ],
+    "claimValidationRequired": true,
+    "claimValidationCompleted": true
+  }
+}

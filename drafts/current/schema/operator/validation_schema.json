@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/operator",
+  "type": "object",
+  "title": "BOOST Operator Entity Validation Schema",
+  "description": "Validation schema for personnel and operator management within the BOOST biomass chain of custody system",
+  "properties": {
+    "@context": {
+      "type": "object",
+      "description": "JSON-LD context for linked data interoperability"
+    },
+    "@type": {
+      "type": "string",
+      "enum": ["Operator"],
+      "description": "JSON-LD type identifier"
+    },
+    "@id": {
+      "type": "string",
+      "format": "uri",
+      "description": "Unique URI identifier for the operator"
+    },
+    "operatorId": {
+      "type": "string",
+      "pattern": "^OP-[A-Z0-9-]{6,50}$",
+      "description": "Unique identifier for the operator (Primary Key)",
+      "examples": ["OP-KLAMATH-HARVEST-001", "OP-PACIFIC-MILL-QA-042"]
+    },
+    "organizationId": {
+      "type": "string",
+      "description": "Foreign key reference to employing organization",
+      "examples": ["ORG-KLAMATH-HARVEST-OPERATIONS-001"]
+    },
+    "operatorName": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "description": "Full name of the operator",
+      "examples": ["John Anderson", "Maria Rodriguez-Chen"]
+    },
+    "employeeId": {
+      "type": ["string", "null"],
+      "description": "Internal employee identification number",
+      "examples": ["EMP-001234", "H-5678"]
+    },
+    "operatorType": {
+      "type": "string",
+      "enum": [
+        "harvester_operator",
+        "mill_operator", 
+        "transport_driver",
+        "quality_inspector",
+        "processing_technician",
+        "equipment_maintenance",
+        "loading_operator",
+        "scaling_specialist",
+        "environmental_monitor",
+        "safety_coordinator"
+      ],
+      "description": "Type/role of operator within the supply chain"
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "CDL_Class_A",
+          "CDL_Class_B", 
+          "Forklift_Operator",
+          "Crane_Operator",
+          "Heavy_Equipment_Operator",
+          "Chainsaw_Safety",
+          "First_Aid_CPR",
+          "OSHA_10",
+          "OSHA_30",
+          "Hazmat_Transport",
+          "DOT_Medical_Certificate",
+          "Equipment_Specific_Training",
+          "Quality_Control_Certified",
+          "Environmental_Compliance",
+          "FSC_Chain_of_Custody",
+          "SBP_Data_Transfer_System"
+        ]
+      },
+      "description": "Array of certifications held by the operator"
+    },
+    "equipmentAuthorizations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Equipment the operator is authorized to operate",
+      "examples": ["HARVESTER-001", "MILL-SCALE-A", "LOG-TRUCK-042"]
+    },
+    "contactInfo": {
+      "type": ["string", "null"],
+      "description": "Phone/email contact information",
+      "examples": ["555-0123, john.anderson@klamathops.com"]
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Current employment status - true if actively employed"
+    },
+    "hireDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when operator started employment"
+    },
+    "skillsQualifications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Relevant skills and qualifications",
+      "examples": ["10 years harvesting experience", "Bilingual English/Spanish", "Mechanical troubleshooting"]
+    },
+    "supervisorOperatorId": {
+      "type": ["string", "null"],
+      "description": "Foreign key reference to direct supervisor operator (optional)"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of last record modification"
+    }
+  },
+  "required": [
+    "@context",
+    "@type", 
+    "@id",
+    "operatorId",
+    "organizationId",
+    "operatorName",
+    "operatorType",
+    "isActive",
+    "hireDate",
+    "lastUpdated"
+  ],
+  "additionalProperties": false
+}
