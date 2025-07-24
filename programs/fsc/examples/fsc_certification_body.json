@@ -1,0 +1,29 @@
+{
+    "cbId": "FSC-ACCREDITED-CB",
+    "cbName": "FSC Accredited Certification Body",
+    "accreditationStatus": "FSC-accredited",
+    "accreditationScope": "Forest Management and Chain of Custody",
+    "fscAccreditationNumber": "FSC-ACC-001",
+    "contactInformation": {
+      "address": {
+        "street": "456 Forest Certification Ave",
+        "city": "Portland",
+        "state": "OR",
+        "postalCode": "97205",
+        "country": "USA"
+      },
+      "email": "info@fsc-certifier.org",
+      "phone": "+1-503-555-0123",
+      "website": "https://www.fsc-certifier.org"
+    },
+    "jurisdictions": ["USA", "Canada", "Mexico"],
+    "sectorsServed": ["Forest Management", "Chain of Custody", "Controlled Wood"],
+    "fscStandardsApplied": [
+      "FSC-STD-40-004 (Chain of Custody)",
+      "FSC-STD-40-005 (Controlled Wood)",
+      "FSC-STD-01-001 (Forest Management)"
+    ],
+    "accreditationBody": "Accreditation Services International (ASI)",
+    "isActive": true,
+    "lastUpdated": "2025-06-24T10:00:00Z"
+  }

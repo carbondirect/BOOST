@@ -1,0 +1,245 @@
+{
+  "schema": {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/lcfs-reporting",
+  "title": "LCFS Reporting",
+  "description": "Quarterly LCFS compliance report for regulated entities with credit calculations and submission tracking",
+  "boost_metadata": {
+    "area": "reporting_compliance",
+    "emoji": "📊",
+    "position": { "x": 3000, "y": 600 },
+    "relationships": [
+      {
+        "from": "LcfsReporting",
+        "to": "Organization",
+        "label": "submitted_by",
+        "type": "identifying",
+        "from_cardinality": "many", 
+        "to_cardinality": "one"
+      },
+      {
+        "from": "LcfsReporting",
+        "to": "Transaction",
+        "label": "includes",
+        "type": "non-identifying",
+        "from_cardinality": "one",
+        "to_cardinality": "many"
+      },
+      {
+        "from": "LcfsReporting",
+        "to": "LcfsPathway",
+        "label": "summarizes_pathway",
+        "type": "non-identifying", 
+        "from_cardinality": "one",
+        "to_cardinality": "many"
+      }
+    ]
+  },
+  "type": "object",
+  "required": [
+    "@context",
+    "@type",
+    "@id", 
+    "reportingId",
+    "regulatedEntityId",
+    "reportingPeriod",
+    "totalFuelVolume",
+    "totalCreditsGenerated",
+    "totalDeficitsIncurred",
+    "netPosition",
+    "complianceStatus"
+  ],
+  "properties": {
+    "@context": {
+      "$ref": "https://github.com/carbondirect/BOOST/schemas#context"
+    },
+    "@type": {
+      "type": "string",
+      "const": "LCFSReporting"
+    },
+    "@id": {
+      "type": "string",
+      "format": "uri",
+      "description": "Unique URI identifier for JSON-LD"
+    },
+    "reportingId": {
+      "type": "string",
+      "description": "Unique identifier for the quarterly report",
+      "pattern": "^LCFS-RPT-[0-9]{4}-Q[1-4]-[A-Z0-9]{3,8}$"
+    },
+    "regulatedEntityId": {
+      "type": "string",
+      "description": "Reference to regulated Organization entity"
+    },
+    "reportingPeriod": {
+      "type": "string",
+      "description": "Reporting quarter in YYYY-QN format",
+      "pattern": "^[0-9]{4}-Q[1-4]$"
+    },
+    "totalFuelVolume": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total fuel volume reported in gallons"
+    },
+    "totalCreditsGenerated": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total LCFS credits generated in the reporting period"
+    },
+    "totalDeficitsIncurred": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total LCFS deficits incurred in the reporting period"
+    },
+    "netPosition": {
+      "type": "number",
+      "description": "Net credit/deficit position (credits - deficits)"
+    },
+    "complianceStatus": {
+      "type": "string",
+      "enum": ["compliant", "deficit", "pending", "under_review"],
+      "description": "Overall compliance status for the reporting period"
+    },
+    "submissionDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time report was submitted to CARB"
+    },
+    "verificationDate": {
+      "type": "string", 
+      "format": "date-time",
+      "description": "Date of third-party verification completion"
+    },
+    "verificationRequired": {
+      "type": "boolean",
+      "description": "Whether third-party verification is required for this entity"
+    },
+    "reportingDeadline": {
+      "type": "string",
+      "format": "date",
+      "description": "CARB deadline for report submission"
+    },
+    "transactionIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of Transaction entity IDs included in this report"
+    },
+    "pathwaySummary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pathwayId", "transactionCount", "totalVolume", "creditsGenerated"],
+        "properties": {
+          "pathwayId": {
+            "type": "string",
+            "description": "CARB pathway identifier"
+          },
+          "feedstockType": {
+            "type": "string",
+            "description": "Primary feedstock category"
+          },
+          "transactionCount": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of transactions for this pathway"
+          },
+          "totalVolume": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Total fuel volume for this pathway in gallons"
+          },
+          "creditsGenerated": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Credits generated from this pathway"
+          }
+        }
+      },
+      "description": "Summary of activity by LCFS pathway"
+    },
+    "calculationParameters": {
+      "type": "object",
+      "properties": {
+        "conversionFactor": {
+          "type": "number",
+          "description": "Energy conversion factor (MJ/gallon)"
+        },
+        "conversionFactorUnit": {
+          "type": "string",
+          "enum": ["MJ/gallon", "MJ/liter"],
+          "description": "Unit for energy conversion factor"
+        },
+        "regulatoryBenchmark": {
+          "type": "number",
+          "description": "Annual regulatory benchmark (gCO2e/MJ)"
+        },
+        "benchmarkUnit": {
+          "type": "string",
+          "const": "gCO2e/MJ",
+          "description": "Unit for regulatory benchmark"
+        },
+        "defaultEER": {
+          "type": "number",
+          "description": "Default energy economy ratio"
+        }
+      },
+      "description": "Calculation parameters used for credit computation"
+    },
+    "complianceMetrics": {
+      "type": "object",
+      "properties": {
+        "creditValue": {
+          "type": "object",
+          "properties": {
+            "estimatedValue": {
+              "type": "number",
+              "description": "Estimated monetary value of credits"
+            },
+            "valueUnit": {
+              "type": "string",
+              "enum": ["USD", "CAD"],
+              "description": "Currency unit for credit value"
+            },
+            "creditPrice": {
+              "type": "number",
+              "description": "Price per credit used in valuation"
+            },
+            "priceUnit": {
+              "type": "string",
+              "enum": ["USD_per_credit", "CAD_per_credit"],
+              "description": "Unit for credit price"
+            }
+          }
+        },
+        "environmentalImpact": {
+          "type": "object",
+          "properties": {
+            "co2ReductionMT": {
+              "type": "number",
+              "description": "CO2 reduction in metric tons"
+            },
+            "co2ReductionUnit": {
+              "type": "string",
+              "const": "metric_tons",
+              "description": "Unit for CO2 reduction"
+            },
+            "equivalentCarsRemoved": {
+              "type": "integer",
+              "description": "Equivalent number of cars removed from roads"
+            }
+          }
+        }
+      },
+      "description": "Additional compliance and environmental impact metrics"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time", 
+      "description": "Timestamp of most recent report update"
+    }
+  },
+  "additionalProperties": false
+}
+}

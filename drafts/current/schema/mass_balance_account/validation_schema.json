@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["MassBalanceAccount"]
+        "enum": [
+          "MassBalanceAccount"
+        ]
       },
       "@id": {
         "type": "string",
@@ -48,21 +50,40 @@
       "organizationId",
       "productGroupId",
       "currentBalance"
-    ]
+    ],
+    "title": "Mass Balance Account",
+    "description": "MassBalanceAccount entity in BOOST data model",
+    "boost_metadata": {
+      "area": "analytics_data",
+      "emoji": "\u2696\ufe0f",
+      "position": {
+        "x": 900,
+        "y": 1800
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "accountId" }
+        "!!": {
+          "var": "accountId"
+        }
       },
       {
-        "!!": { "var": "organizationId" }
+        "!!": {
+          "var": "organizationId"
+        }
       },
       {
-        "!!": { "var": "productGroupId" }
+        "!!": {
+          "var": "productGroupId"
+        }
       },
       {
-        "!!": { "var": "currentBalance" }
+        "!!": {
+          "var": "currentBalance"
+        }
       }
     ]
   }

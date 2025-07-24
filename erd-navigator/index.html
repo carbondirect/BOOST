@@ -805,10 +805,39 @@
             'Operator': { x: 500, y: 1800 }
         };
 
+        // Auto-discovery functions
+        async function discoverSchemaDirectories() {
+            try {
+                const response = await fetch('../drafts/current/schema/');
+                const text = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                
+                // Extract directory names from directory listing
+                const directories = Array.from(doc.querySelectorAll('a'))
+                    .map(a => a.textContent.trim())
+                    .filter(name => name && !name.includes('.') && name !== '../' && name !== 'README.md')
+                    .map(name => name.replace('/', ''));
+                
+                console.log(`Auto-discovered ${directories.length} schema directories`);
+                return directories;
+            } catch (error) {
+                console.warn('Could not auto-discover schemas, falling back to entityMetadata:', error);
+                return Object.keys(entityMetadata);
+            }
+        }
+
+        function directoryToEntityName(directory) {
+            // Convert snake_case to PascalCase
+            return directory.split('_')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join('');
+        }
+
         // Schema loading functions
         async function loadSchemaFile(entityName) {
             try {
-                const schemaPath = `../drafts/current/schema/${entityName.toLowerCase().replace(/([A-Z])/g, '_$1').substring(1)}/validation_schema.json`;
+                const schemaPath = `../drafts/current/schema/${entityName.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2').replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()}/validation_schema.json?cb=${Date.now()}`;
                 const response = await fetch(schemaPath);
                 if (!response.ok) {
                     console.warn(`Could not load schema for ${entityName}: ${response.status}`);
@@ -819,6 +848,51 @@
                 console.warn(`Error loading schema for ${entityName}:`, error);
                 return null;
             }
+        }
+
+        function extractMetadataFromSchema(entityName, schema) {
+            const schemaData = schema.schema || schema;
+            const boostMeta = schemaData.boost_metadata;
+            
+            if (!boostMeta) {
+                console.warn(`Entity ${entityName} is missing boost_metadata in schema file`);
+                return null;
+            }
+            
+            if (!boostMeta.area) {
+                console.warn(`Entity ${entityName} has boost_metadata but missing area field`);
+                return null;
+            }
+            
+            return {
+                area: boostMeta.area,
+                description: `${boostMeta.emoji || '📋'} ${schemaData.description || schemaData.title || entityName}`,
+                position: boostMeta.position || null,
+                relationships: boostMeta.relationships || []
+            };
+        }
+
+        function calculateAutoPosition(area, entityIndex, entitiesInArea) {
+            const areaLayouts = {
+                'core_traceability': { startX: 1400, startY: 800, cols: 2, spacing: 400 },
+                'organizational_foundation': { startX: 100, startY: 400, cols: 1, spacing: 400 },
+                'material_supply_chain': { startX: 800, startY: 600, cols: 2, spacing: 400 },
+                'transaction_management': { startX: 2400, startY: 800, cols: 1, spacing: 400 },
+                'sustainability_claims': { startX: 1400, startY: 200, cols: 3, spacing: 400 },
+                'geographic_location': { startX: 500, startY: 1200, cols: 2, spacing: 400 },
+                'reporting_compliance': { startX: 2800, startY: 400, cols: 1, spacing: 500 },
+                'analytics_data': { startX: 1000, startY: 1800, cols: 3, spacing: 300 },
+                'personnel': { startX: 400, startY: 1800, cols: 1, spacing: 400 }
+            };
+            
+            const layout = areaLayouts[area] || areaLayouts['analytics_data'];
+            const col = entityIndex % layout.cols;
+            const row = Math.floor(entityIndex / layout.cols);
+            
+            return {
+                x: layout.startX + (col * layout.spacing),
+                y: layout.startY + (row * layout.spacing)
+            };
         }
 
         function convertSchemaToEntity(entityName, schema, area, description, position) {
@@ -1032,28 +1106,93 @@
                 area: 'personnel', 
                 description: '👤 Personnel and operators in supply chain',
                 position: { x: 500, y: 1800 }
+            },
+            'LCFSPathway': { 
+                area: 'reporting_compliance', 
+                description: '🛣️ CARB-certified fuel pathways for LCFS compliance with carbon intensity data',
+                position: { x: 3000, y: 1200 }
+            },
+            'LCFSReporting': { 
+                area: 'reporting_compliance', 
+                description: '📊 Quarterly LCFS compliance reports submitted to CARB',
+                position: { x: 3000, y: 600 }
             }
         };
 
-        // Load entities from schema files
+        // Load entities from schema files with auto-discovery
         async function loadEntitiesFromSchema() {
             const entities = [];
-            const entityNames = Object.keys(entityMetadata);
+            const discoveredRelationships = [];
             
-            for (const entityName of entityNames) {
-                const metadata = entityMetadata[entityName];
+            // Try auto-discovery first
+            const directories = await discoverSchemaDirectories();
+            const discoveredEntities = new Set();
+            
+            // Group entities by area for auto-positioning
+            const entitiesByArea = {};
+            
+            for (const directory of directories) {
+                const entityName = directoryToEntityName(directory);
                 const schema = await loadSchemaFile(entityName);
                 
                 if (schema) {
-                    const entity = convertSchemaToEntity(entityName, schema, metadata.area, metadata.description, metadata.position);
-                    if (entity) {
-                        entities.push(entity);
+                    console.log(`Processing entity: ${entityName}`);
+                    const metadata = extractMetadataFromSchema(entityName, schema);
+                    
+                    if (metadata) {
+                        console.log(`✅ ${entityName} loaded successfully in area: ${metadata.area}`);
+                        // Collect relationships from schema metadata
+                        if (metadata.relationships && metadata.relationships.length > 0) {
+                            metadata.relationships.forEach(rel => {
+                                discoveredRelationships.push({
+                                    from: rel.from,
+                                    to: rel.to,
+                                    label: rel.label,
+                                    type: rel.type,
+                                    fromCard: rel.from_cardinality,
+                                    toCard: rel.to_cardinality
+                                });
+                            });
+                            console.log(`Found ${metadata.relationships.length} relationships for ${entityName}`);
+                        }
+                        
+                        // Initialize area group if needed
+                        if (!entitiesByArea[metadata.area]) {
+                            entitiesByArea[metadata.area] = [];
+                        }
+                        
+                        // Auto-calculate position if not specified
+                        let position = metadata.position;
+                        if (!position) {
+                            // Auto-calculate position
+                            const entityIndex = entitiesByArea[metadata.area].length;
+                            position = calculateAutoPosition(metadata.area, entityIndex);
+                        }
+                        
+                        const entity = convertSchemaToEntity(entityName, schema, metadata.area, metadata.description, position);
+                        if (entity) {
+                            entities.push(entity);
+                            entitiesByArea[metadata.area].push(entity);
+                            discoveredEntities.add(entityName);
+                        }
+                    } else {
+                        console.warn(`Skipping ${entityName} - missing boost_metadata`);
                     }
                 } else {
-                    console.warn(`Failed to load schema for ${entityName}, using fallback if available`);
+                    console.warn(`Failed to load schema for ${entityName} from directory ${directory}`);
                 }
             }
             
+            // No fallback needed - all entities must have boost_metadata in their schema files
+            
+            // Merge discovered relationships with static relationships
+            if (discoveredRelationships.length > 0) {
+                console.log(`Merging ${discoveredRelationships.length} relationships from schema metadata with ${relationships.length} static relationships`);
+                relationships.push(...discoveredRelationships);
+                console.log(`Total relationships after merge: ${relationships.length}`);
+            }
+            
+            console.log(`Loaded ${entities.length} entities (${discoveredEntities.size} auto-discovered, ${entities.length - discoveredEntities.size} from metadata)`);
             return entities;
         }
 
@@ -1659,6 +1798,13 @@
             // 🔴 REPORTING & COMPLIANCE RELATIONSHIPS
             { from: 'Organization', to: 'SupplyBaseReport', label: 'prepares', type: 'identifying', fromCard: 'one', toCard: 'many' },
             { from: 'Audit', to: 'Organization', label: 'audits', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
+            
+            // LCFS COMPLIANCE RELATIONSHIPS
+            { from: 'Transaction', to: 'LCFSPathway', label: 'uses_pathway', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
+            { from: 'LCFSReporting', to: 'Organization', label: 'submitted_by', type: 'identifying', fromCard: 'many', toCard: 'one' },
+            { from: 'LCFSReporting', to: 'Transaction', label: 'includes', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
+            { from: 'LCFSPathway', to: 'EnergyCarbonData', label: 'has_carbon_data', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
+            { from: 'LCFSReporting', to: 'LCFSPathway', label: 'summarizes_pathway', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
 
             // ⚫ ANALYTICS & DATA MANAGEMENT RELATIONSHIPS
             { from: 'Organization', to: 'MassBalanceAccount', label: 'manages', type: 'identifying', fromCard: 'one', toCard: 'many' },
@@ -3050,6 +3196,8 @@
                 // Load entities from schema files
                 entities = await loadEntitiesFromSchema();
                 console.log(`Loaded ${entities.length} entities from schema files`);
+                
+                console.log(`Total relationships available: ${relationships.length}`);
                 
                 // Fallback to static entities if schema loading fails
                 if (entities.length === 0) {

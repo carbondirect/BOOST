@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["GeographicData"]
+        "enum": [
+          "GeographicData"
+        ]
       },
       "@id": {
         "type": "string",
@@ -25,7 +27,15 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["Point", "Polygon", "LineString", "MultiPoint", "MultiPolygon", "MultiLineString", "GeometryCollection"]
+            "enum": [
+              "Point",
+              "Polygon",
+              "LineString",
+              "MultiPoint",
+              "MultiPolygon",
+              "MultiLineString",
+              "GeometryCollection"
+            ]
           },
           "coordinates": {
             "type": "array"
@@ -34,11 +44,22 @@
             "type": "object"
           }
         },
-        "required": ["type", "coordinates"]
+        "required": [
+          "type",
+          "coordinates"
+        ]
       },
       "dataType": {
         "type": "string",
-        "enum": ["harvest_site", "processing_location", "administrative_boundary", "supply_base_area", "skid_road", "forest_road", "mill_entrance"],
+        "enum": [
+          "harvest_site",
+          "processing_location",
+          "administrative_boundary",
+          "supply_base_area",
+          "skid_road",
+          "forest_road",
+          "mill_entrance"
+        ],
         "description": "Type of geographic data"
       },
       "description": {
@@ -81,41 +102,81 @@
       "geoJsonData",
       "dataType",
       "description"
-    ]
+    ],
+    "title": "Geographic Data",
+    "description": "GeographicData entity in BOOST data model",
+    "boost_metadata": {
+      "area": "geographic_location",
+      "emoji": "\ud83d\uddfa\ufe0f",
+      "position": {
+        "x": 2300,
+        "y": 600
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "geographicDataId" }
+        "!!": {
+          "var": "geographicDataId"
+        }
       },
       {
-        "!!": { "var": "geoJsonData" }
+        "!!": {
+          "var": "geoJsonData"
+        }
       },
       {
-        "!!": { "var": "dataType" }
+        "!!": {
+          "var": "dataType"
+        }
       },
       {
-        "!!": { "var": "description" }
+        "!!": {
+          "var": "description"
+        }
       },
       {
-        "!!": { "var": "geoJsonData.type" }
+        "!!": {
+          "var": "geoJsonData.type"
+        }
       },
       {
-        "!!": { "var": "geoJsonData.coordinates" }
+        "!!": {
+          "var": "geoJsonData.coordinates"
+        }
       },
       {
         "if": [
-          { "var": "accuracy" },
           {
-            ">=": [{ "var": "accuracy" }, 0]
+            "var": "accuracy"
+          },
+          {
+            ">=": [
+              {
+                "var": "accuracy"
+              },
+              0
+            ]
           },
           true
         ]
       },
       {
         "in": [
-          { "var": "geoJsonData.type" },
-          ["Point", "Polygon", "LineString", "MultiPoint", "MultiPolygon", "MultiLineString", "GeometryCollection"]
+          {
+            "var": "geoJsonData.type"
+          },
+          [
+            "Point",
+            "Polygon",
+            "LineString",
+            "MultiPoint",
+            "MultiPolygon",
+            "MultiLineString",
+            "GeometryCollection"
+          ]
         ]
       }
     ]

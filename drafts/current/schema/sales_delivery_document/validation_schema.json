@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["SalesDeliveryDocument"]
+        "enum": [
+          "SalesDeliveryDocument"
+        ]
       },
       "@id": {
         "type": "string",
@@ -60,27 +62,50 @@
       "sellerName",
       "productDescription",
       "quantity"
-    ]
+    ],
+    "title": "Sales Delivery Document",
+    "description": "SalesDeliveryDocument entity in BOOST data model",
+    "boost_metadata": {
+      "area": "transaction_management",
+      "emoji": "\ud83d\udcc4",
+      "position": {
+        "x": 2700,
+        "y": 600
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "documentId" }
+        "!!": {
+          "var": "documentId"
+        }
       },
       {
-        "!!": { "var": "dateIssued" }
+        "!!": {
+          "var": "dateIssued"
+        }
       },
       {
-        "!!": { "var": "buyerName" }
+        "!!": {
+          "var": "buyerName"
+        }
       },
       {
-        "!!": { "var": "sellerName" }
+        "!!": {
+          "var": "sellerName"
+        }
       },
       {
-        "!!": { "var": "productDescription" }
+        "!!": {
+          "var": "productDescription"
+        }
       },
       {
-        "!!": { "var": "quantity" }
+        "!!": {
+          "var": "quantity"
+        }
       }
     ]
   }

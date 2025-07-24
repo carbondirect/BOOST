@@ -2,6 +2,31 @@
 
 This directory contains JSON schema definitions for all BOOST entities. These schema files serve as the single source of truth for entity structure and are automatically consumed by the BOOST ERD visualization.
 
+## Quick Reference: Entity/Attribute/Relationship Management
+
+### Adding New Entities
+1. **Create directory**: `mkdir drafts/current/schema/new_entity_name`
+2. **Create schema**: Add `validation_schema.json` with `{"schema": {...}}` wrapper
+3. **Add boost_metadata**: Include `area`, `emoji`, `position`, and `relationships`
+4. **Refresh ERD**: Entity appears automatically with relationships
+
+### Adding Attributes to Existing Entities
+1. **Edit schema**: Modify `properties` section in `validation_schema.json`
+2. **Update required**: Add to `required` array if mandatory
+3. **Refresh ERD**: Fields appear automatically with proper types
+
+### Adding Relationships
+1. **Edit boost_metadata**: Add to `relationships` array in schema file
+2. **Use correct entity names**: Ensure PascalCase names match exactly
+3. **Verify both entities exist**: Source and target must both be loaded
+4. **Refresh ERD**: Relationships draw automatically
+
+### Key Requirements
+- ✅ All schemas need `{"schema": {...}}` wrapper
+- ✅ Entity names must be PascalCase (e.g., "LcfsPathway", not "LCFSPathway")
+- ✅ Directory names use snake_case (e.g., "lcfs_pathway")
+- ✅ boost_metadata is required for ERD integration
+
 ## Overview
 
 Each entity in the BOOST data model has its own subdirectory containing:
@@ -21,11 +46,52 @@ schema/
 │   ├── validation_schema.json
 │   ├── material_example.json
 │   └── material_dictionary.md
-├── organization/             # Business entities
-├── transaction/              # Business transactions
+├── organization/             # Business entities (enhanced with LCFS fields)
+├── transaction/              # Business transactions (enhanced with LCFS fields)
+├── lcfs_pathway/             # CARB-certified fuel pathways for LCFS compliance  
+├── lcfs_reporting/           # Quarterly LCFS compliance reports
+├── energy_carbon_data/       # Energy and carbon data (enhanced with LCFS fields)
 ├── [22+ other entities]/
 └── README.md                 # This file
 ```
+
+## LCFS Integration
+
+The BOOST schema now includes comprehensive support for California's Low Carbon Fuel Standard (LCFS) program compliance. This integration enables organizations to track fuel transactions, calculate credits/deficits, and generate quarterly compliance reports.
+
+### LCFS-Specific Entities
+
+#### LCFSPathway
+- **Purpose**: Represents CARB-certified fuel pathways with carbon intensity data
+- **Key Fields**: `pathwayId`, `carbonIntensity`, `energyEconomyRatio`, `feedstockCategory`
+- **Usage**: Links transactions to certified pathways for credit calculation
+
+#### LCFSReporting  
+- **Purpose**: Quarterly compliance reports submitted to CARB
+- **Key Fields**: `reportingPeriod`, `totalCreditsGenerated`, `netPosition`, `complianceStatus`
+- **Usage**: Aggregates transaction data for regulatory submission
+
+### Enhanced Core Entities
+
+#### Organization (LCFS Enhancements)
+- **New Fields**: `lcfsRegistrationId`, `regulatedEntityType`, `facilityCapacity`, `operationalStatus`  
+- **Purpose**: Track LCFS registration status and regulated entity classification
+
+#### Transaction (LCFS Enhancements)
+- **New Fields**: `lcfsPathwayId`, `fuelVolume`, `fuelCategory`, `reportingPeriod`, `regulatedPartyRole`
+- **Purpose**: Link fuel transactions to LCFS pathways for credit calculation
+
+#### EnergyCarbonData (LCFS Enhancements)
+- **New Fields**: `lcfsPathwayType`, `energyEconomyRatio`, `lifeCycleStage`, `regulatoryBenchmark`
+- **Purpose**: Support LCFS carbon intensity calculations and lifecycle assessments
+
+### LCFS Workflow Integration
+
+1. **Pathway Certification**: LCFSPathway entities store CARB-certified pathways
+2. **Transaction Tracking**: Enhanced Transaction entities link fuel sales to pathways
+3. **Credit Calculation**: System calculates credits using `(Benchmark_CI - Pathway_CI) × Fuel_Volume_MJ × EER`
+4. **Quarterly Reporting**: LCFSReporting entities aggregate transactions for CARB submission
+5. **Compliance Monitoring**: Track credit/deficit positions and submission deadlines
 
 ## Schema Integration with ERD
 
@@ -34,7 +100,19 @@ The BOOST ERD Navigator (`../../erd-navigator/index.html`) **dynamically loads t
 ✅ **Schema changes automatically appear in the ERD**  
 ✅ **Field additions/removals are immediately reflected**  
 ✅ **Type changes update ERD display**  
+✅ **Relationships from schema metadata are automatically processed**
 ✅ **Single source of truth maintained**
+
+### Automatic Entity and Relationship Discovery
+
+The ERD Navigator now includes a powerful auto-discovery system that:
+
+1. **Scans schema directories**: Automatically finds all entity schema files
+2. **Extracts relationships**: Processes `boost_metadata.relationships` from schema files  
+3. **Merges with static relationships**: Combines schema-defined and hardcoded relationships
+4. **Positions entities**: Auto-calculates positions by functional area if not specified
+
+This means **new entities automatically appear in the ERD** without any manual ERD Navigator code changes!
 
 ### For Schema Maintainers
 
@@ -45,6 +123,8 @@ When you modify a `validation_schema.json` file:
 4. **Update descriptions**: Available for future tooltip integration
 
 ## Quick Start
+
+### Editing Existing Entities
 
 To see your schema changes in the ERD:
 
@@ -70,6 +150,161 @@ To see your schema changes in the ERD:
 ```
 
 The ERD will automatically show `newField` in the entity with appropriate styling.
+
+## Adding New Entities with Auto-Discovery
+
+The ERD Navigator now supports **automatic entity discovery**. Follow these steps to add a new entity that will automatically appear in the ERD with its relationships:
+
+### Step 1: Create Schema Directory
+
+Create a new directory using `snake_case` naming:
+
+```bash
+mkdir drafts/current/schema/new_entity_name
+```
+
+### Step 2: Create validation_schema.json with boost_metadata
+
+Create the schema file with the **required wrapper format** and include `boost_metadata` for ERD integration:
+
+```json
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/new-entity-name",
+    "title": "New Entity Name",
+    "description": "Description of the new entity",
+    "boost_metadata": {
+      "area": "core_traceability",
+      "emoji": "⚙️", 
+      "position": { "x": 2000, "y": 1000 },
+      "relationships": [
+        {
+          "from": "NewEntityName",
+          "to": "Organization",
+          "label": "managed_by",
+          "type": "non-identifying",
+          "from_cardinality": "many",
+          "to_cardinality": "one"
+        }
+      ]
+    },
+    "type": "object",
+    "properties": {
+      "@context": { "type": "object" },
+      "@type": { "type": "string", "const": "NewEntityName" },
+      "@id": { "type": "string", "format": "uri" },
+      "entityId": { 
+        "type": "string", 
+        "description": "Unique identifier" 
+      },
+      "entityName": {
+        "type": "string",
+        "description": "Human-readable name"
+      }
+    },
+    "required": ["@context", "@type", "@id", "entityId", "entityName"],
+    "additionalProperties": false
+  }
+}
+```
+
+### Step 3: Configure boost_metadata
+
+#### Required Schema Wrapper
+**Critical**: All schema files must have the `{"schema": {...}}` wrapper for the ERD Navigator to load them correctly.
+
+#### Functional Areas (area)
+Choose from existing areas for consistent coloring and grouping:
+- `core_traceability` - 🟢 Green (central tracking entities)
+- `organizational_foundation` - 🔵 Blue (business entities)  
+- `material_supply_chain` - 🟤 Brown (material and supply entities)
+- `transaction_management` - 🟠 Orange (transaction entities)
+- `sustainability_claims` - 🟡 Yellow (sustainability entities)
+- `geographic_location` - 🟣 Purple (location entities)
+- `reporting_compliance` - 🔴 Red (reporting entities)
+- `analytics_data` - ⚫ Black (analytics entities)
+
+#### Position Coordinates (position)
+- Set `x` and `y` coordinates to position the entity in the ERD
+- Use `null` for auto-positioning within the functional area
+- Coordinate system: (0,0) is top-left, extends to (3200, 2000)
+- Common positions by area:
+  - Core traceability: x: 500-1500, y: 400-1200
+  - Organizational: x: 500-1500, y: 1400-2000  
+  - Material supply: x: 1700-2400, y: 400-1200
+  - Transaction: x: 1700-2400, y: 1400-2000
+  - Reporting: x: 2600-3200, y: 400-1200
+
+#### Relationships (relationships)
+Define relationships in the `relationships` array using this format:
+
+```json
+{
+  "from": "SourceEntityName",      // PascalCase entity name
+  "to": "TargetEntityName",        // PascalCase entity name  
+  "label": "relationship_label",   // snake_case description
+  "type": "non-identifying",       // "identifying" or "non-identifying"
+  "from_cardinality": "many",      // "one" or "many"
+  "to_cardinality": "one"          // "one" or "many"
+}
+```
+
+**Important**: Both source and target entities must exist in the ERD for the relationship line to appear.
+
+### Step 4: Naming Conventions
+
+#### Directory to Entity Name Conversion
+The auto-discovery system converts directory names to entity names:
+- Directory: `my_new_entity` → Entity: `MyNewEntity`
+- Directory: `lcfs_pathway` → Entity: `LcfsPathway`
+- Directory: `supply_base_report` → Entity: `SupplyBaseReport`
+
+**Rule**: `snake_case` directory names are converted to `PascalCase` entity names.
+
+#### Field Naming for Key Detection
+
+**Primary Keys**: Detected when field name contains "id" + entity name:
+- `newEntityId` in `NewEntity` ✅
+- `organizationId` in `Organization` ✅
+- `id` in any entity ✅
+
+**Foreign Keys**: Detected when field name ends with "Id" but is not a primary key:
+- `organizationId` in other entities ✅
+- `materialTypeId` ✅
+- `geographicDataId` ✅
+
+### Step 5: Verification
+
+After creating the schema file:
+
+1. **Refresh the ERD Navigator** 
+2. **Check browser console** for any loading errors
+3. **Verify entity appears** in the correct functional area
+4. **Confirm relationships** are drawn to target entities
+
+The entity will automatically:
+- ✅ Appear in the ERD visualization
+- ✅ Show all defined relationships  
+- ✅ Be positioned appropriately
+- ✅ Work with filtering and focus features
+- ✅ Display proper field types and keys
+
+### Common Issues and Solutions
+
+#### Entity Not Appearing
+- ❌ Missing `"schema"` wrapper → ✅ Add `{"schema": {...}}` wrapper
+- ❌ Invalid JSON syntax → ✅ Validate JSON format
+- ❌ Wrong directory naming → ✅ Use `snake_case` for directory names
+
+#### Relationships Not Showing  
+- ❌ Target entity doesn't exist → ✅ Ensure both entities have valid schemas
+- ❌ Entity names don't match → ✅ Check PascalCase entity names exactly
+- ❌ Missing relationship target → ✅ Verify target entity is loaded in ERD
+
+#### Positioning Issues
+- ❌ Entity appears in wrong area → ✅ Check `boost_metadata.area` value
+- ❌ Entity overlaps others → ✅ Adjust `position` coordinates or use `null` for auto-positioning
 
 ## Architecture
 

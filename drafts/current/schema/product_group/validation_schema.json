@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["ProductGroup"]
+        "enum": [
+          "ProductGroup"
+        ]
       },
       "@id": {
         "type": "string",
@@ -23,7 +25,11 @@
       },
       "productCategory": {
         "type": "string",
-        "enum": ["solid_biomass", "liquid_biofuel", "biogas"]
+        "enum": [
+          "solid_biomass",
+          "liquid_biofuel",
+          "biogas"
+        ]
       },
       "classification": {
         "type": "string"
@@ -61,10 +67,17 @@
         "items": {
           "type": "object",
           "properties": {
-            "@type": { "const": "Material" },
-            "id": { "type": "string" }
+            "@type": {
+              "const": "Material"
+            },
+            "id": {
+              "type": "string"
+            }
           },
-          "required": ["@type", "id"]
+          "required": [
+            "@type",
+            "id"
+          ]
         }
       }
     },
@@ -76,28 +89,56 @@
       "productGroupName",
       "productCategory",
       "description"
-    ]
+    ],
+    "title": "Product Group",
+    "description": "ProductGroup entity in BOOST data model",
+    "boost_metadata": {
+      "area": "analytics_data",
+      "emoji": "\ud83d\udccb",
+      "position": {
+        "x": 1200,
+        "y": 1800
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "productGroupId" }
+        "!!": {
+          "var": "productGroupId"
+        }
       },
       {
-        "!!": { "var": "productGroupName" }
+        "!!": {
+          "var": "productGroupName"
+        }
       },
       {
-        "!!": { "var": "productCategory" }
+        "!!": {
+          "var": "productCategory"
+        }
       },
       {
-        "!!": { "var": "description" }
+        "!!": {
+          "var": "description"
+        }
       },
       {
         "if": [
-          { "var": "typicalUses" },
+          {
+            "var": "typicalUses"
+          },
           {
             "and": [
-              { ">": [ { "var": "typicalUses.length" }, 0 ] }
+              {
+                ">": [
+                  {
+                    "var": "typicalUses.length"
+                  },
+                  0
+                ]
+              }
             ]
           },
           true
@@ -105,10 +146,19 @@
       },
       {
         "if": [
-          { "var": "qualityStandards" },
+          {
+            "var": "qualityStandards"
+          },
           {
             "and": [
-              { ">": [ { "var": "qualityStandards.length" }, 0 ] }
+              {
+                ">": [
+                  {
+                    "var": "qualityStandards.length"
+                  },
+                  0
+                ]
+              }
             ]
           },
           true
@@ -116,10 +166,19 @@
       },
       {
         "if": [
-          { "var": "certificationRequirements" },
+          {
+            "var": "certificationRequirements"
+          },
           {
             "and": [
-              { ">": [ { "var": "certificationRequirements.length" }, 0 ] }
+              {
+                ">": [
+                  {
+                    "var": "certificationRequirements.length"
+                  },
+                  0
+                ]
+              }
             ]
           },
           true
@@ -127,19 +186,43 @@
       },
       {
         "if": [
-          { "var": "relatedMaterials" },
+          {
+            "var": "relatedMaterials"
+          },
           {
             "and": [
-              { ">": [ { "var": "relatedMaterials.length" }, 0 ] },
-              { "all": [
-                { "var": "relatedMaterials" },
-                {
-                  "and": [
-                    { "!!": { "var": "id" } },
-                    { "==": [ { "var": "@type" }, "Material" ] }
-                  ]
-                }
-              ]}
+              {
+                ">": [
+                  {
+                    "var": "relatedMaterials.length"
+                  },
+                  0
+                ]
+              },
+              {
+                "all": [
+                  {
+                    "var": "relatedMaterials"
+                  },
+                  {
+                    "and": [
+                      {
+                        "!!": {
+                          "var": "id"
+                        }
+                      },
+                      {
+                        "==": [
+                          {
+                            "var": "@type"
+                          },
+                          "Material"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           },
           true
@@ -148,4 +231,3 @@
     ]
   }
 }
-  

@@ -2,6 +2,33 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.3.0] - 2025-07-24 - ERD Auto-Discovery and Relationship Processing
+
+### Added
+- **Auto-Discovery System** - ERD Navigator now automatically discovers all 32 entities from schema directory structure
+- **Schema-Based Relationship Processing** - Relationships defined in `boost_metadata` are automatically extracted and merged with static relationships
+- **Comprehensive Entity Coverage** - All 32 BOOST entities now load with proper functional area classification and positioning
+- **Cache-Busting** - Aggressive cache-busting ensures schema changes are immediately reflected in ERD
+- **Entity Name Conversion** - Automatic snake_case to PascalCase conversion for entity discovery (e.g., `lcfs_pathway` → `LcfsPathway`)
+
+### Enhanced
+- **LCFS Entity Integration** - Fixed entity name mismatches that prevented LCFS relationship visualization
+- **TrackingPoint Relationships** - Added missing relationships to GeographicData and Operator entities
+- **Boost Metadata Processing** - Streamlined processing of entity metadata from schema files with strict validation
+- **Schema File Structure** - All entities now consistently use `{"schema": {...}}` wrapper format for proper loading
+
+### Fixed
+- **Entity Classification** - Resolved issue where entities were defaulting to "Analytics" area instead of their proper functional areas
+- **Relationship Name Matching** - Fixed case sensitivity issues preventing LCFS relationships from displaying
+- **Duplicate Metadata** - Cleaned up duplicate boost_metadata sections that were preventing entity loading
+- **Server Path Resolution** - Fixed schema directory access issues for proper auto-discovery functionality
+
+### Technical Improvements
+- **Single Source of Truth** - Schema files are now the authoritative source for entity structure and relationships
+- **Automated Relationship Discovery** - No manual ERD code changes needed for new entity relationships
+- **Comprehensive Documentation** - Added quick reference guide for entity/attribute/relationship management processes
+- **Debug Logging** - Enhanced debugging capabilities for relationship processing and entity loading
+
 ## [2.2.1] - 2025-07-23 - Repository Cleanup and ERD Consolidation
 
 ### Removed

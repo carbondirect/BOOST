@@ -2,36 +2,99 @@
   "schema": {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://github.com/carbondirect/BOOST/schemas/material",
+    "title": "Material",
+    "description": "Material types and specifications",
+    "boost_metadata": {
+      "area": "material_supply_chain",
+      "emoji": "\ud83e\udeb5",
+      "position": {
+        "x": 500,
+        "y": 200
+      },
+      "relationships": []
+    },
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["Material"] },
-      "@id": { "type": "string", "format": "uri" },
-      "materialTypeId": { "type": "string" },
-      "materialName": { "type": "string" },
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "Material"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "materialTypeId": {
+        "type": "string"
+      },
+      "materialName": {
+        "type": "string"
+      },
       "materialCategory": {
         "type": "string",
-        "enum": ["softwood", "hardwood", "mixed"]
+        "enum": [
+          "softwood",
+          "hardwood",
+          "mixed"
+        ]
       },
-      "defaultAssortmentTypes": { "type": "string" },
-      "standardQualityGrades": { "type": "string" },
-      "carbonStorageRate": { "type": "string" },
-      "density": { "type": "string" },
+      "defaultAssortmentTypes": {
+        "type": "string"
+      },
+      "standardQualityGrades": {
+        "type": "string"
+      },
+      "carbonStorageRate": {
+        "type": "string"
+      },
+      "density": {
+        "type": "string"
+      },
       "applicableProcessingTypes": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
       "typicalSpecies": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
-      "standardMoistureContent": { "type": "string" },
-      "energyContent": { "type": "string" },
+      "standardMoistureContent": {
+        "type": "string"
+      },
+      "energyContent": {
+        "type": "string"
+      },
       "applicablePlantParts": {
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["trunk", "branches", "twigs", "bark", "heartwood", "sapwood", "leaves", "needles", "seeds", "nuts", "cones", "stalks", "straw", "husks", "hulls", "chaff", "stubble"]
+          "enum": [
+            "trunk",
+            "branches",
+            "twigs",
+            "bark",
+            "heartwood",
+            "sapwood",
+            "leaves",
+            "needles",
+            "seeds",
+            "nuts",
+            "cones",
+            "stalks",
+            "straw",
+            "husks",
+            "hulls",
+            "chaff",
+            "stubble"
+          ]
         },
         "description": "Plant parts included in this material type"
       },
@@ -39,7 +102,25 @@
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["trunk", "branches", "twigs", "bark", "heartwood", "sapwood", "leaves", "needles", "seeds", "nuts", "cones", "stalks", "straw", "husks", "hulls", "chaff", "stubble"]
+          "enum": [
+            "trunk",
+            "branches",
+            "twigs",
+            "bark",
+            "heartwood",
+            "sapwood",
+            "leaves",
+            "needles",
+            "seeds",
+            "nuts",
+            "cones",
+            "stalks",
+            "straw",
+            "husks",
+            "hulls",
+            "chaff",
+            "stubble"
+          ]
         },
         "description": "Plant parts excluded from this material type"
       },
@@ -53,40 +134,95 @@
                 "type": "array",
                 "items": {
                   "type": "string",
-                  "enum": ["sawing", "chipping", "pelletizing", "veneer", "pulping", "mulching", "composting", "burning"]
+                  "enum": [
+                    "sawing",
+                    "chipping",
+                    "pelletizing",
+                    "veneer",
+                    "pulping",
+                    "mulching",
+                    "composting",
+                    "burning"
+                  ]
                 }
               },
               "qualityGrades": {
                 "type": "array",
-                "items": { "type": "string" }
+                "items": {
+                  "type": "string"
+                }
               },
-              "moistureRange": { "type": "string" },
-              "energyContent": { "type": "string" }
+              "moistureRange": {
+                "type": "string"
+              },
+              "energyContent": {
+                "type": "string"
+              }
             }
           }
         },
         "description": "Processing specifications by plant part"
       },
-      "lastUpdated": { "type": "string", "format": "date-time" }
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time"
+      }
     },
-    "required": ["@context", "@type", "@id", "materialTypeId", "materialName", "materialCategory"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "materialTypeId",
+      "materialName",
+      "materialCategory"
+    ]
   },
   "rules": {
     "and": [
-      { "!!": { "var": "materialTypeId" } },
-      { "!!": { "var": "materialName" } },
-      { "!!": { "var": "materialCategory" } },
+      {
+        "!!": {
+          "var": "materialTypeId"
+        }
+      },
+      {
+        "!!": {
+          "var": "materialName"
+        }
+      },
+      {
+        "!!": {
+          "var": "materialCategory"
+        }
+      },
       {
         "if": [
-          { "var": "applicableProcessingTypes" },
-          { ">": [{ "var": "applicableProcessingTypes.length" }, 0] },
+          {
+            "var": "applicableProcessingTypes"
+          },
+          {
+            ">": [
+              {
+                "var": "applicableProcessingTypes.length"
+              },
+              0
+            ]
+          },
           true
         ]
       },
       {
         "if": [
-          { "var": "typicalSpecies" },
-          { ">": [{ "var": "typicalSpecies.length" }, 0] },
+          {
+            "var": "typicalSpecies"
+          },
+          {
+            ">": [
+              {
+                "var": "typicalSpecies.length"
+              },
+              0
+            ]
+          },
           true
         ]
       }
