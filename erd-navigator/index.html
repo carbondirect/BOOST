@@ -805,7 +805,7 @@
             'Operator': { x: 500, y: 1800 }
         };
 
-        // Auto-discovery functions
+        // Auto-discovery functions - supports both raw directory listings and Jekyll pages
         async function discoverSchemaDirectories() {
             try {
                 const response = await fetch('../drafts/current/schema/');
@@ -813,11 +813,31 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'text/html');
                 
-                // Extract directory names from directory listing
-                const directories = Array.from(doc.querySelectorAll('a'))
-                    .map(a => a.textContent.trim())
-                    .filter(name => name && !name.includes('.') && name !== '../' && name !== 'README.md')
-                    .map(name => name.replace('/', ''));
+                // Try Jekyll format first (GitHub Pages)
+                const codeBlocks = doc.querySelectorAll('pre code, .highlight code');
+                let directories = [];
+                
+                for (const codeBlock of codeBlocks) {
+                    const content = codeBlock.textContent;
+                    // Look for directory structure with trailing slashes
+                    const directoryMatches = content.match(/├── (\w+)\//g) || content.match(/(\w+)\/\s*#/g);
+                    if (directoryMatches) {
+                        directories = directoryMatches
+                            .map(match => match.replace(/├── |\/.*$/g, '').trim())
+                            .filter(name => name && !name.includes('.') && name !== 'README');
+                        console.log(`Found Jekyll-formatted directories: ${directories.join(', ')}`);
+                        break;
+                    }
+                }
+                
+                // Fallback to raw directory listing format (local server)
+                if (directories.length === 0) {
+                    directories = Array.from(doc.querySelectorAll('a'))
+                        .map(a => a.textContent.trim())
+                        .filter(name => name && !name.includes('.') && name !== '../' && name !== 'README.md')
+                        .map(name => name.replace('/', ''));
+                    console.log(`Found raw directory listing: ${directories.join(', ')}`);
+                }
                 
                 console.log(`Auto-discovered ${directories.length} schema directories`);
                 return directories;
