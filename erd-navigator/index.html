@@ -813,21 +813,31 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'text/html');
                 
-                // Try Jekyll format first (GitHub Pages)
-                const codeBlocks = doc.querySelectorAll('pre code, .highlight code');
+                // Try Jekyll format first (GitHub Pages) - extract ALL snake_case patterns
                 let directories = [];
                 
-                for (const codeBlock of codeBlocks) {
-                    const content = codeBlock.textContent;
-                    // Look for directory structure with trailing slashes
-                    const directoryMatches = content.match(/├── (\w+)\//g) || content.match(/(\w+)\/\s*#/g);
-                    if (directoryMatches) {
-                        directories = directoryMatches
-                            .map(match => match.replace(/├── |\/.*$/g, '').trim())
-                            .filter(name => name && !name.includes('.') && name !== 'README');
-                        console.log(`Found Jekyll-formatted directories: ${directories.join(', ')}`);
-                        break;
-                    }
+                // Look for any snake_case directory patterns in the entire page
+                const snakeCaseMatches = text.match(/\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\b/g);
+                if (snakeCaseMatches) {
+                    // Test each potential directory by trying to fetch its schema file
+                    const uniqueMatches = [...new Set(snakeCaseMatches)];
+                    console.log(`Found potential schema directories: ${uniqueMatches.join(', ')}`);
+                    
+                    const testPromises = uniqueMatches.map(async (dir) => {
+                        try {
+                            const testResponse = await fetch(`../drafts/current/schema/${dir}/validation_schema.json`, { method: 'HEAD' });
+                            if (testResponse.ok) {
+                                return dir;
+                            }
+                        } catch (e) {
+                            // Directory doesn't exist or schema file missing
+                        }
+                        return null;
+                    });
+                    
+                    const results = await Promise.all(testPromises);
+                    directories = results.filter(dir => dir !== null);
+                    console.log(`Verified existing directories: ${directories.join(', ')}`);
                 }
                 
                 // Fallback to raw directory listing format (local server)
