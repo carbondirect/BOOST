@@ -63,8 +63,8 @@
     },
     "status": {
       "type": "string",
-      "enum": ["active", "expired", "revoked", "suspended"],
-      "description": "Current certificate status"
+      "enum": ["active", "expired", "revoked", "suspended", "pending"],
+      "description": "Current certificate status. Use 'pending' for certificates that are in the process of being reviewed or approved but are not yet active."
     },
     "scopeOfCertification": {
       "type": "string",
@@ -77,6 +77,74 @@
       "description": "Version of standard applied",
       "examples": ["2022", "FSC-STD-40-004 v3-1", "PEFC ST 2002:2020"]
     },
+    "productGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "productType": { "type": "string" },
+          "materialCategories": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "controlSystems": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["productType"]
+      }
+    },
+    "volumeTrackingRecord": {
+      "type": "object",
+      "properties": {
+        "inputVolumeByCategory": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        },
+        "outputVolumeByCategory": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        }
+      }
+    },
+    "labelUseRecord": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product": { "type": "string" },
+          "claimType": { "type": "string" },
+          "approvalReference": { "type": "string" }
+        }
+      }
+    },
+    "supplierInfo": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string" }
+      }
+    },
+    "supplierRiskRatingDDS": {
+      "type": "object",
+      "properties": {
+        "riskRating": { "type": "string" },
+        "mitigationMeasures": { "type": "string" }
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "fileName": { "type": "string" },
+          "fileUrl": { "type": "string", "format": "uri" },
+          "fileType": { "type": "string" }
+        }
+      }
+    },
+    "lastUpdated": { "type": "string", "format": "date-time" },
     "conditionalRequirements": {
       "type": "array",
       "description": "Special conditions or requirements",

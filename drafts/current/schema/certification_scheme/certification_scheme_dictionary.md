@@ -1,74 +1,54 @@
-# Data Dictionary
+# Certification Scheme Data Dictionary
 
-## CertificationScheme
+## Overview
+The `CertificationScheme` entity defines the standards, requirements, and geographic applicability for sustainability certifications within the BOOST system. It serves as the foundational definition for how certifications are managed and validated throughout the timber supply chain, with full support for JSON-LD.
 
-### Overview
-The `CertificationScheme` entity defines certification standards and requirements with geographic applicability as part of Phase 2 BOOST traceability system enhancements. This entity provides the foundational definitions for sustainability certifications, their requirements, and applicable contexts for use throughout the timber supply chain.
+## Fields
 
-### Fields
+| Field | Type | Required | Description | Examples |
+|-------|------|----------|-------------|----------|
+| `@context` | object | No | JSON-LD context for semantic web compatibility. | `{"@vocab": "https://schema.org/"}` |
+| `@type` | string | No | JSON-LD type identifier, constant: `CertificationScheme`. | `CertificationScheme` |
+| `@id` | string (uri)| Yes | Unique URI identifier for the certification scheme. | `https://example.com/schemes/FSC-CoC` |
+| `certificationSchemeId`| string | Yes | Unique identifier for the certification scheme (primary key). | `CERT-SCHEME-FSC-001` |
+| `schemeName` | string | Yes | Official name of the certification scheme. | `FSC Chain of Custody` |
+| `recognitionStatus` | string | Yes | The recognition status of the scheme. Enum: `internationally-recognized`, `nationally-approved`, `pending-approval`, `not-recognized`. | `internationally-recognized` |
+| `schemeType` | string | Yes | The type of certification scheme. | `forest_management`, `chain_of_custody` |
+| `schemeStandard` | string | No | The specific standard or version identifier. | `FSC-STD-40-004 V3-1` |
+| `issuingOrganizationId`| string | Yes | Foreign key to the `Organization` that issues this scheme. | `ORG-FSC-INTERNATIONAL` |
+| `description` | string | No | A short, generic description of the scheme. | `A certification for responsible forestry.` |
+| `schemeDescription` | string | No | A more detailed description of the certification scheme. | `Ensures responsible forest management...` |
+| `applicableGeographicAreas`| array | No | Geographic areas where this scheme is applicable. | `["GEO-REGION-NORTH-AMERICA"]` |
+| `materialCategories` | array | No | A list of material categories covered by the scheme. | `["Roundwood", "Chips"]` |
+| `controlSystems` | array | No | A list of control systems required by the scheme. | `["Physical Separation", "Credit"]` |
+| `labelUseRequirements` | string | No | Requirements for using the scheme's label on products. | `Must display logo with license number.` |
+| `volumeTrackingRequirements`| string | No | Requirements for tracking the volume of certified material. | `Mass balance calculations required quarterly.` |
+| `dueDiligenceRequirements`| string | No | Due diligence requirements for verifying material sources. | `Risk assessment required for all new suppliers.` |
+| `sustainabilityCriteria`| array | No | A list of sustainability criteria the scheme addresses. | `["Biodiversity", "Water Quality"]` |
+| `applicableRegions`| array | No | A list of regions where the scheme is applicable. | `["North America", "Europe"]` |
+| `dateEstablished` | string (date)| No | The date the certification scheme was established. | `1993-01-01` |
+| `eligibleMaterialTypes`| array | No | A list of material types eligible for this certification. | `["softwood", "hardwood"]` |
+| `claimTypes` | array | No | The types of claims supported by this scheme. | `["FSC Mix", "FSC 100%"]` |
+| `auditRequirements`| string | No | Requirements for audits and verification. | `Annual surveillance audits required.` |
+| `chainOfCustodyRequirements`| string | No | Requirements for chain of custody tracking. | `Physical or percentage-based system.` |
+| `documentationRequirements`| array | No | A list of required documentation for compliance. | `["purchase_records", "sales_invoices"]` |
+| `validityPeriod` | string | No | The typical validity period for certifications under this scheme. | `3 years`, `5 years` |
+| `website` | string (uri)| No | The official website for the certification scheme. | `https://fsc.org/` |
+| `lastUpdated` | string (date-time)| No | Timestamp of the most recent data update. | `2025-07-21T15:45:00Z` |
+| `versionNumber` | string | Yes | The version number of the certification scheme. | `v3-1` |
 
-| Field                          | Type             | Required | Description                                                                 | Examples                                    |
-|-------------------------------|------------------|----------|-----------------------------------------------------------------------------|---------------------------------------------|
-| `certificationSchemeId`       | string           | Yes      | Unique identifier for the certification scheme (primary key)              | `CERT-SCHEME-FSC-001`, `CERT-SCHEME-SFI-COC` |
-| `schemeName`                  | string           | Yes      | Official name of the certification scheme                                 | `FSC Chain of Custody`, `SFI Chain of Custody` |
-| `schemeType`                  | string           | Yes      | Type of certification scheme (enum)                                       | `forest_management`, `chain_of_custody`, `biomass_sustainability` |
-| `schemeStandard`              | string           | No       | Standard or version identifier                                            | `FSC-STD-40-004 V3-1`, `SFI-2015-2019 COC` |
-| `issuingOrganizationId`       | string (FK)      | Yes      | Foreign key to organization that issues this scheme                       | `ORG-FSC-INTERNATIONAL`, `ORG-SFI-INC`    |
-| `schemeDescription`           | string           | No       | Detailed description of the certification scheme                          | `Ensures responsible forest management`     |
-| `applicableGeographicAreas`   | array<string>    | No       | Geographic areas where this scheme is applicable                          | `["GEO-REGION-NORTH-AMERICA"]`            |
-| `eligibleMaterialTypes`       | array<string>    | No       | Material types eligible for this certification scheme                     | `["softwood", "hardwood", "mixed"]`       |
-| `claimTypes`                  | array<string>    | No       | Types of claims supported by this scheme                                  | `["FSC Mix", "FSC 100%", "FSC Recycled"]` |
-| `auditRequirements`           | string           | No       | Audit and verification requirements                                       | `Annual surveillance audits`               |
-| `chainOfCustodyRequirements`  | string           | No       | Chain of custody tracking requirements                                    | `Physical or percentage-based system`      |
-| `documentationRequirements`   | array<string>    | No       | Required documentation and record-keeping                                 | `["purchase_records", "sales_invoices"]`  |
-| `validityPeriod`              | string           | No       | Typical validity period for certifications                               | `3 years`, `5 years`                      |
-| `website`                     | string (uri)     | No       | Official website for the certification scheme                             | `https://fsc.org/`                        |
-| `@id`                         | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                        | `https://github.com/carbondirect/BOOST/schemas/certification-scheme/CERT-SCHEME-FSC-001` |
-| `lastUpdated`                 | string (date-time)| No      | Timestamp of the most recent data update                                 | `2025-07-21T15:45:00Z`                    |
+---
 
 ### Scheme Types
 
-1. **forest_management**
-   - Certifies responsible forest management practices
-   - Covers forest planning, biodiversity conservation, and social impacts
-   - Examples: FSC Forest Management, SFI Forest Management
-   - Applies to forest owners and managers
-   - Long-term forest stewardship focus
+1.  **forest_management**: Certifies responsible forest management practices, covering planning, biodiversity, and social impacts.
+2.  **chain_of_custody**: Tracks certified material through the supply chain, ensuring proper segregation and mixing calculations.
+3.  **controlled_wood**: Ensures wood avoids controversial sources through risk assessment and mitigation.
+4.  **biomass_sustainability**: Verifies sustainable biomass production, focusing on GHG reductions and land use.
+5.  **carbon_offset**: Quantifies and verifies carbon sequestration and emission reductions.
+6.  **environmental_management**: Focuses on comprehensive environmental management systems, like ISO 14001.
 
-2. **chain_of_custody**
-   - Tracks certified material through supply chain
-   - Ensures segregation and proper mixing calculations
-   - Examples: FSC Chain of Custody, SFI Chain of Custody
-   - Applies to processors, manufacturers, and traders
-   - Material flow and claim verification
-
-3. **controlled_wood**
-   - Ensures wood avoids controversial sources
-   - Risk assessment and mitigation requirements
-   - Examples: FSC Controlled Wood, SFI Fiber Sourcing
-   - Due diligence and supply chain verification
-   - Minimum acceptable standards
-
-4. **biomass_sustainability**
-   - Verifies sustainable biomass production and sourcing
-   - Greenhouse gas emission reductions and land use criteria
-   - Examples: SBP (Sustainable Biomass Partnership)
-   - Regional risk assessments and supply base evaluations
-   - Energy and environmental benefits focus
-
-5. **carbon_offset**
-   - Quantifies and verifies carbon sequestration and emission reductions
-   - Additionality, permanence, and measurement requirements
-   - Examples: Verified Carbon Standard (VCS), Climate Action Reserve
-   - Forest carbon projects and methodologies
-   - Third-party verification and monitoring
-
-6. **environmental_management**
-   - Comprehensive environmental management systems
-   - ISO 14001 and other environmental standards
-   - Continuous improvement and compliance frameworks
-   - Environmental impact assessment and mitigation
-   - Stakeholder engagement and reporting
+---
 
 ### Key Features
 

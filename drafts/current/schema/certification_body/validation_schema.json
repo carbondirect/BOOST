@@ -41,6 +41,7 @@
       "enum": ["active", "suspended", "expired", "pending", "revoked"],
       "description": "Current accreditation status"
     },
+    "accreditationScope": { "type": "string" },
     "authorizedSchemes": {
       "type": "array",
       "description": "List of certification schemes the CB can certify under",
@@ -88,6 +89,10 @@
       "minItems": 1,
       "examples": [["US", "CA", "MX"], ["GB", "DE", "FR"]]
     },
+    "jurisdictions": { "type": "array", "items": { "type": "string" } },
+    "sectorsServed": { "type": "array", "items": { "type": "string" } },
+    "isActive": { "type": "boolean" },
+    "lastUpdated": { "type": "string", "format": "date-time" },
     "accreditationBody": {
       "type": "string",
       "description": "Organization that accredited this CB",
