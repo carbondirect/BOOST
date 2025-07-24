@@ -805,54 +805,34 @@
             'Operator': { x: 500, y: 1800 }
         };
 
-        // Auto-discovery functions - supports both raw directory listings and Jekyll pages
+        // Auto-discovery functions - uses manifest file for reliable cross-platform discovery
         async function discoverSchemaDirectories() {
             try {
+                // Try manifest file first (recommended approach)
+                const manifestResponse = await fetch('../drafts/current/schema/directories.json');
+                if (manifestResponse.ok) {
+                    const manifest = await manifestResponse.json();
+                    console.log(`Loaded ${manifest.total_entities} schema directories from manifest (updated: ${manifest.last_updated})`);
+                    return manifest.schema_directories;
+                }
+                
+                console.warn('Manifest file not found, falling back to directory discovery');
+                
+                // Fallback to raw directory listing (local development)
                 const response = await fetch('../drafts/current/schema/');
                 const text = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'text/html');
                 
-                // Try Jekyll format first (GitHub Pages) - extract ALL snake_case patterns
-                let directories = [];
-                
-                // Look for any snake_case directory patterns in the entire page
-                const snakeCaseMatches = text.match(/\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\b/g);
-                if (snakeCaseMatches) {
-                    // Test each potential directory by trying to fetch its schema file
-                    const uniqueMatches = [...new Set(snakeCaseMatches)];
-                    console.log(`Found potential schema directories: ${uniqueMatches.join(', ')}`);
+                const directories = Array.from(doc.querySelectorAll('a'))
+                    .map(a => a.textContent.trim())
+                    .filter(name => name && !name.includes('.') && name !== '../' && name !== 'README.md')
+                    .map(name => name.replace('/', ''));
                     
-                    const testPromises = uniqueMatches.map(async (dir) => {
-                        try {
-                            const testResponse = await fetch(`../drafts/current/schema/${dir}/validation_schema.json`, { method: 'HEAD' });
-                            if (testResponse.ok) {
-                                return dir;
-                            }
-                        } catch (e) {
-                            // Directory doesn't exist or schema file missing
-                        }
-                        return null;
-                    });
-                    
-                    const results = await Promise.all(testPromises);
-                    directories = results.filter(dir => dir !== null);
-                    console.log(`Verified existing directories: ${directories.join(', ')}`);
-                }
-                
-                // Fallback to raw directory listing format (local server)
-                if (directories.length === 0) {
-                    directories = Array.from(doc.querySelectorAll('a'))
-                        .map(a => a.textContent.trim())
-                        .filter(name => name && !name.includes('.') && name !== '../' && name !== 'README.md')
-                        .map(name => name.replace('/', ''));
-                    console.log(`Found raw directory listing: ${directories.join(', ')}`);
-                }
-                
-                console.log(`Auto-discovered ${directories.length} schema directories`);
+                console.log(`Fallback discovery found ${directories.length} directories: ${directories.join(', ')}`);
                 return directories;
             } catch (error) {
-                console.error('Could not auto-discover schemas:', error);
+                console.error('Schema discovery failed:', error);
                 return [];
             }
         }

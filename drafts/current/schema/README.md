@@ -26,6 +26,17 @@ This directory contains JSON schema definitions for all BOOST entities. These sc
 - ✅ Entity names must be PascalCase (e.g., "LcfsPathway", not "LCFSPathway")
 - ✅ Directory names use snake_case (e.g., "lcfs_pathway")
 - ✅ boost_metadata is required for ERD integration
+- ✅ Update `directories.json` manifest when adding new entities
+
+### Schema Directory Manifest
+The `directories.json` file contains a comprehensive list of all schema directories for reliable ERD Navigator discovery across all platforms (GitHub Pages, local development, etc.). 
+
+**When adding new entities:**
+1. Create your schema directory and files as usual
+2. Add the directory name to `directories.json` in the `schema_directories` array
+3. Update the `total_entities` count and `last_updated` timestamp
+
+This ensures the ERD Navigator can discover all entities regardless of deployment environment.
 
 ## Overview
 
