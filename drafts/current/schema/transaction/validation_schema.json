@@ -4,9 +4,19 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/transaction",
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["Transaction"] },
-      "@id": { "type": "string", "format": "uri" },
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "Transaction"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
       "transactionId": {
         "type": "string",
         "description": "Unique identifier for the business transaction"
@@ -16,7 +26,7 @@
         "description": "Foreign key to selling organization"
       },
       "customerOrganizationId": {
-        "type": "string", 
+        "type": "string",
         "description": "Foreign key to buying organization"
       },
       "transactionDate": {
@@ -35,12 +45,31 @@
       },
       "contractCurrency": {
         "type": "string",
-        "enum": ["USD", "EUR", "GBP", "CAD", "JPY", "AUD", "CHF", "SEK", "NOK"],
+        "enum": [
+          "USD",
+          "EUR",
+          "GBP",
+          "CAD",
+          "JPY",
+          "AUD",
+          "CHF",
+          "SEK",
+          "NOK"
+        ],
         "description": "Currency code for contract value"
       },
       "contractTerms": {
         "type": "string",
-        "enum": ["FOB", "CIF", "DDP", "EXW", "FCA", "CPT", "DAP", "FAS"],
+        "enum": [
+          "FOB",
+          "CIF",
+          "DDP",
+          "EXW",
+          "FCA",
+          "CPT",
+          "DAP",
+          "FAS"
+        ],
         "description": "Incoterms delivery conditions"
       },
       "paymentTerms": {
@@ -49,7 +78,14 @@
       },
       "transactionStatus": {
         "type": "string",
-        "enum": ["pending", "confirmed", "delivered", "completed", "cancelled", "disputed"],
+        "enum": [
+          "pending",
+          "confirmed",
+          "delivered",
+          "completed",
+          "cancelled",
+          "disputed"
+        ],
         "description": "Current status of business transaction"
       },
       "transactionGeographicDataId": {
@@ -57,53 +93,157 @@
         "description": "Foreign key to primary transaction location"
       },
       "brokerOrganizationId": {
-        "type": ["string", "null"],
+        "type": [
+          "string",
+          "null"
+        ],
         "description": "Foreign key to intermediary broker organization"
       },
       "contractSignedDate": {
-        "type": ["string", "null"],
+        "type": [
+          "string",
+          "null"
+        ],
         "format": "date",
         "description": "Date when contract was executed"
       },
       "expectedDeliveryDate": {
-        "type": ["string", "null"],
-        "format": "date", 
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date",
         "description": "Expected completion/delivery date"
       },
       "complianceRequirements": {
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["FSC_Chain_of_Custody", "SBP_DTS_Registration", "PEFC_Certification", "RSB_Compliance", "LCFS_Reporting", "RFS_Reporting", "EU_RED_Compliance"]
+          "enum": [
+            "FSC_Chain_of_Custody",
+            "SBP_DTS_Registration",
+            "PEFC_Certification",
+            "RSB_Compliance",
+            "LCFS_Reporting",
+            "RFS_Reporting",
+            "EU_RED_Compliance"
+          ]
         },
         "description": "Regulatory compliance requirements for transaction"
       },
       "financialTerms": {
         "type": "object",
         "properties": {
-          "downPaymentAmount": { "type": "number", "minimum": 0 },
-          "downPaymentPercentage": { "type": "number", "minimum": 0, "maximum": 100 },
-          "retentionAmount": { "type": "number", "minimum": 0 },
-          "lateFeePercentage": { "type": "number", "minimum": 0 },
-          "discountTerms": { "type": "string" },
-          "creditLimit": { "type": "number", "minimum": 0 },
-          "collateralRequired": { "type": "boolean" }
+          "downPaymentAmount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "downPaymentPercentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "retentionAmount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "lateFeePercentage": {
+            "type": "number",
+            "minimum": 0
+          },
+          "discountTerms": {
+            "type": "string"
+          },
+          "creditLimit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "collateralRequired": {
+            "type": "boolean"
+          }
         },
         "description": "Detailed financial terms and conditions"
       },
       "riskManagement": {
         "type": "object",
         "properties": {
-          "forceMarjeureClause": { "type": "boolean" },
-          "qualityGuarantees": { "type": "array", "items": { "type": "string" } },
-          "deliveryPenalties": { "type": "string" },
-          "insuranceRequirements": { "type": "string" },
-          "disputeResolutionMethod": { 
+          "forceMarjeureClause": {
+            "type": "boolean"
+          },
+          "qualityGuarantees": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deliveryPenalties": {
+            "type": "string"
+          },
+          "insuranceRequirements": {
+            "type": "string"
+          },
+          "disputeResolutionMethod": {
             "type": "string",
-            "enum": ["arbitration", "mediation", "litigation", "negotiation"]
+            "enum": [
+              "arbitration",
+              "mediation",
+              "litigation",
+              "negotiation"
+            ]
           }
         },
         "description": "Risk management and mitigation terms"
+      },
+      "lcfsPathwayId": {
+        "type": "string",
+        "description": "CARB-certified pathway identifier for LCFS compliance",
+        "pattern": "^CA-[A-Z]{2,4}-[0-9]{4}-[A-Z]{3,4}-[0-9]{3}$"
+      },
+      "fuelVolume": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Volume of fuel in transaction for LCFS reporting"
+      },
+      "fuelVolumeUnit": {
+        "type": "string",
+        "enum": [
+          "gallons",
+          "liters",
+          "GGE"
+        ],
+        "description": "Unit of measurement for fuel volume"
+      },
+      "fuelCategory": {
+        "type": "string",
+        "enum": [
+          "gasoline",
+          "diesel",
+          "renewable_diesel",
+          "biodiesel",
+          "ethanol",
+          "renewable_gasoline",
+          "hydrogen",
+          "electricity",
+          "renewable_natural_gas",
+          "sustainable_aviation_fuel"
+        ],
+        "description": "Category of fuel for LCFS classification"
+      },
+      "reportingPeriod": {
+        "type": "string",
+        "pattern": "^[0-9]{4}-Q[1-4]$",
+        "description": "LCFS reporting quarter in YYYY-QN format"
+      },
+      "regulatedPartyRole": {
+        "type": "string",
+        "enum": [
+          "producer",
+          "importer",
+          "blender",
+          "distributor",
+          "not_applicable"
+        ],
+        "description": "Role of regulated party in LCFS transaction"
       },
       "lastUpdated": {
         "type": "string",
@@ -112,9 +252,27 @@
       }
     },
     "required": [
-      "@context", "@type", "@id", "transactionId", 
-      "supplyingOrganizationId", "customerOrganizationId", 
-      "transactionDate", "contractValue", "contractCurrency", "transactionStatus"
-    ]
+      "@context",
+      "@type",
+      "@id",
+      "transactionId",
+      "supplyingOrganizationId",
+      "customerOrganizationId",
+      "transactionDate",
+      "contractValue",
+      "contractCurrency",
+      "transactionStatus"
+    ],
+    "title": "Transaction",
+    "description": "Transaction entity in BOOST data model",
+    "boost_metadata": {
+      "area": "transaction_management",
+      "emoji": "\ud83d\udcb0",
+      "position": {
+        "x": 2700,
+        "y": 1000
+      },
+      "relationships": []
+    }
   }
 }

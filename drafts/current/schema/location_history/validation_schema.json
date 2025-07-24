@@ -2,6 +2,17 @@
   "schema": {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://github.com/carbondirect/BOOST/schemas/location-history",
+    "title": "Location History",
+    "description": "Historical movement records of TRUs",
+    "boost_metadata": {
+      "area": "core_traceability",
+      "emoji": "📍",
+      "position": {
+        "x": 1600,
+        "y": 600
+      },
+      "relationships": []
+    },
     "type": "object",
     "properties": {
       "@context": { "type": "object" },

@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["Supplier"]
+        "enum": [
+          "Supplier"
+        ]
       },
       "@id": {
         "type": "string",
@@ -43,15 +45,30 @@
       "@id",
       "supplierId",
       "supplierName"
-    ]
+    ],
+    "title": "Supplier",
+    "description": "Supplier entity in BOOST data model",
+    "boost_metadata": {
+      "area": "material_supply_chain",
+      "emoji": "\ud83e\udd1d",
+      "position": {
+        "x": 500,
+        "y": 1000
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "supplierId" }
+        "!!": {
+          "var": "supplierId"
+        }
       },
       {
-        "!!": { "var": "supplierName" }
+        "!!": {
+          "var": "supplierName"
+        }
       }
     ]
   }

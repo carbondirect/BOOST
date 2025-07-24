@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["SupplyBaseReport"]
+        "enum": [
+          "SupplyBaseReport"
+        ]
       },
       "@id": {
         "type": "string",
@@ -49,18 +51,35 @@
       "sbrId",
       "organizationId",
       "preparationDate"
-    ]
+    ],
+    "title": "Supply Base Report",
+    "description": "SupplyBaseReport entity in BOOST data model",
+    "boost_metadata": {
+      "area": "reporting_compliance",
+      "emoji": "\ud83d\udcca",
+      "position": {
+        "x": 2300,
+        "y": 1400
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "sbrId" }
+        "!!": {
+          "var": "sbrId"
+        }
       },
       {
-        "!!": { "var": "organizationId" }
+        "!!": {
+          "var": "organizationId"
+        }
       },
       {
-        "!!": { "var": "preparationDate" }
+        "!!": {
+          "var": "preparationDate"
+        }
       }
     ]
   }

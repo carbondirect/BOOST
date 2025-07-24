@@ -4,24 +4,72 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/biometric-identifier",
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["BiometricIdentifier"] },
-      "@id": { "type": "string", "format": "uri" },
-      "biometricId": { "type": "string" },
-      "traceableUnitId": { "type": "string" },
-      "biometricSignature": { "type": "string" },
-      "captureMethod": {
-        "type": "string", 
-        "enum": ["optical_scanner", "photo_analysis"]
+      "@context": {
+        "type": "object"
       },
-      "captureGeographicDataId": { "type": "string" },
-      "captureTimestamp": { "type": "string", "format": "date-time" },
-      "trackingPointId": { "type": "string" },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "BiometricIdentifier"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "biometricId": {
+        "type": "string"
+      },
+      "traceableUnitId": {
+        "type": "string"
+      },
+      "biometricSignature": {
+        "type": "string"
+      },
+      "captureMethod": {
+        "type": "string",
+        "enum": [
+          "optical_scanner",
+          "photo_analysis"
+        ]
+      },
+      "captureGeographicDataId": {
+        "type": "string"
+      },
+      "captureTimestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "trackingPointId": {
+        "type": "string"
+      },
       "speciesBiometrics": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       }
     },
-    "required": ["@context", "@type", "@id", "biometricId", "traceableUnitId", "biometricSignature", "captureMethod", "captureTimestamp"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "biometricId",
+      "traceableUnitId",
+      "biometricSignature",
+      "captureMethod",
+      "captureTimestamp"
+    ],
+    "title": "Biometric Identifier",
+    "description": "BiometricIdentifier entity in BOOST data model",
+    "boost_metadata": {
+      "area": "core_traceability",
+      "emoji": "\ud83d\udd2c",
+      "position": {
+        "x": 1600,
+        "y": 1400
+      },
+      "relationships": []
+    }
   }
 }

@@ -4,27 +4,106 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/tracking-point",
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["TrackingPoint"] },
-      "@id": { "type": "string", "format": "uri" },
-      "trackingPointId": { "type": "string" },
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "TrackingPoint"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "trackingPointId": {
+        "type": "string"
+      },
       "pointType": {
         "type": "string",
-        "enum": ["harvest_site", "skid_road", "forest_road", "mill_entrance"]
+        "enum": [
+          "harvest_site",
+          "skid_road",
+          "forest_road",
+          "mill_entrance"
+        ]
       },
-      "geographicDataId": { "type": "string" },
-      "equipmentUsed": { "type": "string" },
-      "operatorId": { "type": "string" },
-      "establishedTimestamp": { "type": "string", "format": "date-time" }
+      "geographicDataId": {
+        "type": "string"
+      },
+      "equipmentUsed": {
+        "type": "string"
+      },
+      "operatorId": {
+        "type": "string"
+      },
+      "establishedTimestamp": {
+        "type": "string",
+        "format": "date-time"
+      }
     },
-    "required": ["@context", "@type", "@id", "trackingPointId", "pointType", "geographicDataId", "equipmentUsed", "establishedTimestamp"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "trackingPointId",
+      "pointType",
+      "geographicDataId",
+      "equipmentUsed",
+      "establishedTimestamp"
+    ],
+    "title": "Tracking Point",
+    "description": "TrackingPoint entity in BOOST data model",
+    "boost_metadata": {
+      "area": "core_traceability",
+      "emoji": "\ud83d\udce1",
+      "position": {
+        "x": 900,
+        "y": 1000
+      },
+      "relationships": [
+        {
+          "from": "TrackingPoint",
+          "to": "GeographicData",
+          "label": "located_at",
+          "type": "non-identifying",
+          "from_cardinality": "many",
+          "to_cardinality": "one"
+        },
+        {
+          "from": "TrackingPoint",
+          "to": "Operator",
+          "label": "established_by",
+          "type": "non-identifying",
+          "from_cardinality": "many",
+          "to_cardinality": "one"
+        }
+      ]
+    }
   },
   "rules": {
     "and": [
-      { "!!": { "var": "trackingPointId" } },
-      { "!!": { "var": "pointType" } },
-      { "!!": { "var": "geographicDataId" } },
-      { "!!": { "var": "equipmentUsed" } }
+      {
+        "!!": {
+          "var": "trackingPointId"
+        }
+      },
+      {
+        "!!": {
+          "var": "pointType"
+        }
+      },
+      {
+        "!!": {
+          "var": "geographicDataId"
+        }
+      },
+      {
+        "!!": {
+          "var": "equipmentUsed"
+        }
+      }
     ]
   }
 }

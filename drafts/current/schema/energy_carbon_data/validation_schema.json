@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["EnergyCarbonData"]
+        "enum": [
+          "EnergyCarbonData"
+        ]
       },
       "@id": {
         "type": "string",
@@ -20,22 +22,54 @@
       },
       "dataType": {
         "type": "string",
-        "enum": ["moisture", "transport", "fuel consumption"]
+        "enum": [
+          "moisture",
+          "transport",
+          "fuel consumption",
+          "carbon_intensity",
+          "energy_content",
+          "emissions",
+          "lifecycle_assessment"
+        ]
       },
       "value": {
         "type": "number"
       },
       "unit": {
         "type": "string",
-        "enum": ["percentage", "kg_CO2e", "liters", "MJ"]
+        "enum": [
+          "percentage",
+          "kg_CO2e",
+          "liters",
+          "MJ",
+          "gCO2e/MJ",
+          "MJ/kg",
+          "gCO2e/gallon",
+          "MJ/gallon"
+        ]
       },
       "source": {
         "type": "string",
-        "enum": ["field_measurement", "laboratory_analysis", "default_values", "calculated"]
+        "enum": [
+          "field_measurement",
+          "laboratory_analysis",
+          "default_values",
+          "calculated"
+        ]
       },
       "measurementMethod": {
         "type": "string",
-        "enum": ["oven_dry", "electrical_resistance", "microwave", "near_infrared", "gravimetric"]
+        "enum": [
+          "oven_dry",
+          "electrical_resistance",
+          "microwave",
+          "near_infrared",
+          "gravimetric",
+          "CA-GREET3.0",
+          "GREET2023",
+          "Direct_Measurement",
+          "LCA_Modeling"
+        ]
       },
       "traceableUnitId": {
         "type": "string"
@@ -56,6 +90,43 @@
       "humidityConditions": {
         "type": "number"
       },
+      "lcfsPathwayType": {
+        "type": "string",
+        "enum": [
+          "Lookup_Table",
+          "Tier_1",
+          "Tier_2",
+          "Not_LCFS"
+        ],
+        "description": "LCFS pathway tier classification"
+      },
+      "energyEconomyRatio": {
+        "type": "number",
+        "minimum": 0.5,
+        "maximum": 3.0,
+        "description": "Energy economy ratio for LCFS credit calculation"
+      },
+      "lifeCycleStage": {
+        "type": "string",
+        "enum": [
+          "feedstock",
+          "production",
+          "transport",
+          "distribution",
+          "combustion",
+          "full_lifecycle"
+        ],
+        "description": "Lifecycle stage for carbon intensity data"
+      },
+      "regulatoryBenchmark": {
+        "type": "number",
+        "description": "CARB regulatory benchmark for comparison (gCO2e/MJ)"
+      },
+      "caGreetVersion": {
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+$",
+        "description": "CA-GREET model version used for calculation"
+      },
       "qualityAssurance": {
         "type": "string"
       }
@@ -69,24 +140,45 @@
       "value",
       "unit",
       "source"
-    ]
+    ],
+    "title": "Energy Carbon Data",
+    "description": "EnergyCarbonData entity in BOOST data model",
+    "boost_metadata": {
+      "area": "analytics_data",
+      "emoji": "\ud83c\udf21\ufe0f",
+      "position": {
+        "x": 1600,
+        "y": 1800
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "energyCarbonDataId" }
+        "!!": {
+          "var": "energyCarbonDataId"
+        }
       },
       {
-        "!!": { "var": "dataType" }
+        "!!": {
+          "var": "dataType"
+        }
       },
       {
-        "!!": { "var": "value" }
+        "!!": {
+          "var": "value"
+        }
       },
       {
-        "!!": { "var": "unit" }
+        "!!": {
+          "var": "unit"
+        }
       },
       {
-        "!!": { "var": "source" }
+        "!!": {
+          "var": "source"
+        }
       }
     ]
   }

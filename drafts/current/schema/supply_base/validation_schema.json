@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["SupplyBase"]
+        "enum": [
+          "SupplyBase"
+        ]
       },
       "@id": {
         "type": "string",
@@ -75,21 +77,40 @@
       "organizationId",
       "supplyBaseName",
       "description"
-    ]
+    ],
+    "title": "Supply Base",
+    "description": "SupplyBase entity in BOOST data model",
+    "boost_metadata": {
+      "area": "material_supply_chain",
+      "emoji": "\ud83c\udf32",
+      "position": {
+        "x": 500,
+        "y": 600
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "supplyBaseId" }
+        "!!": {
+          "var": "supplyBaseId"
+        }
       },
       {
-        "!!": { "var": "organizationId" }
+        "!!": {
+          "var": "organizationId"
+        }
       },
       {
-        "!!": { "var": "supplyBaseName" }
+        "!!": {
+          "var": "supplyBaseName"
+        }
       },
       {
-        "!!": { "var": "description" }
+        "!!": {
+          "var": "description"
+        }
       }
     ]
   }

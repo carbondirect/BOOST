@@ -1,0 +1,96 @@
+{
+  "@context": {
+    "LCFSReporting": "https://github.com/carbondirect/BOOST/schemas#LCFSReporting",
+    "reportingId": "https://github.com/carbondirect/BOOST/schemas#reportingId",
+    "regulatedEntityId": "https://github.com/carbondirect/BOOST/schemas#regulatedEntityId",
+    "reportingPeriod": "https://github.com/carbondirect/BOOST/schemas#reportingPeriod",
+    "totalFuelVolume": "https://github.com/carbondirect/BOOST/schemas#totalFuelVolume",
+    "totalCreditsGenerated": "https://github.com/carbondirect/BOOST/schemas#totalCreditsGenerated",
+    "totalDeficitsIncurred": "https://github.com/carbondirect/BOOST/schemas#totalDeficitsIncurred",
+    "netPosition": "https://github.com/carbondirect/BOOST/schemas#netPosition",
+    "complianceStatus": "https://github.com/carbondirect/BOOST/schemas#complianceStatus",
+    "submissionDate": "https://github.com/carbondirect/BOOST/schemas#submissionDate",
+    "verificationDate": "https://github.com/carbondirect/BOOST/schemas#verificationDate",
+    "verificationRequired": "https://github.com/carbondirect/BOOST/schemas#verificationRequired",
+    "reportingDeadline": "https://github.com/carbondirect/BOOST/schemas#reportingDeadline",
+    "transactionIds": "https://github.com/carbondirect/BOOST/schemas#transactionIds",
+    "pathwaySummary": "https://github.com/carbondirect/BOOST/schemas#pathwaySummary",
+    "calculationParameters": "https://github.com/carbondirect/BOOST/schemas#calculationParameters",
+    "complianceMetrics": "https://github.com/carbondirect/BOOST/schemas#complianceMetrics",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "LCFSReporting",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/lcfs-reporting/LCFS-RPT-2025-Q1-PACIFIC001",
+  "reportingId": "LCFS-RPT-2025-Q1-PACIFIC001",
+  "regulatedEntityId": "pacific-renewable-fuels-001",
+  "reportingPeriod": "2025-Q1",
+  "totalFuelVolume": 5075000.0,
+  "totalCreditsGenerated": 54580477.10,
+  "totalDeficitsIncurred": 0.0,
+  "netPosition": 54580477.10,
+  "complianceStatus": "compliant",
+  "submissionDate": "2025-04-15T10:30:00Z",
+  "verificationDate": "2025-04-10T14:00:00Z",
+  "verificationRequired": true,
+  "reportingDeadline": "2025-05-15",
+  "transactionIds": [
+    "TXN-2025-Q1-001",
+    "TXN-2025-Q1-002", 
+    "TXN-2025-Q1-003",
+    "TXN-2025-Q1-004",
+    "TXN-2025-Q1-005",
+    "TXN-2025-Q1-006"
+  ],
+  "pathwaySummary": [
+    {
+      "pathwayId": "CA-RD-2025-LMR-001",
+      "feedstockType": "logging_and_mill_residue",
+      "transactionCount": 2,
+      "totalVolume": 1650000.0,
+      "creditsGenerated": 17995184.00
+    },
+    {
+      "pathwayId": "CA-RD-2025-AGR-001", 
+      "feedstockType": "agricultural_residue",
+      "transactionCount": 2,
+      "totalVolume": 2350000.0,
+      "creditsGenerated": 24886720.85
+    },
+    {
+      "pathwayId": "CA-RD-2025-GRW-001",
+      "feedstockType": "grass_residue_waste",
+      "transactionCount": 1,
+      "totalVolume": 650000.0,
+      "creditsGenerated": 7171332.25
+    },
+    {
+      "pathwayId": "CA-RD-2025-FHR-001",
+      "feedstockType": "forest_harvest_residue", 
+      "transactionCount": 1,
+      "totalVolume": 425000.0,
+      "creditsGenerated": 4527240.00
+    }
+  ],
+  "calculationParameters": {
+    "conversionFactor": 138.7,
+    "conversionFactorUnit": "MJ/gallon",
+    "regulatoryBenchmark": 98.47,
+    "benchmarkUnit": "gCO2e/MJ",
+    "defaultEER": 1.0
+  },
+  "complianceMetrics": {
+    "creditValue": {
+      "estimatedValue": 109160954.20,
+      "valueUnit": "USD",
+      "creditPrice": 2.00,
+      "priceUnit": "USD_per_credit"
+    },
+    "environmentalImpact": {
+      "co2ReductionMT": 55249.19,
+      "co2ReductionUnit": "metric_tons",
+      "equivalentCarsRemoved": 12011
+    }
+  },
+  "lastUpdated": "2025-07-21T16:45:00Z"
+}

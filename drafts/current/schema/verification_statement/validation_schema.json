@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["VerificationStatement"]
+        "enum": [
+          "VerificationStatement"
+        ]
       },
       "@id": {
         "type": "string",
@@ -39,18 +41,35 @@
       "statementId",
       "verificationDate",
       "issuingBody"
-    ]
+    ],
+    "title": "Verification Statement",
+    "description": "VerificationStatement entity in BOOST data model",
+    "boost_metadata": {
+      "area": "reporting_compliance",
+      "emoji": "\u2705",
+      "position": {
+        "x": 2300,
+        "y": 1800
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "statementId" }
+        "!!": {
+          "var": "statementId"
+        }
       },
       {
-        "!!": { "var": "verificationDate" }
+        "!!": {
+          "var": "verificationDate"
+        }
       },
       {
-        "!!": { "var": "issuingBody" }
+        "!!": {
+          "var": "issuingBody"
+        }
       }
     ]
   }

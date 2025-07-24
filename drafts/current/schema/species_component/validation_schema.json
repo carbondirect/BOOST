@@ -2,6 +2,17 @@
   "schema": {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://github.com/carbondirect/BOOST/schemas/species-component",
+    "title": "Species Component",
+    "description": "Species composition within TRUs",
+    "boost_metadata": {
+      "area": "core_traceability",
+      "emoji": "🌲",
+      "position": {
+        "x": 1200,
+        "y": 600
+      },
+      "relationships": []
+    },
     "type": "object",
     "properties": {
       "@context": {

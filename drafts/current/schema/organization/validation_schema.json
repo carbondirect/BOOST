@@ -1,9 +1,16 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/carbondirect/BOOST/schemas/organization",
-  "title": "Organization",
-  "description": "Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements",
-  "type": "object",
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/organization",
+    "title": "Organization",
+    "description": "Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements",
+    "boost_metadata": {
+      "area": "organizational_foundation",
+      "emoji": "🏢",
+      "position": { "x": 100, "y": 1000 },
+      "relationships": []
+    },
+    "type": "object",
   "properties": {
     "@context": {
       "type": "object",
@@ -35,7 +42,7 @@
     "organizationType": {
       "type": "string",
       "description": "Type of organization",
-      "enum": ["harvester", "processor", "certifier", "transporter", "supplier", "manufacturer"]
+      "enum": ["harvester", "processor", "certifier", "transporter", "supplier", "manufacturer", "producer", "importer", "blender", "distributor"]
     },
     "primaryGeographicDataId": {
       "type": "string",
@@ -88,6 +95,38 @@
       "description": "Organization website URL",
       "examples": ["https://www.pacificforest.com", "https://klamathforestry.org"]
     },
+    "lcfsRegistrationId": {
+      "type": "string",
+      "description": "CARB LCFS registration identifier for regulated entities",
+      "pattern": "^LCFS-REG-[0-9]{4}-[0-9]{3}$",
+      "examples": ["LCFS-REG-2025-003", "LCFS-REG-2025-127"]
+    },
+    "regulatedEntityType": {
+      "type": "string",
+      "enum": ["producer", "importer", "blender", "distributor", "not_regulated"],
+      "description": "LCFS regulated entity classification"
+    },
+    "facilityCapacity": {
+      "type": "object",
+      "properties": {
+        "annualCapacity": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Annual production or handling capacity"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["gallons_renewable_diesel", "gallons_ethanol", "gallons_biodiesel", "gallons_gasoline", "gallons_diesel", "GGE", "MJ"],
+          "description": "Unit for capacity measurement"
+        }
+      },
+      "description": "Facility production or handling capacity for LCFS reporting"
+    },
+    "operationalStatus": {
+      "type": "string",
+      "enum": ["active", "inactive", "suspended", "under_construction"],
+      "description": "Current operational status of the organization"
+    },
     "lastUpdated": {
       "type": "string",
       "format": "date-time",
@@ -102,4 +141,5 @@
     "organizationType"
   ],
   "additionalProperties": false
+  }
 }

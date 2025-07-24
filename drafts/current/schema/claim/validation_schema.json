@@ -4,23 +4,60 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/claim",
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["Claim"] },
-      "@id": { "type": "string", "format": "uri" },
-      "claimId": { "type": "string" },
-      "traceableUnitId": { "type": "string" },
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "Claim"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "claimId": {
+        "type": "string"
+      },
+      "traceableUnitId": {
+        "type": "string"
+      },
       "claimType": {
         "type": "string",
-        "enum": ["SBP-compliant", "FSC Mix", "RSB Global", "PEFC", "organic", "FSC 100%", "FSC Recycled", "ISCC EU", "RED II"]
+        "enum": [
+          "SBP-compliant",
+          "FSC Mix",
+          "RSB Global",
+          "PEFC",
+          "organic",
+          "FSC 100%",
+          "FSC Recycled",
+          "ISCC EU",
+          "RED II"
+        ]
       },
-      "certificationSchemeId": { "type": "string" },
-      "statement": { "type": "string" },
-      "validated": { "type": "boolean" },
-      "validatedBy": { "type": "string" },
-      "validationDate": { "type": "string", "format": "date-time" },
+      "certificationSchemeId": {
+        "type": "string"
+      },
+      "statement": {
+        "type": "string"
+      },
+      "validated": {
+        "type": "boolean"
+      },
+      "validatedBy": {
+        "type": "string"
+      },
+      "validationDate": {
+        "type": "string",
+        "format": "date-time"
+      },
       "applicableSpecies": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
       "claimPercentage": {
         "type": "number",
@@ -29,16 +66,51 @@
       },
       "claimScope": {
         "type": "string",
-        "enum": ["harvest", "processing", "transport", "full_chain"]
+        "enum": [
+          "harvest",
+          "processing",
+          "transport",
+          "full_chain"
+        ]
       },
-      "evidenceDocumentId": { "type": "string" },
-      "claimExpiry": { "type": "string", "format": "date-time" },
+      "evidenceDocumentId": {
+        "type": "string"
+      },
+      "claimExpiry": {
+        "type": "string",
+        "format": "date-time"
+      },
       "inheritedFromTRU": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
-      "lastUpdated": { "type": "string", "format": "date-time" }
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time"
+      }
     },
-    "required": ["@context", "@type", "@id", "claimId", "traceableUnitId", "claimType", "statement", "validated"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "claimId",
+      "traceableUnitId",
+      "claimType",
+      "statement",
+      "validated"
+    ],
+    "title": "Claim",
+    "description": "Claim entity in BOOST data model",
+    "boost_metadata": {
+      "area": "sustainability_claims",
+      "emoji": "\ud83c\udfc6",
+      "position": {
+        "x": 1600,
+        "y": 200
+      },
+      "relationships": []
+    }
   }
 }

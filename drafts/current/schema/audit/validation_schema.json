@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["Audit"]
+        "enum": [
+          "Audit"
+        ]
       },
       "@id": {
         "type": "string",
@@ -20,7 +22,11 @@
       },
       "auditType": {
         "type": "string",
-        "enum": ["Initial", "Surveillance", "Transfer"]
+        "enum": [
+          "Initial",
+          "Surveillance",
+          "Transfer"
+        ]
       },
       "auditDate": {
         "type": "string",
@@ -51,21 +57,40 @@
       "auditType",
       "auditDate",
       "organizationId"
-    ]
+    ],
+    "title": "Audit",
+    "description": "Audit entity in BOOST data model",
+    "boost_metadata": {
+      "area": "reporting_compliance",
+      "emoji": "\ud83d\udd0d",
+      "position": {
+        "x": 2700,
+        "y": 1800
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "auditId" }
+        "!!": {
+          "var": "auditId"
+        }
       },
       {
-        "!!": { "var": "auditType" }
+        "!!": {
+          "var": "auditType"
+        }
       },
       {
-        "!!": { "var": "auditDate" }
+        "!!": {
+          "var": "auditDate"
+        }
       },
       {
-        "!!": { "var": "organizationId" }
+        "!!": {
+          "var": "organizationId"
+        }
       }
     ]
   }

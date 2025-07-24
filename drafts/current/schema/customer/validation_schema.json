@@ -9,7 +9,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["Customer"]
+        "enum": [
+          "Customer"
+        ]
       },
       "@id": {
         "type": "string",
@@ -34,15 +36,30 @@
       "@id",
       "customerId",
       "customerName"
-    ]
+    ],
+    "title": "Customer",
+    "description": "Customer entity in BOOST data model",
+    "boost_metadata": {
+      "area": "material_supply_chain",
+      "emoji": "\ud83c\udfed",
+      "position": {
+        "x": 500,
+        "y": 1400
+      },
+      "relationships": []
+    }
   },
   "rules": {
     "and": [
       {
-        "!!": { "var": "customerId" }
+        "!!": {
+          "var": "customerId"
+        }
       },
       {
-        "!!": { "var": "customerName" }
+        "!!": {
+          "var": "customerName"
+        }
       }
     ]
   }

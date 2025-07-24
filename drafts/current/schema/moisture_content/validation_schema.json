@@ -132,6 +132,17 @@
         }
       }
     },
+    "boost_metadata": {
+      "title": "Moisture Content",
+      "description": "Moisture content measurements and tracking",
+      "area": "analytics_data",
+      "emoji": "💧",
+      "position": {
+        "x": 1400,
+        "y": 1800
+      },
+      "relationships": []
+    },
     "validationAlgorithms": {
       "moistureConsistencyCheck": {
         "description": "Algorithm to validate moisture content consistency across processing chain",

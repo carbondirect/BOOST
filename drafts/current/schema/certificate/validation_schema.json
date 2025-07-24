@@ -1,156 +1,211 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/carbondirect/BOOST/schemas/certificate",
-  "title": "Certificate",
-  "description": "Certificate entity representing formal certification records issued by certification bodies",
-  "type": "object",
-  "properties": {
-    "@context": {
-      "type": "object",
-      "description": "JSON-LD context for semantic web compatibility"
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/certificate",
+    "title": "Certificate",
+    "description": "Certificate entity representing formal certification records issued by certification bodies",
+    "boost_metadata": {
+      "area": "organizational_foundation",
+      "emoji": "\ud83d\udcdc",
+      "position": {
+        "x": 100,
+        "y": 600
+      },
+      "relationships": []
     },
-    "@type": {
-      "type": "string",
-      "const": "Certificate",
-      "description": "JSON-LD type identifier"
-    },
-    "@id": {
-      "type": "string",
-      "format": "uri",
-      "description": "Unique URI identifier for the certificate"
-    },
-    "certificateId": {
-      "type": "string",
-      "description": "Optional internal identifier",
-      "examples": ["SFI-CERT-001", "FSC-CERT-12345"]
-    },
-    "certificateNumber": {
-      "type": "string",
-      "description": "Official certificate number (primary key)",
-      "minLength": 1,
-      "examples": ["SFI-2025-12345", "FSC-C123456", "PEFC/12-34-567"]
-    },
-    "certificationSchemeId": {
-      "type": "string",
-      "description": "Foreign key to Certification Scheme",
-      "minLength": 1,
-      "examples": ["SFI-CoC", "FSC-CoC", "PEFC-CoC"]
-    },
-    "cbId": {
-      "type": "string",
-      "description": "Foreign key to Certification Body",
-      "minLength": 1,
-      "examples": ["SFI", "FSC-US", "PEFC-001"]
-    },
-    "organizationId": {
-      "type": "string",
-      "description": "Foreign key to Organization receiving the certificate",
-      "minLength": 1,
-      "pattern": "^ORG-[A-Z0-9-_]+$",
-      "examples": ["ORG-FORESTCO-001", "ORG-SAWMILL-PACIFIC"]
-    },
-    "dateOfIssue": {
-      "type": "string",
-      "format": "date",
-      "description": "Date of certificate issuance",
-      "examples": ["2025-01-01"]
-    },
-    "dateOfExpiry": {
-      "type": "string",
-      "format": "date",
-      "description": "Certificate expiry date",
-      "examples": ["2030-01-01"]
-    },
-    "status": {
-      "type": "string",
-      "enum": ["active", "expired", "revoked", "suspended"],
-      "description": "Current certificate status"
-    },
-    "scopeOfCertification": {
-      "type": "string",
-      "description": "Summary of certification coverage",
-      "minLength": 1,
-      "examples": ["Chain of Custody for lumber and pulp", "Forest Management"]
-    },
-    "versionNumber": {
-      "type": "string",
-      "description": "Version of standard applied",
-      "examples": ["2022", "FSC-STD-40-004 v3-1", "PEFC ST 2002:2020"]
-    },
-    "conditionalRequirements": {
-      "type": "array",
-      "description": "Special conditions or requirements",
-      "items": {
+    "type": "object",
+    "properties": {
+      "@context": {
         "type": "object",
+        "description": "JSON-LD context for semantic web compatibility"
+      },
+      "@type": {
+        "type": "string",
+        "const": "Certificate",
+        "description": "JSON-LD type identifier"
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri",
+        "description": "Unique URI identifier for the certificate"
+      },
+      "certificateId": {
+        "type": "string",
+        "description": "Optional internal identifier",
+        "examples": [
+          "SFI-CERT-001",
+          "FSC-CERT-12345"
+        ]
+      },
+      "certificateNumber": {
+        "type": "string",
+        "description": "Official certificate number (primary key)",
+        "minLength": 1,
+        "examples": [
+          "SFI-2025-12345",
+          "FSC-C123456",
+          "PEFC/12-34-567"
+        ]
+      },
+      "certificationSchemeId": {
+        "type": "string",
+        "description": "Foreign key to Certification Scheme",
+        "minLength": 1,
+        "examples": [
+          "SFI-CoC",
+          "FSC-CoC",
+          "PEFC-CoC"
+        ]
+      },
+      "cbId": {
+        "type": "string",
+        "description": "Foreign key to Certification Body",
+        "minLength": 1,
+        "examples": [
+          "SFI",
+          "FSC-US",
+          "PEFC-001"
+        ]
+      },
+      "organizationId": {
+        "type": "string",
+        "description": "Foreign key to Organization receiving the certificate",
+        "minLength": 1,
+        "pattern": "^ORG-[A-Z0-9-_]+$",
+        "examples": [
+          "ORG-FORESTCO-001",
+          "ORG-SAWMILL-PACIFIC"
+        ]
+      },
+      "dateOfIssue": {
+        "type": "string",
+        "format": "date",
+        "description": "Date of certificate issuance",
+        "examples": [
+          "2025-01-01"
+        ]
+      },
+      "dateOfExpiry": {
+        "type": "string",
+        "format": "date",
+        "description": "Certificate expiry date",
+        "examples": [
+          "2030-01-01"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "active",
+          "expired",
+          "revoked",
+          "suspended"
+        ],
+        "description": "Current certificate status"
+      },
+      "scopeOfCertification": {
+        "type": "string",
+        "description": "Summary of certification coverage",
+        "minLength": 1,
+        "examples": [
+          "Chain of Custody for lumber and pulp",
+          "Forest Management"
+        ]
+      },
+      "versionNumber": {
+        "type": "string",
+        "description": "Version of standard applied",
+        "examples": [
+          "2022",
+          "FSC-STD-40-004 v3-1",
+          "PEFC ST 2002:2020"
+        ]
+      },
+      "conditionalRequirements": {
+        "type": "array",
+        "description": "Special conditions or requirements",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "examples": [
+                "surveillance",
+                "corrective-action",
+                "scope-limitation"
+              ]
+            },
+            "description": {
+              "type": "string"
+            },
+            "dueDate": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        }
+      },
+      "suspensionHistory": {
+        "type": "array",
+        "description": "History of certificate suspensions",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "restoredDate": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        }
+      },
+      "auditSchedule": {
+        "type": "object",
+        "description": "Scheduled audit information",
         "properties": {
+          "nextAudit": {
+            "type": "string",
+            "format": "date"
+          },
           "type": {
             "type": "string",
-            "examples": ["surveillance", "corrective-action", "scope-limitation"]
+            "enum": [
+              "initial",
+              "surveillance",
+              "recertification"
+            ]
           },
-          "description": {
+          "auditorId": {
             "type": "string"
-          },
-          "dueDate": {
-            "type": "string",
-            "format": "date"
           }
         }
+      },
+      "certificateDocument": {
+        "type": "string",
+        "format": "uri",
+        "description": "Link or reference to certificate document",
+        "examples": [
+          "https://sfiprogram.org/certificates/2025-12345.pdf"
+        ]
       }
     },
-    "suspensionHistory": {
-      "type": "array",
-      "description": "History of certificate suspensions",
-      "items": {
-        "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "reason": {
-            "type": "string"
-          },
-          "restoredDate": {
-            "type": "string",
-            "format": "date"
-          }
-        }
-      }
-    },
-    "auditSchedule": {
-      "type": "object",
-      "description": "Scheduled audit information",
-      "properties": {
-        "nextAudit": {
-          "type": "string",
-          "format": "date"
-        },
-        "type": {
-          "type": "string",
-          "enum": ["initial", "surveillance", "recertification"]
-        },
-        "auditorId": {
-          "type": "string"
-        }
-      }
-    },
-    "certificateDocument": {
-      "type": "string",
-      "format": "uri",
-      "description": "Link or reference to certificate document",
-      "examples": ["https://sfiprogram.org/certificates/2025-12345.pdf"]
-    }
-  },
-  "required": [
-    "certificateNumber",
-    "certificationSchemeId", 
-    "cbId",
-    "organizationId",
-    "dateOfIssue",
-    "dateOfExpiry",
-    "status",
-    "scopeOfCertification",
-    "versionNumber"
-  ],
-  "additionalProperties": false
+    "required": [
+      "certificateNumber",
+      "certificationSchemeId",
+      "cbId",
+      "organizationId",
+      "dateOfIssue",
+      "dateOfExpiry",
+      "status",
+      "scopeOfCertification",
+      "versionNumber"
+    ],
+    "additionalProperties": false
+  }
 }

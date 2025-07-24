@@ -2,6 +2,17 @@
   "schema": {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://github.com/carbondirect/BOOST/schemas/measurement-record",
+    "title": "Measurement Record",
+    "description": "Quality measurements and dimensional data",
+    "boost_metadata": {
+      "area": "core_traceability",
+      "emoji": "📏",
+      "position": {
+        "x": 2000,
+        "y": 600
+      },
+      "relationships": []
+    },
     "type": "object",
     "properties": {
       "@context": { "type": "object" },
