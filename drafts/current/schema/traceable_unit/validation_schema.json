@@ -4,12 +4,6 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/traceable-unit",
     "title": "Traceable Unit",
     "description": "Unique biomass tracking unit with BOOST traceability system integration",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "🔑",
-      "position": { "x": 1600, "y": 1000 },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
       "@context": {
@@ -17,7 +11,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["TraceableUnit"]
+        "enum": [
+          "TraceableUnit"
+        ]
       },
       "@id": {
         "type": "string",
@@ -29,7 +25,12 @@
       },
       "unitType": {
         "type": "string",
-        "enum": ["individual_log", "pile", "volume_aggregation", "processed_batch"],
+        "enum": [
+          "individual_log",
+          "pile",
+          "volume_aggregation",
+          "processed_batch"
+        ],
         "description": "Type of traceable unit"
       },
       "uniqueIdentifier": {
@@ -68,12 +69,23 @@
       },
       "assortmentType": {
         "type": "string",
-        "enum": ["sawlog", "pulpwood", "biomass", "chips"],
+        "enum": [
+          "sawlog",
+          "pulpwood",
+          "biomass",
+          "chips"
+        ],
         "description": "Type of wood assortment"
       },
       "qualityGrade": {
         "type": "string",
-        "enum": ["A", "B", "C", "structural", "fuel"],
+        "enum": [
+          "A",
+          "B",
+          "C",
+          "structural",
+          "fuel"
+        ],
         "description": "Quality grade classification"
       },
       "isMultiSpecies": {
@@ -107,7 +119,12 @@
       },
       "currentStatus": {
         "type": "string",
-        "enum": ["active", "processed", "delivered", "consumed"],
+        "enum": [
+          "active",
+          "processed",
+          "delivered",
+          "consumed"
+        ],
         "description": "Current status of the TRU (Phase 2)"
       },
       "sustainabilityCertification": {
@@ -144,52 +161,89 @@
   "rules": {
     "and": [
       {
-        "!!": { "var": "traceableUnitId" }
+        "!!": {
+          "var": "traceableUnitId"
+        }
       },
       {
-        "!!": { "var": "unitType" }
+        "!!": {
+          "var": "unitType"
+        }
       },
       {
-        "!!": { "var": "uniqueIdentifier" }
+        "!!": {
+          "var": "uniqueIdentifier"
+        }
       },
       {
-        "!!": { "var": "totalVolumeM3" }
+        "!!": {
+          "var": "totalVolumeM3"
+        }
       },
       {
-        ">": [{ "var": "totalVolumeM3" }, 0]
+        ">": [
+          {
+            "var": "totalVolumeM3"
+          },
+          0
+        ]
       },
       {
-        "!!": { "var": "createdTimestamp" }
+        "!!": {
+          "var": "createdTimestamp"
+        }
       },
       {
-        "!!": { "var": "harvesterId" }
+        "!!": {
+          "var": "harvesterId"
+        }
       },
       {
-        "!!": { "var": "materialTypeId" }
+        "!!": {
+          "var": "materialTypeId"
+        }
       },
       {
         "if": [
-          { "var": "isMultiSpecies" },
           {
-            "!!": { "var": "currentGeographicDataId" }
+            "var": "isMultiSpecies"
+          },
+          {
+            "!!": {
+              "var": "currentGeographicDataId"
+            }
           },
           true
         ]
       },
       {
         "if": [
-          { "var": "processingHistory" },
           {
-            ">": [ { "var": "processingHistory.length" }, 0 ]
+            "var": "processingHistory"
+          },
+          {
+            ">": [
+              {
+                "var": "processingHistory.length"
+              },
+              0
+            ]
           },
           true
         ]
       },
       {
         "if": [
-          { "var": "childTraceableUnitIds" },
           {
-            ">": [ { "var": "childTraceableUnitIds.length" }, 0 ]
+            "var": "childTraceableUnitIds"
+          },
+          {
+            ">": [
+              {
+                "var": "childTraceableUnitIds.length"
+              },
+              0
+            ]
           },
           true
         ]

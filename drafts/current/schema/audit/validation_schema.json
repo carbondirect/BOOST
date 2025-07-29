@@ -59,16 +59,7 @@
       "organizationId"
     ],
     "title": "Audit",
-    "description": "Audit entity in BOOST data model",
-    "boost_metadata": {
-      "area": "reporting_compliance",
-      "emoji": "\ud83d\udd0d",
-      "position": {
-        "x": 2700,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "description": "Audit entity in BOOST data model"
   },
   "rules": {
     "and": [

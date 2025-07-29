@@ -4,12 +4,6 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/organization",
     "title": "Organization",
     "description": "Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements",
-    "boost_metadata": {
-      "area": "organizational_foundation",
-      "emoji": "🏢",
-      "position": { "x": 100, "y": 1000 },
-      "relationships": []
-    },
     "type": "object",
   "properties": {
     "@context": {

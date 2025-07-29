@@ -102,15 +102,6 @@
       "validated"
     ],
     "title": "Claim",
-    "description": "Claim entity in BOOST data model",
-    "boost_metadata": {
-      "area": "sustainability_claims",
-      "emoji": "\ud83c\udfc6",
-      "position": {
-        "x": 1600,
-        "y": 200
-      },
-      "relationships": []
-    }
+    "description": "Claim entity in BOOST data model"
   }
 }

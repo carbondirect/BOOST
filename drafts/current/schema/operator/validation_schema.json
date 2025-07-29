@@ -168,15 +168,6 @@
       "hireDate",
       "lastUpdated"
     ],
-    "additionalProperties": false,
-    "boost_metadata": {
-      "area": "personnel",
-      "emoji": "\ud83d\udc64",
-      "position": {
-        "x": 500,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "additionalProperties": false
   }
 }

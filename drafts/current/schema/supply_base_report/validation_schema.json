@@ -53,16 +53,7 @@
       "preparationDate"
     ],
     "title": "Supply Base Report",
-    "description": "SupplyBaseReport entity in BOOST data model",
-    "boost_metadata": {
-      "area": "reporting_compliance",
-      "emoji": "\ud83d\udcca",
-      "position": {
-        "x": 2300,
-        "y": 1400
-      },
-      "relationships": []
-    }
+    "description": "SupplyBaseReport entity in BOOST data model"
   },
   "rules": {
     "and": [

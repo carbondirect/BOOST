@@ -61,15 +61,6 @@
       "captureTimestamp"
     ],
     "title": "Biometric Identifier",
-    "description": "BiometricIdentifier entity in BOOST data model",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "\ud83d\udd2c",
-      "position": {
-        "x": 1600,
-        "y": 1400
-      },
-      "relationships": []
-    }
+    "description": "BiometricIdentifier entity in BOOST data model"
   }
 }

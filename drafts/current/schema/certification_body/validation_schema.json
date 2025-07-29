@@ -212,15 +212,6 @@
       "operationalRegions",
       "validityPeriod"
     ],
-    "additionalProperties": false,
-    "boost_metadata": {
-      "area": "organizational_foundation",
-      "emoji": "\ud83c\udfdb\ufe0f",
-      "position": {
-        "x": 100,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "additionalProperties": false
   }
 }

@@ -182,15 +182,6 @@
       "schemeType",
       "issuingOrganizationId"
     ],
-    "additionalProperties": false,
-    "boost_metadata": {
-      "area": "organizational_foundation",
-      "emoji": "\ud83d\udee1\ufe0f",
-      "position": {
-        "x": 100,
-        "y": 1400
-      },
-      "relationships": []
-    }
+    "additionalProperties": false
   }
 }

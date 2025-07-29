@@ -87,16 +87,7 @@
       "reconciliationDate"
     ],
     "title": "Data Reconciliation",
-    "description": "DataReconciliation entity in BOOST data model",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "\ud83d\udd04",
-      "position": {
-        "x": 2300,
-        "y": 1000
-      },
-      "relationships": []
-    }
+    "description": "DataReconciliation entity in BOOST data model"
   },
   "rules": {
     "and": [

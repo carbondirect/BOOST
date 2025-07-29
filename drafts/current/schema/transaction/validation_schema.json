@@ -264,15 +264,6 @@
       "transactionStatus"
     ],
     "title": "Transaction",
-    "description": "Transaction entity in BOOST data model",
-    "boost_metadata": {
-      "area": "transaction_management",
-      "emoji": "\ud83d\udcb0",
-      "position": {
-        "x": 2700,
-        "y": 1000
-      },
-      "relationships": []
-    }
+    "description": "Transaction entity in BOOST data model"
   }
 }

@@ -4,15 +4,6 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/material",
     "title": "Material",
     "description": "Material types and specifications",
-    "boost_metadata": {
-      "area": "material_supply_chain",
-      "emoji": "\ud83e\udeb5",
-      "position": {
-        "x": 500,
-        "y": 200
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
       "@context": {

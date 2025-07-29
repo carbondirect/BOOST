@@ -4,51 +4,117 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/measurement-record",
     "title": "Measurement Record",
     "description": "Quality measurements and dimensional data",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "📏",
-      "position": {
-        "x": 2000,
-        "y": 600
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["MeasurementRecord"] },
-      "@id": { "type": "string", "format": "uri" },
-      "recordId": { "type": "string" },
-      "traceableUnitId": { "type": "string" },
-      "measuredVolume": { "type": "number", "minimum": 0 },
-      "measuredLength": { "type": "number", "minimum": 0 },
-      "measuredDiameter": { "type": "number", "minimum": 0 },
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "MeasurementRecord"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "recordId": {
+        "type": "string"
+      },
+      "traceableUnitId": {
+        "type": "string"
+      },
+      "measuredVolume": {
+        "type": "number",
+        "minimum": 0
+      },
+      "measuredLength": {
+        "type": "number",
+        "minimum": 0
+      },
+      "measuredDiameter": {
+        "type": "number",
+        "minimum": 0
+      },
       "measurementMethod": {
         "type": "string",
-        "enum": ["harvester", "mill", "manual", "optical"]
+        "enum": [
+          "harvester",
+          "mill",
+          "manual",
+          "optical"
+        ]
       },
-      "measurementGeographicDataId": { "type": "string" },
-      "measurementTimestamp": { "type": "string", "format": "date-time" },
-      "operatorId": { "type": "string" },
-      "trackingPointId": { "type": "string" },
+      "measurementGeographicDataId": {
+        "type": "string"
+      },
+      "measurementTimestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "operatorId": {
+        "type": "string"
+      },
+      "trackingPointId": {
+        "type": "string"
+      },
       "speciesMeasurements": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
-      "lastUpdated": { "type": "string", "format": "date-time" }
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time"
+      }
     },
-    "required": ["@context", "@type", "@id", "recordId", "traceableUnitId", "measurementMethod", "measurementTimestamp"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "recordId",
+      "traceableUnitId",
+      "measurementMethod",
+      "measurementTimestamp"
+    ]
   },
   "rules": {
     "and": [
-      { "!!": { "var": "recordId" } },
-      { "!!": { "var": "traceableUnitId" } },
-      { "!!": { "var": "measurementMethod" } },
-      { "!!": { "var": "measurementTimestamp" } },
+      {
+        "!!": {
+          "var": "recordId"
+        }
+      },
+      {
+        "!!": {
+          "var": "traceableUnitId"
+        }
+      },
+      {
+        "!!": {
+          "var": "measurementMethod"
+        }
+      },
+      {
+        "!!": {
+          "var": "measurementTimestamp"
+        }
+      },
       {
         "if": [
-          { "var": "measuredVolume" },
-          { ">": [{ "var": "measuredVolume" }, 0] },
+          {
+            "var": "measuredVolume"
+          },
+          {
+            ">": [
+              {
+                "var": "measuredVolume"
+              },
+              0
+            ]
+          },
           true
         ]
       }

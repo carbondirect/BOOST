@@ -52,16 +52,7 @@
       "currentBalance"
     ],
     "title": "Mass Balance Account",
-    "description": "MassBalanceAccount entity in BOOST data model",
-    "boost_metadata": {
-      "area": "analytics_data",
-      "emoji": "\u2696\ufe0f",
-      "position": {
-        "x": 900,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "description": "MassBalanceAccount entity in BOOST data model"
   },
   "rules": {
     "and": [

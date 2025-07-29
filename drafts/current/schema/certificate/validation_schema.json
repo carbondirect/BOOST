@@ -4,15 +4,6 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/certificate",
     "title": "Certificate",
     "description": "Certificate entity representing formal certification records issued by certification bodies",
-    "boost_metadata": {
-      "area": "organizational_foundation",
-      "emoji": "\ud83d\udcdc",
-      "position": {
-        "x": 100,
-        "y": 600
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
       "@context": {

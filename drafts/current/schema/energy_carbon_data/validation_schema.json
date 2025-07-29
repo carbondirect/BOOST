@@ -142,16 +142,7 @@
       "source"
     ],
     "title": "Energy Carbon Data",
-    "description": "EnergyCarbonData entity in BOOST data model",
-    "boost_metadata": {
-      "area": "analytics_data",
-      "emoji": "\ud83c\udf21\ufe0f",
-      "position": {
-        "x": 1600,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "description": "EnergyCarbonData entity in BOOST data model"
   },
   "rules": {
     "and": [

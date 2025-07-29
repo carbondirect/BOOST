@@ -336,15 +336,6 @@
       "batchStatus"
     ],
     "title": "Transaction Batch",
-    "description": "TransactionBatch entity in BOOST data model",
-    "boost_metadata": {
-      "area": "transaction_management",
-      "emoji": "\ud83d\udce6",
-      "position": {
-        "x": 2700,
-        "y": 1400
-      },
-      "relationships": []
-    }
+    "description": "TransactionBatch entity in BOOST data model"
   }
 }

@@ -64,16 +64,7 @@
       "quantity"
     ],
     "title": "Sales Delivery Document",
-    "description": "SalesDeliveryDocument entity in BOOST data model",
-    "boost_metadata": {
-      "area": "transaction_management",
-      "emoji": "\ud83d\udcc4",
-      "position": {
-        "x": 2700,
-        "y": 600
-      },
-      "relationships": []
-    }
+    "description": "SalesDeliveryDocument entity in BOOST data model"
   },
   "rules": {
     "and": [

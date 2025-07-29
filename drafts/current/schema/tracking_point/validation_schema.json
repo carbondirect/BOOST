@@ -54,33 +54,7 @@
       "establishedTimestamp"
     ],
     "title": "Tracking Point",
-    "description": "TrackingPoint entity in BOOST data model",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "\ud83d\udce1",
-      "position": {
-        "x": 900,
-        "y": 1000
-      },
-      "relationships": [
-        {
-          "from": "TrackingPoint",
-          "to": "GeographicData",
-          "label": "located_at",
-          "type": "non-identifying",
-          "from_cardinality": "many",
-          "to_cardinality": "one"
-        },
-        {
-          "from": "TrackingPoint",
-          "to": "Operator",
-          "label": "established_by",
-          "type": "non-identifying",
-          "from_cardinality": "many",
-          "to_cardinality": "one"
-        }
-      ]
-    }
+    "description": "TrackingPoint entity in BOOST data model"
   },
   "rules": {
     "and": [
