@@ -23,7 +23,7 @@
     "measurement_verification": {
       "color": "#EAB308",
       "label": "Measurement & Verification", 
-      "entities": ["MeasurementRecord", "MoistureContent", "Claim", "VerificationStatement"]
+      "entities": ["MeasurementRecord", "Claim", "VerificationStatement"]
     },
     "geographic_tracking": {
       "color": "#9333EA",
@@ -39,131 +39,127 @@
   "entity_display": {
     "TraceableUnit": {
       "emoji": "📦",
-      "position": {"x": 1600, "y": 1000}
+      "position": {"x": 1600, "y": 1200}
     },
     "MaterialProcessing": {
       "emoji": "🔄",
-      "position": {"x": 1200, "y": 1400}
+      "position": {"x": 1300, "y": 1000}
     },
     "ProcessingHistory": {
       "emoji": "⚙️",
-      "position": {"x": 2000, "y": 1400}
-    },
-    "SpeciesComponent": {
-      "emoji": "🌲",
-      "position": {"x": 500, "y": 800}
-    },
-    "MeasurementRecord": {
-      "emoji": "📏",
-      "position": {"x": 2000, "y": 600}
+      "position": {"x": 1300, "y": 1400}
     },
     "LocationHistory": {
       "emoji": "📍",
-      "position": {"x": 1600, "y": 600}
+      "position": {"x": 1900, "y": 1000}
     },
     "BiometricIdentifier": {
       "emoji": "🔬",
-      "position": {"x": 1600, "y": 1400}
-    },
-    "TrackingPoint": {
-      "emoji": "📌",
-      "position": {"x": 900, "y": 1000}
-    },
-    "DataReconciliation": {
-      "emoji": "🔄",
-      "position": {"x": 3000, "y": 1600}
+      "position": {"x": 1900, "y": 1400}
     },
     "Organization": {
       "emoji": "🏢",
-      "position": {"x": 100, "y": 1000}
+      "position": {"x": 100, "y": 400}
     },
     "Certificate": {
       "emoji": "📜",
-      "position": {"x": 100, "y": 600}
+      "position": {"x": 350, "y": 400}
     },
     "CertificationScheme": {
       "emoji": "📋",
-      "position": {"x": 100, "y": 200}
+      "position": {"x": 600, "y": 400}
     },
     "CertificationBody": {
       "emoji": "🏛️",
-      "position": {"x": 100, "y": 1400}
-    },
-    "Material": {
-      "emoji": "🪵",
-      "position": {"x": 500, "y": 200}
-    },
-    "SupplyBase": {
-      "emoji": "🌍",
-      "position": {"x": 500, "y": 600}
-    },
-    "Supplier": {
-      "emoji": "🚚",
-      "position": {"x": 500, "y": 1000}
-    },
-    "Customer": {
-      "emoji": "🏭",
-      "position": {"x": 500, "y": 1400}
-    },
-    "Transaction": {
-      "emoji": "💰",
-      "position": {"x": 2700, "y": 1000}
-    },
-    "TransactionBatch": {
-      "emoji": "📋",
-      "position": {"x": 2700, "y": 1400}
-    },
-    "SalesDeliveryDocument": {
-      "emoji": "📄",
-      "position": {"x": 2700, "y": 600}
-    },
-    "Claim": {
-      "emoji": "✅",
-      "position": {"x": 1600, "y": 200}
-    },
-    "GeographicData": {
-      "emoji": "🗺️",
-      "position": {"x": 900, "y": 600}
-    },
-    "SupplyBaseReport": {
-      "emoji": "📊",
-      "position": {"x": 700, "y": 600}
-    },
-    "VerificationStatement": {
-      "emoji": "🔐",
-      "position": {"x": 3000, "y": 400}
+      "position": {"x": 100, "y": 700}
     },
     "Audit": {
       "emoji": "🔍",
-      "position": {"x": 300, "y": 1000}
-    },
-    "ProductGroup": {
-      "emoji": "📦",
-      "position": {"x": 3000, "y": 1000}
-    },
-    "MassBalanceAccount": {
-      "emoji": "⚖️",
-      "position": {"x": 3000, "y": 1200}
-    },
-    "EnergyCarbonData": {
-      "emoji": "⚡",
-      "position": {"x": 3000, "y": 1400}
+      "position": {"x": 350, "y": 700}
     },
     "Operator": {
       "emoji": "👤",
-      "position": {"x": 300, "y": 600}
+      "position": {"x": 600, "y": 700}
+    },
+    "Material": {
+      "emoji": "🪵",
+      "position": {"x": 100, "y": 2000}
+    },
+    "SpeciesComponent": {
+      "emoji": "🌲",
+      "position": {"x": 400, "y": 2000}
+    },
+    "Supplier": {
+      "emoji": "🚚",
+      "position": {"x": 700, "y": 2000}
+    },
+    "Customer": {
+      "emoji": "🏭",
+      "position": {"x": 1000, "y": 2000}
+    },
+    "SupplyBase": {
+      "emoji": "🌍",
+      "position": {"x": 1300, "y": 2000}
+    },
+    "SupplyBaseReport": {
+      "emoji": "📊",
+      "position": {"x": 1600, "y": 2000}
+    },
+    "Transaction": {
+      "emoji": "💰",
+      "position": {"x": 2700, "y": 400}
+    },
+    "TransactionBatch": {
+      "emoji": "📋",
+      "position": {"x": 3000, "y": 400}
+    },
+    "SalesDeliveryDocument": {
+      "emoji": "📄",
+      "position": {"x": 3300, "y": 400}
+    },
+    "MeasurementRecord": {
+      "emoji": "📏",
+      "position": {"x": 2700, "y": 100}
+    },
+    "Claim": {
+      "emoji": "✅",
+      "position": {"x": 3300, "y": 100}
+    },
+    "VerificationStatement": {
+      "emoji": "🔐",
+      "position": {"x": 3600, "y": 100}
+    },
+    "GeographicData": {
+      "emoji": "🗺️",
+      "position": {"x": 100, "y": 100}
+    },
+    "TrackingPoint": {
+      "emoji": "📌",
+      "position": {"x": 400, "y": 100}
     },
     "LcfsPathway": {
       "emoji": "🛣️",
-      "position": {"x": 3000, "y": 600}
+      "position": {"x": 2700, "y": 2000}
     },
     "LcfsReporting": {
       "emoji": "📈",
-      "position": {"x": 3000, "y": 800}
+      "position": {"x": 3000, "y": 2000}
     },
-    "MoistureContent": {
-      "emoji": "💧",
-      "position": {"x": 2000, "y": 200}
+    "ProductGroup": {
+      "emoji": "📦",
+      "position": {"x": 3300, "y": 2000}
+    },
+    "EnergyCarbonData": {
+      "emoji": "⚡",
+      "position": {"x": 2700, "y": 2300}
+    },
+    "DataReconciliation": {
+      "emoji": "🔄",
+      "position": {"x": 3000, "y": 2300}
+    },
+    "MassBalanceAccount": {
+      "emoji": "⚖️",
+      "position": {"x": 3300, "y": 2300}
     }
   },
   "manual_relationships": [

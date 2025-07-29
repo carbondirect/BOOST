@@ -249,5 +249,63 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "TraceableUnit",
+      "primaryKey": "traceableUnitId",
+      "area": "core_traceability",
+      "description": "🔑 CENTRAL: Unique biomass tracking unit with BOOST traceability system integration"
+    },
+    "relationships": [
+      {
+        "field": "currentGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "currently located at",
+        "example": "TRU-456 is currently located at 'Portland Mill Yard'"
+      },
+      {
+        "field": "harvestGeographicDataId", 
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "harvested at",
+        "example": "TRU-123 was harvested at 'Olympic Forest Block 7A'"
+      },
+      {
+        "field": "harvesterId",
+        "targetEntity": "Organization", 
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "harvested by",
+        "example": "TRU-123 was harvested by 'West Coast Timber Co.'"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one", 
+        "required": false,
+        "label": "operated by",
+        "example": "TRU-789 was created by operator 'John Smith'"
+      },
+      {
+        "field": "materialTypeId",
+        "targetEntity": "Material",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "material type",
+        "example": "TRU-001 is classified as 'Douglas Fir Sawlog'"
+      },
+      {
+        "field": "parentTraceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "derived from",
+        "example": "TRU-890 was derived from parent unit TRU-456"
+      }
+    ]
   }
 }

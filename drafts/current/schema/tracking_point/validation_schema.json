@@ -79,5 +79,29 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "TrackingPoint",
+      "primaryKey": "trackingPointId",
+      "area": "geographic_tracking",
+      "description": "Specific tracking locations for biomass movement monitoring"
+    },
+    "relationships": [
+      {
+        "field": "geographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "located at"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "operated by"
+      }
+    ]
   }
 }

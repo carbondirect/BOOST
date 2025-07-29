@@ -230,5 +230,50 @@
       "inputTRUIds",
       "outputTRUIds"
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "ProcessingHistory",
+      "primaryKey": "processingHistoryId",
+      "area": "core_traceability",
+      "description": "Timeline of processing events with complete chain tracking"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "processing for"
+      },
+      {
+        "field": "materialProcessingId",
+        "targetEntity": "MaterialProcessing",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "using process"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "performed by"
+      },
+      {
+        "field": "processingGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "processed at"
+      },
+      {
+        "field": "previousProcessingHistoryId",
+        "targetEntity": "ProcessingHistory",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "follows"
+      }
+    ]
   }
 }

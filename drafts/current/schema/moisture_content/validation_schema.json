@@ -200,5 +200,14 @@
         "formula": "adjustedVolume = measuredVolume \u00d7 (1 + (standardMoisture - moistureContent) \u00d7 shrinkageFactor)"
       }
     }
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "MoistureContentValidation",
+      "primaryKey": "validationId",
+      "area": "measurement_verification",
+      "description": "Moisture content validation rules and business logic"
+    },
+    "relationships": []
   }
 }

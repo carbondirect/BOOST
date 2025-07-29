@@ -65,6 +65,42 @@
           "type": "string"
         }
       },
+      "moistureContent": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Moisture content as percentage of weight contributed by water (0-100%)"
+      },
+      "moistureMethod": {
+        "type": "string",
+        "enum": [
+          "oven_dry",
+          "electrical_resistance",
+          "microwave",
+          "near_infrared",
+          "gravimetric",
+          "capacitive",
+          "calculated",
+          "estimated"
+        ],
+        "description": "Method used to determine moisture content"
+      },
+      "moistureStandard": {
+        "type": "string",
+        "enum": [
+          "ASTM_D4442",
+          "ASTM_D2016",
+          "ISO_13061",
+          "CEN_EN_14774",
+          "local_standard"
+        ],
+        "description": "Standard procedure followed for moisture measurement"
+      },
+      "moistureAccuracy": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Estimated accuracy of moisture measurement (± percentage points)"
+      },
       "lastUpdated": {
         "type": "string",
         "format": "date-time"
@@ -117,6 +153,45 @@
           },
           true
         ]
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "MeasurementRecord",
+      "primaryKey": "recordId",
+      "area": "measurement_verification",
+      "description": "Quality measurements and dimensional data for biomass tracking"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "measuring",
+        "example": "Record-456 measures volume/moisture of TRU-123"
+      },
+      {
+        "field": "measurementGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "measured at"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "measured by"
+      },
+      {
+        "field": "trackingPointId",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "measured at point"
       }
     ]
   }

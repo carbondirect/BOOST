@@ -766,55 +766,7 @@
             }
         };
 
-        // Strategic positioning with increased spacing to reduce overlaps
-        const entityPositions = {
-            // 🟢 CORE TRACEABILITY - Central cluster with more spacing (9 entities)
-            'TraceableUnit': { x: 1600, y: 1000 },
-            'MaterialProcessing': { x: 1200, y: 1400 },
-            'ProcessingHistory': { x: 2000, y: 1400 },
-            'SpeciesComponent': { x: 1200, y: 600 },
-            'MeasurementRecord': { x: 2000, y: 600 },
-            'LocationHistory': { x: 1600, y: 600 },
-            'BiometricIdentifier': { x: 1600, y: 1400 },
-            'TrackingPoint': { x: 900, y: 1000 },
-            'DataReconciliation': { x: 2300, y: 1000 },
-
-            // 🔵 ORGANIZATIONAL FOUNDATION - Far left (4 entities)
-            'Organization': { x: 100, y: 1000 },
-            'Certificate': { x: 100, y: 600 },
-            'CertificationScheme': { x: 100, y: 200 },
-            'CertificationBody': { x: 100, y: 1400 },
-
-            // 🟤 MATERIAL & SUPPLY CHAIN - Left side with more spacing (4 entities)
-            'Material': { x: 500, y: 200 },
-            'SupplyBase': { x: 500, y: 600 },
-            'Supplier': { x: 500, y: 1000 },
-            'Customer': { x: 500, y: 1400 },
-
-            // 🟠 TRANSACTION MANAGEMENT - Far right (3 entities)
-            'Transaction': { x: 2700, y: 1000 },
-            'TransactionBatch': { x: 2700, y: 1400 },
-            'SalesDeliveryDocument': { x: 2700, y: 600 },
-
-            // 🟡 SUSTAINABILITY & CLAIMS - Top center (1 entity)
-            'Claim': { x: 1600, y: 200 },
-
-            // 🟣 GEOGRAPHIC & LOCATION - Center left (1 entity)
-            'GeographicData': { x: 900, y: 600 },
-
-            // 🔴 REPORTING & COMPLIANCE - Lower right with spacing (3 entities)
-            'SupplyBaseReport': { x: 2700, y: 1800 },
-            'VerificationStatement': { x: 2300, y: 1800 },
-            'Audit': { x: 1900, y: 1800 },
-
-            // ⚫ ANALYTICS & DATA MANAGEMENT - Lower center with spacing (3 entities)
-            'ProductGroup': { x: 1200, y: 1800 },
-            'MassBalanceAccount': { x: 900, y: 1800 },
-            'EnergyCarbonData': { x: 1600, y: 1800 },
-
-            // 👥 PERSONNEL MANAGEMENT - Lower left (1 entity)
-            'Operator': { x: 500, y: 1800 }
-        };
+        // Entity positions are now managed exclusively through the ERD config file
 
         // Auto-discovery functions - uses manifest file for reliable cross-platform discovery
         async function discoverSchemaDirectories() {
@@ -941,53 +893,34 @@
 
         function convertSchemaToEntity(entityName, schema, area, description, position) {
             if (!schema || !schema.schema || !schema.schema.properties) {
+                console.error(`❌ Entity ${entityName}: Invalid schema structure`);
+                return null;
+            }
+
+            // Check for boost_metadata
+            if (!schema.boost_metadata) {
+                console.error(`❌ Entity ${entityName}: Missing boost_metadata section`);
                 return null;
             }
 
             const properties = schema.schema.properties;
             const required = schema.schema.required || [];
+            const metadata = schema.boost_metadata;
             const fields = [];
 
-            // Convert schema properties to ERD fields
+            // Get FK fields from metadata relationships
+            const fkFields = new Set(metadata.relationships.map(rel => rel.field));
+            const primaryKey = metadata.entity.primaryKey;
+
+            // Convert schema properties to ERD fields using metadata
             Object.entries(properties).forEach(([fieldName, fieldDef]) => {
                 // Skip JSON-LD context fields
                 if (fieldName.startsWith('@')) return;
 
                 let fieldType = fieldDef.type || 'string';
-                let isPK = false;
-                let isFK = false;
+                let isPK = fieldName === primaryKey;
+                let isFK = fkFields.has(fieldName);
                 let isRequired = required.includes(fieldName);
-
-                // Enhanced primary key detection using configuration
-                if (fieldName.toLowerCase().includes('id')) {
-                    // Check if field name contains entity name (common pattern)
-                    const entityLower = entityName.toLowerCase();
-                    if (fieldName.toLowerCase().includes(entityLower) || fieldName === 'id') {
-                        isPK = true;
-                    }
-                    // Check configuration for entity-specific primary key patterns
-                    else if (globalErdConfig && globalErdConfig.primary_key_mappings && 
-                             globalErdConfig.primary_key_mappings[entityName] === fieldName) {
-                        isPK = true;
-                    }
-                }
-
-                // Enhanced FK detection with multiple patterns
-                if (!isPK && fieldName !== 'id') {
-                    // Check if field follows any FK naming pattern
-                    const fkPatterns = [
-                        /^[A-Z][a-zA-Z]*Id$/, // OrganizationId, CustomerId
-                        /^[a-z][a-zA-Z]*Id$/, // operatorId, materialTypeId
-                        /^[a-z]+[A-Z][a-zA-Z]*Id$/, // currentGeographicDataId
-                        /^regulatedEntityId$/, // special case
-                        /^harvesterId$/, // special case
-                        /^cbId$/, // special case
-                        /^pathwayId$/, // special case
-                        /Id$/  // fallback: any field ending in Id
-                    ];
-                    
-                    isFK = fkPatterns.some(pattern => pattern.test(fieldName));
-                }
 
                 // Handle enum types
                 if (fieldDef.enum) {
@@ -999,9 +932,14 @@
                     fieldType = 'array';
                 }
 
-                // Handle number types
+                // Handle number types with date-time format
                 if (fieldType === 'number') {
                     fieldType = fieldDef.format === 'date-time' ? 'datetime' : 'decimal';
+                }
+
+                // Handle string types with date-time format
+                if (fieldType === 'string' && fieldDef.format === 'date-time') {
+                    fieldType = 'datetime';
                 }
 
                 fields.push({
@@ -1013,1390 +951,70 @@
                 });
             });
 
+            console.log(`✅ Entity ${entityName}: ${fields.length} fields, ${metadata.relationships.length} relationships`);
+
             return {
                 id: entityName,
                 name: entityName,
-                area: area,
-                description: description,
+                area: metadata.entity.area,
+                description: metadata.entity.description,
                 fields: fields,
                 x: position.x,
-                y: position.y
+                y: position.y,
+                metadata: metadata,
+                schema: schema.schema || schema
             };
         }
 
-        // Generate automatic relationships from FK fields using EntityNameId convention
-        function generateAutomaticFKRelationships(entities, existingRelationships) {
-            const automaticRelationships = [];
-            const entityNameSet = new Set(entities.map(e => e.id));
+        // Generate relationships from schema metadata (NO pattern matching)
+        function generateMetadataRelationships(entities) {
+            const relationships = [];
+            const entityNameSet = new Set(entities.map(e => e.name));
             
-            // Create lookup for existing relationships to avoid duplicates
-            const existingRelLookup = new Set(
-                existingRelationships.map(rel => `${rel.from}-${rel.to}`)
-            );
+            console.log('🔍 Generating relationships from schema metadata...');
+            console.log('Available entities:', Array.from(entityNameSet).sort());
             
             for (const entity of entities) {
-                // Find all FK fields in this entity
-                const fkFields = entity.fields.filter(field => field.isFK);
+                if (!entity.metadata || !entity.metadata.relationships) {
+                    console.warn(`⚠️ Entity ${entity.name}: No relationship metadata found`);
+                    continue;
+                }
                 
-                for (const fkField of fkFields) {
-                    // Use EntityNameId convention for trivial matching
-                    const targetEntityName = inferTargetEntityFromFK(fkField.name, entityNameSet);
+                console.log(`Processing ${entity.name} with ${entity.metadata.relationships.length} relationships`);
+                
+                for (const relMetadata of entity.metadata.relationships) {
+                    const targetEntity = relMetadata.targetEntity;
                     
-                    if (targetEntityName) {
-                        const relationshipKey = `${entity.id}-${targetEntityName}`;
-                        
-                        // Skip if relationship already exists from metadata
-                        if (!existingRelLookup.has(relationshipKey)) {
-                            const semanticLabel = convertToSemanticRelationship(fkField.name);
-                            const isRequired = entity.schema?.required?.includes(fkField.name);
-                            
-                            automaticRelationships.push({
-                                from: entity.id,
-                                to: targetEntityName,
-                                label: semanticLabel,
-                                type: isRequired ? 'identifying' : 'non-identifying',
-                                fromCard: 'many',
-                                toCard: 'one'
-                            });
-                        }
+                    // Validate target entity exists
+                    if (!entityNameSet.has(targetEntity)) {
+                        console.error(`❌ Entity ${entity.name}: Relationship field '${relMetadata.field}' references unknown entity '${targetEntity}'`);
+                        continue;
                     }
+                    
+                    // Convert metadata to relationship
+                    const relationship = {
+                        from: entity.name,
+                        to: targetEntity,
+                        label: relMetadata.label,
+                        type: relMetadata.required ? 'identifying' : 'non-identifying',
+                        fromCard: relMetadata.relationshipType.startsWith('many') ? 'many' : 'one',
+                        toCard: relMetadata.relationshipType.endsWith('many') ? 'many' : 'one',
+                        field: relMetadata.field
+                    };
+                    
+                    relationships.push(relationship);
+                    console.log(`  ✅ ${entity.name}.${relMetadata.field} → ${targetEntity} (${relMetadata.label})`);
                 }
             }
             
-            return automaticRelationships;
+            console.log(`✅ Generated ${relationships.length} relationships from metadata`);
+            return relationships;
         }
         
-        // Convert FK field name to semantic relationship label
-        function convertToSemanticRelationship(fieldName) {
-            // Remove 'Id' suffix if present
-            const baseName = fieldName.replace(/Id$/, '');
-            
-            // Convert PascalCase to snake_case semantic form
-            const semantic = baseName
-                .replace(/([A-Z])/g, '_$1')  // Insert underscore before capitals
-                .toLowerCase()               // Convert to lowercase
-                .replace(/^_/, '');          // Remove leading underscore if present
-            
-            // Return semantic relationship name
-            return `references_${semantic}`;
-        }
-        
-        // Enhanced FK matching using multiple naming conventions
-        function inferTargetEntityFromFK(fieldName, entityNameSet) {
-            // Primary convention: EntityNameId pattern
-            if (fieldName.endsWith('Id')) {
-                const targetName = fieldName.slice(0, -2);
-                if (entityNameSet.has(targetName)) {
-                    return targetName;
-                }
-            }
-            
-            // Handle common variations and patterns
-            const patterns = [
-                // Standard patterns
-                { pattern: /^([A-Z][a-zA-Z]+)Id$/, transform: (match) => match[1] }, // OrganizationId → Organization
-                { pattern: /^([a-z][a-zA-Z]+)Id$/, transform: (match) => capitalizeFirst(match[1]) }, // operatorId → Operator
-                
-                // Compound patterns
-                { pattern: /^([a-z]+)([A-Z][a-zA-Z]+)Id$/, transform: (match) => match[2] }, // materialTypeId → Material, currentGeographicDataId → GeographicData
-                { pattern: /^([a-z]+)([A-Z][a-zA-Z]+)DataId$/, transform: (match) => match[2] + 'Data' }, // harvestGeographicDataId → GeographicData
-                
-                // Generic special cases (specific mappings now in erd-config.json)
-                { pattern: /^regulatedEntityId$/, transform: () => 'Organization' },
-                { pattern: /^harvesterId$/, transform: () => 'Organization' },
-                { pattern: /^cbId$/, transform: () => 'CertificationBody' },
-                { pattern: /^pathwayId$/, transform: () => 'LcfsPathway' },
-                
-                // Underscore patterns (convert to PascalCase)
-                { pattern: /^([a-z]+)_([a-z]+)_id$/i, transform: (match) => capitalizeFirst(match[1]) + capitalizeFirst(match[2]) }
-            ];
-            
-            for (const {pattern, transform} of patterns) {
-                const match = fieldName.match(pattern);
-                if (match) {
-                    const targetName = transform(match);
-                    if (entityNameSet.has(targetName)) {
-                        return targetName;
-                    }
-                }
-            }
-            
-            return null;
-        }
-        
-        // Helper function to capitalize first letter
-        function capitalizeFirst(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        }
 
         // Dynamic Network Analysis Engine
-        class NetworkAnalysisEngine {
-            constructor(entities, relationships, config = {}) {
-                this.entities = entities;
-                this.relationships = relationships;
-                this.adjacencyList = this.buildAdjacencyList();
-                this.entityMap = new Map(entities.map(e => [e.name, e]));
-                
-                // Configurable network metric weights
-                this.networkWeights = {
-                    degree: 0.6,        // Primary importance for visual hubs
-                    betweenness: 0.3,   // Secondary importance for bottlenecks  
-                    closeness: 0.1,     // Tertiary importance for accessibility
-                    normalize: true,    // Enable min-max normalization
-                    ...config.networkWeights
-                };
-                
-                console.log('NetworkAnalysisEngine initialized with weights:', this.networkWeights);
-            }
+        // Dynamic layout engine removed - using config-only positioning
 
-            buildAdjacencyList() {
-                const adjacencyList = new Map();
-                
-                // Initialize adjacency list
-                this.entities.forEach(entity => {
-                    adjacencyList.set(entity.name, new Set());
-                });
-
-                // Add relationships
-                this.relationships.forEach(rel => {
-                    if (adjacencyList.has(rel.from) && adjacencyList.has(rel.to)) {
-                        adjacencyList.get(rel.from).add(rel.to);
-                        adjacencyList.get(rel.to).add(rel.from); // Undirected for layout purposes
-                    }
-                });
-
-                return adjacencyList;
-            }
-
-            // Normalize values to 0-1 range using min-max normalization
-            normalizeValues(values) {
-                if (values.length === 0) return values;
-                
-                const min = Math.min(...values);
-                const max = Math.max(...values);
-                const range = max - min;
-                
-                if (range === 0) return values.map(() => 0.5); // All values equal
-                
-                return values.map(value => (value - min) / range);
-            }
-
-            // Calculate all centrality metrics for all entities
-            calculateAllCentralityMetrics() {
-                const degreeValues = [];
-                const betweennessValues = [];
-                const closenessValues = [];
-                const entityNames = [];
-                
-                // Calculate raw values for all entities
-                this.entities.forEach(entity => {
-                    const name = entity.name;
-                    entityNames.push(name);
-                    
-                    const degree = this.adjacencyList.get(name).size;
-                    const betweenness = this.calculateBetweennessCentrality(name);
-                    const closeness = this.calculateClosenessCentrality(name);
-                    
-                    degreeValues.push(degree);
-                    betweennessValues.push(betweenness);
-                    closenessValues.push(closeness);
-                });
-                
-                // Normalize if enabled
-                const normalizedDegree = this.networkWeights.normalize ? 
-                    this.normalizeValues(degreeValues) : degreeValues;
-                const normalizedBetweenness = this.networkWeights.normalize ? 
-                    this.normalizeValues(betweennessValues) : betweennessValues;
-                const normalizedCloseness = this.networkWeights.normalize ? 
-                    this.normalizeValues(closenessValues) : closenessValues;
-                
-                // Create metrics map with weighted scores
-                const metrics = new Map();
-                entityNames.forEach((name, index) => {
-                    const weightedConnectivity = 
-                        (normalizedDegree[index] * this.networkWeights.degree) +
-                        (normalizedBetweenness[index] * this.networkWeights.betweenness) +
-                        (normalizedCloseness[index] * this.networkWeights.closeness);
-                    
-                    metrics.set(name, {
-                        degree: degreeValues[index],
-                        betweenness: betweennessValues[index],
-                        closeness: closenessValues[index],
-                        normalizedDegree: normalizedDegree[index],
-                        normalizedBetweenness: normalizedBetweenness[index],
-                        normalizedCloseness: normalizedCloseness[index],
-                        weightedConnectivity: weightedConnectivity,
-                        totalConnectivity: weightedConnectivity // Use weighted score as total
-                    });
-                });
-                
-                return metrics;
-            }
-
-            calculateConnectivityMetrics() {
-                // Use the new weighted approach
-                return this.calculateAllCentralityMetrics();
-            }
-
-            calculateBetweennessCentrality(targetNode) {
-                let betweenness = 0;
-                const nodes = Array.from(this.adjacencyList.keys());
-                
-                // Simplified betweenness centrality calculation
-                for (let i = 0; i < nodes.length; i++) {
-                    for (let j = i + 1; j < nodes.length; j++) {
-                        const source = nodes[i];
-                        const target = nodes[j];
-                        
-                        if (source !== targetNode && target !== targetNode) {
-                            const pathsThrough = this.countShortestPathsThrough(source, target, targetNode);
-                            const totalPaths = this.countShortestPaths(source, target);
-                            
-                            if (totalPaths > 0) {
-                                betweenness += pathsThrough / totalPaths;
-                            }
-                        }
-                    }
-                }
-                
-                return betweenness;
-            }
-
-            calculateClosenessCentrality(targetNode) {
-                let totalDistance = 0;
-                let reachableNodes = 0;
-                
-                this.entities.forEach(entity => {
-                    if (entity.name !== targetNode) {
-                        const distance = this.shortestPathDistance(targetNode, entity.name);
-                        if (distance < Infinity) {
-                            totalDistance += distance;
-                            reachableNodes++;
-                        }
-                    }
-                });
-                
-                return reachableNodes > 0 ? reachableNodes / totalDistance : 0;
-            }
-
-            countShortestPathsThrough(source, target, throughNode) {
-                // Simplified implementation - counts if throughNode is on any shortest path
-                const pathToThrough = this.shortestPathDistance(source, throughNode);
-                const throughToTarget = this.shortestPathDistance(throughNode, target);
-                const directPath = this.shortestPathDistance(source, target);
-                
-                return (pathToThrough + throughToTarget === directPath) ? 1 : 0;
-            }
-
-            countShortestPaths(source, target) {
-                return this.shortestPathDistance(source, target) < Infinity ? 1 : 0;
-            }
-
-            shortestPathDistance(start, end) {
-                if (start === end) return 0;
-                
-                const visited = new Set();
-                const queue = [{node: start, distance: 0}];
-                
-                while (queue.length > 0) {
-                    const {node, distance} = queue.shift();
-                    
-                    if (visited.has(node)) continue;
-                    visited.add(node);
-                    
-                    if (node === end) return distance;
-                    
-                    const neighbors = this.adjacencyList.get(node) || new Set();
-                    neighbors.forEach(neighbor => {
-                        if (!visited.has(neighbor)) {
-                            queue.push({node: neighbor, distance: distance + 1});
-                        }
-                    });
-                }
-                
-                return Infinity;
-            }
-
-            identifyHubs(threshold = 0.7) {
-                const metrics = this.calculateConnectivityMetrics();
-                const sortedByConnectivity = Array.from(metrics.entries())
-                    .sort((a, b) => b[1].totalConnectivity - a[1].totalConnectivity);
-                
-                const topN = Math.ceil(sortedByConnectivity.length * threshold);
-                const hubs = sortedByConnectivity.slice(0, topN).map(([name, metrics]) => ({
-                    name,
-                    ...metrics,
-                    entity: this.entityMap.get(name)
-                }));
-                
-                console.log('Identified network hubs:', hubs.map(h => 
-                    `${h.name} (degree: ${h.degree}, weighted: ${h.weightedConnectivity.toFixed(3)})`));
-                return hubs;
-            }
-
-            detectCommunitiesLouvain() {
-                // Simplified community detection using modularity optimization
-                const communities = new Map();
-                let communityId = 0;
-                
-                // Initialize each node as its own community
-                this.entities.forEach(entity => {
-                    communities.set(entity.name, communityId++);
-                });
-                
-                // Iteratively move nodes to communities that maximize modularity
-                let improved = true;
-                let iterations = 0;
-                const maxIterations = 10;
-                
-                while (improved && iterations < maxIterations) {
-                    improved = false;
-                    iterations++;
-                    
-                    this.entities.forEach(entity => {
-                        const currentCommunity = communities.get(entity.name);
-                        let bestCommunity = currentCommunity;
-                        let bestModularityGain = 0;
-                        
-                        // Check all neighboring communities
-                        const neighbors = this.adjacencyList.get(entity.name);
-                        const neighborCommunities = new Set();
-                        
-                        neighbors.forEach(neighbor => {
-                            neighborCommunities.add(communities.get(neighbor));
-                        });
-                        
-                        neighborCommunities.forEach(communityId => {
-                            if (communityId !== currentCommunity) {
-                                const modularityGain = this.calculateModularityGain(entity.name, communityId, communities);
-                                if (modularityGain > bestModularityGain) {
-                                    bestModularityGain = modularityGain;
-                                    bestCommunity = communityId;
-                                    improved = true;
-                                }
-                            }
-                        });
-                        
-                        communities.set(entity.name, bestCommunity);
-                    });
-                }
-                
-                // Group entities by community
-                const communityGroups = new Map();
-                communities.forEach((communityId, entityName) => {
-                    if (!communityGroups.has(communityId)) {
-                        communityGroups.set(communityId, []);
-                    }
-                    communityGroups.get(communityId).push(entityName);
-                });
-                
-                console.log('Detected communities:', Array.from(communityGroups.values()));
-                return communityGroups;
-            }
-
-            calculateModularityGain(node, targetCommunity, communities) {
-                // Simplified modularity gain calculation
-                const currentCommunity = communities.get(node);
-                const neighbors = this.adjacencyList.get(node);
-                
-                let currentCommunityEdges = 0;
-                let targetCommunityEdges = 0;
-                
-                neighbors.forEach(neighbor => {
-                    if (communities.get(neighbor) === currentCommunity) {
-                        currentCommunityEdges++;
-                    }
-                    if (communities.get(neighbor) === targetCommunity) {
-                        targetCommunityEdges++;
-                    }
-                });
-                
-                return targetCommunityEdges - currentCommunityEdges;
-            }
-        }
-
-        // Dynamic Layout Engine with Force-Directed Algorithm
-        class DynamicLayoutEngine {
-            constructor(entities, relationships, erdConfig, config = {}) {
-                this.entities = entities;
-                this.relationships = relationships;
-                this.erdConfig = erdConfig;
-                
-                // Initialize NetworkAnalysisEngine with configuration
-                this.networkAnalysis = new NetworkAnalysisEngine(entities, relationships, config);
-                
-                // Layout parameters (adaptive based on network size)
-                this.canvasWidth = 3200;
-                this.canvasHeight = 1800;
-                this.categoryPadding = 400;
-                this.entitySpacing = 200;
-                
-                // Multi-force weighting configuration
-                this.forceWeights = {
-                    repulsive: 0.4,      // Balanced node separation (exponential scaling handles close distances)
-                    attractive: 0.25,    // Moderate connection strength for relationships
-                    categorical: 0.15,   // Reduced category grouping to prioritize connectivity
-                    hub: 0.6,           // Very strong hub centralization for network structure
-                    baseK: 150,         // Base force constant
-                    ...config.forceWeights
-                };
-                
-                // Layout priority configuration
-                this.layoutPriorities = {
-                    connectivity: 0.4,    // Algorithmic network optimization
-                    categorization: 0.3,  // Functional grouping maintenance  
-                    aesthetics: 0.3,     // Visual appeal (spacing, symmetry)
-                    ...config.layoutPriorities
-                };
-                
-                // Adaptive force parameters
-                const networkDensity = (relationships.length * 2) / (entities.length * (entities.length - 1));
-                this.iterations = Math.max(80, Math.min(200, 120 + Math.floor(networkDensity * 100))); // More iterations
-                this.coolingFactor = 0.98; // Slower cooling for more stability
-                this.initialTemperature = 150; // Higher initial temperature
-                this.k = this.forceWeights.baseK * Math.sqrt(networkDensity + 0.1); // Adaptive k based on density
-                
-                console.log('DynamicLayoutEngine initialized:', {
-                    entities: entities.length,
-                    relationships: relationships.length,
-                    networkDensity: networkDensity.toFixed(3),
-                    adaptiveK: this.k.toFixed(1),
-                    iterations: this.iterations,
-                    forceWeights: this.forceWeights
-                });
-            }
-
-            calculateDynamicLayout() {
-                console.log('Starting dynamic layout calculation...');
-                const startTime = performance.now();
-                
-                // Phase 1: Network analysis
-                const hubs = this.networkAnalysis.identifyHubs(0.3); // Top 30% as hubs
-                console.log('Network hubs identified:', hubs.map(h => h.name));
-                
-                // Phase 2: Create simple initial spread to avoid overlaps
-                let positions = this.createInitialSpreadLayout();
-                
-                // Phase 3: Force-directed layout with hub preservation integrated
-                positions = this.applyForceDirectedLayoutWithHubs(positions, hubs);
-                
-                // Phase 4: Final collision elimination (guaranteed no overlaps)
-                positions = this.eliminateAllCollisions(positions);
-                
-                const endTime = performance.now();
-                console.log(`Dynamic layout calculated in ${Math.round(endTime - startTime)}ms`);
-                
-                return positions;
-            }
-
-            createInitialSpreadLayout() {
-                const positions = new Map();
-                
-                // Use category-based initial layout instead of random grid
-                // This gives much better starting positions that align with the final layout goals
-                const categoryRegions = this.calculateCategoryRegions();
-                
-                Object.entries(this.erdConfig.areas).forEach(([areaKey, area]) => {
-                    const region = categoryRegions[areaKey];
-                    const entitiesInArea = area.entities.filter(entityName => 
-                        this.entities.some(e => e.name === entityName)
-                    );
-                    
-                    // Arrange entities within their category region
-                    entitiesInArea.forEach((entityName, index) => {
-                        const position = this.calculateEntityPositionInRegion(region, index, entitiesInArea.length);
-                        
-                        // Debug: Log initial positions for problem entity
-                        if (entityName === 'SalesDeliveryDocument') {
-                            console.log(`SalesDeliveryDocument initial position: area=${areaKey}, center=(${Math.round(region.centerX)}, ${Math.round(region.centerY)}), pos=(${Math.round(position.x)}, ${Math.round(position.y)})`);
-                        }
-                        
-                        positions.set(entityName, position);
-                    });
-                });
-                
-                console.log(`Initial category-based layout: ${Object.keys(this.erdConfig.areas).length} category regions`);
-                return positions;
-            }
-
-            applyForceDirectedLayoutWithHubs(initialPositions, hubs) {
-                let positions = new Map(initialPositions);
-                let temperature = this.initialTemperature;
-                
-                console.log('Starting integrated force-directed layout with hub preservation');
-                
-                for (let iteration = 0; iteration < this.iterations; iteration++) {
-                    const forces = this.calculateForcesWithHubs(positions, hubs);
-                    positions = this.updatePositionsWithCollisionAvoidance(positions, forces, temperature);
-                    temperature *= this.coolingFactor;
-                    
-                    if (iteration % 20 === 0) {
-                        console.log(`Iteration ${iteration}, temp: ${temperature.toFixed(2)}, hub positions:`, 
-                            hubs.slice(0, 3).map(h => {
-                                const pos = positions.get(h.name);
-                                return `${h.name}(${Math.round(pos.x)},${Math.round(pos.y)})`;
-                            }).join(', ')
-                        );
-                    }
-                }
-                
-                return positions;
-            }
-
-            calculateForcesWithHubs(positions, hubs) {
-                const forces = new Map();
-                
-                // Initialize forces
-                this.entities.forEach(entity => {
-                    forces.set(entity.name, { x: 0, y: 0 });
-                });
-                
-                // Repulsive forces with distance-based scaling
-                this.entities.forEach(entity1 => {
-                    this.entities.forEach(entity2 => {
-                        if (entity1.name !== entity2.name) {
-                            const pos1 = positions.get(entity1.name);
-                            const pos2 = positions.get(entity2.name);
-                            const distance = Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2);
-                            
-                            // Use the new enhanced repulsive force calculation (handles distance scaling internally)
-                            const force = this.calculateRepulsiveForce(pos1, pos2);
-                            const weightedForce = {
-                                x: force.x * this.forceWeights.repulsive,
-                                y: force.y * this.forceWeights.repulsive
-                            };
-                            
-                            const currentForce = forces.get(entity1.name);
-                            forces.set(entity1.name, {
-                                x: currentForce.x + weightedForce.x,
-                                y: currentForce.y + weightedForce.y
-                            });
-                        }
-                    });
-                });
-                
-                // Attractive forces for relationships
-                this.relationships.forEach(rel => {
-                    const pos1 = positions.get(rel.from);
-                    const pos2 = positions.get(rel.to);
-                    
-                    if (pos1 && pos2) {
-                        const force = this.calculateAttractiveForce(pos1, pos2);
-                        const weightedForce = {
-                            x: force.x * this.forceWeights.attractive,
-                            y: force.y * this.forceWeights.attractive
-                        };
-                        
-                        const force1 = forces.get(rel.from);
-                        const force2 = forces.get(rel.to);
-                        
-                        forces.set(rel.from, {
-                            x: force1.x - weightedForce.x, // Attractive force pulls towards
-                            y: force1.y - weightedForce.y
-                        });
-                        
-                        forces.set(rel.to, {
-                            x: force2.x + weightedForce.x,
-                            y: force2.y + weightedForce.y
-                        });
-                    }
-                });
-                
-                // Strong central forces for hubs
-                const centerX = this.canvasWidth / 2;
-                const centerY = this.canvasHeight / 2;
-                
-                hubs.forEach((hub, index) => {
-                    if (index < 3) { // Focus on top 3 hubs
-                        const pos = positions.get(hub.name);
-                        const idealPos = this.calculateHubPosition(hub, index);
-                        
-                        const dx = idealPos.x - pos.x;
-                        const dy = idealPos.y - pos.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance > 20) { // Only apply if hub is significantly displaced
-                            const force = forces.get(hub.name);
-                            // Very strong hub centralization force based on connectivity
-                            const hubForceStrength = hub.weightedConnectivity * this.forceWeights.hub * 20;
-                            
-                            forces.set(hub.name, {
-                                x: force.x + (dx / distance) * hubForceStrength,
-                                y: force.y + (dy / distance) * hubForceStrength
-                            });
-                        }
-                    }
-                });
-                
-                return forces;
-            }
-
-            updatePositionsWithCollisionAvoidance(positions, forces, temperature) {
-                const newPositions = new Map();
-                const minDistance = 130; // Minimum distance between entities
-                
-                // First pass: calculate intended positions
-                const intendedPositions = new Map();
-                this.entities.forEach(entity => {
-                    const currentPos = positions.get(entity.name);
-                    const force = forces.get(entity.name);
-                    
-                    const displacement = Math.sqrt(force.x * force.x + force.y * force.y);
-                    const maxDisplacement = Math.min(displacement, temperature);
-                    
-                    let newX = currentPos.x;
-                    let newY = currentPos.y;
-                    
-                    if (displacement > 0) {
-                        newX += (force.x / displacement) * maxDisplacement;
-                        newY += (force.y / displacement) * maxDisplacement;
-                    }
-                    
-                    // Keep within canvas bounds with margin
-                    newX = Math.max(120, Math.min(this.canvasWidth - 120, newX));
-                    newY = Math.max(120, Math.min(this.canvasHeight - 120, newY));
-                    
-                    intendedPositions.set(entity.name, { x: newX, y: newY });
-                });
-                
-                // Second pass: resolve collisions by pushing apart
-                this.entities.forEach(entity => {
-                    const intendedPos = intendedPositions.get(entity.name);
-                    let finalX = intendedPos.x;
-                    let finalY = intendedPos.y;
-                    
-                    // Check all other entities for potential collisions
-                    this.entities.forEach(otherEntity => {
-                        if (otherEntity.name !== entity.name) {
-                            const otherIntendedPos = intendedPositions.get(otherEntity.name);
-                            const dx = finalX - otherIntendedPos.x;
-                            const dy = finalY - otherIntendedPos.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-                            
-                            if (distance < minDistance && distance > 0) {
-                                // Push entities apart by half the overlap distance each
-                                const overlap = minDistance - distance;
-                                const pushDistance = overlap / 2 + 5;
-                                
-                                const unitX = dx / distance;
-                                const unitY = dy / distance;
-                                
-                                finalX += unitX * pushDistance;
-                                finalY += unitY * pushDistance;
-                            }
-                        }
-                    });
-                    
-                    // Ensure still within bounds after collision resolution
-                    finalX = Math.max(120, Math.min(this.canvasWidth - 120, finalX));
-                    finalY = Math.max(120, Math.min(this.canvasHeight - 120, finalY));
-                    
-                    newPositions.set(entity.name, { x: finalX, y: finalY });
-                });
-                
-                return newPositions;
-            }
-
-            createInitialCategoricalLayout() {
-                const positions = new Map();
-                const categoryRegions = this.calculateCategoryRegions();
-                
-                // Distribute entities within their category regions
-                Object.entries(this.erdConfig.areas).forEach(([areaKey, area]) => {
-                    const region = categoryRegions[areaKey];
-                    const entitiesInArea = area.entities.filter(entityName => 
-                        this.entities.some(e => e.name === entityName)
-                    );
-                    
-                    entitiesInArea.forEach((entityName, index) => {
-                        const position = this.calculateEntityPositionInRegion(region, index, entitiesInArea.length);
-                        positions.set(entityName, position);
-                    });
-                });
-                
-                return positions;
-            }
-
-            calculateCategoryRegions() {
-                const areas = Object.keys(this.erdConfig.areas);
-                const regions = {};
-                
-                // Use a strategic layout that avoids placing any category at exact canvas center
-                // Position categories in a ring pattern around the center, leaving center for hubs
-                const canvasCenterX = this.canvasWidth / 2;
-                const canvasCenterY = this.canvasHeight / 2;
-                const ringRadius = 600; // Distance from center
-                
-                areas.forEach((areaKey, index) => {
-                    // Position categories in a circle around the center
-                    const angle = (2 * Math.PI * index) / areas.length;
-                    const centerX = canvasCenterX + ringRadius * Math.cos(angle);
-                    const centerY = canvasCenterY + ringRadius * Math.sin(angle);
-                    
-                    // Each category gets a circular region
-                    const regionRadius = 400;
-                    
-                    regions[areaKey] = {
-                        x: centerX - regionRadius,
-                        y: centerY - regionRadius,
-                        width: regionRadius * 2,
-                        height: regionRadius * 2,
-                        centerX: centerX,
-                        centerY: centerY
-                    };
-                    
-                    console.log(`Category ${areaKey}: center=(${Math.round(centerX)}, ${Math.round(centerY)}), angle=${Math.round(angle * 180 / Math.PI)}°`);
-                });
-                
-                return regions;
-            }
-
-            calculateEntityPositionInRegion(region, index, total) {
-                // Arrange entities in a rough circle within the region
-                const centerX = region.centerX;
-                const centerY = region.centerY;
-                const radius = Math.min(region.width, region.height) * 0.3;
-                
-                if (total === 1) {
-                    return { x: centerX, y: centerY };
-                }
-                
-                const angle = (2 * Math.PI * index) / total;
-                return {
-                    x: centerX + radius * Math.cos(angle),
-                    y: centerY + radius * Math.sin(angle)
-                };
-            }
-
-            adjustForHubs(positions, hubs) {
-                // Move high-connectivity hubs to more central positions
-                const adjustedPositions = new Map(positions);
-                
-                hubs.forEach((hub, index) => {
-                    if (index < 3) { // Top 3 hubs get special treatment
-                        const hubPosition = this.calculateHubPosition(hub, index);
-                        adjustedPositions.set(hub.name, hubPosition);
-                    }
-                });
-                
-                return adjustedPositions;
-            }
-
-            calculateHubPosition(hub, hubIndex) {
-                const centerX = this.canvasWidth / 2;
-                const centerY = this.canvasHeight / 2;
-                
-                // FIXED: Top hubs should be positioned AT the center, not around it
-                if (hubIndex < 3) { // Top 3 hubs go to center
-                    const hubRadius = 100; // Very small radius for tight central clustering
-                    
-                    // Slight offset to prevent exact overlap
-                    const angles = [0, 2 * Math.PI / 3, 4 * Math.PI / 3];
-                    const angle = angles[hubIndex] || 0;
-                    
-                    return {
-                        x: centerX + hubRadius * Math.cos(angle),
-                        y: centerY + hubRadius * Math.sin(angle)
-                    };
-                }
-                
-                // Lower priority hubs positioned in wider ring
-                const hubRadius = 300;
-                const angles = [0, 2 * Math.PI / 3, 4 * Math.PI / 3];
-                const angle = angles[hubIndex % 3] || 0;
-                
-                return {
-                    x: centerX + hubRadius * Math.cos(angle),
-                    y: centerY + hubRadius * Math.sin(angle)
-                };
-            }
-
-            applyForceDirectedLayout(initialPositions) {
-                let positions = new Map(initialPositions);
-                let temperature = this.initialTemperature;
-                
-                for (let iteration = 0; iteration < this.iterations; iteration++) {
-                    const forces = this.calculateForces(positions);
-                    positions = this.updatePositions(positions, forces, temperature);
-                    temperature *= this.coolingFactor;
-                    
-                    if (iteration % 20 === 0) {
-                        console.log(`Force-directed iteration ${iteration}, temperature: ${temperature.toFixed(2)}`);
-                        
-                        // Debug: Track TraceableUnit position during iterations
-                        if (positions.has('TraceableUnit')) {
-                            const traceablePos = positions.get('TraceableUnit');
-                            console.log(`  Iteration ${iteration}: TraceableUnit(${Math.round(traceablePos.x)},${Math.round(traceablePos.y)})`);
-                        }
-                    }
-                }
-                
-                return positions;
-            }
-
-            calculateForces(positions) {
-                const forces = new Map();
-                
-                // Initialize forces
-                this.entities.forEach(entity => {
-                    forces.set(entity.name, { x: 0, y: 0 });
-                });
-                
-                // Debug: Track force components for TraceableUnit
-                const debugEntity = 'TraceableUnit';
-                let debugForces = { repulsive: {x: 0, y: 0}, attractive: {x: 0, y: 0}, hub: {x: 0, y: 0}, categorical: {x: 0, y: 0} };
-                
-                // Repulsive forces between all entities (weighted)
-                this.entities.forEach(entity1 => {
-                    this.entities.forEach(entity2 => {
-                        if (entity1.name !== entity2.name) {
-                            const pos1 = positions.get(entity1.name);
-                            const pos2 = positions.get(entity2.name);
-                            const force = this.calculateRepulsiveForce(pos1, pos2);
-                            
-                            // Apply repulsive force weight
-                            const weightedForce = {
-                                x: force.x * this.forceWeights.repulsive,
-                                y: force.y * this.forceWeights.repulsive
-                            };
-                            
-                            // Debug: Track repulsive forces for TraceableUnit
-                            if (entity1.name === debugEntity) {
-                                debugForces.repulsive.x += weightedForce.x;
-                                debugForces.repulsive.y += weightedForce.y;
-                            }
-                            
-                            const currentForce = forces.get(entity1.name);
-                            forces.set(entity1.name, {
-                                x: currentForce.x + weightedForce.x,
-                                y: currentForce.y + weightedForce.y
-                            });
-                        }
-                    });
-                });
-                
-                // Attractive forces for connected entities (weighted)
-                this.relationships.forEach(rel => {
-                    const pos1 = positions.get(rel.from);
-                    const pos2 = positions.get(rel.to);
-                    
-                    if (pos1 && pos2) {
-                        const force = this.calculateAttractiveForce(pos1, pos2);
-                        
-                        // Apply attractive force weight
-                        const weightedForce = {
-                            x: force.x * this.forceWeights.attractive,
-                            y: force.y * this.forceWeights.attractive
-                        };
-                        
-                        // Debug: Track attractive forces for TraceableUnit
-                        if (rel.from === debugEntity) {
-                            debugForces.attractive.x += weightedForce.x;
-                            debugForces.attractive.y += weightedForce.y;
-                        } else if (rel.to === debugEntity) {
-                            debugForces.attractive.x -= weightedForce.x;
-                            debugForces.attractive.y -= weightedForce.y;
-                        }
-                        
-                        // Apply force to both entities
-                        const force1 = forces.get(rel.from);
-                        const force2 = forces.get(rel.to);
-                        
-                        forces.set(rel.from, {
-                            x: force1.x + weightedForce.x,
-                            y: force1.y + weightedForce.y
-                        });
-                        
-                        forces.set(rel.to, {
-                            x: force2.x - weightedForce.x,
-                            y: force2.y - weightedForce.y
-                        });
-                    }
-                });
-                
-                // Hub preservation forces (weighted)
-                this.applyHubPreservationForces(positions, forces, debugForces);
-                
-                // Categorical grouping forces (weighted)
-                this.applyCategoricalForces(positions, forces, debugForces);
-                
-                // Debug: Log force breakdown for TraceableUnit
-                if (forces.has(debugEntity)) {
-                    const totalForce = forces.get(debugEntity);
-                    const totalMagnitude = Math.sqrt(totalForce.x * totalForce.x + totalForce.y * totalForce.y);
-                    const repulsiveMag = Math.sqrt(debugForces.repulsive.x * debugForces.repulsive.x + debugForces.repulsive.y * debugForces.repulsive.y);
-                    const attractiveMag = Math.sqrt(debugForces.attractive.x * debugForces.attractive.x + debugForces.attractive.y * debugForces.attractive.y);
-                    const hubMag = Math.sqrt(debugForces.hub.x * debugForces.hub.x + debugForces.hub.y * debugForces.hub.y);
-                    const catMag = Math.sqrt(debugForces.categorical.x * debugForces.categorical.x + debugForces.categorical.y * debugForces.categorical.y);
-                    
-                    console.log(`🔍 ${debugEntity} Force Analysis:`);
-                    console.log(`  Repulsive: (${debugForces.repulsive.x.toFixed(1)}, ${debugForces.repulsive.y.toFixed(1)}) mag=${repulsiveMag.toFixed(1)}`);
-                    console.log(`  Attractive: (${debugForces.attractive.x.toFixed(1)}, ${debugForces.attractive.y.toFixed(1)}) mag=${attractiveMag.toFixed(1)}`);
-                    console.log(`  Hub: (${debugForces.hub.x.toFixed(1)}, ${debugForces.hub.y.toFixed(1)}) mag=${hubMag.toFixed(1)}`);
-                    console.log(`  Categorical: (${debugForces.categorical.x.toFixed(1)}, ${debugForces.categorical.y.toFixed(1)}) mag=${catMag.toFixed(1)}`);
-                    console.log(`  TOTAL: (${totalForce.x.toFixed(1)}, ${totalForce.y.toFixed(1)}) mag=${totalMagnitude.toFixed(1)}`);
-                }
-                
-                return forces;
-            }
-
-            calculateRepulsiveForce(pos1, pos2) {
-                const dx = pos1.x - pos2.x;
-                const dy = pos1.y - pos2.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                // Handle zero distance case with strong random separation
-                if (distance < 1) {
-                    const randomAngle = Math.random() * 2 * Math.PI;
-                    return {
-                        x: Math.cos(randomAngle) * 1000, // Very strong force
-                        y: Math.sin(randomAngle) * 1000
-                    };
-                }
-                
-                const unitX = dx / distance;
-                const unitY = dy / distance;
-                
-                // Exponentially increasing repulsive force as distance decreases
-                // This creates a "hard boundary" that prevents overlaps
-                const minDistance = 140; // Our target minimum distance
-                let force;
-                
-                if (distance < minDistance) {
-                    // Exponential repulsion that becomes extremely strong as distance approaches 0
-                    const ratio = minDistance / distance;
-                    force = Math.pow(ratio, 3) * 2000; // Cubic growth for very strong repulsion
-                } else if (distance < minDistance * 1.5) {
-                    // Strong repulsion in the warning zone
-                    force = (this.k * this.k) / (distance * distance) * 10;
-                } else {
-                    // Standard Fruchterman-Reingold formula for distant entities
-                    force = (this.k * this.k) / (distance * distance);
-                }
-                
-                return {
-                    x: force * unitX,
-                    y: force * unitY
-                };
-            }
-
-            calculateAttractiveForce(pos1, pos2) {
-                const dx = pos1.x - pos2.x;
-                const dy = pos1.y - pos2.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 1) return { x: 0, y: 0 };
-                
-                const unitX = dx / distance;
-                const unitY = dy / distance;
-                
-                // Balanced attractive force to create connectivity-based cohesion
-                // Cap the attractive force but allow reasonable pulling power
-                const maxAttractiveDistance = 600; // Increased range for better connectivity grouping
-                const effectiveDistance = Math.min(distance, maxAttractiveDistance);
-                
-                // Moderate attractive force formula with better scaling
-                const baseForce = effectiveDistance / (this.k * 1.5); // Less weakened than before
-                const force = Math.min(baseForce, 80); // Increased cap for better cohesion
-                
-                return {
-                    x: -force * unitX, // Negative because we want to pull towards each other
-                    y: -force * unitY
-                };
-            }
-
-            applyHubPreservationForces(positions, forces, debugForces = null) {
-                // Get hub entities based on weighted connectivity
-                const hubs = this.networkAnalysis.identifyHubs(0.3); // Top 30% as hubs
-                const centerX = this.canvasWidth / 2;
-                const centerY = this.canvasHeight / 2;
-                
-                hubs.forEach((hub, index) => {
-                    if (positions.has(hub.name) && index < 3) { // Focus on top 3 hubs
-                        const pos = positions.get(hub.name);
-                        const idealHubPos = this.calculateHubPosition(hub, index);
-                        
-                        // Debug: Log hub positions
-                        console.log(`Hub ${index + 1}: ${hub.name} → ideal=(${Math.round(idealHubPos.x)}, ${Math.round(idealHubPos.y)}), current=(${Math.round(pos.x)}, ${Math.round(pos.y)})`);
-                        
-                        const dx = idealHubPos.x - pos.x;
-                        const dy = idealHubPos.y - pos.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance > 50) { // Only apply if hub is displaced from ideal position
-                            const force = forces.get(hub.name);
-                            // NUCLEAR hub preservation force strength - must overpower repulsive forces
-                            const hubStrength = hub.weightedConnectivity * this.forceWeights.hub * 100; // 4x stronger
-                            
-                            const hubForceX = (dx / distance) * hubStrength;
-                            const hubForceY = (dy / distance) * hubStrength;
-                            
-                            // Debug: Log force calculations for TraceableUnit
-                            if (hub.name === 'TraceableUnit') {
-                                console.log(`TraceableUnit hub force: connectivity=${hub.weightedConnectivity.toFixed(3)}, hubWeight=${this.forceWeights.hub}, multiplier=25, hubStrength=${hubStrength.toFixed(1)}, distance=${Math.round(distance)}`);
-                                console.log(`TraceableUnit hub force components: (${hubForceX.toFixed(1)}, ${hubForceY.toFixed(1)})`);
-                            }
-                            
-                            // Track debug forces for TraceableUnit
-                            if (debugForces && hub.name === 'TraceableUnit') {
-                                debugForces.hub.x += hubForceX;
-                                debugForces.hub.y += hubForceY;
-                            }
-                            
-                            forces.set(hub.name, {
-                                x: force.x + hubForceX,
-                                y: force.y + hubForceY
-                            });
-                        }
-                    }
-                });
-            }
-
-            applyCategoricalForces(positions, forces, debugForces = null) {
-                const categoryRegions = this.calculateCategoryRegions();
-                
-                // Get list of hub entities to exclude from categorical forces
-                const hubs = this.networkAnalysis.identifyHubs(0.3);
-                const hubNames = new Set(hubs.slice(0, 3).map(hub => hub.name)); // Top 3 hubs
-                
-                // Debug: Log category centers
-                console.log('Category centers:', Object.entries(categoryRegions).map(([key, region]) => 
-                    `${key}: (${Math.round(region.centerX)}, ${Math.round(region.centerY)})`
-                ).join(', '));
-                console.log('🔍 Hub entities excluded from categorical forces:', Array.from(hubNames).join(', '));
-                
-                Object.entries(this.erdConfig.areas).forEach(([areaKey, area]) => {
-                    const region = categoryRegions[areaKey];
-                    const centerX = region.centerX;
-                    const centerY = region.centerY;
-                    
-                    area.entities.forEach(entityName => {
-                        if (positions.has(entityName)) {
-                            // Hub entities get much weaker categorical forces (10% strength)
-                            const isHub = hubNames.has(entityName);
-                            const hubReduction = isHub ? 0.1 : 1.0;
-                            
-                            if (isHub) {
-                                console.log(`🔽 Applying weak categorical force for hub: ${entityName} (${(hubReduction * 100).toFixed(0)}% strength)`);
-                            }
-                            
-                            const pos = positions.get(entityName);
-                            const dx = centerX - pos.x;
-                            const dy = centerY - pos.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-                            
-                            // Debug: Log entity-to-center assignments for problem entities
-                            if (entityName === 'SalesDeliveryDocument' || entityName === 'TraceableUnit') {
-                                console.log(`${entityName}: area=${areaKey}, center=(${Math.round(centerX)}, ${Math.round(centerY)}), current=(${Math.round(pos.x)}, ${Math.round(pos.y)}), distance=${Math.round(distance)}`);
-                            }
-                            
-                            // Apply categorical force with distance-based scaling
-                            const force = forces.get(entityName);
-                            
-                            // Stronger categorical pull with distance-based scaling
-                            let basePullStrength = 0.5; // Increased from 0.1
-                            
-                            // Scale force based on distance from category center
-                            if (distance > region.width * 0.6) {
-                                basePullStrength *= 2.0; // Very strong pull for distant entities
-                            } else if (distance > region.width * 0.4) {
-                                basePullStrength *= 1.5; // Strong pull for moderately distant entities
-                            } else {
-                                basePullStrength *= 0.8; // Gentle pull for entities already near center
-                            }
-                            
-                            const weightedPullStrength = basePullStrength * this.forceWeights.categorical * hubReduction;
-                            const catForceX = dx * weightedPullStrength;
-                            const catForceY = dy * weightedPullStrength;
-                            
-                            // Track debug forces for TraceableUnit (should be 0 now)
-                            if (debugForces && entityName === 'TraceableUnit') {
-                                debugForces.categorical.x += catForceX;
-                                debugForces.categorical.y += catForceY;
-                            }
-                            
-                            forces.set(entityName, {
-                                x: force.x + catForceX,
-                                y: force.y + catForceY
-                            });
-                        }
-                    });
-                });
-            }
-
-            updatePositions(positions, forces, temperature) {
-                const newPositions = new Map();
-                
-                this.entities.forEach(entity => {
-                    const currentPos = positions.get(entity.name);
-                    const force = forces.get(entity.name);
-                    
-                    const displacement = Math.sqrt(force.x * force.x + force.y * force.y);
-                    const maxDisplacement = Math.min(displacement, temperature);
-                    
-                    let newX = currentPos.x;
-                    let newY = currentPos.y;
-                    
-                    if (displacement > 0) {
-                        newX += (force.x / displacement) * maxDisplacement;
-                        newY += (force.y / displacement) * maxDisplacement;
-                    }
-                    
-                    // Keep within canvas bounds
-                    newX = Math.max(50, Math.min(this.canvasWidth - 50, newX));
-                    newY = Math.max(50, Math.min(this.canvasHeight - 50, newY));
-                    
-                    newPositions.set(entity.name, { x: newX, y: newY });
-                });
-                
-                return newPositions;
-            }
-
-            resolveCollisions(positions) {
-                const resolvedPositions = new Map(positions);
-                // Adaptive minimum distance based on layout priorities
-                const baseMinDistance = 120;
-                const aestheticsWeight = this.layoutPriorities.aesthetics;
-                const minDistance = baseMinDistance * (0.8 + aestheticsWeight * 0.4); // 96-144 range
-                
-                let hasCollisions = true;
-                let iterations = 0;
-                const maxIterations = 30; // Reduced from 50
-                
-                while (hasCollisions && iterations < maxIterations) {
-                    hasCollisions = false;
-                    iterations++;
-                    
-                    this.entities.forEach(entity1 => {
-                        this.entities.forEach(entity2 => {
-                            if (entity1.name !== entity2.name) {
-                                const pos1 = resolvedPositions.get(entity1.name);
-                                const pos2 = resolvedPositions.get(entity2.name);
-                                
-                                const dx = pos1.x - pos2.x;
-                                const dy = pos1.y - pos2.y;
-                                const distance = Math.sqrt(dx * dx + dy * dy);
-                                
-                                if (distance < minDistance) {
-                                    hasCollisions = true;
-                                    
-                                    // Move entities apart
-                                    const overlap = minDistance - distance;
-                                    const moveDistance = overlap / 2 + 10;
-                                    
-                                    const unitX = dx / distance || Math.random() - 0.5;
-                                    const unitY = dy / distance || Math.random() - 0.5;
-                                    
-                                    resolvedPositions.set(entity1.name, {
-                                        x: pos1.x + unitX * moveDistance,
-                                        y: pos1.y + unitY * moveDistance
-                                    });
-                                    
-                                    resolvedPositions.set(entity2.name, {
-                                        x: pos2.x - unitX * moveDistance,
-                                        y: pos2.y - unitY * moveDistance
-                                    });
-                                }
-                            }
-                        });
-                    });
-                }
-                
-                console.log(`Collision resolution completed in ${iterations} iterations`);
-                return resolvedPositions;
-            }
-
-            eliminateAllCollisions(positions) {
-                console.log('Starting guaranteed collision elimination phase...');
-                const startTime = performance.now();
-                let eliminatedPositions = new Map(positions);
-                const minDistance = 140; // Minimum distance for final pass
-                let totalMoves = 0;
-                let maxPasses = 15; // Increased maximum passes
-                let previousCollisionCount = Infinity;
-                let stuckCount = 0;
-                
-                for (let pass = 0; pass < maxPasses; pass++) {
-                    let movesMadeThisPass = 0;
-                    let collisionsDetected = [];
-                    
-                    // First, detect all collisions
-                    const entityList = Array.from(eliminatedPositions.keys());
-                    for (let i = 0; i < entityList.length; i++) {
-                        for (let j = i + 1; j < entityList.length; j++) {
-                            const entity1 = entityList[i];
-                            const entity2 = entityList[j];
-                            const pos1 = eliminatedPositions.get(entity1);
-                            const pos2 = eliminatedPositions.get(entity2);
-                            
-                            const dx = pos1.x - pos2.x;
-                            const dy = pos1.y - pos2.y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
-                            
-                            if (distance < minDistance) {
-                                collisionsDetected.push({
-                                    entity1, entity2, pos1, pos2, 
-                                    distance, dx, dy,
-                                    overlap: minDistance - distance
-                                });
-                            }
-                        }
-                    }
-                    
-                    if (collisionsDetected.length === 0) {
-                        console.log(`Collision elimination completed after ${pass + 1} passes with no remaining overlaps`);
-                        break;
-                    }
-                    
-                    console.log(`Pass ${pass + 1}: Found ${collisionsDetected.length} collisions`);
-                    
-                    // Check if we're stuck (same number of collisions as last pass)
-                    if (collisionsDetected.length === previousCollisionCount) {
-                        stuckCount++;
-                        if (stuckCount >= 3) {
-                            // We're stuck - use more aggressive separation
-                            console.log(`Pass ${pass + 1}: Stuck with ${collisionsDetected.length} collisions - switching to aggressive mode`);
-                        }
-                    } else {
-                        stuckCount = 0; // Reset stuck counter if we made progress
-                    }
-                    previousCollisionCount = collisionsDetected.length;
-                    
-                    // Sort collisions by overlap amount (resolve worst overlaps first)
-                    collisionsDetected.sort((a, b) => b.overlap - a.overlap);
-                    
-                    // Resolve each collision by moving both entities apart
-                    collisionsDetected.forEach((collision, index) => {
-                        const { entity1, entity2, dx, dy, distance, overlap } = collision;
-                        
-                        if (distance > 0) {
-                            // Calculate unit vector for separation direction
-                            const unitX = dx / distance;
-                            const unitY = dy / distance;
-                            
-                            // Aggressive separation when stuck, normal otherwise
-                            let separationMultiplier = 1.0;
-                            if (stuckCount >= 3) {
-                                separationMultiplier = 1.5 + (stuckCount * 0.2); // Increasingly aggressive
-                            }
-                            
-                            // Move each entity by half the required separation distance plus buffer
-                            const separationDistance = ((overlap / 2) + 15) * separationMultiplier;
-                            
-                            const currentPos1 = eliminatedPositions.get(entity1);
-                            const currentPos2 = eliminatedPositions.get(entity2);
-                            
-                            let newPos1 = {
-                                x: currentPos1.x + unitX * separationDistance,
-                                y: currentPos1.y + unitY * separationDistance
-                            };
-                            
-                            let newPos2 = {
-                                x: currentPos2.x - unitX * separationDistance,
-                                y: currentPos2.y - unitY * separationDistance
-                            };
-                            
-                            // For stuck situations, try alternative separation patterns
-                            if (stuckCount >= 5 && index % 2 === 0) {
-                                // For every other collision, try perpendicular separation
-                                const perpX = -unitY;
-                                const perpY = unitX;
-                                const perpSeparation = separationDistance * 0.7;
-                                
-                                newPos1.x += perpX * perpSeparation;
-                                newPos1.y += perpY * perpSeparation;
-                                newPos2.x -= perpX * perpSeparation;
-                                newPos2.y -= perpY * perpSeparation;
-                            }
-                            
-                            // Ensure positions stay within canvas bounds with more room at edges
-                            const margin = 180; // Larger margin to prevent edge clustering
-                            newPos1.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos1.x));
-                            newPos1.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos1.y));
-                            newPos2.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos2.x));
-                            newPos2.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos2.y));
-                            
-                            eliminatedPositions.set(entity1, newPos1);
-                            eliminatedPositions.set(entity2, newPos2);
-                            
-                            movesMadeThisPass++;
-                            totalMoves++;
-                        } else {
-                            // Handle edge case where entities are at exactly the same position
-                            console.log(`Pass ${pass + 1}: Entities ${entity1} and ${entity2} at identical position - applying random separation`);
-                            const currentPos1 = eliminatedPositions.get(entity1);
-                            const currentPos2 = eliminatedPositions.get(entity2);
-                            
-                            const randomAngle = Math.random() * 2 * Math.PI;
-                            const separationDistance = minDistance / 2 + 20;
-                            
-                            const newPos1 = {
-                                x: currentPos1.x + Math.cos(randomAngle) * separationDistance,
-                                y: currentPos1.y + Math.sin(randomAngle) * separationDistance
-                            };
-                            
-                            const newPos2 = {
-                                x: currentPos2.x - Math.cos(randomAngle) * separationDistance,
-                                y: currentPos2.y - Math.sin(randomAngle) * separationDistance
-                            };
-                            
-                            const margin = 180;
-                            newPos1.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos1.x));
-                            newPos1.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos1.y));
-                            newPos2.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos2.x));
-                            newPos2.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos2.y));
-                            
-                            eliminatedPositions.set(entity1, newPos1);
-                            eliminatedPositions.set(entity2, newPos2);
-                            
-                            movesMadeThisPass++;
-                            totalMoves++;
-                        }
-                    });
-                    
-                    console.log(`Pass ${pass + 1}: Made ${movesMadeThisPass} entity moves (separation multiplier: ${(stuckCount >= 3 ? (1.5 + stuckCount * 0.2) : 1.0).toFixed(1)})`);
-                    
-                    // Early exit only if we have zero collisions, don't give up easily
-                    if (collisionsDetected.length === 0) {
-                        break;
-                    }
-                }
-                
-                const endTime = performance.now();
-                console.log(`Collision elimination completed: ${totalMoves} total moves in ${Math.round(endTime - startTime)}ms`);
-                
-                // Final verification pass
-                let finalCollisions = 0;
-                const finalCollisionPairs = [];
-                const entityList = Array.from(eliminatedPositions.keys());
-                for (let i = 0; i < entityList.length; i++) {
-                    for (let j = i + 1; j < entityList.length; j++) {
-                        const entity1 = entityList[i];
-                        const entity2 = entityList[j];
-                        const pos1 = eliminatedPositions.get(entity1);
-                        const pos2 = eliminatedPositions.get(entity2);
-                        const distance = Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2);
-                        
-                        if (distance < minDistance) {
-                            finalCollisions++;
-                            finalCollisionPairs.push(`${entity1}↔${entity2} (${Math.round(distance)}px)`);
-                        }
-                    }
-                }
-                
-                if (finalCollisions === 0) {
-                    console.log('✅ SUCCESS: All entity overlaps eliminated!');
-                } else {
-                    console.log(`⚠️ WARNING: ${finalCollisions} overlaps remain (< ${minDistance}px separation)`);
-                    console.log('Remaining collision pairs:', finalCollisionPairs.slice(0, 5).join(', '));
-                    if (finalCollisionPairs.length > 5) {
-                        console.log(`... and ${finalCollisionPairs.length - 5} more`);
-                    }
-                }
-                
-                return eliminatedPositions;
-            }
-        }
 
         // Load entities from schema files with auto-discovery
         async function loadEntitiesFromSchema() {
@@ -2458,76 +1076,49 @@
                 }
             }
             
-            // Generate automatic relationships from FK fields using generic conventions
-            const automaticRelationships = generateAutomaticFKRelationships(entities, discoveredRelationships);
-            console.log(`Generated ${automaticRelationships.length} automatic FK relationships`);
+            // Generate relationships from schema metadata (NO pattern matching)
+            const metadataRelationships = generateMetadataRelationships(entities);
+            console.log(`Generated ${metadataRelationships.length} relationships from schema metadata`);
             
-            // Merge all relationships: manual + automatic FK
-            const allDiscoveredRelationships = [...discoveredRelationships, ...automaticRelationships];
-            relationships.push(...allDiscoveredRelationships);
+            // Use only metadata relationships (no manual or pattern-based relationships)
+            relationships.length = 0; // Clear any existing relationships
+            relationships.push(...metadataRelationships);
             console.log(`Total relationships: ${relationships.length}`);
             
-            // Apply dynamic layout calculation
-            console.log('Applying dynamic network-based layout...');
-            let dynamicPositions;
-            try {
-                // Configuration for weighted network layout
-                const layoutConfig = {
-                    networkWeights: {
-                        degree: 0.6,        // Emphasize highly connected entities
-                        betweenness: 0.3,   // Consider bottleneck entities  
-                        closeness: 0.1,     // Minor consideration for central accessibility
-                        normalize: true     // Enable normalization for fair comparison
-                    },
-                    forceWeights: {
-                        repulsive: 0.4,     // Balanced entity separation (exponential scaling handles close distances)
-                        attractive: 0.25,   // Moderate connection pull for relationships
-                        categorical: 0.15,  // Reduced category grouping to prioritize connectivity
-                        hub: 0.6,          // Very strong hub centralization for network structure
-                        baseK: 150         // Base force constant
-                    },
-                    layoutPriorities: {
-                        connectivity: 0.4,   // Primary focus on network structure
-                        categorization: 0.3, // Secondary focus on functional groups
-                        aesthetics: 0.3     // Tertiary focus on visual appeal
-                    }
-                };
-                
-                const layoutEngine = new DynamicLayoutEngine(entities, relationships, erdConfig, layoutConfig);
-                console.log('Created DynamicLayoutEngine successfully');
-                dynamicPositions = layoutEngine.calculateDynamicLayout();
-                console.log('Dynamic layout calculation completed successfully');
-            } catch (error) {
-                console.error('Error in dynamic layout calculation:', error);
-                // Fall back to original positioning logic if dynamic layout fails
-                console.log('Falling back to original positioning logic');
-                dynamicPositions = new Map();
-                entities.forEach(entity => {
-                    // Try to get position from ERD config, fallback to auto calculation
-                    const configPos = erdConfig.entity_display[entity.name]?.position;
-                    if (configPos) {
-                        dynamicPositions.set(entity.name, {x: configPos.x, y: configPos.y});
-                    } else {
-                        // Simple fallback positioning
-                        dynamicPositions.set(entity.name, {
-                            x: 100 + Math.random() * 2800,
-                            y: 100 + Math.random() * 1400
-                        });
-                    }
-                });
-            }
-            
-            // Update entity positions with dynamic layout results
+            // Apply config-based positioning (simplified from dynamic layout)
+            console.log('Applying config-based entity positioning...');
+            const configPositions = new Map();
             entities.forEach(entity => {
-                const dynamicPos = dynamicPositions.get(entity.name);
-                if (dynamicPos) {
-                    entity.x = dynamicPos.x;
-                    entity.y = dynamicPos.y;
-                    console.log(`${entity.name}: positioned at (${Math.round(dynamicPos.x)}, ${Math.round(dynamicPos.y)})`);
+                // Get position from ERD config, fallback to simple grid if missing
+                const configPos = erdConfig.entity_display[entity.name]?.position;
+                if (configPos) {
+                    configPositions.set(entity.name, {x: configPos.x, y: configPos.y});
+                    console.log(`${entity.name}: Using config position (${configPos.x}, ${configPos.y})`);
+                } else {
+                    // Simple grid fallback for entities without explicit config
+                    const index = Array.from(configPositions.keys()).length;
+                    const cols = 8;
+                    const spacing = 300;
+                    const fallbackPos = {
+                        x: 100 + (index % cols) * spacing,
+                        y: 100 + Math.floor(index / cols) * spacing
+                    };
+                    configPositions.set(entity.name, fallbackPos);
+                    console.warn(`${entity.name}: No config position found, using fallback (${fallbackPos.x}, ${fallbackPos.y})`);
                 }
             });
             
-            console.log(`Successfully loaded ${entities.length} entities with dynamic positioning`);
+            // Update entity positions with config-based results
+            entities.forEach(entity => {
+                const configPos = configPositions.get(entity.name);
+                if (configPos) {
+                    entity.x = configPos.x;
+                    entity.y = configPos.y;
+                    console.log(`${entity.name}: positioned at (${Math.round(configPos.x)}, ${Math.round(configPos.y)})`);
+                }
+            });
+            
+            console.log(`Successfully loaded ${entities.length} entities with config-based positioning`);
             return entities;
         }
 
@@ -2593,7 +1184,7 @@
         }
         
         function resetZoom() {
-            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+            fitToScreen();
         }
         
         function fitToScreen() {
@@ -2684,26 +1275,33 @@
             let targetFieldName = null;
             
             if (isFromEntity) {
-                // Look for FK field that references the target entity
-                const targetEntityName = targetEntity.id;
-                
-                // Use configuration-based field mapping if available
-                if (erdConfig && erdConfig.field_mappings && erdConfig.field_mappings[targetEntityName]) {
-                    const possibleFieldNames = erdConfig.field_mappings[targetEntityName];
-                    fieldIndex = entity.fields.findIndex(field => 
-                        field.isFK && possibleFieldNames.includes(field.name)
-                    );
-                }
-                
-                // Fallback to generic pattern matching if no configuration mapping found
-                if (fieldIndex === -1) {
-                    fieldIndex = entity.fields.findIndex(field => 
-                        field.isFK && (
-                            field.name === targetEntityName + 'Id' ||
-                            field.name === targetEntityName.toLowerCase() + 'Id' ||
-                            field.name.toLowerCase().includes(targetEntityName.replace('Data', '').toLowerCase())
-                        )
-                    );
+                // Use explicit field name from relationship metadata if available
+                if (relationship.field) {
+                    fieldIndex = entity.fields.findIndex(field => field.name === relationship.field);
+                    targetFieldName = relationship.field;
+                    console.log(`🔗 Using explicit field: ${entity.id}.${relationship.field} → ${targetEntity.id}`);
+                } else {
+                    // Fallback to old pattern matching for manual relationships
+                    const targetEntityName = targetEntity.id;
+                    
+                    // Use configuration-based field mapping if available
+                    if (erdConfig && erdConfig.field_mappings && erdConfig.field_mappings[targetEntityName]) {
+                        const possibleFieldNames = erdConfig.field_mappings[targetEntityName];
+                        fieldIndex = entity.fields.findIndex(field => 
+                            field.isFK && possibleFieldNames.includes(field.name)
+                        );
+                    }
+                    
+                    // Fallback to generic pattern matching if no configuration mapping found
+                    if (fieldIndex === -1) {
+                        fieldIndex = entity.fields.findIndex(field => 
+                            field.isFK && (
+                                field.name === targetEntityName + 'Id' ||
+                                field.name === targetEntityName.toLowerCase() + 'Id' ||
+                                field.name.toLowerCase().includes(targetEntityName.replace('Data', '').toLowerCase())
+                            )
+                        );
+                    }
                 }
                 
                 // Debug logging for unmatched relationships
@@ -3270,7 +1868,53 @@
         }
 
         function generateControlPoints(fromPoint, toPoint, relationship, fromEntity, toEntity) {
+            // Special handling for self-referencing relationships
+            if (fromEntity.id === toEntity.id) {
+                return generateSelfReferencingLoop(fromPoint, toPoint, fromEntity, relationship);
+            }
+            
             return findRouteAroundEntities(fromPoint, toPoint, fromEntity, toEntity, relationship);
+        }
+        
+        function generateSelfReferencingLoop(fromPoint, toPoint, entity, relationship) {
+            // Create a simple loop that extends outward from the entity
+            const entityWidth = 200; // Approximate entity width
+            const loopSize = 60; // Size of the loop
+            const offset = 30; // Offset from entity edge
+            
+            // Determine which side to place the loop based on field positions
+            let loopDirection = 'left'; // Default to left side for better visibility
+            
+            // If this is a parent relationship, keep it on the left for better semantics
+            if (relationship.label && relationship.label.toLowerCase().includes('parent')) {
+                loopDirection = 'left';
+            }
+            
+            let controlPoints;
+            if (loopDirection === 'right') {
+                // Right-side loop - extends to the right
+                controlPoints = [
+                    fromPoint,
+                    { x: entity.x + entityWidth/2 + offset, y: fromPoint.y },
+                    { x: entity.x + entityWidth/2 + offset + loopSize, y: fromPoint.y - loopSize/2 },
+                    { x: entity.x + entityWidth/2 + offset + loopSize, y: toPoint.y + loopSize/2 },
+                    { x: entity.x + entityWidth/2 + offset, y: toPoint.y },
+                    toPoint
+                ];
+            } else {
+                // Left-side loop - extends to the left (away from other entities)
+                controlPoints = [
+                    fromPoint,
+                    { x: entity.x - entityWidth/2 - offset, y: fromPoint.y },
+                    { x: entity.x - entityWidth/2 - offset - loopSize, y: fromPoint.y - loopSize/2 },
+                    { x: entity.x - entityWidth/2 - offset - loopSize, y: toPoint.y + loopSize/2 },
+                    { x: entity.x - entityWidth/2 - offset, y: toPoint.y },
+                    toPoint
+                ];
+            }
+            
+            console.log(`🔄 Self-referencing relationship: ${entity.id}.${relationship.field} using ${loopDirection} loop`);
+            return controlPoints;
         }
 
         // Draw entity function
@@ -3699,6 +2343,12 @@
                 .style('box-shadow', '0 4px 12px rgba(0,0,0,0.3)')
                 .style('opacity', '0');
                 
+            // Check if relationship has an example in metadata
+            const relationshipMeta = fromEntity.metadata?.relationships?.find(r => 
+                r.targetEntity === toEntity.name && r.label === relationship.label
+            );
+            const example = relationshipMeta?.example;
+
             messageContainer.html(`
                 <div style="text-align: center;">
                     <div style="font-weight: 600; margin-bottom: 4px;">Relationship Focus</div>
@@ -3708,6 +2358,11 @@
                     <div style="font-size: 11px; color: #9ca3af; margin-top: 4px;">
                         "${relationship.label}"
                     </div>
+                    ${example ? `
+                    <div style="font-size: 10px; color: #fbbf24; margin-top: 6px; padding-top: 6px; border-top: 1px solid #374151;">
+                        💡 ${example}
+                    </div>
+                    ` : ''}
                 </div>
             `);
                 
@@ -3825,18 +2480,23 @@
         function markEssentialElements() {
             // Essential TraceableUnit relationships (only the most critical)
             const essentialRelationships = [
-                'material_type_reference',
-                'includes_tru',
-                'originates_tru',
-                'manages'
+                'material type',
+                'harvested by',
+                'currently located at',
+                'harvested at',
+                'derived from',
+                'processes input',
+                'produces output'
             ];
             
             // Essential entities connected to TraceableUnit
             const essentialEntities = [
                 'Material',
-                'Transaction', 
-                'SupplyBase',
-                'Organization'
+                'Organization', 
+                'GeographicData',
+                'MaterialProcessing',
+                'ProcessingHistory',
+                'LocationHistory'
             ];
             
             // Mark essential relationship groups

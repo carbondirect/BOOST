@@ -163,5 +163,43 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "LocationHistory",
+      "primaryKey": "locationHistoryId",
+      "area": "core_traceability",
+      "description": "Historical movement records and location tracking for biomass units"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "tracking movement of"
+      },
+      {
+        "field": "geographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "located at"
+      },
+      {
+        "field": "materialProcessingId",
+        "targetEntity": "MaterialProcessing",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "during processing"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "handled by"
+      }
+    ]
   }
 }

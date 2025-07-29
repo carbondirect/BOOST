@@ -171,5 +171,14 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "GeographicData",
+      "primaryKey": "geographicDataId",
+      "area": "geographic_tracking",
+      "description": "📍 Geographic location data for entities"
+    },
+    "relationships": []
   }
 }

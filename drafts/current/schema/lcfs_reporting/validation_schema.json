@@ -88,6 +88,10 @@
         "type": "boolean",
         "description": "Whether third-party verification is required for this entity"
       },
+      "VerificationStatementId": {
+        "type": "string",
+        "description": "Uses EntityNameId convention referencing VerificationStatement for third-party verification"
+      },
       "reportingDeadline": {
         "type": "string",
         "format": "date",
@@ -229,5 +233,29 @@
       }
     },
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "LCFSReporting",
+      "primaryKey": "reportingId",
+      "area": "compliance_reporting",
+      "description": "LCFS compliance reports for regulated entities"
+    },
+    "relationships": [
+      {
+        "field": "regulatedEntityId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "reported by"
+      },
+      {
+        "field": "VerificationStatementId",
+        "targetEntity": "VerificationStatement",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "verified by"
+      }
+    ]
   }
 }

@@ -74,14 +74,25 @@ The Interactive ERD Navigator is available at:
 
 ### Data Sources
 - **Schema Files**: Loads entity definitions from `../drafts/current/schema/*/validation_schema.json`
+- **Configuration**: Entity positioning and relationships defined in `erd-config.json`
+- **Metadata System**: Relationships driven by `boost_metadata` sections in schemas
 - **Discussion Mapping**: Direct links to GitHub discussions embedded in entity headers
 - **Dynamic Rendering**: D3.js-based interactive visualization with real-time updates
 
 ### Key Technologies
 - **D3.js v7**: Interactive SVG manipulation and zooming
 - **JSON Schema**: Entity validation and field definitions
+- **Metadata-Driven Relationships**: Automatic relationship detection from schema metadata
 - **GitHub Discussions API**: Direct integration for feedback collection
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
+
+### Architecture Details
+For comprehensive configuration guidance, see **[ERD_CONFIGURATION.md](ERD_CONFIGURATION.md)** which covers:
+- Hub-and-spoke layout design principles
+- Entity positioning and spacing requirements
+- Metadata-driven relationship system
+- Visual design system and color coding
+- Adding new entities and maintenance procedures
 
 ## Usage Instructions
 
@@ -93,8 +104,11 @@ The Interactive ERD Navigator is available at:
 
 ### For Developers
 - Entity definitions are dynamically loaded from schema files
+- Entity positioning configured in `erd-config.json`
+- Relationships defined in schema `boost_metadata` sections
 - Discussion links are embedded directly in the ERD
 - The navigator automatically reflects schema updates without manual intervention
+- See **[ERD_CONFIGURATION.md](ERD_CONFIGURATION.md)** for detailed development guidance
 
 ## Maintenance
 

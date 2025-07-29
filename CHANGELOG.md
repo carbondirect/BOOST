@@ -2,6 +2,33 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.4.0] - 2025-07-29 - ERD Configuration Documentation and Relationship Examples
+
+### Added
+- **Comprehensive ERD Configuration Documentation** - Created detailed `ERD_CONFIGURATION.md` covering hub-and-spoke layout, entity positioning, and relationship management
+- **Quick Reference Guide** - Added `QUICK_REFERENCE.md` for common ERD maintenance tasks and troubleshooting
+- **Relationship Examples System** - Implemented interactive relationship examples that appear when clicking relationship lines
+- **Complete TraceableUnit Relationship Examples** - Added concrete examples to all 6 TraceableUnit relationships
+- **Transaction Entity Examples** - Added examples for seller organization, buyer customer, and delivery document relationships
+- **Organization Entity Relationships** - Added headquarters location and operational areas relationship examples
+- **TransactionBatch Relationship Examples** - Added examples for transaction membership, unit contents, and delivery location
+
+### Enhanced
+- **ERD Navigator README** - Updated with comprehensive configuration references and metadata-driven architecture details  
+- **Schema README Integration** - Added ERD configuration section with boost_metadata examples and positioning guidance
+- **Visual Design Documentation** - Documented 7-color thematic system with semantic meanings and emoji selection rationale
+- **Maintenance Procedures** - Comprehensive troubleshooting guides and best practices for ERD system maintenance
+
+### Fixed
+- **Missing Relationship Examples** - Completed relationship examples across key entities including MaterialProcessing, MeasurementRecord, and SupplyBaseReport
+- **Documentation Cross-References** - Established proper linking between ERD configuration, schema development, and maintenance guides
+
+### Technical Improvements
+- **Hub-and-Spoke Layout Documentation** - Detailed coordinate system and spacing requirements (300px minimum spacing)
+- **Metadata-Driven Relationship Documentation** - Complete guide for boost_metadata structure and automatic relationship detection
+- **Schema Integration Guidance** - Step-by-step procedures for adding new entities and maintaining ERD consistency
+- **GitHub Pages Compatibility Verification** - Confirmed full compatibility with static file serving and CORS requirements
+
 ## [2.3.0] - 2025-07-24 - ERD Auto-Discovery and Relationship Processing
 
 ### Added

@@ -147,5 +147,14 @@
       }
     },
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "LCFSPathway",
+      "primaryKey": "pathwayId",
+      "area": "compliance_reporting",
+      "description": "LCFS pathway definitions for fuel lifecycle tracking"
+    },
+    "relationships": []
   }
 }

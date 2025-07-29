@@ -220,5 +220,14 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "ProductGroup",
+      "primaryKey": "productGroupId",
+      "area": "compliance_reporting",
+      "description": "Product groupings and classifications for biomass materials"
+    },
+    "relationships": []
   }
 }

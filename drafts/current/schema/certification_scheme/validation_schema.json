@@ -183,5 +183,22 @@
       "issuingOrganizationId"
     ],
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "CertificationScheme",
+      "primaryKey": "certificationSchemeId",
+      "area": "organizational_foundation",
+      "description": "Certification standards and requirements with geographic applicability"
+    },
+    "relationships": [
+      {
+        "field": "issuingOrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "issued by"
+      }
+    ]
   }
 }

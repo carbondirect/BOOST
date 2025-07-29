@@ -316,5 +316,29 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "SpeciesComponent",
+      "primaryKey": "componentId",
+      "area": "material_supply_chain",
+      "description": "Species composition details within biomass tracking units"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "component of"
+      },
+      {
+        "field": "sourceGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "harvested from"
+      }
+    ]
   }
 }

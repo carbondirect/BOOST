@@ -42,6 +42,13 @@
       },
       "reportGeographicDataId": {
         "type": "string"
+      },
+      "supplyBaseIds": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Array of SupplyBase IDs that this report covers"
       }
     },
     "required": [
@@ -54,6 +61,38 @@
     ],
     "title": "Supply Base Report",
     "description": "SupplyBaseReport entity in BOOST data model"
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "SupplyBaseReport",
+      "primaryKey": "sbrId",
+      "area": "material_supply_chain",
+      "description": "📋 Supply base sustainability reporting document"
+    },
+    "relationships": [
+      {
+        "field": "organizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one", 
+        "required": true,
+        "label": "prepared by"
+      },
+      {
+        "field": "reportGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "report coverage area"
+      },
+      {
+        "field": "supplyBaseIds",
+        "targetEntity": "SupplyBase",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "reports on",
+        "example": "SBR-2023 covers sustainability of 'Olympic Forest Unit' + 'Cascade Unit'"
+      }
+    ]
   },
   "rules": {
     "and": [

@@ -135,5 +135,31 @@
     "organizationType"
   ],
   "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Organization",
+      "primaryKey": "organizationId",
+      "area": "organizational_foundation",
+      "description": "🏢 Organization entity for supply chain participants"
+    },
+    "relationships": [
+      {
+        "field": "primaryGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "headquartered at",
+        "example": "'Olympic Forest Products' headquartered at 'Seattle Mill Site'"
+      },
+      {
+        "field": "operationalAreas",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "operates in areas",
+        "example": "'West Coast Timber' operates in 'Cascade Forest' + 'Olympic Peninsula'"
+      }
+    ]
   }
 }

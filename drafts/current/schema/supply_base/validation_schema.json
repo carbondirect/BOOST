@@ -106,5 +106,29 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "SupplyBase",
+      "primaryKey": "supplyBaseId",
+      "area": "material_supply_chain",
+      "description": "Geographic and operational bases for biomass supply operations"
+    },
+    "relationships": [
+      {
+        "field": "OrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "managed by"
+      },
+      {
+        "field": "GeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "located at"
+      }
+    ]
   }
 }

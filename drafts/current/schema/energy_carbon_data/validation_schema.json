@@ -172,5 +172,29 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "EnergyCarbonData",
+      "primaryKey": "energyCarbonDataId",
+      "area": "compliance_reporting",
+      "description": "Energy and carbon intensity data for lifecycle assessments"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "carbon profile of"
+      },
+      {
+        "field": "measurementRecordId",
+        "targetEntity": "MeasurementRecord",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "based on measurement"
+      }
+    ]
   }
 }

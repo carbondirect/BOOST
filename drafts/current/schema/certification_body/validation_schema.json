@@ -213,5 +213,14 @@
       "validityPeriod"
     ],
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "CertificationBody",
+      "primaryKey": "cbId",
+      "area": "organizational_foundation",
+      "description": "Independent organizations authorized to issue certificates"
+    },
+    "relationships": []
   }
 }

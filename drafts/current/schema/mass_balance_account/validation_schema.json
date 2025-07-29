@@ -77,5 +77,29 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "MassBalanceAccount",
+      "primaryKey": "accountId",
+      "area": "compliance_reporting",
+      "description": "Mass balance accounting for material flow tracking"
+    },
+    "relationships": [
+      {
+        "field": "organizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "managed by"
+      },
+      {
+        "field": "productGroupId",
+        "targetEntity": "ProductGroup",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "tracking product group"
+      }
+    ]
   }
 }

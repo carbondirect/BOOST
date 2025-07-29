@@ -337,5 +337,39 @@
     ],
     "title": "Transaction Batch",
     "description": "TransactionBatch entity in BOOST data model"
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "TransactionBatch",
+      "primaryKey": "transactionBatchId",
+      "area": "transaction_management",
+      "description": "Physical material batches within business transactions"
+    },
+    "relationships": [
+      {
+        "field": "transactionId",
+        "targetEntity": "Transaction",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "part of",
+        "example": "Batch TB-2024-067 is part of transaction TXN-2024-001"
+      },
+      {
+        "field": "traceableUnitIds",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-many",
+        "required": true,
+        "label": "contains units",
+        "example": "Batch TB-2024-067 contains TRU-456 + TRU-789 + TRU-890"
+      },
+      {
+        "field": "deliveryGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "delivered to",
+        "example": "Batch TB-2024-067 delivered to 'Portland Mill Yard'"
+      }
+    ]
   }
 }

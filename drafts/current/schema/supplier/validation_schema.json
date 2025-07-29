@@ -63,5 +63,22 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Supplier",
+      "primaryKey": "supplierId",
+      "area": "material_supply_chain",
+      "description": "Supply chain organizations providing biomass materials"
+    },
+    "relationships": [
+      {
+        "field": "GeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "located at"
+      }
+    ]
   }
 }

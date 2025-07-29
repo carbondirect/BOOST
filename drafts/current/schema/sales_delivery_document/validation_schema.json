@@ -99,5 +99,22 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "SalesDeliveryDocument",
+      "primaryKey": "documentId",
+      "area": "transaction_management",
+      "description": "Sales and delivery documentation for business transactions"
+    },
+    "relationships": [
+      {
+        "field": "transactionId",
+        "targetEntity": "Transaction",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "documenting"
+      }
+    ]
   }
 }

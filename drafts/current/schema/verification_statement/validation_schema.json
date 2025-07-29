@@ -63,5 +63,29 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "VerificationStatement",
+      "primaryKey": "statementId",
+      "area": "measurement_verification",
+      "description": "Verification statements for certification compliance"
+    },
+    "relationships": [
+      {
+        "field": "transactionBatchId",
+        "targetEntity": "TransactionBatch",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "verifying"
+      },
+      {
+        "field": "issuingBody",
+        "targetEntity": "CertificationBody",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "issued by"
+      }
+    ]
   }
 }

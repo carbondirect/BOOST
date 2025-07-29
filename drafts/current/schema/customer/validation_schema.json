@@ -54,5 +54,22 @@
         }
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Customer",
+      "primaryKey": "customerId",
+      "area": "material_supply_chain",
+      "description": "🏪 Customer entity for buyers"
+    },
+    "relationships": [
+      {
+        "field": "GeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "located at"
+      }
+    ]
   }
 }

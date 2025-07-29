@@ -184,6 +184,10 @@
         "examples": [
           "https://sfiprogram.org/certificates/2025-12345.pdf"
         ]
+      },
+      "VerificationStatementId": {
+        "type": "string",
+        "description": "Uses EntityNameId convention referencing VerificationStatement for third-party validation"
       }
     },
     "required": [
@@ -198,5 +202,43 @@
       "versionNumber"
     ],
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Certificate",
+      "primaryKey": "certificateNumber",
+      "area": "organizational_foundation",
+      "description": "Formal certification records issued by certification bodies"
+    },
+    "relationships": [
+      {
+        "field": "CertificationSchemeId",
+        "targetEntity": "CertificationScheme",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "certified under"
+      },
+      {
+        "field": "CertificationBodyId",
+        "targetEntity": "CertificationBody",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "issued by"
+      },
+      {
+        "field": "OrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "held by"
+      },
+      {
+        "field": "VerificationStatementId",
+        "targetEntity": "VerificationStatement",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "verified by"
+      }
+    ]
   }
 }

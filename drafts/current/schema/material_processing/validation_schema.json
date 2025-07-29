@@ -269,5 +269,45 @@
       "inputVolume",
       "outputVolume"
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "MaterialProcessing",
+      "primaryKey": "processingId",
+      "area": "core_traceability",
+      "description": "Processing operations that transform biomass materials"
+    },
+    "relationships": [
+      {
+        "field": "inputTraceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "processes input",
+        "example": "Chipping-789 processes whole tree TRU-456 into wood chips"
+      },
+      {
+        "field": "outputTraceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "produces output",
+        "example": "Chipping-789 produces wood chip pile TRU-790"
+      },
+      {
+        "field": "processingGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "processed at"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "operated by"
+      }
+    ]
   }
 }

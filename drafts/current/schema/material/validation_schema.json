@@ -218,5 +218,22 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Material",
+      "primaryKey": "materialTypeId",
+      "area": "material_supply_chain",
+      "description": "🌿 Material/feedstock entity"
+    },
+    "relationships": [
+      {
+        "field": "materialTypeId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "one-to-many",
+        "required": false,
+        "label": "material type for"
+      }
+    ]
   }
 }

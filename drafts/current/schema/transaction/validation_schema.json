@@ -265,5 +265,60 @@
     ],
     "title": "Transaction",
     "description": "Transaction entity in BOOST data model"
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Transaction",
+      "primaryKey": "transactionId",
+      "area": "transaction_management",
+      "description": "🔄 Business transaction with supply chain traceability"
+    },
+    "relationships": [
+      {
+        "field": "OrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "seller organization",
+        "example": "TXN-2024-001 sold by 'Olympic Forest Products'"
+      },
+      {
+        "field": "CustomerId", 
+        "targetEntity": "Customer",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "buyer customer",
+        "example": "TXN-2024-001 purchased by customer 'Green Energy Corp'"
+      },
+      {
+        "field": "SalesDeliveryDocumentId",
+        "targetEntity": "SalesDeliveryDocument",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "delivery document",
+        "example": "TXN-2024-001 documented by delivery receipt SDD-789"
+      },
+      {
+        "field": "GeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "transaction location"
+      },
+      {
+        "field": "BrokerOrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "broker organization"
+      },
+      {
+        "field": "LcfsPathwayId",
+        "targetEntity": "LcfsPathway", 
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "LCFS pathway"
+      }
+    ]
   }
 }

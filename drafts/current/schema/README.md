@@ -158,6 +158,47 @@ The BOOST ERD Navigator (`../../erd-navigator/index.html`) **dynamically loads t
 ✅ **Relationships from schema metadata are automatically processed**
 ✅ **Single source of truth maintained**
 
+### ERD Configuration and Positioning
+
+For comprehensive guidance on ERD configuration, including entity positioning, relationship examples, and visual design principles, see the **[ERD Configuration Guide](../../erd-navigator/ERD_CONFIGURATION.md)**.
+
+The guide covers:
+- **Hub-and-spoke layout design** with TraceableUnit as the central hub
+- **Entity positioning system** and coordinate management  
+- **Relationship configuration** using `boost_metadata` sections
+- **Visual design system** with thematic color coding
+- **Adding new entities** and maintenance procedures
+- **Troubleshooting** common configuration issues
+
+### Boost Metadata for ERD Integration
+
+Each schema file should include a `boost_metadata` section for ERD integration:
+
+```json
+{
+  "boost_metadata": {
+    "entity": {
+      "name": "EntityName",
+      "primaryKey": "entityId",
+      "area": "core_traceability", 
+      "description": "Entity description with emoji"
+    },
+    "relationships": [
+      {
+        "field": "targetEntityId",
+        "targetEntity": "TargetEntity",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "relationship description",
+        "example": "Concrete example showing the relationship"
+      }
+    ]
+  }
+}
+```
+
+This metadata enables automatic ERD positioning, relationship detection, and interactive examples.
+
 ### Automatic Entity and Relationship Discovery
 
 The ERD Navigator now includes a powerful auto-discovery system that:

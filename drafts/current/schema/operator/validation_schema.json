@@ -169,5 +169,14 @@
       "lastUpdated"
     ],
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Operator",
+      "primaryKey": "operatorId",
+      "area": "organizational_foundation",
+      "description": "👤 Individual operator/personnel entity"
+    },
+    "relationships": []
   }
 }

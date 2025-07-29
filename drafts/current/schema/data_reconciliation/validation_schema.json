@@ -166,5 +166,29 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "DataReconciliation",
+      "primaryKey": "reconciliationId",
+      "area": "compliance_reporting",
+      "description": "Data reconciliation records for measurement discrepancy resolution"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "reconciling data for"
+      },
+      {
+        "field": "transactionId",
+        "targetEntity": "Transaction",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "related to transaction"
+      }
+    ]
   }
 }

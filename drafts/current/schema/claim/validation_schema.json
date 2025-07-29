@@ -105,5 +105,29 @@
     ],
     "title": "Claim",
     "description": "Claim entity in BOOST data model"
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Claim",
+      "primaryKey": "claimId",
+      "area": "measurement_verification",
+      "description": "Sustainability claims and certifications for biomass materials"
+    },
+    "relationships": [
+      {
+        "field": "TraceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "claim applies to"
+      },
+      {
+        "field": "CertificationSchemeId",
+        "targetEntity": "CertificationScheme",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "certified under"
+      }
+    ]
   }
 }
