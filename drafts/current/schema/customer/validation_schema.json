@@ -26,8 +26,9 @@
       "address": {
         "type": "string"
       },
-      "customerGeographicDataId": {
-        "type": "string"
+      "GeographicDataId": {
+        "type": "string",
+        "description": "Customer location - uses EntityNameId convention referencing GeographicData"
       }
     },
     "required": [

@@ -35,8 +35,9 @@
       "supplierType": {
         "type": "string"
       },
-      "supplierGeographicDataId": {
-        "type": "string"
+      "GeographicDataId": {
+        "type": "string",
+        "description": "Supplier location - uses EntityNameId convention referencing GeographicData"
       }
     },
     "required": [

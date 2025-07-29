@@ -20,8 +20,9 @@
       "supplyBaseId": {
         "type": "string"
       },
-      "organizationId": {
-        "type": "string"
+      "OrganizationId": {
+        "type": "string",
+        "description": "Managing organization - uses EntityNameId convention referencing Organization"
       },
       "supplyBaseName": {
         "type": "string"
@@ -65,8 +66,9 @@
           "type": "string"
         }
       },
-      "supplyBaseGeographicDataId": {
-        "type": "string"
+      "GeographicDataId": {
+        "type": "string",
+        "description": "Supply base location - uses EntityNameId convention referencing GeographicData"
       }
     },
     "required": [
@@ -74,7 +76,7 @@
       "@type",
       "@id",
       "supplyBaseId",
-      "organizationId",
+      "OrganizationId",
       "supplyBaseName",
       "description"
     ],

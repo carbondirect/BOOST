@@ -20,8 +20,9 @@
       "claimId": {
         "type": "string"
       },
-      "traceableUnitId": {
-        "type": "string"
+      "TraceableUnitId": {
+        "type": "string",
+        "description": "Referenced traceable unit - uses EntityNameId convention referencing TraceableUnit"
       },
       "claimType": {
         "type": "string",
@@ -37,8 +38,9 @@
           "RED II"
         ]
       },
-      "certificationSchemeId": {
-        "type": "string"
+      "CertificationSchemeId": {
+        "type": "string",
+        "description": "Certification scheme - uses EntityNameId convention referencing CertificationScheme"
       },
       "statement": {
         "type": "string"
@@ -96,7 +98,7 @@
       "@type",
       "@id",
       "claimId",
-      "traceableUnitId",
+      "TraceableUnitId",
       "claimType",
       "statement",
       "validated"
