@@ -405,6 +405,10 @@
             max-width: 200px;
         }
 
+        .legend-hidden {
+            display: none !important;
+        }
+
         .legend h4 {
             margin: 0 0 8px 0;
             font-size: 11px;
@@ -595,11 +599,9 @@
             <button class="btn" onclick="filterByArea('organizational_foundation')">🔵 Organizational</button>
             <button class="btn" onclick="filterByArea('material_supply_chain')">🟤 Material & Supply</button>
             <button class="btn" onclick="filterByArea('transaction_management')">🟠 Transactions</button>
-            <button class="btn" onclick="filterByArea('sustainability_claims')">🟡 Sustainability</button>
-            <button class="btn" onclick="filterByArea('geographic_location')">🟣 Geographic</button>
-            <button class="btn" onclick="filterByArea('reporting_compliance')">🔴 Reporting</button>
-            <button class="btn" onclick="filterByArea('analytics_data')">⚫ Analytics</button>
-            <button class="btn" onclick="filterByArea('personnel')">👥 Personnel</button>
+            <button class="btn" onclick="filterByArea('measurement_verification')">🟡 Measurement</button>
+            <button class="btn" onclick="filterByArea('geographic_tracking')">🟣 Geographic</button>
+            <button class="btn" onclick="filterByArea('compliance_reporting')">🔴 Reporting</button>
             <button class="btn" onclick="fitToScreen()">Fit to Screen</button>
         </div>
 
@@ -610,6 +612,7 @@
                 <button class="control-btn" onclick="resetZoom()" title="Reset Zoom">⌂</button>
                 <button class="control-btn" onclick="toggleLabels()" title="Toggle relationship labels" id="label-toggle">🏷️</button>
                 <button class="control-btn" onclick="toggleTruFocus()" title="Focus on essential TraceableUnit relationships" id="tru-focus">🎯</button>
+                <button class="control-btn" onclick="toggleLegend()" title="Toggle legend visibility" id="legend-toggle">📋</button>
             </div>
             
             <div class="area-controls">
@@ -646,9 +649,27 @@
                     <span style="color: #9ca3af;">○</span>
                     <span>Optional Field</span>
                 </div>
+                
+                <h4 style="margin-top: 15px;">Relationship Types</h4>
+                <div class="legend-item">
+                    <svg width="30" height="2" style="margin-right: 8px;">
+                        <line x1="0" y1="1" x2="30" y2="1" stroke="#374151" stroke-width="1.5"/>
+                    </svg>
+                    <span>Identifying (FK is part of PK)</span>
+                </div>
+                <div class="legend-item">
+                    <svg width="30" height="2" style="margin-right: 8px;">
+                        <line x1="0" y1="1" x2="30" y2="1" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+                    </svg>
+                    <span>Non-identifying (FK references only)</span>
+                </div>
+                <div style="font-size: 10px; color: #6b7280; margin-top: 5px; line-height: 1.3;">
+                    <strong>Solid:</strong> Child entity depends on parent for identity (owns/contains)<br/>
+                    <strong>Dashed:</strong> Child entity references parent independently (uses/links to)
+                </div>
             </div>
             
-            <svg id="erd-svg" width="3200" height="2000"></svg>
+            <svg id="erd-svg" width="3600" height="2000"></svg>
         </div>
         
         <div class="tooltip" id="tooltip"></div>
@@ -708,49 +729,39 @@
             curveType: 'curveBasis',
             colors: {
                 'core_traceability': { 
-                    fill: 'rgba(46, 125, 50, 0.1)', 
-                    stroke: '#2E7D32', 
-                    header: '#1B5E20'
+                    fill: 'rgba(22, 163, 74, 0.1)', 
+                    stroke: '#16A34A', 
+                    header: '#15803D'
                 },
                 'organizational_foundation': { 
-                    fill: 'rgba(21, 101, 192, 0.1)', 
-                    stroke: '#1565C0', 
-                    header: '#0D47A1'
+                    fill: 'rgba(37, 99, 235, 0.1)', 
+                    stroke: '#2563EB', 
+                    header: '#1D4ED8'
                 },
                 'material_supply_chain': { 
-                    fill: 'rgba(93, 64, 55, 0.1)', 
-                    stroke: '#5D4037', 
-                    header: '#3E2723'
+                    fill: 'rgba(161, 98, 7, 0.1)', 
+                    stroke: '#A16207', 
+                    header: '#92400E'
                 },
                 'transaction_management': { 
-                    fill: 'rgba(245, 124, 0, 0.1)', 
-                    stroke: '#F57C00', 
-                    header: '#E65100'
+                    fill: 'rgba(234, 88, 12, 0.1)', 
+                    stroke: '#EA580C', 
+                    header: '#C2410C'
                 },
-                'sustainability_claims': { 
-                    fill: 'rgba(249, 168, 37, 0.1)', 
-                    stroke: '#F9A825', 
-                    header: '#F57F17'
+                'measurement_verification': { 
+                    fill: 'rgba(234, 179, 8, 0.1)', 
+                    stroke: '#EAB308', 
+                    header: '#CA8A04'
                 },
-                'geographic_location': { 
-                    fill: 'rgba(123, 31, 162, 0.1)', 
-                    stroke: '#7B1FA2', 
-                    header: '#4A148C'
+                'geographic_tracking': { 
+                    fill: 'rgba(147, 51, 234, 0.1)', 
+                    stroke: '#9333EA', 
+                    header: '#7C3AED'
                 },
-                'reporting_compliance': { 
-                    fill: 'rgba(198, 40, 40, 0.1)', 
-                    stroke: '#C62828', 
-                    header: '#B71C1C'
-                },
-                'analytics_data': { 
-                    fill: 'rgba(66, 66, 66, 0.1)', 
-                    stroke: '#424242', 
-                    header: '#212121'
-                },
-                'personnel': { 
-                    fill: 'rgba(103, 58, 183, 0.1)', 
-                    stroke: '#673AB7', 
-                    header: '#512DA8'
+                'compliance_reporting': { 
+                    fill: 'rgba(220, 38, 38, 0.1)', 
+                    stroke: '#DC2626', 
+                    header: '#B91C1C'
                 }
             }
         };
@@ -860,25 +871,48 @@
             }
         }
 
-        function extractMetadataFromSchema(entityName, schema) {
+        async function loadERDConfig() {
+            try {
+                const response = await fetch('./erd-config.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load ERD config: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Failed to load ERD configuration:', error);
+                throw error;
+            }
+        }
+
+        function extractMetadataFromSchema(entityName, schema, erdConfig) {
             const schemaData = schema.schema || schema;
-            const boostMeta = schemaData.boost_metadata;
             
-            if (!boostMeta) {
-                console.warn(`Entity ${entityName} is missing boost_metadata in schema file`);
+            // Find area for this entity from ERD config
+            let entityArea = null;
+            for (const [areaName, areaConfig] of Object.entries(erdConfig.areas)) {
+                if (areaConfig.entities.includes(entityName)) {
+                    entityArea = areaName;
+                    break;
+                }
+            }
+            
+            if (!entityArea) {
+                console.error(`Entity ${entityName} not found in any area configuration`);
                 return null;
             }
             
-            if (!boostMeta.area) {
-                console.warn(`Entity ${entityName} has boost_metadata but missing area field`);
+            // Get display config
+            const displayConfig = erdConfig.entity_display[entityName];
+            if (!displayConfig) {
+                console.error(`Entity ${entityName} missing display configuration`);
                 return null;
             }
             
             return {
-                area: boostMeta.area,
-                description: `${boostMeta.emoji || '📋'} ${schemaData.description || schemaData.title || entityName}`,
-                position: boostMeta.position || null,
-                relationships: boostMeta.relationships || []
+                area: entityArea,
+                description: `${displayConfig.emoji || '📋'} ${schemaData.description || schemaData.title || entityName}`,
+                position: displayConfig.position || { x: 1600, y: 1000 },
+                relationships: []
             };
         }
 
@@ -924,15 +958,35 @@
                 let isFK = false;
                 let isRequired = required.includes(fieldName);
 
-                // Detect primary keys (usually ends with 'Id' and matches entity name)
-                if (fieldName.toLowerCase().includes('id') && 
-                    (fieldName.toLowerCase().includes(entityName.toLowerCase()) || fieldName === 'id')) {
-                    isPK = true;
+                // Enhanced primary key detection using configuration
+                if (fieldName.toLowerCase().includes('id')) {
+                    // Check if field name contains entity name (common pattern)
+                    const entityLower = entityName.toLowerCase();
+                    if (fieldName.toLowerCase().includes(entityLower) || fieldName === 'id') {
+                        isPK = true;
+                    }
+                    // Check configuration for entity-specific primary key patterns
+                    else if (globalErdConfig && globalErdConfig.primary_key_mappings && 
+                             globalErdConfig.primary_key_mappings[entityName] === fieldName) {
+                        isPK = true;
+                    }
                 }
 
-                // Detect foreign keys (ends with 'Id' but not primary key)
-                if (fieldName.endsWith('Id') && !isPK && fieldName !== 'id') {
-                    isFK = true;
+                // Enhanced FK detection with multiple patterns
+                if (!isPK && fieldName !== 'id') {
+                    // Check if field follows any FK naming pattern
+                    const fkPatterns = [
+                        /^[A-Z][a-zA-Z]*Id$/, // OrganizationId, CustomerId
+                        /^[a-z][a-zA-Z]*Id$/, // operatorId, materialTypeId
+                        /^[a-z]+[A-Z][a-zA-Z]*Id$/, // currentGeographicDataId
+                        /^regulatedEntityId$/, // special case
+                        /^harvesterId$/, // special case
+                        /^cbId$/, // special case
+                        /^pathwayId$/, // special case
+                        /Id$/  // fallback: any field ending in Id
+                    ];
+                    
+                    isFK = fkPatterns.some(pattern => pattern.test(fieldName));
                 }
 
                 // Handle enum types
@@ -970,18 +1024,1413 @@
             };
         }
 
+        // Generate automatic relationships from FK fields using EntityNameId convention
+        function generateAutomaticFKRelationships(entities, existingRelationships) {
+            const automaticRelationships = [];
+            const entityNameSet = new Set(entities.map(e => e.id));
+            
+            // Create lookup for existing relationships to avoid duplicates
+            const existingRelLookup = new Set(
+                existingRelationships.map(rel => `${rel.from}-${rel.to}`)
+            );
+            
+            for (const entity of entities) {
+                // Find all FK fields in this entity
+                const fkFields = entity.fields.filter(field => field.isFK);
+                
+                for (const fkField of fkFields) {
+                    // Use EntityNameId convention for trivial matching
+                    const targetEntityName = inferTargetEntityFromFK(fkField.name, entityNameSet);
+                    
+                    if (targetEntityName) {
+                        const relationshipKey = `${entity.id}-${targetEntityName}`;
+                        
+                        // Skip if relationship already exists from metadata
+                        if (!existingRelLookup.has(relationshipKey)) {
+                            const semanticLabel = convertToSemanticRelationship(fkField.name);
+                            const isRequired = entity.schema?.required?.includes(fkField.name);
+                            
+                            automaticRelationships.push({
+                                from: entity.id,
+                                to: targetEntityName,
+                                label: semanticLabel,
+                                type: isRequired ? 'identifying' : 'non-identifying',
+                                fromCard: 'many',
+                                toCard: 'one'
+                            });
+                        }
+                    }
+                }
+            }
+            
+            return automaticRelationships;
+        }
+        
+        // Convert FK field name to semantic relationship label
+        function convertToSemanticRelationship(fieldName) {
+            // Remove 'Id' suffix if present
+            const baseName = fieldName.replace(/Id$/, '');
+            
+            // Convert PascalCase to snake_case semantic form
+            const semantic = baseName
+                .replace(/([A-Z])/g, '_$1')  // Insert underscore before capitals
+                .toLowerCase()               // Convert to lowercase
+                .replace(/^_/, '');          // Remove leading underscore if present
+            
+            // Return semantic relationship name
+            return `references_${semantic}`;
+        }
+        
+        // Enhanced FK matching using multiple naming conventions
+        function inferTargetEntityFromFK(fieldName, entityNameSet) {
+            // Primary convention: EntityNameId pattern
+            if (fieldName.endsWith('Id')) {
+                const targetName = fieldName.slice(0, -2);
+                if (entityNameSet.has(targetName)) {
+                    return targetName;
+                }
+            }
+            
+            // Handle common variations and patterns
+            const patterns = [
+                // Standard patterns
+                { pattern: /^([A-Z][a-zA-Z]+)Id$/, transform: (match) => match[1] }, // OrganizationId → Organization
+                { pattern: /^([a-z][a-zA-Z]+)Id$/, transform: (match) => capitalizeFirst(match[1]) }, // operatorId → Operator
+                
+                // Compound patterns
+                { pattern: /^([a-z]+)([A-Z][a-zA-Z]+)Id$/, transform: (match) => match[2] }, // materialTypeId → Material, currentGeographicDataId → GeographicData
+                { pattern: /^([a-z]+)([A-Z][a-zA-Z]+)DataId$/, transform: (match) => match[2] + 'Data' }, // harvestGeographicDataId → GeographicData
+                
+                // Generic special cases (specific mappings now in erd-config.json)
+                { pattern: /^regulatedEntityId$/, transform: () => 'Organization' },
+                { pattern: /^harvesterId$/, transform: () => 'Organization' },
+                { pattern: /^cbId$/, transform: () => 'CertificationBody' },
+                { pattern: /^pathwayId$/, transform: () => 'LcfsPathway' },
+                
+                // Underscore patterns (convert to PascalCase)
+                { pattern: /^([a-z]+)_([a-z]+)_id$/i, transform: (match) => capitalizeFirst(match[1]) + capitalizeFirst(match[2]) }
+            ];
+            
+            for (const {pattern, transform} of patterns) {
+                const match = fieldName.match(pattern);
+                if (match) {
+                    const targetName = transform(match);
+                    if (entityNameSet.has(targetName)) {
+                        return targetName;
+                    }
+                }
+            }
+            
+            return null;
+        }
+        
+        // Helper function to capitalize first letter
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Dynamic Network Analysis Engine
+        class NetworkAnalysisEngine {
+            constructor(entities, relationships, config = {}) {
+                this.entities = entities;
+                this.relationships = relationships;
+                this.adjacencyList = this.buildAdjacencyList();
+                this.entityMap = new Map(entities.map(e => [e.name, e]));
+                
+                // Configurable network metric weights
+                this.networkWeights = {
+                    degree: 0.6,        // Primary importance for visual hubs
+                    betweenness: 0.3,   // Secondary importance for bottlenecks  
+                    closeness: 0.1,     // Tertiary importance for accessibility
+                    normalize: true,    // Enable min-max normalization
+                    ...config.networkWeights
+                };
+                
+                console.log('NetworkAnalysisEngine initialized with weights:', this.networkWeights);
+            }
+
+            buildAdjacencyList() {
+                const adjacencyList = new Map();
+                
+                // Initialize adjacency list
+                this.entities.forEach(entity => {
+                    adjacencyList.set(entity.name, new Set());
+                });
+
+                // Add relationships
+                this.relationships.forEach(rel => {
+                    if (adjacencyList.has(rel.from) && adjacencyList.has(rel.to)) {
+                        adjacencyList.get(rel.from).add(rel.to);
+                        adjacencyList.get(rel.to).add(rel.from); // Undirected for layout purposes
+                    }
+                });
+
+                return adjacencyList;
+            }
+
+            // Normalize values to 0-1 range using min-max normalization
+            normalizeValues(values) {
+                if (values.length === 0) return values;
+                
+                const min = Math.min(...values);
+                const max = Math.max(...values);
+                const range = max - min;
+                
+                if (range === 0) return values.map(() => 0.5); // All values equal
+                
+                return values.map(value => (value - min) / range);
+            }
+
+            // Calculate all centrality metrics for all entities
+            calculateAllCentralityMetrics() {
+                const degreeValues = [];
+                const betweennessValues = [];
+                const closenessValues = [];
+                const entityNames = [];
+                
+                // Calculate raw values for all entities
+                this.entities.forEach(entity => {
+                    const name = entity.name;
+                    entityNames.push(name);
+                    
+                    const degree = this.adjacencyList.get(name).size;
+                    const betweenness = this.calculateBetweennessCentrality(name);
+                    const closeness = this.calculateClosenessCentrality(name);
+                    
+                    degreeValues.push(degree);
+                    betweennessValues.push(betweenness);
+                    closenessValues.push(closeness);
+                });
+                
+                // Normalize if enabled
+                const normalizedDegree = this.networkWeights.normalize ? 
+                    this.normalizeValues(degreeValues) : degreeValues;
+                const normalizedBetweenness = this.networkWeights.normalize ? 
+                    this.normalizeValues(betweennessValues) : betweennessValues;
+                const normalizedCloseness = this.networkWeights.normalize ? 
+                    this.normalizeValues(closenessValues) : closenessValues;
+                
+                // Create metrics map with weighted scores
+                const metrics = new Map();
+                entityNames.forEach((name, index) => {
+                    const weightedConnectivity = 
+                        (normalizedDegree[index] * this.networkWeights.degree) +
+                        (normalizedBetweenness[index] * this.networkWeights.betweenness) +
+                        (normalizedCloseness[index] * this.networkWeights.closeness);
+                    
+                    metrics.set(name, {
+                        degree: degreeValues[index],
+                        betweenness: betweennessValues[index],
+                        closeness: closenessValues[index],
+                        normalizedDegree: normalizedDegree[index],
+                        normalizedBetweenness: normalizedBetweenness[index],
+                        normalizedCloseness: normalizedCloseness[index],
+                        weightedConnectivity: weightedConnectivity,
+                        totalConnectivity: weightedConnectivity // Use weighted score as total
+                    });
+                });
+                
+                return metrics;
+            }
+
+            calculateConnectivityMetrics() {
+                // Use the new weighted approach
+                return this.calculateAllCentralityMetrics();
+            }
+
+            calculateBetweennessCentrality(targetNode) {
+                let betweenness = 0;
+                const nodes = Array.from(this.adjacencyList.keys());
+                
+                // Simplified betweenness centrality calculation
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const source = nodes[i];
+                        const target = nodes[j];
+                        
+                        if (source !== targetNode && target !== targetNode) {
+                            const pathsThrough = this.countShortestPathsThrough(source, target, targetNode);
+                            const totalPaths = this.countShortestPaths(source, target);
+                            
+                            if (totalPaths > 0) {
+                                betweenness += pathsThrough / totalPaths;
+                            }
+                        }
+                    }
+                }
+                
+                return betweenness;
+            }
+
+            calculateClosenessCentrality(targetNode) {
+                let totalDistance = 0;
+                let reachableNodes = 0;
+                
+                this.entities.forEach(entity => {
+                    if (entity.name !== targetNode) {
+                        const distance = this.shortestPathDistance(targetNode, entity.name);
+                        if (distance < Infinity) {
+                            totalDistance += distance;
+                            reachableNodes++;
+                        }
+                    }
+                });
+                
+                return reachableNodes > 0 ? reachableNodes / totalDistance : 0;
+            }
+
+            countShortestPathsThrough(source, target, throughNode) {
+                // Simplified implementation - counts if throughNode is on any shortest path
+                const pathToThrough = this.shortestPathDistance(source, throughNode);
+                const throughToTarget = this.shortestPathDistance(throughNode, target);
+                const directPath = this.shortestPathDistance(source, target);
+                
+                return (pathToThrough + throughToTarget === directPath) ? 1 : 0;
+            }
+
+            countShortestPaths(source, target) {
+                return this.shortestPathDistance(source, target) < Infinity ? 1 : 0;
+            }
+
+            shortestPathDistance(start, end) {
+                if (start === end) return 0;
+                
+                const visited = new Set();
+                const queue = [{node: start, distance: 0}];
+                
+                while (queue.length > 0) {
+                    const {node, distance} = queue.shift();
+                    
+                    if (visited.has(node)) continue;
+                    visited.add(node);
+                    
+                    if (node === end) return distance;
+                    
+                    const neighbors = this.adjacencyList.get(node) || new Set();
+                    neighbors.forEach(neighbor => {
+                        if (!visited.has(neighbor)) {
+                            queue.push({node: neighbor, distance: distance + 1});
+                        }
+                    });
+                }
+                
+                return Infinity;
+            }
+
+            identifyHubs(threshold = 0.7) {
+                const metrics = this.calculateConnectivityMetrics();
+                const sortedByConnectivity = Array.from(metrics.entries())
+                    .sort((a, b) => b[1].totalConnectivity - a[1].totalConnectivity);
+                
+                const topN = Math.ceil(sortedByConnectivity.length * threshold);
+                const hubs = sortedByConnectivity.slice(0, topN).map(([name, metrics]) => ({
+                    name,
+                    ...metrics,
+                    entity: this.entityMap.get(name)
+                }));
+                
+                console.log('Identified network hubs:', hubs.map(h => 
+                    `${h.name} (degree: ${h.degree}, weighted: ${h.weightedConnectivity.toFixed(3)})`));
+                return hubs;
+            }
+
+            detectCommunitiesLouvain() {
+                // Simplified community detection using modularity optimization
+                const communities = new Map();
+                let communityId = 0;
+                
+                // Initialize each node as its own community
+                this.entities.forEach(entity => {
+                    communities.set(entity.name, communityId++);
+                });
+                
+                // Iteratively move nodes to communities that maximize modularity
+                let improved = true;
+                let iterations = 0;
+                const maxIterations = 10;
+                
+                while (improved && iterations < maxIterations) {
+                    improved = false;
+                    iterations++;
+                    
+                    this.entities.forEach(entity => {
+                        const currentCommunity = communities.get(entity.name);
+                        let bestCommunity = currentCommunity;
+                        let bestModularityGain = 0;
+                        
+                        // Check all neighboring communities
+                        const neighbors = this.adjacencyList.get(entity.name);
+                        const neighborCommunities = new Set();
+                        
+                        neighbors.forEach(neighbor => {
+                            neighborCommunities.add(communities.get(neighbor));
+                        });
+                        
+                        neighborCommunities.forEach(communityId => {
+                            if (communityId !== currentCommunity) {
+                                const modularityGain = this.calculateModularityGain(entity.name, communityId, communities);
+                                if (modularityGain > bestModularityGain) {
+                                    bestModularityGain = modularityGain;
+                                    bestCommunity = communityId;
+                                    improved = true;
+                                }
+                            }
+                        });
+                        
+                        communities.set(entity.name, bestCommunity);
+                    });
+                }
+                
+                // Group entities by community
+                const communityGroups = new Map();
+                communities.forEach((communityId, entityName) => {
+                    if (!communityGroups.has(communityId)) {
+                        communityGroups.set(communityId, []);
+                    }
+                    communityGroups.get(communityId).push(entityName);
+                });
+                
+                console.log('Detected communities:', Array.from(communityGroups.values()));
+                return communityGroups;
+            }
+
+            calculateModularityGain(node, targetCommunity, communities) {
+                // Simplified modularity gain calculation
+                const currentCommunity = communities.get(node);
+                const neighbors = this.adjacencyList.get(node);
+                
+                let currentCommunityEdges = 0;
+                let targetCommunityEdges = 0;
+                
+                neighbors.forEach(neighbor => {
+                    if (communities.get(neighbor) === currentCommunity) {
+                        currentCommunityEdges++;
+                    }
+                    if (communities.get(neighbor) === targetCommunity) {
+                        targetCommunityEdges++;
+                    }
+                });
+                
+                return targetCommunityEdges - currentCommunityEdges;
+            }
+        }
+
+        // Dynamic Layout Engine with Force-Directed Algorithm
+        class DynamicLayoutEngine {
+            constructor(entities, relationships, erdConfig, config = {}) {
+                this.entities = entities;
+                this.relationships = relationships;
+                this.erdConfig = erdConfig;
+                
+                // Initialize NetworkAnalysisEngine with configuration
+                this.networkAnalysis = new NetworkAnalysisEngine(entities, relationships, config);
+                
+                // Layout parameters (adaptive based on network size)
+                this.canvasWidth = 3200;
+                this.canvasHeight = 1800;
+                this.categoryPadding = 400;
+                this.entitySpacing = 200;
+                
+                // Multi-force weighting configuration
+                this.forceWeights = {
+                    repulsive: 0.4,      // Balanced node separation (exponential scaling handles close distances)
+                    attractive: 0.25,    // Moderate connection strength for relationships
+                    categorical: 0.15,   // Reduced category grouping to prioritize connectivity
+                    hub: 0.6,           // Very strong hub centralization for network structure
+                    baseK: 150,         // Base force constant
+                    ...config.forceWeights
+                };
+                
+                // Layout priority configuration
+                this.layoutPriorities = {
+                    connectivity: 0.4,    // Algorithmic network optimization
+                    categorization: 0.3,  // Functional grouping maintenance  
+                    aesthetics: 0.3,     // Visual appeal (spacing, symmetry)
+                    ...config.layoutPriorities
+                };
+                
+                // Adaptive force parameters
+                const networkDensity = (relationships.length * 2) / (entities.length * (entities.length - 1));
+                this.iterations = Math.max(80, Math.min(200, 120 + Math.floor(networkDensity * 100))); // More iterations
+                this.coolingFactor = 0.98; // Slower cooling for more stability
+                this.initialTemperature = 150; // Higher initial temperature
+                this.k = this.forceWeights.baseK * Math.sqrt(networkDensity + 0.1); // Adaptive k based on density
+                
+                console.log('DynamicLayoutEngine initialized:', {
+                    entities: entities.length,
+                    relationships: relationships.length,
+                    networkDensity: networkDensity.toFixed(3),
+                    adaptiveK: this.k.toFixed(1),
+                    iterations: this.iterations,
+                    forceWeights: this.forceWeights
+                });
+            }
+
+            calculateDynamicLayout() {
+                console.log('Starting dynamic layout calculation...');
+                const startTime = performance.now();
+                
+                // Phase 1: Network analysis
+                const hubs = this.networkAnalysis.identifyHubs(0.3); // Top 30% as hubs
+                console.log('Network hubs identified:', hubs.map(h => h.name));
+                
+                // Phase 2: Create simple initial spread to avoid overlaps
+                let positions = this.createInitialSpreadLayout();
+                
+                // Phase 3: Force-directed layout with hub preservation integrated
+                positions = this.applyForceDirectedLayoutWithHubs(positions, hubs);
+                
+                // Phase 4: Final collision elimination (guaranteed no overlaps)
+                positions = this.eliminateAllCollisions(positions);
+                
+                const endTime = performance.now();
+                console.log(`Dynamic layout calculated in ${Math.round(endTime - startTime)}ms`);
+                
+                return positions;
+            }
+
+            createInitialSpreadLayout() {
+                const positions = new Map();
+                
+                // Use category-based initial layout instead of random grid
+                // This gives much better starting positions that align with the final layout goals
+                const categoryRegions = this.calculateCategoryRegions();
+                
+                Object.entries(this.erdConfig.areas).forEach(([areaKey, area]) => {
+                    const region = categoryRegions[areaKey];
+                    const entitiesInArea = area.entities.filter(entityName => 
+                        this.entities.some(e => e.name === entityName)
+                    );
+                    
+                    // Arrange entities within their category region
+                    entitiesInArea.forEach((entityName, index) => {
+                        const position = this.calculateEntityPositionInRegion(region, index, entitiesInArea.length);
+                        
+                        // Debug: Log initial positions for problem entity
+                        if (entityName === 'SalesDeliveryDocument') {
+                            console.log(`SalesDeliveryDocument initial position: area=${areaKey}, center=(${Math.round(region.centerX)}, ${Math.round(region.centerY)}), pos=(${Math.round(position.x)}, ${Math.round(position.y)})`);
+                        }
+                        
+                        positions.set(entityName, position);
+                    });
+                });
+                
+                console.log(`Initial category-based layout: ${Object.keys(this.erdConfig.areas).length} category regions`);
+                return positions;
+            }
+
+            applyForceDirectedLayoutWithHubs(initialPositions, hubs) {
+                let positions = new Map(initialPositions);
+                let temperature = this.initialTemperature;
+                
+                console.log('Starting integrated force-directed layout with hub preservation');
+                
+                for (let iteration = 0; iteration < this.iterations; iteration++) {
+                    const forces = this.calculateForcesWithHubs(positions, hubs);
+                    positions = this.updatePositionsWithCollisionAvoidance(positions, forces, temperature);
+                    temperature *= this.coolingFactor;
+                    
+                    if (iteration % 20 === 0) {
+                        console.log(`Iteration ${iteration}, temp: ${temperature.toFixed(2)}, hub positions:`, 
+                            hubs.slice(0, 3).map(h => {
+                                const pos = positions.get(h.name);
+                                return `${h.name}(${Math.round(pos.x)},${Math.round(pos.y)})`;
+                            }).join(', ')
+                        );
+                    }
+                }
+                
+                return positions;
+            }
+
+            calculateForcesWithHubs(positions, hubs) {
+                const forces = new Map();
+                
+                // Initialize forces
+                this.entities.forEach(entity => {
+                    forces.set(entity.name, { x: 0, y: 0 });
+                });
+                
+                // Repulsive forces with distance-based scaling
+                this.entities.forEach(entity1 => {
+                    this.entities.forEach(entity2 => {
+                        if (entity1.name !== entity2.name) {
+                            const pos1 = positions.get(entity1.name);
+                            const pos2 = positions.get(entity2.name);
+                            const distance = Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2);
+                            
+                            // Use the new enhanced repulsive force calculation (handles distance scaling internally)
+                            const force = this.calculateRepulsiveForce(pos1, pos2);
+                            const weightedForce = {
+                                x: force.x * this.forceWeights.repulsive,
+                                y: force.y * this.forceWeights.repulsive
+                            };
+                            
+                            const currentForce = forces.get(entity1.name);
+                            forces.set(entity1.name, {
+                                x: currentForce.x + weightedForce.x,
+                                y: currentForce.y + weightedForce.y
+                            });
+                        }
+                    });
+                });
+                
+                // Attractive forces for relationships
+                this.relationships.forEach(rel => {
+                    const pos1 = positions.get(rel.from);
+                    const pos2 = positions.get(rel.to);
+                    
+                    if (pos1 && pos2) {
+                        const force = this.calculateAttractiveForce(pos1, pos2);
+                        const weightedForce = {
+                            x: force.x * this.forceWeights.attractive,
+                            y: force.y * this.forceWeights.attractive
+                        };
+                        
+                        const force1 = forces.get(rel.from);
+                        const force2 = forces.get(rel.to);
+                        
+                        forces.set(rel.from, {
+                            x: force1.x - weightedForce.x, // Attractive force pulls towards
+                            y: force1.y - weightedForce.y
+                        });
+                        
+                        forces.set(rel.to, {
+                            x: force2.x + weightedForce.x,
+                            y: force2.y + weightedForce.y
+                        });
+                    }
+                });
+                
+                // Strong central forces for hubs
+                const centerX = this.canvasWidth / 2;
+                const centerY = this.canvasHeight / 2;
+                
+                hubs.forEach((hub, index) => {
+                    if (index < 3) { // Focus on top 3 hubs
+                        const pos = positions.get(hub.name);
+                        const idealPos = this.calculateHubPosition(hub, index);
+                        
+                        const dx = idealPos.x - pos.x;
+                        const dy = idealPos.y - pos.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance > 20) { // Only apply if hub is significantly displaced
+                            const force = forces.get(hub.name);
+                            // Very strong hub centralization force based on connectivity
+                            const hubForceStrength = hub.weightedConnectivity * this.forceWeights.hub * 20;
+                            
+                            forces.set(hub.name, {
+                                x: force.x + (dx / distance) * hubForceStrength,
+                                y: force.y + (dy / distance) * hubForceStrength
+                            });
+                        }
+                    }
+                });
+                
+                return forces;
+            }
+
+            updatePositionsWithCollisionAvoidance(positions, forces, temperature) {
+                const newPositions = new Map();
+                const minDistance = 130; // Minimum distance between entities
+                
+                // First pass: calculate intended positions
+                const intendedPositions = new Map();
+                this.entities.forEach(entity => {
+                    const currentPos = positions.get(entity.name);
+                    const force = forces.get(entity.name);
+                    
+                    const displacement = Math.sqrt(force.x * force.x + force.y * force.y);
+                    const maxDisplacement = Math.min(displacement, temperature);
+                    
+                    let newX = currentPos.x;
+                    let newY = currentPos.y;
+                    
+                    if (displacement > 0) {
+                        newX += (force.x / displacement) * maxDisplacement;
+                        newY += (force.y / displacement) * maxDisplacement;
+                    }
+                    
+                    // Keep within canvas bounds with margin
+                    newX = Math.max(120, Math.min(this.canvasWidth - 120, newX));
+                    newY = Math.max(120, Math.min(this.canvasHeight - 120, newY));
+                    
+                    intendedPositions.set(entity.name, { x: newX, y: newY });
+                });
+                
+                // Second pass: resolve collisions by pushing apart
+                this.entities.forEach(entity => {
+                    const intendedPos = intendedPositions.get(entity.name);
+                    let finalX = intendedPos.x;
+                    let finalY = intendedPos.y;
+                    
+                    // Check all other entities for potential collisions
+                    this.entities.forEach(otherEntity => {
+                        if (otherEntity.name !== entity.name) {
+                            const otherIntendedPos = intendedPositions.get(otherEntity.name);
+                            const dx = finalX - otherIntendedPos.x;
+                            const dy = finalY - otherIntendedPos.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < minDistance && distance > 0) {
+                                // Push entities apart by half the overlap distance each
+                                const overlap = minDistance - distance;
+                                const pushDistance = overlap / 2 + 5;
+                                
+                                const unitX = dx / distance;
+                                const unitY = dy / distance;
+                                
+                                finalX += unitX * pushDistance;
+                                finalY += unitY * pushDistance;
+                            }
+                        }
+                    });
+                    
+                    // Ensure still within bounds after collision resolution
+                    finalX = Math.max(120, Math.min(this.canvasWidth - 120, finalX));
+                    finalY = Math.max(120, Math.min(this.canvasHeight - 120, finalY));
+                    
+                    newPositions.set(entity.name, { x: finalX, y: finalY });
+                });
+                
+                return newPositions;
+            }
+
+            createInitialCategoricalLayout() {
+                const positions = new Map();
+                const categoryRegions = this.calculateCategoryRegions();
+                
+                // Distribute entities within their category regions
+                Object.entries(this.erdConfig.areas).forEach(([areaKey, area]) => {
+                    const region = categoryRegions[areaKey];
+                    const entitiesInArea = area.entities.filter(entityName => 
+                        this.entities.some(e => e.name === entityName)
+                    );
+                    
+                    entitiesInArea.forEach((entityName, index) => {
+                        const position = this.calculateEntityPositionInRegion(region, index, entitiesInArea.length);
+                        positions.set(entityName, position);
+                    });
+                });
+                
+                return positions;
+            }
+
+            calculateCategoryRegions() {
+                const areas = Object.keys(this.erdConfig.areas);
+                const regions = {};
+                
+                // Use a strategic layout that avoids placing any category at exact canvas center
+                // Position categories in a ring pattern around the center, leaving center for hubs
+                const canvasCenterX = this.canvasWidth / 2;
+                const canvasCenterY = this.canvasHeight / 2;
+                const ringRadius = 600; // Distance from center
+                
+                areas.forEach((areaKey, index) => {
+                    // Position categories in a circle around the center
+                    const angle = (2 * Math.PI * index) / areas.length;
+                    const centerX = canvasCenterX + ringRadius * Math.cos(angle);
+                    const centerY = canvasCenterY + ringRadius * Math.sin(angle);
+                    
+                    // Each category gets a circular region
+                    const regionRadius = 400;
+                    
+                    regions[areaKey] = {
+                        x: centerX - regionRadius,
+                        y: centerY - regionRadius,
+                        width: regionRadius * 2,
+                        height: regionRadius * 2,
+                        centerX: centerX,
+                        centerY: centerY
+                    };
+                    
+                    console.log(`Category ${areaKey}: center=(${Math.round(centerX)}, ${Math.round(centerY)}), angle=${Math.round(angle * 180 / Math.PI)}°`);
+                });
+                
+                return regions;
+            }
+
+            calculateEntityPositionInRegion(region, index, total) {
+                // Arrange entities in a rough circle within the region
+                const centerX = region.centerX;
+                const centerY = region.centerY;
+                const radius = Math.min(region.width, region.height) * 0.3;
+                
+                if (total === 1) {
+                    return { x: centerX, y: centerY };
+                }
+                
+                const angle = (2 * Math.PI * index) / total;
+                return {
+                    x: centerX + radius * Math.cos(angle),
+                    y: centerY + radius * Math.sin(angle)
+                };
+            }
+
+            adjustForHubs(positions, hubs) {
+                // Move high-connectivity hubs to more central positions
+                const adjustedPositions = new Map(positions);
+                
+                hubs.forEach((hub, index) => {
+                    if (index < 3) { // Top 3 hubs get special treatment
+                        const hubPosition = this.calculateHubPosition(hub, index);
+                        adjustedPositions.set(hub.name, hubPosition);
+                    }
+                });
+                
+                return adjustedPositions;
+            }
+
+            calculateHubPosition(hub, hubIndex) {
+                const centerX = this.canvasWidth / 2;
+                const centerY = this.canvasHeight / 2;
+                
+                // FIXED: Top hubs should be positioned AT the center, not around it
+                if (hubIndex < 3) { // Top 3 hubs go to center
+                    const hubRadius = 100; // Very small radius for tight central clustering
+                    
+                    // Slight offset to prevent exact overlap
+                    const angles = [0, 2 * Math.PI / 3, 4 * Math.PI / 3];
+                    const angle = angles[hubIndex] || 0;
+                    
+                    return {
+                        x: centerX + hubRadius * Math.cos(angle),
+                        y: centerY + hubRadius * Math.sin(angle)
+                    };
+                }
+                
+                // Lower priority hubs positioned in wider ring
+                const hubRadius = 300;
+                const angles = [0, 2 * Math.PI / 3, 4 * Math.PI / 3];
+                const angle = angles[hubIndex % 3] || 0;
+                
+                return {
+                    x: centerX + hubRadius * Math.cos(angle),
+                    y: centerY + hubRadius * Math.sin(angle)
+                };
+            }
+
+            applyForceDirectedLayout(initialPositions) {
+                let positions = new Map(initialPositions);
+                let temperature = this.initialTemperature;
+                
+                for (let iteration = 0; iteration < this.iterations; iteration++) {
+                    const forces = this.calculateForces(positions);
+                    positions = this.updatePositions(positions, forces, temperature);
+                    temperature *= this.coolingFactor;
+                    
+                    if (iteration % 20 === 0) {
+                        console.log(`Force-directed iteration ${iteration}, temperature: ${temperature.toFixed(2)}`);
+                        
+                        // Debug: Track TraceableUnit position during iterations
+                        if (positions.has('TraceableUnit')) {
+                            const traceablePos = positions.get('TraceableUnit');
+                            console.log(`  Iteration ${iteration}: TraceableUnit(${Math.round(traceablePos.x)},${Math.round(traceablePos.y)})`);
+                        }
+                    }
+                }
+                
+                return positions;
+            }
+
+            calculateForces(positions) {
+                const forces = new Map();
+                
+                // Initialize forces
+                this.entities.forEach(entity => {
+                    forces.set(entity.name, { x: 0, y: 0 });
+                });
+                
+                // Debug: Track force components for TraceableUnit
+                const debugEntity = 'TraceableUnit';
+                let debugForces = { repulsive: {x: 0, y: 0}, attractive: {x: 0, y: 0}, hub: {x: 0, y: 0}, categorical: {x: 0, y: 0} };
+                
+                // Repulsive forces between all entities (weighted)
+                this.entities.forEach(entity1 => {
+                    this.entities.forEach(entity2 => {
+                        if (entity1.name !== entity2.name) {
+                            const pos1 = positions.get(entity1.name);
+                            const pos2 = positions.get(entity2.name);
+                            const force = this.calculateRepulsiveForce(pos1, pos2);
+                            
+                            // Apply repulsive force weight
+                            const weightedForce = {
+                                x: force.x * this.forceWeights.repulsive,
+                                y: force.y * this.forceWeights.repulsive
+                            };
+                            
+                            // Debug: Track repulsive forces for TraceableUnit
+                            if (entity1.name === debugEntity) {
+                                debugForces.repulsive.x += weightedForce.x;
+                                debugForces.repulsive.y += weightedForce.y;
+                            }
+                            
+                            const currentForce = forces.get(entity1.name);
+                            forces.set(entity1.name, {
+                                x: currentForce.x + weightedForce.x,
+                                y: currentForce.y + weightedForce.y
+                            });
+                        }
+                    });
+                });
+                
+                // Attractive forces for connected entities (weighted)
+                this.relationships.forEach(rel => {
+                    const pos1 = positions.get(rel.from);
+                    const pos2 = positions.get(rel.to);
+                    
+                    if (pos1 && pos2) {
+                        const force = this.calculateAttractiveForce(pos1, pos2);
+                        
+                        // Apply attractive force weight
+                        const weightedForce = {
+                            x: force.x * this.forceWeights.attractive,
+                            y: force.y * this.forceWeights.attractive
+                        };
+                        
+                        // Debug: Track attractive forces for TraceableUnit
+                        if (rel.from === debugEntity) {
+                            debugForces.attractive.x += weightedForce.x;
+                            debugForces.attractive.y += weightedForce.y;
+                        } else if (rel.to === debugEntity) {
+                            debugForces.attractive.x -= weightedForce.x;
+                            debugForces.attractive.y -= weightedForce.y;
+                        }
+                        
+                        // Apply force to both entities
+                        const force1 = forces.get(rel.from);
+                        const force2 = forces.get(rel.to);
+                        
+                        forces.set(rel.from, {
+                            x: force1.x + weightedForce.x,
+                            y: force1.y + weightedForce.y
+                        });
+                        
+                        forces.set(rel.to, {
+                            x: force2.x - weightedForce.x,
+                            y: force2.y - weightedForce.y
+                        });
+                    }
+                });
+                
+                // Hub preservation forces (weighted)
+                this.applyHubPreservationForces(positions, forces, debugForces);
+                
+                // Categorical grouping forces (weighted)
+                this.applyCategoricalForces(positions, forces, debugForces);
+                
+                // Debug: Log force breakdown for TraceableUnit
+                if (forces.has(debugEntity)) {
+                    const totalForce = forces.get(debugEntity);
+                    const totalMagnitude = Math.sqrt(totalForce.x * totalForce.x + totalForce.y * totalForce.y);
+                    const repulsiveMag = Math.sqrt(debugForces.repulsive.x * debugForces.repulsive.x + debugForces.repulsive.y * debugForces.repulsive.y);
+                    const attractiveMag = Math.sqrt(debugForces.attractive.x * debugForces.attractive.x + debugForces.attractive.y * debugForces.attractive.y);
+                    const hubMag = Math.sqrt(debugForces.hub.x * debugForces.hub.x + debugForces.hub.y * debugForces.hub.y);
+                    const catMag = Math.sqrt(debugForces.categorical.x * debugForces.categorical.x + debugForces.categorical.y * debugForces.categorical.y);
+                    
+                    console.log(`🔍 ${debugEntity} Force Analysis:`);
+                    console.log(`  Repulsive: (${debugForces.repulsive.x.toFixed(1)}, ${debugForces.repulsive.y.toFixed(1)}) mag=${repulsiveMag.toFixed(1)}`);
+                    console.log(`  Attractive: (${debugForces.attractive.x.toFixed(1)}, ${debugForces.attractive.y.toFixed(1)}) mag=${attractiveMag.toFixed(1)}`);
+                    console.log(`  Hub: (${debugForces.hub.x.toFixed(1)}, ${debugForces.hub.y.toFixed(1)}) mag=${hubMag.toFixed(1)}`);
+                    console.log(`  Categorical: (${debugForces.categorical.x.toFixed(1)}, ${debugForces.categorical.y.toFixed(1)}) mag=${catMag.toFixed(1)}`);
+                    console.log(`  TOTAL: (${totalForce.x.toFixed(1)}, ${totalForce.y.toFixed(1)}) mag=${totalMagnitude.toFixed(1)}`);
+                }
+                
+                return forces;
+            }
+
+            calculateRepulsiveForce(pos1, pos2) {
+                const dx = pos1.x - pos2.x;
+                const dy = pos1.y - pos2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // Handle zero distance case with strong random separation
+                if (distance < 1) {
+                    const randomAngle = Math.random() * 2 * Math.PI;
+                    return {
+                        x: Math.cos(randomAngle) * 1000, // Very strong force
+                        y: Math.sin(randomAngle) * 1000
+                    };
+                }
+                
+                const unitX = dx / distance;
+                const unitY = dy / distance;
+                
+                // Exponentially increasing repulsive force as distance decreases
+                // This creates a "hard boundary" that prevents overlaps
+                const minDistance = 140; // Our target minimum distance
+                let force;
+                
+                if (distance < minDistance) {
+                    // Exponential repulsion that becomes extremely strong as distance approaches 0
+                    const ratio = minDistance / distance;
+                    force = Math.pow(ratio, 3) * 2000; // Cubic growth for very strong repulsion
+                } else if (distance < minDistance * 1.5) {
+                    // Strong repulsion in the warning zone
+                    force = (this.k * this.k) / (distance * distance) * 10;
+                } else {
+                    // Standard Fruchterman-Reingold formula for distant entities
+                    force = (this.k * this.k) / (distance * distance);
+                }
+                
+                return {
+                    x: force * unitX,
+                    y: force * unitY
+                };
+            }
+
+            calculateAttractiveForce(pos1, pos2) {
+                const dx = pos1.x - pos2.x;
+                const dy = pos1.y - pos2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 1) return { x: 0, y: 0 };
+                
+                const unitX = dx / distance;
+                const unitY = dy / distance;
+                
+                // Balanced attractive force to create connectivity-based cohesion
+                // Cap the attractive force but allow reasonable pulling power
+                const maxAttractiveDistance = 600; // Increased range for better connectivity grouping
+                const effectiveDistance = Math.min(distance, maxAttractiveDistance);
+                
+                // Moderate attractive force formula with better scaling
+                const baseForce = effectiveDistance / (this.k * 1.5); // Less weakened than before
+                const force = Math.min(baseForce, 80); // Increased cap for better cohesion
+                
+                return {
+                    x: -force * unitX, // Negative because we want to pull towards each other
+                    y: -force * unitY
+                };
+            }
+
+            applyHubPreservationForces(positions, forces, debugForces = null) {
+                // Get hub entities based on weighted connectivity
+                const hubs = this.networkAnalysis.identifyHubs(0.3); // Top 30% as hubs
+                const centerX = this.canvasWidth / 2;
+                const centerY = this.canvasHeight / 2;
+                
+                hubs.forEach((hub, index) => {
+                    if (positions.has(hub.name) && index < 3) { // Focus on top 3 hubs
+                        const pos = positions.get(hub.name);
+                        const idealHubPos = this.calculateHubPosition(hub, index);
+                        
+                        // Debug: Log hub positions
+                        console.log(`Hub ${index + 1}: ${hub.name} → ideal=(${Math.round(idealHubPos.x)}, ${Math.round(idealHubPos.y)}), current=(${Math.round(pos.x)}, ${Math.round(pos.y)})`);
+                        
+                        const dx = idealHubPos.x - pos.x;
+                        const dy = idealHubPos.y - pos.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance > 50) { // Only apply if hub is displaced from ideal position
+                            const force = forces.get(hub.name);
+                            // NUCLEAR hub preservation force strength - must overpower repulsive forces
+                            const hubStrength = hub.weightedConnectivity * this.forceWeights.hub * 100; // 4x stronger
+                            
+                            const hubForceX = (dx / distance) * hubStrength;
+                            const hubForceY = (dy / distance) * hubStrength;
+                            
+                            // Debug: Log force calculations for TraceableUnit
+                            if (hub.name === 'TraceableUnit') {
+                                console.log(`TraceableUnit hub force: connectivity=${hub.weightedConnectivity.toFixed(3)}, hubWeight=${this.forceWeights.hub}, multiplier=25, hubStrength=${hubStrength.toFixed(1)}, distance=${Math.round(distance)}`);
+                                console.log(`TraceableUnit hub force components: (${hubForceX.toFixed(1)}, ${hubForceY.toFixed(1)})`);
+                            }
+                            
+                            // Track debug forces for TraceableUnit
+                            if (debugForces && hub.name === 'TraceableUnit') {
+                                debugForces.hub.x += hubForceX;
+                                debugForces.hub.y += hubForceY;
+                            }
+                            
+                            forces.set(hub.name, {
+                                x: force.x + hubForceX,
+                                y: force.y + hubForceY
+                            });
+                        }
+                    }
+                });
+            }
+
+            applyCategoricalForces(positions, forces, debugForces = null) {
+                const categoryRegions = this.calculateCategoryRegions();
+                
+                // Get list of hub entities to exclude from categorical forces
+                const hubs = this.networkAnalysis.identifyHubs(0.3);
+                const hubNames = new Set(hubs.slice(0, 3).map(hub => hub.name)); // Top 3 hubs
+                
+                // Debug: Log category centers
+                console.log('Category centers:', Object.entries(categoryRegions).map(([key, region]) => 
+                    `${key}: (${Math.round(region.centerX)}, ${Math.round(region.centerY)})`
+                ).join(', '));
+                console.log('🔍 Hub entities excluded from categorical forces:', Array.from(hubNames).join(', '));
+                
+                Object.entries(this.erdConfig.areas).forEach(([areaKey, area]) => {
+                    const region = categoryRegions[areaKey];
+                    const centerX = region.centerX;
+                    const centerY = region.centerY;
+                    
+                    area.entities.forEach(entityName => {
+                        if (positions.has(entityName)) {
+                            // Hub entities get much weaker categorical forces (10% strength)
+                            const isHub = hubNames.has(entityName);
+                            const hubReduction = isHub ? 0.1 : 1.0;
+                            
+                            if (isHub) {
+                                console.log(`🔽 Applying weak categorical force for hub: ${entityName} (${(hubReduction * 100).toFixed(0)}% strength)`);
+                            }
+                            
+                            const pos = positions.get(entityName);
+                            const dx = centerX - pos.x;
+                            const dy = centerY - pos.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            // Debug: Log entity-to-center assignments for problem entities
+                            if (entityName === 'SalesDeliveryDocument' || entityName === 'TraceableUnit') {
+                                console.log(`${entityName}: area=${areaKey}, center=(${Math.round(centerX)}, ${Math.round(centerY)}), current=(${Math.round(pos.x)}, ${Math.round(pos.y)}), distance=${Math.round(distance)}`);
+                            }
+                            
+                            // Apply categorical force with distance-based scaling
+                            const force = forces.get(entityName);
+                            
+                            // Stronger categorical pull with distance-based scaling
+                            let basePullStrength = 0.5; // Increased from 0.1
+                            
+                            // Scale force based on distance from category center
+                            if (distance > region.width * 0.6) {
+                                basePullStrength *= 2.0; // Very strong pull for distant entities
+                            } else if (distance > region.width * 0.4) {
+                                basePullStrength *= 1.5; // Strong pull for moderately distant entities
+                            } else {
+                                basePullStrength *= 0.8; // Gentle pull for entities already near center
+                            }
+                            
+                            const weightedPullStrength = basePullStrength * this.forceWeights.categorical * hubReduction;
+                            const catForceX = dx * weightedPullStrength;
+                            const catForceY = dy * weightedPullStrength;
+                            
+                            // Track debug forces for TraceableUnit (should be 0 now)
+                            if (debugForces && entityName === 'TraceableUnit') {
+                                debugForces.categorical.x += catForceX;
+                                debugForces.categorical.y += catForceY;
+                            }
+                            
+                            forces.set(entityName, {
+                                x: force.x + catForceX,
+                                y: force.y + catForceY
+                            });
+                        }
+                    });
+                });
+            }
+
+            updatePositions(positions, forces, temperature) {
+                const newPositions = new Map();
+                
+                this.entities.forEach(entity => {
+                    const currentPos = positions.get(entity.name);
+                    const force = forces.get(entity.name);
+                    
+                    const displacement = Math.sqrt(force.x * force.x + force.y * force.y);
+                    const maxDisplacement = Math.min(displacement, temperature);
+                    
+                    let newX = currentPos.x;
+                    let newY = currentPos.y;
+                    
+                    if (displacement > 0) {
+                        newX += (force.x / displacement) * maxDisplacement;
+                        newY += (force.y / displacement) * maxDisplacement;
+                    }
+                    
+                    // Keep within canvas bounds
+                    newX = Math.max(50, Math.min(this.canvasWidth - 50, newX));
+                    newY = Math.max(50, Math.min(this.canvasHeight - 50, newY));
+                    
+                    newPositions.set(entity.name, { x: newX, y: newY });
+                });
+                
+                return newPositions;
+            }
+
+            resolveCollisions(positions) {
+                const resolvedPositions = new Map(positions);
+                // Adaptive minimum distance based on layout priorities
+                const baseMinDistance = 120;
+                const aestheticsWeight = this.layoutPriorities.aesthetics;
+                const minDistance = baseMinDistance * (0.8 + aestheticsWeight * 0.4); // 96-144 range
+                
+                let hasCollisions = true;
+                let iterations = 0;
+                const maxIterations = 30; // Reduced from 50
+                
+                while (hasCollisions && iterations < maxIterations) {
+                    hasCollisions = false;
+                    iterations++;
+                    
+                    this.entities.forEach(entity1 => {
+                        this.entities.forEach(entity2 => {
+                            if (entity1.name !== entity2.name) {
+                                const pos1 = resolvedPositions.get(entity1.name);
+                                const pos2 = resolvedPositions.get(entity2.name);
+                                
+                                const dx = pos1.x - pos2.x;
+                                const dy = pos1.y - pos2.y;
+                                const distance = Math.sqrt(dx * dx + dy * dy);
+                                
+                                if (distance < minDistance) {
+                                    hasCollisions = true;
+                                    
+                                    // Move entities apart
+                                    const overlap = minDistance - distance;
+                                    const moveDistance = overlap / 2 + 10;
+                                    
+                                    const unitX = dx / distance || Math.random() - 0.5;
+                                    const unitY = dy / distance || Math.random() - 0.5;
+                                    
+                                    resolvedPositions.set(entity1.name, {
+                                        x: pos1.x + unitX * moveDistance,
+                                        y: pos1.y + unitY * moveDistance
+                                    });
+                                    
+                                    resolvedPositions.set(entity2.name, {
+                                        x: pos2.x - unitX * moveDistance,
+                                        y: pos2.y - unitY * moveDistance
+                                    });
+                                }
+                            }
+                        });
+                    });
+                }
+                
+                console.log(`Collision resolution completed in ${iterations} iterations`);
+                return resolvedPositions;
+            }
+
+            eliminateAllCollisions(positions) {
+                console.log('Starting guaranteed collision elimination phase...');
+                const startTime = performance.now();
+                let eliminatedPositions = new Map(positions);
+                const minDistance = 140; // Minimum distance for final pass
+                let totalMoves = 0;
+                let maxPasses = 15; // Increased maximum passes
+                let previousCollisionCount = Infinity;
+                let stuckCount = 0;
+                
+                for (let pass = 0; pass < maxPasses; pass++) {
+                    let movesMadeThisPass = 0;
+                    let collisionsDetected = [];
+                    
+                    // First, detect all collisions
+                    const entityList = Array.from(eliminatedPositions.keys());
+                    for (let i = 0; i < entityList.length; i++) {
+                        for (let j = i + 1; j < entityList.length; j++) {
+                            const entity1 = entityList[i];
+                            const entity2 = entityList[j];
+                            const pos1 = eliminatedPositions.get(entity1);
+                            const pos2 = eliminatedPositions.get(entity2);
+                            
+                            const dx = pos1.x - pos2.x;
+                            const dy = pos1.y - pos2.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < minDistance) {
+                                collisionsDetected.push({
+                                    entity1, entity2, pos1, pos2, 
+                                    distance, dx, dy,
+                                    overlap: minDistance - distance
+                                });
+                            }
+                        }
+                    }
+                    
+                    if (collisionsDetected.length === 0) {
+                        console.log(`Collision elimination completed after ${pass + 1} passes with no remaining overlaps`);
+                        break;
+                    }
+                    
+                    console.log(`Pass ${pass + 1}: Found ${collisionsDetected.length} collisions`);
+                    
+                    // Check if we're stuck (same number of collisions as last pass)
+                    if (collisionsDetected.length === previousCollisionCount) {
+                        stuckCount++;
+                        if (stuckCount >= 3) {
+                            // We're stuck - use more aggressive separation
+                            console.log(`Pass ${pass + 1}: Stuck with ${collisionsDetected.length} collisions - switching to aggressive mode`);
+                        }
+                    } else {
+                        stuckCount = 0; // Reset stuck counter if we made progress
+                    }
+                    previousCollisionCount = collisionsDetected.length;
+                    
+                    // Sort collisions by overlap amount (resolve worst overlaps first)
+                    collisionsDetected.sort((a, b) => b.overlap - a.overlap);
+                    
+                    // Resolve each collision by moving both entities apart
+                    collisionsDetected.forEach((collision, index) => {
+                        const { entity1, entity2, dx, dy, distance, overlap } = collision;
+                        
+                        if (distance > 0) {
+                            // Calculate unit vector for separation direction
+                            const unitX = dx / distance;
+                            const unitY = dy / distance;
+                            
+                            // Aggressive separation when stuck, normal otherwise
+                            let separationMultiplier = 1.0;
+                            if (stuckCount >= 3) {
+                                separationMultiplier = 1.5 + (stuckCount * 0.2); // Increasingly aggressive
+                            }
+                            
+                            // Move each entity by half the required separation distance plus buffer
+                            const separationDistance = ((overlap / 2) + 15) * separationMultiplier;
+                            
+                            const currentPos1 = eliminatedPositions.get(entity1);
+                            const currentPos2 = eliminatedPositions.get(entity2);
+                            
+                            let newPos1 = {
+                                x: currentPos1.x + unitX * separationDistance,
+                                y: currentPos1.y + unitY * separationDistance
+                            };
+                            
+                            let newPos2 = {
+                                x: currentPos2.x - unitX * separationDistance,
+                                y: currentPos2.y - unitY * separationDistance
+                            };
+                            
+                            // For stuck situations, try alternative separation patterns
+                            if (stuckCount >= 5 && index % 2 === 0) {
+                                // For every other collision, try perpendicular separation
+                                const perpX = -unitY;
+                                const perpY = unitX;
+                                const perpSeparation = separationDistance * 0.7;
+                                
+                                newPos1.x += perpX * perpSeparation;
+                                newPos1.y += perpY * perpSeparation;
+                                newPos2.x -= perpX * perpSeparation;
+                                newPos2.y -= perpY * perpSeparation;
+                            }
+                            
+                            // Ensure positions stay within canvas bounds with more room at edges
+                            const margin = 180; // Larger margin to prevent edge clustering
+                            newPos1.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos1.x));
+                            newPos1.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos1.y));
+                            newPos2.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos2.x));
+                            newPos2.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos2.y));
+                            
+                            eliminatedPositions.set(entity1, newPos1);
+                            eliminatedPositions.set(entity2, newPos2);
+                            
+                            movesMadeThisPass++;
+                            totalMoves++;
+                        } else {
+                            // Handle edge case where entities are at exactly the same position
+                            console.log(`Pass ${pass + 1}: Entities ${entity1} and ${entity2} at identical position - applying random separation`);
+                            const currentPos1 = eliminatedPositions.get(entity1);
+                            const currentPos2 = eliminatedPositions.get(entity2);
+                            
+                            const randomAngle = Math.random() * 2 * Math.PI;
+                            const separationDistance = minDistance / 2 + 20;
+                            
+                            const newPos1 = {
+                                x: currentPos1.x + Math.cos(randomAngle) * separationDistance,
+                                y: currentPos1.y + Math.sin(randomAngle) * separationDistance
+                            };
+                            
+                            const newPos2 = {
+                                x: currentPos2.x - Math.cos(randomAngle) * separationDistance,
+                                y: currentPos2.y - Math.sin(randomAngle) * separationDistance
+                            };
+                            
+                            const margin = 180;
+                            newPos1.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos1.x));
+                            newPos1.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos1.y));
+                            newPos2.x = Math.max(margin, Math.min(this.canvasWidth - margin, newPos2.x));
+                            newPos2.y = Math.max(margin, Math.min(this.canvasHeight - margin, newPos2.y));
+                            
+                            eliminatedPositions.set(entity1, newPos1);
+                            eliminatedPositions.set(entity2, newPos2);
+                            
+                            movesMadeThisPass++;
+                            totalMoves++;
+                        }
+                    });
+                    
+                    console.log(`Pass ${pass + 1}: Made ${movesMadeThisPass} entity moves (separation multiplier: ${(stuckCount >= 3 ? (1.5 + stuckCount * 0.2) : 1.0).toFixed(1)})`);
+                    
+                    // Early exit only if we have zero collisions, don't give up easily
+                    if (collisionsDetected.length === 0) {
+                        break;
+                    }
+                }
+                
+                const endTime = performance.now();
+                console.log(`Collision elimination completed: ${totalMoves} total moves in ${Math.round(endTime - startTime)}ms`);
+                
+                // Final verification pass
+                let finalCollisions = 0;
+                const finalCollisionPairs = [];
+                const entityList = Array.from(eliminatedPositions.keys());
+                for (let i = 0; i < entityList.length; i++) {
+                    for (let j = i + 1; j < entityList.length; j++) {
+                        const entity1 = entityList[i];
+                        const entity2 = entityList[j];
+                        const pos1 = eliminatedPositions.get(entity1);
+                        const pos2 = eliminatedPositions.get(entity2);
+                        const distance = Math.sqrt((pos1.x - pos2.x) ** 2 + (pos1.y - pos2.y) ** 2);
+                        
+                        if (distance < minDistance) {
+                            finalCollisions++;
+                            finalCollisionPairs.push(`${entity1}↔${entity2} (${Math.round(distance)}px)`);
+                        }
+                    }
+                }
+                
+                if (finalCollisions === 0) {
+                    console.log('✅ SUCCESS: All entity overlaps eliminated!');
+                } else {
+                    console.log(`⚠️ WARNING: ${finalCollisions} overlaps remain (< ${minDistance}px separation)`);
+                    console.log('Remaining collision pairs:', finalCollisionPairs.slice(0, 5).join(', '));
+                    if (finalCollisionPairs.length > 5) {
+                        console.log(`... and ${finalCollisionPairs.length - 5} more`);
+                    }
+                }
+                
+                return eliminatedPositions;
+            }
+        }
 
         // Load entities from schema files with auto-discovery
         async function loadEntitiesFromSchema() {
+            console.log('Starting schema-based entity loading...');
+            
+            // Load ERD configuration first
+            const erdConfig = await loadERDConfig();
+            globalErdConfig = erdConfig; // Store globally for use in connection points
+            console.log('Loaded ERD configuration');
+            
             const entities = [];
             const discoveredRelationships = [];
+            
+            // Add manual relationships from ERD config
+            erdConfig.manual_relationships.forEach(rel => {
+                discoveredRelationships.push({
+                    from: rel.from,
+                    to: rel.to,
+                    label: rel.label,
+                    type: rel.type,
+                    fromCard: rel.from_cardinality,
+                    toCard: rel.to_cardinality
+                });
+            });
+            console.log(`Loaded ${erdConfig.manual_relationships.length} manual relationships from config`);
             
             // Try auto-discovery first
             const directories = await discoverSchemaDirectories();
             const discoveredEntities = new Set();
             
-            // Group entities by area for auto-positioning
-            const entitiesByArea = {};
+            if (!directories || directories.length === 0) {
+                console.error('No schema directories found - cannot continue');
+                throw new Error('Schema directories not found');
+            }
             
             for (const directory of directories) {
                 const entityName = directoryToEntityName(directory);
@@ -989,695 +2438,99 @@
                 
                 if (schema) {
                     console.log(`Processing entity: ${entityName}`);
-                    const metadata = extractMetadataFromSchema(entityName, schema);
+                    const metadata = extractMetadataFromSchema(entityName, schema, erdConfig);
                     
                     if (metadata) {
                         console.log(`✅ ${entityName} loaded successfully in area: ${metadata.area}`);
-                        // Collect relationships from schema metadata
-                        if (metadata.relationships && metadata.relationships.length > 0) {
-                            metadata.relationships.forEach(rel => {
-                                discoveredRelationships.push({
-                                    from: rel.from,
-                                    to: rel.to,
-                                    label: rel.label,
-                                    type: rel.type,
-                                    fromCard: rel.from_cardinality,
-                                    toCard: rel.to_cardinality
-                                });
-                            });
-                            console.log(`Found ${metadata.relationships.length} relationships for ${entityName}`);
-                        }
                         
-                        // Initialize area group if needed
-                        if (!entitiesByArea[metadata.area]) {
-                            entitiesByArea[metadata.area] = [];
-                        }
-                        
-                        // Auto-calculate position if not specified
-                        let position = metadata.position;
-                        if (!position) {
-                            // Auto-calculate position
-                            const entityIndex = entitiesByArea[metadata.area].length;
-                            position = calculateAutoPosition(metadata.area, entityIndex);
-                        }
-                        
-                        const entity = convertSchemaToEntity(entityName, schema, metadata.area, metadata.description, position);
+                        const entity = convertSchemaToEntity(entityName, schema, metadata.area, metadata.description, metadata.position);
                         if (entity) {
                             entities.push(entity);
-                            entitiesByArea[metadata.area].push(entity);
                             discoveredEntities.add(entityName);
                         }
                     } else {
-                        console.warn(`Skipping ${entityName} - missing boost_metadata`);
+                        console.error(`FAILED to process ${entityName} - check ERD configuration`);
+                        throw new Error(`Entity ${entityName} not properly configured`);
                     }
                 } else {
-                    console.warn(`Failed to load schema for ${entityName} from directory ${directory}`);
+                    console.error(`FAILED to load schema for ${entityName} from directory ${directory}`);
+                    throw new Error(`Schema not found for ${entityName}`);
                 }
             }
             
-            // No fallback needed - all entities must have boost_metadata in their schema files
+            // Generate automatic relationships from FK fields using generic conventions
+            const automaticRelationships = generateAutomaticFKRelationships(entities, discoveredRelationships);
+            console.log(`Generated ${automaticRelationships.length} automatic FK relationships`);
             
-            // Merge discovered relationships with static relationships
-            if (discoveredRelationships.length > 0) {
-                console.log(`Merging ${discoveredRelationships.length} relationships from schema metadata with ${relationships.length} static relationships`);
-                relationships.push(...discoveredRelationships);
-                console.log(`Total relationships after merge: ${relationships.length}`);
+            // Merge all relationships: manual + automatic FK
+            const allDiscoveredRelationships = [...discoveredRelationships, ...automaticRelationships];
+            relationships.push(...allDiscoveredRelationships);
+            console.log(`Total relationships: ${relationships.length}`);
+            
+            // Apply dynamic layout calculation
+            console.log('Applying dynamic network-based layout...');
+            let dynamicPositions;
+            try {
+                // Configuration for weighted network layout
+                const layoutConfig = {
+                    networkWeights: {
+                        degree: 0.6,        // Emphasize highly connected entities
+                        betweenness: 0.3,   // Consider bottleneck entities  
+                        closeness: 0.1,     // Minor consideration for central accessibility
+                        normalize: true     // Enable normalization for fair comparison
+                    },
+                    forceWeights: {
+                        repulsive: 0.4,     // Balanced entity separation (exponential scaling handles close distances)
+                        attractive: 0.25,   // Moderate connection pull for relationships
+                        categorical: 0.15,  // Reduced category grouping to prioritize connectivity
+                        hub: 0.6,          // Very strong hub centralization for network structure
+                        baseK: 150         // Base force constant
+                    },
+                    layoutPriorities: {
+                        connectivity: 0.4,   // Primary focus on network structure
+                        categorization: 0.3, // Secondary focus on functional groups
+                        aesthetics: 0.3     // Tertiary focus on visual appeal
+                    }
+                };
+                
+                const layoutEngine = new DynamicLayoutEngine(entities, relationships, erdConfig, layoutConfig);
+                console.log('Created DynamicLayoutEngine successfully');
+                dynamicPositions = layoutEngine.calculateDynamicLayout();
+                console.log('Dynamic layout calculation completed successfully');
+            } catch (error) {
+                console.error('Error in dynamic layout calculation:', error);
+                // Fall back to original positioning logic if dynamic layout fails
+                console.log('Falling back to original positioning logic');
+                dynamicPositions = new Map();
+                entities.forEach(entity => {
+                    // Try to get position from ERD config, fallback to auto calculation
+                    const configPos = erdConfig.entity_display[entity.name]?.position;
+                    if (configPos) {
+                        dynamicPositions.set(entity.name, {x: configPos.x, y: configPos.y});
+                    } else {
+                        // Simple fallback positioning
+                        dynamicPositions.set(entity.name, {
+                            x: 100 + Math.random() * 2800,
+                            y: 100 + Math.random() * 1400
+                        });
+                    }
+                });
             }
             
-            console.log(`Loaded ${entities.length} entities (${discoveredEntities.size} auto-discovered, ${entities.length - discoveredEntities.size} from metadata)`);
+            // Update entity positions with dynamic layout results
+            entities.forEach(entity => {
+                const dynamicPos = dynamicPositions.get(entity.name);
+                if (dynamicPos) {
+                    entity.x = dynamicPos.x;
+                    entity.y = dynamicPos.y;
+                    console.log(`${entity.name}: positioned at (${Math.round(dynamicPos.x)}, ${Math.round(dynamicPos.y)})`);
+                }
+            });
+            
+            console.log(`Successfully loaded ${entities.length} entities with dynamic positioning`);
             return entities;
         }
 
-        // Complete entities based on schema definitions - will be replaced by dynamic loading
-        const staticEntities = [
-            {
-                id: 'TraceableUnit',
-                name: 'TraceableUnit',
-                area: 'core_traceability',
-                description: '🔑 CENTRAL: Unique biomass tracking unit with BOOST traceability system integration',
-                fields: [
-                    { name: 'traceableUnitId', type: 'string', isPK: true, required: true },
-                    { name: 'unitType', type: 'enum', required: true },
-                    { name: 'uniqueIdentifier', type: 'string', required: true },
-                    { name: 'totalVolumeM3', type: 'decimal', required: true },
-                    { name: 'currentMoistureContent', type: 'decimal' },
-                    { name: 'moistureContentTimestamp', type: 'datetime' },
-                    { name: 'moistureContentSource', type: 'string' },
-                    { name: 'currentGeographicDataId', type: 'string', isFK: true },
-                    { name: 'harvestGeographicDataId', type: 'string', isFK: true },
-                    { name: 'createdTimestamp', type: 'datetime', required: true },
-                    { name: 'harvesterId', type: 'string', isFK: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'materialTypeId', type: 'string', isFK: true },
-                    { name: 'assortmentType', type: 'string' },
-                    { name: 'qualityGrade', type: 'string' },
-                    { name: 'isMultiSpecies', type: 'boolean' },
-                    { name: 'currentStatus', type: 'string' },
-                    { name: 'sustainabilityCertification', type: 'string' },
-                    { name: 'parentTraceableUnitId', type: 'string', isFK: true },
-                    { name: 'childTraceableUnitIds', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'MaterialProcessing',
-                name: 'MaterialProcessing',
-                area: 'core_traceability',
-                description: '🔑 Processing operations that transform TRUs with plant part tracking',
-                fields: [
-                    { name: 'processingId', type: 'string', isPK: true, required: true },
-                    { name: 'inputTraceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'outputTraceableUnitId', type: 'string', isFK: true },
-                    { name: 'processType', type: 'string', required: true },
-                    { name: 'processTimestamp', type: 'datetime', required: true },
-                    { name: 'processingGeographicDataId', type: 'string', isFK: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'inputComposition', type: 'string' },
-                    { name: 'outputComposition', type: 'string' },
-                    { name: 'inputVolume', type: 'decimal' },
-                    { name: 'outputVolume', type: 'decimal' },
-                    { name: 'volumeLoss', type: 'decimal' },
-                    { name: 'qualityMetrics', type: 'string' },
-                    { name: 'equipmentUsed', type: 'string' }
-                ]
-            },
-            {
-                id: 'ProcessingHistory',
-                name: 'ProcessingHistory',
-                area: 'core_traceability',
-                description: '🔑 Complete timeline of processing events with moisture tracking',
-                fields: [
-                    { name: 'processingHistoryId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'materialProcessingId', type: 'string', isFK: true },
-                    { name: 'timestamp', type: 'datetime', required: true },
-                    { name: 'processSequenceNumber', type: 'integer' },
-                    { name: 'processingEventType', type: 'string' },
-                    { name: 'inputTRUIds', type: 'string[]' },
-                    { name: 'outputTRUIds', type: 'string[]' },
-                    { name: 'processingDuration', type: 'string' },
-                    { name: 'qualityChangeDescription', type: 'string' },
-                    { name: 'inputMoistureContent', type: 'decimal' },
-                    { name: 'outputMoistureContent', type: 'decimal' },
-                    { name: 'moistureChangeRatio', type: 'decimal' },
-                    { name: 'operatorId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'SpeciesComponent',
-                name: 'SpeciesComponent',
-                area: 'core_traceability',
-                description: '🌲 Species composition within TRUs',
-                fields: [
-                    { name: 'componentId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'species', type: 'string', required: true },
-                    { name: 'volumeM3', type: 'decimal' },
-                    { name: 'percentageByVolume', type: 'decimal' },
-                    { name: 'qualityGrade', type: 'string' },
-                    { name: 'sourceGeographicDataId', type: 'string', isFK: true },
-                    { name: 'harvestingMethod', type: 'string' },
-                    { name: 'harvestTimestamp', type: 'datetime' },
-                    { name: 'carbonStorage', type: 'string' },
-                    { name: 'primaryPlantPart', type: 'string' }
-                ]
-            },
-            {
-                id: 'MeasurementRecord',
-                name: 'MeasurementRecord',
-                area: 'core_traceability',
-                description: '📏 Quality measurements and dimensional data',
-                fields: [
-                    { name: 'recordId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'measuredVolume', type: 'decimal' },
-                    { name: 'measuredLength', type: 'decimal' },
-                    { name: 'measuredDiameter', type: 'decimal' },
-                    { name: 'moistureContent', type: 'decimal' },
-                    { name: 'moistureMeasurementMethod', type: 'string' },
-                    { name: 'moistureEquipmentUsed', type: 'string' },
-                    { name: 'measurementMethod', type: 'string' },
-                    { name: 'measurementGeographicDataId', type: 'string', isFK: true },
-                    { name: 'measurementTimestamp', type: 'datetime', required: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'trackingPointId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'LocationHistory',
-                name: 'LocationHistory',
-                area: 'core_traceability',
-                description: '📍 Historical movement records of TRUs',
-                fields: [
-                    { name: 'locationHistoryId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'geographicDataId', type: 'string', isFK: true, required: true },
-                    { name: 'timestamp', type: 'datetime', required: true },
-                    { name: 'locationEventType', type: 'string' },
-                    { name: 'materialProcessingId', type: 'string', isFK: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'equipmentUsed', type: 'string' },
-                    { name: 'notes', type: 'string' },
-                    { name: 'distanceTraveled', type: 'decimal' },
-                    { name: 'transportMethod', type: 'string' },
-                    { name: 'isCurrentLocation', type: 'boolean' }
-                ]
-            },
-            {
-                id: 'BiometricIdentifier',
-                name: 'BiometricIdentifier',
-                area: 'core_traceability',
-                description: '🔬 Biometric identifiers for media-interruption-free tracking',
-                fields: [
-                    { name: 'biometricId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'biometricSignature', type: 'string', required: true },
-                    { name: 'captureMethod', type: 'string' },
-                    { name: 'captureGeographicDataId', type: 'string', isFK: true },
-                    { name: 'captureTimestamp', type: 'datetime', required: true },
-                    { name: 'trackingPointId', type: 'string', isFK: true },
-                    { name: 'speciesBiometrics', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'TrackingPoint',
-                name: 'TrackingPoint',
-                area: 'core_traceability',
-                description: '📡 Physical tracking points in supply chain',
-                fields: [
-                    { name: 'trackingPointId', type: 'string', isPK: true, required: true },
-                    { name: 'pointType', type: 'string', required: true },
-                    { name: 'geographicDataId', type: 'string', isFK: true, required: true },
-                    { name: 'equipmentUsed', type: 'string' },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'establishedTimestamp', type: 'datetime', required: true }
-                ]
-            },
-            {
-                id: 'DataReconciliation',
-                name: 'DataReconciliation',
-                area: 'core_traceability',
-                description: '🔄 Reconciliation of measurement discrepancies',
-                fields: [
-                    { name: 'reconciliationId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'transactionId', type: 'string', isFK: true },
-                    { name: 'forestMeasurement', type: 'decimal' },
-                    { name: 'millMeasurement', type: 'decimal' },
-                    { name: 'discrepancy', type: 'decimal' },
-                    { name: 'reconciliationStatus', type: 'string' },
-                    { name: 'discrepancyReason', type: 'string' },
-                    { name: 'reconciliationDate', type: 'datetime' },
-                    { name: 'reconciliationOperator', type: 'string' }
-                ]
-            },
-            {
-                id: 'Organization',
-                name: 'Organization',
-                area: 'organizational_foundation',
-                description: '🏢 Business entities in BOOST supply chain',
-                fields: [
-                    { name: 'organizationId', type: 'string', isPK: true, required: true },
-                    { name: 'name', type: 'string', required: true },
-                    { name: 'address', type: 'string' },
-                    { name: 'role', type: 'string' },
-                    { name: 'scopeOfOperations', type: 'string' },
-                    { name: 'legalEntityStatus', type: 'string' },
-                    { name: 'certificateCode', type: 'string', isFK: true },
-                    { name: 'contactInfo', type: 'string' },
-                    { name: 'equipmentIds', type: 'string[]' },
-                    { name: 'operatorIds', type: 'string[]' },
-                    { name: 'harvestSites', type: 'string[]' },
-                    { name: 'traceableUnitIds', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'Certificate',
-                name: 'Certificate',
-                area: 'organizational_foundation',
-                description: '📜 Sustainability certificates',
-                fields: [
-                    { name: 'certificateNumber', type: 'string', isPK: true, required: true },
-                    { name: 'certificateId', type: 'string' },
-                    { name: 'dateOfIssue', type: 'date', required: true },
-                    { name: 'dateOfExpiry', type: 'date', required: true },
-                    { name: 'scopeOfCertification', type: 'string' },
-                    { name: 'status', type: 'string' },
-                    { name: 'versionNumber', type: 'string' },
-                    { name: 'cbId', type: 'string', isFK: true },
-                    { name: 'organizationId', type: 'string', isFK: true },
-                    { name: 'certificationSchemeId', type: 'string', isFK: true },
-                    { name: 'certificateGeographicDataId', type: 'string', isFK: true },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'CertificationScheme',
-                name: 'CertificationScheme',
-                area: 'organizational_foundation',
-                description: '🛡️ Certification schemes (FSC, PEFC, SBP, etc.)',
-                fields: [
-                    { name: 'schemeId', type: 'string', isPK: true, required: true },
-                    { name: 'schemeName', type: 'string', required: true },
-                    { name: 'recognitionStatus', type: 'string' },
-                    { name: 'versionNumber', type: 'string' },
-                    { name: 'description', type: 'string' },
-                    { name: 'website', type: 'uri' },
-                    { name: 'materialCategories', type: 'string[]' },
-                    { name: 'controlSystems', type: 'string[]' },
-                    { name: 'labelUseRequirements', type: 'string' },
-                    { name: 'volumeTrackingRequirements', type: 'string' },
-                    { name: 'dueDiligenceRequirements', type: 'string' },
-                    { name: 'sustainabilityCriteria', type: 'string[]' },
-                    { name: 'applicableRegions', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'CertificationBody',
-                name: 'CertificationBody',
-                area: 'organizational_foundation',
-                description: '🏛️ Accredited certification bodies',
-                fields: [
-                    { name: 'cbId', type: 'string', isPK: true, required: true },
-                    { name: 'cbName', type: 'string', required: true },
-                    { name: 'accreditationStatus', type: 'string' },
-                    { name: 'accreditationScope', type: 'string' },
-                    { name: 'contactInformation', type: 'object' },
-                    { name: 'jurisdictions', type: 'string[]' },
-                    { name: 'sectorsServed', type: 'string[]' },
-                    { name: 'isActive', type: 'boolean', required: true },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'Material',
-                name: 'Material',
-                area: 'material_supply_chain',
-                description: '🪵 Material types and specifications',
-                fields: [
-                    { name: 'materialTypeId', type: 'string', isPK: true, required: true },
-                    { name: 'materialName', type: 'string', required: true },
-                    { name: 'materialCategory', type: 'string' },
-                    { name: 'defaultAssortmentTypes', type: 'string' },
-                    { name: 'standardQualityGrades', type: 'string' },
-                    { name: 'carbonStorageRate', type: 'string' },
-                    { name: 'density', type: 'string' },
-                    { name: 'applicableProcessingTypes', type: 'string[]' },
-                    { name: 'applicablePlantParts', type: 'string[]' },
-                    { name: 'excludedPlantParts', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'SupplyBase',
-                name: 'SupplyBase',
-                area: 'material_supply_chain',
-                description: '🌲 Supply base areas and management',
-                fields: [
-                    { name: 'supplyBaseId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'supplyBaseName', type: 'string', required: true },
-                    { name: 'description', type: 'string' },
-                    { name: 'harvestSites', type: 'string[]' },
-                    { name: 'skidRoads', type: 'string[]' },
-                    { name: 'forestRoads', type: 'string[]' },
-                    { name: 'equipmentDeployment', type: 'string[]' },
-                    { name: 'traceableUnitIds', type: 'string[]' },
-                    { name: 'speciesAvailable', type: 'string[]' },
-                    { name: 'supplyBaseGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Supplier',
-                name: 'Supplier',
-                area: 'material_supply_chain',
-                description: '🤝 External suppliers in supply chain',
-                fields: [
-                    { name: 'supplierId', type: 'string', isPK: true, required: true },
-                    { name: 'supplierName', type: 'string', required: true },
-                    { name: 'address', type: 'string' },
-                    { name: 'certificateCode', type: 'string' },
-                    { name: 'claim', type: 'string' },
-                    { name: 'supplierType', type: 'string' },
-                    { name: 'supplierGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Customer',
-                name: 'Customer',
-                area: 'material_supply_chain',
-                description: '🏭 End customers and buyers',
-                fields: [
-                    { name: 'customerId', type: 'string', isPK: true, required: true },
-                    { name: 'customerName', type: 'string', required: true },
-                    { name: 'address', type: 'string' },
-                    { name: 'customerGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Transaction',
-                name: 'Transaction',
-                area: 'transaction_management',
-                description: '💰 Business transactions between organizations',
-                fields: [
-                    { name: 'transactionId', type: 'string', isPK: true, required: true },
-                    { name: 'supplyingOrganizationId', type: 'string', isFK: true, required: true },
-                    { name: 'customerOrganizationId', type: 'string', isFK: true, required: true },
-                    { name: 'transactionDate', type: 'date', required: true },
-                    { name: 'salesDocumentId', type: 'string', isFK: true },
-                    { name: 'contractValue', type: 'decimal' },
-                    { name: 'contractCurrency', type: 'string' },
-                    { name: 'contractTerms', type: 'string' },
-                    { name: 'paymentTerms', type: 'string' },
-                    { name: 'transactionStatus', type: 'string' },
-                    { name: 'transactionGeographicDataId', type: 'string', isFK: true },
-                    { name: 'brokerOrganizationId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'TransactionBatch',
-                name: 'TransactionBatch',
-                area: 'transaction_management',
-                description: '📦 Physical batches within transactions',
-                fields: [
-                    { name: 'transactionBatchId', type: 'string', isPK: true, required: true },
-                    { name: 'transactionId', type: 'string', isFK: true, required: true },
-                    { name: 'productionBatchId', type: 'string', isFK: true },
-                    { name: 'quantity', type: 'decimal', required: true },
-                    { name: 'quantityUnit', type: 'string' },
-                    { name: 'traceableUnitIds', type: 'string[]' },
-                    { name: 'claimId', type: 'string', isFK: true },
-                    { name: 'additionalClaimIds', type: 'string[]' },
-                    { name: 'speciesComposition', type: 'string[]' },
-                    { name: 'qualityGrade', type: 'string' },
-                    { name: 'processingHistoryIds', type: 'string[]' },
-                    { name: 'reconciliationStatus', type: 'string' },
-                    { name: 'measurementRecordIds', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'SalesDeliveryDocument',
-                name: 'SalesDeliveryDocument',
-                area: 'transaction_management',
-                description: '📄 Sales and delivery documentation',
-                fields: [
-                    { name: 'documentId', type: 'string', isPK: true, required: true },
-                    { name: 'dateIssued', type: 'date', required: true },
-                    { name: 'buyerName', type: 'string', required: true },
-                    { name: 'buyerAddress', type: 'string' },
-                    { name: 'sellerName', type: 'string', required: true },
-                    { name: 'sellerAddress', type: 'string' },
-                    { name: 'productDescription', type: 'string', required: true },
-                    { name: 'quantity', type: 'decimal', required: true },
-                    { name: 'transactionId', type: 'string', isFK: true },
-                    { name: 'certificateCode', type: 'string' },
-                    { name: 'transportReference', type: 'string' }
-                ]
-            },
-            {
-                id: 'Claim',
-                name: 'Claim',
-                area: 'sustainability_claims',
-                description: '🏆 Sustainability claims and validation',
-                fields: [
-                    { name: 'claimId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'claimType', type: 'string', required: true },
-                    { name: 'certificationSchemeId', type: 'string', isFK: true },
-                    { name: 'statement', type: 'string', required: true },
-                    { name: 'validated', type: 'boolean', required: true },
-                    { name: 'validatedBy', type: 'string' },
-                    { name: 'validationDate', type: 'datetime' },
-                    { name: 'applicableSpecies', type: 'string[]' },
-                    { name: 'claimPercentage', type: 'decimal' },
-                    { name: 'claimScope', type: 'string' },
-                    { name: 'evidenceDocumentId', type: 'string' },
-                    { name: 'claimExpiry', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'GeographicData',
-                name: 'GeographicData',
-                area: 'geographic_location',
-                description: '🗺️ Spatial data and geographic references',
-                fields: [
-                    { name: 'geographicDataId', type: 'string', isPK: true, required: true },
-                    { name: 'geoJsonData', type: 'json', required: true },
-                    { name: 'dataType', type: 'string' },
-                    { name: 'description', type: 'string' },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'SupplyBaseReport',
-                name: 'SupplyBaseReport',
-                area: 'reporting_compliance',
-                description: '📊 Supply base reports and documentation',
-                fields: [
-                    { name: 'sbrId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'preparationDate', type: 'date', required: true },
-                    { name: 'supplyBaseSummary', type: 'string' },
-                    { name: 'sourcingPractices', type: 'string' },
-                    { name: 'sustainabilityMeasures', type: 'string' },
-                    { name: 'publicationUrl', type: 'string' },
-                    { name: 'reportGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'VerificationStatement',
-                name: 'VerificationStatement',
-                area: 'reporting_compliance',
-                description: '✅ Third-party verification statements',
-                fields: [
-                    { name: 'statementId', type: 'string', isPK: true, required: true },
-                    { name: 'verificationDate', type: 'date', required: true },
-                    { name: 'issuingBody', type: 'string', required: true },
-                    { name: 'scope', type: 'string' },
-                    { name: 'transactionBatchId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Audit',
-                name: 'Audit',
-                area: 'reporting_compliance',
-                description: '🔍 Certification audits and findings',
-                fields: [
-                    { name: 'auditId', type: 'string', isPK: true, required: true },
-                    { name: 'auditType', type: 'string', required: true },
-                    { name: 'auditDate', type: 'date', required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'cbId', type: 'string', isFK: true },
-                    { name: 'findings', type: 'string' },
-                    { name: 'reportUrl', type: 'string' },
-                    { name: 'auditGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'ProductGroup',
-                name: 'ProductGroup',
-                area: 'analytics_data',
-                description: '📋 Product categorization and grouping',
-                fields: [
-                    { name: 'productGroupId', type: 'string', isPK: true, required: true },
-                    { name: 'productGroupName', type: 'string', required: true },
-                    { name: 'productCategory', type: 'string' },
-                    { name: 'classification', type: 'string' },
-                    { name: 'description', type: 'string', required: true },
-                    { name: 'typicalUses', type: 'string[]' },
-                    { name: 'qualityStandards', type: 'string[]' },
-                    { name: 'certificationRequirements', type: 'string[]' },
-                    { name: 'regulatoryClassification', type: 'string' },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'MassBalanceAccount',
-                name: 'MassBalanceAccount',
-                area: 'analytics_data',
-                description: '⚖️ Mass balance accounting system',
-                fields: [
-                    { name: 'accountId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'productGroupId', type: 'string', isFK: true, required: true },
-                    { name: 'periodInputs', type: 'decimal' },
-                    { name: 'periodOutputs', type: 'decimal' },
-                    { name: 'currentBalance', type: 'decimal' },
-                    { name: 'balancingPeriod', type: 'string' },
-                    { name: 'conversionFactors', type: 'decimal' }
-                ]
-            },
-            {
-                id: 'EnergyCarbonData',
-                name: 'EnergyCarbonData',
-                area: 'analytics_data',
-                description: '🌡️ Energy and carbon footprint data',
-                fields: [
-                    { name: 'energyCarbonDataId', type: 'string', isPK: true, required: true },
-                    { name: 'dataType', type: 'string', required: true },
-                    { name: 'value', type: 'decimal', required: true },
-                    { name: 'unit', type: 'string', required: true },
-                    { name: 'source', type: 'string', required: true },
-                    { name: 'measurementMethod', type: 'string' },
-                    { name: 'traceableUnitId', type: 'string', isFK: true },
-                    { name: 'measurementRecordId', type: 'string', isFK: true },
-                    { name: 'measurementTimestamp', type: 'datetime' },
-                    { name: 'measurementGeographicDataId', type: 'string', isFK: true },
-                    { name: 'temperatureConditions', type: 'decimal' },
-                    { name: 'humidityConditions', type: 'decimal' }
-                ]
-            },
-            {
-                id: 'Operator',
-                name: 'Operator',
-                area: 'personnel',
-                description: '👤 Personnel and operators in supply chain',
-                fields: [
-                    { name: 'operatorId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'operatorName', type: 'string', required: true },
-                    { name: 'employeeId', type: 'string' },
-                    { name: 'operatorType', type: 'string' },
-                    { name: 'certifications', type: 'string[]' },
-                    { name: 'equipmentAuthorizations', type: 'string[]' },
-                    { name: 'contactInfo', type: 'string' },
-                    { name: 'isActive', type: 'boolean', required: true },
-                    { name: 'hireDate', type: 'date' },
-                    { name: 'skillsQualifications', type: 'string[]' },
-                    { name: 'supervisorOperatorId', type: 'string', isFK: true }
-                ]
-            }
-        ].map(entity => ({
-            ...entity,
-            x: entityPositions[entity.id]?.x || 1600,
-            y: entityPositions[entity.id]?.y || 1000
-        }));
-
-        // Relationships based on schema definitions
-        const relationships = [
-            // 🔵 ORGANIZATIONAL FOUNDATION RELATIONSHIPS
-            { from: 'Organization', to: 'Certificate', label: 'has', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Certificate', to: 'CertificationScheme', label: 'certifies_against', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'Certificate', to: 'CertificationBody', label: 'issued_by', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'CertificationBody', to: 'Audit', label: 'conducts', type: 'identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟢 CORE TRACEABILITY RELATIONSHIPS - Primary Data Flow
-            { from: 'TraceableUnit', to: 'SpeciesComponent', label: 'contains_species', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'MaterialProcessing', label: 'undergoes_processing', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'ProcessingHistory', label: 'has_processing_timeline', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MaterialProcessing', to: 'MeasurementRecord', label: 'generates_measurements', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MaterialProcessing', to: 'ProcessingHistory', label: 'documented_by', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'ProcessingHistory', to: 'ProcessingHistory', label: 'forms_processing_chain', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'BiometricIdentifier', label: 'identified_by', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'DataReconciliation', label: 'reconciled_through', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'LocationHistory', label: 'has_location_history', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'Claim', label: 'has_sustainability_claims', type: 'identifying', fromCard: 'one', toCard: 'one' },
-            { from: 'TrackingPoint', to: 'MeasurementRecord', label: 'captures_at', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TrackingPoint', to: 'BiometricIdentifier', label: 'scanned_at', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'TraceableUnit', label: 'parent_child_relationship', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟤 MATERIAL & SUPPLY CHAIN RELATIONSHIPS
-            { from: 'Material', to: 'TraceableUnit', label: 'material_type_reference', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'SupplyBase', label: 'manages_supply_base', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'SupplyBase', to: 'TraceableUnit', label: 'originates_tru', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'Supplier', label: 'sources_from', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-            { from: 'Organization', to: 'Customer', label: 'sells_to', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-
-            // 🟠 TRANSACTION MANAGEMENT RELATIONSHIPS
-            { from: 'Transaction', to: 'TraceableUnit', label: 'includes_tru', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-            { from: 'TransactionBatch', to: 'TraceableUnit', label: 'contains_tru', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-            { from: 'Transaction', to: 'TransactionBatch', label: 'contains', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Transaction', to: 'SalesDeliveryDocument', label: 'documented_by', type: 'identifying', fromCard: 'one', toCard: 'one' },
-            { from: 'TransactionBatch', to: 'VerificationStatement', label: 'verified_by', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'Transaction', to: 'DataReconciliation', label: 'validated_by', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'Transaction', label: 'creates', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Customer', to: 'Transaction', label: 'receives', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟡 SUSTAINABILITY & CLAIMS RELATIONSHIPS
-            { from: 'Claim', to: 'CertificationScheme', label: 'references_scheme', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'Claim', to: 'TraceableUnit', label: 'inherited_from_parent_tru', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-
-            // 🟣 GEOGRAPHIC & LOCATION RELATIONSHIPS - Spatial Integration
-            { from: 'GeographicData', to: 'TraceableUnit', label: 'provides_harvest_location', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'TraceableUnit', label: 'provides_current_location', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Organization', label: 'defines_operational_area', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Transaction', label: 'locates_transaction', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'SupplyBase', label: 'defines_boundaries', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Supplier', label: 'locates_supplier', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Customer', label: 'locates_customer', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'LocationHistory', to: 'GeographicData', label: 'references_location', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LocationHistory', to: 'MaterialProcessing', label: 'triggered_by_processing', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LocationHistory', to: 'TraceableUnit', label: 'tracks_movement_of', type: 'identifying', fromCard: 'many', toCard: 'one' },
-
-            // 🔴 REPORTING & COMPLIANCE RELATIONSHIPS
-            { from: 'Organization', to: 'SupplyBaseReport', label: 'prepares', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Audit', to: 'Organization', label: 'audits', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            
-            // LCFS COMPLIANCE RELATIONSHIPS
-            { from: 'Transaction', to: 'LCFSPathway', label: 'uses_pathway', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LCFSReporting', to: 'Organization', label: 'submitted_by', type: 'identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LCFSReporting', to: 'Transaction', label: 'includes', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'LCFSPathway', to: 'EnergyCarbonData', label: 'has_carbon_data', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'LCFSReporting', to: 'LCFSPathway', label: 'summarizes_pathway', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // ⚫ ANALYTICS & DATA MANAGEMENT RELATIONSHIPS
-            { from: 'Organization', to: 'MassBalanceAccount', label: 'manages', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'ProductGroup', label: 'defines', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MassBalanceAccount', to: 'ProductGroup', label: 'tracks', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'ProductGroup', to: 'Material', label: 'categorizes', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Certificate', to: 'ProductGroup', label: 'certifies', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Material', to: 'EnergyCarbonData', label: 'characterized_by', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TransactionBatch', to: 'EnergyCarbonData', label: 'associated_with', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'EnergyCarbonData', label: 'characterized_by', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MeasurementRecord', to: 'EnergyCarbonData', label: 'generates_moisture_data', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'ProcessingHistory', to: 'EnergyCarbonData', label: 'tracks_moisture_changes', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟢 ORGANIZATIONAL-TRU MANAGEMENT RELATIONSHIPS
-            { from: 'Organization', to: 'TrackingPoint', label: 'operates', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'TraceableUnit', label: 'manages', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'Operator', label: 'employs', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Operator', to: 'MaterialProcessing', label: 'performs_processing', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Operator', to: 'ProcessingHistory', label: 'documents_processing', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Operator', to: 'LocationHistory', label: 'manages_movement', type: 'non-identifying', fromCard: 'one', toCard: 'many' }
-        ];
 
         // D3 Setup with zoom and pan
         const svg = d3.select('#erd-svg');
@@ -1823,7 +2676,7 @@
         }
 
         // Enhanced connection points that connect to specific fields
-        function getConnectionPoint(entity, targetEntity, relationship, isFromEntity = true) {
+        function getConnectionPoint(entity, targetEntity, relationship, isFromEntity = true, erdConfig = null) {
             const entityHeight = config.headerHeight + (entity.fields.length * config.entityFieldHeight) + (config.entityPadding * 2) + 4;
             
             // Find the relevant field for this relationship
@@ -1833,17 +2686,31 @@
             if (isFromEntity) {
                 // Look for FK field that references the target entity
                 const targetEntityName = targetEntity.id;
-                const possibleFKNames = [
-                    targetEntityName.toLowerCase() + 'Id',
-                    targetEntityName.charAt(0).toLowerCase() + targetEntityName.slice(1) + 'Id',
-                    // Common patterns
-                    'organizationId', 'traceableUnitId', 'geographicDataId', 'operatorId', 
-                    'materialTypeId', 'certificateCode', 'cbId', 'schemeId'
-                ];
                 
-                fieldIndex = entity.fields.findIndex(field => 
-                    field.isFK && possibleFKNames.some(name => field.name.includes(name.replace('Id', '')))
-                );
+                // Use configuration-based field mapping if available
+                if (erdConfig && erdConfig.field_mappings && erdConfig.field_mappings[targetEntityName]) {
+                    const possibleFieldNames = erdConfig.field_mappings[targetEntityName];
+                    fieldIndex = entity.fields.findIndex(field => 
+                        field.isFK && possibleFieldNames.includes(field.name)
+                    );
+                }
+                
+                // Fallback to generic pattern matching if no configuration mapping found
+                if (fieldIndex === -1) {
+                    fieldIndex = entity.fields.findIndex(field => 
+                        field.isFK && (
+                            field.name === targetEntityName + 'Id' ||
+                            field.name === targetEntityName.toLowerCase() + 'Id' ||
+                            field.name.toLowerCase().includes(targetEntityName.replace('Data', '').toLowerCase())
+                        )
+                    );
+                }
+                
+                // Debug logging for unmatched relationships
+                if (fieldIndex === -1) {
+                    console.warn(`⚠️ Could not find FK field in ${entity.id} for relationship to ${targetEntityName}. Available FK fields:`, 
+                        entity.fields.filter(f => f.isFK).map(f => f.name));
+                }
             } else {
                 // For target entity, use primary key
                 fieldIndex = entity.fields.findIndex(field => field.isPK);
@@ -2591,8 +3458,8 @@
         }
 
         function drawCurvedRelationship(fromEntity, toEntity, rel) {
-            const fromPoint = getConnectionPoint(fromEntity, toEntity, rel, true);
-            const toPoint = getConnectionPoint(toEntity, fromEntity, rel, false);
+            const fromPoint = getConnectionPoint(fromEntity, toEntity, rel, true, globalErdConfig);
+            const toPoint = getConnectionPoint(toEntity, fromEntity, rel, false, globalErdConfig);
             const controlPoints = generateControlPoints(fromPoint, toPoint, rel, fromEntity, toEntity);
             
             const relationshipGroup = g.append('g')
@@ -2930,6 +3797,16 @@
             button.attr('title', isHidden ? 'Toggle relationship labels' : 'Show relationship labels');
         }
         
+        function toggleLegend() {
+            const legend = d3.select('.legend');
+            const button = d3.select('#legend-toggle');
+            const isHidden = legend.classed('legend-hidden');
+            
+            legend.classed('legend-hidden', !isHidden);
+            button.text(isHidden ? '📋' : '📋⚹');
+            button.attr('title', isHidden ? 'Toggle legend visibility' : 'Hide legend');
+        }
+        
         function toggleTruFocus() {
             const container = d3.select('#svg-container');
             const button = d3.select('#tru-focus');
@@ -3039,8 +3916,55 @@
             URL.revokeObjectURL(url);
         }
 
-        // Global entities variable
+        // Global variables
         let entities = [];
+        let relationships = [];
+        let globalErdConfig = null;
+
+        // Initialize button tooltips
+        function initializeButtonTooltips() {
+            const tooltip = d3.select('#tooltip');
+            
+            // Toggle buttons with detailed tooltips
+            const buttonTooltips = [
+                {
+                    id: '#label-toggle',
+                    content: `<strong>🏷️ Relationship Labels</strong><br/>
+                             Toggle visibility of relationship labels on connection lines.<br/>
+                             <em>Helpful for understanding entity connections</em>`
+                },
+                {
+                    id: '#tru-focus',
+                    content: `<strong>🎯 TraceableUnit Focus</strong><br/>
+                             Focus on essential TraceableUnit relationships only.<br/>
+                             <em>Simplifies the diagram by showing core traceability flows</em>`
+                },
+                {
+                    id: '#legend-toggle',
+                    content: `<strong>📋 Legend</strong><br/>
+                             Toggle legend showing relationship line types:<br/>
+                             • <strong>Solid lines</strong> - Identifying relationships<br/>
+                             • <strong>Dashed lines</strong> - Non-identifying relationships`
+                }
+            ];
+            
+            buttonTooltips.forEach(({ id, content }) => {
+                d3.select(id)
+                    .on('mouseover', function(event) {
+                        tooltip.style('opacity', 1)
+                            .html(content)
+                            .style('left', (event.pageX + 10) + 'px')
+                            .style('top', (event.pageY - 10) + 'px');
+                    })
+                    .on('mouseout', function() {
+                        tooltip.style('opacity', 0);
+                    })
+                    .on('mousemove', function(event) {
+                        tooltip.style('left', (event.pageX + 10) + 'px')
+                            .style('top', (event.pageY - 10) + 'px');
+                    });
+            });
+        }
 
         // Initialize
         async function initializeVisualization() {
@@ -3051,10 +3975,9 @@
                 
                 console.log(`Total relationships available: ${relationships.length}`);
                 
-                // Fallback to static entities if schema loading fails
+                // No fallback - if schema loading fails, show error
                 if (entities.length === 0) {
-                    console.warn('No entities loaded from schemas, falling back to static entities');
-                    entities = staticEntities;
+                    throw new Error('No entities loaded from schemas - check configuration and schema files');
                 }
                 
                 // Draw entities
@@ -3065,18 +3988,28 @@
                 drawRelationships();
                 updateZoomIndicator();
                 
+                // Initialize button tooltips
+                initializeButtonTooltips();
+                
                 // Initial fit to screen
                 setTimeout(fitToScreen, 100);
             } catch (error) {
-                console.error('Error initializing visualization:', error);
-                // Fallback to static entities
-                entities = staticEntities;
-                entities.forEach(entity => {
-                    drawEntity(entity);
-                });
-                drawRelationships();
-                updateZoomIndicator();
-                setTimeout(fitToScreen, 100);
+                console.error('CRITICAL ERROR initializing visualization:', error);
+                // Show error message to user instead of fallback
+                document.querySelector('.container').innerHTML = `
+                    <div style="color: red; text-align: center; padding: 50px;">
+                        <h2>❌ ERD Loading Failed</h2>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Please check the browser console for detailed debugging information.</p>
+                        <p>Common issues:</p>
+                        <ul style="text-align: left; display: inline-block;">
+                            <li>Schema files not found or malformed</li>
+                            <li>ERD configuration file missing or invalid</li>
+                            <li>Entity not configured in ERD config</li>
+                        </ul>
+                    </div>
+                `;
+                throw error;
             }
         }
 

@@ -44,11 +44,11 @@
       },
       "currentGeographicDataId": {
         "type": "string",
-        "description": "Foreign key to current location"
+        "description": "Current location - uses EntityNameId convention referencing GeographicData"
       },
       "harvestGeographicDataId": {
         "type": "string",
-        "description": "Foreign key to harvest location"
+        "description": "Harvest location - uses EntityNameId convention referencing GeographicData"
       },
       "createdTimestamp": {
         "type": "string",
