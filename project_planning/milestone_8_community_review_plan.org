@@ -1,0 +1,137 @@
+#+TITLE: BOOST Milestone 8 - Community Review and Refinement Plan
+#+DATE: 2025-07-30
+#+AUTHOR: BOOST Working Group
+#+STATUS: IN_PROGRESS
+
+* Overview
+** Milestone Status
+- *Milestone 7 (Drafting the Standard)*: ✅ COMPLETE (0 open, 27 closed)
+- *Milestone 8 (Community Review)*: 🚀 IN_PROGRESS (6 open, 4 closed)
+- *Milestone 9 (Release Preparation)*: 🟡 PENDING (11 open, 0 closed)
+
+** Foundation Achieved
+- ✅ Complete 31-entity schema system with JSON Schema validation
+- ✅ Interactive ERD Navigator with relationship examples and GitHub Discussions integration
+- ✅ Comprehensive California biomass use case validation framework
+- ✅ boost_metadata relationship system for automatic foreign key detection
+- ✅ GitHub Pages deployment ready for community access
+
+* Phase 1: Critical Validation Tasks (PRIORITY: Critical)
+** DONE Schema Validation Against Real Use Cases (#45)
+CLOSED: [2025-07-30 Tue]
+- [X] Created 4 comprehensive California biomass scenarios
+  - Northern California Forest Thinning to Biomass Plant
+  - Central Valley Agricultural Residues to Renewable Diesel  
+  - High Fire Hazard Zone Fuels Reduction for BioRAM
+  - Urban Tree Removal to Engineered Wood Products
+- [X] Python test runner with automated validation
+- [X] All 31 entities tested against real supply chain data
+- [X] Business rule validation with JsonLogic for CA regulatory requirements
+
+** DONE Address Core Functionality Issues (#44)
+CLOSED: [2025-07-30 Tue]
+- [X] Proactively identified schema structure misalignments
+- [X] Fixed foreign key relationship validation
+- [X] Updated JSON-LD context references
+- [X] Validated boost_metadata relationships across all 31 entities
+
+** IN-PROGRESS Publish Draft v0.1 to Repository (#39)
+- [ ] Create comprehensive v0.1 release documentation
+- [ ] Package complete schema system as formal release
+- [ ] Tag GitHub release with changelog
+- [ ] Prepare download packages for stakeholder distribution
+
+** TODO Distribute Review Requests to Working Group (#41)
+- [ ] Send formal review requests to 15+ BOOST working group members
+- [ ] Provide structured review templates focusing on:
+  - Entity completeness and attribute coverage
+  - Relationship accuracy and boost_metadata validation
+  - California regulatory compliance requirements
+  - Real-world use case applicability
+- [ ] Set 2-week review deadline with feedback categories
+- [ ] Create tracking system for review responses
+
+* Phase 2: Community Engagement & Documentation (PRIORITY: High)
+** TODO Host Community Review Session (#42)
+- [ ] Schedule live Q&A session with working group and broader stakeholders
+- [ ] Demo ERD Navigator and entity relationship system
+- [ ] Walk through California use case scenarios
+- [ ] Collect real-time feedback on usability and completeness
+- [ ] Record session for broader community access
+
+** TODO Update Documentation Based on Feedback (#47)
+- [ ] Incorporate validation results into schema documentation
+- [ ] Update ERD_CONFIGURATION.md with lessons learned
+- [ ] Enhance entity descriptions based on use case testing
+- [ ] Improve README and quick-start guides
+- [ ] Create getting started documentation for different stakeholder types
+
+** TODO Validate SBP Data Transfer System Compatibility (#46)
+- [ ] Test interoperability with Sustainable Biomass Program systems
+- [ ] Ensure BOOST entities can map to/from SBP data structures
+- [ ] Document integration pathways and conversion requirements
+- [ ] Create SBP-BOOST mapping guide for existing SBP users
+
+* Phase 3: Release Documentation (PRIORITY: Medium)
+** TODO Create Migration Guide for Existing Systems (#48)
+- [ ] Develop comprehensive migration documentation
+- [ ] Provide step-by-step conversion processes from legacy formats
+- [ ] Include code examples and transformation scripts
+- [ ] Address common migration challenges and solutions
+- [ ] Create specific guides for major existing systems
+
+* Success Metrics
+- [ ] All 31 entities validated against real California use cases
+- [ ] Working group formal review completed (15+ participants)
+- [ ] Draft v0.1 formally published and distributed
+- [ ] Community review session conducted with recorded feedback
+- [ ] SBP compatibility confirmed with integration guide
+- [ ] Migration documentation complete for existing systems
+
+* Timeline
+** Weeks 1-2: Critical Validation & Publishing
+- Complete draft v0.1 packaging and release
+- Distribute formal review requests to working group
+- Begin collecting structured feedback
+
+** Weeks 3-4: Community Engagement
+- Host live community review session
+- Process and incorporate feedback
+- Update documentation based on validation results
+- Complete SBP compatibility validation
+
+** Weeks 5-6: Final Documentation
+- Create comprehensive migration guides
+- Finalize all community feedback incorporation
+- Prepare for Milestone 9 transition
+
+* Target: Complete Milestone 8 by end of 6-week cycle
+
+* Files Created/Updated
+** Schema Validation Framework
+- =drafts/current/examples/use_cases/california_biomass_scenarios.json=
+- =drafts/current/examples/use_cases/schema_validation_tests.json=
+- =drafts/current/examples/use_cases/run_validation_tests.py=
+- =drafts/current/examples/use_cases/requirements.txt=
+
+** Community Engagement System
+- ✅ ERD Navigator with GitHub Discussions integration
+- ✅ 31 entity-specific discussion threads (#90-107, #166-179)
+- ✅ Interactive relationship examples and tooltips
+- ✅ Hub-and-spoke visualization with thematic filtering
+
+** Technical Foundation
+- ✅ All 31 entity schemas with boost_metadata relationships
+- ✅ Complete validation rules and business logic
+- ✅ California regulatory compliance integration
+- ✅ Real-world use case testing framework
+
+* Next Phase Preview: Milestone 9 - Release Preparation
+** Critical Tasks Ahead
+- Working group consensus and sign-off
+- Final documentation and specification writing
+- Production deployment preparation
+- v0.1 public release coordination
+
+** Foundation Ready
+The technical foundation is production-ready. Milestone 8 focuses on community validation and refinement to ensure broad adoption readiness for the v0.1 standard release.

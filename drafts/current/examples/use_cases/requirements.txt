@@ -1,0 +1,3 @@
+# BOOST Schema Validation Test Dependencies
+jsonschema>=4.17.0
+json-logic>=1.0.0
