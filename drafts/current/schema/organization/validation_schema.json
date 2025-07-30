@@ -23,14 +23,16 @@
     "organizationId": {
       "type": "string",
       "description": "Unique identifier for the organization",
-      "minLength": 1,
+      "minLength": 5,
+      "maxLength": 50,
       "pattern": "^ORG-[A-Z0-9-_]+$",
       "examples": ["ORG-001", "ORG-FORESTCO-PACIFIC"]
     },
     "organizationName": {
       "type": "string",
       "description": "Legal name of the organization",
-      "minLength": 1,
+      "minLength": 2,
+      "maxLength": 200,
       "examples": ["Pacific Forest Products LLC", "Klamath Sustainable Forestry"]
     },
     "organizationType": {
@@ -62,13 +64,16 @@
     "contactPhone": {
       "type": "string",
       "description": "Primary contact phone number",
+      "pattern": "^\\+[1-9]\\d{1,14}$",
       "examples": ["+1-555-123-4567", "+1-800-FOREST-1"]
     },
     "certifications": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^CERT-[A-Z0-9-_]+$"
       },
+      "uniqueItems": true,
       "description": "List of certification IDs held by organization",
       "examples": [["CERT-FSC-001", "CERT-SFI-002"]]
     },
@@ -106,6 +111,7 @@
         "annualCapacity": {
           "type": "number",
           "minimum": 0,
+          "maximum": 999999999,
           "description": "Annual production or handling capacity"
         },
         "unit": {

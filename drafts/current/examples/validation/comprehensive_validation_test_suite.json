@@ -1,0 +1,520 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/examples/validation-test-suite",
+  "title": "BOOST Comprehensive Validation Test Suite",
+  "description": "Complete test cases for validating BOOST data integrity, business logic, and compliance rules",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "validExamples": {
+      "type": "object",
+      "description": "Correctly formatted entities that should pass all validation",
+      "properties": {
+        "organization": {
+          "type": "object",
+          "properties": {
+            "@context": {"const": "https://schema.org"},
+            "@type": {"const": "Organization"},
+            "@id": {"const": "https://example.com/organizations/pacific-forest"},
+            "organizationId": {"const": "ORG-PACIFIC-001"},
+            "organizationName": {"const": "Pacific Forest Products LLC"},
+            "organizationType": {"const": "harvester"},
+            "primaryGeographicDataId": {"const": "GEO-MILL-PACIFIC-001"},
+            "operationalAreas": {"const": ["GEO-FOREST-AREA-01", "GEO-MILL-SITE-02"]},
+            "contactEmail": {"const": "operations@pacificforest.com"},
+            "contactPhone": {"const": "+15551234567"},
+            "certifications": {"const": ["CERT-FSC-001", "CERT-SFI-002"]},
+            "establishedDate": {"const": "1995-03-15"},
+            "operationalStatus": {"const": "active"}
+          }
+        },
+        "traceableUnit": {
+          "type": "object",
+          "properties": {
+            "@context": {"const": "https://schema.org"},
+            "@type": {"const": "TraceableUnit"},
+            "@id": {"const": "https://example.com/tru/douglas-fir-001"},
+            "traceableUnitId": {"const": "TRU-DF-001"},
+            "OrganizationId": {"const": "ORG-PACIFIC-001"},
+            "volume": {"const": 125.5},
+            "volumeUnit": {"const": "cubic_meters"},
+            "mass": {"const": 62.75},
+            "massUnit": {"const": "metric_tons"},
+            "harvestDate": {"const": "2025-07-15"},
+            "harvestGeographicDataId": {"const": "GEO-FOREST-AREA-01"},
+            "speciesComposition": {
+              "const": [
+                {
+                  "speciesId": "SPEC-DOUGLAS-FIR",
+                  "percentage": 85.0
+                },
+                {
+                  "speciesId": "SPEC-WESTERN-HEMLOCK", 
+                  "percentage": 15.0
+                }
+              ]
+            }
+          }
+        },
+        "transaction": {
+          "type": "object", 
+          "properties": {
+            "@context": {"const": "https://schema.org"},
+            "@type": {"const": "Transaction"},
+            "@id": {"const": "https://example.com/transactions/txn-001"},
+            "transactionId": {"const": "TXN-JULY-001"},
+            "OrganizationId": {"const": "ORG-PACIFIC-001"},
+            "CustomerId": {"const": "CUST-MILL-001"},
+            "TraceableUnitId": {"const": "TRU-DF-001"},
+            "transactionDate": {"const": "2025-07-20"},
+            "quantity": {"const": 50.0},
+            "quantityUnit": {"const": "cubic_meters"},
+            "contractValue": {"const": 4250.00},
+            "contractCurrency": {"const": "USD"}
+          }
+        },
+        "materialProcessing": {
+          "type": "object",
+          "properties": {
+            "@context": {"const": "https://schema.org"},
+            "@type": {"const": "MaterialProcessing"},
+            "@id": {"const": "https://example.com/processing/chip-001"},
+            "processingId": {"const": "PROC-CHIP-001"},
+            "inputTraceableUnitId": {"const": "TRU-DF-001"},
+            "outputTraceableUnitId": {"const": "TRU-CHIPS-001"},
+            "processType": {"const": "chipping"},
+            "processTimestamp": {"const": "2025-07-16T08:30:00Z"},
+            "inputVolume": {"const": 75.5},
+            "outputVolume": {"const": 95.0},
+            "volumeLoss": {"const": 0.0},
+            "inputMass": {"const": 37.75},
+            "outputMass": {"const": 37.0}
+          }
+        }
+      }
+    },
+    "invalidExamples": {
+      "type": "object",
+      "description": "Incorrectly formatted entities that should fail validation",
+      "properties": {
+        "schemaViolations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "testName": {"type": "string"},
+              "entity": {"type": "object"},
+              "expectedErrors": {"type": "array", "items": {"type": "string"}},
+              "description": {"type": "string"}
+            }
+          },
+          "default": [
+            {
+              "testName": "missing_required_field",
+              "entity": {
+                "@type": "Organization",
+                "@id": "https://example.com/org/invalid",
+                "organizationName": "Missing ID Org"
+              },
+              "expectedErrors": ["REQUIRED_FIELD_ERROR: organizationId"],
+              "description": "Organization missing required organizationId field"
+            },
+            {
+              "testName": "invalid_id_pattern",
+              "entity": {
+                "@type": "Organization", 
+                "@id": "https://example.com/org/invalid",
+                "organizationId": "INVALID-ID-FORMAT",
+                "organizationName": "Bad ID Format Org",
+                "organizationType": "harvester"
+              },
+              "expectedErrors": ["FORMAT_ERROR: organizationId pattern mismatch"],
+              "description": "Organization ID does not match required ORG- prefix pattern"
+            },
+            {
+              "testName": "invalid_enum_value",
+              "entity": {
+                "@type": "Organization",
+                "@id": "https://example.com/org/invalid", 
+                "organizationId": "ORG-INVALID-001",
+                "organizationName": "Invalid Type Org",
+                "organizationType": "invalid_type"
+              },
+              "expectedErrors": ["FORMAT_ERROR: organizationType not in enum"],
+              "description": "Organization type not in allowed enumeration"
+            },
+            {
+              "testName": "negative_volume",
+              "entity": {
+                "@type": "TraceableUnit",
+                "@id": "https://example.com/tru/invalid",
+                "traceableUnitId": "TRU-INVALID-001",
+                "OrganizationId": "ORG-VALID-001",
+                "volume": -50.0,
+                "volumeUnit": "cubic_meters"
+              },
+              "expectedErrors": ["FORMAT_ERROR: volume below minimum"],
+              "description": "Negative volume violates minimum constraint"
+            }
+          ]
+        },
+        "businessLogicViolations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "testName": {"type": "string"},
+              "entities": {"type": "array"},
+              "expectedErrors": {"type": "array", "items": {"type": "string"}},
+              "description": {"type": "string"}
+            }
+          },
+          "default": [
+            {
+              "testName": "volume_conservation_violation",
+              "entities": [
+                {
+                  "@type": "MaterialProcessing",
+                  "processingId": "PROC-VIOLATION-001",
+                  "inputVolume": 100.0,
+                  "outputVolume": 120.0,
+                  "volumeLoss": 0.0
+                }
+              ],
+              "expectedErrors": ["BUSINESS_LOGIC_ERROR: volume conservation violated - output exceeds input"],
+              "description": "Processing output volume exceeds input volume without loss accounting"
+            },
+            {
+              "testName": "transaction_exceeds_available",
+              "entities": [
+                {
+                  "@type": "TraceableUnit",
+                  "traceableUnitId": "TRU-SMALL-001",
+                  "volume": 50.0
+                },
+                {
+                  "@type": "Transaction",
+                  "transactionId": "TXN-OVERSELL-001",
+                  "TraceableUnitId": "TRU-SMALL-001",
+                  "quantity": 75.0
+                }
+              ],
+              "expectedErrors": ["BUSINESS_LOGIC_ERROR: transaction quantity exceeds available TRU volume"],
+              "description": "Transaction quantity exceeds available volume in TraceableUnit"
+            },
+            {
+              "testName": "species_percentage_sum_error",
+              "entities": [
+                {
+                  "@type": "TraceableUnit",
+                  "traceableUnitId": "TRU-SPECIES-001",
+                  "speciesComposition": [
+                    {"speciesId": "SPEC-PINE", "percentage": 60.0},
+                    {"speciesId": "SPEC-OAK", "percentage": 30.0}
+                  ]
+                }
+              ],
+              "expectedErrors": ["BUSINESS_LOGIC_ERROR: species percentages sum to 90.0, must equal 100.0"],
+              "description": "Species composition percentages do not sum to 100%"
+            },
+            {
+              "testName": "processing_before_harvest",
+              "entities": [
+                {
+                  "@type": "TraceableUnit",
+                  "traceableUnitId": "TRU-TIME-001",
+                  "harvestDate": "2025-07-15"
+                },
+                {
+                  "@type": "MaterialProcessing",
+                  "processingId": "PROC-TIME-001",
+                  "inputTraceableUnitId": "TRU-TIME-001",
+                  "processTimestamp": "2025-07-10T10:00:00Z"
+                }
+              ],
+              "expectedErrors": ["BUSINESS_LOGIC_ERROR: processing date before harvest date"],
+              "description": "Processing timestamp is before harvest date"
+            }
+          ]
+        },
+        "crossEntityViolations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "testName": {"type": "string"},
+              "entities": {"type": "array"},
+              "expectedErrors": {"type": "array", "items": {"type": "string"}},
+              "description": {"type": "string"}
+            }
+          },
+          "default": [
+            {
+              "testName": "broken_foreign_key",
+              "entities": [
+                {
+                  "@type": "Transaction",
+                  "transactionId": "TXN-BROKEN-001",
+                  "OrganizationId": "ORG-NONEXISTENT-001",
+                  "CustomerId": "CUST-VALID-001"
+                }
+              ],
+              "expectedErrors": ["REFERENCE_ERROR: OrganizationId ORG-NONEXISTENT-001 not found"],
+              "description": "Transaction references non-existent Organization"
+            },
+            {
+              "testName": "circular_reference",
+              "entities": [
+                {
+                  "@type": "TraceableUnit",
+                  "traceableUnitId": "TRU-PARENT-001",
+                  "parentTraceableUnitId": "TRU-CHILD-001"
+                },
+                {
+                  "@type": "TraceableUnit", 
+                  "traceableUnitId": "TRU-CHILD-001",
+                  "parentTraceableUnitId": "TRU-PARENT-001"
+                }
+              ],
+              "expectedErrors": ["REFERENCE_ERROR: circular reference detected in TRU parent-child chain"],
+              "description": "Circular reference in TraceableUnit parent-child relationship"
+            },
+            {
+              "testName": "inactive_organization_reference",
+              "entities": [
+                {
+                  "@type": "Organization",
+                  "organizationId": "ORG-INACTIVE-001",
+                  "operationalStatus": "inactive"
+                },
+                {
+                  "@type": "Transaction", 
+                  "transactionId": "TXN-INACTIVE-001",
+                  "OrganizationId": "ORG-INACTIVE-001"
+                }
+              ],
+              "expectedErrors": ["BUSINESS_LOGIC_ERROR: cannot create transaction with inactive organization"],
+              "description": "Transaction references inactive Organization"
+            }
+          ]
+        }
+      }
+    },
+    "edgeCaseTests": {
+      "type": "object",
+      "description": "Boundary conditions and unusual but valid scenarios",
+      "properties": {
+        "boundaryValues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "testName": {"type": "string"},
+              "entity": {"type": "object"}, 
+              "expectedResult": {"type": "string"},
+              "description": {"type": "string"}
+            }
+          },
+          "default": [
+            {
+              "testName": "minimum_valid_volume",
+              "entity": {
+                "@type": "TraceableUnit",
+                "traceableUnitId": "TRU-MIN-001",
+                "volume": 0.001,
+                "volumeUnit": "cubic_meters"
+              },
+              "expectedResult": "valid",
+              "description": "Minimum positive volume should be valid"
+            },
+            {
+              "testName": "maximum_valid_volume",
+              "entity": {
+                "@type": "TraceableUnit",
+                "traceableUnitId": "TRU-MAX-001", 
+                "volume": 999999.0,
+                "volumeUnit": "cubic_meters"
+              },
+              "expectedResult": "valid",
+              "description": "Maximum allowed volume should be valid"
+            },
+            {
+              "testName": "single_species_100_percent",
+              "entity": {
+                "@type": "TraceableUnit",
+                "traceableUnitId": "TRU-MONO-001",
+                "speciesComposition": [
+                  {"speciesId": "SPEC-PINE", "percentage": 100.0}
+                ]
+              },
+              "expectedResult": "valid",
+              "description": "Single species at 100% should be valid"
+            },
+            {
+              "testName": "processing_with_volume_increase",
+              "entity": {
+                "@type": "MaterialProcessing",
+                "processingId": "PROC-CHIP-EXPAND-001",
+                "processType": "chipping",
+                "inputVolume": 100.0,
+                "outputVolume": 130.0,
+                "volumeLoss": 0.0
+              },
+              "expectedResult": "valid",
+              "description": "Chipping can increase apparent volume within limits"
+            }
+          ]
+        }
+      }
+    },
+    "integrationTests": {
+      "type": "object",
+      "description": "Complete supply chain scenarios for end-to-end validation",
+      "properties": {
+        "completeSupplyChain": {
+          "type": "object",
+          "properties": {
+            "scenario": {"const": "forest_to_pellet_mill"},
+            "description": {"const": "Complete chain from forest harvest to pellet production"},
+            "entities": {
+              "type": "array",
+              "default": [
+                {
+                  "@type": "Organization",
+                  "organizationId": "ORG-FOREST-001",
+                  "organizationName": "Cascade Forest Services",
+                  "organizationType": "harvester",
+                  "operationalStatus": "active"
+                },
+                {
+                  "@type": "GeographicData",
+                  "geographicDataId": "GEO-FOREST-001",
+                  "latitude": 45.3311,
+                  "longitude": -121.7113,
+                  "description": "Mount Hood National Forest - Timber Sale Unit 47"
+                },
+                {
+                  "@type": "TraceableUnit",
+                  "traceableUnitId": "TRU-LOGS-001",
+                  "OrganizationId": "ORG-FOREST-001",
+                  "volume": 500.0,
+                  "mass": 250.0,
+                  "harvestDate": "2025-07-01",
+                  "harvestGeographicDataId": "GEO-FOREST-001",
+                  "speciesComposition": [
+                    {"speciesId": "SPEC-DOUGLAS-FIR", "percentage": 70.0},
+                    {"speciesId": "SPEC-WESTERN-HEMLOCK", "percentage": 25.0},
+                    {"speciesId": "SPEC-NOBLE-FIR", "percentage": 5.0}
+                  ]
+                },
+                {
+                  "@type": "MaterialProcessing",
+                  "processingId": "PROC-DELIMB-001",
+                  "inputTraceableUnitId": "TRU-LOGS-001",
+                  "outputTraceableUnitId": "TRU-LOGS-CLEAN-001", 
+                  "processType": "delimbing",
+                  "processTimestamp": "2025-07-02T09:00:00Z",
+                  "inputVolume": 500.0,
+                  "outputVolume": 475.0,
+                  "volumeLoss": 25.0
+                },
+                {
+                  "@type": "Transaction",
+                  "transactionId": "TXN-LOGS-SALE-001",
+                  "OrganizationId": "ORG-FOREST-001",
+                  "CustomerId": "CUST-MILL-001",
+                  "TraceableUnitId": "TRU-LOGS-CLEAN-001",
+                  "transactionDate": "2025-07-05",
+                  "quantity": 400.0,
+                  "contractValue": 32000.0,
+                  "contractCurrency": "USD"
+                }
+              ]
+            },
+            "validationChecks": {
+              "type": "array",
+              "default": [
+                "All foreign key references resolve correctly",
+                "Processing dates are after harvest dates",
+                "Transaction quantities do not exceed TRU volumes",
+                "Species composition sums to 100%",
+                "Volume conservation in processing",
+                "Organization operational status is active"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "performanceTests": {
+      "type": "object", 
+      "description": "Large-scale validation scenarios",
+      "properties": {
+        "bulkValidation": {
+          "type": "object",
+          "properties": {
+            "entityCounts": {
+              "type": "object",
+              "properties": {
+                "organizations": {"const": 1000},
+                "traceableUnits": {"const": 10000},
+                "transactions": {"const": 50000},
+                "materialProcessing": {"const": 5000}
+              }
+            },
+            "expectedPerformance": {
+              "type": "object", 
+              "properties": {
+                "maxValidationTimeSeconds": {"const": 30},
+                "maxMemoryUsageMB": {"const": 500},
+                "concurrentValidations": {"const": 10}
+              }
+            }
+          }
+        }
+      }
+    },
+    "testExecution": {
+      "type": "object",
+      "description": "Instructions for running validation tests",
+      "properties": {
+        "executionOrder": {
+          "type": "array",
+          "items": {"type": "string"},
+          "default": [
+            "validExamples",
+            "invalidExamples.schemaViolations", 
+            "invalidExamples.crossEntityViolations",
+            "invalidExamples.businessLogicViolations",
+            "edgeCaseTests",
+            "integrationTests",
+            "performanceTests"
+          ]
+        },
+        "successCriteria": {
+          "type": "object",
+          "properties": {
+            "validExamples": {"const": "All must pass validation"},
+            "invalidExamples": {"const": "All must fail with expected errors"},
+            "edgeCaseTests": {"const": "Results must match expected outcomes"},
+            "integrationTests": {"const": "Complete chains must validate successfully"},
+            "performanceTests": {"const": "Must meet performance benchmarks"}
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "version",
+    "validExamples", 
+    "invalidExamples",
+    "edgeCaseTests",
+    "integrationTests",
+    "performanceTests",
+    "testExecution"
+  ],
+  "additionalProperties": false
+}
