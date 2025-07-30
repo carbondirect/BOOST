@@ -33,6 +33,8 @@
     - **Reference Implementation**
         - Demonstrates the use of BOOST in a business case
         - Testing/feedback requested
+    - **Schema Validation**
+        - The system validates data quality through completeness checks, consistency validation, and accuracy constraints.
 - Announcements of relevant events, papers, or news
 - Any new proposals or items for consideration
     - Version name/number update
