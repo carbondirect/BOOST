@@ -1,0 +1,408 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/cross-entity-validation",
+  "title": "BOOST Cross-Entity Validation Framework",
+  "description": "Comprehensive validation rules for entity relationships, foreign key integrity, and cross-entity business logic constraints",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "foreignKeyConstraints": {
+      "type": "object",
+      "description": "Foreign key relationship validation rules",
+      "properties": {
+        "Organization": {
+          "type": "object",
+          "properties": {
+            "primaryGeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Organization primary location must reference valid GeographicData"
+              }
+            },
+            "operationalAreas": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "cardinality": "one-to-many",
+                "required": false,
+                "description": "All operational area references must be valid GeographicData entities"
+              }
+            }
+          }
+        },
+        "Transaction": {
+          "type": "object",
+          "properties": {
+            "OrganizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Transaction seller must reference valid Organization"
+              }
+            },
+            "CustomerId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Customer"},
+                "targetField": {"const": "customerId"},
+                "required": true,
+                "description": "Transaction buyer must reference valid Customer"
+              }
+            },
+            "SalesDeliveryDocumentId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "SalesDeliveryDocument"},
+                "targetField": {"const": "salesDeliveryDocumentId"},
+                "required": false,
+                "description": "Sales document reference must be valid if provided"
+              }
+            },
+            "TraceableUnitId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TraceableUnit"},
+                "targetField": {"const": "traceableUnitId"},
+                "required": true,
+                "description": "Transaction must reference valid TraceableUnit"
+              }
+            }
+          }
+        },
+        "TraceableUnit": {
+          "type": "object",
+          "properties": {
+            "OrganizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "TRU must be owned by valid Organization"
+              }
+            },
+            "harvestGeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Harvest location must reference valid GeographicData"
+              }
+            },
+            "parentTraceableUnitId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TraceableUnit"},
+                "targetField": {"const": "traceableUnitId"},
+                "required": false,
+                "description": "Parent TRU reference must be valid if provided"
+              }
+            }
+          }
+        },
+        "MaterialProcessing": {
+          "type": "object",
+          "properties": {
+            "inputTraceableUnitId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TraceableUnit"},
+                "targetField": {"const": "traceableUnitId"},
+                "required": true,
+                "description": "Input TRU must be valid"
+              }
+            },
+            "outputTraceableUnitId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TraceableUnit"},
+                "targetField": {"const": "traceableUnitId"},
+                "required": true,
+                "description": "Output TRU must be valid"
+              }
+            },
+            "processingGeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Processing location must be valid GeographicData"
+              }
+            },
+            "operatorId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Operator"},
+                "targetField": {"const": "operatorId"},
+                "required": false,
+                "description": "Processing operator must be valid if specified"
+              }
+            }
+          }
+        },
+        "Certificate": {
+          "type": "object",
+          "properties": {
+            "CertificationBodyId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "CertificationBody"},
+                "targetField": {"const": "certificationBodyId"},
+                "required": true,
+                "description": "Certificate issuer must be valid CertificationBody"
+              }
+            },
+            "CertificationSchemeId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "CertificationScheme"},
+                "targetField": {"const": "certificationSchemeId"},
+                "required": true,
+                "description": "Certificate scheme must be valid"
+              }
+            },
+            "OrganizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Certificate holder must be valid Organization"
+              }
+            }
+          }
+        }
+      }
+    },
+    "circularReferenceRules": {
+      "type": "object",
+      "description": "Rules to prevent circular dependencies",
+      "properties": {
+        "TraceableUnit": {
+          "type": "object",
+          "properties": {
+            "parentChildCycles": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "no_cycles"},
+                "description": "TraceableUnit parent-child relationships must be acyclic",
+                "validation": "Traverse parentTraceableUnitId chain and ensure no entity appears twice"
+              }
+            }
+          }
+        },
+        "MaterialProcessing": {
+          "type": "object",
+          "properties": {
+            "processingChainCycles": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "no_cycles"},
+                "description": "MaterialProcessing input-output chains must be acyclic",
+                "validation": "Follow input/output TRU chains and ensure no processing loops"
+              }
+            }
+          }
+        },
+        "GeographicData": {
+          "type": "object",
+          "properties": {
+            "hierarchyCycles": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "no_cycles"},
+                "description": "Geographic hierarchies must be acyclic",
+                "validation": "Check parent geographic area references for cycles"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cardinalityConstraints": {
+      "type": "object",
+      "description": "Entity relationship cardinality rules",
+      "properties": {
+        "oneToMany": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "parentEntity": {"type": "string"},
+              "parentField": {"type": "string"},
+              "childEntity": {"type": "string"},
+              "childField": {"type": "string"},
+              "description": {"type": "string"}
+            }
+          },
+          "default": [
+            {
+              "parentEntity": "Organization",
+              "parentField": "organizationId",
+              "childEntity": "TraceableUnit",
+              "childField": "OrganizationId",
+              "description": "One Organization can own many TraceableUnits"
+            },
+            {
+              "parentEntity": "Organization",
+              "parentField": "organizationId",
+              "childEntity": "Transaction",
+              "childField": "OrganizationId",
+              "description": "One Organization can create many Transactions"
+            },
+            {
+              "parentEntity": "TraceableUnit",
+              "parentField": "traceableUnitId",
+              "childEntity": "MaterialProcessing",
+              "childField": "inputTraceableUnitId",
+              "description": "One TRU can be input to many processing operations"
+            },
+            {
+              "parentEntity": "CertificationScheme",
+              "parentField": "certificationSchemeId",
+              "childEntity": "Certificate",
+              "childField": "CertificationSchemeId",
+              "description": "One scheme can have many certificates"
+            }
+          ]
+        },
+        "manyToOne": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "childEntity": {"type": "string"},
+              "childField": {"type": "string"},
+              "parentEntity": {"type": "string"},
+              "parentField": {"type": "string"},
+              "description": {"type": "string"}
+            }
+          },
+          "default": [
+            {
+              "childEntity": "MaterialProcessing",
+              "childField": "outputTraceableUnitId",
+              "parentEntity": "TraceableUnit",
+              "parentField": "traceableUnitId",
+              "description": "Many processing operations can output to one TRU"
+            },
+            {
+              "childEntity": "Transaction",
+              "childField": "CustomerId",
+              "parentEntity": "Customer",
+              "parentField": "customerId",
+              "description": "Many transactions can be with one customer"
+            }
+          ]
+        }
+      }
+    },
+    "statusConsistencyRules": {
+      "type": "object",
+      "description": "Rules ensuring status consistency across related entities",
+      "properties": {
+        "organizationStatus": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "active_parent_required"},
+            "description": "Related entities require parent Organization to be active",
+            "applies_to": ["TraceableUnit", "Transaction", "Certificate"],
+            "validation": "Parent Organization.operationalStatus must be 'active' for new related entities"
+          }
+        },
+        "certificateValidity": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "valid_certificate_required"},
+            "description": "Certificate references must be to valid, non-expired certificates",
+            "applies_to": ["Organization.certifications", "TraceableUnit.certifications"],
+            "validation": "Certificate.certificateStatus must be 'valid' and expiryDate >= current_date"
+          }
+        },
+        "geographicDataConsistency": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "consistent_locations"},
+            "description": "Related geographic references must be logically consistent",
+            "validation": "Processing locations should be within reasonable distance of harvest locations"
+          }
+        }
+      }
+    },
+    "dataIntegrityRules": {
+      "type": "object",
+      "description": "Cross-entity data integrity validation rules",
+      "properties": {
+        "quantityBalance": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "conservation_of_mass_volume"},
+            "description": "Volume and mass must be conserved across processing and transactions",
+            "validation": {
+              "processing": "MaterialProcessing.inputVolume >= (outputVolume + volumeLoss)",
+              "transaction": "Sum of Transaction.quantity <= TraceableUnit.volume",
+              "splitting": "Sum of child TRU volumes <= parent TRU volume"
+            }
+          }
+        },
+        "temporalConsistency": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "chronological_order"},
+            "description": "Dates must be in logical chronological order",
+            "validation": {
+              "processing": "MaterialProcessing.processTimestamp >= inputTRU.harvestDate",
+              "transaction": "Transaction.transactionDate >= TRU.harvestDate",
+              "certificate": "Certificate.issueDate <= Certificate.expiryDate"
+            }
+          }
+        },
+        "speciesConsistency": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "species_composition_integrity"},
+            "description": "Species composition must be consistent across processing chain",
+            "validation": {
+              "percentage_sum": "Sum of SpeciesComponent.percentage = 100.0",
+              "processing_inheritance": "Output TRU species composition derived from input TRU",
+              "transaction_match": "Transaction material type consistent with TRU species"
+            }
+          }
+        }
+      }
+    },
+    "validationSequence": {
+      "type": "array",
+      "description": "Recommended order for cross-entity validation execution",
+      "items": {"type": "string"},
+      "default": [
+        "foreignKeyConstraints",
+        "circularReferenceRules", 
+        "cardinalityConstraints",
+        "statusConsistencyRules",
+        "dataIntegrityRules"
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "foreignKeyConstraints",
+    "circularReferenceRules",
+    "cardinalityConstraints", 
+    "statusConsistencyRules",
+    "dataIntegrityRules",
+    "validationSequence"
+  ],
+  "additionalProperties": false
+}
