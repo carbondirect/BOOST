@@ -59,16 +59,7 @@
       "organizationId"
     ],
     "title": "Audit",
-    "description": "Audit entity in BOOST data model",
-    "boost_metadata": {
-      "area": "reporting_compliance",
-      "emoji": "\ud83d\udd0d",
-      "position": {
-        "x": 2700,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "description": "Audit entity in BOOST data model"
   },
   "rules": {
     "and": [
@@ -91,6 +82,37 @@
         "!!": {
           "var": "organizationId"
         }
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Audit",
+      "primaryKey": "auditId",
+      "area": "organizational_foundation",
+      "description": "Audit records for certification compliance verification"
+    },
+    "relationships": [
+      {
+        "field": "organizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "auditing"
+      },
+      {
+        "field": "cbId",
+        "targetEntity": "CertificationBody",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "conducted by"
+      },
+      {
+        "field": "auditGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "conducted at"
       }
     ]
   }

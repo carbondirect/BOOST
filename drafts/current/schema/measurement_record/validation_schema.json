@@ -4,53 +4,194 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/measurement-record",
     "title": "Measurement Record",
     "description": "Quality measurements and dimensional data",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "📏",
-      "position": {
-        "x": 2000,
-        "y": 600
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["MeasurementRecord"] },
-      "@id": { "type": "string", "format": "uri" },
-      "recordId": { "type": "string" },
-      "traceableUnitId": { "type": "string" },
-      "measuredVolume": { "type": "number", "minimum": 0 },
-      "measuredLength": { "type": "number", "minimum": 0 },
-      "measuredDiameter": { "type": "number", "minimum": 0 },
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "MeasurementRecord"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "recordId": {
+        "type": "string"
+      },
+      "traceableUnitId": {
+        "type": "string"
+      },
+      "measuredVolume": {
+        "type": "number",
+        "minimum": 0
+      },
+      "measuredLength": {
+        "type": "number",
+        "minimum": 0
+      },
+      "measuredDiameter": {
+        "type": "number",
+        "minimum": 0
+      },
       "measurementMethod": {
         "type": "string",
-        "enum": ["harvester", "mill", "manual", "optical"]
+        "enum": [
+          "harvester",
+          "mill",
+          "manual",
+          "optical"
+        ]
       },
-      "measurementGeographicDataId": { "type": "string" },
-      "measurementTimestamp": { "type": "string", "format": "date-time" },
-      "operatorId": { "type": "string" },
-      "trackingPointId": { "type": "string" },
+      "measurementGeographicDataId": {
+        "type": "string"
+      },
+      "measurementTimestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "operatorId": {
+        "type": "string"
+      },
+      "trackingPointId": {
+        "type": "string"
+      },
       "speciesMeasurements": {
         "type": "array",
-        "items": { "type": "string" }
+        "items": {
+          "type": "string"
+        }
       },
-      "lastUpdated": { "type": "string", "format": "date-time" }
+      "moistureContent": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Moisture content as percentage of weight contributed by water (0-100%)"
+      },
+      "moistureMethod": {
+        "type": "string",
+        "enum": [
+          "oven_dry",
+          "electrical_resistance",
+          "microwave",
+          "near_infrared",
+          "gravimetric",
+          "capacitive",
+          "calculated",
+          "estimated"
+        ],
+        "description": "Method used to determine moisture content"
+      },
+      "moistureStandard": {
+        "type": "string",
+        "enum": [
+          "ASTM_D4442",
+          "ASTM_D2016",
+          "ISO_13061",
+          "CEN_EN_14774",
+          "local_standard"
+        ],
+        "description": "Standard procedure followed for moisture measurement"
+      },
+      "moistureAccuracy": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Estimated accuracy of moisture measurement (± percentage points)"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time"
+      }
     },
-    "required": ["@context", "@type", "@id", "recordId", "traceableUnitId", "measurementMethod", "measurementTimestamp"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "recordId",
+      "traceableUnitId",
+      "measurementMethod",
+      "measurementTimestamp"
+    ]
   },
   "rules": {
     "and": [
-      { "!!": { "var": "recordId" } },
-      { "!!": { "var": "traceableUnitId" } },
-      { "!!": { "var": "measurementMethod" } },
-      { "!!": { "var": "measurementTimestamp" } },
+      {
+        "!!": {
+          "var": "recordId"
+        }
+      },
+      {
+        "!!": {
+          "var": "traceableUnitId"
+        }
+      },
+      {
+        "!!": {
+          "var": "measurementMethod"
+        }
+      },
+      {
+        "!!": {
+          "var": "measurementTimestamp"
+        }
+      },
       {
         "if": [
-          { "var": "measuredVolume" },
-          { ">": [{ "var": "measuredVolume" }, 0] },
+          {
+            "var": "measuredVolume"
+          },
+          {
+            ">": [
+              {
+                "var": "measuredVolume"
+              },
+              0
+            ]
+          },
           true
         ]
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "MeasurementRecord",
+      "primaryKey": "recordId",
+      "area": "measurement_verification",
+      "description": "Quality measurements and dimensional data for biomass tracking"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "measuring",
+        "example": "Record-456 measures volume/moisture of TRU-123"
+      },
+      {
+        "field": "measurementGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "measured at"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "measured by"
+      },
+      {
+        "field": "trackingPointId",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "measured at point"
       }
     ]
   }

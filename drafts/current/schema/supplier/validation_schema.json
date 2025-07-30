@@ -35,8 +35,9 @@
       "supplierType": {
         "type": "string"
       },
-      "supplierGeographicDataId": {
-        "type": "string"
+      "GeographicDataId": {
+        "type": "string",
+        "description": "Supplier location - uses EntityNameId convention referencing GeographicData"
       }
     },
     "required": [
@@ -47,16 +48,7 @@
       "supplierName"
     ],
     "title": "Supplier",
-    "description": "Supplier entity in BOOST data model",
-    "boost_metadata": {
-      "area": "material_supply_chain",
-      "emoji": "\ud83e\udd1d",
-      "position": {
-        "x": 500,
-        "y": 1000
-      },
-      "relationships": []
-    }
+    "description": "Supplier entity in BOOST data model"
   },
   "rules": {
     "and": [
@@ -69,6 +61,23 @@
         "!!": {
           "var": "supplierName"
         }
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Supplier",
+      "primaryKey": "supplierId",
+      "area": "material_supply_chain",
+      "description": "Supply chain organizations providing biomass materials"
+    },
+    "relationships": [
+      {
+        "field": "GeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "located at"
       }
     ]
   }

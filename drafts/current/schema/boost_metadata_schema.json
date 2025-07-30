@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/boost-metadata",
+  "title": "BOOST Entity Metadata Schema",
+  "description": "Metadata schema for BOOST entity relationship definitions and ERD configuration",
+  "type": "object",
+  "properties": {
+    "entity": {
+      "type": "object",
+      "description": "Core entity metadata",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Canonical entity name (PascalCase)",
+          "pattern": "^[A-Z][a-zA-Z0-9]*$"
+        },
+        "primaryKey": {
+          "type": "string", 
+          "description": "Primary key field name"
+        },
+        "area": {
+          "type": "string",
+          "description": "ERD area grouping",
+          "enum": [
+            "organizational_foundation",
+            "core_traceability", 
+            "material_supply_chain",
+            "transaction_management",
+            "measurement_verification",
+            "geographic_tracking",
+            "compliance_reporting"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable entity description"
+        }
+      },
+      "required": ["name", "primaryKey", "area"],
+      "additionalProperties": false
+    },
+    "relationships": {
+      "type": "array",
+      "description": "Foreign key relationship definitions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "Field name containing foreign key"
+          },
+          "targetEntity": {
+            "type": "string",
+            "description": "Target entity name (must match entity.name of target)",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$"
+          },
+          "relationshipType": {
+            "type": "string",
+            "description": "Cardinality of relationship",
+            "enum": ["one-to-one", "one-to-many", "many-to-one", "many-to-many"]
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Whether the relationship is required (NOT NULL)"
+          },
+          "label": {
+            "type": "string",
+            "description": "Human-readable relationship label",
+            "maxLength": 50
+          },
+          "example": {
+            "type": "string",
+            "description": "Concrete example showing how this relationship works in practice",
+            "maxLength": 100
+          }
+        },
+        "required": ["field", "targetEntity", "relationshipType", "required"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["entity", "relationships"],
+  "additionalProperties": false
+}

@@ -31,9 +31,9 @@
           "OP-PACIFIC-MILL-QA-042"
         ]
       },
-      "organizationId": {
+      "OrganizationId": {
         "type": "string",
-        "description": "Foreign key reference to employing organization",
+        "description": "Employing organization - uses EntityNameId convention referencing Organization",
         "examples": [
           "ORG-KLAMATH-HARVEST-OPERATIONS-001"
         ]
@@ -168,15 +168,15 @@
       "hireDate",
       "lastUpdated"
     ],
-    "additionalProperties": false,
-    "boost_metadata": {
-      "area": "personnel",
-      "emoji": "\ud83d\udc64",
-      "position": {
-        "x": 500,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Operator",
+      "primaryKey": "operatorId",
+      "area": "organizational_foundation",
+      "description": "👤 Individual operator/personnel entity"
+    },
+    "relationships": []
   }
 }

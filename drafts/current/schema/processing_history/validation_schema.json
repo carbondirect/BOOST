@@ -4,56 +4,69 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/processing-history",
     "title": "Processing History",
     "description": "Complete timeline of processing events with moisture tracking",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "🔑",
-      "position": {
-        "x": 2000,
-        "y": 1400
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["ProcessingHistory"] },
-      "@id": { "type": "string", "format": "uri" },
-      "processingHistoryId": { 
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "ProcessingHistory"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "processingHistoryId": {
         "type": "string",
         "description": "Unique identifier for the processing history record"
       },
-      "traceableUnitId": { 
+      "traceableUnitId": {
         "type": "string",
         "description": "Foreign key to TRU this history record belongs to"
       },
-      "materialProcessingId": { 
+      "materialProcessingId": {
         "type": "string",
         "description": "Foreign key to MaterialProcessing operation"
       },
-      "timestamp": { 
-        "type": "string", 
+      "timestamp": {
+        "type": "string",
         "format": "date-time",
         "description": "When this processing step occurred"
       },
-      "processSequenceNumber": { 
-        "type": "integer", 
+      "processSequenceNumber": {
+        "type": "integer",
         "minimum": 1,
         "description": "Sequential order of this processing step for the TRU"
       },
       "processingEventType": {
         "type": "string",
-        "enum": ["transformation", "split", "merge", "quality_change", "loading", "transport_processing", "measurement"],
+        "enum": [
+          "transformation",
+          "split",
+          "merge",
+          "quality_change",
+          "loading",
+          "transport_processing",
+          "measurement"
+        ],
         "description": "Type of processing event"
       },
       "inputTRUIds": {
         "type": "array",
-        "items": { "type": "string" },
+        "items": {
+          "type": "string"
+        },
         "minItems": 1,
         "description": "Array of input TRU IDs (multiple for merge operations)"
       },
       "outputTRUIds": {
-        "type": "array", 
-        "items": { "type": "string" },
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
         "minItems": 1,
         "description": "Array of output TRU IDs (multiple for split operations)"
       },
@@ -67,7 +80,7 @@
         "description": "Description of quality changes during processing"
       },
       "operatorId": {
-        "type": "string", 
+        "type": "string",
         "description": "Foreign key to operator who performed processing"
       },
       "equipmentUsed": {
@@ -82,7 +95,13 @@
       },
       "speciesCompositionChange": {
         "type": "string",
-        "enum": ["unchanged", "separated", "mixed", "filtered", "transformed"],
+        "enum": [
+          "unchanged",
+          "separated",
+          "mixed",
+          "filtered",
+          "transformed"
+        ],
         "description": "How species composition changed during processing"
       },
       "plantPartTransformation": {
@@ -98,39 +117,77 @@
         "description": "Foreign key to location where processing occurred"
       },
       "previousProcessingHistoryId": {
-        "type": ["string", "null"],
+        "type": [
+          "string",
+          "null"
+        ],
         "description": "Foreign key to previous processing history record (forms chain)"
       },
       "nextProcessingHistoryIds": {
         "type": "array",
-        "items": { "type": "string" },
+        "items": {
+          "type": "string"
+        },
         "description": "Array of next processing history record IDs (for split operations)"
       },
       "volumeConservationData": {
         "type": "object",
         "properties": {
-          "totalInputVolume": { "type": "number", "minimum": 0 },
-          "totalOutputVolume": { "type": "number", "minimum": 0 },
-          "volumeLoss": { "type": "number", "minimum": 0 },
-          "lossReason": { 
-            "type": "string",
-            "enum": ["sawdust", "trimming", "moisture_loss", "handling_damage", "sorting_loss", "measurement_variance"]
+          "totalInputVolume": {
+            "type": "number",
+            "minimum": 0
           },
-          "conservationValidated": { "type": "boolean" }
+          "totalOutputVolume": {
+            "type": "number",
+            "minimum": 0
+          },
+          "volumeLoss": {
+            "type": "number",
+            "minimum": 0
+          },
+          "lossReason": {
+            "type": "string",
+            "enum": [
+              "sawdust",
+              "trimming",
+              "moisture_loss",
+              "handling_damage",
+              "sorting_loss",
+              "measurement_variance"
+            ]
+          },
+          "conservationValidated": {
+            "type": "boolean"
+          }
         },
-        "required": ["totalInputVolume", "totalOutputVolume"],
+        "required": [
+          "totalInputVolume",
+          "totalOutputVolume"
+        ],
         "description": "Volume conservation validation data"
       },
       "mediaBreakData": {
-        "type": "object", 
+        "type": "object",
         "properties": {
-          "mediaBreakOccurred": { "type": "boolean" },
-          "breakDuration": { "type": "string" },
-          "breakReason": { "type": "string" },
-          "recoveryMethod": { "type": "string" },
-          "dataIntegrityValidated": { "type": "boolean" }
+          "mediaBreakOccurred": {
+            "type": "boolean"
+          },
+          "breakDuration": {
+            "type": "string"
+          },
+          "breakReason": {
+            "type": "string"
+          },
+          "recoveryMethod": {
+            "type": "string"
+          },
+          "dataIntegrityValidated": {
+            "type": "boolean"
+          }
         },
-        "required": ["mediaBreakOccurred"],
+        "required": [
+          "mediaBreakOccurred"
+        ],
         "description": "Media break detection and recovery information"
       },
       "claimInheritanceData": {
@@ -138,24 +195,85 @@
         "properties": {
           "inheritedClaims": {
             "type": "array",
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "description": "Array of claim IDs inherited from input TRUs"
           },
           "newClaims": {
-            "type": "array", 
-            "items": { "type": "string" },
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "description": "Array of new claim IDs created during processing"
           },
-          "claimValidationRequired": { "type": "boolean" },
-          "claimValidationCompleted": { "type": "boolean" }
+          "claimValidationRequired": {
+            "type": "boolean"
+          },
+          "claimValidationCompleted": {
+            "type": "boolean"
+          }
         },
         "description": "Sustainability claim inheritance tracking"
       }
     },
     "required": [
-      "@context", "@type", "@id", "processingHistoryId", "traceableUnitId", 
-      "materialProcessingId", "timestamp", "processSequenceNumber", 
-      "processingEventType", "inputTRUIds", "outputTRUIds"
+      "@context",
+      "@type",
+      "@id",
+      "processingHistoryId",
+      "traceableUnitId",
+      "materialProcessingId",
+      "timestamp",
+      "processSequenceNumber",
+      "processingEventType",
+      "inputTRUIds",
+      "outputTRUIds"
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "ProcessingHistory",
+      "primaryKey": "processingHistoryId",
+      "area": "core_traceability",
+      "description": "Timeline of processing events with complete chain tracking"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "processing for"
+      },
+      {
+        "field": "materialProcessingId",
+        "targetEntity": "MaterialProcessing",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "using process"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "performed by"
+      },
+      {
+        "field": "processingGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "processed at"
+      },
+      {
+        "field": "previousProcessingHistoryId",
+        "targetEntity": "ProcessingHistory",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "follows"
+      }
     ]
   }
 }

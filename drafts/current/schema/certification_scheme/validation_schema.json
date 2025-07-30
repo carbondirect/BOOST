@@ -182,15 +182,23 @@
       "schemeType",
       "issuingOrganizationId"
     ],
-    "additionalProperties": false,
-    "boost_metadata": {
+    "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "CertificationScheme",
+      "primaryKey": "certificationSchemeId",
       "area": "organizational_foundation",
-      "emoji": "\ud83d\udee1\ufe0f",
-      "position": {
-        "x": 100,
-        "y": 1400
-      },
-      "relationships": []
-    }
+      "description": "Certification standards and requirements with geographic applicability"
+    },
+    "relationships": [
+      {
+        "field": "issuingOrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "issued by"
+      }
+    ]
   }
 }

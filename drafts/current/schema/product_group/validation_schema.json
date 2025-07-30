@@ -91,16 +91,7 @@
       "description"
     ],
     "title": "Product Group",
-    "description": "ProductGroup entity in BOOST data model",
-    "boost_metadata": {
-      "area": "analytics_data",
-      "emoji": "\ud83d\udccb",
-      "position": {
-        "x": 1200,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "description": "ProductGroup entity in BOOST data model"
   },
   "rules": {
     "and": [
@@ -229,5 +220,14 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "ProductGroup",
+      "primaryKey": "productGroupId",
+      "area": "compliance_reporting",
+      "description": "Product groupings and classifications for biomass materials"
+    },
+    "relationships": []
   }
 }

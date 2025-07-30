@@ -4,15 +4,6 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/species-component",
     "title": "Species Component",
     "description": "Species composition within TRUs",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "🌲",
-      "position": {
-        "x": 1200,
-        "y": 600
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
       "@context": {
@@ -20,7 +11,9 @@
       },
       "@type": {
         "type": "string",
-        "enum": ["SpeciesComponent"]
+        "enum": [
+          "SpeciesComponent"
+        ]
       },
       "@id": {
         "type": "string",
@@ -59,7 +52,12 @@
       },
       "harvestingMethod": {
         "type": "string",
-        "enum": ["chainsaw", "harvester", "manual", "mechanical"],
+        "enum": [
+          "chainsaw",
+          "harvester",
+          "manual",
+          "mechanical"
+        ],
         "description": "Method used to harvest this species"
       },
       "harvestTimestamp": {
@@ -115,7 +113,7 @@
                 "description": "Volume of this plant part in cubic meters"
               },
               "percentage": {
-                "type": "number", 
+                "type": "number",
                 "minimum": 0,
                 "maximum": 100,
                 "description": "Percentage of this species component"
@@ -131,19 +129,46 @@
                 "description": "Plant part specific moisture content"
               }
             },
-            "required": ["volume", "percentage"]
+            "required": [
+              "volume",
+              "percentage"
+            ]
           }
         },
         "description": "Plant part breakdown within this species component"
       },
       "primaryPlantPart": {
         "type": "string",
-        "enum": ["trunk", "branches", "twigs", "bark", "heartwood", "sapwood", "leaves", "needles", "seeds", "nuts", "cones", "stalks", "straw", "husks", "hulls", "chaff", "stubble"],
+        "enum": [
+          "trunk",
+          "branches",
+          "twigs",
+          "bark",
+          "heartwood",
+          "sapwood",
+          "leaves",
+          "needles",
+          "seeds",
+          "nuts",
+          "cones",
+          "stalks",
+          "straw",
+          "husks",
+          "hulls",
+          "chaff",
+          "stubble"
+        ],
         "description": "Primary plant part represented by this species component"
       },
       "structuralClassification": {
         "type": "string",
-        "enum": ["structural", "protective", "metabolic", "reproductive", "storage"],
+        "enum": [
+          "structural",
+          "protective",
+          "metabolic",
+          "reproductive",
+          "storage"
+        ],
         "description": "Functional classification of the primary plant part"
       },
       "lastUpdated": {
@@ -166,71 +191,153 @@
   "rules": {
     "and": [
       {
-        "!!": { "var": "componentId" }
+        "!!": {
+          "var": "componentId"
+        }
       },
       {
-        "!!": { "var": "traceableUnitId" }
+        "!!": {
+          "var": "traceableUnitId"
+        }
       },
       {
-        "!!": { "var": "species" }
+        "!!": {
+          "var": "species"
+        }
       },
       {
-        "!!": { "var": "volumeM3" }
+        "!!": {
+          "var": "volumeM3"
+        }
       },
       {
-        ">": [{ "var": "volumeM3" }, 0]
+        ">": [
+          {
+            "var": "volumeM3"
+          },
+          0
+        ]
       },
       {
-        "!!": { "var": "percentageByVolume" }
+        "!!": {
+          "var": "percentageByVolume"
+        }
       },
       {
-        ">": [{ "var": "percentageByVolume" }, 0]
+        ">": [
+          {
+            "var": "percentageByVolume"
+          },
+          0
+        ]
       },
       {
-        "<=": [{ "var": "percentageByVolume" }, 100]
+        "<=": [
+          {
+            "var": "percentageByVolume"
+          },
+          100
+        ]
       },
       {
         "if": [
-          { "var": "dbhCm" },
           {
-            ">": [{ "var": "dbhCm" }, 0]
+            "var": "dbhCm"
+          },
+          {
+            ">": [
+              {
+                "var": "dbhCm"
+              },
+              0
+            ]
           },
           true
         ]
       },
       {
         "if": [
-          { "var": "heightM" },
           {
-            ">": [{ "var": "heightM" }, 0]
+            "var": "heightM"
+          },
+          {
+            ">": [
+              {
+                "var": "heightM"
+              },
+              0
+            ]
           },
           true
         ]
       },
       {
         "if": [
-          { "var": "ageYears" },
           {
-            ">=": [{ "var": "ageYears" }, 0]
+            "var": "ageYears"
+          },
+          {
+            ">=": [
+              {
+                "var": "ageYears"
+              },
+              0
+            ]
           },
           true
         ]
       },
       {
         "if": [
-          { "var": "moistureContent" },
+          {
+            "var": "moistureContent"
+          },
           {
             "and": [
               {
-                ">=": [{ "var": "moistureContent" }, 0]
+                ">=": [
+                  {
+                    "var": "moistureContent"
+                  },
+                  0
+                ]
               },
               {
-                "<=": [{ "var": "moistureContent" }, 100]
+                "<=": [
+                  {
+                    "var": "moistureContent"
+                  },
+                  100
+                ]
               }
             ]
           },
           true
         ]
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "SpeciesComponent",
+      "primaryKey": "componentId",
+      "area": "material_supply_chain",
+      "description": "Species composition details within biomass tracking units"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "component of"
+      },
+      {
+        "field": "sourceGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "harvested from"
       }
     ]
   }

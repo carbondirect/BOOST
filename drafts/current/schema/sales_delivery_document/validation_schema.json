@@ -64,16 +64,7 @@
       "quantity"
     ],
     "title": "Sales Delivery Document",
-    "description": "SalesDeliveryDocument entity in BOOST data model",
-    "boost_metadata": {
-      "area": "transaction_management",
-      "emoji": "\ud83d\udcc4",
-      "position": {
-        "x": 2700,
-        "y": 600
-      },
-      "relationships": []
-    }
+    "description": "SalesDeliveryDocument entity in BOOST data model"
   },
   "rules": {
     "and": [
@@ -106,6 +97,23 @@
         "!!": {
           "var": "quantity"
         }
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "SalesDeliveryDocument",
+      "primaryKey": "documentId",
+      "area": "transaction_management",
+      "description": "Sales and delivery documentation for business transactions"
+    },
+    "relationships": [
+      {
+        "field": "transactionId",
+        "targetEntity": "Transaction",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "documenting"
       }
     ]
   }
