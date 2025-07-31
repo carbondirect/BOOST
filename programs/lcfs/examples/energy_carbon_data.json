@@ -1,0 +1,82 @@
+[
+  {
+    "energyCarbonDataId": "CI-2025-LMR-001",
+    "dataCategory": "carbon_intensity",
+    "value": 18.7,
+    "unit": "gCO2e/MJ",
+    "source": "Third-party verification by Environmental Resources Management",
+    "measurementMethod": "CA-GREET3.0",
+    "lcfsPathwayType": "Tier_1", 
+    "energyEconomyRatio": 1.0,
+    "lifeCycleStage": "production",
+    "regulatoryBenchmark": 95.61,
+    "verificationDate": "2025-01-10",
+    "associatedPathway": "CA-RD-2025-LMR-001",
+    "lcaBreakdown": {
+      "feedstock": 4.0,
+      "transport": 1.2,
+      "processing": 12.8,
+      "distribution": 0.7
+    }
+  },
+  {
+    "energyCarbonDataId": "CI-2025-AGR-001", 
+    "dataCategory": "carbon_intensity",
+    "value": 16.2,
+    "unit": "gCO2e/MJ",
+    "source": "Third-party verification by Environmental Resources Management",
+    "measurementMethod": "CA-GREET3.0",
+    "lcfsPathwayType": "Tier_1",
+    "energyEconomyRatio": 1.0,
+    "lifeCycleStage": "production",
+    "regulatoryBenchmark": 95.61,
+    "verificationDate": "2025-01-15",
+    "associatedPathway": "CA-RD-2025-AGR-001",
+    "lcaBreakdown": {
+      "feedstock": 3.6,
+      "transport": 2.1, 
+      "processing": 10.1,
+      "distribution": 0.4
+    }
+  },
+  {
+    "energyCarbonDataId": "CI-2025-GRW-001",
+    "dataCategory": "carbon_intensity", 
+    "value": 14.5,
+    "unit": "gCO2e/MJ",
+    "source": "Third-party verification by Environmental Resources Management",
+    "measurementMethod": "CA-GREET3.0",
+    "lcfsPathwayType": "Tier_1",
+    "energyEconomyRatio": 1.0,
+    "lifeCycleStage": "production",
+    "regulatoryBenchmark": 95.61,
+    "verificationDate": "2025-01-20",
+    "associatedPathway": "CA-RD-2025-GRW-001",
+    "lcaBreakdown": {
+      "feedstock": 2.6,
+      "transport": 1.8,
+      "processing": 9.8,
+      "distribution": 0.3
+    }
+  },
+  {
+    "energyCarbonDataId": "CI-2025-FHR-001",
+    "dataCategory": "carbon_intensity",
+    "value": 21.3,
+    "unit": "gCO2e/MJ", 
+    "source": "Third-party verification by Environmental Resources Management",
+    "measurementMethod": "CA-GREET3.0",
+    "lcfsPathwayType": "Tier_1",
+    "energyEconomyRatio": 1.0,
+    "lifeCycleStage": "production",
+    "regulatoryBenchmark": 95.61,
+    "verificationDate": "2025-01-05",
+    "associatedPathway": "CA-RD-2025-FHR-001",
+    "lcaBreakdown": {
+      "feedstock": 5.6,
+      "transport": 2.4,
+      "processing": 12.8,
+      "distribution": 0.5
+    }
+  }
+]

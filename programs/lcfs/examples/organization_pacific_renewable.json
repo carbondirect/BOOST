@@ -1,0 +1,24 @@
+{
+  "organizationId": "pacific-renewable-fuels-001",
+  "name": "Pacific Renewable Fuels Corp",
+  "address": {
+    "street": "2500 Industrial Parkway",
+    "city": "Stockton", 
+    "state": "CA",
+    "postalCode": "95206",
+    "country": "USA"
+  },
+  "contactInfo": {
+    "email": "compliance@pacificrenewable.com",
+    "phone": "+1-209-555-0150",
+    "website": "https://www.pacificrenewable.com"
+  },
+  "lcfsRegistrationId": "LCFS-REG-2025-003",
+  "regulatedEntityType": "producer",
+  "facilityCapacity": {
+    "annualCapacity": 50000000,
+    "unit": "gallons_renewable_diesel"
+  },
+  "operationalStatus": "active",
+  "lastUpdated": "2025-07-02T10:00:00Z"
+}
