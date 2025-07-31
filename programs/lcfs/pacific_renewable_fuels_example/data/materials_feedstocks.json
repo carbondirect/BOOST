@@ -1,0 +1,90 @@
+[
+  {
+    "materialId": "feedstock-lumber-mill-residual-001",
+    "materialType": "lumber_mill_residual",
+    "description": "Sawdust and wood chips from lumber milling operations",
+    "specification": {
+      "moistureContent": 15.2,
+      "ashContent": 2.1,
+      "cellulose": 42.5,
+      "hemicellulose": 27.3,
+      "lignin": 28.1
+    },
+    "supplier": "Northern California Lumber Co-op",
+    "originLocation": {
+      "region": "Northern California",
+      "sustainabilityCertification": "FSC_Chain_of_Custody"
+    },
+    "carbonIntensityProfile": {
+      "feedstockCI": 2.8,
+      "transportCI": 1.2,
+      "totalFeedstockCI": 4.0
+    }
+  },
+  {
+    "materialId": "feedstock-ag-residue-001", 
+    "materialType": "agricultural_residue",
+    "description": "Wheat straw and rice hulls from Central Valley farms",
+    "specification": {
+      "moistureContent": 12.5,
+      "ashContent": 8.7,
+      "cellulose": 38.2,
+      "hemicellulose": 32.1,
+      "lignin": 21.0
+    },
+    "supplier": "Central Valley Ag Residue Collective",
+    "originLocation": {
+      "region": "California Central Valley",
+      "sustainabilityCertification": "CARB_Approved_Feedstock"
+    },
+    "carbonIntensityProfile": {
+      "feedstockCI": 1.5,
+      "transportCI": 2.1,
+      "totalFeedstockCI": 3.6
+    }
+  },
+  {
+    "materialId": "feedstock-green-waste-001",
+    "materialType": "municipal_green_waste", 
+    "description": "Yard trimmings and tree waste from municipal collection",
+    "specification": {
+      "moistureContent": 18.7,
+      "ashContent": 4.3,
+      "cellulose": 35.8,
+      "hemicellulose": 25.2,
+      "lignin": 34.7
+    },
+    "supplier": "Bay Area Green Waste Recovery",
+    "originLocation": {
+      "region": "San Francisco Bay Area",
+      "sustainabilityCertification": "Municipal_Waste_Stream"
+    },
+    "carbonIntensityProfile": {
+      "feedstockCI": 0.8,
+      "transportCI": 1.8,
+      "totalFeedstockCI": 2.6
+    }
+  },
+  {
+    "materialId": "feedstock-forest-residual-001",
+    "materialType": "forest_harvest_residual",
+    "description": "Logging residue and forest thinning materials",
+    "specification": {
+      "moistureContent": 22.1,
+      "ashContent": 1.9,
+      "cellulose": 44.2,
+      "hemicellulose": 29.8,
+      "lignin": 24.1
+    },
+    "supplier": "Sierra Nevada Forest Products",
+    "originLocation": {
+      "region": "Sierra Nevada Foothills",
+      "sustainabilityCertification": "SFI_Fiber_Sourcing"
+    },
+    "carbonIntensityProfile": {
+      "feedstockCI": 3.2,
+      "transportCI": 2.4,
+      "totalFeedstockCI": 5.6
+    }
+  }
+]

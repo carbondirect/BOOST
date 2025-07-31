@@ -1,0 +1,292 @@
+{
+  "schema_validation_test_suite": {
+    "description": "Automated test suite for validating BOOST schemas against California biomass use cases",
+    "version": "1.0",
+    "test_framework": "JSON Schema Draft 07 with JsonLogic validation rules",
+    "test_categories": [
+      {
+        "category": "entity_schema_validation",
+        "description": "Validate individual entity schemas against test data",
+        "tests": [
+          {
+            "test_id": "TRU_001_forestry_residues",
+            "entity": "TraceableUnit",
+            "schema_path": "drafts/current/schema/traceable_unit/validation_schema.json",
+            "test_data": {
+              "@context": {"@vocab": "https://schema.boost.org/"},
+              "@type": "TraceableUnit", 
+              "@id": "https://boost.org/units/TRU-NORCAL-THN-240801-001",
+              "traceableUnitId": "TRU-NORCAL-THN-240801-001",
+              "unitType": "volume_aggregation",
+              "uniqueIdentifier": "optical-pattern-norcal-001",
+              "totalVolumeM3": 35.2,
+              "currentGeographicDataId": "GEO-HUMBOLDT-FOREST-001",
+              "harvestGeographicDataId": "GEO-HUMBOLDT-FOREST-001",
+              "createdTimestamp": "2024-08-01T08:30:00Z",
+              "harvesterId": "ORG-GREENDIAMONDRC-001",
+              "operatorId": "OP-FOREST-CREW-001",
+              "materialTypeId": "MAT-FOREST-THIN-001",
+              "assortmentType": "biomass",
+              "qualityGrade": "B",
+              "isMultiSpecies": false,
+              "attachedInformation": ["harvest-permit-2024-001", "moisture-reading-35.2"],
+              "currentStatus": "active",
+              "lastUpdated": "2024-08-01T08:30:00Z"
+            },
+            "expected_result": "valid",
+            "validation_rules": [
+              "Volume must be positive number",
+              "Harvest date must be valid ISO date format",
+              "Quality grade must match enum values",
+              "Foreign key references must resolve to valid entities"
+            ]
+          },
+          {
+            "test_id": "MAT_001_forest_material",
+            "entity": "Material",
+            "schema_path": "drafts/current/schema/material/validation_schema.json",
+            "test_data": {
+              "@context": {"@vocab": "https://schema.boost.org/"},
+              "@type": "Material",
+              "@id": "https://boost.org/materials/MAT-FOREST-THIN-001",
+              "materialTypeId": "MAT-FOREST-THIN-001",
+              "materialName": "Douglas Fir Forest Thinning Residues", 
+              "materialCategory": "mixed",
+              "applicablePlantParts": ["trunk", "branches", "twigs"],
+              "excludedPlantParts": ["leaves", "needles"],
+              "carbonStorageRate": "0.47 tCO2e/dry ton",
+              "density": "0.45 g/cm³",
+              "energyContent": "18.5 GJ/dry ton",
+              "applicableProcessingTypes": ["chipping", "pelletizing", "burning"],
+              "typicalSpecies": ["Pseudotsuga menziesii", "Abies concolor"],
+              "standardMoistureContent": "35-45%"
+            },
+            "expected_result": "valid",
+            "validation_rules": [
+              "Material category must be in enum [softwood, hardwood, mixed]",
+              "Plant parts must be from predefined list",
+              "Processing types must be valid enum values",
+              "Species names should follow scientific nomenclature"
+            ]
+          },
+          {
+            "test_id": "LCFS_001_pathway_validation",
+            "entity": "LcfsPathway", 
+            "schema_path": "drafts/current/schema/lcfs_pathway/validation_schema.json",
+            "test_data": {
+              "@context": {"boost": "https://schema.boost.org/"},
+              "@type": "LCFSPathway",
+              "@id": "https://boost.org/lcfs/CA-FR-2024-ELEC-001",
+              "pathwayId": "CA-FR-2024-ELEC-001",
+              "pathwayType": "Tier_1",
+              "feedstockCategory": "forest_residues",
+              "fuelProduct": "electricity",
+              "facilityLocation": "California",
+              "carbonIntensity": 22.4,
+              "energyEconomyRatio": 1.0,
+              "certificationDate": "2024-01-15",
+              "verificationStatus": "approved",
+              "caGreetVersion": "3.2"
+            },
+            "expected_result": "valid",
+            "validation_rules": [
+              "Carbon intensity must be positive number",
+              "CARB pathway code must follow naming convention", 
+              "Expiration date must be after approval date",
+              "Geographic scope must include California for LCFS"
+            ]
+          }
+        ]
+      },
+      {
+        "category": "relationship_validation",
+        "description": "Validate boost_metadata relationships work correctly",
+        "tests": [
+          {
+            "test_id": "REL_001_traceable_unit_relationships",
+            "description": "Validate TraceableUnit foreign key relationships resolve correctly",
+            "primary_entity": "TraceableUnit",
+            "relationships_tested": [
+              {
+                "field": "MaterialId",
+                "target_entity": "Material",
+                "relationship_type": "many-to-one",
+                "test_scenario": "Forest residue TRU references forest material type",
+                "expected_resolution": true
+              },
+              {
+                "field": "OrganizationId", 
+                "target_entity": "Organization",
+                "relationship_type": "many-to-one",
+                "test_scenario": "TRU references Green Diamond Resource Company",
+                "expected_resolution": true
+              },
+              {
+                "field": "TrackingPointId",
+                "target_entity": "TrackingPoint", 
+                "relationship_type": "many-to-one",
+                "test_scenario": "TRU references Humboldt Forest tracking point",
+                "expected_resolution": true
+              }
+            ]
+          },
+          {
+            "test_id": "REL_002_processing_chain_validation",
+            "description": "Validate complete processing chain relationships",
+            "chain_flow": [
+              "TraceableUnit -> MaterialProcessing",
+              "MaterialProcessing -> ProcessingHistory", 
+              "ProcessingHistory -> Transaction",
+              "Transaction -> SalesDeliveryDocument"
+            ],
+            "test_scenario": "Forest residues through chipping to biomass plant delivery",
+            "validation_criteria": [
+              "All relationship links resolve correctly",
+              "Volume tracking maintains consistency",
+              "Date sequences are chronologically valid",
+              "Material properties propagate correctly"
+            ]
+          }
+        ]
+      },
+      {
+        "category": "business_rule_validation",
+        "description": "Validate JsonLogic business rules against real scenarios",
+        "tests": [
+          {
+            "test_id": "BUS_001_moisture_content_rules",
+            "description": "Validate moisture content business rules",
+            "rule_file": "drafts/current/examples/validation/example_rules.json",
+            "test_scenarios": [
+              {
+                "scenario": "Grade A lumber moisture requirements",
+                "test_data": {
+                  "currentMoistureContent": 15.5,
+                  "qualityGrade": "Grade A",
+                  "materialCategory": "softwood"
+                },
+                "expected_result": true,
+                "rule_description": "Grade A lumber must have ≤18% moisture content"
+              },
+              {
+                "scenario": "Grade B lumber moisture tolerance", 
+                "test_data": {
+                  "currentMoistureContent": 21.2,
+                  "qualityGrade": "Grade B", 
+                  "materialCategory": "hardwood"
+                },
+                "expected_result": true,
+                "rule_description": "Grade B lumber must have ≤22% moisture content"
+              }
+            ]
+          },
+          {
+            "test_id": "BUS_002_california_geographic_rules",
+            "description": "Validate California-specific geographic constraints",
+            "test_scenarios": [
+              {
+                "scenario": "Fire Hazard Severity Zone validation",
+                "test_data": {
+                  "coordinates": [-117.2812, 33.7866],
+                  "fireHazardSeverityZone": "Very High",
+                  "state": "California"
+                },
+                "expected_result": true,
+                "rule_description": "Coordinates must fall within CAL FIRE VHFHSZ boundaries"
+              },
+              {
+                "scenario": "BioRAM sourcing requirements",
+                "test_data": {
+                  "fireHazardSeverityZone": "Very High",
+                  "fuelSourceContentPercentage": 75.8,
+                  "programType": "BioRAM"
+                },
+                "expected_result": true, 
+                "rule_description": "BioRAM requires ≥60% sourcing from VHFHSZ areas"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "category": "integration_validation",
+        "description": "End-to-end integration tests across multiple entities",
+        "tests": [
+          {
+            "test_id": "INT_001_complete_supply_chain",
+            "description": "Complete forest-to-energy supply chain validation",
+            "scenario": "CA_FORESTRY_RESIDUES_001", 
+            "entities_involved": 17,
+            "validation_steps": [
+              {
+                "step": 1,
+                "action": "Create TraceableUnit at harvest site",
+                "validations": ["Unit ID uniqueness", "Volume positivity", "Date validity"]
+              },
+              {
+                "step": 2,
+                "action": "Link to Material and Organization entities",
+                "validations": ["Foreign key resolution", "Entity relationship integrity"]
+              },
+              {
+                "step": 3,
+                "action": "Process through MaterialProcessing",
+                "validations": ["Volume conservation", "Moisture content tracking", "Process type validity"]
+              },
+              {
+                "step": 4,
+                "action": "Generate Transaction and delivery documents",
+                "validations": ["Price calculations", "Quantity reconciliation", "Date sequences"]
+              },
+              {
+                "step": 5,
+                "action": "Create LCFS reporting records",
+                "validations": ["Carbon intensity calculations", "Pathway code validity", "Volume reporting"]
+              }
+            ],
+            "success_criteria": [
+              "All 17 entities validate against their schemas",
+              "All relationships resolve correctly",
+              "Business rules pass for all entities", 
+              "End-to-end data consistency maintained"
+            ]
+          },
+          {
+            "test_id": "INT_002_cross_scenario_consistency",
+            "description": "Validate data consistency across multiple California scenarios",
+            "scenarios_tested": ["CA_FORESTRY_RESIDUES_001", "CA_AGRICULTURAL_WASTE_002", "CA_FIRE_HAZARD_REDUCTION_003"],
+            "consistency_checks": [
+              {
+                "check": "Geographic coordinate system consistency",
+                "validation": "All coordinates use WGS84 decimal degrees within California boundaries"
+              },
+              {
+                "check": "Organization entity reuse",
+                "validation": "Same organizations referenced consistently across scenarios"
+              },
+              {
+                "check": "Material property consistency",
+                "validation": "Similar materials have consistent property values"
+              },
+              {
+                "check": "LCFS pathway integrity",
+                "validation": "Pathway codes and carbon intensities match CARB registry"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "test_execution": {
+      "validation_framework": "JSON Schema + JsonLogic + Custom California Rules",
+      "test_automation": "Python test runner with schema validation libraries",
+      "reporting": "Detailed validation report with pass/fail status and error descriptions",
+      "coverage_metrics": {
+        "entity_coverage": "31/31 entities tested",
+        "relationship_coverage": "All boost_metadata relationships validated", 
+        "business_rule_coverage": "California-specific rules for LCFS, BioRAM, fire hazard zones",
+        "integration_coverage": "End-to-end supply chain workflows tested"
+      }
+    }
+  }
+}

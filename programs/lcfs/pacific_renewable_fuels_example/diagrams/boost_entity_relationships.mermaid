@@ -1,0 +1,77 @@
+erDiagram
+    %% BOOST Entity Relationship Diagram for LCFS Compliance
+    %% Demonstrates data model structure and relationships
+    
+    ORGANIZATION {
+        string organizationId PK
+        string lcfsRegistrationId
+        string regulatedEntityType
+        string facilityCapacity
+        string organizationName
+        string contactInfo
+    }
+    
+    MATERIAL {
+        string materialId PK
+        string materialType
+        decimal totalFeedstockCI
+        string certification
+        string sustainabilityInfo
+        string source
+    }
+    
+    LCFS_PATHWAY {
+        string pathwayId PK
+        string pathwayType
+        decimal carbonIntensity
+        string carbCertificationStatus
+        string volumeLimit
+        string verificationStatus
+        string feedstockCategory
+    }
+    
+    ENERGY_CARBON_DATA {
+        string energyCarbonDataId PK
+        string pathwayId FK
+        decimal value
+        string measurementMethod
+        decimal regulatoryBenchmark
+        string lifecycleStage
+        string calculationMethod
+    }
+    
+    TRANSACTION {
+        string transactionId PK
+        string organizationId FK
+        string pathwayId FK
+        decimal fuelVolume
+        decimal energyMJ
+        string reportingPeriod
+        string deliveryPoint
+        string fuelType
+        datetime transactionDate
+    }
+    
+    LCFS_REPORTING {
+        string reportingId PK
+        string organizationId FK
+        string reportingPeriod
+        decimal totalFuelVolume
+        decimal totalEnergyMJ
+        decimal totalCreditsGenerated
+        decimal portfolioWeightedCI
+        string complianceStatus
+        string verificationStatus
+        datetime submissionDate
+    }
+    
+    %% Relationships with cardinality
+    ORGANIZATION ||--o{ TRANSACTION : "produces"
+    ORGANIZATION ||--|| LCFS_REPORTING : "submits"
+    LCFS_PATHWAY ||--o{ TRANSACTION : "categorizes"
+    LCFS_PATHWAY ||--|| ENERGY_CARBON_DATA : "defines"
+    MATERIAL ||--|| LCFS_PATHWAY : "maps_to"
+    TRANSACTION }o--|| LCFS_REPORTING : "aggregates_into"
+    
+    %% Additional relationships for data integrity
+    ENERGY_CARBON_DATA ||--o{ TRANSACTION : "calculates_credits_for"

@@ -1,0 +1,24 @@
+# BOOST Python Reference Implementation Dependencies
+
+# Core dependencies
+pydantic>=2.0.0,<3.0.0           # Data validation and settings management
+jsonschema>=4.0.0,<5.0.0         # JSON Schema validation
+requests>=2.28.0,<3.0.0          # HTTP library for API calls
+python-dateutil>=2.8.0,<3.0.0   # Date parsing utilities
+
+# JSON-LD support
+pyld>=2.0.0,<3.0.0               # JSON-LD processor for Python
+
+# Optional dependencies for enhanced functionality
+rdflib>=6.0.0,<7.0.0             # RDF manipulation (optional)
+uuid>=1.30                        # UUID generation utilities
+
+# Development and testing (optional)
+pytest>=7.0.0,<8.0.0             # Testing framework
+pytest-cov>=4.0.0,<5.0.0         # Coverage reporting
+black>=22.0.0,<24.0.0            # Code formatting
+mypy>=1.0.0,<2.0.0               # Type checking
+
+# Documentation (optional)
+mkdocs>=1.4.0,<2.0.0             # Documentation generator
+mkdocs-material>=8.0.0,<10.0.0   # Material theme for MkDocs

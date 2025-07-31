@@ -7,24 +7,24 @@ The `LCFSPathway` entity represents CARB-certified fuel pathways for California'
 
 ### Fields
 
-| Field                | Type                | Required | Description                                                                 | Examples                                    |
-|---------------------|---------------------|----------|-----------------------------------------------------------------------------|---------------------------------------------|
-| `pathwayId`         | string              | Yes      | CARB-assigned pathway identifier (primary key)                            | `CA-RD-2025-LMR-001`, `CA-ET-2025-CRN-042` |
-| `pathwayType`       | string (enum)       | Yes      | CARB pathway certification tier                                            | `Lookup_Table`, `Tier_1`, `Tier_2`         |
-| `feedstockCategory` | string (enum)       | Yes      | Primary feedstock type for pathway                                         | `logging_and_mill_residue`, `corn`, `algae` |
-| `fuelProduct`       | string (enum)       | Yes      | Final fuel product produced                                                | `renewable_diesel`, `ethanol`, `biodiesel`  |
-| `facilityLocation`  | string              | Yes      | Production facility location                                               | `Stockton, CA`, `Iowa`, `Western_US`        |
-| `carbonIntensity`   | number              | Yes      | Certified carbon intensity in gCO2e/MJ                                    | `19.85`, `74.32`, `12.41`                  |
-| `energyEconomyRatio`| number              | Yes      | Energy economy ratio multiplier for credit calculation                     | `1.0`, `1.5`, `2.0`                        |
-| `certificationDate` | string (date)       | Yes      | CARB pathway certification date                                            | `2025-01-15`                               |
-| `expirationDate`    | string (date)       | No       | Pathway certification expiration date                                      | `2028-01-15`                               |
-| `verificationStatus`| string (enum)       | Yes      | Current CARB verification status                                           | `active`, `suspended`, `expired`            |
-| `caGreetVersion`    | string              | Yes      | CA-GREET model version used for certification                              | `3.0`, `2.1`                              |
-| `facilityCapacity`  | number              | No       | Annual production capacity in gallons                                      | `50000000`, `125000000`                    |
-| `processDescription`| string              | No       | Brief description of production process                                    | `Hydrotreated renewable diesel production`  |
-| `geographicScope`   | string (enum)       | No       | Geographic applicability of pathway                                        | `California`, `Western_US`, `National`      |
-| `@id`               | string (uri)        | Yes      | Unique URI identifier for JSON-LD                                         | `https://github.com/carbondirect/BOOST/schemas/lcfs-pathway/CA-RD-2025-LMR-001` |
-| `lastUpdated`       | string (date-time)  | No       | Timestamp of most recent pathway data update                               | `2025-07-21T14:30:00Z`                     |
+| Field                | Type               | Required | Description                                            | Examples                                                                        |
+|----------------------|--------------------|----------|--------------------------------------------------------|---------------------------------------------------------------------------------|
+| `pathwayId`          | string             | Yes      | CARB-assigned pathway identifier (primary key)         | `CA-RD-2025-LMR-001`, `CA-ET-2025-CRN-042`                                      |
+| `pathwayType`        | string (enum)      | Yes      | CARB pathway certification tier                        | `Lookup_Table`, `Tier_1`, `Tier_2`                                              |
+| `feedstockCategory`  | string (enum)      | Yes      | Primary feedstock type for pathway                     | `logging_and_mill_residue`, `corn`, `algae`                                     |
+| `fuelProduct`        | string (enum)      | Yes      | Final fuel product produced                            | `renewable_diesel`, `ethanol`, `biodiesel`                                      |
+| `facilityLocation`   | string             | Yes      | Production facility location                           | `Stockton, CA`, `Iowa`, `Western_US`                                            |
+| `carbonIntensity`    | number             | Yes      | Certified carbon intensity in gCO2e/MJ                 | `19.85`, `74.32`, `12.41`                                                       |
+| `energyEconomyRatio` | number             | Yes      | Energy economy ratio multiplier for credit calculation | `1.0`, `1.5`, `2.0`                                                             |
+| `certificationDate`  | string (date)      | Yes      | CARB pathway certification date                        | `2025-01-15`                                                                    |
+| `expirationDate`     | string (date)      | No       | Pathway certification expiration date                  | `2028-01-15`                                                                    |
+| `verificationStatus` | string (enum)      | Yes      | Current CARB verification status                       | `active`, `suspended`, `expired`                                                |
+| `caGreetVersion`     | string             | Yes      | CA-GREET model version used for certification          | `3.0`, `2.1`                                                                    |
+| `facilityCapacity`   | number             | No       | Annual production capacity in gallons                  | `50000000`, `125000000`                                                         |
+| `processDescription` | string             | No       | Brief description of production process                | `Hydrotreated renewable diesel production`                                      |
+| `geographicScope`    | string (enum)      | No       | Geographic applicability of pathway                    | `California`, `Western_US`, `National`                                          |
+| `@id`                | string (uri)       | Yes      | Unique URI identifier for JSON-LD                      | `https://github.com/carbondirect/BOOST/schemas/lcfs-pathway/CA-RD-2025-LMR-001` |
+| `lastUpdated`        | string (date-time) | No       | Timestamp of most recent pathway data update           | `2025-07-21T14:30:00Z`                                                          |
 
 ---
 

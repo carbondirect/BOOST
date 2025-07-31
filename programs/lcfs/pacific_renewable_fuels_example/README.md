@@ -10,27 +10,59 @@ This directory contains a complete real-world example of LCFS compliance using t
 **LCFS Registration**: LCFS-REG-2025-003  
 **Quarterly Period**: Q1 2025  
 
-## Example Files
+## Directory Structure
 
-### 1. organization.json
-Complete organization entity with LCFS enhancements including:
-- LCFS registration ID and regulated entity type
-- Facility capacity and operational status
-- Contact information and compliance details
+### Documentation (`documentation/`)
+Comprehensive visualization and analysis materials:
 
-### 2. transactions_q1_2025.json
-Six fuel transactions for Q1 2025 covering:
-- 5.075 million gallons renewable diesel
-- 4 different CARB-certified pathways
-- Multiple feedstock types (logging residue, agricultural residue, grass waste, forest residue)
-- Delivery to distributors across California
+#### 1. pacific_renewable_fuels_boost_entity_flow.md
+Main LCFS workflow documentation with three professional diagrams:
+- **Data Flow Through BOOST Entities** - Shows how 4.2M+ external records flow through BOOST processing
+- **BOOST Entity Relationships (ERD)** - Complete entity relationship diagram with proper cardinality
+- **Production Workflow** - Transaction aggregation from 6 individual entities to quarterly reporting
+- Business metrics and regulatory compliance validation
 
-### 3. calculated_results.json
-Complete LCFS credit calculations showing:
-- Individual transaction credit calculations
-- Quarterly totals and compliance status
-- Pathway performance summary
-- Environmental impact metrics
+#### 2. boost_entity_attribute_flow.md
+Detailed attribute-level analysis demonstrating:
+- Granular field-level data flow through LCFS compliance workflow
+- Material → LCFSPathway → Transaction attribute mapping
+- Complete audit trail from feedstock attributes to compliance reporting
+- Business logic validation and data integrity mechanisms
+
+### Diagrams (`diagrams/`)
+Professional Mermaid diagrams with corresponding SVG renderings:
+
+#### Core Workflow Diagrams
+- `feedstock_flow.mermaid/.svg` - Data flow from external sources through BOOST entities
+- `boost_entity_relationships.mermaid/.svg` - Entity Relationship Diagram with all attributes
+- `production_workflow.mermaid/.svg` - Transaction aggregation workflow for quarterly reporting
+
+Each diagram demonstrates different aspects of BOOST's LCFS compliance capabilities, from data integration through regulatory submission.
+
+#### 3. Interactive Workflow Documentation
+Complete LCFS compliance workflow using BOOST best practices:
+
+**pacific_renewable_fuels_lcfs_example.ipynb** (24 cells)
+- **BOOST Python reference implementation** demonstration
+- **Schema-compliant** entities with proper validation  
+- **JSON-LD semantic web** compatibility with @context, @type, @id
+- **Dynamic validation** using current BOOST schemas
+- **Future-proof design** that adapts to schema changes automatically
+- **Complete business scenario** with regulatory context and real-world metrics
+- **Interactive execution** with comprehensive error handling and validation reporting
+
+### Data Files (`data/`)
+Complete JSON entity examples and calculations:
+
+#### Core Entities
+- `organization.json` - Pacific Renewable Fuels Corp with LCFS registration
+- `transactions_q1_2025.json` - Six Q1 2025 fuel transactions across 4 pathways
+- `calculated_results.json` - Detailed LCFS credit calculations and compliance metrics
+
+#### Supporting Data
+- `energy_carbon_data.json` - Carbon intensity profiles with CA-GREET methodology
+- `lcfs_pathways.json` - CARB-certified pathway definitions and specifications
+- `materials_feedstocks.json` - Lignocellulosic biomass feedstock classifications
 
 ## Key Metrics
 
@@ -83,13 +115,41 @@ This example demonstrates:
 4. **Quarterly aggregation** for compliance reporting
 5. **Real-world transaction volumes** and distribution patterns
 
+### BOOST Reference Implementation
+
+This example demonstrates advanced BOOST capabilities:
+- **Schema-driven validation** with automatic adaptation to schema changes
+- **JSON-LD semantic web integration** for interoperability
+- **Dynamic enum validation** ensuring current schema compliance
+- **Enterprise-ready error handling** and validation reporting
+- **Future-proof architecture** requiring minimal maintenance
+- **Production-ready patterns** for regulatory compliance systems
+
 ## Usage
 
 Use this example to:
-- Understand LCFS entity structure and relationships
-- Validate your own credit calculation implementations
-- Test BOOST framework integration with LCFS requirements
-- Reference realistic transaction data and pathways
+- **Learn BOOST Python reference implementation** best practices
+- **Build schema-compliant applications** with automatic validation
+- **Implement JSON-LD semantic web** integration patterns
+- **Develop future-proof systems** that adapt to schema evolution
+- **Reference production-ready** LCFS compliance code
+- **Understand LCFS entity structure** and regulatory relationships
+- **Validate credit calculation implementations** against real-world data
+
+### Quick Start
+```bash
+# Run the BOOST demo script (quick overview)
+python boost_example_demo.py
+
+# Or explore the comprehensive Jupyter notebook
+jupyter notebook pacific_renewable_fuels_lcfs_example.ipynb
+```
+
+### What You'll Learn
+- **Dynamic schema validation** - How BOOST adapts to schema changes automatically
+- **JSON-LD semantic web** - Production-ready semantic data integration
+- **LCFS compliance workflows** - Complete regulatory reporting pipeline
+- **Enterprise architecture patterns** - Scalable, maintainable design approaches
 
 ## Status
 

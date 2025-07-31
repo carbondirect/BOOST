@@ -15,7 +15,12 @@ California's carbon reduction program for transportation fuels.
 
 **Documentation:**
 - [Entity Specification](./lcfs/lcfs_entity_specification.md) - LCFS data model and entity definitions
-- [Pacific Renewable Fuels Example](./lcfs/pacific_renewable_fuels_example/) - Complete worked example
+- [Pacific Renewable Fuels Example](./lcfs/pacific_renewable_fuels_example/) - Comprehensive real-world example with:
+  - **Professional Mermaid Visualizations** - 3 specialized diagrams (ER, data flow, production workflow)
+  - **BOOST Python Reference Implementation** - Schema-compliant Jupyter notebook (24 cells) with dynamic validation
+  - **JSON-LD Semantic Web Integration** - Production-ready semantic data compatibility
+  - **Complete Data Suite** - 6 JSON files with real Q1 2025 business data ($109M+ credit value)
+  - **Interactive Analysis** - Executable Python workflow for LCFS compliance calculations
 
 ## Directory Structure
 
@@ -25,11 +30,23 @@ The LCFS program follows this structure:
 lcfs/
 ├── README.md                           # Program overview and quick start
 ├── lcfs_entity_specification.md        # LCFS data model and entity definitions
-└── pacific_renewable_fuels_example/    # Complete worked example
-    ├── README.md
-    ├── calculated_results.json
-    ├── organization.json
-    └── transactions_q1_2025.json
+└── pacific_renewable_fuels_example/    # Comprehensive worked example
+    ├── README.md                       # Example overview with business metrics
+    ├── documentation/                  # Rich visualization and analysis
+    │   ├── pacific_renewable_fuels_boost_entity_flow.md                   # Main workflow documentation
+    │   ├── boost_entity_attribute_flow.md                                 # Detailed attribute mapping
+    │   └── pacific_renewable_fuels_lcfs_example.ipynb                     # BOOST-compliant Jupyter notebook (24 cells)
+    ├── diagrams/                       # Professional Mermaid visualizations
+    │   ├── feedstock_flow.mermaid/.svg      # Data flow through BOOST entities
+    │   ├── boost_entity_relationships.mermaid/.svg # Complete ERD with attributes
+    │   └── production_workflow.mermaid/.svg        # Transaction aggregation workflow
+    └── data/                           # Complete JSON entities and calculations
+        ├── organization.json           # Pacific Renewable Fuels Corp entity
+        ├── transactions_q1_2025.json  # Q1 2025 fuel transactions
+        ├── calculated_results.json    # LCFS credit calculations
+        ├── energy_carbon_data.json    # Carbon intensity profiles
+        ├── lcfs_pathways.json         # CARB pathway definitions
+        └── materials_feedstocks.json  # Feedstock classifications
 ```
 
 ## Implementation Guidelines

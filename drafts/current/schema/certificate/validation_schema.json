@@ -105,11 +105,23 @@
       },
       "versionNumber": {
         "type": "string",
-        "description": "Version of standard applied",
+        "description": "Version identifier of the certification standard",
         "examples": [
-          "2022",
-          "FSC-STD-40-004 v3-1",
-          "PEFC ST 2002:2020"
+          "v3-1",
+          "V1.1",
+          "2020",
+          "ST 2002"
+        ]
+      },
+      "versionYear": {
+        "type": "integer",
+        "description": "Year of the standard's relevant version release",
+        "minimum": 1990,
+        "maximum": 2050,
+        "examples": [
+          2022,
+          2020,
+          2025
         ]
       },
       "conditionalRequirements": {

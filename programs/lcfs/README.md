@@ -93,11 +93,19 @@ Credits = (Benchmark_CI - Pathway_CI) × Fuel_Volume_MJ × EER
 lcfs/
 ├── README.md                           # This overview
 ├── lcfs_entity_specification.md        # Complete entity definitions
-└── pacific_renewable_fuels_example/    # Working example
-    ├── README.md                       # Example overview
-    ├── organization.json               # Organization entity
-    ├── transactions_q1_2025.json      # Transaction entities
-    └── calculated_results.json        # LCFS calculations
+└── pacific_renewable_fuels_example/    # Comprehensive working example
+    ├── README.md                       # Example overview with metrics
+    ├── documentation/                  # Rich visualization and analysis
+    │   ├── pacific_renewable_fuels_boost_entity_flow.md  # Main Mermaid diagrams
+    │   ├── boost_entity_attribute_flow.md               # Detailed attribute mapping
+    │   └── pacific_renewable_fuels_lcfs_example.org     # Literate programming (66K lines)
+    └── data/                           # Complete JSON entities and calculations
+        ├── organization.json           # Pacific Renewable Fuels Corp entity
+        ├── transactions_q1_2025.json  # Q1 2025 fuel transactions
+        ├── calculated_results.json    # LCFS credit calculations
+        ├── energy_carbon_data.json    # Carbon intensity profiles
+        ├── lcfs_pathways.json         # CARB pathway definitions
+        └── materials_feedstocks.json  # Feedstock classifications
 ```
 
 ## Pacific Renewable Fuels Example
