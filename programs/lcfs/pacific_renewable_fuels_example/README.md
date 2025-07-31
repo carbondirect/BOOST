@@ -16,17 +16,28 @@ This directory contains a complete real-world example of LCFS compliance using t
 Comprehensive visualization and analysis materials:
 
 #### 1. pacific_renewable_fuels_boost_entity_flow.md
-Main entity flow diagram with complex Mermaid visualizations showing:
-- Complete LCFS workflow from feedstocks to CARB reporting
-- 4 feedstock types → 4 pathways → 6 transactions → compliance reporting
-- Business metrics and credit generation potential
-- Entity relationship validation
+Main LCFS workflow documentation with three professional diagrams:
+- **Data Flow Through BOOST Entities** - Shows how 4.2M+ external records flow through BOOST processing
+- **BOOST Entity Relationships (ERD)** - Complete entity relationship diagram with proper cardinality
+- **Production Workflow** - Transaction aggregation from 6 individual entities to quarterly reporting
+- Business metrics and regulatory compliance validation
 
 #### 2. boost_entity_attribute_flow.md
-Detailed attribute mapping between BOOST entities demonstrating:
+Detailed attribute-level analysis demonstrating:
 - Granular field-level data flow through LCFS compliance workflow
-- Schema validation and business logic integration
-- Complete audit trail from feedstock to credits
+- Material → LCFSPathway → Transaction attribute mapping
+- Complete audit trail from feedstock attributes to compliance reporting
+- Business logic validation and data integrity mechanisms
+
+### Diagrams (`diagrams/`)
+Professional Mermaid diagrams with corresponding SVG renderings:
+
+#### Core Workflow Diagrams
+- `feedstock_flow.mermaid/.svg` - Data flow from external sources through BOOST entities
+- `boost_entity_relationships.mermaid/.svg` - Entity Relationship Diagram with all attributes
+- `production_workflow.mermaid/.svg` - Transaction aggregation workflow for quarterly reporting
+
+Each diagram demonstrates different aspects of BOOST's LCFS compliance capabilities, from data integration through regulatory submission.
 
 #### 3. pacific_renewable_fuels_lcfs_example.org
 Comprehensive literate programming document (66K+ lines) featuring:
