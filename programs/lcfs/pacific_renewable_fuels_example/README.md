@@ -10,27 +10,43 @@ This directory contains a complete real-world example of LCFS compliance using t
 **LCFS Registration**: LCFS-REG-2025-003  
 **Quarterly Period**: Q1 2025  
 
-## Example Files
+## Directory Structure
 
-### 1. organization.json
-Complete organization entity with LCFS enhancements including:
-- LCFS registration ID and regulated entity type
-- Facility capacity and operational status
-- Contact information and compliance details
+### Documentation (`documentation/`)
+Comprehensive visualization and analysis materials:
 
-### 2. transactions_q1_2025.json
-Six fuel transactions for Q1 2025 covering:
-- 5.075 million gallons renewable diesel
-- 4 different CARB-certified pathways
-- Multiple feedstock types (logging residue, agricultural residue, grass waste, forest residue)
-- Delivery to distributors across California
+#### 1. pacific_renewable_fuels_boost_entity_flow.md
+Main entity flow diagram with complex Mermaid visualizations showing:
+- Complete LCFS workflow from feedstocks to CARB reporting
+- 4 feedstock types → 4 pathways → 6 transactions → compliance reporting
+- Business metrics and credit generation potential
+- Entity relationship validation
 
-### 3. calculated_results.json
-Complete LCFS credit calculations showing:
-- Individual transaction credit calculations
-- Quarterly totals and compliance status
-- Pathway performance summary
-- Environmental impact metrics
+#### 2. boost_entity_attribute_flow.md
+Detailed attribute mapping between BOOST entities demonstrating:
+- Granular field-level data flow through LCFS compliance workflow
+- Schema validation and business logic integration
+- Complete audit trail from feedstock to credits
+
+#### 3. pacific_renewable_fuels_lcfs_example.org
+Comprehensive literate programming document (66K+ lines) featuring:
+- Executable workflow with detailed business scenario
+- Complete JSON entity examples with real-world data
+- LCFS compliance requirements and regulatory context
+- Technical implementation guidance
+
+### Data Files (`data/`)
+Complete JSON entity examples and calculations:
+
+#### Core Entities
+- `organization.json` - Pacific Renewable Fuels Corp with LCFS registration
+- `transactions_q1_2025.json` - Six Q1 2025 fuel transactions across 4 pathways
+- `calculated_results.json` - Detailed LCFS credit calculations and compliance metrics
+
+#### Supporting Data
+- `energy_carbon_data.json` - Carbon intensity profiles with CA-GREET methodology
+- `lcfs_pathways.json` - CARB-certified pathway definitions and specifications
+- `materials_feedstocks.json` - Lignocellulosic biomass feedstock classifications
 
 ## Key Metrics
 
