@@ -55,6 +55,60 @@
       "description": "List of geographic areas where organization operates",
       "examples": [["GEO-FOREST-AREA-01", "GEO-MILL-SITE-02"]]
     },
+    "equipmentIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^EQ-[A-Z0-9-_]+$"
+      },
+      "description": "Harvester/machine tracking references",
+      "examples": [["EQ-HARVESTER-001", "EQ-SKIDDER-002"]]
+    },
+    "operatorIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$"
+      },
+      "description": "Personnel tracking references",
+      "examples": [["OP-SMITH-001", "OP-JONES-002"]]
+    },
+    "harvestSites": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TP-[A-Z0-9-_]+$"
+      },
+      "description": "Operational harvest locations managed",
+      "examples": [["TP-SITE-ALPHA", "TP-SITE-BETA"]]
+    },
+    "skidRoads": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TP-[A-Z0-9-_]+$"
+      },
+      "description": "Infrastructure mapping references",
+      "examples": [["TP-SKID-001", "TP-SKID-002"]]
+    },
+    "forestRoads": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TP-[A-Z0-9-_]+$"
+      },
+      "description": "Transportation routes managed",
+      "examples": [["TP-ROAD-MAIN", "TP-ROAD-ACCESS"]]
+    },
+    "traceableUnitIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$"
+      },
+      "description": "TRUs managed by this organization",
+      "examples": [["TRU-001", "TRU-002", "TRU-003"]]
+    },
     "contactEmail": {
       "type": "string",
       "format": "email",
@@ -165,6 +219,38 @@
         "required": false,
         "label": "operates in areas",
         "example": "'West Coast Timber' operates in 'Cascade Forest' + 'Olympic Peninsula'"
+      },
+      {
+        "field": "traceableUnitIds",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "manages TRUs",
+        "example": "'Pacific Forest Products' manages TRU-001 + TRU-002 + TRU-003"
+      },
+      {
+        "field": "harvestSites",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "operates harvest sites",
+        "example": "'Forest Company' operates TP-SITE-ALPHA + TP-SITE-BETA"
+      },
+      {
+        "field": "skidRoads",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "maintains skid roads",
+        "example": "'Timber Corp' maintains TP-SKID-001 + TP-SKID-002"
+      },
+      {
+        "field": "forestRoads",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "manages forest roads",
+        "example": "'Logging Inc' manages TP-ROAD-MAIN + TP-ROAD-ACCESS"
       }
     ]
   }
