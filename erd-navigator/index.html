@@ -405,6 +405,10 @@
             max-width: 200px;
         }
 
+        .legend-hidden {
+            display: none !important;
+        }
+
         .legend h4 {
             margin: 0 0 8px 0;
             font-size: 11px;
@@ -595,11 +599,9 @@
             <button class="btn" onclick="filterByArea('organizational_foundation')">🔵 Organizational</button>
             <button class="btn" onclick="filterByArea('material_supply_chain')">🟤 Material & Supply</button>
             <button class="btn" onclick="filterByArea('transaction_management')">🟠 Transactions</button>
-            <button class="btn" onclick="filterByArea('sustainability_claims')">🟡 Sustainability</button>
-            <button class="btn" onclick="filterByArea('geographic_location')">🟣 Geographic</button>
-            <button class="btn" onclick="filterByArea('reporting_compliance')">🔴 Reporting</button>
-            <button class="btn" onclick="filterByArea('analytics_data')">⚫ Analytics</button>
-            <button class="btn" onclick="filterByArea('personnel')">👥 Personnel</button>
+            <button class="btn" onclick="filterByArea('measurement_verification')">🟡 Measurement</button>
+            <button class="btn" onclick="filterByArea('geographic_tracking')">🟣 Geographic</button>
+            <button class="btn" onclick="filterByArea('compliance_reporting')">🔴 Reporting</button>
             <button class="btn" onclick="fitToScreen()">Fit to Screen</button>
         </div>
 
@@ -610,6 +612,7 @@
                 <button class="control-btn" onclick="resetZoom()" title="Reset Zoom">⌂</button>
                 <button class="control-btn" onclick="toggleLabels()" title="Toggle relationship labels" id="label-toggle">🏷️</button>
                 <button class="control-btn" onclick="toggleTruFocus()" title="Focus on essential TraceableUnit relationships" id="tru-focus">🎯</button>
+                <button class="control-btn" onclick="toggleLegend()" title="Toggle legend visibility" id="legend-toggle">📋</button>
             </div>
             
             <div class="area-controls">
@@ -646,9 +649,27 @@
                     <span style="color: #9ca3af;">○</span>
                     <span>Optional Field</span>
                 </div>
+                
+                <h4 style="margin-top: 15px;">Relationship Types</h4>
+                <div class="legend-item">
+                    <svg width="30" height="2" style="margin-right: 8px;">
+                        <line x1="0" y1="1" x2="30" y2="1" stroke="#374151" stroke-width="1.5"/>
+                    </svg>
+                    <span>Identifying (FK is part of PK)</span>
+                </div>
+                <div class="legend-item">
+                    <svg width="30" height="2" style="margin-right: 8px;">
+                        <line x1="0" y1="1" x2="30" y2="1" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,3"/>
+                    </svg>
+                    <span>Non-identifying (FK references only)</span>
+                </div>
+                <div style="font-size: 10px; color: #6b7280; margin-top: 5px; line-height: 1.3;">
+                    <strong>Solid:</strong> Child entity depends on parent for identity (owns/contains)<br/>
+                    <strong>Dashed:</strong> Child entity references parent independently (uses/links to)
+                </div>
             </div>
             
-            <svg id="erd-svg" width="3200" height="2000"></svg>
+            <svg id="erd-svg" width="3600" height="2000"></svg>
         </div>
         
         <div class="tooltip" id="tooltip"></div>
@@ -708,122 +729,74 @@
             curveType: 'curveBasis',
             colors: {
                 'core_traceability': { 
-                    fill: 'rgba(46, 125, 50, 0.1)', 
-                    stroke: '#2E7D32', 
-                    header: '#1B5E20'
+                    fill: 'rgba(22, 163, 74, 0.1)', 
+                    stroke: '#16A34A', 
+                    header: '#15803D'
                 },
                 'organizational_foundation': { 
-                    fill: 'rgba(21, 101, 192, 0.1)', 
-                    stroke: '#1565C0', 
-                    header: '#0D47A1'
+                    fill: 'rgba(37, 99, 235, 0.1)', 
+                    stroke: '#2563EB', 
+                    header: '#1D4ED8'
                 },
                 'material_supply_chain': { 
-                    fill: 'rgba(93, 64, 55, 0.1)', 
-                    stroke: '#5D4037', 
-                    header: '#3E2723'
+                    fill: 'rgba(161, 98, 7, 0.1)', 
+                    stroke: '#A16207', 
+                    header: '#92400E'
                 },
                 'transaction_management': { 
-                    fill: 'rgba(245, 124, 0, 0.1)', 
-                    stroke: '#F57C00', 
-                    header: '#E65100'
+                    fill: 'rgba(234, 88, 12, 0.1)', 
+                    stroke: '#EA580C', 
+                    header: '#C2410C'
                 },
-                'sustainability_claims': { 
-                    fill: 'rgba(249, 168, 37, 0.1)', 
-                    stroke: '#F9A825', 
-                    header: '#F57F17'
+                'measurement_verification': { 
+                    fill: 'rgba(234, 179, 8, 0.1)', 
+                    stroke: '#EAB308', 
+                    header: '#CA8A04'
                 },
-                'geographic_location': { 
-                    fill: 'rgba(123, 31, 162, 0.1)', 
-                    stroke: '#7B1FA2', 
-                    header: '#4A148C'
+                'geographic_tracking': { 
+                    fill: 'rgba(147, 51, 234, 0.1)', 
+                    stroke: '#9333EA', 
+                    header: '#7C3AED'
                 },
-                'reporting_compliance': { 
-                    fill: 'rgba(198, 40, 40, 0.1)', 
-                    stroke: '#C62828', 
-                    header: '#B71C1C'
-                },
-                'analytics_data': { 
-                    fill: 'rgba(66, 66, 66, 0.1)', 
-                    stroke: '#424242', 
-                    header: '#212121'
-                },
-                'personnel': { 
-                    fill: 'rgba(103, 58, 183, 0.1)', 
-                    stroke: '#673AB7', 
-                    header: '#512DA8'
+                'compliance_reporting': { 
+                    fill: 'rgba(220, 38, 38, 0.1)', 
+                    stroke: '#DC2626', 
+                    header: '#B91C1C'
                 }
             }
         };
 
-        // Strategic positioning with increased spacing to reduce overlaps
-        const entityPositions = {
-            // 🟢 CORE TRACEABILITY - Central cluster with more spacing (9 entities)
-            'TraceableUnit': { x: 1600, y: 1000 },
-            'MaterialProcessing': { x: 1200, y: 1400 },
-            'ProcessingHistory': { x: 2000, y: 1400 },
-            'SpeciesComponent': { x: 1200, y: 600 },
-            'MeasurementRecord': { x: 2000, y: 600 },
-            'LocationHistory': { x: 1600, y: 600 },
-            'BiometricIdentifier': { x: 1600, y: 1400 },
-            'TrackingPoint': { x: 900, y: 1000 },
-            'DataReconciliation': { x: 2300, y: 1000 },
+        // Entity positions are now managed exclusively through the ERD config file
 
-            // 🔵 ORGANIZATIONAL FOUNDATION - Far left (4 entities)
-            'Organization': { x: 100, y: 1000 },
-            'Certificate': { x: 100, y: 600 },
-            'CertificationScheme': { x: 100, y: 200 },
-            'CertificationBody': { x: 100, y: 1400 },
-
-            // 🟤 MATERIAL & SUPPLY CHAIN - Left side with more spacing (4 entities)
-            'Material': { x: 500, y: 200 },
-            'SupplyBase': { x: 500, y: 600 },
-            'Supplier': { x: 500, y: 1000 },
-            'Customer': { x: 500, y: 1400 },
-
-            // 🟠 TRANSACTION MANAGEMENT - Far right (3 entities)
-            'Transaction': { x: 2700, y: 1000 },
-            'TransactionBatch': { x: 2700, y: 1400 },
-            'SalesDeliveryDocument': { x: 2700, y: 600 },
-
-            // 🟡 SUSTAINABILITY & CLAIMS - Top center (1 entity)
-            'Claim': { x: 1600, y: 200 },
-
-            // 🟣 GEOGRAPHIC & LOCATION - Center left (1 entity)
-            'GeographicData': { x: 900, y: 600 },
-
-            // 🔴 REPORTING & COMPLIANCE - Lower right with spacing (3 entities)
-            'SupplyBaseReport': { x: 2700, y: 1800 },
-            'VerificationStatement': { x: 2300, y: 1800 },
-            'Audit': { x: 1900, y: 1800 },
-
-            // ⚫ ANALYTICS & DATA MANAGEMENT - Lower center with spacing (3 entities)
-            'ProductGroup': { x: 1200, y: 1800 },
-            'MassBalanceAccount': { x: 900, y: 1800 },
-            'EnergyCarbonData': { x: 1600, y: 1800 },
-
-            // 👥 PERSONNEL MANAGEMENT - Lower left (1 entity)
-            'Operator': { x: 500, y: 1800 }
-        };
-
-        // Auto-discovery functions
+        // Auto-discovery functions - uses manifest file for reliable cross-platform discovery
         async function discoverSchemaDirectories() {
             try {
+                // Try manifest file first (recommended approach)
+                const manifestResponse = await fetch('../drafts/current/schema/directories.json');
+                if (manifestResponse.ok) {
+                    const manifest = await manifestResponse.json();
+                    console.log(`Loaded ${manifest.total_entities} schema directories from manifest (updated: ${manifest.last_updated})`);
+                    return manifest.schema_directories;
+                }
+                
+                console.warn('Manifest file not found, falling back to directory discovery');
+                
+                // Fallback to raw directory listing (local development)
                 const response = await fetch('../drafts/current/schema/');
                 const text = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'text/html');
                 
-                // Extract directory names from directory listing
                 const directories = Array.from(doc.querySelectorAll('a'))
                     .map(a => a.textContent.trim())
                     .filter(name => name && !name.includes('.') && name !== '../' && name !== 'README.md')
                     .map(name => name.replace('/', ''));
-                
-                console.log(`Auto-discovered ${directories.length} schema directories`);
+                    
+                console.log(`Fallback discovery found ${directories.length} directories: ${directories.join(', ')}`);
                 return directories;
             } catch (error) {
-                console.warn('Could not auto-discover schemas, falling back to entityMetadata:', error);
-                return Object.keys(entityMetadata);
+                console.error('Schema discovery failed:', error);
+                return [];
             }
         }
 
@@ -850,25 +823,48 @@
             }
         }
 
-        function extractMetadataFromSchema(entityName, schema) {
+        async function loadERDConfig() {
+            try {
+                const response = await fetch('./erd-config.json');
+                if (!response.ok) {
+                    throw new Error(`Failed to load ERD config: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Failed to load ERD configuration:', error);
+                throw error;
+            }
+        }
+
+        function extractMetadataFromSchema(entityName, schema, erdConfig) {
             const schemaData = schema.schema || schema;
-            const boostMeta = schemaData.boost_metadata;
             
-            if (!boostMeta) {
-                console.warn(`Entity ${entityName} is missing boost_metadata in schema file`);
+            // Find area for this entity from ERD config
+            let entityArea = null;
+            for (const [areaName, areaConfig] of Object.entries(erdConfig.areas)) {
+                if (areaConfig.entities.includes(entityName)) {
+                    entityArea = areaName;
+                    break;
+                }
+            }
+            
+            if (!entityArea) {
+                console.error(`Entity ${entityName} not found in any area configuration`);
                 return null;
             }
             
-            if (!boostMeta.area) {
-                console.warn(`Entity ${entityName} has boost_metadata but missing area field`);
+            // Get display config
+            const displayConfig = erdConfig.entity_display[entityName];
+            if (!displayConfig) {
+                console.error(`Entity ${entityName} missing display configuration`);
                 return null;
             }
             
             return {
-                area: boostMeta.area,
-                description: `${boostMeta.emoji || '📋'} ${schemaData.description || schemaData.title || entityName}`,
-                position: boostMeta.position || null,
-                relationships: boostMeta.relationships || []
+                area: entityArea,
+                description: `${displayConfig.emoji || '📋'} ${schemaData.description || schemaData.title || entityName}`,
+                position: displayConfig.position || { x: 1600, y: 1000 },
+                relationships: []
             };
         }
 
@@ -897,33 +893,34 @@
 
         function convertSchemaToEntity(entityName, schema, area, description, position) {
             if (!schema || !schema.schema || !schema.schema.properties) {
+                console.error(`❌ Entity ${entityName}: Invalid schema structure`);
+                return null;
+            }
+
+            // Check for boost_metadata
+            if (!schema.boost_metadata) {
+                console.error(`❌ Entity ${entityName}: Missing boost_metadata section`);
                 return null;
             }
 
             const properties = schema.schema.properties;
             const required = schema.schema.required || [];
+            const metadata = schema.boost_metadata;
             const fields = [];
 
-            // Convert schema properties to ERD fields
+            // Get FK fields from metadata relationships
+            const fkFields = new Set(metadata.relationships.map(rel => rel.field));
+            const primaryKey = metadata.entity.primaryKey;
+
+            // Convert schema properties to ERD fields using metadata
             Object.entries(properties).forEach(([fieldName, fieldDef]) => {
                 // Skip JSON-LD context fields
                 if (fieldName.startsWith('@')) return;
 
                 let fieldType = fieldDef.type || 'string';
-                let isPK = false;
-                let isFK = false;
+                let isPK = fieldName === primaryKey;
+                let isFK = fkFields.has(fieldName);
                 let isRequired = required.includes(fieldName);
-
-                // Detect primary keys (usually ends with 'Id' and matches entity name)
-                if (fieldName.toLowerCase().includes('id') && 
-                    (fieldName.toLowerCase().includes(entityName.toLowerCase()) || fieldName === 'id')) {
-                    isPK = true;
-                }
-
-                // Detect foreign keys (ends with 'Id' but not primary key)
-                if (fieldName.endsWith('Id') && !isPK && fieldName !== 'id') {
-                    isFK = true;
-                }
 
                 // Handle enum types
                 if (fieldDef.enum) {
@@ -935,9 +932,14 @@
                     fieldType = 'array';
                 }
 
-                // Handle number types
+                // Handle number types with date-time format
                 if (fieldType === 'number') {
                     fieldType = fieldDef.format === 'date-time' ? 'datetime' : 'decimal';
+                }
+
+                // Handle string types with date-time format
+                if (fieldType === 'string' && fieldDef.format === 'date-time') {
+                    fieldType = 'datetime';
                 }
 
                 fields.push({
@@ -949,187 +951,104 @@
                 });
             });
 
+            console.log(`✅ Entity ${entityName}: ${fields.length} fields, ${metadata.relationships.length} relationships`);
+
             return {
                 id: entityName,
                 name: entityName,
-                area: area,
-                description: description,
+                area: metadata.entity.area,
+                description: metadata.entity.description,
                 fields: fields,
                 x: position.x,
-                y: position.y
+                y: position.y,
+                metadata: metadata,
+                schema: schema.schema || schema
             };
         }
 
-        // Entity metadata (areas, descriptions, and positions)
-        const entityMetadata = {
-            'TraceableUnit': { 
-                area: 'core_traceability', 
-                description: '🔑 CENTRAL: Unique biomass tracking unit with BOOST traceability system integration',
-                position: { x: 1600, y: 1000 }
-            },
-            'MaterialProcessing': { 
-                area: 'core_traceability', 
-                description: '🔑 Processing operations that transform TRUs with plant part tracking',
-                position: { x: 1200, y: 1400 }
-            },
-            'ProcessingHistory': { 
-                area: 'core_traceability', 
-                description: '🔑 Complete timeline of processing events with moisture tracking',
-                position: { x: 2000, y: 1400 }
-            },
-            'SpeciesComponent': { 
-                area: 'core_traceability', 
-                description: '🌲 Species composition within TRUs',
-                position: { x: 1200, y: 600 }
-            },
-            'MeasurementRecord': { 
-                area: 'core_traceability', 
-                description: '📏 Quality measurements and dimensional data',
-                position: { x: 2000, y: 600 }
-            },
-            'LocationHistory': { 
-                area: 'core_traceability', 
-                description: '📍 Historical movement records of TRUs',
-                position: { x: 1600, y: 600 }
-            },
-            'BiometricIdentifier': { 
-                area: 'core_traceability', 
-                description: '🔬 Biometric identifiers for media-interruption-free tracking',
-                position: { x: 1600, y: 1400 }
-            },
-            'TrackingPoint': { 
-                area: 'core_traceability', 
-                description: '📡 Physical tracking points in supply chain',
-                position: { x: 900, y: 1000 }
-            },
-            'DataReconciliation': { 
-                area: 'core_traceability', 
-                description: '🔄 Reconciliation of measurement discrepancies',
-                position: { x: 2300, y: 1000 }
-            },
-            'Organization': { 
-                area: 'organizational_foundation', 
-                description: '🏢 Business entities in BOOST supply chain',
-                position: { x: 100, y: 1000 }
-            },
-            'Certificate': { 
-                area: 'organizational_foundation', 
-                description: '📜 Sustainability certificates',
-                position: { x: 100, y: 600 }
-            },
-            'CertificationScheme': { 
-                area: 'organizational_foundation', 
-                description: '🛡️ Certification schemes (FSC, PEFC, SBP, etc.)',
-                position: { x: 100, y: 1400 }
-            },
-            'CertificationBody': { 
-                area: 'organizational_foundation', 
-                description: '🏛️ Accredited certification bodies',
-                position: { x: 100, y: 1800 }
-            },
-            'Material': { 
-                area: 'material_supply_chain', 
-                description: '🪵 Material types and specifications',
-                position: { x: 500, y: 200 }
-            },
-            'SupplyBase': { 
-                area: 'material_supply_chain', 
-                description: '🌲 Supply base areas and management',
-                position: { x: 500, y: 600 }
-            },
-            'Supplier': { 
-                area: 'material_supply_chain', 
-                description: '🤝 External suppliers in supply chain',
-                position: { x: 500, y: 1000 }
-            },
-            'Customer': { 
-                area: 'material_supply_chain', 
-                description: '🏭 End customers and buyers',
-                position: { x: 500, y: 1400 }
-            },
-            'Transaction': { 
-                area: 'transaction_management', 
-                description: '💰 Business transactions between organizations',
-                position: { x: 2700, y: 1000 }
-            },
-            'TransactionBatch': { 
-                area: 'transaction_management', 
-                description: '📦 Physical batches within transactions',
-                position: { x: 2700, y: 1400 }
-            },
-            'SalesDeliveryDocument': { 
-                area: 'transaction_management', 
-                description: '📄 Sales and delivery documentation',
-                position: { x: 2700, y: 600 }
-            },
-            'Claim': { 
-                area: 'sustainability_claims', 
-                description: '🏆 Sustainability claims and validation',
-                position: { x: 1600, y: 200 }
-            },
-            'GeographicData': { 
-                area: 'geographic_location', 
-                description: '🗺️ Spatial data and geographic references',
-                position: { x: 2300, y: 600 }
-            },
-            'SupplyBaseReport': { 
-                area: 'reporting_compliance', 
-                description: '📊 Supply base reports and documentation',
-                position: { x: 2300, y: 1400 }
-            },
-            'VerificationStatement': { 
-                area: 'reporting_compliance', 
-                description: '✅ Third-party verification statements',
-                position: { x: 2300, y: 1800 }
-            },
-            'Audit': { 
-                area: 'reporting_compliance', 
-                description: '🔍 Certification audits and findings',
-                position: { x: 2700, y: 1800 }
-            },
-            'ProductGroup': { 
-                area: 'analytics_data', 
-                description: '📋 Product categorization and grouping',
-                position: { x: 1200, y: 1800 }
-            },
-            'MassBalanceAccount': { 
-                area: 'analytics_data', 
-                description: '⚖️ Mass balance accounting system',
-                position: { x: 900, y: 1800 }
-            },
-            'EnergyCarbonData': { 
-                area: 'analytics_data', 
-                description: '🌡️ Energy and carbon footprint data',
-                position: { x: 1600, y: 1800 }
-            },
-            'Operator': { 
-                area: 'personnel', 
-                description: '👤 Personnel and operators in supply chain',
-                position: { x: 500, y: 1800 }
-            },
-            'LCFSPathway': { 
-                area: 'reporting_compliance', 
-                description: '🛣️ CARB-certified fuel pathways for LCFS compliance with carbon intensity data',
-                position: { x: 3000, y: 1200 }
-            },
-            'LCFSReporting': { 
-                area: 'reporting_compliance', 
-                description: '📊 Quarterly LCFS compliance reports submitted to CARB',
-                position: { x: 3000, y: 600 }
+        // Generate relationships from schema metadata (NO pattern matching)
+        function generateMetadataRelationships(entities) {
+            const relationships = [];
+            const entityNameSet = new Set(entities.map(e => e.name));
+            
+            console.log('🔍 Generating relationships from schema metadata...');
+            console.log('Available entities:', Array.from(entityNameSet).sort());
+            
+            for (const entity of entities) {
+                if (!entity.metadata || !entity.metadata.relationships) {
+                    console.warn(`⚠️ Entity ${entity.name}: No relationship metadata found`);
+                    continue;
+                }
+                
+                console.log(`Processing ${entity.name} with ${entity.metadata.relationships.length} relationships`);
+                
+                for (const relMetadata of entity.metadata.relationships) {
+                    const targetEntity = relMetadata.targetEntity;
+                    
+                    // Validate target entity exists
+                    if (!entityNameSet.has(targetEntity)) {
+                        console.error(`❌ Entity ${entity.name}: Relationship field '${relMetadata.field}' references unknown entity '${targetEntity}'`);
+                        continue;
+                    }
+                    
+                    // Convert metadata to relationship
+                    const relationship = {
+                        from: entity.name,
+                        to: targetEntity,
+                        label: relMetadata.label,
+                        type: relMetadata.required ? 'identifying' : 'non-identifying',
+                        fromCard: relMetadata.relationshipType.startsWith('many') ? 'many' : 'one',
+                        toCard: relMetadata.relationshipType.endsWith('many') ? 'many' : 'one',
+                        field: relMetadata.field
+                    };
+                    
+                    relationships.push(relationship);
+                    console.log(`  ✅ ${entity.name}.${relMetadata.field} → ${targetEntity} (${relMetadata.label})`);
+                }
             }
-        };
+            
+            console.log(`✅ Generated ${relationships.length} relationships from metadata`);
+            return relationships;
+        }
+        
+
+        // Dynamic Network Analysis Engine
+        // Dynamic layout engine removed - using config-only positioning
+
 
         // Load entities from schema files with auto-discovery
         async function loadEntitiesFromSchema() {
+            console.log('Starting schema-based entity loading...');
+            
+            // Load ERD configuration first
+            const erdConfig = await loadERDConfig();
+            globalErdConfig = erdConfig; // Store globally for use in connection points
+            console.log('Loaded ERD configuration');
+            
             const entities = [];
             const discoveredRelationships = [];
+            
+            // Add manual relationships from ERD config
+            erdConfig.manual_relationships.forEach(rel => {
+                discoveredRelationships.push({
+                    from: rel.from,
+                    to: rel.to,
+                    label: rel.label,
+                    type: rel.type,
+                    fromCard: rel.from_cardinality,
+                    toCard: rel.to_cardinality
+                });
+            });
+            console.log(`Loaded ${erdConfig.manual_relationships.length} manual relationships from config`);
             
             // Try auto-discovery first
             const directories = await discoverSchemaDirectories();
             const discoveredEntities = new Set();
             
-            // Group entities by area for auto-positioning
-            const entitiesByArea = {};
+            if (!directories || directories.length === 0) {
+                console.error('No schema directories found - cannot continue');
+                throw new Error('Schema directories not found');
+            }
             
             for (const directory of directories) {
                 const entityName = directoryToEntityName(directory);
@@ -1137,695 +1056,72 @@
                 
                 if (schema) {
                     console.log(`Processing entity: ${entityName}`);
-                    const metadata = extractMetadataFromSchema(entityName, schema);
+                    const metadata = extractMetadataFromSchema(entityName, schema, erdConfig);
                     
                     if (metadata) {
                         console.log(`✅ ${entityName} loaded successfully in area: ${metadata.area}`);
-                        // Collect relationships from schema metadata
-                        if (metadata.relationships && metadata.relationships.length > 0) {
-                            metadata.relationships.forEach(rel => {
-                                discoveredRelationships.push({
-                                    from: rel.from,
-                                    to: rel.to,
-                                    label: rel.label,
-                                    type: rel.type,
-                                    fromCard: rel.from_cardinality,
-                                    toCard: rel.to_cardinality
-                                });
-                            });
-                            console.log(`Found ${metadata.relationships.length} relationships for ${entityName}`);
-                        }
                         
-                        // Initialize area group if needed
-                        if (!entitiesByArea[metadata.area]) {
-                            entitiesByArea[metadata.area] = [];
-                        }
-                        
-                        // Auto-calculate position if not specified
-                        let position = metadata.position;
-                        if (!position) {
-                            // Auto-calculate position
-                            const entityIndex = entitiesByArea[metadata.area].length;
-                            position = calculateAutoPosition(metadata.area, entityIndex);
-                        }
-                        
-                        const entity = convertSchemaToEntity(entityName, schema, metadata.area, metadata.description, position);
+                        const entity = convertSchemaToEntity(entityName, schema, metadata.area, metadata.description, metadata.position);
                         if (entity) {
                             entities.push(entity);
-                            entitiesByArea[metadata.area].push(entity);
                             discoveredEntities.add(entityName);
                         }
                     } else {
-                        console.warn(`Skipping ${entityName} - missing boost_metadata`);
+                        console.error(`FAILED to process ${entityName} - check ERD configuration`);
+                        throw new Error(`Entity ${entityName} not properly configured`);
                     }
                 } else {
-                    console.warn(`Failed to load schema for ${entityName} from directory ${directory}`);
+                    console.error(`FAILED to load schema for ${entityName} from directory ${directory}`);
+                    throw new Error(`Schema not found for ${entityName}`);
                 }
             }
             
-            // No fallback needed - all entities must have boost_metadata in their schema files
+            // Generate relationships from schema metadata (NO pattern matching)
+            const metadataRelationships = generateMetadataRelationships(entities);
+            console.log(`Generated ${metadataRelationships.length} relationships from schema metadata`);
             
-            // Merge discovered relationships with static relationships
-            if (discoveredRelationships.length > 0) {
-                console.log(`Merging ${discoveredRelationships.length} relationships from schema metadata with ${relationships.length} static relationships`);
-                relationships.push(...discoveredRelationships);
-                console.log(`Total relationships after merge: ${relationships.length}`);
-            }
+            // Use only metadata relationships (no manual or pattern-based relationships)
+            relationships.length = 0; // Clear any existing relationships
+            relationships.push(...metadataRelationships);
+            console.log(`Total relationships: ${relationships.length}`);
             
-            console.log(`Loaded ${entities.length} entities (${discoveredEntities.size} auto-discovered, ${entities.length - discoveredEntities.size} from metadata)`);
+            // Apply config-based positioning (simplified from dynamic layout)
+            console.log('Applying config-based entity positioning...');
+            const configPositions = new Map();
+            entities.forEach(entity => {
+                // Get position from ERD config, fallback to simple grid if missing
+                const configPos = erdConfig.entity_display[entity.name]?.position;
+                if (configPos) {
+                    configPositions.set(entity.name, {x: configPos.x, y: configPos.y});
+                    console.log(`${entity.name}: Using config position (${configPos.x}, ${configPos.y})`);
+                } else {
+                    // Simple grid fallback for entities without explicit config
+                    const index = Array.from(configPositions.keys()).length;
+                    const cols = 8;
+                    const spacing = 300;
+                    const fallbackPos = {
+                        x: 100 + (index % cols) * spacing,
+                        y: 100 + Math.floor(index / cols) * spacing
+                    };
+                    configPositions.set(entity.name, fallbackPos);
+                    console.warn(`${entity.name}: No config position found, using fallback (${fallbackPos.x}, ${fallbackPos.y})`);
+                }
+            });
+            
+            // Update entity positions with config-based results
+            entities.forEach(entity => {
+                const configPos = configPositions.get(entity.name);
+                if (configPos) {
+                    entity.x = configPos.x;
+                    entity.y = configPos.y;
+                    console.log(`${entity.name}: positioned at (${Math.round(configPos.x)}, ${Math.round(configPos.y)})`);
+                }
+            });
+            
+            console.log(`Successfully loaded ${entities.length} entities with config-based positioning`);
             return entities;
         }
 
-        // Complete entities based on schema definitions - will be replaced by dynamic loading
-        const staticEntities = [
-            {
-                id: 'TraceableUnit',
-                name: 'TraceableUnit',
-                area: 'core_traceability',
-                description: '🔑 CENTRAL: Unique biomass tracking unit with BOOST traceability system integration',
-                fields: [
-                    { name: 'traceableUnitId', type: 'string', isPK: true, required: true },
-                    { name: 'unitType', type: 'enum', required: true },
-                    { name: 'uniqueIdentifier', type: 'string', required: true },
-                    { name: 'totalVolumeM3', type: 'decimal', required: true },
-                    { name: 'currentMoistureContent', type: 'decimal' },
-                    { name: 'moistureContentTimestamp', type: 'datetime' },
-                    { name: 'moistureContentSource', type: 'string' },
-                    { name: 'currentGeographicDataId', type: 'string', isFK: true },
-                    { name: 'harvestGeographicDataId', type: 'string', isFK: true },
-                    { name: 'createdTimestamp', type: 'datetime', required: true },
-                    { name: 'harvesterId', type: 'string', isFK: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'materialTypeId', type: 'string', isFK: true },
-                    { name: 'assortmentType', type: 'string' },
-                    { name: 'qualityGrade', type: 'string' },
-                    { name: 'isMultiSpecies', type: 'boolean' },
-                    { name: 'currentStatus', type: 'string' },
-                    { name: 'sustainabilityCertification', type: 'string' },
-                    { name: 'parentTraceableUnitId', type: 'string', isFK: true },
-                    { name: 'childTraceableUnitIds', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'MaterialProcessing',
-                name: 'MaterialProcessing',
-                area: 'core_traceability',
-                description: '🔑 Processing operations that transform TRUs with plant part tracking',
-                fields: [
-                    { name: 'processingId', type: 'string', isPK: true, required: true },
-                    { name: 'inputTraceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'outputTraceableUnitId', type: 'string', isFK: true },
-                    { name: 'processType', type: 'string', required: true },
-                    { name: 'processTimestamp', type: 'datetime', required: true },
-                    { name: 'processingGeographicDataId', type: 'string', isFK: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'inputComposition', type: 'string' },
-                    { name: 'outputComposition', type: 'string' },
-                    { name: 'inputVolume', type: 'decimal' },
-                    { name: 'outputVolume', type: 'decimal' },
-                    { name: 'volumeLoss', type: 'decimal' },
-                    { name: 'qualityMetrics', type: 'string' },
-                    { name: 'equipmentUsed', type: 'string' }
-                ]
-            },
-            {
-                id: 'ProcessingHistory',
-                name: 'ProcessingHistory',
-                area: 'core_traceability',
-                description: '🔑 Complete timeline of processing events with moisture tracking',
-                fields: [
-                    { name: 'processingHistoryId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'materialProcessingId', type: 'string', isFK: true },
-                    { name: 'timestamp', type: 'datetime', required: true },
-                    { name: 'processSequenceNumber', type: 'integer' },
-                    { name: 'processingEventType', type: 'string' },
-                    { name: 'inputTRUIds', type: 'string[]' },
-                    { name: 'outputTRUIds', type: 'string[]' },
-                    { name: 'processingDuration', type: 'string' },
-                    { name: 'qualityChangeDescription', type: 'string' },
-                    { name: 'inputMoistureContent', type: 'decimal' },
-                    { name: 'outputMoistureContent', type: 'decimal' },
-                    { name: 'moistureChangeRatio', type: 'decimal' },
-                    { name: 'operatorId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'SpeciesComponent',
-                name: 'SpeciesComponent',
-                area: 'core_traceability',
-                description: '🌲 Species composition within TRUs',
-                fields: [
-                    { name: 'componentId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'species', type: 'string', required: true },
-                    { name: 'volumeM3', type: 'decimal' },
-                    { name: 'percentageByVolume', type: 'decimal' },
-                    { name: 'qualityGrade', type: 'string' },
-                    { name: 'sourceGeographicDataId', type: 'string', isFK: true },
-                    { name: 'harvestingMethod', type: 'string' },
-                    { name: 'harvestTimestamp', type: 'datetime' },
-                    { name: 'carbonStorage', type: 'string' },
-                    { name: 'primaryPlantPart', type: 'string' }
-                ]
-            },
-            {
-                id: 'MeasurementRecord',
-                name: 'MeasurementRecord',
-                area: 'core_traceability',
-                description: '📏 Quality measurements and dimensional data',
-                fields: [
-                    { name: 'recordId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'measuredVolume', type: 'decimal' },
-                    { name: 'measuredLength', type: 'decimal' },
-                    { name: 'measuredDiameter', type: 'decimal' },
-                    { name: 'moistureContent', type: 'decimal' },
-                    { name: 'moistureMeasurementMethod', type: 'string' },
-                    { name: 'moistureEquipmentUsed', type: 'string' },
-                    { name: 'measurementMethod', type: 'string' },
-                    { name: 'measurementGeographicDataId', type: 'string', isFK: true },
-                    { name: 'measurementTimestamp', type: 'datetime', required: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'trackingPointId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'LocationHistory',
-                name: 'LocationHistory',
-                area: 'core_traceability',
-                description: '📍 Historical movement records of TRUs',
-                fields: [
-                    { name: 'locationHistoryId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'geographicDataId', type: 'string', isFK: true, required: true },
-                    { name: 'timestamp', type: 'datetime', required: true },
-                    { name: 'locationEventType', type: 'string' },
-                    { name: 'materialProcessingId', type: 'string', isFK: true },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'equipmentUsed', type: 'string' },
-                    { name: 'notes', type: 'string' },
-                    { name: 'distanceTraveled', type: 'decimal' },
-                    { name: 'transportMethod', type: 'string' },
-                    { name: 'isCurrentLocation', type: 'boolean' }
-                ]
-            },
-            {
-                id: 'BiometricIdentifier',
-                name: 'BiometricIdentifier',
-                area: 'core_traceability',
-                description: '🔬 Biometric identifiers for media-interruption-free tracking',
-                fields: [
-                    { name: 'biometricId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'biometricSignature', type: 'string', required: true },
-                    { name: 'captureMethod', type: 'string' },
-                    { name: 'captureGeographicDataId', type: 'string', isFK: true },
-                    { name: 'captureTimestamp', type: 'datetime', required: true },
-                    { name: 'trackingPointId', type: 'string', isFK: true },
-                    { name: 'speciesBiometrics', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'TrackingPoint',
-                name: 'TrackingPoint',
-                area: 'core_traceability',
-                description: '📡 Physical tracking points in supply chain',
-                fields: [
-                    { name: 'trackingPointId', type: 'string', isPK: true, required: true },
-                    { name: 'pointType', type: 'string', required: true },
-                    { name: 'geographicDataId', type: 'string', isFK: true, required: true },
-                    { name: 'equipmentUsed', type: 'string' },
-                    { name: 'operatorId', type: 'string', isFK: true },
-                    { name: 'establishedTimestamp', type: 'datetime', required: true }
-                ]
-            },
-            {
-                id: 'DataReconciliation',
-                name: 'DataReconciliation',
-                area: 'core_traceability',
-                description: '🔄 Reconciliation of measurement discrepancies',
-                fields: [
-                    { name: 'reconciliationId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'transactionId', type: 'string', isFK: true },
-                    { name: 'forestMeasurement', type: 'decimal' },
-                    { name: 'millMeasurement', type: 'decimal' },
-                    { name: 'discrepancy', type: 'decimal' },
-                    { name: 'reconciliationStatus', type: 'string' },
-                    { name: 'discrepancyReason', type: 'string' },
-                    { name: 'reconciliationDate', type: 'datetime' },
-                    { name: 'reconciliationOperator', type: 'string' }
-                ]
-            },
-            {
-                id: 'Organization',
-                name: 'Organization',
-                area: 'organizational_foundation',
-                description: '🏢 Business entities in BOOST supply chain',
-                fields: [
-                    { name: 'organizationId', type: 'string', isPK: true, required: true },
-                    { name: 'name', type: 'string', required: true },
-                    { name: 'address', type: 'string' },
-                    { name: 'role', type: 'string' },
-                    { name: 'scopeOfOperations', type: 'string' },
-                    { name: 'legalEntityStatus', type: 'string' },
-                    { name: 'certificateCode', type: 'string', isFK: true },
-                    { name: 'contactInfo', type: 'string' },
-                    { name: 'equipmentIds', type: 'string[]' },
-                    { name: 'operatorIds', type: 'string[]' },
-                    { name: 'harvestSites', type: 'string[]' },
-                    { name: 'traceableUnitIds', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'Certificate',
-                name: 'Certificate',
-                area: 'organizational_foundation',
-                description: '📜 Sustainability certificates',
-                fields: [
-                    { name: 'certificateNumber', type: 'string', isPK: true, required: true },
-                    { name: 'certificateId', type: 'string' },
-                    { name: 'dateOfIssue', type: 'date', required: true },
-                    { name: 'dateOfExpiry', type: 'date', required: true },
-                    { name: 'scopeOfCertification', type: 'string' },
-                    { name: 'status', type: 'string' },
-                    { name: 'versionNumber', type: 'string' },
-                    { name: 'cbId', type: 'string', isFK: true },
-                    { name: 'organizationId', type: 'string', isFK: true },
-                    { name: 'certificationSchemeId', type: 'string', isFK: true },
-                    { name: 'certificateGeographicDataId', type: 'string', isFK: true },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'CertificationScheme',
-                name: 'CertificationScheme',
-                area: 'organizational_foundation',
-                description: '🛡️ Certification schemes (FSC, PEFC, SBP, etc.)',
-                fields: [
-                    { name: 'schemeId', type: 'string', isPK: true, required: true },
-                    { name: 'schemeName', type: 'string', required: true },
-                    { name: 'recognitionStatus', type: 'string' },
-                    { name: 'versionNumber', type: 'string' },
-                    { name: 'description', type: 'string' },
-                    { name: 'website', type: 'uri' },
-                    { name: 'materialCategories', type: 'string[]' },
-                    { name: 'controlSystems', type: 'string[]' },
-                    { name: 'labelUseRequirements', type: 'string' },
-                    { name: 'volumeTrackingRequirements', type: 'string' },
-                    { name: 'dueDiligenceRequirements', type: 'string' },
-                    { name: 'sustainabilityCriteria', type: 'string[]' },
-                    { name: 'applicableRegions', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'CertificationBody',
-                name: 'CertificationBody',
-                area: 'organizational_foundation',
-                description: '🏛️ Accredited certification bodies',
-                fields: [
-                    { name: 'cbId', type: 'string', isPK: true, required: true },
-                    { name: 'cbName', type: 'string', required: true },
-                    { name: 'accreditationStatus', type: 'string' },
-                    { name: 'accreditationScope', type: 'string' },
-                    { name: 'contactInformation', type: 'object' },
-                    { name: 'jurisdictions', type: 'string[]' },
-                    { name: 'sectorsServed', type: 'string[]' },
-                    { name: 'isActive', type: 'boolean', required: true },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'Material',
-                name: 'Material',
-                area: 'material_supply_chain',
-                description: '🪵 Material types and specifications',
-                fields: [
-                    { name: 'materialTypeId', type: 'string', isPK: true, required: true },
-                    { name: 'materialName', type: 'string', required: true },
-                    { name: 'materialCategory', type: 'string' },
-                    { name: 'defaultAssortmentTypes', type: 'string' },
-                    { name: 'standardQualityGrades', type: 'string' },
-                    { name: 'carbonStorageRate', type: 'string' },
-                    { name: 'density', type: 'string' },
-                    { name: 'applicableProcessingTypes', type: 'string[]' },
-                    { name: 'applicablePlantParts', type: 'string[]' },
-                    { name: 'excludedPlantParts', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'SupplyBase',
-                name: 'SupplyBase',
-                area: 'material_supply_chain',
-                description: '🌲 Supply base areas and management',
-                fields: [
-                    { name: 'supplyBaseId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'supplyBaseName', type: 'string', required: true },
-                    { name: 'description', type: 'string' },
-                    { name: 'harvestSites', type: 'string[]' },
-                    { name: 'skidRoads', type: 'string[]' },
-                    { name: 'forestRoads', type: 'string[]' },
-                    { name: 'equipmentDeployment', type: 'string[]' },
-                    { name: 'traceableUnitIds', type: 'string[]' },
-                    { name: 'speciesAvailable', type: 'string[]' },
-                    { name: 'supplyBaseGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Supplier',
-                name: 'Supplier',
-                area: 'material_supply_chain',
-                description: '🤝 External suppliers in supply chain',
-                fields: [
-                    { name: 'supplierId', type: 'string', isPK: true, required: true },
-                    { name: 'supplierName', type: 'string', required: true },
-                    { name: 'address', type: 'string' },
-                    { name: 'certificateCode', type: 'string' },
-                    { name: 'claim', type: 'string' },
-                    { name: 'supplierType', type: 'string' },
-                    { name: 'supplierGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Customer',
-                name: 'Customer',
-                area: 'material_supply_chain',
-                description: '🏭 End customers and buyers',
-                fields: [
-                    { name: 'customerId', type: 'string', isPK: true, required: true },
-                    { name: 'customerName', type: 'string', required: true },
-                    { name: 'address', type: 'string' },
-                    { name: 'customerGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Transaction',
-                name: 'Transaction',
-                area: 'transaction_management',
-                description: '💰 Business transactions between organizations',
-                fields: [
-                    { name: 'transactionId', type: 'string', isPK: true, required: true },
-                    { name: 'supplyingOrganizationId', type: 'string', isFK: true, required: true },
-                    { name: 'customerOrganizationId', type: 'string', isFK: true, required: true },
-                    { name: 'transactionDate', type: 'date', required: true },
-                    { name: 'salesDocumentId', type: 'string', isFK: true },
-                    { name: 'contractValue', type: 'decimal' },
-                    { name: 'contractCurrency', type: 'string' },
-                    { name: 'contractTerms', type: 'string' },
-                    { name: 'paymentTerms', type: 'string' },
-                    { name: 'transactionStatus', type: 'string' },
-                    { name: 'transactionGeographicDataId', type: 'string', isFK: true },
-                    { name: 'brokerOrganizationId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'TransactionBatch',
-                name: 'TransactionBatch',
-                area: 'transaction_management',
-                description: '📦 Physical batches within transactions',
-                fields: [
-                    { name: 'transactionBatchId', type: 'string', isPK: true, required: true },
-                    { name: 'transactionId', type: 'string', isFK: true, required: true },
-                    { name: 'productionBatchId', type: 'string', isFK: true },
-                    { name: 'quantity', type: 'decimal', required: true },
-                    { name: 'quantityUnit', type: 'string' },
-                    { name: 'traceableUnitIds', type: 'string[]' },
-                    { name: 'claimId', type: 'string', isFK: true },
-                    { name: 'additionalClaimIds', type: 'string[]' },
-                    { name: 'speciesComposition', type: 'string[]' },
-                    { name: 'qualityGrade', type: 'string' },
-                    { name: 'processingHistoryIds', type: 'string[]' },
-                    { name: 'reconciliationStatus', type: 'string' },
-                    { name: 'measurementRecordIds', type: 'string[]' }
-                ]
-            },
-            {
-                id: 'SalesDeliveryDocument',
-                name: 'SalesDeliveryDocument',
-                area: 'transaction_management',
-                description: '📄 Sales and delivery documentation',
-                fields: [
-                    { name: 'documentId', type: 'string', isPK: true, required: true },
-                    { name: 'dateIssued', type: 'date', required: true },
-                    { name: 'buyerName', type: 'string', required: true },
-                    { name: 'buyerAddress', type: 'string' },
-                    { name: 'sellerName', type: 'string', required: true },
-                    { name: 'sellerAddress', type: 'string' },
-                    { name: 'productDescription', type: 'string', required: true },
-                    { name: 'quantity', type: 'decimal', required: true },
-                    { name: 'transactionId', type: 'string', isFK: true },
-                    { name: 'certificateCode', type: 'string' },
-                    { name: 'transportReference', type: 'string' }
-                ]
-            },
-            {
-                id: 'Claim',
-                name: 'Claim',
-                area: 'sustainability_claims',
-                description: '🏆 Sustainability claims and validation',
-                fields: [
-                    { name: 'claimId', type: 'string', isPK: true, required: true },
-                    { name: 'traceableUnitId', type: 'string', isFK: true, required: true },
-                    { name: 'claimType', type: 'string', required: true },
-                    { name: 'certificationSchemeId', type: 'string', isFK: true },
-                    { name: 'statement', type: 'string', required: true },
-                    { name: 'validated', type: 'boolean', required: true },
-                    { name: 'validatedBy', type: 'string' },
-                    { name: 'validationDate', type: 'datetime' },
-                    { name: 'applicableSpecies', type: 'string[]' },
-                    { name: 'claimPercentage', type: 'decimal' },
-                    { name: 'claimScope', type: 'string' },
-                    { name: 'evidenceDocumentId', type: 'string' },
-                    { name: 'claimExpiry', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'GeographicData',
-                name: 'GeographicData',
-                area: 'geographic_location',
-                description: '🗺️ Spatial data and geographic references',
-                fields: [
-                    { name: 'geographicDataId', type: 'string', isPK: true, required: true },
-                    { name: 'geoJsonData', type: 'json', required: true },
-                    { name: 'dataType', type: 'string' },
-                    { name: 'description', type: 'string' },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'SupplyBaseReport',
-                name: 'SupplyBaseReport',
-                area: 'reporting_compliance',
-                description: '📊 Supply base reports and documentation',
-                fields: [
-                    { name: 'sbrId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'preparationDate', type: 'date', required: true },
-                    { name: 'supplyBaseSummary', type: 'string' },
-                    { name: 'sourcingPractices', type: 'string' },
-                    { name: 'sustainabilityMeasures', type: 'string' },
-                    { name: 'publicationUrl', type: 'string' },
-                    { name: 'reportGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'VerificationStatement',
-                name: 'VerificationStatement',
-                area: 'reporting_compliance',
-                description: '✅ Third-party verification statements',
-                fields: [
-                    { name: 'statementId', type: 'string', isPK: true, required: true },
-                    { name: 'verificationDate', type: 'date', required: true },
-                    { name: 'issuingBody', type: 'string', required: true },
-                    { name: 'scope', type: 'string' },
-                    { name: 'transactionBatchId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'Audit',
-                name: 'Audit',
-                area: 'reporting_compliance',
-                description: '🔍 Certification audits and findings',
-                fields: [
-                    { name: 'auditId', type: 'string', isPK: true, required: true },
-                    { name: 'auditType', type: 'string', required: true },
-                    { name: 'auditDate', type: 'date', required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'cbId', type: 'string', isFK: true },
-                    { name: 'findings', type: 'string' },
-                    { name: 'reportUrl', type: 'string' },
-                    { name: 'auditGeographicDataId', type: 'string', isFK: true }
-                ]
-            },
-            {
-                id: 'ProductGroup',
-                name: 'ProductGroup',
-                area: 'analytics_data',
-                description: '📋 Product categorization and grouping',
-                fields: [
-                    { name: 'productGroupId', type: 'string', isPK: true, required: true },
-                    { name: 'productGroupName', type: 'string', required: true },
-                    { name: 'productCategory', type: 'string' },
-                    { name: 'classification', type: 'string' },
-                    { name: 'description', type: 'string', required: true },
-                    { name: 'typicalUses', type: 'string[]' },
-                    { name: 'qualityStandards', type: 'string[]' },
-                    { name: 'certificationRequirements', type: 'string[]' },
-                    { name: 'regulatoryClassification', type: 'string' },
-                    { name: 'lastUpdated', type: 'datetime' }
-                ]
-            },
-            {
-                id: 'MassBalanceAccount',
-                name: 'MassBalanceAccount',
-                area: 'analytics_data',
-                description: '⚖️ Mass balance accounting system',
-                fields: [
-                    { name: 'accountId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'productGroupId', type: 'string', isFK: true, required: true },
-                    { name: 'periodInputs', type: 'decimal' },
-                    { name: 'periodOutputs', type: 'decimal' },
-                    { name: 'currentBalance', type: 'decimal' },
-                    { name: 'balancingPeriod', type: 'string' },
-                    { name: 'conversionFactors', type: 'decimal' }
-                ]
-            },
-            {
-                id: 'EnergyCarbonData',
-                name: 'EnergyCarbonData',
-                area: 'analytics_data',
-                description: '🌡️ Energy and carbon footprint data',
-                fields: [
-                    { name: 'energyCarbonDataId', type: 'string', isPK: true, required: true },
-                    { name: 'dataType', type: 'string', required: true },
-                    { name: 'value', type: 'decimal', required: true },
-                    { name: 'unit', type: 'string', required: true },
-                    { name: 'source', type: 'string', required: true },
-                    { name: 'measurementMethod', type: 'string' },
-                    { name: 'traceableUnitId', type: 'string', isFK: true },
-                    { name: 'measurementRecordId', type: 'string', isFK: true },
-                    { name: 'measurementTimestamp', type: 'datetime' },
-                    { name: 'measurementGeographicDataId', type: 'string', isFK: true },
-                    { name: 'temperatureConditions', type: 'decimal' },
-                    { name: 'humidityConditions', type: 'decimal' }
-                ]
-            },
-            {
-                id: 'Operator',
-                name: 'Operator',
-                area: 'personnel',
-                description: '👤 Personnel and operators in supply chain',
-                fields: [
-                    { name: 'operatorId', type: 'string', isPK: true, required: true },
-                    { name: 'organizationId', type: 'string', isFK: true, required: true },
-                    { name: 'operatorName', type: 'string', required: true },
-                    { name: 'employeeId', type: 'string' },
-                    { name: 'operatorType', type: 'string' },
-                    { name: 'certifications', type: 'string[]' },
-                    { name: 'equipmentAuthorizations', type: 'string[]' },
-                    { name: 'contactInfo', type: 'string' },
-                    { name: 'isActive', type: 'boolean', required: true },
-                    { name: 'hireDate', type: 'date' },
-                    { name: 'skillsQualifications', type: 'string[]' },
-                    { name: 'supervisorOperatorId', type: 'string', isFK: true }
-                ]
-            }
-        ].map(entity => ({
-            ...entity,
-            x: entityPositions[entity.id]?.x || 1600,
-            y: entityPositions[entity.id]?.y || 1000
-        }));
-
-        // Relationships based on schema definitions
-        const relationships = [
-            // 🔵 ORGANIZATIONAL FOUNDATION RELATIONSHIPS
-            { from: 'Organization', to: 'Certificate', label: 'has', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Certificate', to: 'CertificationScheme', label: 'certifies_against', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'Certificate', to: 'CertificationBody', label: 'issued_by', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'CertificationBody', to: 'Audit', label: 'conducts', type: 'identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟢 CORE TRACEABILITY RELATIONSHIPS - Primary Data Flow
-            { from: 'TraceableUnit', to: 'SpeciesComponent', label: 'contains_species', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'MaterialProcessing', label: 'undergoes_processing', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'ProcessingHistory', label: 'has_processing_timeline', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MaterialProcessing', to: 'MeasurementRecord', label: 'generates_measurements', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MaterialProcessing', to: 'ProcessingHistory', label: 'documented_by', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'ProcessingHistory', to: 'ProcessingHistory', label: 'forms_processing_chain', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'BiometricIdentifier', label: 'identified_by', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'DataReconciliation', label: 'reconciled_through', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'LocationHistory', label: 'has_location_history', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'Claim', label: 'has_sustainability_claims', type: 'identifying', fromCard: 'one', toCard: 'one' },
-            { from: 'TrackingPoint', to: 'MeasurementRecord', label: 'captures_at', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TrackingPoint', to: 'BiometricIdentifier', label: 'scanned_at', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'TraceableUnit', label: 'parent_child_relationship', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟤 MATERIAL & SUPPLY CHAIN RELATIONSHIPS
-            { from: 'Material', to: 'TraceableUnit', label: 'material_type_reference', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'SupplyBase', label: 'manages_supply_base', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'SupplyBase', to: 'TraceableUnit', label: 'originates_tru', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'Supplier', label: 'sources_from', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-            { from: 'Organization', to: 'Customer', label: 'sells_to', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-
-            // 🟠 TRANSACTION MANAGEMENT RELATIONSHIPS
-            { from: 'Transaction', to: 'TraceableUnit', label: 'includes_tru', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-            { from: 'TransactionBatch', to: 'TraceableUnit', label: 'contains_tru', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-            { from: 'Transaction', to: 'TransactionBatch', label: 'contains', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Transaction', to: 'SalesDeliveryDocument', label: 'documented_by', type: 'identifying', fromCard: 'one', toCard: 'one' },
-            { from: 'TransactionBatch', to: 'VerificationStatement', label: 'verified_by', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'Transaction', to: 'DataReconciliation', label: 'validated_by', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'Transaction', label: 'creates', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Customer', to: 'Transaction', label: 'receives', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟡 SUSTAINABILITY & CLAIMS RELATIONSHIPS
-            { from: 'Claim', to: 'CertificationScheme', label: 'references_scheme', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'Claim', to: 'TraceableUnit', label: 'inherited_from_parent_tru', type: 'non-identifying', fromCard: 'many', toCard: 'many' },
-
-            // 🟣 GEOGRAPHIC & LOCATION RELATIONSHIPS - Spatial Integration
-            { from: 'GeographicData', to: 'TraceableUnit', label: 'provides_harvest_location', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'TraceableUnit', label: 'provides_current_location', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Organization', label: 'defines_operational_area', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Transaction', label: 'locates_transaction', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'SupplyBase', label: 'defines_boundaries', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Supplier', label: 'locates_supplier', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'GeographicData', to: 'Customer', label: 'locates_customer', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'LocationHistory', to: 'GeographicData', label: 'references_location', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LocationHistory', to: 'MaterialProcessing', label: 'triggered_by_processing', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LocationHistory', to: 'TraceableUnit', label: 'tracks_movement_of', type: 'identifying', fromCard: 'many', toCard: 'one' },
-
-            // 🔴 REPORTING & COMPLIANCE RELATIONSHIPS
-            { from: 'Organization', to: 'SupplyBaseReport', label: 'prepares', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Audit', to: 'Organization', label: 'audits', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            
-            // LCFS COMPLIANCE RELATIONSHIPS
-            { from: 'Transaction', to: 'LCFSPathway', label: 'uses_pathway', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LCFSReporting', to: 'Organization', label: 'submitted_by', type: 'identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'LCFSReporting', to: 'Transaction', label: 'includes', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'LCFSPathway', to: 'EnergyCarbonData', label: 'has_carbon_data', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'LCFSReporting', to: 'LCFSPathway', label: 'summarizes_pathway', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // ⚫ ANALYTICS & DATA MANAGEMENT RELATIONSHIPS
-            { from: 'Organization', to: 'MassBalanceAccount', label: 'manages', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'ProductGroup', label: 'defines', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MassBalanceAccount', to: 'ProductGroup', label: 'tracks', type: 'non-identifying', fromCard: 'many', toCard: 'one' },
-            { from: 'ProductGroup', to: 'Material', label: 'categorizes', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Certificate', to: 'ProductGroup', label: 'certifies', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Material', to: 'EnergyCarbonData', label: 'characterized_by', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TransactionBatch', to: 'EnergyCarbonData', label: 'associated_with', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'TraceableUnit', to: 'EnergyCarbonData', label: 'characterized_by', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'MeasurementRecord', to: 'EnergyCarbonData', label: 'generates_moisture_data', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'ProcessingHistory', to: 'EnergyCarbonData', label: 'tracks_moisture_changes', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-
-            // 🟢 ORGANIZATIONAL-TRU MANAGEMENT RELATIONSHIPS
-            { from: 'Organization', to: 'TrackingPoint', label: 'operates', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'TraceableUnit', label: 'manages', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Organization', to: 'Operator', label: 'employs', type: 'identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Operator', to: 'MaterialProcessing', label: 'performs_processing', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Operator', to: 'ProcessingHistory', label: 'documents_processing', type: 'non-identifying', fromCard: 'one', toCard: 'many' },
-            { from: 'Operator', to: 'LocationHistory', label: 'manages_movement', type: 'non-identifying', fromCard: 'one', toCard: 'many' }
-        ];
 
         // D3 Setup with zoom and pan
         const svg = d3.select('#erd-svg');
@@ -1888,7 +1184,7 @@
         }
         
         function resetZoom() {
-            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+            fitToScreen();
         }
         
         function fitToScreen() {
@@ -1971,7 +1267,7 @@
         }
 
         // Enhanced connection points that connect to specific fields
-        function getConnectionPoint(entity, targetEntity, relationship, isFromEntity = true) {
+        function getConnectionPoint(entity, targetEntity, relationship, isFromEntity = true, erdConfig = null) {
             const entityHeight = config.headerHeight + (entity.fields.length * config.entityFieldHeight) + (config.entityPadding * 2) + 4;
             
             // Find the relevant field for this relationship
@@ -1979,19 +1275,40 @@
             let targetFieldName = null;
             
             if (isFromEntity) {
-                // Look for FK field that references the target entity
-                const targetEntityName = targetEntity.id;
-                const possibleFKNames = [
-                    targetEntityName.toLowerCase() + 'Id',
-                    targetEntityName.charAt(0).toLowerCase() + targetEntityName.slice(1) + 'Id',
-                    // Common patterns
-                    'organizationId', 'traceableUnitId', 'geographicDataId', 'operatorId', 
-                    'materialTypeId', 'certificateCode', 'cbId', 'schemeId'
-                ];
+                // Use explicit field name from relationship metadata if available
+                if (relationship.field) {
+                    fieldIndex = entity.fields.findIndex(field => field.name === relationship.field);
+                    targetFieldName = relationship.field;
+                    console.log(`🔗 Using explicit field: ${entity.id}.${relationship.field} → ${targetEntity.id}`);
+                } else {
+                    // Fallback to old pattern matching for manual relationships
+                    const targetEntityName = targetEntity.id;
+                    
+                    // Use configuration-based field mapping if available
+                    if (erdConfig && erdConfig.field_mappings && erdConfig.field_mappings[targetEntityName]) {
+                        const possibleFieldNames = erdConfig.field_mappings[targetEntityName];
+                        fieldIndex = entity.fields.findIndex(field => 
+                            field.isFK && possibleFieldNames.includes(field.name)
+                        );
+                    }
+                    
+                    // Fallback to generic pattern matching if no configuration mapping found
+                    if (fieldIndex === -1) {
+                        fieldIndex = entity.fields.findIndex(field => 
+                            field.isFK && (
+                                field.name === targetEntityName + 'Id' ||
+                                field.name === targetEntityName.toLowerCase() + 'Id' ||
+                                field.name.toLowerCase().includes(targetEntityName.replace('Data', '').toLowerCase())
+                            )
+                        );
+                    }
+                }
                 
-                fieldIndex = entity.fields.findIndex(field => 
-                    field.isFK && possibleFKNames.some(name => field.name.includes(name.replace('Id', '')))
-                );
+                // Debug logging for unmatched relationships
+                if (fieldIndex === -1) {
+                    console.warn(`⚠️ Could not find FK field in ${entity.id} for relationship to ${targetEntityName}. Available FK fields:`, 
+                        entity.fields.filter(f => f.isFK).map(f => f.name));
+                }
             } else {
                 // For target entity, use primary key
                 fieldIndex = entity.fields.findIndex(field => field.isPK);
@@ -2551,7 +1868,53 @@
         }
 
         function generateControlPoints(fromPoint, toPoint, relationship, fromEntity, toEntity) {
+            // Special handling for self-referencing relationships
+            if (fromEntity.id === toEntity.id) {
+                return generateSelfReferencingLoop(fromPoint, toPoint, fromEntity, relationship);
+            }
+            
             return findRouteAroundEntities(fromPoint, toPoint, fromEntity, toEntity, relationship);
+        }
+        
+        function generateSelfReferencingLoop(fromPoint, toPoint, entity, relationship) {
+            // Create a simple loop that extends outward from the entity
+            const entityWidth = 200; // Approximate entity width
+            const loopSize = 60; // Size of the loop
+            const offset = 30; // Offset from entity edge
+            
+            // Determine which side to place the loop based on field positions
+            let loopDirection = 'left'; // Default to left side for better visibility
+            
+            // If this is a parent relationship, keep it on the left for better semantics
+            if (relationship.label && relationship.label.toLowerCase().includes('parent')) {
+                loopDirection = 'left';
+            }
+            
+            let controlPoints;
+            if (loopDirection === 'right') {
+                // Right-side loop - extends to the right
+                controlPoints = [
+                    fromPoint,
+                    { x: entity.x + entityWidth/2 + offset, y: fromPoint.y },
+                    { x: entity.x + entityWidth/2 + offset + loopSize, y: fromPoint.y - loopSize/2 },
+                    { x: entity.x + entityWidth/2 + offset + loopSize, y: toPoint.y + loopSize/2 },
+                    { x: entity.x + entityWidth/2 + offset, y: toPoint.y },
+                    toPoint
+                ];
+            } else {
+                // Left-side loop - extends to the left (away from other entities)
+                controlPoints = [
+                    fromPoint,
+                    { x: entity.x - entityWidth/2 - offset, y: fromPoint.y },
+                    { x: entity.x - entityWidth/2 - offset - loopSize, y: fromPoint.y - loopSize/2 },
+                    { x: entity.x - entityWidth/2 - offset - loopSize, y: toPoint.y + loopSize/2 },
+                    { x: entity.x - entityWidth/2 - offset, y: toPoint.y },
+                    toPoint
+                ];
+            }
+            
+            console.log(`🔄 Self-referencing relationship: ${entity.id}.${relationship.field} using ${loopDirection} loop`);
+            return controlPoints;
         }
 
         // Draw entity function
@@ -2739,8 +2102,8 @@
         }
 
         function drawCurvedRelationship(fromEntity, toEntity, rel) {
-            const fromPoint = getConnectionPoint(fromEntity, toEntity, rel, true);
-            const toPoint = getConnectionPoint(toEntity, fromEntity, rel, false);
+            const fromPoint = getConnectionPoint(fromEntity, toEntity, rel, true, globalErdConfig);
+            const toPoint = getConnectionPoint(toEntity, fromEntity, rel, false, globalErdConfig);
             const controlPoints = generateControlPoints(fromPoint, toPoint, rel, fromEntity, toEntity);
             
             const relationshipGroup = g.append('g')
@@ -2980,6 +2343,12 @@
                 .style('box-shadow', '0 4px 12px rgba(0,0,0,0.3)')
                 .style('opacity', '0');
                 
+            // Check if relationship has an example in metadata
+            const relationshipMeta = fromEntity.metadata?.relationships?.find(r => 
+                r.targetEntity === toEntity.name && r.label === relationship.label
+            );
+            const example = relationshipMeta?.example;
+
             messageContainer.html(`
                 <div style="text-align: center;">
                     <div style="font-weight: 600; margin-bottom: 4px;">Relationship Focus</div>
@@ -2989,6 +2358,11 @@
                     <div style="font-size: 11px; color: #9ca3af; margin-top: 4px;">
                         "${relationship.label}"
                     </div>
+                    ${example ? `
+                    <div style="font-size: 10px; color: #fbbf24; margin-top: 6px; padding-top: 6px; border-top: 1px solid #374151;">
+                        💡 ${example}
+                    </div>
+                    ` : ''}
                 </div>
             `);
                 
@@ -3078,6 +2452,16 @@
             button.attr('title', isHidden ? 'Toggle relationship labels' : 'Show relationship labels');
         }
         
+        function toggleLegend() {
+            const legend = d3.select('.legend');
+            const button = d3.select('#legend-toggle');
+            const isHidden = legend.classed('legend-hidden');
+            
+            legend.classed('legend-hidden', !isHidden);
+            button.text(isHidden ? '📋' : '📋⚹');
+            button.attr('title', isHidden ? 'Toggle legend visibility' : 'Hide legend');
+        }
+        
         function toggleTruFocus() {
             const container = d3.select('#svg-container');
             const button = d3.select('#tru-focus');
@@ -3096,18 +2480,23 @@
         function markEssentialElements() {
             // Essential TraceableUnit relationships (only the most critical)
             const essentialRelationships = [
-                'material_type_reference',
-                'includes_tru',
-                'originates_tru',
-                'manages'
+                'material type',
+                'harvested by',
+                'currently located at',
+                'harvested at',
+                'derived from',
+                'processes input',
+                'produces output'
             ];
             
             // Essential entities connected to TraceableUnit
             const essentialEntities = [
                 'Material',
-                'Transaction', 
-                'SupplyBase',
-                'Organization'
+                'Organization', 
+                'GeographicData',
+                'MaterialProcessing',
+                'ProcessingHistory',
+                'LocationHistory'
             ];
             
             // Mark essential relationship groups
@@ -3187,8 +2576,55 @@
             URL.revokeObjectURL(url);
         }
 
-        // Global entities variable
+        // Global variables
         let entities = [];
+        let relationships = [];
+        let globalErdConfig = null;
+
+        // Initialize button tooltips
+        function initializeButtonTooltips() {
+            const tooltip = d3.select('#tooltip');
+            
+            // Toggle buttons with detailed tooltips
+            const buttonTooltips = [
+                {
+                    id: '#label-toggle',
+                    content: `<strong>🏷️ Relationship Labels</strong><br/>
+                             Toggle visibility of relationship labels on connection lines.<br/>
+                             <em>Helpful for understanding entity connections</em>`
+                },
+                {
+                    id: '#tru-focus',
+                    content: `<strong>🎯 TraceableUnit Focus</strong><br/>
+                             Focus on essential TraceableUnit relationships only.<br/>
+                             <em>Simplifies the diagram by showing core traceability flows</em>`
+                },
+                {
+                    id: '#legend-toggle',
+                    content: `<strong>📋 Legend</strong><br/>
+                             Toggle legend showing relationship line types:<br/>
+                             • <strong>Solid lines</strong> - Identifying relationships<br/>
+                             • <strong>Dashed lines</strong> - Non-identifying relationships`
+                }
+            ];
+            
+            buttonTooltips.forEach(({ id, content }) => {
+                d3.select(id)
+                    .on('mouseover', function(event) {
+                        tooltip.style('opacity', 1)
+                            .html(content)
+                            .style('left', (event.pageX + 10) + 'px')
+                            .style('top', (event.pageY - 10) + 'px');
+                    })
+                    .on('mouseout', function() {
+                        tooltip.style('opacity', 0);
+                    })
+                    .on('mousemove', function(event) {
+                        tooltip.style('left', (event.pageX + 10) + 'px')
+                            .style('top', (event.pageY - 10) + 'px');
+                    });
+            });
+        }
 
         // Initialize
         async function initializeVisualization() {
@@ -3199,10 +2635,9 @@
                 
                 console.log(`Total relationships available: ${relationships.length}`);
                 
-                // Fallback to static entities if schema loading fails
+                // No fallback - if schema loading fails, show error
                 if (entities.length === 0) {
-                    console.warn('No entities loaded from schemas, falling back to static entities');
-                    entities = staticEntities;
+                    throw new Error('No entities loaded from schemas - check configuration and schema files');
                 }
                 
                 // Draw entities
@@ -3213,18 +2648,28 @@
                 drawRelationships();
                 updateZoomIndicator();
                 
+                // Initialize button tooltips
+                initializeButtonTooltips();
+                
                 // Initial fit to screen
                 setTimeout(fitToScreen, 100);
             } catch (error) {
-                console.error('Error initializing visualization:', error);
-                // Fallback to static entities
-                entities = staticEntities;
-                entities.forEach(entity => {
-                    drawEntity(entity);
-                });
-                drawRelationships();
-                updateZoomIndicator();
-                setTimeout(fitToScreen, 100);
+                console.error('CRITICAL ERROR initializing visualization:', error);
+                // Show error message to user instead of fallback
+                document.querySelector('.container').innerHTML = `
+                    <div style="color: red; text-align: center; padding: 50px;">
+                        <h2>❌ ERD Loading Failed</h2>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p>Please check the browser console for detailed debugging information.</p>
+                        <p>Common issues:</p>
+                        <ul style="text-align: left; display: inline-block;">
+                            <li>Schema files not found or malformed</li>
+                            <li>ERD configuration file missing or invalid</li>
+                            <li>Entity not configured in ERD config</li>
+                        </ul>
+                    </div>
+                `;
+                throw error;
             }
         }
 

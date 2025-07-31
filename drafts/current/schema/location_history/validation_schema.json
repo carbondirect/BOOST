@@ -4,69 +4,201 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/location-history",
     "title": "Location History",
     "description": "Historical movement records of TRUs",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "📍",
-      "position": {
-        "x": 1600,
-        "y": 600
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
-      "@context": { "type": "object" },
-      "@type": { "type": "string", "enum": ["LocationHistory"] },
-      "@id": { "type": "string", "format": "uri" },
-      "locationHistoryId": { "type": "string" },
-      "traceableUnitId": { "type": "string" },
-      "geographicDataId": { "type": "string" },
-      "timestamp": { "type": "string", "format": "date-time" },
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "LocationHistory"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "locationHistoryId": {
+        "type": "string"
+      },
+      "traceableUnitId": {
+        "type": "string"
+      },
+      "geographicDataId": {
+        "type": "string"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
       "locationEventType": {
         "type": "string",
-        "enum": ["arrival", "departure", "processing", "storage", "measurement"]
+        "enum": [
+          "arrival",
+          "departure",
+          "processing",
+          "storage",
+          "measurement"
+        ]
       },
-      "materialProcessingId": { "type": ["string", "null"] },
-      "operatorId": { "type": "string" },
-      "equipmentUsed": { "type": "string" },
-      "notes": { "type": "string" },
-      "distanceTraveled": { "type": "number", "minimum": 0 },
+      "materialProcessingId": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "operatorId": {
+        "type": "string"
+      },
+      "equipmentUsed": {
+        "type": "string"
+      },
+      "notes": {
+        "type": "string"
+      },
+      "distanceTraveled": {
+        "type": "number",
+        "minimum": 0
+      },
       "transportMethod": {
         "type": "string",
-        "enum": ["truck", "rail", "ship", "conveyor", "manual"]
+        "enum": [
+          "truck",
+          "rail",
+          "ship",
+          "conveyor",
+          "manual"
+        ]
       },
-      "isCurrentLocation": { "type": "boolean" },
+      "isCurrentLocation": {
+        "type": "boolean"
+      },
       "verificationMethods": {
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["GPS", "RFID", "visual_confirmation", "biometric_scan"]
+          "enum": [
+            "GPS",
+            "RFID",
+            "visual_confirmation",
+            "biometric_scan"
+          ]
         }
       },
-      "lastUpdated": { "type": "string", "format": "date-time" }
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time"
+      }
     },
-    "required": ["@context", "@type", "@id", "locationHistoryId", "traceableUnitId", "geographicDataId", "timestamp", "locationEventType", "isCurrentLocation"]
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "locationHistoryId",
+      "traceableUnitId",
+      "geographicDataId",
+      "timestamp",
+      "locationEventType",
+      "isCurrentLocation"
+    ]
   },
   "rules": {
     "and": [
-      { "!!": { "var": "locationHistoryId" } },
-      { "!!": { "var": "traceableUnitId" } },
-      { "!!": { "var": "geographicDataId" } },
-      { "!!": { "var": "timestamp" } },
-      { "!!": { "var": "locationEventType" } },
+      {
+        "!!": {
+          "var": "locationHistoryId"
+        }
+      },
+      {
+        "!!": {
+          "var": "traceableUnitId"
+        }
+      },
+      {
+        "!!": {
+          "var": "geographicDataId"
+        }
+      },
+      {
+        "!!": {
+          "var": "timestamp"
+        }
+      },
+      {
+        "!!": {
+          "var": "locationEventType"
+        }
+      },
       {
         "if": [
-          { "var": "distanceTraveled" },
-          { ">=": [{ "var": "distanceTraveled" }, 0] },
+          {
+            "var": "distanceTraveled"
+          },
+          {
+            ">=": [
+              {
+                "var": "distanceTraveled"
+              },
+              0
+            ]
+          },
           true
         ]
       },
       {
         "if": [
-          { "var": "verificationMethods" },
-          { ">": [{ "var": "verificationMethods.length" }, 0] },
+          {
+            "var": "verificationMethods"
+          },
+          {
+            ">": [
+              {
+                "var": "verificationMethods.length"
+              },
+              0
+            ]
+          },
           true
         ]
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "LocationHistory",
+      "primaryKey": "locationHistoryId",
+      "area": "core_traceability",
+      "description": "Historical movement records and location tracking for biomass units"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "tracking movement of"
+      },
+      {
+        "field": "geographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "located at"
+      },
+      {
+        "field": "materialProcessingId",
+        "targetEntity": "MaterialProcessing",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "during processing"
+      },
+      {
+        "field": "operatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "handled by"
       }
     ]
   }

@@ -1,0 +1,574 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/carbondirect/BOOST/schemas/business-logic-validation",
+  "title": "BOOST Business Logic Validation Rules",
+  "description": "Domain-specific business rules and calculations for biomass supply chain validation",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "volumeMassConservation": {
+      "type": "object",
+      "description": "Physical conservation laws for biomass processing",
+      "properties": {
+        "materialProcessing": {
+          "type": "object",
+          "properties": {
+            "volumeConservation": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "input_volume >= output_volume + volume_loss"},
+                "description": "Volume cannot be created in processing, only lost",
+                "validation": {
+                  "formula": "inputVolume >= (outputVolume + volumeLoss)",
+                  "tolerance": 0.001,
+                  "units": "cubic_meters"
+                },
+                "exceptions": [
+                  {
+                    "processType": "chipping",
+                    "description": "Chipping can increase apparent volume due to air gaps",
+                    "maxVolumeIncrease": 1.3
+                  }
+                ]
+              }
+            },
+            "massConservation": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "input_mass >= output_mass"},
+                "description": "Mass can only be lost (moisture, debris), never gained",
+                "validation": {
+                  "formula": "inputMass >= outputMass",
+                  "tolerance": 0.001,
+                  "units": "metric_tons"
+                },
+                "typicalLossRates": {
+                  "debarking": {"min": 0.05, "max": 0.15},
+                  "chipping": {"min": 0.02, "max": 0.08},
+                  "drying": {"min": 0.15, "max": 0.40}
+                }
+              }
+            },
+            "densityConsistency": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "density_within_species_range"},
+                "description": "Calculated density must be within realistic species ranges",
+                "validation": {
+                  "formula": "density = mass / volume",
+                  "speciesRanges": {
+                    "pine": {"min": 0.35, "max": 0.60},
+                    "oak": {"min": 0.60, "max": 0.90},
+                    "poplar": {"min": 0.30, "max": 0.50},
+                    "eucalyptus": {"min": 0.40, "max": 0.70}
+                  },
+                  "units": "tonnes_per_cubic_meter"
+                }
+              }
+            }
+          }
+        },
+        "transactionQuantities": {
+          "type": "object",
+          "properties": {
+            "availabilityCheck": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "transaction_quantity <= available_quantity"},
+                "description": "Cannot sell more than what's available in TRU",
+                "validation": {
+                  "formula": "transaction.quantity <= traceableUnit.volume",
+                  "cumulativeCheck": "sum(all_transactions.quantity) <= traceableUnit.volume"
+                }
+              }
+            },
+            "minimumTransactionSize": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "economically_viable_minimum"},
+                "description": "Transactions must meet minimum economic thresholds",
+                "validation": {
+                  "minimumVolume": 1.0,
+                  "minimumValue": 100.0,
+                  "units": "cubic_meters and currency"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "temporalLogicRules": {
+      "type": "object",
+      "description": "Time-based business logic constraints",
+      "properties": {
+        "harvestSeasons": {
+          "type": "object",
+          "properties": {
+            "seasonalRestrictions": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "harvest_within_season"},
+                "description": "Certain species/regions have restricted harvest seasons",
+                "validation": {
+                  "northernHemisphere": {
+                    "hardwood": {"months": [10, 11, 12, 1, 2, 3]},
+                    "softwood": {"months": [6, 7, 8, 9, 10, 11]}
+                  },
+                  "wetlands": {"restrictedMonths": [3, 4, 5, 6]},
+                  "fireSeasonRestrictions": {"months": [6, 7, 8, 9]}
+                }
+              }
+            }
+          }
+        },
+        "processingTimeframes": {
+          "type": "object",
+          "properties": {
+            "freshnessDegradation": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "processing_within_freshness_window"},
+                "description": "Some materials must be processed within time limits",
+                "validation": {
+                  "greenWood": {"maxDays": 30},
+                  "agriculturalResidue": {"maxDays": 14},
+                  "bark": {"maxDays": 60}
+                }
+              }
+            },
+            "chronologicalOrder": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "processing_after_harvest"},
+                "description": "Processing dates must follow harvest dates",
+                "validation": {
+                  "formula": "processingDate >= harvestDate",
+                  "bufferDays": 0
+                }
+              }
+            }
+          }
+        },
+        "transactionTiming": {
+          "type": "object",
+          "properties": {
+            "postProductionSales": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "transaction_after_production"},
+                "description": "Cannot sell before material is produced/processed",
+                "validation": {
+                  "formula": "transactionDate >= finalProcessingDate"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "geographicLogicRules": {
+      "type": "object",
+      "description": "Location-based business constraints",
+      "properties": {
+        "transportationDistance": {
+          "type": "object",
+          "properties": {
+            "economicViability": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "transport_distance_reasonable"},
+                "description": "Transport distances must be economically viable",
+                "validation": {
+                  "maxDistanceKm": {
+                    "logs": 500,
+                    "chips": 200,
+                    "pellets": 1000,
+                    "pulp": 300
+                  },
+                  "costPerKm": {
+                    "truck": 1.50,
+                    "rail": 0.35,
+                    "ship": 0.15
+                  }
+                }
+              }
+            }
+          }
+        },
+        "jurisdictionalCompliance": {
+          "type": "object",
+          "properties": {
+            "harvestPermits": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "valid_permits_required"},
+                "description": "Harvest operations require valid regional permits",
+                "validation": {
+                  "publicLand": "requires_government_permit",
+                  "privateLand": "requires_landowner_consent",
+                  "indigenousLand": "requires_tribal_approval"
+                }
+              }
+            },
+            "crossBorderMovement": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "customs_documentation_required"},
+                "description": "International shipments require customs documentation",
+                "validation": {
+                  "phytosanitaryCertificate": "required_for_international",
+                  "citesCertificate": "required_for_protected_species",
+                  "originCertificate": "required_for_sustainability_claims"
+                }
+              }
+            }
+          }
+        },
+        "operationalAreaConsistency": {
+          "type": "object",
+          "properties": {
+            "withinOperationalBounds": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "operations_within_declared_areas"},
+                "description": "All operations must occur within organization's declared areas",
+                "validation": {
+                  "harvestLocation": "must_be_within_organization_operational_areas",
+                  "processingLocation": "must_be_within_organization_operational_areas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "speciesCompositionRules": {
+      "type": "object",
+      "description": "Species-specific business logic",
+      "properties": {
+        "compositionMath": {
+          "type": "object",
+          "properties": {
+            "percentageSum": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "percentages_sum_to_100"},
+                "description": "Species percentages must sum to exactly 100%",
+                "validation": {
+                  "formula": "sum(speciesComponent.percentage) = 100.0",
+                  "tolerance": 0.01
+                }
+              }
+            },
+            "individualBounds": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "individual_percentages_valid"},
+                "description": "Each species percentage must be between 0 and 100",
+                "validation": {
+                  "minPercentage": 0.0,
+                  "maxPercentage": 100.0,
+                  "excludeZero": false
+                }
+              }
+            }
+          }
+        },
+        "speciesCompatibility": {
+          "type": "object",
+          "properties": {
+            "ecosystemConsistency": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "species_from_same_ecosystem"},
+                "description": "Mixed species should be from compatible ecosystems",
+                "validation": {
+                  "temperateForest": ["pine", "oak", "maple", "birch"],
+                  "tropicalForest": ["mahogany", "teak", "eucalyptus"],
+                  "borealForest": ["spruce", "fir", "pine", "birch"],
+                  "grassland": ["switchgrass", "miscanthus", "prairie_grass"]
+                }
+              }
+            }
+          }
+        },
+        "plantPartConsistency": {
+          "type": "object",
+          "properties": {
+            "appropriateParts": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "plant_parts_match_species"},
+                "description": "Plant parts must be anatomically possible for species",
+                "validation": {
+                  "coniferousSpecies": ["trunk", "branches", "twigs", "bark", "needles", "cones"],
+                  "deciduousSpecies": ["trunk", "branches", "twigs", "bark", "leaves", "seeds"],
+                  "grassSpecies": ["stalks", "leaves", "seeds", "roots"],
+                  "agriculturalResidue": ["stalks", "straw", "husks", "hulls", "chaff", "stubble"]
+                }
+              }
+            },
+            "processingAppropriateness": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "processing_appropriate_for_parts"},
+                "description": "Processing methods must be suitable for plant parts",
+                "validation": {
+                  "chipping": ["trunk", "branches", "twigs"],
+                  "debarking": ["trunk", "branches"],
+                  "pelleting": ["sawdust", "shavings", "bark"],
+                  "bundling": ["stalks", "straw", "branches"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "certificationLogicRules": {
+      "type": "object",
+      "description": "Certification-related business logic",
+      "properties": {
+        "chainOfCustodyRules": {
+          "type": "object",
+          "properties": {
+            "certificateValidity": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "certificates_must_be_current"},
+                "description": "All certificates in chain must be valid and non-expired",
+                "validation": {
+                  "formula": "certificateExpiryDate >= transactionDate",
+                  "statusCheck": "certificateStatus = 'valid'",
+                  "suspensionCheck": "no_active_suspensions"
+                }
+              }
+            },
+            "continuousChain": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "unbroken_custody_chain"},
+                "description": "Chain of custody must be continuous from harvest to final sale",
+                "validation": {
+                  "sellerCertified": "seller_has_valid_certificate",
+                  "buyerCertified": "buyer_has_valid_certificate",
+                  "materialCovered": "material_within_certificate_scope"
+                }
+              }
+            }
+          }
+        },
+        "sustainabilityClaims": {
+          "type": "object",
+          "properties": {
+            "claimSubstantiation": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "claims_must_be_substantiated"},
+                "description": "Sustainability claims require supporting certification",
+                "validation": {
+                  "sustainableForestry": "requires_FSC_or_PEFC_certificate",
+                  "responsibleSourcing": "requires_SBP_or_equivalent",
+                  "carbonNeutral": "requires_carbon_accounting_certificate",
+                  "biodiversityFriendly": "requires_biodiversity_assessment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "regulatoryComplianceRules": {
+      "type": "object",
+      "description": "Regulatory program-specific business logic",
+      "properties": {
+        "lcfsCompliance": {
+          "type": "object",
+          "properties": {
+            "pathwayValidity": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "pathway_certified_and_current"},
+                "description": "LCFS pathways must be CARB-certified and not expired",
+                "validation": {
+                  "carbCertified": "pathway_approved_by_CARB",
+                  "notExpired": "pathwayExpiryDate >= fuelProductionDate",
+                  "feedstockMatch": "feedstock_matches_pathway_specification"
+                }
+              }
+            },
+            "creditCalculation": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "credits_calculated_correctly"},
+                "description": "LCFS credits must use approved CARB formulas",
+                "validation": {
+                  "formula": "(benchmarkCI - pathwayCI) * fuelVolumeMJ * EER",
+                  "benchmarkCI": "use_current_CARB_benchmark",
+                  "pathwayCI": "use_certified_pathway_value",
+                  "conversionFactors": "use_CARB_approved_factors"
+                }
+              }
+            }
+          }
+        },
+        "euRedCompliance": {
+          "type": "object",
+          "properties": {
+            "sustainabilityCriteria": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "meets_RED_sustainability_criteria"},
+                "description": "Biomass must meet EU RED sustainability requirements",
+                "validation": {
+                  "ghgSavings": "minimum_35_percent_savings",
+                  "landUseChange": "no_high_carbon_stock_land",
+                  "biodiversity": "no_high_biodiversity_areas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "economicLogicRules": {
+      "type": "object",
+      "description": "Economic and market-based validation rules",
+      "properties": {
+        "pricingReasonableness": {
+          "type": "object",
+          "properties": {
+            "marketPriceRange": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "prices_within_market_range"},
+                "description": "Contract prices should be within reasonable market ranges",
+                "validation": {
+                  "pricePerUnit": {
+                    "softwood_logs": {"min": 40, "max": 120},
+                    "hardwood_logs": {"min": 60, "max": 200},
+                    "wood_chips": {"min": 15, "max": 45},
+                    "wood_pellets": {"min": 120, "max": 300}
+                  },
+                  "currency": "USD_per_cubic_meter_or_tonne",
+                  "tolerance": 0.5
+                }
+              }
+            }
+          }
+        },
+        "paymentTermsReasonableness": {
+          "type": "object",
+          "properties": {
+            "standardTerms": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "payment_terms_reasonable"},
+                "description": "Payment terms should follow industry standards",
+                "validation": {
+                  "maxPaymentDays": 90,
+                  "advancePaymentMax": 0.5,
+                  "retentionMax": 0.1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "qualityAssuranceRules": {
+      "type": "object",
+      "description": "Quality control and assurance validation",
+      "properties": {
+        "moistureContentLimits": {
+          "type": "object",
+          "properties": {
+            "speciesSpecificLimits": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "moisture_within_species_limits"},
+                "description": "Moisture content must be within realistic limits for species",
+                "validation": {
+                  "freshlyHarvested": {"min": 30, "max": 65},
+                  "airDried": {"min": 15, "max": 25},
+                  "kilnDried": {"min": 6, "max": 12},
+                  "units": "percent_by_weight"
+                }
+              }
+            }
+          }
+        },
+        "contaminationLimits": {
+          "type": "object",
+          "properties": {
+            "acceptableLevels": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "contamination_within_limits"},
+                "description": "Contamination levels must not exceed acceptable limits",
+                "validation": {
+                  "soil": {"max": 2.0},
+                  "metal": {"max": 0.1},
+                  "plastic": {"max": 0.05},
+                  "other": {"max": 1.0},
+                  "units": "percent_by_weight"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "validationExecution": {
+      "type": "object",
+      "description": "Instructions for implementing business logic validation",
+      "properties": {
+        "executionOrder": {
+          "type": "array",
+          "items": {"type": "string"},
+          "default": [
+            "volumeMassConservation",
+            "temporalLogicRules",
+            "geographicLogicRules",
+            "speciesCompositionRules",
+            "certificationLogicRules",
+            "regulatoryComplianceRules",
+            "economicLogicRules",
+            "qualityAssuranceRules"
+          ]
+        },
+        "errorHandling": {
+          "type": "object",
+          "properties": {
+            "severityLevels": {
+              "type": "object",
+              "properties": {
+                "critical": {"description": "Blocks entity creation/update"},
+                "error": {"description": "Requires correction before approval"},
+                "warning": {"description": "Advisory, does not block processing"},
+                "info": {"description": "Informational note for review"}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "version",
+    "volumeMassConservation",
+    "temporalLogicRules",
+    "geographicLogicRules", 
+    "speciesCompositionRules",
+    "certificationLogicRules",
+    "regulatoryComplianceRules",
+    "economicLogicRules",
+    "qualityAssuranceRules",
+    "validationExecution"
+  ],
+  "additionalProperties": false
+}

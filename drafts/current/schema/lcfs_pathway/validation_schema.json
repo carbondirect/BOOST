@@ -4,33 +4,10 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/lcfs-pathway",
     "title": "LCFS Pathway",
     "description": "CARB-certified fuel pathway for LCFS compliance with carbon intensity and regulatory attributes",
-    "boost_metadata": {
-      "area": "reporting_compliance",
-      "emoji": "🛣️",
-      "position": { "x": 3000, "y": 1200 },
-      "relationships": [
-        {
-          "from": "Transaction",
-          "to": "LcfsPathway", 
-          "label": "uses_pathway",
-          "type": "non-identifying",
-          "from_cardinality": "many",
-          "to_cardinality": "one"
-        },
-        {
-          "from": "LcfsPathway",
-          "to": "EnergyCarbonData",
-          "label": "has_carbon_data", 
-          "type": "non-identifying",
-          "from_cardinality": "one",
-          "to_cardinality": "many"
-        }
-      ]
-    },
     "type": "object",
     "required": [
       "@context",
-      "@type", 
+      "@type",
       "@id",
       "pathwayId",
       "pathwayType",
@@ -63,19 +40,23 @@
       },
       "pathwayType": {
         "type": "string",
-        "enum": ["Lookup_Table", "Tier_1", "Tier_2"],
+        "enum": [
+          "Lookup_Table",
+          "Tier_1",
+          "Tier_2"
+        ],
         "description": "CARB pathway certification tier"
       },
       "feedstockCategory": {
         "type": "string",
         "enum": [
           "corn",
-          "sugarcane", 
+          "sugarcane",
           "forest_residue",
           "agricultural_residue",
           "logging_and_mill_residue",
           "grass_residue_waste",
-          "forest_harvest_residue", 
+          "forest_harvest_residue",
           "urban_wood_waste",
           "dedicated_energy_crops",
           "algae",
@@ -86,7 +67,7 @@
         "description": "Primary feedstock type for pathway"
       },
       "fuelProduct": {
-        "type": "string", 
+        "type": "string",
         "enum": [
           "ethanol",
           "renewable_diesel",
@@ -122,12 +103,17 @@
       },
       "expirationDate": {
         "type": "string",
-        "format": "date", 
+        "format": "date",
         "description": "Pathway certification expiration date"
       },
       "verificationStatus": {
         "type": "string",
-        "enum": ["active", "suspended", "expired", "pending_renewal"],
+        "enum": [
+          "active",
+          "suspended",
+          "expired",
+          "pending_renewal"
+        ],
         "description": "Current CARB verification status"
       },
       "caGreetVersion": {
@@ -145,8 +131,13 @@
         "description": "Brief description of production process"
       },
       "geographicScope": {
-        "type": "string", 
-        "enum": ["California", "Western_US", "National", "International"],
+        "type": "string",
+        "enum": [
+          "California",
+          "Western_US",
+          "National",
+          "International"
+        ],
         "description": "Geographic applicability of pathway"
       },
       "lastUpdated": {
@@ -156,5 +147,14 @@
       }
     },
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "LCFSPathway",
+      "primaryKey": "pathwayId",
+      "area": "compliance_reporting",
+      "description": "LCFS pathway definitions for fuel lifecycle tracking"
+    },
+    "relationships": []
   }
 }

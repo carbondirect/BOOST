@@ -19,28 +19,35 @@
       },
       "transactionId": {
         "type": "string",
+        "pattern": "^TXN-[A-Z0-9-_]+$",
+        "minLength": 5,
+        "maxLength": 50,
         "description": "Unique identifier for the business transaction"
       },
-      "supplyingOrganizationId": {
+      "OrganizationId": {
         "type": "string",
-        "description": "Foreign key to selling organization"
+        "pattern": "^ORG-[A-Z0-9-_]+$",
+        "description": "Primary organization involved in transaction (seller/supplier)"
       },
-      "customerOrganizationId": {
+      "CustomerId": {
         "type": "string",
-        "description": "Foreign key to buying organization"
+        "pattern": "^CUST-[A-Z0-9-_]+$",
+        "description": "Customer organization (buyer) - uses EntityNameId convention referencing Customer entity"
       },
       "transactionDate": {
         "type": "string",
         "format": "date",
         "description": "Date of business agreement"
       },
-      "salesDocumentId": {
+      "SalesDeliveryDocumentId": {
         "type": "string",
-        "description": "Foreign key to sales/delivery documentation"
+        "description": "Foreign key to sales/delivery documentation - uses EntityNameId convention referencing SalesDeliveryDocument"
       },
       "contractValue": {
         "type": "number",
         "minimum": 0,
+        "maximum": 999999999.99,
+        "multipleOf": 0.01,
         "description": "Total monetary value of the transaction"
       },
       "contractCurrency": {
@@ -88,16 +95,16 @@
         ],
         "description": "Current status of business transaction"
       },
-      "transactionGeographicDataId": {
+      "GeographicDataId": {
         "type": "string",
-        "description": "Foreign key to primary transaction location"
+        "description": "Primary transaction location - uses EntityNameId convention referencing GeographicData"
       },
-      "brokerOrganizationId": {
+      "BrokerOrganizationId": {
         "type": [
           "string",
           "null"
         ],
-        "description": "Foreign key to intermediary broker organization"
+        "description": "Optional intermediary broker organization - uses EntityNameId convention referencing Organization"
       },
       "contractSignedDate": {
         "type": [
@@ -194,9 +201,9 @@
         },
         "description": "Risk management and mitigation terms"
       },
-      "lcfsPathwayId": {
+      "LcfsPathwayId": {
         "type": "string",
-        "description": "CARB-certified pathway identifier for LCFS compliance",
+        "description": "CARB-certified pathway identifier for LCFS compliance - uses EntityNameId convention referencing LcfsPathway",
         "pattern": "^CA-[A-Z]{2,4}-[0-9]{4}-[A-Z]{3,4}-[0-9]{3}$"
       },
       "fuelVolume": {
@@ -256,23 +263,69 @@
       "@type",
       "@id",
       "transactionId",
-      "supplyingOrganizationId",
-      "customerOrganizationId",
+      "OrganizationId",
+      "CustomerId",
       "transactionDate",
       "contractValue",
       "contractCurrency",
       "transactionStatus"
     ],
     "title": "Transaction",
-    "description": "Transaction entity in BOOST data model",
-    "boost_metadata": {
+    "description": "Transaction entity in BOOST data model"
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Transaction",
+      "primaryKey": "transactionId",
       "area": "transaction_management",
-      "emoji": "\ud83d\udcb0",
-      "position": {
-        "x": 2700,
-        "y": 1000
+      "description": "🔄 Business transaction with supply chain traceability"
+    },
+    "relationships": [
+      {
+        "field": "OrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "seller organization",
+        "example": "TXN-2024-001 sold by 'Olympic Forest Products'"
       },
-      "relationships": []
-    }
+      {
+        "field": "CustomerId", 
+        "targetEntity": "Customer",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "buyer customer",
+        "example": "TXN-2024-001 purchased by customer 'Green Energy Corp'"
+      },
+      {
+        "field": "SalesDeliveryDocumentId",
+        "targetEntity": "SalesDeliveryDocument",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "delivery document",
+        "example": "TXN-2024-001 documented by delivery receipt SDD-789"
+      },
+      {
+        "field": "GeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "transaction location"
+      },
+      {
+        "field": "BrokerOrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "broker organization"
+      },
+      {
+        "field": "LcfsPathwayId",
+        "targetEntity": "LcfsPathway", 
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "LCFS pathway"
+      }
+    ]
   }
 }

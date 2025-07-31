@@ -15,7 +15,7 @@
         "type": "string",
         "enum": [
           "oven_dry",
-          "electrical_resistance", 
+          "electrical_resistance",
           "microwave",
           "near_infrared",
           "gravimetric",
@@ -35,7 +35,13 @@
           },
           "standardReference": {
             "type": "string",
-            "enum": ["ASTM_D4442", "ASTM_D2016", "ISO_13061", "CEN_EN_14774", "local_standard"],
+            "enum": [
+              "ASTM_D4442",
+              "ASTM_D2016",
+              "ISO_13061",
+              "CEN_EN_14774",
+              "local_standard"
+            ],
             "description": "Standard procedure followed for measurement"
           },
           "sampleSize": {
@@ -46,13 +52,21 @@
           "measurementAccuracy": {
             "type": "number",
             "minimum": 0,
-            "description": "Estimated accuracy of measurement (± percentage points)"
+            "description": "Estimated accuracy of measurement (\u00b1 percentage points)"
           },
           "environmentalConditions": {
             "type": "object",
             "properties": {
-              "temperature": { "type": "number", "description": "Temperature during measurement (Celsius)" },
-              "humidity": { "type": "number", "minimum": 0, "maximum": 100, "description": "Relative humidity (%)" }
+              "temperature": {
+                "type": "number",
+                "description": "Temperature during measurement (Celsius)"
+              },
+              "humidity": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "description": "Relative humidity (%)"
+              }
             }
           }
         }
@@ -62,12 +76,30 @@
       "qualityGradeRequirements": {
         "description": "Moisture content requirements by quality grade",
         "rules": {
-          "Grade_A": { "maxMoisture": 18, "description": "Premium grade requires moisture below 18%" },
-          "Grade_B": { "maxMoisture": 22, "description": "Standard grade allows moisture up to 22%" },
-          "Grade_C": { "maxMoisture": 30, "description": "Utility grade allows moisture up to 30%" },
-          "Structural": { "maxMoisture": 19, "description": "Structural lumber requires moisture below 19%" },
-          "Fuel": { "maxMoisture": 50, "description": "Fuel grade allows higher moisture content" },
-          "Pulpwood": { "maxMoisture": 60, "description": "Pulpwood can have high moisture content" }
+          "Grade_A": {
+            "maxMoisture": 18,
+            "description": "Premium grade requires moisture below 18%"
+          },
+          "Grade_B": {
+            "maxMoisture": 22,
+            "description": "Standard grade allows moisture up to 22%"
+          },
+          "Grade_C": {
+            "maxMoisture": 30,
+            "description": "Utility grade allows moisture up to 30%"
+          },
+          "Structural": {
+            "maxMoisture": 19,
+            "description": "Structural lumber requires moisture below 19%"
+          },
+          "Fuel": {
+            "maxMoisture": 50,
+            "description": "Fuel grade allows higher moisture content"
+          },
+          "Pulpwood": {
+            "maxMoisture": 60,
+            "description": "Pulpwood can have high moisture content"
+          }
         }
       },
       "processingValidation": {
@@ -97,7 +129,10 @@
           "LCFS": {
             "required": true,
             "measurementRequired": "at_delivery",
-            "standardMethod": ["oven_dry", "near_infrared"],
+            "standardMethod": [
+              "oven_dry",
+              "near_infrared"
+            ],
             "maxMoisture": 65,
             "description": "LCFS requires moisture measurement at delivery, max 65%"
           },
@@ -132,21 +167,14 @@
         }
       }
     },
-    "boost_metadata": {
-      "title": "Moisture Content",
-      "description": "Moisture content measurements and tracking",
-      "area": "analytics_data",
-      "emoji": "💧",
-      "position": {
-        "x": 1400,
-        "y": 1800
-      },
-      "relationships": []
-    },
     "validationAlgorithms": {
       "moistureConsistencyCheck": {
         "description": "Algorithm to validate moisture content consistency across processing chain",
-        "inputs": ["processingHistory", "moistureContent", "processingEventType"],
+        "inputs": [
+          "processingHistory",
+          "moistureContent",
+          "processingEventType"
+        ],
         "logic": {
           "drying": "outputMoisture < inputMoisture",
           "storage_outdoor": "outputMoisture >= inputMoisture - 2",
@@ -156,14 +184,30 @@
       },
       "qualityGradeValidation": {
         "description": "Validate that moisture content meets quality grade requirements",
-        "inputs": ["moistureContent", "qualityGrade"],
+        "inputs": [
+          "moistureContent",
+          "qualityGrade"
+        ],
         "logic": "moistureContent <= qualityGradeRequirements[qualityGrade].maxMoisture"
       },
       "volumeAdjustment": {
         "description": "Adjust volume measurements based on moisture content",
-        "inputs": ["measuredVolume", "moistureContent", "standardMoisture"],
-        "formula": "adjustedVolume = measuredVolume × (1 + (standardMoisture - moistureContent) × shrinkageFactor)"
+        "inputs": [
+          "measuredVolume",
+          "moistureContent",
+          "standardMoisture"
+        ],
+        "formula": "adjustedVolume = measuredVolume \u00d7 (1 + (standardMoisture - moistureContent) \u00d7 shrinkageFactor)"
       }
     }
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "MoistureContentValidation",
+      "primaryKey": "validationId",
+      "area": "measurement_verification",
+      "description": "Moisture content validation rules and business logic"
+    },
+    "relationships": []
   }
 }

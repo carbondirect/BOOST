@@ -61,15 +61,37 @@
       "captureTimestamp"
     ],
     "title": "Biometric Identifier",
-    "description": "BiometricIdentifier entity in BOOST data model",
-    "boost_metadata": {
+    "description": "BiometricIdentifier entity in BOOST data model"
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "BiometricIdentifier",
+      "primaryKey": "biometricId",
       "area": "core_traceability",
-      "emoji": "\ud83d\udd2c",
-      "position": {
-        "x": 1600,
-        "y": 1400
+      "description": "Biometric signatures for unique biomass identification"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "identifies"
       },
-      "relationships": []
-    }
+      {
+        "field": "captureGeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "captured at"
+      },
+      {
+        "field": "trackingPointId",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "captured at point"
+      }
+    ]
   }
 }

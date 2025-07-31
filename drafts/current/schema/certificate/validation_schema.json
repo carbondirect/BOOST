@@ -4,15 +4,6 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/certificate",
     "title": "Certificate",
     "description": "Certificate entity representing formal certification records issued by certification bodies",
-    "boost_metadata": {
-      "area": "organizational_foundation",
-      "emoji": "\ud83d\udcdc",
-      "position": {
-        "x": 100,
-        "y": 600
-      },
-      "relationships": []
-    },
     "type": "object",
     "properties": {
       "@context": {
@@ -47,9 +38,9 @@
           "PEFC/12-34-567"
         ]
       },
-      "certificationSchemeId": {
+      "CertificationSchemeId": {
         "type": "string",
-        "description": "Foreign key to Certification Scheme",
+        "description": "Uses EntityNameId convention referencing CertificationScheme",
         "minLength": 1,
         "examples": [
           "SFI-CoC",
@@ -57,9 +48,9 @@
           "PEFC-CoC"
         ]
       },
-      "cbId": {
+      "CertificationBodyId": {
         "type": "string",
-        "description": "Foreign key to Certification Body",
+        "description": "Uses EntityNameId convention referencing CertificationBody",
         "minLength": 1,
         "examples": [
           "SFI",
@@ -67,9 +58,9 @@
           "PEFC-001"
         ]
       },
-      "organizationId": {
+      "OrganizationId": {
         "type": "string",
-        "description": "Foreign key to Organization receiving the certificate",
+        "description": "Uses EntityNameId convention referencing Organization receiving the certificate",
         "minLength": 1,
         "pattern": "^ORG-[A-Z0-9-_]+$",
         "examples": [
@@ -114,11 +105,23 @@
       },
       "versionNumber": {
         "type": "string",
-        "description": "Version of standard applied",
+        "description": "Version identifier of the certification standard",
         "examples": [
-          "2022",
-          "FSC-STD-40-004 v3-1",
-          "PEFC ST 2002:2020"
+          "v3-1",
+          "V1.1",
+          "2020",
+          "ST 2002"
+        ]
+      },
+      "versionYear": {
+        "type": "integer",
+        "description": "Year of the standard's relevant version release",
+        "minimum": 1990,
+        "maximum": 2050,
+        "examples": [
+          2022,
+          2020,
+          2025
         ]
       },
       "conditionalRequirements": {
@@ -193,13 +196,17 @@
         "examples": [
           "https://sfiprogram.org/certificates/2025-12345.pdf"
         ]
+      },
+      "VerificationStatementId": {
+        "type": "string",
+        "description": "Uses EntityNameId convention referencing VerificationStatement for third-party validation"
       }
     },
     "required": [
       "certificateNumber",
-      "certificationSchemeId",
-      "cbId",
-      "organizationId",
+      "CertificationSchemeId",
+      "CertificationBodyId",
+      "OrganizationId",
       "dateOfIssue",
       "dateOfExpiry",
       "status",
@@ -207,5 +214,43 @@
       "versionNumber"
     ],
     "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Certificate",
+      "primaryKey": "certificateNumber",
+      "area": "organizational_foundation",
+      "description": "Formal certification records issued by certification bodies"
+    },
+    "relationships": [
+      {
+        "field": "CertificationSchemeId",
+        "targetEntity": "CertificationScheme",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "certified under"
+      },
+      {
+        "field": "CertificationBodyId",
+        "targetEntity": "CertificationBody",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "issued by"
+      },
+      {
+        "field": "OrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "held by"
+      },
+      {
+        "field": "VerificationStatementId",
+        "targetEntity": "VerificationStatement",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "verified by"
+      }
+    ]
   }
 }

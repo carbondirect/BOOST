@@ -43,16 +43,7 @@
       "issuingBody"
     ],
     "title": "Verification Statement",
-    "description": "VerificationStatement entity in BOOST data model",
-    "boost_metadata": {
-      "area": "reporting_compliance",
-      "emoji": "\u2705",
-      "position": {
-        "x": 2300,
-        "y": 1800
-      },
-      "relationships": []
-    }
+    "description": "VerificationStatement entity in BOOST data model"
   },
   "rules": {
     "and": [
@@ -70,6 +61,30 @@
         "!!": {
           "var": "issuingBody"
         }
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "VerificationStatement",
+      "primaryKey": "statementId",
+      "area": "measurement_verification",
+      "description": "Verification statements for certification compliance"
+    },
+    "relationships": [
+      {
+        "field": "transactionBatchId",
+        "targetEntity": "TransactionBatch",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "verifying"
+      },
+      {
+        "field": "issuingBody",
+        "targetEntity": "CertificationBody",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "issued by"
       }
     ]
   }

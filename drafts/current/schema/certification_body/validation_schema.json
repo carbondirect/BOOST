@@ -212,15 +212,15 @@
       "operationalRegions",
       "validityPeriod"
     ],
-    "additionalProperties": false,
-    "boost_metadata": {
+    "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "CertificationBody",
+      "primaryKey": "cbId",
       "area": "organizational_foundation",
-      "emoji": "\ud83c\udfdb\ufe0f",
-      "position": {
-        "x": 100,
-        "y": 1800
-      },
-      "relationships": []
-    }
+      "description": "Independent organizations authorized to issue certificates"
+    },
+    "relationships": []
   }
 }

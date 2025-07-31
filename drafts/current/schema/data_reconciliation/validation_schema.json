@@ -87,16 +87,7 @@
       "reconciliationDate"
     ],
     "title": "Data Reconciliation",
-    "description": "DataReconciliation entity in BOOST data model",
-    "boost_metadata": {
-      "area": "core_traceability",
-      "emoji": "\ud83d\udd04",
-      "position": {
-        "x": 2300,
-        "y": 1000
-      },
-      "relationships": []
-    }
+    "description": "DataReconciliation entity in BOOST data model"
   },
   "rules": {
     "and": [
@@ -173,6 +164,30 @@
           },
           true
         ]
+      }
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "DataReconciliation",
+      "primaryKey": "reconciliationId",
+      "area": "compliance_reporting",
+      "description": "Data reconciliation records for measurement discrepancy resolution"
+    },
+    "relationships": [
+      {
+        "field": "traceableUnitId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "reconciling data for"
+      },
+      {
+        "field": "transactionId",
+        "targetEntity": "Transaction",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "related to transaction"
       }
     ]
   }

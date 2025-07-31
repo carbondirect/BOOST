@@ -104,16 +104,7 @@
       "description"
     ],
     "title": "Geographic Data",
-    "description": "GeographicData entity in BOOST data model",
-    "boost_metadata": {
-      "area": "geographic_location",
-      "emoji": "\ud83d\uddfa\ufe0f",
-      "position": {
-        "x": 2300,
-        "y": 600
-      },
-      "relationships": []
-    }
+    "description": "GeographicData entity in BOOST data model"
   },
   "rules": {
     "and": [
@@ -180,5 +171,14 @@
         ]
       }
     ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "GeographicData",
+      "primaryKey": "geographicDataId",
+      "area": "geographic_tracking",
+      "description": "📍 Geographic location data for entities"
+    },
+    "relationships": []
   }
 }
