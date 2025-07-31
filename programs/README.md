@@ -17,9 +17,10 @@ California's carbon reduction program for transportation fuels.
 - [Entity Specification](./lcfs/lcfs_entity_specification.md) - LCFS data model and entity definitions
 - [Pacific Renewable Fuels Example](./lcfs/pacific_renewable_fuels_example/) - Comprehensive real-world example with:
   - **Professional Mermaid Visualizations** - 3 specialized diagrams (ER, data flow, production workflow)
-  - **Interactive Documentation** - 66K+ line literate programming document 
+  - **BOOST Python Reference Implementation** - Schema-compliant Jupyter notebook (24 cells) with dynamic validation
+  - **JSON-LD Semantic Web Integration** - Production-ready semantic data compatibility
   - **Complete Data Suite** - 6 JSON files with real Q1 2025 business data ($109M+ credit value)
-  - **Separate Diagram Files** - Both .mermaid source and .svg rendered versions
+  - **Interactive Analysis** - Executable Python workflow for LCFS compliance calculations
 
 ## Directory Structure
 
@@ -32,9 +33,9 @@ lcfs/
 └── pacific_renewable_fuels_example/    # Comprehensive worked example
     ├── README.md                       # Example overview with business metrics
     ├── documentation/                  # Rich visualization and analysis
-    │   ├── pacific_renewable_fuels_boost_entity_flow.md  # Main workflow documentation
-    │   ├── boost_entity_attribute_flow.md               # Detailed attribute mapping
-    │   └── pacific_renewable_fuels_lcfs_example.org     # Literate programming (66K lines)
+    │   ├── pacific_renewable_fuels_boost_entity_flow.md                   # Main workflow documentation
+    │   ├── boost_entity_attribute_flow.md                                 # Detailed attribute mapping
+    │   └── pacific_renewable_fuels_lcfs_example.ipynb                     # BOOST-compliant Jupyter notebook (24 cells)
     ├── diagrams/                       # Professional Mermaid visualizations
     │   ├── feedstock_flow.mermaid/.svg      # Data flow through BOOST entities
     │   ├── boost_entity_relationships.mermaid/.svg # Complete ERD with attributes

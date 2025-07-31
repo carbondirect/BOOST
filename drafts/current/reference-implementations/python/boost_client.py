@@ -294,7 +294,8 @@ class BOOSTClient:
             Validation result dictionary
         """
         entity_type = entity.type.lower().replace(' ', '_')
-        entity_data = entity.dict(by_alias=True)
+        # Fix: Use proper serialization for validation - exclude None values and serialize enums properly
+        entity_data = entity.model_dump(by_alias=True, exclude_none=True, mode='json')
         
         # Schema validation
         is_valid, schema_errors = self.validator.validate_entity(entity_type, entity_data)
@@ -318,11 +319,11 @@ class BOOSTClient:
             Comprehensive validation results
         """
         all_entities = {
-            'organization': [org.dict(by_alias=True) for org in self.organizations.values()],
-            'traceable_unit': [tru.dict(by_alias=True) for tru in self.traceable_units.values()],
-            'transaction': [txn.dict(by_alias=True) for txn in self.transactions.values()],
-            'material_processing': [proc.dict(by_alias=True) for proc in self.material_processing.values()],
-            'claim': [claim.dict(by_alias=True) for claim in self.claims.values()]
+            'organization': [org.model_dump(by_alias=True, exclude_none=True, mode='json') for org in self.organizations.values()],
+            'traceable_unit': [tru.model_dump(by_alias=True, exclude_none=True, mode='json') for tru in self.traceable_units.values()],
+            'transaction': [txn.model_dump(by_alias=True, exclude_none=True, mode='json') for txn in self.transactions.values()],
+            'material_processing': [proc.model_dump(by_alias=True, exclude_none=True, mode='json') for proc in self.material_processing.values()],
+            'claim': [claim.model_dump(by_alias=True, exclude_none=True, mode='json') for claim in self.claims.values()]
         }
         
         return self.validator.comprehensive_validation(all_entities)
@@ -393,7 +394,8 @@ class BOOSTClient:
         for entity_dict in [self.organizations, self.traceable_units, self.transactions, 
                            self.material_processing, self.claims]:
             for entity in entity_dict.values():
-                entity_data = entity.dict(by_alias=True)
+                # Fix: Use proper serialization for JSON-LD export
+                entity_data = entity.model_dump(by_alias=True, exclude_none=True, mode='json')
                 if not include_context and '@context' in entity_data:
                     del entity_data['@context']
                 export_data.append(entity_data)

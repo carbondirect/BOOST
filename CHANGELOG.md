@@ -2,6 +2,39 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.5.1] - 2025-07-31 - LCFS Example Refactoring and Validation Fixes
+
+### Added
+- **📓 BOOST-Compliant LCFS Example** - Completely refactored Pacific Renewable Fuels LCFS example using BOOST Python reference implementation
+- **🎯 Schema-Compliant Data Structures** - All entities now follow proper BOOST ID patterns (`ORG-*`, `TXN-*`, `CUST-*`)
+- **🌐 JSON-LD Semantic Web Support** - Full `@context`, `@type`, `@id` compatibility for semantic web integration
+- **✅ Dynamic Validation Demonstration** - Working example of schema-driven validation with real LCFS data
+- **🚀 Production-Ready Example** - Enterprise-grade patterns for regulatory compliance applications
+
+### Enhanced
+- **📋 LCFS Example Documentation** - Streamlined to single high-quality BOOST-compliant Jupyter notebook
+- **🔧 Validation Robustness** - Fixed enum serialization and None field handling in Python reference implementation
+- **📖 User Experience** - Clear progression from basic concepts to advanced BOOST patterns
+
+### Fixed
+- **🐛 Validation Issues in Python Reference Implementation**:
+  - Fixed enum serialization (`OrganizationOrganizationtypeEnum.PRODUCER` → `"producer"`)
+  - Fixed None field validation (now properly excluded from validation)
+  - Updated `validate_entity()` to use `model_dump(exclude_none=True, mode='json')`
+  - Updated `validate_all()` for proper entity serialization
+  - Updated `export_to_jsonld()` for clean JSON-LD output
+- **📏 ID Pattern Compliance** - Fixed organization and transaction ID patterns in LCFS example
+- **📞 Phone Number Format** - Corrected to E.164 format without dashes
+- **🔗 Relative Path Issues** - Fixed Python import paths in Jupyter notebook
+
+### Removed
+- **🗑️ Redundant Documentation** - Removed org-mode version (66K+ lines) and original non-compliant Jupyter notebook
+- **📂 Technical Debt** - Eliminated duplicate LCFS content and inconsistent data structures
+
+### Migration Notes
+- **LCFS Example Users**: The example now demonstrates proper BOOST usage - review the refactored notebook for best practices
+- **Python Reference Implementation Users**: Validation now works correctly - update any custom validation code if needed
+
 ## [2.5.0] - 2025-07-30 - Schema-Driven Python Reference Implementation
 
 ### Added
