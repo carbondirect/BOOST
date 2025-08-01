@@ -1,0 +1,59 @@
+[
+    {
+      "pathwayId": "BIORAM-PWR-2025-LMR-001",
+      "pathwayType": "Direct_Combustion",
+      "feedstockCategory": "lumber_mill_residual",
+      "energyProduct": "electricity",
+      "facilityLocation": "Sherwood, Oregon, USA",
+      "carbonIntensity": 15.2,
+      "energyConversionEfficiency": 0.35,
+      "certificationDate": "2025-01-15",
+      "expirationDate": "2028-01-15",
+      "verificationStatus": "active",
+      "calculationMethodology": "BIORAM-v1.0",
+      "pathwayDescription": "Lumber mill residue to electricity via direct combustion",
+      "annualBiomassLimit": 120000,
+      "facility": {
+        "facilityId": "BIORAM-FAC-2025-001",
+        "operatorName": "Sherwood Power Station"
+      }
+    },
+    {
+      "pathwayId": "BIORAM-PWR-2025-FHR-001",
+      "pathwayType": "Direct_Combustion",
+      "feedstockCategory": "forest_harvest_residual",
+      "energyProduct": "electricity",
+      "facilityLocation": "Sherwood, Oregon, USA",
+      "carbonIntensity": 18.4,
+      "energyConversionEfficiency": 0.33,
+      "certificationDate": "2025-01-20",
+      "expirationDate": "2028-01-20",
+      "verificationStatus": "active",
+      "calculationMethodology": "BIORAM-v1.0",
+      "pathwayDescription": "Forest harvest residue to electricity via direct combustion",
+      "annualBiomassLimit": 80000,
+      "facility": {
+        "facilityId": "BIORAM-FAC-2025-001",
+        "operatorName": "Sherwood Power Station"
+      }
+    },
+    {
+      "pathwayId": "BIORAM-PWR-2025-UWW-001",
+      "pathwayType": "Direct_Combustion",
+      "feedstockCategory": "urban_wood_waste",
+      "energyProduct": "electricity",
+      "facilityLocation": "Sherwood, Oregon, USA",
+      "carbonIntensity": 12.8,
+      "energyConversionEfficiency": 0.34,
+      "certificationDate": "2025-02-01",
+      "expirationDate": "2028-02-01",
+      "verificationStatus": "active",
+      "calculationMethodology": "BIORAM-v1.0",
+      "pathwayDescription": "Urban wood waste to electricity via direct combustion",
+      "annualBiomassLimit": 60000,
+      "facility": {
+        "facilityId": "BIORAM-FAC-2025-001",
+        "operatorName": "Sherwood Power Station"
+      }
+    }
+  ] 7
