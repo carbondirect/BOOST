@@ -266,6 +266,26 @@ class DynamicBOOSTValidator:
         elif category == 'regulatoryComplianceRules':
             errors.extend(self._validate_regulatory_compliance(entity_type, entity_data, rules))
         
+        # New validation categories for enhanced entities
+        elif category == 'truTransactionConsistency':
+            # This is handled at the comprehensive validation level, not per-entity
+            pass
+        
+        elif category == 'reconciliationWorkflow':
+            is_valid, rule_errors = self.validate_reconciliation_workflow(entity_type, entity_data)
+            if not is_valid:
+                errors.extend(rule_errors)
+        
+        elif category == 'timestampChronology':
+            is_valid, rule_errors = self.validate_timestamp_chronology(entity_type, entity_data)
+            if not is_valid:
+                errors.extend(rule_errors)
+        
+        elif category == 'organizationalConsistency':
+            is_valid, rule_errors = self.validate_organization_operational_consistency(entity_type, entity_data)
+            if not is_valid:
+                errors.extend(rule_errors)
+        
         return errors
     
     def _validate_volume_conservation(self, processing_data: Dict[str, Any], rules: Dict[str, Any]) -> List[str]:
@@ -754,7 +774,196 @@ class DynamicBOOSTValidator:
             results['valid'] = False
             results['errors'].extend(errors)
         
+        # TRU-Transaction consistency validation
+        is_valid, errors = self.validate_tru_transaction_consistency(entities)
+        if not is_valid:
+            results['valid'] = False
+            results['errors'].extend(errors)
+        
         return results
+    
+    def validate_tru_transaction_consistency(self, entities: Dict[str, List[Dict[str, Any]]]) -> Tuple[bool, List[str]]:
+        """
+        Validate TRU-transaction consistency using entity relationships.
+        
+        Args:
+            entities: Dictionary with entity_type -> list of entities
+            
+        Returns:
+            Tuple of (is_valid, list_of_errors)
+        """
+        errors = []
+        
+        if 'transaction' not in entities or 'traceable_unit' not in entities:
+            return True, errors  # Skip if entities not present
+        
+        # Build TRU lookup
+        tru_lookup = {}
+        for tru in entities['traceable_unit']:
+            tru_id_field = self.schema_loader.get_primary_key('traceable_unit')
+            if tru_id_field and tru_id_field in tru:
+                tru_lookup[tru[tru_id_field]] = tru
+        
+        # Validate TRU references in transactions
+        for transaction in entities['transaction']:
+            tru_ids = transaction.get('traceableUnitIds', [])
+            media_breaks = transaction.get('mediaBreaksDetected', [])
+            
+            # Check that all referenced TRUs exist
+            for tru_id in tru_ids:
+                if tru_id not in tru_lookup:
+                    errors.append(f"Transaction {transaction.get('transactionId', 'unknown')} references non-existent TRU: {tru_id}")
+            
+            # Validate media breaks array length matches TRU array length
+            if tru_ids and media_breaks and len(media_breaks) != len(tru_ids):
+                errors.append(
+                    f"Transaction {transaction.get('transactionId', 'unknown')}: "
+                    f"mediaBreaksDetected array length ({len(media_breaks)}) must match "
+                    f"traceableUnitIds array length ({len(tru_ids)})"
+                )
+        
+        return len(errors) == 0, errors
+    
+    def validate_reconciliation_workflow(self, entity_type: str, entity_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        """
+        Validate reconciliation workflow logic for transactions.
+        
+        Args:
+            entity_type: Type of entity
+            entity_data: Entity data to validate
+            
+        Returns:
+            Tuple of (is_valid, list_of_errors)
+        """
+        errors = []
+        
+        if entity_type != 'transaction':
+            return True, errors  # Only applies to transactions
+        
+        status = entity_data.get('reconciliationStatus')
+        if not status:
+            return True, errors  # Skip if no reconciliation status
+        
+        # Validate status transitions and requirements
+        valid_statuses = ['pending', 'resolved', 'disputed']
+        if status not in valid_statuses:
+            errors.append(f"Invalid reconciliation status: {status}. Valid values: {valid_statuses}")
+        
+        # Additional validation based on status
+        if status == 'resolved':
+            # For resolved status, ensure we have manipulation timestamps indicating processing
+            timestamps = entity_data.get('manipulationTimestamps', [])
+            if not timestamps:
+                errors.append("Reconciliation status 'resolved' requires manipulation timestamps")
+        
+        elif status == 'disputed':
+            # For disputed status, could require additional documentation
+            # This is a placeholder for future business rule expansion
+            pass
+        
+        return len(errors) == 0, errors
+    
+    def validate_timestamp_chronology(self, entity_type: str, entity_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        """
+        Validate chronological order of timestamps in transactions.
+        
+        Args:
+            entity_type: Type of entity
+            entity_data: Entity data to validate
+            
+        Returns:
+            Tuple of (is_valid, list_of_errors)
+        """
+        errors = []
+        
+        if entity_type != 'transaction':
+            return True, errors  # Only applies to transactions
+        
+        timestamps = entity_data.get('manipulationTimestamps', [])
+        transaction_date = entity_data.get('transactionDate')
+        
+        if not timestamps:
+            return True, errors  # Skip if no manipulation timestamps
+        
+        try:
+            # Convert timestamps to datetime objects for comparison
+            datetime_objects = []
+            for ts in timestamps:
+                if isinstance(ts, str):
+                    # Handle different timestamp formats
+                    ts_clean = ts.replace('Z', '+00:00')
+                    dt = datetime.fromisoformat(ts_clean)
+                    datetime_objects.append(dt)
+                else:
+                    datetime_objects.append(ts)
+            
+            # Check chronological order
+            for i in range(1, len(datetime_objects)):
+                if datetime_objects[i] < datetime_objects[i-1]:
+                    errors.append(
+                        f"Manipulation timestamps not in chronological order: "
+                        f"{timestamps[i]} is before {timestamps[i-1]}"
+                    )
+            
+            # Validate against transaction date if available
+            if transaction_date:
+                try:
+                    tx_date = datetime.fromisoformat(f"{transaction_date}T00:00:00+00:00")
+                    for i, dt in enumerate(datetime_objects):
+                        if dt.date() < tx_date.date():
+                            errors.append(
+                                f"Manipulation timestamp {timestamps[i]} is before transaction date {transaction_date}"
+                            )
+                except ValueError:
+                    pass  # Skip if transaction date format is invalid
+                    
+        except (ValueError, TypeError) as e:
+            errors.append(f"Invalid timestamp format in manipulation timestamps: {str(e)}")
+        
+        return len(errors) == 0, errors
+    
+    def validate_organization_operational_consistency(self, entity_type: str, entity_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
+        """
+        Validate operational consistency for enhanced organization fields.
+        
+        Args:
+            entity_type: Type of entity
+            entity_data: Entity data to validate
+            
+        Returns:
+            Tuple of (is_valid, list_of_errors)
+        """
+        errors = []
+        
+        if entity_type != 'organization':
+            return True, errors  # Only applies to organizations
+        
+        org_type = entity_data.get('organizationType')
+        equipment_ids = entity_data.get('equipmentIds', [])
+        harvest_sites = entity_data.get('harvestSites', [])
+        tru_ids = entity_data.get('traceableUnitIds', [])
+        
+        # Validate that harvester organizations have appropriate resources
+        if org_type == 'harvester':
+            if not equipment_ids and harvest_sites:
+                errors.append("Harvester organizations with harvest sites should have equipment assignments")
+            
+            if harvest_sites and not tru_ids:
+                errors.append("Harvester organizations with harvest sites should manage TRUs")
+        
+        # Validate that processor organizations have appropriate setup
+        elif org_type == 'processor':
+            if tru_ids and not equipment_ids:
+                errors.append("Processor organizations managing TRUs should have processing equipment")
+        
+        # Validate infrastructure consistency
+        skid_roads = entity_data.get('skidRoads', [])
+        forest_roads = entity_data.get('forestRoads', [])
+        
+        if harvest_sites and not (skid_roads or forest_roads):
+            errors.append("Organizations with harvest sites should have transportation infrastructure (skid roads or forest roads)")
+        
+        return len(errors) == 0, errors
     
     def refresh_schemas(self):
         """Reload schemas and regenerate validation rules."""

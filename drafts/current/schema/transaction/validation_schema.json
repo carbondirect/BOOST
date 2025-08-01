@@ -252,6 +252,66 @@
         ],
         "description": "Role of regulated party in LCFS transaction"
       },
+      "traceableUnitIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^TRU-[A-Z0-9-_]+$"
+        },
+        "description": "TRUs included in this transaction"
+      },
+      "reconciliationStatus": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "resolved",
+          "disputed"
+        ],
+        "description": "Transaction reconciliation status"
+      },
+      "manipulationTimestamps": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": "Processing step timestamps"
+      },
+      "trackingPointIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^TP-[A-Z0-9-_]+$"
+        },
+        "description": "Location trail references"
+      },
+      "mediaBreaksDetected": {
+        "type": "array",
+        "items": {
+          "type": "boolean"
+        },
+        "description": "Continuity flags per TRU"
+      },
+      "speciesCompositionAtTransaction": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "species": {
+              "type": "string",
+              "description": "Species name"
+            },
+            "percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Percentage of total volume"
+            }
+          },
+          "required": ["species", "percentage"]
+        },
+        "description": "Species breakdown at transaction time"
+      },
       "lastUpdated": {
         "type": "string",
         "format": "date-time",
@@ -325,6 +385,22 @@
         "relationshipType": "many-to-one",
         "required": false,
         "label": "LCFS pathway"
+      },
+      {
+        "field": "traceableUnitIds",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "includes TRUs",
+        "example": "TXN-2024-001 includes TRU-456 + TRU-789 + TRU-890"
+      },
+      {
+        "field": "trackingPointIds",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-many", 
+        "required": false,
+        "label": "location trail",
+        "example": "TXN-2024-001 tracked through TP-HARVEST-01 → TP-MILL-02"
       }
     ]
   }
