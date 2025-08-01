@@ -1,0 +1,66 @@
+{
+  "@context": {
+    "Equipment": "https://github.com/carbondirect/BOOST/schemas#Equipment",
+    "equipmentId": "https://github.com/carbondirect/BOOST/schemas#equipmentId",
+    "equipmentName": "https://github.com/carbondirect/BOOST/schemas#equipmentName",
+    "equipmentType": "https://github.com/carbondirect/BOOST/schemas#equipmentType",
+    "organizationId": "https://github.com/carbondirect/BOOST/schemas#organizationId",
+    "manufacturer": "https://github.com/carbondirect/BOOST/schemas#manufacturer",
+    "model": "https://github.com/carbondirect/BOOST/schemas#model",
+    "serialNumber": "https://github.com/carbondirect/BOOST/schemas#serialNumber",
+    "yearManufactured": "https://github.com/carbondirect/BOOST/schemas#yearManufactured",
+    "operationalStatus": "https://github.com/carbondirect/BOOST/schemas#operationalStatus",
+    "currentOperatorId": "https://github.com/carbondirect/BOOST/schemas#currentOperatorId",
+    "assignedTrackingPointId": "https://github.com/carbondirect/BOOST/schemas#assignedTrackingPointId",
+    "acquisitionDate": "https://github.com/carbondirect/BOOST/schemas#acquisitionDate",
+    "lastUpdated": "https://github.com/carbondirect/BOOST/schemas#lastUpdated",
+    "id": "@id"
+  },
+  "@type": "Equipment",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/equipment/EQ-HARVESTER-JD770G-001",
+  "equipmentId": "EQ-HARVESTER-JD770G-001",
+  "equipmentName": "John Deere 770G Harvester #001",
+  "equipmentType": "harvester",
+  "organizationId": "ORG-PACIFIC-FOREST-001",
+  "manufacturer": "John Deere",
+  "model": "770G",
+  "serialNumber": "1DW770GXGF234567",
+  "yearManufactured": 2020,
+  "operationalStatus": "active",
+  "specifications": {
+    "capacity": {
+      "value": 30,
+      "unit": "tons"
+    },
+    "enginePower": {
+      "value": 200,
+      "unit": "hp"
+    },
+    "weight": {
+      "value": 45000,
+      "unit": "lbs"
+    }
+  },
+  "currentOperatorId": "OP-SMITH-HARVESTER-001",
+  "assignedTrackingPointId": "TP-SITE-CASCADE-ALPHA",
+  "maintenanceSchedule": {
+    "lastServiceDate": "2025-06-15",
+    "nextServiceDate": "2025-09-15",
+    "serviceIntervalHours": 500,
+    "currentHours": 2340
+  },
+  "certifications": [
+    "CERT-EPA-TIER4-ENGINE",
+    "CERT-SAFETY-ROPS-FOPS"
+  ],
+  "acquisitionDate": "2020-03-15",
+  "acquisitionCost": 450000,
+  "insuranceInfo": {
+    "policyNumber": "EQ-INS-2025-001",
+    "insurer": "Forest Equipment Insurance Co.",
+    "coverageAmount": 400000,
+    "expirationDate": "2025-12-31"
+  },
+  "notes": "Primary harvester for Cascade Forest operations. Recently serviced with new cutting head installed.",
+  "lastUpdated": "2025-07-31T14:30:00Z"
+}

@@ -2,6 +2,83 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.6.1] - 2025-08-01 - Schema Integrity Enhancements and Development Tools
+
+### Added
+- **Schema Integrity Reviewer Sub-Agent** - Comprehensive validation tool for BOOST schema system integrity
+  - **Location**: `tools/agents/schema-integrity-reviewer.md` with detailed setup documentation
+  - **7 Critical Validation Aspects**: Orphaned FK detection, data model validation, ERD alignment, pattern consistency, implementation integration, Python testing, and business logic validation
+  - **Python Reference Implementation Testing**: Validates Pydantic models, field types, patterns, and validation logic alignment
+  - **Comprehensive Reporting**: Provides specific file locations and actionable fix instructions
+  - **Integration Testing**: Tests complete workflows using Python reference implementation
+- **Equipment Entity** - New entity to resolve orphaned EQ- pattern references
+  - **32 Comprehensive Fields**: Including equipmentId, organizationId, currentOperatorId, assignedTrackingPointId
+  - **Pattern Validation**: `^EQ-[A-Z0-9-_]+$` format for equipment identification
+  - **Foreign Key Relationships**: Proper references to Organization, Operator, and TrackingPoint entities
+  - **ERD Integration**: Added to material_supply_chain area with proper positioning and relationships
+- **Relationship Definition System Consolidation Proposal** - Future enhancement documentation
+  - **Technical Specification**: Complete proposal at `drafts/current/specifications/relationship_definition_system_consolidation_proposal.md`
+  - **GitHub Issue #190**: Critical priority enhancement for consolidating dual relationship systems
+  - **Schema-First Architecture**: Proposed solution to eliminate dual maintenance burden
+
+### Enhanced
+- **Schema Validation Patterns** - Standardized pattern validation across entities
+  - **TrackingPoint**: Added `^TP-[A-Z0-9-_]+$` pattern validation to trackingPointId
+  - **Customer**: Added `^GEO-[A-Z0-9-_]+$` pattern validation to GeographicDataId
+  - **Operator**: Updated pattern from `^OP-[A-Z0-9-]{6,50}$` to `^OP-[A-Z0-9-_]+$` for consistency
+- **ERD Configuration** - Updated with Equipment entity integration
+  - **Entity Count**: Updated from 31 to 32 entities in directories.json
+  - **Equipment Positioning**: Added to material_supply_chain area at coordinates (1900, 2000)
+  - **Relationship Definitions**: Added Organization→Equipment relationships with proper cardinality
+  - **Field Mappings**: Updated to include Equipment foreign key fields
+- **Cross-Entity Validation** - Enhanced validation rules and foreign key constraints
+  - **Equipment Validation**: Added comprehensive validation rules for organizationId, currentOperatorId, assignedTrackingPointId
+  - **SalesDeliveryDocument Fix**: Corrected foreign key reference from salesDeliveryDocumentId to documentId
+  - **Pattern Consistency**: Ensured all FK patterns align with target entity primary key patterns
+- **Development Documentation** - Added comprehensive setup and usage instructions
+  - **Main README**: Added Development Tools section with sub-agent setup instructions
+  - **Agent README**: Created `tools/agents/README.md` with detailed configuration options
+  - **Three Setup Methods**: Automatic discovery, manual registration, and direct Task tool reference
+
+### Fixed
+- **Data Model Normalization Issues** - Resolved fundamental design problems
+  - **Organization Entity**: Removed forestRoads and skidRoads arrays (data duplication with SupplyBase)
+  - **Normalization Compliance**: Eliminated violation of database normalization principles
+  - **Single Source of Truth**: Roads now properly managed by SupplyBase entity only
+- **Orphaned Foreign Key References** - Resolved critical integrity issues
+  - **Equipment References**: Created missing Equipment entity to handle all EQ- pattern references
+  - **Pattern Validation**: Added missing pattern validation to prevent invalid references
+  - **Cross-Entity Consistency**: Aligned validation rules with actual entity relationships
+- **ERD Relationship Accuracy** - Corrected visualization inconsistencies
+  - **Missing Equipment Relationships**: Added Organization→Equipment ownership relationships
+  - **Field Mapping Coverage**: Ensured all FK fields are properly mapped for ERD visualization
+  - **Relationship Completeness**: Added missing metadata relationships for proper ERD display
+
+### Technical Improvements
+- **Schema System Architecture** - Enhanced foundation for consistency and reliability
+  - **Comprehensive Validation Framework**: 7-aspect validation covering all critical schema integrity areas
+  - **Automated Testing Integration**: Sub-agent includes Python reference implementation testing
+  - **Pattern Standardization**: Consistent ID patterns across all 32 entities
+  - **Documentation Integration**: Clear setup instructions and troubleshooting guides
+- **Development Workflow Enhancement** - Improved schema maintenance processes
+  - **Sub-Agent Integration**: Professional validation tool integrated into repository structure
+  - **Future Enhancement Planning**: Documented approach for addressing dual relationship system
+  - **Critical Issue Tracking**: GitHub issue created for architectural improvements
+
+### Migration Notes
+- **Equipment Entity**: New entity is optional - existing systems remain fully compatible
+- **Organization Entity**: Removed fields (forestRoads, skidRoads) were optional - no breaking changes
+- **Pattern Updates**: Enhanced validation is additive and backward compatible
+- **Sub-Agent Usage**: Optional development tool - does not affect production systems
+
+### Business Impact
+- **Data Integrity**: Eliminated orphaned foreign key references that could cause validation failures
+- **Maintenance Efficiency**: Sub-agent reduces manual schema validation effort
+- **System Reliability**: Resolved fundamental data model design issues
+- **Developer Experience**: Clear documentation and automated validation tools
+
+*Resolves: Multiple schema integrity issues, adds comprehensive validation tooling, establishes foundation for future architectural improvements*
+
 ## [2.6.0] - 2025-07-31 - Enhanced Transaction and Organization Entities for TRU Tracking
 
 ### Added
