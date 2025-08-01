@@ -18,7 +18,12 @@
         "format": "uri"
       },
       "trackingPointId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TP-[A-Z0-9-_]+$",
+        "minLength": 5,
+        "maxLength": 50,
+        "description": "Unique identifier for the tracking point",
+        "examples": ["TP-SITE-ALPHA", "TP-MILL-GATE-001", "TP-ROAD-MAIN"]
       },
       "pointType": {
         "type": "string",

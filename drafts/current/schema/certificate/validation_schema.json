@@ -22,10 +22,13 @@
       },
       "certificateId": {
         "type": "string",
-        "description": "Optional internal identifier",
+        "description": "Standard certificate identifier using CERT- pattern",
+        "pattern": "^CERT-[A-Z0-9-_]+$",
+        "minLength": 5,
+        "maxLength": 50,
         "examples": [
-          "SFI-CERT-001",
-          "FSC-CERT-12345"
+          "CERT-SFI-001",
+          "CERT-FSC-12345"
         ]
       },
       "certificateNumber": {
@@ -203,6 +206,10 @@
       }
     },
     "required": [
+      "@context",
+      "@type",
+      "@id",
+      "certificateId",
       "certificateNumber",
       "CertificationSchemeId",
       "CertificationBodyId",

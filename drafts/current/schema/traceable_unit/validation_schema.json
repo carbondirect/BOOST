@@ -57,7 +57,8 @@
       },
       "harvesterId": {
         "type": "string",
-        "description": "Foreign key to harvesting organization"
+        "description": "Foreign key to harvesting organization",
+        "pattern": "^ORG-[A-Z0-9-_]+$"
       },
       "operatorId": {
         "type": "string",

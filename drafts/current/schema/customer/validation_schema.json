@@ -18,7 +18,12 @@
         "format": "uri"
       },
       "customerId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^CUST-[A-Z0-9-_]+$",
+        "minLength": 5,
+        "maxLength": 50,
+        "description": "Unique identifier for the customer",
+        "examples": ["CUST-001", "CUST-PACIFIC-MILLS"]
       },
       "customerName": {
         "type": "string"
@@ -28,7 +33,9 @@
       },
       "GeographicDataId": {
         "type": "string",
-        "description": "Customer location - uses EntityNameId convention referencing GeographicData"
+        "pattern": "^GEO-[A-Z0-9-_]+$",
+        "description": "Customer location - uses EntityNameId convention referencing GeographicData",
+        "examples": ["GEO-CUSTOMER-PACIFIC-001", "GEO-MILL-DELIVERY-SITE"]
       }
     },
     "required": [

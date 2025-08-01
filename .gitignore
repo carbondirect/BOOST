@@ -8,6 +8,12 @@ __pycache__/
 *.pyd
 .Python
 
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Claude Code local directories
+.claude/
+
 # LaTeX intermediate files
 *.aux
 *.bbl

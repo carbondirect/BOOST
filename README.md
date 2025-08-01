@@ -158,6 +158,53 @@ Each entity has a dedicated GitHub discussion thread accessible via the ERD. Thi
 - **✅ Complete**: Integration testing scenarios and migration documentation
 - **🔄 Active**: Community feedback integration and use case expansion
 
+## 🔧 Development Tools
+
+### Schema Integrity Reviewer Sub-Agent
+
+The repository includes a comprehensive schema integrity validation tool at `tools/agents/schema-integrity-reviewer.md`. This Claude Code sub-agent performs systematic validation of the BOOST schema system.
+
+#### Setup Instructions
+
+**Option 1 - Automatic Discovery (Recommended)**:
+Claude Code should automatically discover the agent from the `tools/agents/` directory when running from the repository root.
+
+**Option 2 - Manual Registration**:
+If automatic discovery doesn't work, copy the agent to your local Claude directory:
+```bash
+mkdir -p ~/.claude/agents
+cp tools/agents/schema-integrity-reviewer.md ~/.claude/agents/
+```
+
+**Option 3 - Direct Reference**:
+Use the Task tool to reference the agent file directly from `tools/agents/schema-integrity-reviewer.md`.
+
+#### Usage
+
+Once configured, invoke the agent in Claude Code:
+```
+schema-integrity-reviewer
+```
+
+#### Key Capabilities
+
+- **Orphaned Foreign Key Detection**: Identifies broken references and missing entities
+- **Data Model Design Validation**: Catches normalization violations and data duplication  
+- **Multi-System Alignment**: Ensures consistency between schemas, ERD config, and validation rules
+- **Python Implementation Testing**: Validates that the reference implementation stays synchronized
+- **Pattern Standardization**: Verifies consistent ID patterns and naming conventions
+- **Comprehensive Reporting**: Provides specific file locations and actionable fixes
+
+#### When to Use
+
+- After modifying any JSON schema files
+- Before creating pull requests with schema changes
+- When adding new entities or relationships
+- During troubleshooting of validation errors
+- As part of regular schema maintenance
+
+See `tools/agents/README.md` for detailed setup instructions and troubleshooting.
+
 ## 🚀 Contributing
 
 Please review `CONTRIBUTING.md` and our `CODE_OF_CONDUCT.md` before submitting PRs or issues.

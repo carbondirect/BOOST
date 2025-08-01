@@ -175,6 +175,7 @@
       }
     },
     "required": [
+      "@context",
       "@type",
       "@id",
       "certificationSchemeId",

@@ -203,6 +203,9 @@
       }
     },
     "required": [
+      "@context",
+      "@type",
+      "@id",
       "cbId",
       "cbName",
       "cbType",

@@ -1,0 +1,271 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/equipment",
+    "title": "Equipment",
+    "description": "Equipment entity representing forestry machinery and equipment used in biomass harvesting and processing operations",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object",
+        "description": "JSON-LD context for semantic web compatibility"
+      },
+      "@type": {
+        "type": "string",
+        "const": "Equipment",
+        "description": "JSON-LD type identifier"
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri",
+        "description": "Unique URI identifier for the equipment"
+      },
+      "equipmentId": {
+        "type": "string",
+        "description": "Unique identifier for the equipment",
+        "minLength": 5,
+        "maxLength": 50,
+        "pattern": "^EQ-[A-Z0-9-_]+$",
+        "examples": ["EQ-HARVESTER-001", "EQ-SKIDDER-S150", "EQ-LOADER-L100"]
+      },
+      "equipmentName": {
+        "type": "string",
+        "description": "Descriptive name of the equipment",
+        "minLength": 2,
+        "maxLength": 200,
+        "examples": ["John Deere 770G Harvester", "Caterpillar 535D Skidder", "Liebherr L580 Loader"]
+      },
+      "equipmentType": {
+        "type": "string",
+        "description": "Type of forestry equipment",
+        "enum": ["harvester", "skidder", "forwarder", "chipper", "loader", "saw", "kiln", "debarker", "grinder", "screener", "conveyor", "other"]
+      },
+      "organizationId": {
+        "type": "string",
+        "description": "Foreign key to owning organization",
+        "pattern": "^ORG-[A-Z0-9-_]+$",
+        "examples": ["ORG-PACIFIC-FOREST-001", "ORG-KLAMATH-FORESTRY-001"]
+      },
+      "manufacturer": {
+        "type": "string",
+        "description": "Equipment manufacturer",
+        "maxLength": 100,
+        "examples": ["John Deere", "Caterpillar", "Liebherr", "Ponsse", "Komatsu"]
+      },
+      "model": {
+        "type": "string",
+        "description": "Equipment model designation",
+        "maxLength": 100,
+        "examples": ["770G", "535D", "L580", "Bear", "PC290LC-11"]
+      },
+      "serialNumber": {
+        "type": "string",
+        "description": "Manufacturer serial number",
+        "maxLength": 100,
+        "examples": ["1DW770GXGF123456", "CAT535D789012", "LH580-2023-001"]
+      },
+      "yearManufactured": {
+        "type": "integer",
+        "description": "Year the equipment was manufactured",
+        "minimum": 1950,
+        "maximum": 2050,
+        "examples": [2020, 2018, 2023]
+      },
+      "operationalStatus": {
+        "type": "string",
+        "description": "Current operational status of the equipment",
+        "enum": ["active", "maintenance", "inactive", "retired", "repair"]
+      },
+      "specifications": {
+        "type": "object",
+        "description": "Technical specifications for the equipment",
+        "properties": {
+          "capacity": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Capacity value"
+              },
+              "unit": {
+                "type": "string",
+                "enum": ["tons", "m3", "hp", "kw", "gpm", "liters"],
+                "description": "Unit of measurement for capacity"
+              }
+            }
+          },
+          "enginePower": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Engine power value"
+              },
+              "unit": {
+                "type": "string",
+                "enum": ["hp", "kw"],
+                "description": "Power unit"
+              }
+            }
+          },
+          "weight": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Equipment weight"
+              },
+              "unit": {
+                "type": "string",
+                "enum": ["lbs", "kg", "tons"],
+                "description": "Weight unit"
+              }
+            }
+          }
+        }
+      },
+      "currentOperatorId": {
+        "type": "string",
+        "description": "Foreign key to current operator (if assigned)",
+        "pattern": "^OP-[A-Z0-9-_]+$",
+        "examples": ["OP-SMITH-001", "OP-JONES-002"]
+      },
+      "assignedTrackingPointId": {
+        "type": "string",
+        "description": "Foreign key to current location/assignment",
+        "pattern": "^TP-[A-Z0-9-_]+$",
+        "examples": ["TP-SITE-ALPHA", "TP-MILL-YARD-001"]
+      },
+      "maintenanceSchedule": {
+        "type": "object",
+        "description": "Maintenance schedule information",
+        "properties": {
+          "lastServiceDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of last maintenance service"
+          },
+          "nextServiceDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of next scheduled maintenance"
+          },
+          "serviceIntervalHours": {
+            "type": "number",
+            "minimum": 1,
+            "description": "Hours between maintenance services"
+          },
+          "currentHours": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Current operating hours"
+          }
+        }
+      },
+      "certifications": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^CERT-[A-Z0-9-_]+$"
+        },
+        "uniqueItems": true,
+        "description": "Equipment certifications (safety, emissions, etc.)",
+        "examples": [["CERT-EPA-TIER4", "CERT-SAFETY-ROPS"]]
+      },
+      "acquisitionDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date equipment was acquired by organization",
+        "examples": ["2020-03-15", "2018-11-22"]
+      },
+      "acquisitionCost": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Equipment acquisition cost in USD",
+        "examples": [450000, 75000, 1200000]
+      },
+      "insuranceInfo": {
+        "type": "object",
+        "description": "Equipment insurance information",
+        "properties": {
+          "policyNumber": {
+            "type": "string",
+            "description": "Insurance policy number"
+          },
+          "insurer": {
+            "type": "string",
+            "description": "Insurance company name"
+          },
+          "coverageAmount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Coverage amount in USD"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Policy expiration date"
+          }
+        }
+      },
+      "notes": {
+        "type": "string",
+        "description": "Additional notes or comments about the equipment",
+        "maxLength": 1000
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of the most recent data update"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "equipmentId",
+      "equipmentName",
+      "equipmentType",
+      "organizationId",
+      "operationalStatus"
+    ],
+    "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Equipment",
+      "primaryKey": "equipmentId",
+      "area": "material_supply_chain",
+      "description": "🔧 Equipment entity for forestry machinery and equipment tracking"
+    },
+    "relationships": [
+      {
+        "field": "organizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "owned by",
+        "example": "'Harvester JD-770G' owned by 'Pacific Forest Products'"
+      },
+      {
+        "field": "currentOperatorId",
+        "targetEntity": "Operator",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "operated by",
+        "example": "'Skidder CAT-535D' operated by 'John Smith'"
+      },
+      {
+        "field": "assignedTrackingPointId",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "assigned to",
+        "example": "'Loader L580' assigned to 'Mill Yard A'"
+      }
+    ]
+  }
+}

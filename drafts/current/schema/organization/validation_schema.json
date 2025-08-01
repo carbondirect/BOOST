@@ -82,24 +82,6 @@
       "description": "Operational harvest locations managed",
       "examples": [["TP-SITE-ALPHA", "TP-SITE-BETA"]]
     },
-    "skidRoads": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^TP-[A-Z0-9-_]+$"
-      },
-      "description": "Infrastructure mapping references",
-      "examples": [["TP-SKID-001", "TP-SKID-002"]]
-    },
-    "forestRoads": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^TP-[A-Z0-9-_]+$"
-      },
-      "description": "Transportation routes managed",
-      "examples": [["TP-ROAD-MAIN", "TP-ROAD-ACCESS"]]
-    },
     "traceableUnitIds": {
       "type": "array",
       "items": {
@@ -188,6 +170,7 @@
     }
   },
   "required": [
+    "@context",
     "@type",
     "@id", 
     "organizationId",
@@ -237,20 +220,28 @@
         "example": "'Forest Company' operates TP-SITE-ALPHA + TP-SITE-BETA"
       },
       {
-        "field": "skidRoads",
-        "targetEntity": "TrackingPoint",
-        "relationshipType": "many-to-many",
+        "field": "operatorIds",
+        "targetEntity": "Operator",
+        "relationshipType": "one-to-many",
         "required": false,
-        "label": "maintains skid roads",
-        "example": "'Timber Corp' maintains TP-SKID-001 + TP-SKID-002"
+        "label": "employs operators",
+        "example": "'Pacific Forest Products' employs OP-SMITH-001 + OP-JONES-002"
       },
       {
-        "field": "forestRoads",
-        "targetEntity": "TrackingPoint",
+        "field": "certifications",
+        "targetEntity": "Certificate",
         "relationshipType": "many-to-many",
         "required": false,
-        "label": "manages forest roads",
-        "example": "'Logging Inc' manages TP-ROAD-MAIN + TP-ROAD-ACCESS"
+        "label": "holds certifications",
+        "example": "'Forest Company' holds CERT-FSC-001 + CERT-SFI-002"
+      },
+      {
+        "field": "equipmentIds",
+        "targetEntity": "Equipment",
+        "relationshipType": "one-to-many",
+        "required": false,
+        "label": "owns equipment",
+        "example": "'Pacific Forest Products' owns EQ-HARVESTER-001 + EQ-SKIDDER-002"
       }
     ]
   }
