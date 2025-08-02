@@ -1,27 +1,32 @@
 [
-    {
-      "transactionId": "TXN-BIO-RAM-2025-001",
-      "transactionDate": "2025-08-15",
-      "supplyingOrganizationId": "ANDERSON-MILLS-FOREST-MGMT-001",
-      "customerOrganizationId": "SHERWOOD-POWER-STATION-PLANT-001",
-      "endUsePathway": "ElectricityGeneration",
-      "bioRAMContractID": "BR-RFO-2024-01-A",
-      "powerPurchaseAgreementID": "PPA-PG-E-2025-BR-001",
-      "utilityOfftaker": "PG&E",
-      "feedstockSourceDetails": {
-        "isFromHighHazardZone": true,
-        "highHazardZoneAuthority": "CAL FIRE",
-        "wildfireMitigationProjectID": "WMP-SIERRA-2025-10"
-      },
-      "batches": [
-        {
-          "transactionBatchId": "TXB-BR-001-001",
-          "quantity": 1500,
-          "quantityUnit": "bone_dry_tons",
-          "deliveryDate": "2025-08-20",
-          "electricityGeneratedMWh": 1200,
-          "conversionEfficiency": 0.8
-        }
-      ]
-    }
-  ]
+  {
+    "pathwayId": "BIORAM-PWR-2025-LMR-001",
+    "pathwayType": "Direct_Combustion",
+    "feedstockCategory": "lumber_mill_residual",
+    "energyProduct": "electricity",
+    "facilityLocation": "Sherwood, California, USA",
+    "carbonIntensity": 15.2,
+    "energyConversionEfficiency": 0.35,
+    "certificationDate": "2025-01-15",
+    "expirationDate": "2028-01-15",
+    "verificationStatus": "active",
+    "calculationMethodology": "BIORAM-v1.0",
+    "pathwayDescription": "Lumber mill residue to electricity via direct combustion",
+    "annualBiomassLimit": 120000
+  },
+  {
+    "pathwayId": "BIORAM-PWR-2025-FHR-001",
+    "pathwayType": "Direct_Combustion",
+    "feedstockCategory": "forest_harvest_residual",
+    "energyProduct": "electricity",
+    "facilityLocation": "Sherwood, California, USA",
+    "carbonIntensity": 18.4,
+    "energyConversionEfficiency": 0.33,
+    "certificationDate": "2025-01-20",
+    "expirationDate": "2028-01-20",
+    "verificationStatus": "active",
+    "calculationMethodology": "BIORAM-v1.0",
+    "pathwayDescription": "Forest harvest residue to electricity via direct combustion",
+    "annualBiomassLimit": 80000
+  }
+]

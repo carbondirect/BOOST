@@ -1,24 +1,24 @@
 {
-    "organizationId": "sherwood-power-station-001",
-    "name": "Sherwood Power Station",
-    "address": {
-      "street": "3100 Sherwood Road",
-      "city": "Sherwood",
-      "state": "CA",
-      "postalCode": "95663",
-      "country": "USA"
-    },
-    "contactInfo": {
-      "email": "info@sherwoodpower.example.com",
-      "phone": "+1-916-555-0182",
-      "website": "https://sherwoodpower.example.com"
-    },
-    "regulatoryId": "CEC-BIO-012",
-    "regulatedEntityType": "generator",
-    "facilityCapacity": {
-      "generatingCapacity": 15,
-      "unit": "MW"
-    },
-    "operationalStatus": "Standby",
-    "lastUpdated": "2025-08-01T15:28:00Z"
-  }
+  "organizationId": "ORG-SHERWOOD-POWER-001",
+  "organizationName": "Sherwood Power Station",
+  "facilityType": "power_station",
+  "bioramRegistrationId": "CEC-BIO-012",
+  "powerGenerationCapacity": 15,
+  "powerGenerationUnit": "MW",
+  "biomassStorageCapacity": 5000,
+  "biomassStorageUnit": "bone_dry_tonnes",
+  "address": {
+    "street": "3100 Sherwood Road",
+    "city": "Sherwood",
+    "state": "CA",
+    "postalCode": "95663",
+    "country": "USA"
+  },
+  "contactInfo": {
+    "email": "info@sherwoodpower.example.com",
+    "phone": "+1-916-555-0182",
+    "website": "https://sherwoodpower.example.com"
+  },
+  "operationalStatus": "active",
+  "lastUpdated": "2025-08-01T15:28:00Z"
+}

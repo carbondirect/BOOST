@@ -1,0 +1,27 @@
+[
+  {
+    "transactionId": "TXN-BIORAM-2025-001",
+    "organizationId": "ORG-ANDERSON-MILLS-001",
+    "customerId": "CUST-SHERWOOD-POWER-001",
+    "pathwayId": "BIORAM-PWR-2025-LMR-001",
+    "transactionDate": "2025-08-15",
+    "biomassVolume": 1500,
+    "volumeUnit": "bone_dry_tonnes",
+    "contractValue": 75000.00,
+    "contractCurrency": "USD",
+    "transactionStatus": "completed",
+    "haulDistance": 50,
+    "haulUnit": "miles",
+    "fireHazardZoneStatus": true,
+    "reportingPeriod": "2025-Q3",
+    "deliveryLocation": {
+      "city": "Sherwood",
+      "state": "CA"
+    },
+    "contractDetails": {
+      "bioRAMContractID": "BR-RFO-2024-01-A",
+      "powerPurchaseAgreementID": "PPA-PG-E-2025-BR-001",
+      "utilityOfftaker": "PG&E"
+    }
+  }
+]

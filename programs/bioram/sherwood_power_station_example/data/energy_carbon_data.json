@@ -1,0 +1,31 @@
+[
+  {
+    "energyCarbonDataId": "ECD-BIORAM-2025-001",
+    "pathwayId": "BIORAM-PWR-2025-LMR-001",
+    "value": 15.2,
+    "unit": "gCO2e/MJ",
+    "measurementMethod": "BIORAM-v1.0",
+    "regulatoryBenchmark": 25.0,
+    "lifecycleStage": "complete_pathway",
+    "calculationMethod": "direct_measurement",
+    "components": [
+      {
+        "stage": "feedstock_production",
+        "value": 5.2,
+        "description": "Emissions from biomass collection and processing"
+      },
+      {
+        "stage": "transportation",
+        "value": 2.5,
+        "description": "Emissions from biomass transport to facility"
+      },
+      {
+        "stage": "power_generation",
+        "value": 7.5,
+        "description": "Emissions from combustion and power generation"
+      }
+    ],
+    "lastUpdated": "2025-01-15T00:00:00Z",
+    "verificationStatus": "verified"
+  }
+]
