@@ -2,6 +2,65 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [2.7.0] - 2025-08-04 - Core Traceability Entity Restructuring
+
+### Breaking Changes
+- **TraceableUnit Schema** - `harvestGeographicDataId` is now REQUIRED for all new TraceableUnit instances
+  - **Impact**: Core conformance implementations must provide harvest geographic data
+  - **Migration**: Existing systems must update data creation workflows to include mandatory harvest location
+  - **Validation**: Schema validation will reject TraceableUnit instances without `harvestGeographicDataId`
+
+### Added
+- **Location-Aware Core Conformance** - Enhanced Core traceability requirements for meaningful supply chain transparency
+  - **Four Core Entities**: TraceableUnit, Organization, Material, GeographicData now form complete self-contained traceability system
+  - **Geographic Origin Tracking**: Mandatory harvest location tracking for all traceable units
+  - **Complete Dependency Graph**: Core entities form closed dependency loop with no external requirements
+- **Extended Traceability Entities Section** - New conformance level for enhanced functionality
+  - **MaterialProcessing**: Moved from Core to Extended conformance level
+  - **Processing Operations**: Now classified as enhancement rather than core requirement
+  - **Clear Separation**: Distinct Core vs Extended conformance requirements
+
+### Enhanced
+- **BOOST Conformance Classes** - Updated conformance requirements to match actual entity dependencies
+  - **Core Conformance**: Now explicitly requires TraceableUnit, Organization, Material, GeographicData entities
+  - **Extended Conformance**: Added MaterialProcessing operations and location history tracking
+  - **Full Conformance**: Maintains all 29+ entities for complete functionality
+- **Entity Organization** - Restructured specification sections for clarity
+  - **Core Traceability Entities**: Contains only entities required for Core conformance
+  - **Cross-References**: Added navigation links from original entity sections to Core locations
+  - **Extended Entities**: Separate section for Extended conformance requirements
+
+### Fixed
+- **Schema Consistency Issues** - Resolved critical mismatches between documentation and validation schemas
+  - **TraceableUnit JSON Schema**: Added `harvestGeographicDataId` to required fields array
+  - **Cross-Entity Validation**: Updated validation rules to enforce mandatory harvest location
+  - **Relationship Metadata**: Updated TraceableUnit relationships to reflect required geographic dependency
+- **ERD Configuration Alignment** - Updated visualization to reflect new conformance structure
+  - **MaterialProcessing Classification**: Moved from core_traceability to material_supply_chain area
+  - **Visual Consistency**: ERD now correctly shows MaterialProcessing as Extended conformance entity
+
+### Technical Improvements
+- **Self-Contained Core Architecture** - Core entities now form complete dependency graph
+  - **Foreign Key Resolution**: All Core entity FK references resolved within Core entity set
+  - **Implementation Simplicity**: Core implementations need only 4 entities for basic traceability
+  - **Validation Consistency**: Schema validation, cross-entity rules, and relationship metadata synchronized
+- **Conformance Level Clarity** - Clear separation between conformance requirements
+  - **Core**: Essential traceability with geographic origin tracking (4 entities)
+  - **Extended**: Enhanced functionality with processing operations and history tracking
+  - **Full**: Complete BOOST ecosystem with all regulatory and compliance features
+
+### Migration Guide
+- **Core Implementations**: Must update to include GeographicData entity and mandatory harvest locations
+- **Data Creation**: All TraceableUnit creation workflows must provide `harvestGeographicDataId`
+- **Extended Features**: MaterialProcessing operations now require Extended conformance level
+- **Validation Updates**: Update validation frameworks to enforce new Core requirements
+
+### Business Impact
+- **Supply Chain Transparency**: Core conformance now guarantees geographic origin tracking
+- **Implementation Clarity**: Clear separation between essential vs enhanced functionality  
+- **Market Adoption**: Lower barrier for Core implementation while maintaining traceability value
+- **Regulatory Alignment**: Core requirements align with EUDR and other geographic origin regulations
+
 ## [2.6.1] - 2025-08-01 - Schema Integrity Enhancements and Development Tools
 
 ### Added

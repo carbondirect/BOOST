@@ -156,7 +156,8 @@
       "createdTimestamp",
       "harvesterId",
       "materialTypeId",
-      "isMultiSpecies"
+      "isMultiSpecies",
+      "harvestGeographicDataId"
     ]
   },
   "rules": {
@@ -271,7 +272,7 @@
         "field": "harvestGeographicDataId", 
         "targetEntity": "GeographicData",
         "relationshipType": "many-to-one",
-        "required": false,
+        "required": true,
         "label": "harvested at",
         "example": "TRU-123 was harvested at 'Olympic Forest Block 7A'"
       },

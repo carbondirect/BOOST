@@ -95,7 +95,7 @@
               "properties": {
                 "targetEntity": {"const": "GeographicData"},
                 "targetField": {"const": "geographicDataId"},
-                "required": false,
+                "required": true,
                 "description": "Harvest location must reference valid GeographicData"
               }
             },

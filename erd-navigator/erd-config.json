@@ -8,12 +8,12 @@
     "core_traceability": {
       "color": "#16A34A", 
       "label": "Core Traceability",
-      "entities": ["TraceableUnit", "ProcessingHistory", "MaterialProcessing", "LocationHistory", "BiometricIdentifier"]
+      "entities": ["TraceableUnit", "ProcessingHistory", "LocationHistory", "BiometricIdentifier"]
     },
     "material_supply_chain": {
       "color": "#A16207",
       "label": "Material & Supply Chain", 
-      "entities": ["Material", "SpeciesComponent", "Supplier", "Customer", "SupplyBase", "SupplyBaseReport", "Equipment"]
+      "entities": ["Material", "SpeciesComponent", "Supplier", "Customer", "SupplyBase", "SupplyBaseReport", "Equipment", "MaterialProcessing"]
     },
     "transaction_management": {
       "color": "#EA580C",

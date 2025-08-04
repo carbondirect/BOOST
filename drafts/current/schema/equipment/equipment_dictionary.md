@@ -1,4 +1,4 @@
-# Equipment Entity Dictionary
+# Equipment
 
 ## Overview
 The Equipment entity represents forestry machinery and equipment used in biomass harvesting, processing, and transportation operations. This entity enables tracking of equipment ownership, utilization, maintenance, and operational status within the BOOST supply chain.

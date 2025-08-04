@@ -1,21 +1,85 @@
-# Certification Body Data Dictionary
+# CertificationBody
 
 ## Overview
 The `CertificationBody` object represents an independent organization authorized to issue certificates under specific certification schemes. The primary key is `cbId`.
 
 ## Fields
-| Field | Type | Required | Description | Examples |
-|-------|------|----------|-------------|----------|
-| `cbId` | string | Yes | Unique identifier for the certification body (primary key) | `SFI`, `FSC-US`, `PEFC-001` |
-| `cbName` | string | Yes | Official name of the certification body | `Sustainable Forestry Initiative` |
-| `cbType` | string | Yes | Type or category of certification body | `scheme-owner`, `third-party`, `accredited-body` |
-| `accreditationStatus` | string | Yes | Current accreditation status | `active`, `suspended`, `expired` |
-| `authorizedSchemes` | array | Yes | List of schemes the CB can certify under | `["SFI-CoC", "SFI-FM"]` |
-| `contactInformation` | object | Yes | Contact details | `{"email": "certs@sfiprogram.org", "phone": "+1-202-555-0100"}` |
-| `operationalRegions` | array | Yes | Geographic regions where CB operates | `["US", "CA", "MX"]` |
-| `accreditationBody` | string | No | Organization that accredited this CB | `ANSI-ASQ National Accreditation Board` |
-| `validityPeriod` | object | Yes | Period of CB authorization | `{"start": "2020-01-01", "end": "2025-12-31"}` |
-
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`cbId`
+<td>string
+<td>Yes
+<td>Unique identifier for the certification body (primary key)
+<td>`SFI`, `FSC-US`, `PEFC-001`
+</tr>
+<tr>
+<td>`cbName`
+<td>string
+<td>Yes
+<td>Official name of the certification body
+<td>`Sustainable Forestry Initiative`
+</tr>
+<tr>
+<td>`cbType`
+<td>string
+<td>Yes
+<td>Type or category of certification body
+<td>`scheme-owner`, `third-party`, `accredited-body`
+</tr>
+<tr>
+<td>`accreditationStatus`
+<td>string
+<td>Yes
+<td>Current accreditation status
+<td>`active`, `suspended`, `expired`
+</tr>
+<tr>
+<td>`authorizedSchemes`
+<td>array
+<td>Yes
+<td>List of schemes the CB can certify under
+<td>`["SFI-CoC", "SFI-FM"]`
+</tr>
+<tr>
+<td>`contactInformation`
+<td>object
+<td>Yes
+<td>Contact details
+<td>`{"email": "certs@sfiprogram.org", "phone": "+1-202-555-0100"}`
+</tr>
+<tr>
+<td>`operationalRegions`
+<td>array
+<td>Yes
+<td>Geographic regions where CB operates
+<td>`["US", "CA", "MX"]`
+</tr>
+<tr>
+<td>`accreditationBody`
+<td>string
+<td>No
+<td>Organization that accredited this CB
+<td>`ANSI-ASQ National Accreditation Board`
+</tr>
+<tr>
+<td>`validityPeriod`
+<td>object
+<td>Yes
+<td>Period of CB authorization
+<td>`{"start": "2020-01-01", "end": "2025-12-31"}`
+</tr>
+</tbody>
+</table>
 ## Relationships
 
 ### Parent Entities

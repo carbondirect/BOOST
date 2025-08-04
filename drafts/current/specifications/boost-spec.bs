@@ -1,0 +1,594 @@
+<pre class='metadata'>
+Title: BOOST Data Standard
+Shortname: boost
+Level: 1
+Status: DREAM
+Editor: Peter Tittmann, Carbon Direct, peter@carbondirect.org
+Editor: BOOST W3C Community Group, public-boost-01@w3.org
+Abstract: The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 29 interconnected entities organized into 7 thematic areas.
+Markup Shorthands: markdown yes
+</pre>
+
+<pre class="biblio">
+{
+  "RFC2119": {
+    "authors": ["S. Bradner"],
+    "href": "https://tools.ietf.org/rfc/rfc2119",
+    "title": "Key words for use in RFCs to Indicate Requirement Levels",
+    "publisher": "IETF",
+    "date": "March 1997"
+  },
+  "RFC8174": {
+    "authors": ["B. Leiba"],
+    "href": "https://tools.ietf.org/rfc/rfc8174",
+    "title": "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words",
+    "publisher": "IETF",
+    "date": "May 2017"
+  },
+  "JSON-LD11": {
+    "authors": ["Gregg Kellogg", "Pierre-Antoine Champin", "Dave Longley"],
+    "href": "https://www.w3.org/TR/json-ld11/",
+    "title": "JSON-LD 1.1",
+    "publisher": "W3C",
+    "date": "16 July 2020"
+  },
+  "JSON-SCHEMA": {
+    "authors": ["Austin Wright", "Henry Andrews"],
+    "href": "https://json-schema.org/specification.html",
+    "title": "JSON Schema: A Media Type for Describing JSON Documents",
+    "date": "March 2019"
+  },
+  "GEOJSON": {
+    "authors": ["H. Butler", "M. Daly", "A. Doyle", "S. Gillies", "S. Hagen", "T. Schaub"],
+    "href": "https://tools.ietf.org/rfc/rfc7946",
+    "title": "The GeoJSON Format",
+    "publisher": "IETF",
+    "date": "August 2016"
+  },
+  "ISO38200": {
+    "href": "https://www.iso.org/standard/69429.html",
+    "title": "Chain of custody of wood and wood-based products",
+    "publisher": "ISO",
+    "date": "2018"
+  },
+  "SBP-STANDARD-4": {
+    "href": "https://sbp-cert.org/documents/standards-documents/",
+    "title": "Chain of Custody Standard",
+    "publisher": "Sustainable Biomass Partnership",
+    "date": "Version 1.0, 2013"
+  },
+  "SBP-STANDARD-5": {
+    "href": "https://sbp-cert.org/documents/standards-documents/",
+    "title": "Collection and Communication of Data",
+    "publisher": "Sustainable Biomass Partnership", 
+    "date": "Version 1.0, 2013"
+  },
+  "FSC-STD-40-004": {
+    "href": "https://fsc.org/en/document-centre/documents/resource/392",
+    "title": "Chain of Custody Certification",
+    "publisher": "Forest Stewardship Council",
+    "date": "Version 3.0, 2017"
+  },
+  "PEFC-ST-2002": {
+    "href": "https://www.pefc.org/standards/chain-of-custody",
+    "title": "Chain of Custody of Forest Based Products",
+    "publisher": "Programme for Endorsement of Forest Certification",
+    "date": "2020"
+  },
+  "CA-LCFS": {
+    "href": "https://ww2.arb.ca.gov/our-work/programs/low-carbon-fuel-standard",
+    "title": "Low Carbon Fuel Standard Regulation",
+    "publisher": "California Air Resources Board",
+    "date": "2024"
+  },
+  "EU-RED-II": {
+    "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv:OJ.L_.2018.328.01.0082.01.ENG",
+    "title": "Renewable Energy Directive II",
+    "publisher": "European Union",
+    "date": "Directive (EU) 2018/2001"
+  },
+  "KAULEN-2023": {
+    "authors": ["D. Kaulen", "P. Tittmann", "et al."],
+    "href": "https://github.com/carbondirect/BOOST/tree/main/references",
+    "title": "Systematics of Forestry Technology for Tracing the Timber Supply Chain",
+    "date": "2023"
+  }
+}
+</pre>
+
+<div boilerplate="copyright">
+Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">W3C Software and Document License</a>.
+</div>
+
+<h2 id="sotd" class="no-num no-toc">Status of This Document</h2>
+
+This specification was published by the [Biomass Open Origin Standard for Tracking (BOOST) W3C Community Group](https://www.w3.org/community/boost-01/). It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the [W3C Community Final Specification Agreement (FSA)](https://www.w3.org/community/about/process/final/) other conditions apply. Learn more about [W3C Community and Business Groups](https://www.w3.org/community/).
+
+This document is governed by the [W3C Community License Agreement (CLA)](https://www.w3.org/community/about/process/cla/). A human-readable [summary](https://www.w3.org/community/about/process/cla-deed/) is available.
+
+Publication as a Community Group Report does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
+
+<h2 id="feedback" class="no-num no-toc">How to Give Feedback</h2>
+
+This specification is primarily developed on [GitHub](https://github.com/carbondirect/BOOST). The best way to contribute to this specification is to:
+
+1. File issues and suggestions in the [BOOST GitHub repository](https://github.com/carbondirect/BOOST/issues)
+2. Submit pull requests for specific changes
+3. Participate in community discussions via [GitHub Discussions](https://github.com/carbondirect/BOOST/discussions)
+4. Join the [W3C Community Group mailing list](https://lists.w3.org/Archives/Public/public-boost-01/) for broader discussions
+
+# Introduction # {#introduction}
+
+<pre class=include>
+path: includes/introduction.inc.md
+</pre>
+
+## Purpose and Scope ## {#purpose-scope}
+
+This specification defines the BOOST (Biomass Open-Source Traceability) data standard for biomass supply chain tracking and verification. The standard provides:
+
+- A unified data model for biomass custody transfers
+- Format constraints for serializing chain of custody data
+- Integration specifications for certification systems
+- Regulatory compliance frameworks for multiple jurisdictions
+
+## Background and Motivation ## {#background-motivation}
+
+<pre class=include>
+path: includes/background.inc.md
+</pre>
+
+## Relationship to Existing Standards ## {#existing-standards}
+
+BOOST builds upon and integrates with established standards including:
+- [[ISO38200]] Chain of custody of wood and wood-based products
+- [[SBP-STANDARD-4]] and [[SBP-STANDARD-5]] from Sustainable Biomass Partnership
+- [[FSC-STD-40-004]] Forest Stewardship Council certification standards
+- [[PEFC-ST-2002]] Programme for Endorsement of Forest Certification standards
+- [[CA-LCFS]] California Low Carbon Fuel Standard requirements
+- [[EU-RED-II]] European Union Renewable Energy Directive II
+
+## Community Group Process ## {#community-process}
+
+<pre class=include>
+path: includes/community-process.inc.md
+</pre>
+
+# Conformance # {#conformance-section}
+
+<pre class=include>
+path: includes/conformance.inc.md
+</pre>
+
+## Conformance Classes ## {#conformance-classes}
+
+### BOOST Core Conformance ### {#core-conformance}
+
+Implementations claiming BOOST Core conformance MUST support:
+- TraceableUnit entity with required fields (including mandatory harvest origin)
+- Organization entity for harvester identification  
+- Material entity for material type reference
+- GeographicData entity for location tracking (GeoJSON format)
+- Basic material tracking and identification
+- JSON-LD serialization format
+- Schema validation according to [[#schema-definitions]]
+
+### BOOST Extended Conformance ### {#extended-conformance}
+
+Implementations claiming BOOST Extended conformance MUST support Core conformance plus:
+- Multi-species composition tracking
+- Material processing operations
+- Location history tracking
+- Basic sustainability claims management
+
+### BOOST Full Conformance ### {#full-conformance}
+
+Implementations claiming BOOST Full conformance MUST support Extended conformance plus:
+- All 29 BOOST entities
+- Complete business logic validation
+- Multi-certification scheme support
+- LCFS regulatory integration
+
+## Implementation Requirements ## {#implementation-requirements}
+
+Conforming implementations MUST:
+- Validate data against BOOST JSON schemas
+- Preserve entity relationships and referential integrity
+- Support JSON-LD context and semantic annotations
+- Implement required business logic validation rules
+
+# BOOST Traceability System # {#traceability-system}
+
+<pre class=include>
+path: includes/traceability-system.inc.md
+</pre>
+
+## TraceableUnit (TRU) Central Concept ## {#tru-concept}
+
+The <dfn export>TraceableUnit</dfn> entity serves as the central hub for all biomass tracking operations. Every TRU MUST have:
+- Unique identifier with biometric signature capability
+- Material type classification
+- Volume and mass measurements
+- Geographic location data
+- Processing history linkage
+
+## Media-Interruption-Free Tracking ## {#media-interruption-free}
+
+BOOST implementations MUST support continuous traceability through:
+- Biometric identification without physical attachments
+- Optical pattern recognition for TRU identification
+- Data continuity validation across processing steps
+- Media break detection and flagging mechanisms
+
+## Three Critical Tracking Points ## {#critical-tracking-points}
+
+Implementations MUST support measurement and verification at:
+- **harvest_site** - Initial TRU creation and measurement
+- **skid_road/forest_road** - Transportation consolidation points  
+- **mill_entrance** - Processing facility entry points
+
+## Processing Chain Methodology ## {#processing-chain}
+
+All material transformations MUST be documented through:
+- <dfn export>MaterialProcessing</dfn> entities linking input and output TRUs
+- Volume and mass conservation validation
+- Plant part transformation tracking
+- Quality assessment throughout processing
+
+# Data Model Architecture # {#data-model}
+
+<pre class=include>
+path: includes/data-model.inc.md
+</pre>
+
+## Entity-Relationship Overview ## {#entity-overview}
+
+The BOOST data model consists of 29 interconnected entities organized into 7 thematic areas:
+
+1. **Core Traceability** (9 entities) - Central tracking infrastructure
+2. **Organizational Foundation** (4 entities) - Business entities and certifications  
+3. **Material & Supply Chain** (4 entities) - Material definitions and supply management
+4. **Transaction Management** (3 entities) - Business transaction processing
+5. **Sustainability Claims** (1 entity) - Certification and sustainability assertions
+6. **Geographic Integration** (1 entity) - Spatial data and location services
+7. **Reporting & Compliance** (7 entities) - Analytics, reporting, and regulatory compliance
+
+## Hub-and-Spoke Design ## {#hub-spoke}
+
+The data model implements a hub-and-spoke architecture with TraceableUnit as the central hub. All other entities MUST maintain direct or indirect relationships to TRUs to ensure complete traceability.
+
+## Foreign Key Conventions ## {#foreign-key-conventions}
+
+All foreign key relationships MUST follow the EntityNameId pattern:
+- Field names MUST end with "Id" 
+- Field names MUST reference the target entity name in PascalCase
+- Examples: `OrganizationId`, `TraceableUnitId`, `GeographicDataId`
+
+# Plant Part Categorization System # {#plant-parts}
+
+<pre class=include>
+path: includes/plant-parts.inc.md
+</pre>
+
+## Standardized Plant Parts Taxonomy ## {#plant-parts-taxonomy}
+
+Implementations MUST support the following 17 standardized plant parts:
+- **trunk** - Main stem/bole of tree
+- **heartwood** - Inner, non-living wood
+- **sapwood** - Outer, living wood
+- **bark** - Protective outer layer
+- **branches** - Secondary stems
+- **leaves** - Photosynthetic organs
+- **seeds** - Reproductive structures
+- **roots** - Below-ground structures
+- **twigs** - Small branches
+- **cones** - Seed-bearing structures
+- **needles** - Coniferous leaves
+- **foliage** - All leaf matter
+- **crown** - Above-ground branching structure
+- **stump** - Remaining base after felling
+- **chips** - Mechanically processed fragments
+- **sawdust** - Fine processing residue
+- **pellets** - Densified processed material
+
+# Core Data Entities # {#core-entities}
+
+<pre class=include>
+path: includes/core-entities.inc.md
+</pre>
+
+## Core Traceability Entities ## {#core-traceability-entities}
+
+Implementations claiming BOOST Core conformance MUST support these entities:
+
+### TraceableUnit ### {#traceable-unit}
+
+<pre class=include>
+path: schema/traceable_unit/traceable_unit_dictionary.md
+</pre>
+
+### Organization ### {#organization-core}
+
+<pre class=include>
+path: schema/organization/organization_dictionary.md
+</pre>
+
+### Material ### {#material-core}
+
+<pre class=include>
+path: schema/material/material_dictionary.md
+</pre>
+
+### GeographicData ### {#geographic-data}
+
+<pre class=include>
+path: schema/geographic_data/geographic_data_dictionary.md
+</pre>
+
+## Extended Traceability Entities ## {#extended-traceability-entities}
+
+Implementations claiming BOOST Extended conformance MUST support Core entities plus these additional entities:
+
+### MaterialProcessing ### {#material-processing}
+
+<pre class=include>
+path: schema/material_processing/material_processing_dictionary.md
+</pre>
+
+## Organizational Foundation Entities ## {#organizational-entities}
+
+*Note: Organization is now part of Core Traceability Entities - see [[#organization-core]]*
+
+### Certificate ### {#certificate}
+
+<pre class=include>
+path: schema/certificate/certificate_dictionary.md
+</pre>
+
+## Additional Essential Entities ## {#additional-essential-entities}
+
+*Note: Material is now part of Core Traceability Entities - see [[#material-core]]*
+
+### SpeciesComponent ### {#species-component}
+
+<pre class=include>
+path: schema/species_component/species_component_dictionary.md
+</pre>
+
+### Operator ### {#operator}
+
+<pre class=include>
+path: schema/operator/operator_dictionary.md
+</pre>
+
+### Equipment ### {#equipment}
+
+<pre class=include>
+path: schema/equipment/equipment_dictionary.md
+</pre>
+
+### BiometricIdentifier ### {#biometric-identifier}
+
+<pre class=include>
+path: schema/biometric_identifier/biometric_identifier_dictionary.md
+</pre>
+
+### LocationHistory ### {#location-history}
+
+<pre class=include>
+path: schema/location_history/location_history_dictionary.md
+</pre>
+
+### MeasurementRecord ### {#measurement-record}
+
+<pre class=include>
+path: schema/measurement_record/measurement_record_dictionary.md
+</pre>
+
+### TrackingPoint ### {#tracking-point}
+
+<pre class=include>
+path: schema/tracking_point/tracking_point_dictionary.md
+</pre>
+
+### ProcessingHistory ### {#processing-history}
+
+<pre class=include>
+path: schema/processing_history/processing_history_dictionary.md
+</pre>
+
+### DataReconciliation ### {#data-reconciliation}
+
+<pre class=include>
+path: schema/data_reconciliation/data_reconciliation_dictionary.md
+</pre>
+
+## Certification and Claims Entities ## {#certification-claims-entities}
+
+### CertificationBody ### {#certification-body}
+
+<pre class=include>
+path: schema/certification_body/certification_body_dictionary.md
+</pre>
+
+### CertificationScheme ### {#certification-scheme}
+
+<pre class=include>
+path: schema/certification_scheme/certification_scheme_dictionary.md
+</pre>
+
+### Claim ### {#claim}
+
+<pre class=include>
+path: schema/claim/claim_dictionary.md
+</pre>
+
+## Supply Chain and Commerce Entities ## {#supply-chain-commerce-entities}
+
+### ProductGroup ### {#product-group}
+
+<pre class=include>
+path: schema/product_group/product_group_dictionary.md
+</pre>
+
+## Regulatory and Compliance Entities ## {#regulatory-compliance-entities}
+
+### LCFSPathway ### {#lcfs-pathway}
+
+<pre class=include>
+path: schema/lcfs_pathway/lcfs_pathway_dictionary.md
+</pre>
+
+### LCFSReporting ### {#lcfs-reporting}
+
+<pre class=include>
+path: schema/lcfs_reporting/lcfs_reporting_dictionary.md
+</pre>
+
+# Schema Definitions # {#schema-definitions}
+
+<pre class=include>
+path: includes/schema-definitions.inc.md
+</pre>
+
+## JSON Schema Format ## {#json-schema-format}
+
+All BOOST entity definitions MUST be provided as [[JSON-SCHEMA]] Draft-07 compliant schemas with the following REQUIRED structure:
+
+<pre class="example highlight" highlight="json">
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/entity-name",
+    "title": "Entity Name",
+    "type": "object",
+    "properties": { ... },
+    "required": [ ... ]
+  }
+}
+</pre>
+
+## Business Logic Validation ## {#business-logic}
+
+Implementations MUST validate entities against 8 categories of business rules:
+1. **Volume/Mass Conservation** - Physical conservation laws
+2. **Temporal Logic** - Date consistency validation  
+3. **Geographic Logic** - Spatial relationship validation
+4. **Species Composition** - Percentage validation (sum to 100%)
+5. **Certification Logic** - Chain of custody validation
+6. **Regulatory Compliance** - Jurisdiction-specific rules
+7. **Economic Logic** - Price and payment validation
+8. **Quality Assurance** - Material quality constraints
+
+# Serialization and Exchange # {#serialization}
+
+<pre class=include>
+path: includes/serialization.inc.md
+</pre>
+
+## JSON-LD as Primary Format ## {#json-ld}
+
+BOOST data MUST be serializable to [[JSON-LD11]] format with:
+- Valid `@context` referencing BOOST context definition
+- Entity `@type` declarations matching schema names
+- Unique `@id` values for all entities
+
+## Context Definitions ## {#context-definitions}
+
+The BOOST JSON-LD context MUST define:
+- Semantic mappings for all entity types
+- Property definitions with appropriate vocabularies
+- Data type specifications for typed literals
+- Language specifications for internationalization
+
+# Use Cases and Requirements # {#use-cases}
+
+<pre class=include>
+path: includes/use-cases.inc.md
+</pre>
+
+## Primary Use Cases ## {#primary-use-cases}
+
+BOOST addresses the following primary use cases:
+
+### California Biomass Supply Chain Tracking ### {#california-use-case}
+- Forest management organization harvests certified timber
+- Processing facilities transform raw materials into biofuels
+- Transportation companies maintain chain of custody
+- Regulatory agencies verify compliance with LCFS requirements
+
+### Multi-Certification Scheme Management ### {#multi-cert-use-case}
+- Single TRU maintains multiple certification claims (FSC, SBP, PEFC)
+- Processing operations preserve claim integrity
+- Species-specific claims apply to mixed-species materials
+- Third-party verification validates claim accuracy
+
+# Examples # {#examples}
+
+<pre class=include>
+path: includes/examples.inc.md
+</pre>
+
+## Basic TraceableUnit Example ## {#basic-tru-example}
+
+<pre class="example highlight" highlight="json">
+{
+  "@context": "https://boost-standard.org/context.jsonld",
+  "@type": "TraceableUnit",
+  "@id": "https://example.com/tru/TRU-001",
+  "traceableUnitId": "TRU-FOREST-001",
+  "unitType": "pile",
+  "uniqueIdentifier": "BIOMETRIC-SIGNATURE-ABC123",
+  "totalVolumeM3": 125.5,
+  "materialTypeId": "MAT-DOUGLAS-FIR-SAWLOG",
+  "isMultiSpecies": false,
+  "harvesterId": "ORG-PACIFIC-FOREST",
+  "currentGeographicDataId": "GEO-MILL-YARD-07"
+}
+</pre>
+
+# Security Considerations # {#security}
+
+<pre class=include>
+path: includes/security-considerations.inc.md
+</pre>
+
+## Data Privacy ## {#data-privacy}
+
+Implementations SHOULD consider privacy implications of biomass tracking data:
+- Location data may reveal sensitive commercial information
+- Biometric identifiers require secure storage and transmission
+- Personal operator information needs appropriate access controls
+
+## Data Integrity ## {#data-integrity}
+
+Critical security measures include:
+- Digital signatures for high-value transactions
+- Audit trails for all data modifications
+- Backup and recovery procedures for critical supply chain data
+- Validation of external data sources and certificates
+
+## Supply Chain Security ## {#supply-chain-security}
+
+Implementations SHOULD address:
+- Authentication of supply chain participants
+- Authorization controls for data access and modification
+- Secure communication channels for data exchange
+- Fraud detection and prevention mechanisms
+
+<h2 id="acknowledgments" class="no-num">Acknowledgments</h2>
+
+This specification was developed through the collaborative efforts of the BOOST W3C Community Group with significant contributions from:
+
+- **California Department of Conservation** - Funding and regulatory guidance
+- **Forest industry stakeholders** - Requirements analysis and use case development  
+- **Certification bodies** - Standards alignment and validation procedures
+- **Technology providers** - Implementation guidance and tool development
+- **Academic institutions** - Research and analysis support
+- **Environmental organizations** - Sustainability criteria and verification methods
+
+Special recognition to the contributors of the Interactive ERD Navigator, Python reference implementation, and comprehensive schema validation tools that support this specification.
+
+<h2 id="spec-index" class="no-num">Index</h2>
+
+<div data-fill-with="index"></div>

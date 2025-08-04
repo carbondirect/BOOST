@@ -1,4 +1,4 @@
-# Data Dictionary
+# GeographicData
 
 ## GeographicData
 
@@ -7,20 +7,96 @@ The `GeographicData` entity provides comprehensive spatial data support for the 
 
 ### Fields
 
-| Field                    | Type             | Required | Description                                                                 | Examples                                    |
-|-------------------------|------------------|----------|-----------------------------------------------------------------------------|---------------------------------------------|
-| `geographicDataId`      | string           | Yes      | Unique identifier for the geographic data (primary key)                   | `GEO-HARVEST-001`, `GEO-MILL-PACIFIC-01`   |
-| `geoJsonData`           | object           | Yes      | Valid GeoJSON object (Point, Polygon, LineString, etc.)                  | See GeoJSON examples below                  |
-| `dataType`              | string           | Yes      | Type of geographic data (enum)                                           | `harvest_site`, `processing_location`, `administrative_boundary`, `supply_base_area` |
-| `description`           | string           | Yes      | Human-readable description of the geographic area                        | `Klamath Ridge Harvest Site Unit 4`, `Pacific Lumber Mill Entrance` |
-| `lastUpdated`           | string (date-time)| No      | Timestamp of the most recent data update                                 | `2025-07-21T15:00:00Z`                    |
-| `coordinateSystem`      | string           | No       | Coordinate reference system (default: WGS84)                            | `WGS84`, `UTM Zone 10N`, `NAD83`           |
-| `accuracy`              | number           | No       | GPS accuracy in meters                                                   | `3.5`, `10.0`, `1.2`                      |
-| `elevationM`            | number           | No       | Elevation in meters above sea level                                      | `1250.5`, `450.0`, `2100.8`               |
-| `administrativeRegion`  | string           | No       | Administrative region or jurisdiction                                    | `California`, `Humboldt County`, `Klamath National Forest` |
-| `accessRestrictions`    | string           | No       | Any access restrictions or special conditions                            | `Seasonal road closure Nov-Apr`, `Permit required for access` |
-| `@id`                   | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                       | `https://github.com/carbondirect/BOOST/schemas/geographic-data/GEO-001` |
-
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`geographicDataId`
+<td>string
+<td>Yes
+<td>Unique identifier for the geographic data (primary key)
+<td>`GEO-HARVEST-001`, `GEO-MILL-PACIFIC-01`
+</tr>
+<tr>
+<td>`geoJsonData`
+<td>object
+<td>Yes
+<td>Valid GeoJSON object (Point, Polygon, LineString, etc.)
+<td>See GeoJSON examples below
+</tr>
+<tr>
+<td>`dataType`
+<td>string
+<td>Yes
+<td>Type of geographic data (enum)
+<td>`harvest_site`, `processing_location`, `administrative_boundary`, `supply_base_area`
+</tr>
+<tr>
+<td>`description`
+<td>string
+<td>Yes
+<td>Human-readable description of the geographic area
+<td>`Klamath Ridge Harvest Site Unit 4`, `Pacific Lumber Mill Entrance`
+</tr>
+<tr>
+<td>`lastUpdated`
+<td>string (date-time)
+<td>No
+<td>Timestamp of the most recent data update
+<td>`2025-07-21T15:00:00Z`
+</tr>
+<tr>
+<td>`coordinateSystem`
+<td>string
+<td>No
+<td>Coordinate reference system (default: WGS84)
+<td>`WGS84`, `UTM Zone 10N`, `NAD83`
+</tr>
+<tr>
+<td>`accuracy`
+<td>number
+<td>No
+<td>GPS accuracy in meters
+<td>`3.5`, `10.0`, `1.2`
+</tr>
+<tr>
+<td>`elevationM`
+<td>number
+<td>No
+<td>Elevation in meters above sea level
+<td>`1250.5`, `450.0`, `2100.8`
+</tr>
+<tr>
+<td>`administrativeRegion`
+<td>string
+<td>No
+<td>Administrative region or jurisdiction
+<td>`California`, `Humboldt County`, `Klamath National Forest`
+</tr>
+<tr>
+<td>`accessRestrictions`
+<td>string
+<td>No
+<td>Any access restrictions or special conditions
+<td>`Seasonal road closure Nov-Apr`, `Permit required for access`
+</tr>
+<tr>
+<td>`@id`
+<td>string (uri)
+<td>Yes
+<td>Unique URI identifier for JSON-LD
+<td>`https://github.com/carbondirect/BOOST/schemas/geographic-data/GEO-001`
+</tr>
+</tbody>
+</table>
 ---
 
 ### GeoJSON Data Types
@@ -64,78 +140,78 @@ The `GeographicData` entity provides comprehensive spatial data support for the 
 ### Data Type Classifications
 
 1. **harvest_site**
-   - Specific locations where timber harvesting occurs
-   - Typically Point or small Polygon geometries
-   - Links to TraceableUnit harvest locations
+     Specific locations where timber harvesting occurs
+     Typically Point or small Polygon geometries
+     Links to TraceableUnit harvest locations
 
 2. **processing_location**
-   - Locations where MaterialProcessing occurs
-   - Mills, sorting yards, chipping facilities
-   - Point geometries with facility boundaries
+     Locations where MaterialProcessing occurs
+     Mills, sorting yards, chipping facilities
+     Point geometries with facility boundaries
 
 3. **administrative_boundary**
-   - Regulatory or administrative boundaries
-   - County lines, forest service boundaries, permit areas
-   - Polygon geometries
+     Regulatory or administrative boundaries
+     County lines, forest service boundaries, permit areas
+     Polygon geometries
 
 4. **supply_base_area**
-   - Overall supply base geographic boundaries
-   - Large Polygon geometries encompassing multiple harvest sites
-   - Links to SupplyBase entities
+     Overall supply base geographic boundaries
+     Large Polygon geometries encompassing multiple harvest sites
+     Links to SupplyBase entities
 
 5. **skid_road / forest_road**
-   - Transportation infrastructure
-   - LineString geometries showing road networks
-   - Critical for tracking point infrastructure
+     Transportation infrastructure
+     LineString geometries showing road networks
+     Critical for tracking point infrastructure
 
 6. **mill_entrance**
-   - Specific points where TRUs enter processing facilities
-   - Point geometries at facility gates
-   - Final tracking points in BOOST traceability system
+     Specific points where TRUs enter processing facilities
+     Point geometries at facility gates
+     Final tracking points in BOOST traceability system
 
 ### Key Features
 
 1. **GeoJSON Compliance**
-   - Full GeoJSON specification support
-   - Multiple geometry types (Point, Polygon, LineString, etc.)
-   - Properties object for additional spatial metadata
+     Full GeoJSON specification support
+     Multiple geometry types (Point, Polygon, LineString, etc.)
+     Properties object for additional spatial metadata
 
 2. **Coordinate System Support**
-   - Default WGS84 for global interoperability
-   - Support for regional coordinate systems (UTM, NAD83, etc.)
-   - Accuracy metadata for GPS precision tracking
+     Default WGS84 for global interoperability
+     Support for regional coordinate systems (UTM, NAD83, etc.)
+     Accuracy metadata for GPS precision tracking
 
 3. **Hierarchical Relationships**
-   - Support for nested geographic relationships
-   - Harvest sites within supply base areas
-   - Administrative boundaries containing operational areas
+     Support for nested geographic relationships
+     Harvest sites within supply base areas
+     Administrative boundaries containing operational areas
 
 4. **Agency Integration**
-   - Designed for California agency mapping requirements
-   - Support for regulatory boundary definitions
-   - Integration with GIS systems and spatial databases
+     Designed for California agency mapping requirements
+     Support for regulatory boundary definitions
+     Integration with GIS systems and spatial databases
 
 ### Example Use Cases
 
 1. **Harvest Site Tracking**
-   - Precise GPS coordinates of harvest operations
-   - Links to TraceableUnit harvest locations
-   - Support for environmental compliance reporting
+     Precise GPS coordinates of harvest operations
+     Links to TraceableUnit harvest locations
+     Support for environmental compliance reporting
 
 2. **Supply Base Boundaries**
-   - Large polygon areas defining operational scope
-   - Integration with forest management plans
-   - Regulatory compliance boundary definitions
+     Large polygon areas defining operational scope
+     Integration with forest management plans
+     Regulatory compliance boundary definitions
 
 3. **Transportation Networks**
-   - Skid road and forest road mapping
-   - Route optimization and planning
-   - Infrastructure maintenance tracking
+     Skid road and forest road mapping
+     Route optimization and planning
+     Infrastructure maintenance tracking
 
 4. **Processing Facility Locations**
-   - Mill entrance points for final tracking
-   - Processing location definitions
-   - Facility boundary and access point mapping
+     Mill entrance points for final tracking
+     Processing location definitions
+     Facility boundary and access point mapping
 
 ### Relationships
 - GeographicData provides harvest locations for TraceableUnit
