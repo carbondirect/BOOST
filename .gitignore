@@ -35,3 +35,6 @@ cd_report/
 
 # IAWG notes - keep local but don't track
 meetings/IAWG_NOTES_*.md
+
+# Ignore local venvs
+venv/
