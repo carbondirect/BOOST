@@ -1,0 +1,18 @@
+% BOOST Operator Entity Validation Schema Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{BOOST Operator Entity Validation Schema}
+\textbf{\field{hireDate}} & string (date) & Date when operator started employment \\
+\textbf{\field{isActive}} & boolean & Current employment status - true if actively employed \\
+\textbf{\field{lastUpdated}} & string (date-time) & Timestamp of last record modification \\
+\textbf{\field{operatorId}} & string (pattern) & Unique identifier for the operator (Primary Key) \\
+\textbf{\field{operatorName}} & string & Full name of the operator \\
+\textbf{\field{operatorType}} & enum(10 values) & Type/role of operator within the supply chain \\
+\field{OrganizationId} & string & Employing organization - uses EntityNameId convention referencing Organization \\
+\field{certifications} & array<string> & Array of certifications held by the operator \\
+\field{contactInfo} & ['string', 'null'] & Phone/email contact information \\
+\field{employeeId} & ['string', 'null'] & Internal employee identification number \\
+\field{equipmentAuthorizations} & array<string> & Equipment the operator is authorized to operate \\
+\field{skillsQualifications} & array<string> & Relevant skills and qualifications \\
+\field{supervisorOperatorId} & ['string', 'null'] & Foreign key reference to direct supervisor operator (optional) \\
+\end{entitytable}

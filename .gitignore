@@ -29,9 +29,29 @@ __pycache__/
 *.vrb
 *.fls
 *.fdb_latexmk
-_minted-*
+*.idx
+*.ind
+*.lof
+*.lot
+_minted-*/
+**/_minted-*/
 */~undo-tree*
 .DS_Store
+
+# Build system outputs
+build/
+**/build/
+drafts/current/specifications/boost-spec.pdf
+drafts/current/specifications/boost-spec.html
+drafts/current/specifications/boost-spec-original.html
+
+# Server and development files
+server.log
+test-*.pdf
+test-*.html
+test-*.aux
+test-*.log
+test-*.out
 
 # California agencies directory - keep local but don't track
 drafts/current/communications/california_agencies/

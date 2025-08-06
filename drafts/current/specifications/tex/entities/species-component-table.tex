@@ -1,0 +1,25 @@
+% Species Component Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Species Component}
+\textbf{\field{componentId}} & string & Unique identifier for the species component \\
+\textbf{\field{percentageByVolume}} & number (≥0, ≤100) & Percentage of total TRU volume for this species \\
+\textbf{\field{species}} & string & Species name (common or scientific) \\
+\textbf{\field{traceableUnitId}} & string & Foreign key back reference to TraceableUnit \\
+\textbf{\field{volumeM3}} & number (≥0) & Volume of this species within the TRU in cubic meters \\
+\field{ageYears} & integer & Estimated age in years \\
+\field{carbonStorage} & string & CO2 data for this species component \\
+\field{dbhCm} & number (≥0) & Diameter at breast height in centimeters \\
+\field{defects} & array<string> & List of defects or quality issues \\
+\field{harvestTimestamp} & string (date-time) & When this species was harvested \\
+\field{harvestingMethod} & enum(4 values) & Method used to harvest this species \\
+\field{heightM} & number (≥0) & Average tree height in meters \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage \\
+\field{plantPartComposition} & object & Plant part breakdown within this species component \\
+\field{primaryPlantPart} & enum(17 values) & Primary plant part represented by this species component \\
+\field{qualityGrade} & string & Species-specific quality grade \\
+\field{scientificName} & string & Scientific/Latin name of the species \\
+\field{sourceGeographicDataId} & string & Foreign key to geographic origin of this species \\
+\field{structuralClassification} & enum(5 values) & Functional classification of the primary plant part \\
+\end{entitytable}

@@ -1,0 +1,229 @@
+% Material & Supply Chain Entities
+% Auto-generated from JSON schemas
+
+
+\subsubsection{Material}
+\label{sec:entity-material}
+
+Material types and specifications
+
+** [View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
+
+% Material Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Material}
+\textbf{\field{materialCategory}} & enum(softwood, hardwood, mixed) & No description provided \\
+\textbf{\field{materialName}} & string & No description provided \\
+\textbf{\field{materialTypeId}} & string & No description provided \\
+\field{applicablePlantParts} & array<string> & Plant parts included in this material type \\
+\field{applicableProcessingTypes} & array<string> & No description provided \\
+\field{carbonStorageRate} & string & No description provided \\
+\field{defaultAssortmentTypes} & string & No description provided \\
+\field{density} & string & No description provided \\
+\field{energyContent} & string & No description provided \\
+\field{excludedPlantParts} & array<string> & Plant parts excluded from this material type \\
+\field{lastUpdated} & string (date-time) & No description provided \\
+\field{plantPartProcessingSpecs} & object & Processing specifications by plant part \\
+\field{standardMoistureContent} & string & No description provided \\
+\field{standardQualityGrades} & string & No description provided \\
+\field{typicalSpecies} & array<string> & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{Species Component}
+\label{sec:entity-species-component}
+
+Species composition within TRUs
+
+** [View Species Component in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
+
+% Species Component Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Species Component}
+\textbf{\field{componentId}} & string & Unique identifier for the species component \\
+\textbf{\field{percentageByVolume}} & number ($\geq$0, $\leq$100) & Percentage of total TRU volume for this species \\
+\textbf{\field{species}} & string & Species name (common or scientific) \\
+\textbf{\field{traceableUnitId}} & string & Foreign key back reference to TraceableUnit \\
+\textbf{\field{volumeM3}} & number ($\geq$0) & Volume of this species within the TRU in cubic meters \\
+\field{ageYears} & integer & Estimated age in years \\
+\field{carbonStorage} & string & CO2 data for this species component \\
+\field{dbhCm} & number ($\geq$0) & Diameter at breast height in centimeters \\
+\field{defects} & array<string> & List of defects or quality issues \\
+\field{harvestTimestamp} & string (date-time) & When this species was harvested \\
+\field{harvestingMethod} & enum(4 values) & Method used to harvest this species \\
+\field{heightM} & number ($\geq$0) & Average tree height in meters \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{moistureContent} & number ($\geq$0, $\leq$100) & Moisture content as percentage \\
+\field{plantPartComposition} & object & Plant part breakdown within this species component \\
+\field{primaryPlantPart} & enum(17 values) & Primary plant part represented by this species component \\
+\field{qualityGrade} & string & Species-specific quality grade \\
+\field{scientificName} & string & Scientific/Latin name of the species \\
+\field{sourceGeographicDataId} & string & Foreign key to geographic origin of this species \\
+\field{structuralClassification} & enum(5 values) & Functional classification of the primary plant part \\
+\end{entitytable}
+
+
+
+\subsubsection{Supplier}
+\label{sec:entity-supplier}
+
+Supplier entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{supplierId} → \entity{Supplier} ()
+\end{itemize}
+\end{informative}
+
+** [View Supplier in ERD Navigator](erd-navigator/index.html?focus=Supplier)**
+
+% Supplier Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Supplier}
+\textbf{\field{supplierId}} & string & No description provided \\
+\textbf{\field{supplierName}} & string & No description provided \\
+\field{GeographicDataId} & string & Supplier location - uses EntityNameId convention referencing GeographicData \\
+\field{address} & string & No description provided \\
+\field{certificateCode} & string & No description provided \\
+\field{claim} & string & No description provided \\
+\field{supplierType} & string & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{Customer}
+\label{sec:entity-customer}
+
+Customer entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{customerId} → \entity{Customer} (Unique identifier for the customer)
+\end{itemize}
+\end{informative}
+
+** [View Customer in ERD Navigator](erd-navigator/index.html?focus=Customer)**
+
+% Customer Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Customer}
+\textbf{\field{customerId}} & string (pattern) & Unique identifier for the customer \\
+\textbf{\field{customerName}} & string & No description provided \\
+\field{GeographicDataId} & string (pattern) & Customer location - uses EntityNameId convention referencing GeographicData \\
+\field{address} & string & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{Supply Base}
+\label{sec:entity-supply-base}
+
+SupplyBase entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{OrganizationId} → \entity{Organization} (Managing organization - uses EntityNameId convention referencing Organization)
+\end{itemize}
+\end{informative}
+
+** [View Supply Base in ERD Navigator](erd-navigator/index.html?focus=SupplyBase)**
+
+% Supply Base Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Supply Base}
+\textbf{\field{OrganizationId}} & string & Managing organization - uses EntityNameId convention referencing Organization \\
+\textbf{\field{description}} & string & No description provided \\
+\textbf{\field{supplyBaseId}} & string & No description provided \\
+\textbf{\field{supplyBaseName}} & string & No description provided \\
+\field{GeographicDataId} & string & Supply base location - uses EntityNameId convention referencing GeographicData \\
+\field{equipmentDeployment} & array<string> & No description provided \\
+\field{forestRoads} & array<string> & No description provided \\
+\field{harvestSites} & array<string> & No description provided \\
+\field{skidRoads} & array<string> & No description provided \\
+\field{speciesAvailable} & array<string> & No description provided \\
+\field{traceableUnitIds} & array<string> & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{Supply Base Report}
+\label{sec:entity-supply-base-report}
+
+SupplyBaseReport entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{organizationId} → \entity{Organization} ()
+\end{itemize}
+\end{informative}
+
+** [View Supply Base Report in ERD Navigator](erd-navigator/index.html?focus=SupplyBaseReport)**
+
+% Supply Base Report Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Supply Base Report}
+\textbf{\field{organizationId}} & string & No description provided \\
+\textbf{\field{preparationDate}} & string (date) & No description provided \\
+\textbf{\field{sbrId}} & string & No description provided \\
+\field{publicationUrl} & string (uri) & No description provided \\
+\field{reportGeographicDataId} & string & No description provided \\
+\field{sourcingPractices} & string & No description provided \\
+\field{supplyBaseIds} & array<string> & Array of SupplyBase IDs that this report covers \\
+\field{supplyBaseSummary} & string & No description provided \\
+\field{sustainabilityMeasures} & string & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{Equipment}
+\label{sec:entity-equipment}
+
+Equipment entity representing forestry machinery and equipment used in biomass harvesting and processing operations
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{equipmentId} → \entity{Equipment} (Unique identifier for the equipment)
+    \item \field{organizationId} → \entity{Organization} (Foreign key to owning organization)
+\end{itemize}
+\end{informative}
+
+** [View Equipment in ERD Navigator](erd-navigator/index.html?focus=Equipment)**
+
+% Equipment Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Equipment}
+\textbf{\field{equipmentId}} & string (pattern) & Unique identifier for the equipment \\
+\textbf{\field{equipmentName}} & string & Descriptive name of the equipment \\
+\textbf{\field{equipmentType}} & enum(12 values) & Type of forestry equipment \\
+\textbf{\field{operationalStatus}} & enum(5 values) & Current operational status of the equipment \\
+\textbf{\field{organizationId}} & string (pattern) & Foreign key to owning organization \\
+\field{acquisitionCost} & number ($\geq$0) & Equipment acquisition cost in USD \\
+\field{acquisitionDate} & string (date) & Date equipment was acquired by organization \\
+\field{assignedTrackingPointId} & string (pattern) & Foreign key to current location/assignment \\
+\field{certifications} & array<string> & Equipment certifications (safety, emissions, etc.) \\
+\field{currentOperatorId} & string (pattern) & Foreign key to current operator (if assigned) \\
+\field{insuranceInfo} & object (structured) & Equipment insurance information \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{maintenanceSchedule} & object (structured) & Maintenance schedule information \\
+\field{manufacturer} & string & Equipment manufacturer \\
+\field{model} & string & Equipment model designation \\
+\field{notes} & string & Additional notes or comments about the equipment \\
+\field{serialNumber} & string & Manufacturer serial number \\
+\field{specifications} & object (structured) & Technical specifications for the equipment \\
+\field{yearManufactured} & integer & Year the equipment was manufactured \\
+\end{entitytable}
+
+

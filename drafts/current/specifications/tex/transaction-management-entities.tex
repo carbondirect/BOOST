@@ -1,0 +1,137 @@
+% Transaction Management Entities
+% Auto-generated from JSON schemas
+
+
+\subsubsection{Transaction}
+\label{sec:entity-transaction}
+
+Transaction entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{transactionId} → \entity{Transaction} (Unique identifier for the business transaction)
+    \item \field{OrganizationId} → \entity{Organization} (Primary organization involved in transaction (seller/supplier))
+    \item \field{CustomerId} → \entity{Customer} (Customer organization (buyer) - uses EntityNameId convention referencing Customer entity)
+\end{itemize}
+\end{informative}
+
+** [View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
+
+% Transaction Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Transaction}
+\textbf{\field{CustomerId}} & string (pattern) & Customer organization (buyer) - uses EntityNameId convention referencing Cust... \\
+\textbf{\field{OrganizationId}} & string (pattern) & Primary organization involved in transaction (seller/supplier) \\
+\textbf{\field{contractCurrency}} & enum(9 values) & Currency code for contract value \\
+\textbf{\field{contractValue}} & number ($\geq$0, $\leq$999999999.99) & Total monetary value of the transaction \\
+\textbf{\field{transactionDate}} & string (date) & Date of business agreement \\
+\textbf{\field{transactionId}} & string (pattern) & Unique identifier for the business transaction \\
+\textbf{\field{transactionStatus}} & enum(6 values) & Current status of business transaction \\
+\field{BrokerOrganizationId} & ['string', 'null'] & Optional intermediary broker organization - uses EntityNameId convention refe... \\
+\field{GeographicDataId} & string & Primary transaction location - uses EntityNameId convention referencing Geogr... \\
+\field{LcfsPathwayId} & string (pattern) & CARB-certified pathway identifier for LCFS compliance - uses EntityNameId con... \\
+\field{SalesDeliveryDocumentId} & string & Foreign key to sales/delivery documentation - uses EntityNameId convention re... \\
+\field{complianceRequirements} & array<string> & Regulatory compliance requirements for transaction \\
+\field{contractSignedDate} & ['string', 'null'] & Date when contract was executed \\
+\field{contractTerms} & enum(8 values) & Incoterms delivery conditions \\
+\field{expectedDeliveryDate} & ['string', 'null'] & Expected completion/delivery date \\
+\field{financialTerms} & object (structured) & Detailed financial terms and conditions \\
+\field{fuelCategory} & enum(10 values) & Category of fuel for LCFS classification \\
+\field{fuelVolume} & number ($\geq$0) & Volume of fuel in transaction for LCFS reporting \\
+\field{fuelVolumeUnit} & enum(gallons, liters, GGE) & Unit of measurement for fuel volume \\
+\field{lastUpdated} & string (date-time) & Timestamp of last modification \\
+\field{manipulationTimestamps} & array<string> & Processing step timestamps \\
+\field{mediaBreaksDetected} & array<boolean> & Continuity flags per TRU \\
+\field{paymentTerms} & string & Payment conditions and timeline \\
+\field{reconciliationStatus} & enum(pending, resolved, disputed) & Transaction reconciliation status \\
+\field{regulatedPartyRole} & enum(5 values) & Role of regulated party in LCFS transaction \\
+\field{reportingPeriod} & string (pattern) & LCFS reporting quarter in YYYY-QN format \\
+\field{riskManagement} & object (structured) & Risk management and mitigation terms \\
+\field{speciesCompositionAtTransaction} & array<object> & Species breakdown at transaction time \\
+\field{traceableUnitIds} & array<string> & TRUs included in this transaction \\
+\field{trackingPointIds} & array<string> & Location trail references \\
+\end{entitytable}
+
+
+
+\subsubsection{Transaction Batch}
+\label{sec:entity-transaction-batch}
+
+TransactionBatch entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{transactionId} → \entity{Transaction} (Foreign key to parent business transaction)
+    \item \field{claimId} → \entity{Claim} (Foreign key to primary sustainability claim)
+\end{itemize}
+\end{informative}
+
+** [View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
+
+% Transaction Batch Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Transaction Batch}
+\textbf{\field{batchStatus}} & enum(6 values) & Current status of the physical batch \\
+\textbf{\field{quantity}} & number ($\geq$0) & Physical quantity of material in this batch \\
+\textbf{\field{quantityUnit}} & enum(7 values) & Unit of measurement for quantity \\
+\textbf{\field{traceableUnitIds}} & array<string> & Array of TRU IDs included in this batch \\
+\textbf{\field{transactionBatchId}} & string & Unique identifier for the physical material batch \\
+\textbf{\field{transactionId}} & string & Foreign key to parent business transaction \\
+\field{additionalClaimIds} & array<string> & Array of secondary claim IDs \\
+\field{batchCreatedDate} & string (date-time) & When the batch was prepared/created \\
+\field{certificationValidation} & object (structured) & Certification and compliance validation data \\
+\field{claimId} & ['string', 'null'] & Foreign key to primary sustainability claim \\
+\field{deliveryDate} & ['string', 'null'] & Actual delivery timestamp \\
+\field{deliveryGeographicDataId} & ['string', 'null'] & Foreign key to delivery location \\
+\field{lastUpdated} & string (date-time) & Timestamp of last modification \\
+\field{measurementRecordIds} & array<string> & Array of measurement record IDs \\
+\field{mediaBreakDetected} & boolean & Flag indicating if traceability continuity was broken \\
+\field{plantPartComposition} & object & Plant part composition breakdown \\
+\field{processingHistoryIds} & array<string> & Array of processing history record IDs \\
+\field{productionBatchId} & ['string', 'null'] & Foreign key to source production batch \\
+\field{qualityGrade} & enum(9 values) & Overall quality grade for the batch \\
+\field{qualityMetrics} & object (structured) & Detailed quality assessment metrics \\
+\field{reconciliationStatus} & enum(5 values) & Status of volume/quality reconciliation \\
+\field{speciesComposition} & array<object> & Species breakdown with percentages \\
+\field{trackingHistory} & string & Complete location trail summary \\
+\field{transportationData} & object (structured) & Transportation and logistics information \\
+\end{entitytable}
+
+
+
+\subsubsection{Sales Delivery Document}
+\label{sec:entity-sales-delivery-document}
+
+SalesDeliveryDocument entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{transactionId} → \entity{Transaction} ()
+\end{itemize}
+\end{informative}
+
+** [View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
+
+% Sales Delivery Document Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Sales Delivery Document}
+\textbf{\field{buyerName}} & string & No description provided \\
+\textbf{\field{dateIssued}} & string (date) & No description provided \\
+\textbf{\field{documentId}} & string & No description provided \\
+\textbf{\field{productDescription}} & string & No description provided \\
+\textbf{\field{quantity}} & number & No description provided \\
+\textbf{\field{sellerName}} & string & No description provided \\
+\field{buyerAddress} & string & No description provided \\
+\field{certificateCode} & string & No description provided \\
+\field{sellerAddress} & string & No description provided \\
+\field{transactionId} & string & No description provided \\
+\field{transportReference} & string & No description provided \\
+\end{entitytable}
+
+

@@ -1,0 +1,113 @@
+% Measurement & Verification Entities
+% Auto-generated from JSON schemas
+
+
+\subsubsection{Measurement Record}
+\label{sec:entity-measurement-record}
+
+Quality measurements and dimensional data
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{operatorId} → \entity{Operator} ()
+\end{itemize}
+\end{informative}
+
+** [View Measurement Record in ERD Navigator](erd-navigator/index.html?focus=MeasurementRecord)**
+
+% Measurement Record Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Measurement Record}
+\textbf{\field{measurementMethod}} & enum(4 values) & No description provided \\
+\textbf{\field{measurementTimestamp}} & string (date-time) & No description provided \\
+\textbf{\field{recordId}} & string & No description provided \\
+\textbf{\field{traceableUnitId}} & string & No description provided \\
+\field{lastUpdated} & string (date-time) & No description provided \\
+\field{measuredDiameter} & number ($\geq$0) & No description provided \\
+\field{measuredLength} & number ($\geq$0) & No description provided \\
+\field{measuredVolume} & number ($\geq$0) & No description provided \\
+\field{measurementGeographicDataId} & string & No description provided \\
+\field{moistureAccuracy} & number ($\geq$0) & Estimated accuracy of moisture measurement (± percentage points) \\
+\field{moistureContent} & number ($\geq$0, $\leq$100) & Moisture content as percentage of weight contributed by water (0-100\textback... \\
+\field{moistureMethod} & enum(8 values) & Method used to determine moisture content \\
+\field{moistureStandard} & enum(5 values) & Standard procedure followed for moisture measurement \\
+\field{operatorId} & string & No description provided \\
+\field{speciesMeasurements} & array<string> & No description provided \\
+\field{trackingPointId} & string & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{Claim}
+\label{sec:entity-claim}
+
+Claim entity in BOOST data model
+
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{claimId} → \entity{Claim} ()
+\end{itemize}
+\end{informative}
+
+** [View Claim in ERD Navigator](erd-navigator/index.html?focus=Claim)**
+
+% Claim Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Claim}
+\textbf{\field{TraceableUnitId}} & string & Referenced traceable unit - uses EntityNameId convention referencing Traceabl... \\
+\textbf{\field{claimId}} & string & No description provided \\
+\textbf{\field{claimType}} & enum(9 values) & No description provided \\
+\textbf{\field{statement}} & string & No description provided \\
+\textbf{\field{validated}} & boolean & No description provided \\
+\field{CertificationSchemeId} & string & Certification scheme - uses EntityNameId convention referencing Certification... \\
+\field{applicableSpecies} & array<string> & No description provided \\
+\field{claimExpiry} & string (date-time) & No description provided \\
+\field{claimPercentage} & number ($\geq$0, $\leq$100) & No description provided \\
+\field{claimScope} & enum(4 values) & No description provided \\
+\field{evidenceDocumentId} & string & No description provided \\
+\field{inheritedFromTRU} & array<string> & No description provided \\
+\field{lastUpdated} & string (date-time) & No description provided \\
+\field{validatedBy} & string & No description provided \\
+\field{validationDate} & string (date-time) & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{Verification Statement}
+\label{sec:entity-verification-statement}
+
+VerificationStatement entity in BOOST data model
+
+** [View Verification Statement in ERD Navigator](erd-navigator/index.html?focus=VerificationStatement)**
+
+% Verification Statement Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Verification Statement}
+\textbf{\field{issuingBody}} & string & No description provided \\
+\textbf{\field{statementId}} & string & No description provided \\
+\textbf{\field{verificationDate}} & string (date) & No description provided \\
+\field{scope} & string & No description provided \\
+\field{transactionBatchId} & string & No description provided \\
+\end{entitytable}
+
+
+
+\subsubsection{BOOST Moisture Content Validation Rules}
+\label{sec:entity-moisture-content}
+
+Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard
+
+** [View BOOST Moisture Content Validation Rules in ERD Navigator](erd-navigator/index.html?focus=BOOSTMoistureContentValidationRules)**
+
+% BOOST Moisture Content Validation Rules Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{BOOST Moisture Content Validation Rules}
+\end{entitytable}
+
+

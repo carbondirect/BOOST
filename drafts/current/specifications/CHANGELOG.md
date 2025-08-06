@@ -5,6 +5,44 @@ All notable changes to the BOOST Specification documentation system will be docu
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.9.0] - 2025-08-06
+
+### Added
+- **Comprehensive PDF Build System**: Complete 67-page PDF with all 33 entities across 7 thematic areas
+- **Minted Syntax Highlighting**: Professional JSON code highlighting in LaTeX examples
+- **Single Source of Truth Architecture**: All entity documentation generated from JSON schemas
+- **Build System Consolidation**: Organized scripts, outputs, and documentation structure
+- **Technical Documentation**: Added comprehensive `docs/BUILD.md` architecture guide
+- **Professional Directory Structure**: Clean separation of source files, scripts, and generated content
+
+### Changed  
+- **Build Output Management**: All generated files now consolidated in `build/` directory
+- **Script Organization**: Moved Python generators to dedicated `scripts/` directory
+- **Documentation Structure**: Complete rewrite of README.md with current workflow
+- **Git Management**: Updated .gitignore to properly handle build artifacts and intermediate files
+- **PDF Generation**: Enhanced 3-pass LaTeX compilation with comprehensive error reporting
+
+### Fixed
+- **Unicode Issues**: Resolved emoji and mathematical symbol rendering in LaTeX
+- **Entity Coverage**: Fixed missing 29 entities - now includes all 33 entities in PDF
+- **Build Consistency**: Standardized all build scripts to use `build/` directory consistently
+- **LaTeX Symbol Handling**: Proper escaping of ≥, ≤, and underscore characters in entity tables
+
+### Technical Implementation
+- Created `scripts/` directory with organized Python content generators
+- Implemented unified `build-all.sh` pipeline with content generation → PDF compilation → validation
+- Enhanced `build-pdf.sh` with minted support and comprehensive logging
+- Added `docs/BUILD.md` with complete technical architecture documentation
+- Updated `.gitignore` with comprehensive build system patterns
+- Cleaned up root directory intermediate files and temporary artifacts
+
+### Build System Features
+- **Complete Entity Coverage**: All 33 entities documented across 7 thematic areas
+- **Schema-to-LaTeX Pipeline**: Automated conversion from JSON schemas to professional LaTeX tables
+- **Multi-Pass Compilation**: 3-pass LaTeX build for complete cross-reference resolution
+- **Error Handling**: Comprehensive validation, logging, and troubleshooting support
+- **CI/CD Ready**: All scripts designed for automated build environments
+
 ## [v2.8.0] - 2025-08-06
 
 ### Added

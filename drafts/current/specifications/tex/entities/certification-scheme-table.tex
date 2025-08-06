@@ -1,0 +1,20 @@
+% CertificationScheme Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{CertificationScheme}
+\textbf{\field{certificationSchemeId}} & string (pattern) & Unique identifier for the certification scheme \\
+\textbf{\field{issuingOrganizationId}} & string (pattern) & Foreign key to organization that issues this scheme \\
+\textbf{\field{schemeName}} & string & Official name of the certification scheme \\
+\textbf{\field{schemeType}} & enum(6 values) & Type of certification scheme \\
+\field{applicableGeographicAreas} & array<string> & Geographic areas where this scheme is applicable \\
+\field{auditRequirements} & string & Audit and verification requirements \\
+\field{chainOfCustodyRequirements} & string & Chain of custody tracking and documentation requirements \\
+\field{claimTypes} & array<string> & Types of claims supported by this scheme \\
+\field{documentationRequirements} & array<string> & Required documentation and record-keeping \\
+\field{eligibleMaterialTypes} & array<string> & Material types eligible for this certification scheme \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{schemeDescription} & string & Detailed description of the certification scheme \\
+\field{schemeStandard} & string & Standard or version identifier \\
+\field{validityPeriod} & string & Typical validity period for certifications under this scheme \\
+\field{website} & string (uri) & Official website for the certification scheme \\
+\end{entitytable}

@@ -1,0 +1,26 @@
+% Traceable Unit Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Traceable Unit}
+\textbf{\field{createdTimestamp}} & string (date-time) & When the TRU was created \\
+\textbf{\field{harvestGeographicDataId}} & string & Harvest location - uses EntityNameId convention referencing GeographicData \\
+\textbf{\field{harvesterId}} & string (pattern) & Foreign key to harvesting organization \\
+\textbf{\field{isMultiSpecies}} & boolean & True if contains multiple species \\
+\textbf{\field{materialTypeId}} & string & Foreign key to Material entity (reference table) \\
+\textbf{\field{totalVolumeM3}} & number (≥0) & Total volume of the traceable unit in cubic meters \\
+\textbf{\field{traceableUnitId}} & string & Unique ID for each TRU \\
+\textbf{\field{uniqueIdentifier}} & string & Biometric signature, RFID tag, or QR code \\
+\textbf{\field{unitType}} & enum(4 values) & Type of traceable unit \\
+\field{assortmentType} & enum(4 values) & Type of wood assortment \\
+\field{attachedInformation} & array<string> & All data linked to this TRU \\
+\field{childTraceableUnitIds} & array<string> & For split/merge operations (Phase 2) \\
+\field{currentGeographicDataId} & string & Current location - uses EntityNameId convention referencing GeographicData \\
+\field{currentStatus} & enum(4 values) & Current status of the TRU (Phase 2) \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{mediaBreakFlags} & array<string> & Points where data continuity was lost (Phase 2) \\
+\field{operatorId} & string & Foreign key to operator \\
+\field{parentTraceableUnitId} & string & For split/merge operations (Phase 2) \\
+\field{processingHistory} & array<string> & Complete processing chain references (Phase 2) \\
+\field{qualityGrade} & enum(5 values) & Quality grade classification \\
+\field{sustainabilityCertification} & string & FSC, PEFC, etc. claims (Phase 2) \\
+\end{entitytable}
