@@ -24,7 +24,7 @@
       },
       "operatorId": {
         "type": "string",
-        "pattern": "^OP-[A-Z0-9-]{6,50}$",
+        "pattern": "^OP-[A-Z0-9-_]+$",
         "description": "Unique identifier for the operator (Primary Key)",
         "examples": [
           "OP-KLAMATH-HARVEST-001",

@@ -13,7 +13,7 @@
     "material_supply_chain": {
       "color": "#A16207",
       "label": "Material & Supply Chain", 
-      "entities": ["Material", "SpeciesComponent", "Supplier", "Customer", "SupplyBase", "SupplyBaseReport"]
+      "entities": ["Material", "SpeciesComponent", "Supplier", "Customer", "SupplyBase", "SupplyBaseReport", "Equipment"]
     },
     "transaction_management": {
       "color": "#EA580C",
@@ -160,6 +160,10 @@
     "MassBalanceAccount": {
       "emoji": "⚖️",
       "position": {"x": 3300, "y": 2300}
+    },
+    "Equipment": {
+      "emoji": "🔧",
+      "position": {"x": 1900, "y": 2000}
     }
   },
   "manual_relationships": [
@@ -660,6 +664,30 @@
       "to_cardinality": "one"
     },
     {
+      "from": "Organization",
+      "to": "GeographicData",
+      "label": "operates_in_areas",
+      "type": "non-identifying",
+      "from_cardinality": "many",
+      "to_cardinality": "many"
+    },
+    {
+      "from": "Organization",
+      "to": "TrackingPoint",
+      "label": "manages_harvest_sites",
+      "type": "non-identifying",
+      "from_cardinality": "one",
+      "to_cardinality": "many"
+    },
+    {
+      "from": "Organization",
+      "to": "Equipment",
+      "label": "owns_equipment",
+      "type": "identifying",
+      "from_cardinality": "one",
+      "to_cardinality": "many"
+    },
+    {
       "from": "Audit",
       "to": "Organization",
       "label": "audits",
@@ -778,10 +806,35 @@
       "type": "non-identifying",
       "from_cardinality": "many",
       "to_cardinality": "one"
+    },
+    {
+      "from": "Equipment",
+      "to": "Organization",
+      "label": "owned_by",
+      "type": "non-identifying",
+      "from_cardinality": "many",
+      "to_cardinality": "one"
+    },
+    {
+      "from": "Equipment",
+      "to": "Operator",
+      "label": "operated_by",
+      "type": "non-identifying",
+      "from_cardinality": "many",
+      "to_cardinality": "one"
+    },
+    {
+      "from": "Equipment",
+      "to": "TrackingPoint",
+      "label": "assigned_to",
+      "type": "non-identifying",
+      "from_cardinality": "many",
+      "to_cardinality": "one"
     }
   ],
   "field_mappings": {
     "Organization": ["OrganizationId", "organizationId", "issuingOrganizationId", "regulatedEntityId", "harvesterId"],
+    "Equipment": ["equipmentId", "currentOperatorId", "assignedTrackingPointId"],
     "GeographicData": ["GeographicDataId", "primaryGeographicDataId", "measurementGeographicDataId", "processingGeographicDataId", "captureGeographicDataId", "sourceGeographicDataId", "deliveryGeographicDataId", "reportGeographicDataId", "supplyBaseGeographicDataId", "customerGeographicDataId", "supplierGeographicDataId", "currentGeographicDataId", "harvestGeographicDataId"],
     "Operator": ["OperatorId", "operatorId", "auditorId", "employeeId"],
     "TraceableUnit": ["TraceableUnitId", "traceableUnitId", "inputTraceableUnitId", "outputTraceableUnitId", "parentTraceableUnitId"],
@@ -795,7 +848,7 @@
     "CertificationScheme": ["CertificationSchemeId", "certificationSchemeId"],
     "Transaction": ["TransactionId", "transactionId"],
     "TransactionBatch": ["TransactionBatchId", "transactionBatchId"],
-    "SalesDeliveryDocument": ["SalesDeliveryDocumentId", "documentId"],
+    "SalesDeliveryDocument": ["documentId"],
     "TrackingPoint": ["TrackingPointId", "trackingPointId"],
     "Claim": ["ClaimId", "claimId"],
     "ProductGroup": ["ProductGroupId", "productGroupId"]
@@ -813,6 +866,7 @@
     "SalesDeliveryDocument": "documentId",
     "SpeciesComponent": "componentId",
     "EnergyCarbonData": "energyCarbonDataId",
-    "BiometricIdentifier": "biometricId"
+    "BiometricIdentifier": "biometricId",
+    "Equipment": "equipmentId"
   }
 }

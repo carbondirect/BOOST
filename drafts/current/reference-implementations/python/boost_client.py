@@ -560,6 +560,186 @@ class BOOSTClient:
         """
         self.schema_loader.refresh_schemas()
         # Validator will automatically use updated schema_loader
+    
+    def add_tru_to_transaction(self, transaction_id: str, tru_id: str) -> bool:
+        """
+        Add a TracableUnit ID to a transaction's TRU array.
+        
+        Args:
+            transaction_id: ID of the transaction to update
+            tru_id: ID of the TRU to add
+            
+        Returns:
+            True if successfully added, False if transaction not found
+        """
+        if transaction_id not in self.transactions:
+            return False
+        
+        transaction = self.transactions[transaction_id]
+        transaction_data = transaction.model_dump(by_alias=True, exclude_none=True)
+        
+        # Initialize array if it doesn't exist or is None
+        if 'traceableUnitIds' not in transaction_data or transaction_data['traceableUnitIds'] is None:
+            transaction_data['traceableUnitIds'] = []
+        
+        # Add TRU ID if not already present
+        if tru_id not in transaction_data['traceableUnitIds']:
+            transaction_data['traceableUnitIds'].append(tru_id)
+            transaction_data['lastUpdated'] = datetime.utcnow()
+            
+            # Recreate the model with updated data
+            TransactionModel = self.schema_loader.get_model('transaction')
+            updated_transaction = TransactionModel(**transaction_data)
+            self.transactions[transaction_id] = updated_transaction
+        
+        return True
+    
+    def add_tru_to_organization(self, org_id: str, tru_id: str) -> bool:
+        """
+        Add a TraceableUnit ID to an organization's managed TRUs array.
+        
+        Args:
+            org_id: ID of the organization to update
+            tru_id: ID of the TRU to add
+            
+        Returns:
+            True if successfully added, False if organization not found
+        """
+        if org_id not in self.organizations:
+            return False
+        
+        organization = self.organizations[org_id]
+        org_data = organization.model_dump(by_alias=True, exclude_none=True)
+        
+        # Initialize array if it doesn't exist or is None
+        if 'traceableUnitIds' not in org_data or org_data['traceableUnitIds'] is None:
+            org_data['traceableUnitIds'] = []
+        
+        # Add TRU ID if not already present
+        if tru_id not in org_data['traceableUnitIds']:
+            org_data['traceableUnitIds'].append(tru_id)
+            org_data['lastUpdated'] = datetime.utcnow()
+            
+            # Recreate the model with updated data
+            OrganizationModel = self.schema_loader.get_model('organization')
+            updated_organization = OrganizationModel(**org_data)
+            self.organizations[org_id] = updated_organization
+        
+        return True
+    
+    def add_equipment_to_organization(self, org_id: str, equipment_id: str) -> bool:
+        """
+        Add an equipment ID to an organization's equipment array.
+        
+        Args:
+            org_id: ID of the organization to update
+            equipment_id: ID of the equipment to add
+            
+        Returns:
+            True if successfully added, False if organization not found
+        """
+        if org_id not in self.organizations:
+            return False
+        
+        organization = self.organizations[org_id]
+        org_data = organization.model_dump(by_alias=True, exclude_none=True)
+        
+        # Initialize array if it doesn't exist or is None
+        if 'equipmentIds' not in org_data or org_data['equipmentIds'] is None:
+            org_data['equipmentIds'] = []
+        
+        # Add equipment ID if not already present
+        if equipment_id not in org_data['equipmentIds']:
+            org_data['equipmentIds'].append(equipment_id)
+            org_data['lastUpdated'] = datetime.utcnow()
+            
+            # Recreate the model with updated data
+            OrganizationModel = self.schema_loader.get_model('organization')
+            updated_organization = OrganizationModel(**org_data)
+            self.organizations[org_id] = updated_organization
+        
+        return True
+    
+    def set_reconciliation_status(self, transaction_id: str, status: str, timestamp: Optional[datetime] = None) -> bool:
+        """
+        Set the reconciliation status for a transaction.
+        
+        Args:
+            transaction_id: ID of the transaction to update
+            status: Reconciliation status ('pending', 'resolved', 'disputed')
+            timestamp: Optional timestamp (defaults to current time)
+            
+        Returns:
+            True if successfully updated, False if transaction not found or invalid status
+        """
+        if transaction_id not in self.transactions:
+            return False
+        
+        # Validate status against schema enum
+        valid_statuses = ['pending', 'resolved', 'disputed']
+        if status not in valid_statuses:
+            raise ValueError(f"Invalid reconciliation status '{status}'. Valid statuses: {valid_statuses}")
+        
+        transaction = self.transactions[transaction_id]
+        transaction_data = transaction.model_dump(by_alias=True, exclude_none=True)
+        
+        transaction_data['reconciliationStatus'] = status
+        transaction_data['lastUpdated'] = timestamp or datetime.utcnow()
+        
+        # Recreate the model with updated data
+        TransactionModel = self.schema_loader.get_model('transaction')
+        updated_transaction = TransactionModel(**transaction_data)
+        self.transactions[transaction_id] = updated_transaction
+        
+        return True
+    
+    def add_manipulation_timestamp(self, transaction_id: str, timestamp: datetime) -> bool:
+        """
+        Add a manipulation timestamp to a transaction's timeline.
+        
+        Args:
+            transaction_id: ID of the transaction to update
+            timestamp: Processing step timestamp
+            
+        Returns:
+            True if successfully added, False if transaction not found
+        """
+        if transaction_id not in self.transactions:
+            return False
+        
+        transaction = self.transactions[transaction_id]
+        transaction_data = transaction.model_dump(by_alias=True, exclude_none=True)
+        
+        # Initialize array if it doesn't exist or is None
+        if 'manipulationTimestamps' not in transaction_data or transaction_data['manipulationTimestamps'] is None:
+            transaction_data['manipulationTimestamps'] = []
+        
+        # Ensure all existing timestamps are strings
+        timestamp_list = []
+        for ts in transaction_data['manipulationTimestamps']:
+            if isinstance(ts, datetime):
+                timestamp_list.append(ts.isoformat())
+            elif isinstance(ts, str):
+                timestamp_list.append(ts)
+            else:
+                # Convert other types to string representation
+                timestamp_list.append(str(ts))
+        
+        # Add new timestamp (convert to ISO string for JSON compatibility)
+        timestamp_str = timestamp.isoformat()
+        timestamp_list.append(timestamp_str)
+        
+        # Sort timestamps chronologically and update
+        timestamp_list.sort()
+        transaction_data['manipulationTimestamps'] = timestamp_list
+        transaction_data['lastUpdated'] = datetime.utcnow()
+        
+        # Recreate the model with updated data
+        TransactionModel = self.schema_loader.get_model('transaction')
+        updated_transaction = TransactionModel(**transaction_data)
+        self.transactions[transaction_id] = updated_transaction
+        
+        return True
 
 
 def create_client(context_url: Optional[str] = None, schema_path: Optional[str] = None) -> BOOSTClient:

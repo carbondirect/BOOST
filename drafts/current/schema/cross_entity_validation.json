@@ -62,7 +62,7 @@
               "type": "object",
               "properties": {
                 "targetEntity": {"const": "SalesDeliveryDocument"},
-                "targetField": {"const": "salesDeliveryDocumentId"},
+                "targetField": {"const": "documentId"},
                 "required": false,
                 "description": "Sales document reference must be valid if provided"
               }
@@ -81,13 +81,13 @@
         "TraceableUnit": {
           "type": "object",
           "properties": {
-            "OrganizationId": {
+            "harvesterId": {
               "type": "object",
               "properties": {
                 "targetEntity": {"const": "Organization"},
                 "targetField": {"const": "organizationId"},
                 "required": true,
-                "description": "TRU must be owned by valid Organization"
+                "description": "TRU must be owned by valid harvesting Organization"
               }
             },
             "harvestGeographicDataId": {
@@ -147,6 +147,38 @@
                 "targetField": {"const": "operatorId"},
                 "required": false,
                 "description": "Processing operator must be valid if specified"
+              }
+            }
+          }
+        },
+        "Equipment": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Equipment must be owned by valid Organization"
+              }
+            },
+            "currentOperatorId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Operator"},
+                "targetField": {"const": "operatorId"},
+                "required": false,
+                "description": "Current operator must be valid if specified"
+              }
+            },
+            "assignedTrackingPointId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TrackingPoint"},
+                "targetField": {"const": "trackingPointId"},
+                "required": false,
+                "description": "Assigned location must be valid TrackingPoint if specified"
               }
             }
           }
@@ -251,7 +283,7 @@
               "parentEntity": "Organization",
               "parentField": "organizationId",
               "childEntity": "TraceableUnit",
-              "childField": "OrganizationId",
+              "childField": "harvesterId",
               "description": "One Organization can own many TraceableUnits"
             },
             {
@@ -260,6 +292,13 @@
               "childEntity": "Transaction",
               "childField": "OrganizationId",
               "description": "One Organization can create many Transactions"
+            },
+            {
+              "parentEntity": "Organization",
+              "parentField": "organizationId",
+              "childEntity": "Equipment",
+              "childField": "organizationId",
+              "description": "One Organization can own many Equipment items"
             },
             {
               "parentEntity": "TraceableUnit",
@@ -303,6 +342,20 @@
               "parentEntity": "Customer",
               "parentField": "customerId",
               "description": "Many transactions can be with one customer"
+            },
+            {
+              "childEntity": "Equipment",
+              "childField": "currentOperatorId",
+              "parentEntity": "Operator",
+              "parentField": "operatorId",
+              "description": "Many equipment items can be operated by one operator"
+            },
+            {
+              "childEntity": "Equipment",
+              "childField": "assignedTrackingPointId",
+              "parentEntity": "TrackingPoint",
+              "parentField": "trackingPointId",
+              "description": "Many equipment items can be assigned to one tracking point"
             }
           ]
         }

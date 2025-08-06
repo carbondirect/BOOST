@@ -1,0 +1,552 @@
+erDiagram
+    %% =========================================================================
+    %% BOOST Data Standard - Thematic Entity Relationship Diagram (2025)
+    %% =========================================================================
+    %% This ERD organizes 31 entities into 8 thematic clusters with visual
+    %% enhancements for improved readability and stakeholder communication
+    %% 
+    %% Legend:
+    %% 🟢 Core Traceability (Green) - Forest/Growth/Sustainability
+    %% 🔵 Organizational Foundation (Blue) - Trust/Certification/Authority  
+    %% 🟤 Material & Supply Chain (Brown) - Earth/Wood/Raw Materials
+    %% 🟠 Transaction Management (Orange) - Commerce/Exchange/Money
+    %% 🟡 Sustainability & Claims (Gold) - Value/Quality/Sustainability
+    %% 🟣 Geographic & Location (Purple) - Spatial/Location/Mapping
+    %% 🔴 Reporting & Compliance (Red) - Compliance/Regulatory/Audit
+    %% ⚫ Analytics & Data Management (Gray) - Data/Analytics/Intelligence
+    %% =========================================================================
+
+    %% 🟢 CORE TRACEABILITY ENTITIES - The Heart of BOOST
+    %% Central positioning - primary entities for biomass tracking
+    
+    TraceableUnit {
+        string context "@context"
+        string type "@type" 
+        string id "@id"
+        string traceableUnitId PK "🔑 TRU-[A-Z0-9-_]+"
+        datetime creationDate "📅 TRU creation timestamp"
+        string harvesterId FK "🏢 ORG-[A-Z0-9-_]+"
+        string operatorId FK "👤 OPER-[A-Z0-9-_]+"
+        string materialTypeId FK "🪵 Material reference"
+        string parentTraceableUnitId FK "🔗 Parent TRU chain"
+        decimal quantity "📏 Volume/weight"
+        string unit "📐 m³, tons, kg"
+        string status "✅ active, processed, sold"
+    }
+    
+    MaterialProcessing {
+        string context "@context"
+        string type "@type"
+        string id "@id" 
+        string materialProcessingId PK "🔑 MP-[A-Z0-9-_]+"
+        datetime processingDate "📅 Operation timestamp"
+        string inputTraceableUnitId FK "📥 Input TRU"
+        string outputTraceableUnitId FK "📤 Output TRU"
+        string processingType "⚙️ chipping, drying, pelletizing"
+        string processingFacilityId FK "🏭 Facility reference"
+        decimal inputQuantity "📊 Input volume"
+        decimal outputQuantity "📊 Output volume"
+        decimal conversionRate "🔄 Input to output ratio"
+    }
+    
+    ProcessingHistory {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string processingHistoryId PK "🔑 PH-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Related TRU"
+        datetime timestamp "⏰ Event time"
+        string operationType "🔧 harvest, transport, process"
+        string operatorId FK "👤 Responsible operator"
+        string locationId FK "📍 Operation location"
+        string notes "📝 Additional context"
+    }
+    
+    SpeciesComponent {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string speciesComponentId PK "🔑 SC-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Parent TRU"
+        string speciesName "🌲 Scientific name"
+        string commonName "🌳 Common name"
+        decimal percentage "📊 % of total volume"
+        string origin "🌍 Geographic origin"
+        string certificationStatus "✅ Certified/non-certified"
+    }
+    
+    MeasurementRecord {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string measurementRecordId PK "🔑 MR-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Measured TRU"
+        datetime measurementDate "📅 Measurement time"
+        string measurementType "📏 volume, weight, moisture"
+        decimal value "🔢 Measured value"
+        string unit "📐 m³, kg, %"
+        string measurementMethod "🔬 Scale, calipers, meter"
+        string operatorId FK "👤 Who measured"
+    }
+    
+    LocationHistory {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string locationHistoryId PK "🔑 LH-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Tracked TRU"
+        datetime timestamp "⏰ Location timestamp"
+        string geographicDataId FK "🗺️ Geographic reference"
+        string movementType "🚛 transport, storage, processing"
+        string transportMethod "🚚 truck, rail, ship"
+        string notes "📝 Movement details"
+    }
+    
+    BiometricIdentifier {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string biometricIdentifierId PK "🔑 BI-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Identified TRU"
+        string biometricType "🔬 grain_pattern, color_profile"
+        string identifierValue "🧬 Unique biometric signature"
+        datetime captureDate "📅 When captured"
+        string captureMethod "📷 scanner, camera, sensor"
+        decimal confidence "📊 Match confidence %"
+    }
+    
+    TrackingPoint {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string trackingPointId PK "🔑 TP-[A-Z0-9-_]+"
+        string trackingPointName "📍 Site Alpha, Mill East Gate"
+        string trackingPointType "🏢 harvest_site, mill, port"
+        string geographicDataId FK "🗺️ Geographic location"
+        string organizationId FK "🏢 Managing organization"
+        string operationalStatus "✅ active, inactive, maintenance"
+        string description "📝 Point description"
+    }
+    
+    DataReconciliation {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string dataReconciliationId PK "🔑 DR-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Reconciled TRU"
+        datetime reconciliationDate "📅 Reconciliation time"
+        string reconciliationType "🔄 measurement, processing, transfer"
+        decimal originalValue "📊 Original measurement"
+        decimal reconciledValue "📊 Corrected measurement"
+        string discrepancyReason "❓ Reason for difference"
+        string approvedBy "✅ Approval authority"
+    }
+
+    %% 🔵 ORGANIZATIONAL FOUNDATION ENTITIES - Trust & Authority
+    %% Business structure and certification framework
+    
+    Organization {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string organizationId PK "🔑 ORG-[A-Z0-9-_]+"
+        string organizationName "🏢 Legal business name"
+        string organizationType "🏷️ harvester, processor, certifier"
+        string primaryGeographicDataId FK "🗺️ HQ location"
+        string contactInformation "📞 Phone, email, address"
+        string operationalStatus "✅ active, inactive, suspended"
+        string registrationNumber "📋 Business registration"
+        datetime lastUpdated "⏰ Record update time"
+    }
+    
+    Certificate {
+        string context "@context"
+        string type "@type" 
+        string id "@id"
+        string certificateNumber PK "🔑 Cert number"
+        string CertificationSchemeId FK "🛡️ Scheme reference"
+        string CertificationBodyId FK "🏛️ Issuing CB"
+        string OrganizationId FK "🏢 Certificate holder"
+        date dateOfIssue "📅 Issue date"
+        date dateOfExpiry "📅 Expiry date"
+        string status "✅ valid, expired, suspended"
+        string scopeOfCertification "📋 What's certified"
+        string versionNumber "🔢 Cert version"
+        string VerificationStatementId FK "✅ Verification ref"
+    }
+    
+    CertificationScheme {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string certificationSchemeId PK "🔑 SCHEME-[A-Z0-9-_]+"
+        string schemeName "🛡️ FSC, SBP, PEFC, RSB"
+        string schemeType "🏷️ forest_management, chain_of_custody"
+        string issuingOrganizationId FK "🏢 Managing organization"
+        string schemeVersion "🔢 Standard version"
+        string recognitionStatus "✅ Recognized authority"
+        string applicableRegions "🌍 Geographic scope"
+        datetime lastUpdated "⏰ Scheme update time"
+    }
+    
+    CertificationBody {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string cbId PK "🔑 CB-[A-Z0-9-_]+"
+        string cbName "🏛️ Certifying body name"
+        string cbType "🏷️ accredited, competent_authority"
+        string accreditationStatus "✅ active, suspended"
+        string authorizedSchemes "🛡️ List of schemes"
+        string contactInformation "📞 CB contact details"
+        string operationalRegions "🌍 Operating countries"
+        string validityPeriod "📅 Accreditation period"
+    }
+
+    %% 🟤 MATERIAL & SUPPLY CHAIN ENTITIES - Physical Materials
+    %% Raw materials and supply network management
+    
+    Material {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string materialId PK "🔑 MAT-[A-Z0-9-_]+"
+        string materialName "🪵 Wood chips, pellets"
+        string materialType "🏷️ roundwood, residues, chips"
+        string materialCategory "📋 SBP Category 1-5"
+        string sustainabilityClassification "🌱 Sustainable, conventional"
+        string moistureContentRange "💧 Expected moisture %"
+        string densityRange "⚖️ Bulk density range"
+        string description "📝 Material description"
+    }
+    
+    SupplyBase {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string supplyBaseId PK "🔑 SB-[A-Z0-9-_]+"
+        string supplyBaseName "🌲 Forest management unit"
+        string geographicDataId FK "🗺️ Location reference"
+        string managementType "🏷️ sustainable, intensive"
+        decimal totalArea "📏 Hectares"
+        string ownershipType "🏷️ public, private, community"
+        string certificationStatus "✅ Certified schemes"
+        string harvestingRights "📋 Legal harvesting status"
+    }
+    
+    Supplier {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string supplierId PK "🔑 SUPP-[A-Z0-9-_]+"
+        string supplierName "🤝 Business name"
+        string supplierType "🏷️ harvester, broker, trader"
+        string geographicDataId FK "🗺️ Supplier location"
+        string contactInformation "📞 Contact details"
+        string certificationIds "🛡️ Held certificates"
+        string operationalStatus "✅ active, inactive"
+        string paymentTerms "💰 Payment conditions"
+    }
+    
+    Customer {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string customerId PK "🔑 CUST-[A-Z0-9-_]+"
+        string customerName "🏭 Customer business name"
+        string address "📍 Customer address"
+        string GeographicDataId FK "🗺️ Customer location"
+        string customerType "🏷️ manufacturer, energy_producer"
+        string contactInformation "📞 Customer contacts"
+        string preferredMaterials "🪵 Material preferences"
+    }
+
+    %% 🟠 TRANSACTION MANAGEMENT ENTITIES - Commerce & Exchange
+    %% Commercial transactions and physical material batches
+    
+    Transaction {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string transactionId PK "🔑 TXN-[A-Z0-9-_]+"
+        string OrganizationId FK "🏢 Seller organization"
+        string customerId FK "🏭 Buyer customer"
+        string traceableUnitId FK "🔗 Sold TRU"
+        datetime transactionDate "📅 Sale date"
+        decimal quantity "📊 Sold quantity"
+        string unit "📐 m³, tons"
+        decimal unitPrice "💰 Price per unit"
+        decimal totalValue "💰 Total transaction value"
+        string paymentStatus "💳 paid, pending, overdue"
+        string BrokerOrganizationId FK "🤝 Broker if used"
+    }
+    
+    TransactionBatch {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string transactionBatchId PK "🔑 TB-[A-Z0-9-_]+"
+        string transactionId FK "🔗 Parent transaction"
+        decimal batchQuantity "📊 Batch quantity"
+        string batchIdentifier "🏷️ Physical batch ID"
+        string qualityGrade "⭐ Grade A, B, C"
+        datetime shipmentDate "🚚 Ship date"
+        datetime deliveryDate "📅 Delivery date"
+        string transportMethod "🚛 Truck, rail, ship"
+        string deliveryStatus "📦 shipped, delivered, pending"
+    }
+    
+    SalesDeliveryDocument {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string salesDeliveryDocumentId PK "🔑 SDD-[A-Z0-9-_]+"
+        string transactionId FK "🔗 Related transaction"
+        string documentType "📄 invoice, delivery_note, bol"
+        string documentNumber "🔢 Legal document number"
+        datetime documentDate "📅 Document date"
+        string legalRequirements "⚖️ Regulatory compliance"
+        string signatories "✍️ Authorized signatures"
+        string documentStatus "✅ draft, final, archived"
+    }
+
+    %% 🟡 SUSTAINABILITY & CLAIMS ENTITIES - Value & Quality
+    %% Environmental claims and certification inheritance
+    
+    Claim {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string claimId PK "🔑 CLAIM-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Claimed TRU"
+        string claimType "🏆 sustainability, carbon_neutral"
+        string claimValue "📊 Claim measurement"
+        string claimUnit "📐 tCO2, %_sustainable"
+        string certificationSchemeId FK "🛡️ Supporting scheme"
+        string evidenceDocuments "📋 Supporting evidence"
+        datetime validFrom "📅 Claim valid from"
+        datetime validTo "📅 Claim valid until"
+        string verificationStatus "✅ verified, pending"
+    }
+
+    %% 🟣 GEOGRAPHIC & LOCATION ENTITIES - Spatial Data
+    %% Geographic information and spatial references
+    
+    GeographicData {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string geographicDataId PK "🔑 GEO-[A-Z0-9-_]+"
+        string locationName "📍 Site name, city"
+        string locationType "🏷️ harvest_site, mill, port"
+        object geoJsonGeometry "🗺️ GeoJSON coordinates"
+        string country "🇺🇸 ISO country code"
+        string administrativeArea "🏛️ State, province"
+        string postalCode "📮 ZIP/postal code"
+        decimal elevation "⛰️ Meters above sea level"
+        string timeZone "🕐 Location timezone"
+    }
+
+    %% 🔴 REPORTING & COMPLIANCE ENTITIES - Regulatory & Audit
+    %% Compliance reporting and audit trail management
+    
+    SupplyBaseReport {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string supplyBaseReportId PK "🔑 SBR-[A-Z0-9-_]+"
+        string supplyBaseId FK "🌲 Reported supply base"
+        string organizationId FK "🏢 Reporting organization"
+        datetime reportingPeriodStart "📅 Period start"
+        datetime reportingPeriodEnd "📅 Period end"
+        decimal totalVolume "📊 Total volume harvested"
+        string sustainabilityMetrics "🌱 Sustainability KPIs"
+        string certificationStatus "✅ Current certifications"
+        datetime submissionDate "📅 Report submission"
+    }
+    
+    VerificationStatement {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string verificationStatementId PK "🔑 VS-[A-Z0-9-_]+"
+        string organizationId FK "🏢 Verified organization"
+        string verifyingBodyId FK "🏛️ Third-party verifier"
+        datetime verificationDate "📅 Verification date"
+        string verificationScope "📋 What was verified"
+        string verificationResult "✅ passed, failed, conditional"
+        string findingsAndRecommendations "📝 Verifier notes"
+        datetime validityPeriod "📅 Verification valid until"
+    }
+    
+    Audit {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string auditId PK "🔑 AUDIT-[A-Z0-9-_]+"
+        string organizationId FK "🏢 Audited organization"
+        string auditType "🔍 internal, external, surveillance"
+        datetime auditDate "📅 Audit date"
+        string auditorId FK "👤 Lead auditor"
+        string auditScope "📋 Areas audited"
+        string auditFindings "📝 Non-conformities"
+        string correctiveActions "🔧 Required actions"
+        string auditStatus "✅ open, closed, follow_up"
+    }
+
+    %% ⚫ ANALYTICS & DATA MANAGEMENT ENTITIES - Intelligence & Analysis
+    %% Business intelligence and environmental data management
+    
+    ProductGroup {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string productGroupId PK "🔑 PG-[A-Z0-9-_]+"
+        string productGroupName "📋 Product category"
+        string materialIds "🪵 Associated materials"
+        string certificationRequirements "🛡️ Required certifications"
+        string marketSegment "🎯 Energy, pulp, construction"
+        string qualitySpecifications "⭐ Grade requirements"
+        string pricingModel "💰 Pricing structure"
+        string description "📝 Product description"
+    }
+    
+    MassBalanceAccount {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string massBalanceAccountId PK "🔑 MBA-[A-Z0-9-_]+"
+        string organizationId FK "🏢 Account owner"
+        string materialType "🪵 Tracked material"
+        decimal inputQuantity "📥 Total input"
+        decimal outputQuantity "📤 Total output"
+        decimal currentBalance "⚖️ Current stock"
+        datetime balanceDate "📅 Balance as of date"
+        string reconciliationStatus "✅ balanced, variance"
+        decimal allowableVariance "📊 Acceptable difference %"
+    }
+    
+    EnergyCarbonData {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string energyCarbonDataId PK "🔑 ECD-[A-Z0-9-_]+"
+        string traceableUnitId FK "🔗 Measured TRU"
+        decimal moistureContent "💧 Moisture percentage"
+        decimal energyContent "⚡ GJ/ton, BTU/lb"
+        decimal carbonContent "🌡️ Carbon percentage"
+        decimal ashContent "🔥 Ash percentage"
+        datetime testDate "📅 Testing date"
+        string testMethod "🔬 ASTM, EN standards"
+        string certifyingLab "🏛️ Testing laboratory"
+    }
+    
+    %% LCFS-specific entities for enhanced regulatory compliance
+    LCFSPathway {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string lcfsPathwayId PK "🔑 LCFS-[A-Z0-9-_]+"
+        string pathwayName "🛣️ Pathway description"
+        string feedstockType "🌱 Feedstock category"
+        string productionProcess "⚙️ Conversion process"
+        decimal carbonIntensity "🌡️ gCO2e/MJ"
+        string certificationStatus "✅ CARB certified"
+        datetime effectiveDate "📅 Pathway effective date"
+        string applicableRegion "🌍 CA, OR, WA"
+    }
+    
+    LCFSReporting {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string lcfsReportingId PK "🔑 LCFSR-[A-Z0-9-_]+"
+        string organizationId FK "🏢 Reporting entity"
+        string lcfsPathwayId FK "🛣️ Used pathway"
+        datetime reportingPeriod "📅 Quarter/year"
+        decimal fuelQuantity "⛽ Gallons/liters"
+        decimal creditsGenerated "💰 LCFS credits"
+        string regulatorySubmission "📋 Submission status"
+        datetime submissionDate "📅 Filed date"
+    }
+    
+    %% Supporting entities for specialized operations
+    Operator {
+        string context "@context"
+        string type "@type"
+        string id "@id"
+        string operatorId PK "🔑 OPER-[A-Z0-9-_]+"
+        string operatorName "👤 Individual name"
+        string organizationId FK "🏢 Employer organization"
+        string certificationLevel "🎓 Skill certifications"
+        string operatorType "🏷️ harvester, driver, processor"
+        string contactInformation "📞 Contact details"
+        string operationalStatus "✅ active, inactive, training"
+        datetime lastTrainingDate "📅 Recent training"
+    }
+
+    %% =========================================================================
+    %% RELATIONSHIP DEFINITIONS - Organized by Thematic Areas
+    %% =========================================================================
+
+    %% 🔵 Organizational Foundation Relationships - Trust Chain
+    Organization ||--o{ Certificate : "holds"
+    Organization ||--|| GeographicData : "headquartered_at"
+    CertificationScheme ||--o{ Certificate : "defines"
+    CertificationBody ||--o{ Certificate : "issues"
+    CertificationBody ||--o{ VerificationStatement : "verifies"
+    Organization ||--o{ VerificationStatement : "verified_for"
+
+    %% 🟢 Core Traceability Relationships - Primary Data Flow
+    Organization ||--o{ TraceableUnit : "owns_via_harvesterId"
+    Operator ||--o{ TraceableUnit : "operates"
+    Material ||--o{ TraceableUnit : "defines_type"
+    TraceableUnit ||--o{ TraceableUnit : "parent_child"
+    TraceableUnit ||--o{ MaterialProcessing : "input_to"
+    TraceableUnit ||--o{ MaterialProcessing : "output_from"
+    TraceableUnit ||--o{ ProcessingHistory : "tracked_in"
+    TraceableUnit ||--o{ SpeciesComponent : "composed_of"
+    TraceableUnit ||--o{ MeasurementRecord : "measured_in"
+    TraceableUnit ||--o{ LocationHistory : "moved_through"
+    TraceableUnit ||--o{ BiometricIdentifier : "identified_by"
+    TraceableUnit ||--o{ DataReconciliation : "reconciled_in"
+    Operator ||--o{ ProcessingHistory : "performs"
+    Operator ||--o{ MeasurementRecord : "measured_by"
+    GeographicData ||--o{ LocationHistory : "located_at"
+    GeographicData ||--o{ TrackingPoint : "positioned_at"
+    Organization ||--o{ TrackingPoint : "manages"
+
+    %% 🟤 Material & Supply Chain Relationships - Raw Material Flow
+    GeographicData ||--o{ SupplyBase : "located_at"
+    GeographicData ||--o{ Supplier : "based_at"
+    GeographicData ||--o{ Customer : "located_at"
+    SupplyBase ||--o{ TraceableUnit : "sourced_from"
+    Supplier ||--o{ Transaction : "supplies_via"
+
+    %% 🟠 Transaction Management Relationships - Commercial Flow
+    Organization ||--o{ Transaction : "sells"
+    Customer ||--o{ Transaction : "buys"
+    TraceableUnit ||--o{ Transaction : "sold_as"
+    Transaction ||--o{ TransactionBatch : "shipped_in"
+    Transaction ||--o{ SalesDeliveryDocument : "documented_by"
+    Organization ||--o{ Transaction : "brokered_by_BrokerOrganizationId"
+
+    %% 🟡 Sustainability & Claims Relationships - Value Chain
+    TraceableUnit ||--o{ Claim : "supports"
+    CertificationScheme ||--o{ Claim : "validates"
+
+    %% 🔴 Reporting & Compliance Relationships - Regulatory Chain
+    SupplyBase ||--o{ SupplyBaseReport : "reported_in"
+    Organization ||--o{ SupplyBaseReport : "reports"
+    Organization ||--o{ Audit : "audited"
+    Operator ||--o{ Audit : "auditor"
+
+    %% ⚫ Analytics & Data Management Relationships - Intelligence Chain
+    Material ||--o{ ProductGroup : "grouped_in"
+    Organization ||--o{ MassBalanceAccount : "maintains"
+    TraceableUnit ||--o{ EnergyCarbonData : "tested_for"
+    Organization ||--o{ LCFSReporting : "reports_lcfs"
+    LCFSPathway ||--o{ LCFSReporting : "follows"
+    
+    %% Additional operator relationships across entities
+    Organization ||--o{ Operator : "employs"
