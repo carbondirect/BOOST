@@ -54,35 +54,35 @@ class BOOSTClient:
     
     def create_organization(
         self,
-        organization_id: str,
-        name: str,
-        org_type: str,
+        organizationId: str,
+        organizationName: str,
+        organizationType: str,
         **kwargs
     ) -> Any:
         """
         Create a new Organization entity.
         
         Args:
-            organization_id: Unique organization identifier
-            name: Organization name
-            org_type: Type of organization
+            organizationId: Unique organization identifier
+            organizationName: Organization name
+            organizationType: Type of organization
             **kwargs: Additional optional fields
             
         Returns:
             Dynamic Organization instance
         """
-        # Validate org_type against schema enums
+        # Validate organizationType against schema enums
         valid_types = self.schema_loader.get_field_enum_values('organization', 'organizationType')
-        if valid_types and org_type not in valid_types:
-            raise ValueError(f"Invalid organization type '{org_type}'. Valid types: {valid_types}")
+        if valid_types and organizationType not in valid_types:
+            raise ValueError(f"Invalid organization type '{organizationType}'. Valid types: {valid_types}")
         
         org_data = {
             "@context": self.default_context["@context"],
             "@type": "Organization",
-            "@id": f"https://github.com/carbondirect/BOOST/schemas/organization/{organization_id}",
-            "organizationId": organization_id,
-            "organizationName": name,
-            "organizationType": org_type,
+            "@id": f"https://github.com/carbondirect/BOOST/schemas/organization/{organizationId}",
+            "organizationId": organizationId,
+            "organizationName": organizationName,
+            "organizationType": organizationType,
             "lastUpdated": datetime.utcnow(),
             **kwargs
         }
@@ -318,12 +318,21 @@ class BOOSTClient:
         Returns:
             Comprehensive validation results
         """
+        def serialize_entity(entity):
+            """Helper to handle both v1 and v2 serialization."""
+            try:
+                # Try v2 first
+                return entity.model_dump(by_alias=True, exclude_none=True, mode='json')
+            except AttributeError:
+                # Fallback to v1
+                return entity.dict(by_alias=True, exclude_none=True)
+
         all_entities = {
-            'organization': [org.model_dump(by_alias=True, exclude_none=True, mode='json') for org in self.organizations.values()],
-            'traceable_unit': [tru.model_dump(by_alias=True, exclude_none=True, mode='json') for tru in self.traceable_units.values()],
-            'transaction': [txn.model_dump(by_alias=True, exclude_none=True, mode='json') for txn in self.transactions.values()],
-            'material_processing': [proc.model_dump(by_alias=True, exclude_none=True, mode='json') for proc in self.material_processing.values()],
-            'claim': [claim.model_dump(by_alias=True, exclude_none=True, mode='json') for claim in self.claims.values()]
+            'organization': [serialize_entity(org) for org in self.organizations.values()],
+            'traceable_unit': [serialize_entity(tru) for tru in self.traceable_units.values()],
+            'transaction': [serialize_entity(txn) for txn in self.transactions.values()],
+            'material_processing': [serialize_entity(proc) for proc in self.material_processing.values()],
+            'claim': [serialize_entity(claim) for claim in self.claims.values()]
         }
         
         return self.validator.comprehensive_validation(all_entities)
@@ -394,8 +403,13 @@ class BOOSTClient:
         for entity_dict in [self.organizations, self.traceable_units, self.transactions, 
                            self.material_processing, self.claims]:
             for entity in entity_dict.values():
-                # Fix: Use proper serialization for JSON-LD export
-                entity_data = entity.model_dump(by_alias=True, exclude_none=True, mode='json')
+                # Handle both v1 and v2 serialization
+                try:
+                    # Try v2 first
+                    entity_data = entity.model_dump(by_alias=True, exclude_none=True, mode='json')
+                except AttributeError:
+                    # Fallback to v1
+                    entity_data = entity.dict(by_alias=True, exclude_none=True)
                 if not include_context and '@context' in entity_data:
                     del entity_data['@context']
                 export_data.append(entity_data)

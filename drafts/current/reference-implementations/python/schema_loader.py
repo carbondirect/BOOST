@@ -11,9 +11,21 @@ import re
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Type, Union, Tuple
 from pathlib import Path
-from pydantic import BaseModel, Field, create_model, validator
-from pydantic.fields import FieldInfo
 from enum import Enum
+
+try:
+    # Try importing Pydantic v2
+    from pydantic.v1 import BaseModel, Field, create_model, validator
+    from pydantic.v1.fields import FieldInfo
+    PYDANTIC_V2 = False
+except ImportError:
+    try:
+        # Fallback to Pydantic v1
+        from pydantic import BaseModel, Field, create_model, validator
+        from pydantic.fields import FieldInfo
+        PYDANTIC_V2 = False
+    except ImportError:
+        raise ImportError("Pydantic v1 or v2 is required")
 
 
 class SchemaLoader:
@@ -139,6 +151,12 @@ class SchemaLoader:
         properties = schema.get('properties', {})
         required_fields = schema.get('required', [])
         
+        # Add serialization methods that work in both v1 and v2
+        def model_to_dict(self, by_alias: bool = True):
+            if hasattr(self, 'model_dump'):  # v2
+                return self.model_dump(by_alias=by_alias)
+            return self.dict(by_alias=by_alias)  # v1
+        
         # Base model fields
         model_fields = {}
         
@@ -177,16 +195,27 @@ class SchemaLoader:
         
         # Create the dynamic model
         model_config = type('Config', (), {
-            'populate_by_name': True,
+            'allow_population_by_name': True,
             'json_encoders': {datetime: lambda v: v.isoformat()},
-            'validate_assignment': True
+            'validate_assignment': True,
+            'arbitrary_types_allowed': True
         })
         
+        # Add dict method that works in both v1 and v2
+        def to_dict(self, by_alias: bool = True):
+            if hasattr(self, 'model_dump'):  # v2
+                return self.model_dump(by_alias=by_alias)
+            return self.dict(by_alias=by_alias)  # v1
+        
+        # Create the base model
         dynamic_model = create_model(
             model_name,
             __config__=model_config,
             **model_fields
         )
+        
+        # Add the to_dict method to the model
+        dynamic_model.to_dict = to_dict
         
         # Add custom validators if needed
         self._add_custom_validators(dynamic_model, entity_name, schema)
