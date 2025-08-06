@@ -241,17 +241,9 @@ All material transformations MUST be documented through:
 path: includes/data-model.inc.md
 </pre>
 
-## Entity-Relationship Overview ## {#entity-overview}
-
-The BOOST data model consists of 29 interconnected entities organized into 7 thematic areas:
-
-1. **Core Traceability** (9 entities) - Central tracking infrastructure
-2. **Organizational Foundation** (4 entities) - Business entities and certifications  
-3. **Material & Supply Chain** (4 entities) - Material definitions and supply management
-4. **Transaction Management** (3 entities) - Business transaction processing
-5. **Sustainability Claims** (1 entity) - Certification and sustainability assertions
-6. **Geographic Integration** (1 entity) - Spatial data and location services
-7. **Reporting & Compliance** (7 entities) - Analytics, reporting, and regulatory compliance
+<pre class=include>
+path: includes/erd-integration.inc.md
+</pre>
 
 ## Hub-and-Spoke Design ## {#hub-spoke}
 
@@ -303,11 +295,19 @@ Implementations claiming BOOST Core conformance MUST support these entities:
 
 ### TraceableUnit ### {#traceable-unit}
 
+The central entity in BOOST's hub-and-spoke architecture. Every TRU connects to [[#organization-core|Organization]], [[#material-core|Material]], and [[#geographic-data|GeographicData]] entities.
+
+**🗂️ [View TraceableUnit in ERD Navigator](erd-navigator/index.html?focus=TraceableUnit)**
+
 <pre class=include>
 path: schema/traceable_unit/traceable_unit_dictionary.md
 </pre>
 
 ### Organization ### {#organization-core}
+
+Defines harvesters, processors, and supply chain participants. Referenced by [[#traceable-unit|TraceableUnit]] and connects to [[#certificate|Certificate]] entities for certification management.
+
+**🗂️ [View Organization in ERD Navigator](erd-navigator/index.html?focus=Organization)**
 
 <pre class=include>
 path: schema/organization/organization_dictionary.md
@@ -315,11 +315,19 @@ path: schema/organization/organization_dictionary.md
 
 ### Material ### {#material-core}
 
+Material type classifications referenced by [[#traceable-unit|TraceableUnit]]. For multi-species materials, connect to [[#species-component|SpeciesComponent]] entities.
+
+**🗂️ [View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
+
 <pre class=include>
 path: schema/material/material_dictionary.md
 </pre>
 
 ### GeographicData ### {#geographic-data}
+
+Spatial data in GeoJSON format for location tracking. Referenced by [[#traceable-unit|TraceableUnit]] and [[#location-history|LocationHistory]] for comprehensive location management.
+
+**🗂️ [View GeographicData in ERD Navigator](erd-navigator/index.html?focus=GeographicData)**
 
 <pre class=include>
 path: schema/geographic_data/geographic_data_dictionary.md
@@ -331,6 +339,10 @@ Implementations claiming BOOST Extended conformance MUST support Core entities p
 
 ### MaterialProcessing ### {#material-processing}
 
+Documents material transformation operations linking input and output [[#traceable-unit|TraceableUnit]] entities. Often references [[#equipment|Equipment]] and [[#operator|Operator]] entities for operational details.
+
+**🗂️ [View MaterialProcessing in ERD Navigator](erd-navigator/index.html?focus=MaterialProcessing)**
+
 <pre class=include>
 path: schema/material_processing/material_processing_dictionary.md
 </pre>
@@ -341,6 +353,10 @@ path: schema/material_processing/material_processing_dictionary.md
 
 ### Certificate ### {#certificate}
 
+Certification documents for [[#organization-core|Organization]] entities. Links to [[#certification-body|CertificationBody]] and [[#certification-scheme|CertificationScheme]] for comprehensive certification management.
+
+**🗂️ [View Certificate in ERD Navigator](erd-navigator/index.html?focus=Certificate)**
+
 <pre class=include>
 path: schema/certificate/certificate_dictionary.md
 </pre>
@@ -350,6 +366,10 @@ path: schema/certificate/certificate_dictionary.md
 *Note: Material is now part of Core Traceability Entities - see [[#material-core]]*
 
 ### SpeciesComponent ### {#species-component}
+
+Multi-species composition data for [[#material-core|Material]] entities. Essential for mixed-species [[#traceable-unit|TraceableUnit]] tracking with percentage validation.
+
+**🗂️ [View SpeciesComponent in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
 
 <pre class=include>
 path: schema/species_component/species_component_dictionary.md
@@ -369,11 +389,19 @@ path: schema/equipment/equipment_dictionary.md
 
 ### BiometricIdentifier ### {#biometric-identifier}
 
+Enables media-interruption-free tracking for [[#traceable-unit|TraceableUnit]] entities through optical pattern recognition and biometric signatures.
+
+**🗂️ [View BiometricIdentifier in ERD Navigator](erd-navigator/index.html?focus=BiometricIdentifier)**
+
 <pre class=include>
 path: schema/biometric_identifier/biometric_identifier_dictionary.md
 </pre>
 
 ### LocationHistory ### {#location-history}
+
+Tracks movement history for [[#traceable-unit|TraceableUnit]] entities, connecting to [[#geographic-data|GeographicData]] and [[#tracking-point|TrackingPoint]] entities.
+
+**🗂️ [View LocationHistory in ERD Navigator](erd-navigator/index.html?focus=LocationHistory)**
 
 <pre class=include>
 path: schema/location_history/location_history_dictionary.md
@@ -545,6 +573,10 @@ path: includes/examples.inc.md
   "harvesterId": "ORG-PACIFIC-FOREST",
   "currentGeographicDataId": "GEO-MILL-YARD-07"
 }
+</pre>
+
+<pre class=include>
+path: includes/resources-community.inc.md
 </pre>
 
 # Security Considerations # {#security}
