@@ -7,16 +7,16 @@
 
 CARB-certified fuel pathway for LCFS compliance with carbon intensity and regulatory attributes
 
-** [View LCFS Pathway in ERD Navigator](erd-navigator/index.html?focus=LCFSPathway)**
+**🗂️ [View LCFS Pathway in ERD Navigator](erd-navigator/index.html?focus=LCFSPathway)**
 
 % LCFS Pathway Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{LCFS Pathway}
 \textbf{\field{caGreetVersion}} & string (pattern) & CA-GREET model version used for pathway certification \\
-\textbf{\field{carbonIntensity}} & number ($\geq$0, $\leq$200) & Certified carbon intensity in gCO2e/MJ \\
+\textbf{\field{carbonIntensity}} & number (≥0, ≤200) & Certified carbon intensity in gCO2e/MJ \\
 \textbf{\field{certificationDate}} & string (date) & CARB pathway certification date \\
-\textbf{\field{energyEconomyRatio}} & number ($\geq$0.5, $\leq$3.0) & Energy economy ratio multiplier for credit calculation \\
+\textbf{\field{energyEconomyRatio}} & number (≥0.5, ≤3.0) & Energy economy ratio multiplier for credit calculation \\
 \textbf{\field{facilityLocation}} & string & Production facility location (city, state or geographic region) \\
 \textbf{\field{feedstockCategory}} & enum(13 values) & Primary feedstock type for pathway \\
 \textbf{\field{fuelProduct}} & enum(8 values) & Final fuel product produced \\
@@ -24,7 +24,7 @@ CARB-certified fuel pathway for LCFS compliance with carbon intensity and regula
 \textbf{\field{pathwayType}} & enum(Lookup_Table, Tier_1, Tier_2) & CARB pathway certification tier \\
 \textbf{\field{verificationStatus}} & enum(4 values) & Current CARB verification status \\
 \field{expirationDate} & string (date) & Pathway certification expiration date \\
-\field{facilityCapacity} & number ($\geq$0) & Annual production capacity in gallons \\
+\field{facilityCapacity} & number (≥0) & Annual production capacity in gallons \\
 \field{geographicScope} & enum(4 values) & Geographic applicability of pathway \\
 \field{lastUpdated} & string (date-time) & Timestamp of most recent pathway data update \\
 \field{processDescription} & string & Brief description of production process \\
@@ -37,7 +37,7 @@ CARB-certified fuel pathway for LCFS compliance with carbon intensity and regula
 
 Quarterly LCFS compliance report for regulated entities with credit calculations and submission tracking
 
-** [View LCFS Reporting in ERD Navigator](erd-navigator/index.html?focus=LCFSReporting)**
+**🗂️ [View LCFS Reporting in ERD Navigator](erd-navigator/index.html?focus=LCFSReporting)**
 
 % LCFS Reporting Entity Table
 % Auto-generated from JSON schema
@@ -48,9 +48,9 @@ Quarterly LCFS compliance report for regulated entities with credit calculations
 \textbf{\field{regulatedEntityId}} & string & Reference to regulated Organization entity \\
 \textbf{\field{reportingId}} & string (pattern) & Unique identifier for the quarterly report \\
 \textbf{\field{reportingPeriod}} & string (pattern) & Reporting quarter in YYYY-QN format \\
-\textbf{\field{totalCreditsGenerated}} & number ($\geq$0) & Total LCFS credits generated in the reporting period \\
-\textbf{\field{totalDeficitsIncurred}} & number ($\geq$0) & Total LCFS deficits incurred in the reporting period \\
-\textbf{\field{totalFuelVolume}} & number ($\geq$0) & Total fuel volume reported in gallons \\
+\textbf{\field{totalCreditsGenerated}} & number (≥0) & Total LCFS credits generated in the reporting period \\
+\textbf{\field{totalDeficitsIncurred}} & number (≥0) & Total LCFS deficits incurred in the reporting period \\
+\textbf{\field{totalFuelVolume}} & number (≥0) & Total fuel volume reported in gallons \\
 \field{VerificationStatementId} & string & Uses EntityNameId convention referencing VerificationStatement for third-part... \\
 \field{calculationParameters} & object (structured) & Calculation parameters used for credit computation \\
 \field{complianceMetrics} & object (structured) & Additional compliance and environmental impact metrics \\
@@ -70,7 +70,7 @@ Quarterly LCFS compliance report for regulated entities with credit calculations
 
 ProductGroup entity in BOOST data model
 
-** [View Product Group in ERD Navigator](erd-navigator/index.html?focus=ProductGroup)**
+**🗂️ [View Product Group in ERD Navigator](erd-navigator/index.html?focus=ProductGroup)**
 
 % Product Group Entity Table
 % Auto-generated from JSON schema
@@ -96,7 +96,7 @@ ProductGroup entity in BOOST data model
 
 EnergyCarbonData entity in BOOST data model
 
-** [View Energy Carbon Data in ERD Navigator](erd-navigator/index.html?focus=EnergyCarbonData)**
+**🗂️ [View Energy Carbon Data in ERD Navigator](erd-navigator/index.html?focus=EnergyCarbonData)**
 
 % Energy Carbon Data Entity Table
 % Auto-generated from JSON schema
@@ -108,7 +108,7 @@ EnergyCarbonData entity in BOOST data model
 \textbf{\field{unit}} & enum(8 values) & No description provided \\
 \textbf{\field{value}} & number & No description provided \\
 \field{caGreetVersion} & string (pattern) & CA-GREET model version used for calculation \\
-\field{energyEconomyRatio} & number ($\geq$0.5, $\leq$3.0) & Energy economy ratio for LCFS credit calculation \\
+\field{energyEconomyRatio} & number (≥0.5, ≤3.0) & Energy economy ratio for LCFS credit calculation \\
 \field{humidityConditions} & number & No description provided \\
 \field{lcfsPathwayType} & enum(4 values) & LCFS pathway tier classification \\
 \field{lifeCycleStage} & enum(6 values) & Lifecycle stage for carbon intensity data \\
@@ -136,15 +136,15 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Data Reconciliation in ERD Navigator](erd-navigator/index.html?focus=DataReconciliation)**
+**🗂️ [View Data Reconciliation in ERD Navigator](erd-navigator/index.html?focus=DataReconciliation)**
 
 % Data Reconciliation Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Data Reconciliation}
 \textbf{\field{discrepancy}} & number & No description provided \\
-\textbf{\field{forestMeasurement}} & number ($\geq$0) & No description provided \\
-\textbf{\field{millMeasurement}} & number ($\geq$0) & No description provided \\
+\textbf{\field{forestMeasurement}} & number (≥0) & No description provided \\
+\textbf{\field{millMeasurement}} & number (≥0) & No description provided \\
 \textbf{\field{reconciliationDate}} & string (date-time) & No description provided \\
 \textbf{\field{reconciliationId}} & string & No description provided \\
 \textbf{\field{reconciliationStatus}} & enum(pending, resolved, disputed) & No description provided \\
@@ -154,7 +154,7 @@ This entity references the following entities:
 \field{reconciliationOperator} & string & No description provided \\
 \field{resolutionNotes} & string & No description provided \\
 \field{speciesDiscrepancies} & array<string> & No description provided \\
-\field{tolerancePercentage} & number ($\geq$0, $\leq$100) & No description provided \\
+\field{tolerancePercentage} & number (≥0, ≤100) & No description provided \\
 \field{transactionId} & string & No description provided \\
 \end{entitytable}
 
@@ -172,7 +172,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Mass Balance Account in ERD Navigator](erd-navigator/index.html?focus=MassBalanceAccount)**
+**🗂️ [View Mass Balance Account in ERD Navigator](erd-navigator/index.html?focus=MassBalanceAccount)**
 
 % Mass Balance Account Entity Table
 % Auto-generated from JSON schema
