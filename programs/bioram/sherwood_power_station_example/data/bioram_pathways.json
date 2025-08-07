@@ -12,7 +12,11 @@
     "verificationStatus": "active",
     "calculationMethodology": "BIORAM-v1.0",
     "pathwayDescription": "Lumber mill residue to electricity via direct combustion",
-    "annualBiomassLimit": 120000
+    "annualBiomassLimit": 120000,
+    "facility": {
+      "facilityId": "BIORAM-FAC-2025-001",
+      "operatorName": "Sherwood Power Station"
+    }
   },
   {
     "pathwayId": "BIORAM-PWR-2025-FHR-001",
@@ -27,6 +31,10 @@
     "verificationStatus": "active",
     "calculationMethodology": "BIORAM-v1.0",
     "pathwayDescription": "Forest harvest residue to electricity via direct combustion",
-    "annualBiomassLimit": 80000
+    "annualBiomassLimit": 80000,
+    "facility": {
+      "facilityId": "BIORAM-FAC-2025-001",
+      "operatorName": "Sherwood Power Station"
+    }
   }
 ]

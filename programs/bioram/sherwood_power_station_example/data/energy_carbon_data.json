@@ -2,8 +2,10 @@
   {
     "energyCarbonDataId": "ECD-BIORAM-2025-001",
     "pathwayId": "BIORAM-PWR-2025-LMR-001",
+    "dataCategory": "carbon_intensity",
     "value": 15.2,
     "unit": "gCO2e/MJ",
+    "source": "Third-party verification by Environmental Certification Services",
     "measurementMethod": "BIORAM-v1.0",
     "regulatoryBenchmark": 25.0,
     "lifecycleStage": "complete_pathway",
@@ -26,6 +28,7 @@
       }
     ],
     "lastUpdated": "2025-01-15T00:00:00Z",
+    "verificationDate": "2025-01-15",
     "verificationStatus": "verified"
   }
 ]
