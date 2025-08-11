@@ -143,7 +143,16 @@ jobs:
           # Try LaTeX build first
           if [ -f "boost-spec.tex" ]; then
             echo "🔧 Attempting LaTeX PDF build with shell-escape..."
+            echo "📄 Running first LaTeX pass..."
             pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            echo "📄 Running second LaTeX pass (for TOC, LOF, LOT)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            echo "📄 Running third LaTeX pass (for cross-references)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            
+            # Check auxiliary files generated
+            echo "🔍 Checking generated auxiliary files..."
+            ls -la *.aux *.toc *.lof *.lot *.log 2>/dev/null || echo "Some auxiliary files missing"
             
             # Check if PDF was actually generated (ignore LaTeX warnings)
             if [ -f "boost-spec.pdf" ]; then

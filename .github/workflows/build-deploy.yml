@@ -179,7 +179,12 @@ jobs:
           # Try LaTeX build first
           if [ -f "boost-spec.tex" ]; then
             echo "🔧 Building PDF from LaTeX..."
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX build failed, trying Pandoc..."
+            echo "📄 Running first LaTeX pass..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX first pass failed"
+            echo "📄 Running second LaTeX pass (for TOC, LOF, LOT)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX second pass failed"
+            echo "📄 Running third LaTeX pass (for cross-references)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX third pass failed, trying Pandoc..."
           fi
           
           # Fallback to Pandoc HTML->PDF conversion
