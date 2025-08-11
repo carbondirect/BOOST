@@ -151,7 +151,7 @@ jobs:
             git add .github/badges/
             git commit -m "📊 Update status badge documentation
 
-🤖 Generated with GitHub Actions"
+Generated with GitHub Actions"
             
             git push
             echo "✅ Badge documentation updated"
