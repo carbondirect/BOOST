@@ -142,11 +142,20 @@ jobs:
           # Try LaTeX build first
           if [ -f "boost-spec.tex" ]; then
             echo "🔧 Attempting LaTeX PDF build..."
-            pdflatex -interaction=nonstopmode boost-spec.tex || echo "LaTeX build failed, trying Pandoc..."
+            if pdflatex -interaction=nonstopmode boost-spec.tex; then
+              echo "✅ LaTeX PDF generation successful"
+              # Rename for development branch consistency
+              if [ -f "boost-spec.pdf" ]; then
+                cp "boost-spec.pdf" "boost-spec-dev-${{ steps.version-info.outputs.branch }}.pdf"
+                echo "✅ PDF renamed for development branch: boost-spec-dev-${{ steps.version-info.outputs.branch }}.pdf"
+              fi
+            else
+              echo "⚠️ LaTeX build failed, trying Pandoc fallback..."
+            fi
           fi
           
-          # Pandoc HTML->PDF conversion (more reliable for development)
-          if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
+          # Pandoc HTML->PDF conversion (fallback if LaTeX failed)
+          if [ ! -f "boost-spec-dev-${{ steps.version-info.outputs.branch }}.pdf" ] && [ -f "boost-spec.html" ]; then
             echo "🔄 Converting HTML to PDF with Pandoc..."
             
             # Clean HTML for PDF using external script
@@ -230,7 +239,8 @@ jobs:
           ## 🏗️ Build Results
           
           - ✅ **HTML Documentation:** $(wc -c < boost-spec.html | numfmt --to=iec-i --suffix=B)
-          - $([ -f "boost-spec-dev-${{ steps.version-info.outputs.branch }}.pdf" ] && echo "✅ **PDF Documentation:** $(wc -c < boost-spec-dev-${{ steps.version-info.outputs.branch }}.pdf | numfmt --to=iec-i --suffix=B)" || echo "❌ **PDF Documentation:** Not generated")
+          - $([ -f "boost-spec.pdf" ] && echo "✅ **LaTeX PDF:** $(wc -c < boost-spec.pdf | numfmt --to=iec-i --suffix=B)" || echo "❌ **LaTeX PDF:** Not generated")
+          - $([ -f "boost-spec-dev-${{ steps.version-info.outputs.branch }}.pdf" ] && echo "✅ **Development PDF:** $(wc -c < boost-spec-dev-${{ steps.version-info.outputs.branch }}.pdf | numfmt --to=iec-i --suffix=B)" || echo "⚠️ **Development PDF:** LaTeX copy available")
           - ✅ **ERD Navigator:** Interactive tool included
           - ✅ **Schema Files:** $(find ../schema -name "validation_schema.json" | wc -l) validated schemas
           
@@ -262,6 +272,7 @@ jobs:
           name: boost-dev-docs-${{ steps.version-info.outputs.branch }}-${{ github.run_number }}
           path: |
             drafts/current/specifications/boost-spec.html
+            drafts/current/specifications/boost-spec.pdf
             drafts/current/specifications/boost-spec-dev-*.pdf
             drafts/current/specifications/dev-build-report.md
             drafts/current/specifications/erd-navigator/
