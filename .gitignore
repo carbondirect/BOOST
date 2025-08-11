@@ -61,3 +61,37 @@ cd_report/
 
 # IAWG notes - keep local but don't track
 meetings/IAWG_NOTES_*.md
+
+# Local CI/CD testing
+.github/local-testing/.secrets
+.github/local-testing/.env
+.github/local-testing/logs/
+.github/local-testing/artifacts/
+
+# Additional build artifacts
+boost-spec-temp.html
+*.html.tmp
+*.bak
+*.bak2
+
+# Node.js artifacts (if added accidentally)
+package-lock.json  
+package.json
+node_modules/
+
+# Personal tools and prompts
+tools/DocumentationPrompt.md
+
+# OS generated files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

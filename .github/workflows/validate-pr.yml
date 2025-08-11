@@ -1,0 +1,281 @@
+name: 📋 PR Validation
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'drafts/current/specifications/**'
+      - 'drafts/current/schema/**'
+      - '.github/workflows/**'
+
+# Cancel in-progress runs for the same PR
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  schema-validation:
+    name: 🔍 Schema Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for git tag access
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install jsonschema pydantic[email] requests
+
+      - name: Validate JSON Schema files
+        run: |
+          echo "🔍 Validating JSON Schema files..."
+          python3 -c "
+          import json
+          import os
+          import sys
+          from pathlib import Path
+          
+          schema_dir = Path('drafts/current/schema')
+          errors = []
+          
+          if not schema_dir.exists():
+              print(f'❌ Schema directory not found: {schema_dir}')
+              sys.exit(1)
+          
+          # Find all validation_schema.json files
+          schema_files = list(schema_dir.rglob('validation_schema.json'))
+          
+          if not schema_files:
+              print('❌ No validation_schema.json files found')
+              sys.exit(1)
+          
+          print(f'Found {len(schema_files)} schema files to validate')
+          
+          for schema_file in schema_files:
+              try:
+                  with open(schema_file, 'r') as f:
+                      schema_data = json.load(f)
+                  
+                  # Basic validation - ensure it has required schema structure
+                  if 'schema' not in schema_data:
+                      errors.append(f'{schema_file}: Missing schema key')
+                      continue
+                  
+                  schema = schema_data['schema']
+                  
+                  # Validate required JSON Schema properties
+                  required_props = ['type', 'properties']
+                  for prop in required_props:
+                      if prop not in schema:
+                          errors.append(f'{schema_file}: Missing required property: {prop}')
+                  
+                  print(f'✅ {schema_file.relative_to(schema_dir)}')
+                  
+              except json.JSONDecodeError as e:
+                  errors.append(f'{schema_file}: Invalid JSON - {e}')
+              except Exception as e:
+                  errors.append(f'{schema_file}: Error - {e}')
+          
+          if errors:
+              print('\\n❌ Schema validation errors:')
+              for error in errors:
+                  print(f'  - {error}')
+              sys.exit(1)
+          
+          print(f'\\n✅ All {len(schema_files)} schema files are valid')
+          "
+
+  schema-integrity:
+    name: 🔗 Schema Integrity Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install jsonschema pydantic[email] requests
+
+      - name: Run Schema Integrity Validation
+        run: |
+          echo "🔗 Running comprehensive schema integrity validation..."
+          python3 -c "
+          import json
+          import re
+          import sys
+          from pathlib import Path
+          from collections import defaultdict
+          
+          schema_dir = Path('drafts/current/schema')
+          
+          # Load all schemas
+          schemas = {}
+          entities = {}
+          
+          for schema_file in schema_dir.rglob('validation_schema.json'):
+              try:
+                  with open(schema_file, 'r') as f:
+                      schema_data = json.load(f)
+                  
+                  # Extract entity info from boost_metadata
+                  if 'boost_metadata' in schema_data and 'entity' in schema_data['boost_metadata']:
+                      entity_info = schema_data['boost_metadata']['entity']
+                      entity_name = entity_info['name']
+                      primary_key = entity_info['primaryKey']
+                      
+                      entities[entity_name] = {
+                          'primary_key': primary_key,
+                          'schema_file': schema_file,
+                          'properties': schema_data['schema'].get('properties', {})
+                      }
+                      schemas[entity_name] = schema_data
+                      
+              except Exception as e:
+                  print(f'❌ Error loading {schema_file}: {e}')
+                  sys.exit(1)
+          
+          print(f'Loaded {len(entities)} entity schemas')
+          
+          # Define expected FK patterns
+          fk_patterns = {
+              'ORG-': 'Organization',
+              'TRU-': 'TraceableUnit', 
+              'OP-': 'Operator',
+              'GEO-': 'GeographicData',
+              'PROC-': 'MaterialProcessing',
+              'TXN-': 'Transaction',
+              'CUST-': 'Customer',
+              'CLAIM-': 'Claim',
+              'CERT-': 'Certificate'
+          }
+          
+          # Validate FK patterns and relationships
+          errors = []
+          
+          for entity_name, entity_data in entities.items():
+              properties = entity_data['properties']
+              
+              # Check primary key pattern
+              pk_field = entity_data['primary_key']
+              if pk_field in properties and 'pattern' in properties[pk_field]:
+                  pk_pattern = properties[pk_field]['pattern']
+                  print(f'✓ {entity_name}: Primary key pattern: {pk_pattern}')
+              else:
+                  errors.append(f'{entity_name}: Missing primary key pattern for {pk_field}')
+              
+              # Check foreign key patterns
+              for prop_name, prop_def in properties.items():
+                  if prop_name.endswith('Id') and prop_name != pk_field:
+                      # This looks like a foreign key
+                      if 'pattern' in prop_def:
+                          pattern = prop_def['pattern']
+                          # Extract prefix from pattern (e.g., '^ORG-' -> 'ORG-')
+                          match = re.search(r'\\^([A-Z]+-)', pattern)
+                          if match:
+                              prefix = match.group(1)
+                              expected_entity = fk_patterns.get(prefix)
+                              if expected_entity:
+                                  if expected_entity not in entities:
+                                      errors.append(f'{entity_name}.{prop_name}: References {expected_entity} but entity not found')
+                                  else:
+                                      print(f'✓ {entity_name}.{prop_name} -> {expected_entity}')
+                              else:
+                                  print(f'⚠️ {entity_name}.{prop_name}: Unknown FK prefix {prefix}')
+                          else:
+                              print(f'⚠️ {entity_name}.{prop_name}: Pattern {pattern} does not match expected FK format')
+                      else:
+                          # Check if it's a known EntityNameId convention
+                          if 'Id' in prop_name and 'description' in prop_def:
+                              desc = prop_def['description'].lower()
+                              if 'foreign key' in desc or 'reference' in desc or 'entitynameid' in desc:
+                                  errors.append(f'{entity_name}.{prop_name}: Foreign key field missing validation pattern')
+          
+          if errors:
+              print('\\n❌ Schema integrity errors:')
+              for error in errors:
+                  print(f'  - {error}')
+              sys.exit(1)
+          
+          print(f'\\n✅ Schema integrity validation passed for {len(entities)} entities')
+          "
+
+  build-test:
+    name: 🏗️ Build Test
+    runs-on: ubuntu-latest
+    needs: [schema-validation]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for git tag version extraction
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+
+      - name: Install Bikeshed
+        run: |
+          pip3 install bikeshed
+          bikeshed update
+
+      - name: Test documentation build
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🔧 Testing documentation build process..."
+          chmod +x build-spec.sh
+          ./build-spec.sh
+
+      - name: Validate generated HTML
+        working-directory: drafts/current/specifications
+        run: |
+          # Check that HTML file was generated
+          if [ ! -f "boost-spec.html" ]; then
+            echo "❌ boost-spec.html was not generated"
+            exit 1
+          fi
+          
+          # Check HTML file size (should be substantial)
+          HTML_SIZE=$(wc -c < boost-spec.html)
+          if [ "$HTML_SIZE" -lt 100000 ]; then
+            echo "❌ Generated HTML file is too small ($HTML_SIZE bytes)"
+            exit 1
+          fi
+          
+          # Check for critical content
+          if ! grep -q "BOOST" boost-spec.html; then
+            echo "❌ Generated HTML missing expected BOOST content"
+            exit 1
+          fi
+          
+          echo "✅ Generated HTML validation passed ($HTML_SIZE bytes)"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: pr-build-artifacts
+          path: |
+            drafts/current/specifications/boost-spec.html
+            drafts/current/specifications/erd-navigator/
+          retention-days: 7

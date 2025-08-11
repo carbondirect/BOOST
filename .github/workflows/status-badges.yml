@@ -1,0 +1,158 @@
+name: 📊 Update Status Badges
+
+on:
+  # Run after other workflows complete
+  workflow_run:
+    workflows: 
+      - "📋 PR Validation"
+      - "🚀 Build & Deploy Documentation" 
+      - "🏷️ Release Documentation"
+      - "🔍 Schema Validation"
+    types:
+      - completed
+
+  # Manual trigger
+  workflow_dispatch:
+
+jobs:
+  update-badges:
+    name: 📊 Update README Badges
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion != 'cancelled'
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Generate status badges
+        run: |
+          # Create badges directory if it doesn't exist
+          mkdir -p .github/badges
+          
+          # Get workflow status
+          echo "🔍 Checking workflow statuses..."
+          
+          # Note: In a real implementation, you would use GitHub API
+          # to check the actual status of each workflow
+          
+          # For now, create static badge URLs that GitHub will update
+          cat > .github/badges/README.md << 'EOF'
+          # BOOST Documentation Status Badges
+          
+          Use these badges in your README files to show current build status:
+          
+          ## Main Workflows
+          
+          **Build & Deploy:**
+          ```markdown
+          ![Build & Deploy](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml/badge.svg?branch=main)
+          ```
+          
+          **Schema Validation:**
+          ```markdown
+          ![Schema Validation](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml/badge.svg?branch=main)
+          ```
+          
+          **Release:**
+          ```markdown
+          ![Release](https://github.com/carbondirect/BOOST/actions/workflows/release.yml/badge.svg)
+          ```
+          
+          ## Combined Status
+          
+          **All Checks:**
+          ```markdown
+          [![Build & Deploy](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml/badge.svg?branch=main)](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml)
+          [![Schema Validation](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml/badge.svg?branch=main)](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml)
+          [![Release](https://github.com/carbondirect/BOOST/actions/workflows/release.yml/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/release.yml)
+          ```
+          
+          ## Documentation Links
+          
+          **Quick Links:**
+          ```markdown
+          📚 [Documentation](https://carbondirect.github.io/BOOST/boost-spec.html) | 
+          🔍 [ERD Navigator](https://carbondirect.github.io/BOOST/erd-navigator/) | 
+          📋 [Schemas](https://carbondirect.github.io/BOOST/schema/) | 
+          🏷️ [Latest Release](https://github.com/carbondirect/BOOST/releases/latest)
+          ```
+          EOF
+          
+          echo "✅ Badge documentation generated"
+
+      - name: Check if README needs updating
+        id: check-readme
+        run: |
+          # Check if main README exists and might need badge updates
+          README_FILE=""
+          
+          if [ -f "README.md" ]; then
+            README_FILE="README.md"
+          elif [ -f "drafts/current/specifications/README.md" ]; then
+            README_FILE="drafts/current/specifications/README.md"
+          fi
+          
+          echo "readme-file=$README_FILE" >> $GITHUB_OUTPUT
+          
+          if [ -n "$README_FILE" ]; then
+            echo "📋 Found README file: $README_FILE"
+            
+            # Check if it already has status badges
+            if grep -q "github.com.*actions.*badge" "$README_FILE"; then
+              echo "✅ README already has status badges"
+              echo "needs-update=false" >> $GITHUB_OUTPUT
+            else
+              echo "📊 README could benefit from status badges"
+              echo "needs-update=true" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "📋 No README file found"
+            echo "needs-update=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Suggest README improvements
+        if: steps.check-readme.outputs.needs-update == 'true'
+        run: |
+          README_FILE="${{ steps.check-readme.outputs.readme-file }}"
+          
+          echo "💡 Suggestion: Add status badges to $README_FILE" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Consider adding these badges to the top of your README:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```markdown' >> $GITHUB_STEP_SUMMARY
+          echo '# BOOST Data Standard' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '[![Build & Deploy](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml/badge.svg?branch=main)](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml)' >> $GITHUB_STEP_SUMMARY
+          echo '[![Schema Validation](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml/badge.svg?branch=main)](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml)' >> $GITHUB_STEP_SUMMARY
+          echo '[![Release](https://github.com/carbondirect/BOOST/actions/workflows/release.yml/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/release.yml)' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '📚 [Documentation](https://carbondirect.github.io/BOOST/boost-spec.html) | ' >> $GITHUB_STEP_SUMMARY
+          echo '🔍 [ERD Navigator](https://carbondirect.github.io/BOOST/erd-navigator/) | ' >> $GITHUB_STEP_SUMMARY
+          echo '📋 [Schemas](https://carbondirect.github.io/BOOST/schema/) | ' >> $GITHUB_STEP_SUMMARY
+          echo '🏷️ [Latest Release](https://github.com/carbondirect/BOOST/releases/latest)' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Commit badge documentation
+        run: |
+          # Only commit if there are changes
+          if git diff --quiet .github/badges/; then
+            echo "📊 No changes to badge documentation"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            
+            git add .github/badges/
+            git commit -m "📊 Update status badge documentation
+
+🤖 Generated with GitHub Actions"
+            
+            git push
+            echo "✅ Badge documentation updated"
+          fi

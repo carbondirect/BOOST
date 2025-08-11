@@ -1,0 +1,82 @@
+# GitHub Pages Configuration for BOOST Documentation
+
+# Site settings
+title: "BOOST Data Standard Documentation"
+description: "Biomass Origin and Ownership Supply-chain Tracking (BOOST) Data Standard"
+url: "https://carbondirect.github.io"
+baseurl: "/BOOST"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-default-layout
+
+# Relative links configuration
+relative_links:
+  enabled: true
+  collections: true
+
+# Optional front matter
+optional_front_matter:
+  enabled: true
+
+# README index
+readme_index:
+  enabled: true
+  remove_originals: false
+
+# Default layouts
+default_layout:
+  enabled: true
+
+# Exclude files from processing
+exclude:
+  - .github/
+  - node_modules/
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
+  - "*.log"
+  - "*.tmp"
+  - build/
+  - drafts/current/specifications/build-spec.sh
+  - drafts/current/specifications/build-*.sh
+  - drafts/current/specifications/*.bs
+  - drafts/current/specifications/*.tex
+
+# Include files that would normally be excluded
+include:
+  - _*
+
+# Collections (if needed for future organization)
+collections:
+  schemas:
+    output: true
+    permalink: /:collection/:name/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: "drafts/current/schema"
+      type: "pages" 
+    values:
+      layout: "schema"
+  - scope:
+      path: "drafts/current/specifications/erd-navigator"
+      type: "pages"
+    values:
+      layout: "default"
