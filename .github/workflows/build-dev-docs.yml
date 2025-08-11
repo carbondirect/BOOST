@@ -142,7 +142,7 @@ jobs:
           # Try LaTeX build first
           if [ -f "boost-spec.tex" ]; then
             echo "🔧 Attempting LaTeX PDF build..."
-            pdflatex -interaction=nonstopmode boost-spec.tex 2>/dev/null || echo "LaTeX build failed, trying Pandoc..."
+            pdflatex -interaction=nonstopmode boost-spec.tex || echo "LaTeX build failed, trying Pandoc..."
           fi
           
           # Pandoc HTML->PDF conversion (more reliable for development)
@@ -169,7 +169,7 @@ jobs:
               --variable linkcolor=blue \
               --variable urlcolor=blue \
               --variable toccolor=blue \
-              2>/dev/null || echo "⚠️ PDF generation failed"
+              || echo "⚠️ PDF generation failed"
             
             # Cleanup
             rm -f boost-spec-clean.html
