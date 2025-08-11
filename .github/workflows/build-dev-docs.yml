@@ -257,7 +257,7 @@ jobs:
           cat dev-build-report.md
 
       - name: Upload development build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: boost-dev-docs-${{ steps.version-info.outputs.branch }}-${{ github.run_number }}
           path: |
