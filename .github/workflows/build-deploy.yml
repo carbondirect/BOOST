@@ -2,7 +2,12 @@ name: 🚀 Build & Deploy Documentation
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main                    # Full build + deploy
+      - develop                 # Build only (no deploy)
+      - 'feature/**'           # Build only (no deploy)  
+      - 'fix/**'               # Build only (no deploy)
+      - 'docs/**'              # Build only (no deploy)
     paths:
       - 'drafts/current/specifications/**'
       - 'drafts/current/schema/**'
@@ -10,6 +15,12 @@ on:
 
   # Allow manual triggering
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to GitHub Pages (main branch only)'
+        required: false
+        type: boolean
+        default: false
 
 # Ensure only one build runs at a time
 concurrency:
@@ -160,6 +171,8 @@ jobs:
         working-directory: drafts/current/specifications
         run: |
           echo "🏗️ Building HTML documentation..."
+          echo "📋 Branch: ${{ github.ref_name }}"
+          echo "🎯 Build type: ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}"
           chmod +x build-spec.sh
           ./build-spec.sh
 
@@ -216,6 +229,63 @@ jobs:
           
           echo "✅ Build output validation passed"
 
+      - name: Build PDF documentation (development branches)
+        if: github.ref != 'refs/heads/main'
+        working-directory: drafts/current/specifications
+        run: |
+          echo "📄 Building PDF documentation for development branch..."
+          
+          # Install additional LaTeX packages if needed
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+          
+          # Try LaTeX build first
+          if [ -f "boost-spec.tex" ]; then
+            echo "🔧 Building PDF from LaTeX..."
+            pdflatex -interaction=nonstopmode boost-spec.tex || echo "LaTeX build failed, trying Pandoc..."
+          fi
+          
+          # Fallback to Pandoc HTML->PDF conversion
+          if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
+            echo "🔄 Converting HTML to PDF with Pandoc..."
+            
+            # Create clean HTML for PDF conversion
+            python3 -c "
+import re
+with open('boost-spec.html', 'r') as f:
+    html = f.read()
+
+# Remove interactive elements for PDF
+html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL)
+html = re.sub(r'onclick=\"[^\"]*\"', '', html)
+
+with open('boost-spec-clean.html', 'w') as f:
+    f.write(html)
+            "
+            
+            # Generate PDF with Pandoc
+            pandoc boost-spec-clean.html \
+              -o "boost-spec-dev-${{ github.ref_name }}.pdf" \
+              --pdf-engine=xelatex \
+              --from=html \
+              --to=pdf \
+              --metadata title="BOOST Data Standard (Dev: ${{ github.ref_name }})" \
+              --metadata author="BOOST Consortium" \
+              --metadata date="$(date +%Y-%m-%d)" \
+              --toc \
+              --toc-depth=3 \
+              --number-sections \
+              || echo "⚠️ PDF generation failed"
+            
+            rm -f boost-spec-clean.html
+            
+            if [ -f "boost-spec-dev-${{ github.ref_name }}.pdf" ]; then
+              echo "✅ PDF generated: boost-spec-dev-${{ github.ref_name }}.pdf"
+            else
+              echo "❌ PDF generation failed"
+            fi
+          fi
+
       - name: Generate build report
         working-directory: drafts/current/specifications
         run: |
@@ -227,6 +297,7 @@ jobs:
           **Build Time:** ${{ steps.extract-version.outputs.timestamp }}
           **Commit:** ${GITHUB_SHA::8}
           **Branch:** ${GITHUB_REF_NAME}
+          **Build Type:** ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}
           
           ## Build Statistics
           
@@ -256,13 +327,15 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: boost-documentation-${{ steps.extract-version.outputs.version }}
+          name: boost-documentation-${{ steps.extract-version.outputs.version }}-${{ github.ref_name }}
           path: |
             drafts/current/specifications/boost-spec.html
+            drafts/current/specifications/boost-spec-dev-*.pdf
+            drafts/current/specifications/boost-spec.pdf
             drafts/current/specifications/build-report.md
             drafts/current/specifications/erd-navigator/
             drafts/current/schema/
-          retention-days: 30
+          retention-days: ${{ github.ref == 'refs/heads/main' && 30 || 7 }}
 
   deploy-github-pages:
     name: 🌐 Deploy to GitHub Pages
