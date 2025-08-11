@@ -49,6 +49,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             python3-pip \
+            python3-pygments \
             texlive-latex-base \
             texlive-latex-recommended \
             texlive-latex-extra \
@@ -141,8 +142,8 @@ jobs:
           
           # Try LaTeX build first
           if [ -f "boost-spec.tex" ]; then
-            echo "🔧 Attempting LaTeX PDF build..."
-            pdflatex -interaction=nonstopmode boost-spec.tex || true
+            echo "🔧 Attempting LaTeX PDF build with shell-escape..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
             
             # Check if PDF was actually generated (ignore LaTeX warnings)
             if [ -f "boost-spec.pdf" ]; then

@@ -55,6 +55,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             python3-pip \
+            python3-pygments \
             texlive-latex-base \
             texlive-latex-recommended \
             texlive-latex-extra \
@@ -178,7 +179,7 @@ jobs:
           # Try LaTeX build first
           if [ -f "boost-spec.tex" ]; then
             echo "🔧 Building PDF from LaTeX..."
-            pdflatex -interaction=nonstopmode boost-spec.tex || echo "LaTeX build failed, trying Pandoc..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX build failed, trying Pandoc..."
           fi
           
           # Fallback to Pandoc HTML->PDF conversion
