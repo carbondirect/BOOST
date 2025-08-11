@@ -101,71 +101,7 @@ jobs:
         working-directory: drafts/current/specifications
         run: |
           echo "🔍 Running comprehensive schema validation..."
-          python3 -c "
-          import json
-          import re
-          import sys
-          from pathlib import Path
-          
-          # Run the same validation as PR workflow but with more detail
-          schema_dir = Path('../schema')
-          errors = []
-          warnings = []
-          
-          # Load all schemas
-          schemas = {}
-          entities = {}
-          
-          for schema_file in schema_dir.rglob('validation_schema.json'):
-              try:
-                  with open(schema_file, 'r') as f:
-                      schema_data = json.load(f)
-                  
-                  if 'boost_metadata' in schema_data and 'entity' in schema_data['boost_metadata']:
-                      entity_info = schema_data['boost_metadata']['entity']
-                      entity_name = entity_info['name']
-                      entities[entity_name] = schema_data
-                      
-              except Exception as e:
-                  errors.append(f'Error loading {schema_file}: {e}')
-          
-          print(f'✅ Loaded and validated {len(entities)} entity schemas')
-          
-          # Additional production validations
-          fk_patterns = {
-              'ORG-': 'Organization',
-              'TRU-': 'TraceableUnit', 
-              'OP-': 'Operator',
-              'GEO-': 'GeographicData'
-          }
-          
-          # Validate FK integrity
-          for entity_name, schema_data in entities.items():
-              properties = schema_data['schema'].get('properties', {})
-              for prop_name, prop_def in properties.items():
-                  if 'pattern' in prop_def:
-                      pattern = prop_def['pattern']
-                      match = re.search(r'\\^([A-Z]+-)', pattern)
-                      if match:
-                          prefix = match.group(1)
-                          if prefix in fk_patterns:
-                              target_entity = fk_patterns[prefix]
-                              if target_entity not in entities:
-                                  errors.append(f'{entity_name}.{prop_name}: References missing entity {target_entity}')
-          
-          if errors:
-              print('❌ Schema validation errors:')
-              for error in errors:
-                  print(f'  - {error}')
-              sys.exit(1)
-          
-          if warnings:
-              print('⚠️ Schema validation warnings:')
-              for warning in warnings:
-                  print(f'  - {warning}')
-          
-          print('✅ Schema validation passed')
-          "
+          python3 ../../../.github/scripts/validate-schemas.py
 
       - name: Build HTML documentation
         working-directory: drafts/current/specifications
@@ -249,19 +185,8 @@ jobs:
           if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
             echo "🔄 Converting HTML to PDF with Pandoc..."
             
-            # Create clean HTML for PDF conversion
-            python3 -c "
-import re
-with open('boost-spec.html', 'r') as f:
-    html = f.read()
-
-# Remove interactive elements for PDF
-html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL)
-html = re.sub(r'onclick=\"[^\"]*\"', '', html)
-
-with open('boost-spec-clean.html', 'w') as f:
-    f.write(html)
-            "
+            # Create clean HTML for PDF conversion using external script
+            python3 ../../../.github/scripts/clean-html-for-pdf.py boost-spec.html boost-spec-clean.html
             
             # Generate PDF with Pandoc
             pandoc boost-spec-clean.html \

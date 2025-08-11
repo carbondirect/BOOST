@@ -149,21 +149,8 @@ jobs:
           if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
             echo "🔄 Converting HTML to PDF with Pandoc..."
             
-            # Clean HTML for PDF
-            python3 -c "
-import re
-with open('boost-spec.html', 'r') as f:
-    html = f.read()
-
-# Remove interactive elements and scripts
-html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL)
-html = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL)
-html = re.sub(r'onclick=\"[^\"]*\"', '', html)
-html = re.sub(r'class=\"[^\"]*\"', '', html)
-
-with open('boost-spec-clean.html', 'w') as f:
-    f.write(html)
-            "
+            # Clean HTML for PDF using external script
+            python3 ../../../.github/scripts/clean-html-for-pdf.py boost-spec.html boost-spec-clean.html
             
             # Generate PDF with enhanced options
             pandoc boost-spec-clean.html \
