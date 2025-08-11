@@ -11,7 +11,7 @@ BOOST is developed through the [BOOST W3C Community Group](https://www.w3.org/co
 
 ## Current Development Status ## {#development-status}
 
-**Current Version:** v2.7.0 - Location-aware Core conformance with enhanced traceability requirements
+**Current Version:** {{VERSION}} - Complete BOOST Documentation Build System with integrated HTML and PDF generation
 
 **Recent Enhancements:**
 - Restructured Core Traceability Entities for location-aware conformance
