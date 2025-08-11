@@ -21,6 +21,7 @@
       },
       "traceableUnitId": {
         "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$",
         "description": "Unique ID for each TRU"
       },
       "unitType": {
