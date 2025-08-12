@@ -35,6 +35,9 @@ __pycache__/
 *.lot
 _minted-*/
 **/_minted-*/
+_minted/
+**/_minted/
+*.minted
 */~undo-tree*
 .DS_Store
 
