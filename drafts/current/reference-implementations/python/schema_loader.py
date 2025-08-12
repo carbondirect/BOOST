@@ -14,10 +14,10 @@ from pathlib import Path
 from enum import Enum
 
 try:
-    # Try importing Pydantic v2
-    from pydantic.v1 import BaseModel, Field, create_model, validator
-    from pydantic.v1.fields import FieldInfo
-    PYDANTIC_V2 = False
+    # Try importing Pydantic v2 (proper V2 imports)
+    from pydantic import BaseModel, Field, create_model, field_validator
+    from pydantic.fields import FieldInfo
+    PYDANTIC_V2 = True
 except ImportError:
     try:
         # Fallback to Pydantic v1
@@ -326,7 +326,7 @@ class SchemaLoader:
                 return expected_type
             
             # Add validator to model
-            setattr(model_class, 'validate_type', validator('type', pre=True, always=True)(validate_type))
+            setattr(model_class, 'validate_type', field_validator('type', pre=True, always=True)(validate_type))
         
         # Add business logic validators based on entity type
         if entity_name == 'material_processing':
@@ -342,7 +342,7 @@ class SchemaLoader:
             
             # Add root validator
             setattr(model_class, 'validate_volume_conservation', 
-                   validator('*', pre=False, allow_reuse=True)(lambda cls, v, values: validate_volume_conservation(cls, values)))
+                   field_validator('*', pre=False, allow_reuse=True)(lambda cls, v, values: validate_volume_conservation(cls, values)))
     
     def get_model(self, entity_name: str) -> Optional[Type[BaseModel]]:
         """Get dynamic model for entity type."""
