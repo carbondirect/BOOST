@@ -23,6 +23,7 @@
       },
       "TraceableUnitId": {
         "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$",
         "description": "Referenced traceable unit - uses EntityNameId convention referencing TraceableUnit"
       },
       "claimType": {
@@ -41,6 +42,7 @@
       },
       "CertificationSchemeId": {
         "type": "string",
+        "pattern": "^CERT-SCHEME-[A-Z0-9-_]+$",
         "description": "Certification scheme - uses EntityNameId convention referencing CertificationScheme"
       },
       "statement": {

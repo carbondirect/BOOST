@@ -45,10 +45,12 @@
       },
       "currentGeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Current location - uses EntityNameId convention referencing GeographicData"
       },
       "harvestGeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Harvest location - uses EntityNameId convention referencing GeographicData"
       },
       "createdTimestamp": {

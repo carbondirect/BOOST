@@ -38,6 +38,7 @@
       },
       "GeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Supplier location - uses EntityNameId convention referencing GeographicData"
       }
     },

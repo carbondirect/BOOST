@@ -33,6 +33,7 @@
       },
       "certificateNumber": {
         "type": "string",
+        "pattern": "^[A-Z0-9][A-Z0-9/_-]+$",
         "description": "Official certificate number (primary key)",
         "minLength": 1,
         "examples": [
@@ -43,6 +44,7 @@
       },
       "CertificationSchemeId": {
         "type": "string",
+        "pattern": "^CERT-SCHEME-[A-Z0-9-_]+$",
         "description": "Uses EntityNameId convention referencing CertificationScheme",
         "minLength": 1,
         "examples": [
@@ -53,6 +55,7 @@
       },
       "CertificationBodyId": {
         "type": "string",
+        "pattern": "^CB-[A-Z0-9-_]+$",
         "description": "Uses EntityNameId convention referencing CertificationBody",
         "minLength": 1,
         "examples": [
@@ -202,6 +205,7 @@
       },
       "VerificationStatementId": {
         "type": "string",
+        "pattern": "^VS-[A-Z0-9-_]+$",
         "description": "Uses EntityNameId convention referencing VerificationStatement for third-party validation"
       }
     },

@@ -39,6 +39,7 @@
       },
       "regulatedEntityId": {
         "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$",
         "description": "Reference to regulated Organization entity"
       },
       "reportingPeriod": {
@@ -91,6 +92,7 @@
       },
       "VerificationStatementId": {
         "type": "string",
+        "pattern": "^VS-[A-Z0-9-_]+$",
         "description": "Uses EntityNameId convention referencing VerificationStatement for third-party verification"
       },
       "reportingDeadline": {
