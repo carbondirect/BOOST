@@ -298,11 +298,40 @@ jobs:
         run: |
           mkdir -p ./pages-content
           
-          # Copy main documentation
-          cp -r build-output/drafts/current/specifications/* ./pages-content/
+          # List downloaded artifacts for debugging
+          echo "📋 Downloaded artifact structure:"
+          find build-output -type f -name "*.html" -o -name "*.pdf" -o -name "*.md" | head -10
+          
+          # Copy main HTML documentation
+          if [ -f "build-output/drafts/current/specifications/boost-spec.html" ]; then
+            cp build-output/drafts/current/specifications/boost-spec.html ./pages-content/
+          else
+            echo "❌ boost-spec.html not found"
+            exit 1
+          fi
+          
+          # Copy ERD navigator if it exists
+          if [ -d "build-output/drafts/current/specifications/erd-navigator" ]; then
+            cp -r build-output/drafts/current/specifications/erd-navigator ./pages-content/
+          fi
+          
+          # Copy build report if it exists
+          if [ -f "build-output/drafts/current/specifications/build-report.md" ]; then
+            cp build-output/drafts/current/specifications/build-report.md ./pages-content/
+          fi
+          
+          # Copy PDF if it exists
+          if [ -f "build-output/drafts/current/specifications/boost-spec.pdf" ]; then
+            cp build-output/drafts/current/specifications/boost-spec.pdf ./pages-content/
+          fi
           
           # Copy schema files  
-          cp -r build-output/drafts/current/schema ./pages-content/
+          if [ -d "build-output/drafts/current/schema" ]; then
+            cp -r build-output/drafts/current/schema ./pages-content/
+          else
+            echo "❌ Schema directory not found"
+            exit 1
+          fi
           
           # Create index.html redirect
           cat > ./pages-content/index.html << EOF
