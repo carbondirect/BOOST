@@ -18,7 +18,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/boost-builder
+  IMAGE_NAME: carbondirect/boost/boost-builder
 
 jobs:
   build-and-push:

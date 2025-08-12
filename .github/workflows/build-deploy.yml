@@ -35,7 +35,7 @@ jobs:
     name: 📚 Build Documentation
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/${{ github.repository }}/boost-builder:latest
+      image: ghcr.io/carbondirect/boost/boost-builder:latest
       options: --pull=missing
     outputs:
       version: ${{ steps.extract-version.outputs.version }}
