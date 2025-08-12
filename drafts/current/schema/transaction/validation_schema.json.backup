@@ -526,13 +526,6 @@
         "label": "LCFS pathway"
       },
       {
-        "field": "BioramPathwayId",
-        "targetEntity": "BioramPathway",
-        "relationshipType": "many-to-one",
-        "required": false,
-        "label": "BioRAM pathway"
-      },
-      {
         "field": "traceableUnitIds",
         "targetEntity": "TraceableUnit",
         "relationshipType": "many-to-many",

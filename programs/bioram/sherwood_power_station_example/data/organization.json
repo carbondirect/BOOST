@@ -1,24 +1,60 @@
 {
   "organizationId": "ORG-SHERWOOD-POWER-001",
   "organizationName": "Sherwood Power Station",
-  "facilityType": "power_station",
-  "bioramRegistrationId": "CEC-BIO-012",
+  "organizationType": "producer",
+  "regulatedEntityType": "producer",
+  "operationalStatus": "active",
+  
+  // Core facility information
+  "facilityType": "biomass_power_station",
   "powerGenerationCapacity": 15,
   "powerGenerationUnit": "MW",
   "biomassStorageCapacity": 5000,
   "biomassStorageUnit": "bone_dry_tonnes",
+  "establishedDate": "2020-01-01",
+  
+  // BioRAM-specific fields (following LCFS pattern)
+  "bioramRegistrationId": "CEC-BIO-012",
+  "bioramFacilityId": "BIORAM-FAC-2025-001",
+  "bioramContractId": "BR-RFO-2024-01",
+  "powerPurchaseAgreementId": "PPA-PG-E-2025-BR-001",
+  "utilityOfftaker": "PG&E",
+  "gridInterconnectionPoint": "PG&E-ELDORADO-SUBSTATION",
+  "airDistrictPermit": "EDCAQMD-2025-BIOMASS-001",
+  "californiaSRA": true,
+  "bioramEligibilityStatus": "qualified",
+  
+  // Geographic and compliance
+  "primaryGeographicDataId": "GEO-SHERWOOD-POWER-001",
+  "operationalAreas": ["GEO-ELDORADO-COUNTY-SRA"],
+  "fireHazardZoneDesignation": "Very High",
+  "calFireJurisdiction": "EL_DORADO_UNIT",
+  
   "address": {
     "street": "3100 Sherwood Road",
     "city": "Sherwood",
     "state": "CA",
     "postalCode": "95663",
-    "country": "USA"
+    "country": "USA",
+    "county": "El Dorado",
+    "apn": "327-120-045"
   },
   "contactInfo": {
     "email": "info@sherwoodpower.example.com",
     "phone": "+1-916-555-0182",
     "website": "https://sherwoodpower.example.com"
   },
-  "operationalStatus": "active",
+  
+  // Certifications and compliance
+  "certifications": [
+    "CERT-AIR-QUALITY-2025-001",
+    "CERT-BIOMASS-FUEL-2025-001"
+  ],
+  "complianceRequirements": [
+    "BioRAM_Reporting",
+    "Air_Quality_Compliance",
+    "RPS_Certification"
+  ],
+  
   "lastUpdated": "2025-08-01T15:28:00Z"
 }

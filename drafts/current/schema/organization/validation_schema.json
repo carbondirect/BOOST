@@ -152,11 +152,68 @@
         },
         "unit": {
           "type": "string",
-          "enum": ["gallons_renewable_diesel", "gallons_ethanol", "gallons_biodiesel", "gallons_gasoline", "gallons_diesel", "GGE", "MJ"],
+          "enum": ["gallons_renewable_diesel", "gallons_ethanol", "gallons_biodiesel", "gallons_gasoline", "gallons_diesel", "GGE", "MJ", "MWh"],
           "description": "Unit for capacity measurement"
         }
       },
       "description": "Facility production or handling capacity for LCFS reporting"
+    },
+    "bioramRegistrationId": {
+      "type": "string",
+      "description": "CEC BioRAM registration identifier for biomass power facilities",
+      "pattern": "^CEC-BIO-[0-9]{3}$",
+      "examples": ["CEC-BIO-012", "CEC-BIO-087"]
+    },
+    "bioramFacilityId": {
+      "type": "string",
+      "description": "BioRAM facility identifier for program tracking",
+      "pattern": "^BIORAM-FAC-[0-9]{4}-[0-9]{3}$",
+      "examples": ["BIORAM-FAC-2025-001", "BIORAM-FAC-2025-087"]
+    },
+    "bioramContractId": {
+      "type": "string",
+      "description": "BioRAM competitive procurement contract identifier",
+      "pattern": "^BR-RFO-[0-9]{4}-[0-9]{2}$",
+      "examples": ["BR-RFO-2024-01", "BR-RFO-2025-03"]
+    },
+    "powerPurchaseAgreementId": {
+      "type": "string",
+      "description": "Power purchase agreement identifier with utility offtaker",
+      "examples": ["PPA-PG-E-2025-BR-001", "PPA-SCE-2025-BR-007"]
+    },
+    "utilityOfftaker": {
+      "type": "string",
+      "description": "Utility company purchasing power under BioRAM contract",
+      "examples": ["PG&E", "SCE", "SDG&E"]
+    },
+    "gridInterconnectionPoint": {
+      "type": "string",
+      "description": "Grid interconnection substation or transmission point",
+      "examples": ["PG&E-ELDORADO-SUBSTATION", "SCE-RIVERSIDE-SUBSTATION"]
+    },
+    "airDistrictPermit": {
+      "type": "string",
+      "description": "Air quality management district permit identifier",
+      "examples": ["EDCAQMD-2025-BIOMASS-001", "SCAQMD-2025-BIORAM-012"]
+    },
+    "californiaSRA": {
+      "type": "boolean",
+      "description": "Whether facility operates within California State Responsibility Area"
+    },
+    "bioramEligibilityStatus": {
+      "type": "string",
+      "enum": ["qualified", "pending", "suspended", "not_eligible"],
+      "description": "Current BioRAM program eligibility status"
+    },
+    "fireHazardZoneDesignation": {
+      "type": "string",
+      "enum": ["Very High", "High", "Moderate", "Low"],
+      "description": "CAL FIRE fire hazard severity zone designation for facility location"
+    },
+    "calFireJurisdiction": {
+      "type": "string",
+      "description": "CAL FIRE unit or jurisdiction for facility area",
+      "examples": ["EL_DORADO_UNIT", "RIVERSIDE_UNIT", "SAN_BERNARDINO_UNIT"]
     },
     "operationalStatus": {
       "type": "string",

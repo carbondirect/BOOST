@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "boost": "https://github.com/carbondirect/BOOST/contexts/",
+    "bioram": "https://github.com/carbondirect/BOOST/contexts/bioram/"
+  },
+  "@type": "BioramReporting",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/bioram-reporting/BIORAM-RPT-2025-Q3-SHWD001",
+  "reportingId": "BIORAM-RPT-2025-Q3-SHWD001",
+  "facilityEntityId": "ORG-SHERWOOD-POWER-001",
+  "bioramContractId": "BR-RFO-2024-01-A",
+  "reportingPeriod": "2025-Q3",
+  "totalBiomassVolume": 3500.0,
+  "totalEnergyGenerated": 2800.0,
+  "overallEfficiency": 0.36,
+  "efficiencyTarget": 0.35,
+  "complianceStatus": "compliant",
+  "submissionDate": "2025-10-15T14:30:00Z",
+  "verificationDate": "2025-10-10T16:45:00Z",
+  "verificationRequired": true,
+  "VerificationStatementId": "VS-BIORAM-2025-Q3-001",
+  "reportingDeadline": "2025-10-31",
+  "transactionIds": [
+    "TXN-BIORAM-2025-001",
+    "TXN-BIORAM-2025-002",
+    "TXN-BIORAM-2025-003"
+  ],
+  "fuelSourcingSummary": {
+    "totalSuppliers": 3,
+    "averageHaulDistance": 50.0,
+    "fireHazardZoneBreakdown": {
+      "veryHighFHSZ": 2300.0,
+      "highFHSZ": 1200.0,
+      "moderateFHSZ": 0.0,
+      "lowFHSZ": 0.0
+    },
+    "fuelTypeBreakdown": [
+      {
+        "fuelType": "lumber_mill_residual",
+        "volume": 2700.0,
+        "percentage": 77.1,
+        "pathwayId": "BIORAM-PWR-2025-LMR-001"
+      },
+      {
+        "fuelType": "forest_harvest_residual",
+        "volume": 800.0,
+        "percentage": 22.9,
+        "pathwayId": "BIORAM-PWR-2025-FHR-001"
+      }
+    ]
+  },
+  "performanceMetrics": {
+    "capacityFactor": 0.82,
+    "availabilityFactor": 0.94,
+    "fuelUtilizationRate": 0.88,
+    "gridReliabilityContribution": {
+      "peakHoursGeneration": 850.0,
+      "gridStabilizationServices": true
+    }
+  },
+  "environmentalImpact": {
+    "co2Reduction": 2450.0,
+    "fireRiskMitigation": {
+      "acresTreated": 1250.0,
+      "firebreakContribution": true
+    },
+    "wasteReduction": 3500.0
+  },
+  "financialSummary": {
+    "totalContractValue": 336000.0,
+    "fuelCosts": 176600.0,
+    "averageFuelPrice": 50.46,
+    "contractPricePerMWh": 120.0
+  },
+  "lastUpdated": "2025-10-15T16:22:00Z"
+}

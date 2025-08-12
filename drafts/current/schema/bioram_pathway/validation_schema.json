@@ -1,0 +1,166 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/bioram-pathway",
+    "title": "BioRAM Pathway",
+    "description": "California BioRAM program pathway for biomass power generation with fuel classification and efficiency attributes",
+    "type": "object",
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "pathwayId",
+      "fuelType",
+      "targetFacilityType",
+      "efficiencyStandard",
+      "carbonIntensity",
+      "certificationDate",
+      "eligibilityStatus"
+    ],
+    "properties": {
+      "@context": {
+        "type": "object",
+        "description": "JSON-LD context for semantic web compatibility"
+      },
+      "@type": {
+        "type": "string",
+        "const": "BioramPathway"
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri",
+        "description": "Unique URI identifier for JSON-LD"
+      },
+      "pathwayId": {
+        "type": "string",
+        "description": "BioRAM pathway identifier",
+        "pattern": "^BIORAM-PWR-[0-9]{4}-[A-Z]{2,4}-[0-9]{3}$"
+      },
+      "fuelType": {
+        "type": "string",
+        "enum": [
+          "lumber_mill_residual",
+          "forest_harvest_residual",
+          "agricultural_residue",
+          "urban_wood_waste",
+          "construction_demolition_wood",
+          "orchard_removal_material",
+          "christmas_tree_farms"
+        ],
+        "description": "BioRAM eligible fuel type classification"
+      },
+      "targetFacilityType": {
+        "type": "string",
+        "enum": [
+          "biomass_power_plant",
+          "biogas_facility",
+          "combined_heat_power"
+        ],
+        "description": "Type of facility this pathway applies to"
+      },
+      "efficiencyStandard": {
+        "type": "number",
+        "minimum": 0.20,
+        "maximum": 0.60,
+        "description": "Minimum efficiency requirement for BioRAM eligibility (fraction)"
+      },
+      "carbonIntensity": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 50,
+        "description": "Carbon intensity in gCO2e/MJ for biomass fuel"
+      },
+      "geographicScope": {
+        "type": "string",
+        "enum": [
+          "California_SRA",
+          "California_Statewide",
+          "Western_States"
+        ],
+        "description": "Geographic applicability within State Responsibility Areas"
+      },
+      "fireHazardZoneEligibility": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "Very High",
+            "High",
+            "Moderate"
+          ]
+        },
+        "description": "Eligible CAL FIRE hazard severity zones"
+      },
+      "certificationDate": {
+        "type": "string",
+        "format": "date",
+        "description": "CEC BioRAM pathway certification date"
+      },
+      "expirationDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Pathway certification expiration date"
+      },
+      "eligibilityStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "suspended",
+          "expired",
+          "pending_approval"
+        ],
+        "description": "Current CEC eligibility status"
+      },
+      "cecVersion": {
+        "type": "string",
+        "description": "CEC BioRAM program version used for certification",
+        "pattern": "^[0-9]+\\.[0-9]+$"
+      },
+      "haulDistanceLimit": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 200,
+        "description": "Maximum economical haul distance in miles"
+      },
+      "seasonalAvailability": {
+        "type": "object",
+        "properties": {
+          "peakSeason": {
+            "type": "string",
+            "enum": [
+              "fire_season",
+              "harvest_season",
+              "year_round"
+            ]
+          },
+          "availabilityFactor": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 1.0,
+            "description": "Seasonal availability factor"
+          }
+        },
+        "description": "Seasonal fuel availability characteristics"
+      },
+      "sourceRegion": {
+        "type": "string",
+        "description": "Primary source region or forest management unit"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of most recent pathway data update"
+      }
+    },
+    "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "BioramPathway",
+      "primaryKey": "pathwayId",
+      "area": "compliance_reporting",
+      "description": "BioRAM pathway definitions for biomass power generation tracking"
+    },
+    "relationships": []
+  }
+}

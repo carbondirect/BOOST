@@ -1,0 +1,136 @@
+{
+  "reportingId": "RPT-BIORAM-2025-Q3-001",
+  "organizationId": "ORG-SHERWOOD-POWER-001",
+  "reportingPeriod": "2025-Q3",
+  "submissionDate": "2025-10-15T00:00:00Z",
+  "verificationStatus": "pending",
+  "complianceStatus": "compliant",
+  
+  // Aggregated metrics
+  "totalBiomassVolume": 3500,
+  "biomassVolumeUnit": "bone_dry_tonnes",
+  "totalEnergyGenerated": 2800,
+  "energyUnit": "MWh",
+  "weightedCarbonIntensity": 16.8,
+  "carbonIntensityUnit": "gCO2e/MJ",
+  "actualEfficiency": 0.36,
+  "efficiencyTarget": 0.35,
+  "averageHaulDistance": 50,
+  "haulDistanceUnit": "miles",
+  
+  // BioRAM Field 1: Fuel Origin Summary
+  "fuelOriginSummary": {
+    "facilitiesCount": 3,
+    "allWithinSRA": true,
+    "coordinatesVerified": true,
+    "avgLatitude": 38.7485,
+    "avgLongitude": -121.2207
+  },
+  
+  // BioRAM Field 2: Fuel Type Breakdown
+  "fuelTypeBreakdown": [
+    {
+      "fuelType": "lumber_mill_residual",
+      "volume": 2700,
+      "percentage": 77.1,
+      "pathwayId": "BIORAM-PWR-2025-LMR-001"
+    },
+    {
+      "fuelType": "forest_harvest_residual", 
+      "volume": 800,
+      "percentage": 22.9,
+      "pathwayId": "BIORAM-PWR-2025-FHR-001"
+    }
+  ],
+  
+  // BioRAM Field 3: Volume Delivered (aggregated from transactions)
+  "volumeDelivered": {
+    "totalVolume": 3500,
+    "transactionCount": 3,
+    "deliveryPeriod": "2025-08-15 to 2025-08-25",
+    "averageLoadSize": 1166.7
+  },
+  
+  // BioRAM Field 4: Haul Distance Analysis
+  "haulDistanceAnalysis": {
+    "averageDistance": 50.0,
+    "minimumDistance": 35,
+    "maximumDistance": 65,
+    "weightedAverageDistance": 48.9,
+    "transportationEfficiency": "compliant"
+  },
+  
+  // BioRAM Field 5: Fuel Ownership Documentation
+  "fuelOwnershipSummary": {
+    "uniqueLandowners": 3,
+    "parcelsCount": 3,
+    "allPermitsActive": true,
+    "calFirePermitsVerified": true,
+    "timberHarvestPlansActive": 3,
+    "ownershipDocumentationComplete": true
+  },
+  
+  // BioRAM Field 6: Fire Hazard Severity Zone Status
+  "fireHazardZoneAnalysis": {
+    "veryHighFHSZ": {
+      "volume": 2300,
+      "percentage": 65.7
+    },
+    "highFHSZ": {
+      "volume": 1200,
+      "percentage": 34.3
+    },
+    "moderateFHSZ": {
+      "volume": 0,
+      "percentage": 0
+    },
+    "lowFHSZ": {
+      "volume": 0,
+      "percentage": 0
+    },
+    "allEligibleZones": true,
+    "verificationSource": "CAL_FIRE_2024_MAPS"
+  },
+  
+  // BioRAM Field 7: Attestation/Certification Summary
+  "attestationSummary": {
+    "certificationsIssued": 3,
+    "allMaterialEligibilityConfirmed": true,
+    "allReportingAccuracyConfirmed": true,
+    "attestationDate": "2025-09-30",
+    "signatories": [
+      "John Anderson, Forest Manager",
+      "Maria Santos, Operations Manager", 
+      "Robert Chen, Mill Manager"
+    ],
+    "complianceFormsSigned": true
+  },
+  
+  // Performance metrics
+  "performanceMetrics": {
+    "efficiencyAchievement": {
+      "target": 35,
+      "actual": 36,
+      "status": "exceeds_target"
+    },
+    "carbonIntensityAchievement": {
+      "target": 25.0,
+      "actual": 16.8,
+      "improvement": 32.8,
+      "status": "exceeds_target"
+    },
+    "bioramEligibilityRate": 100,
+    "fireHazardZoneUtilization": 100,
+    "averageContractValue": 58.86,
+    "totalContractValue": 176600.00
+  },
+  
+  // Compliance verification
+  "complianceVerification": {
+    "allFieldsComplete": true,
+    "dataValidated": true,
+    "crossReferencesVerified": true,
+    "readyForSubmission": true,
+    "estimatedCreditEligibility": "full_qualification"
+  }
+}
