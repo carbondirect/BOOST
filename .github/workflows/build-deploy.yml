@@ -335,38 +335,41 @@ jobs:
           find build-output -type f -name "*.html" -o -name "*.pdf" -o -name "*.md" | head -10
           
           # Copy main HTML documentation
-          if [ -f "build-output/specifications/boost-spec.html" ]; then
-            cp build-output/specifications/boost-spec.html ./pages-content/
+          if [ -f "build-output/drafts/current/specifications/boost-spec.html" ]; then
+            cp build-output/drafts/current/specifications/boost-spec.html ./pages-content/
             echo "✅ Copied boost-spec.html"
           else
-            echo "❌ boost-spec.html not found"
+            echo "❌ boost-spec.html not found at build-output/drafts/current/specifications/boost-spec.html"
             exit 1
           fi
           
           # Copy ERD navigator if it exists
-          if [ -d "build-output/specifications/erd-navigator" ]; then
-            cp -r build-output/specifications/erd-navigator ./pages-content/
+          if [ -d "build-output/drafts/current/specifications/erd-navigator" ]; then
+            cp -r build-output/drafts/current/specifications/erd-navigator ./pages-content/
             echo "✅ Copied ERD navigator"
           fi
           
           # Copy build report if it exists
-          if [ -f "build-output/specifications/build-report.md" ]; then
-            cp build-output/specifications/build-report.md ./pages-content/
+          if [ -f "build-output/drafts/current/specifications/build-report.md" ]; then
+            cp build-output/drafts/current/specifications/build-report.md ./pages-content/
             echo "✅ Copied build report"
           fi
           
           # Copy PDF if it exists
-          if [ -f "build-output/specifications/boost-spec.pdf" ]; then
-            cp build-output/specifications/boost-spec.pdf ./pages-content/
+          if [ -f "build-output/drafts/current/specifications/boost-spec.pdf" ]; then
+            cp build-output/drafts/current/specifications/boost-spec.pdf ./pages-content/
             echo "✅ Copied PDF documentation"
           fi
           
           # Copy schema files  
-          if [ -d "build-output/schema" ]; then
-            cp -r build-output/schema ./pages-content/
+          if [ -d "build-output/drafts/current/schema" ]; then
+            cp -r build-output/drafts/current/schema ./pages-content/
             echo "✅ Copied schema directory"
           else
-            echo "❌ Schema directory not found"
+            echo "❌ Schema directory not found at build-output/drafts/current/schema"
+            # Debug: show what's actually in the build output
+            echo "📋 Available paths in build-output:"
+            find build-output -name "schema" -type d
             exit 1
           fi
           
