@@ -20,7 +20,8 @@
         "format": "uri"
       },
       "processingId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^MP-[A-Z0-9-_]+$"
       },
       "inputTraceableUnitId": {
         "type": "string",

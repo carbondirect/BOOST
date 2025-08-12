@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "supplyBaseId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^SB-[A-Z0-9-_]+$"
       },
       "OrganizationId": {
         "type": "string",

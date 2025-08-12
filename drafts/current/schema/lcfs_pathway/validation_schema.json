@@ -22,7 +22,8 @@
     ],
     "properties": {
       "@context": {
-        "$ref": "https://github.com/carbondirect/BOOST/schemas#context"
+        "type": "object",
+        "description": "JSON-LD context for semantic web compatibility"
       },
       "@type": {
         "type": "string",

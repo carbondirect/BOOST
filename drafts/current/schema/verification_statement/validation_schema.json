@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "statementId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^VS-[A-Z0-9-_]+$"
       },
       "verificationDate": {
         "type": "string",

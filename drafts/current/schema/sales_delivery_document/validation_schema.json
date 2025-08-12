@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "documentId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^DOC-[A-Z0-9-_]+$"
       },
       "dateIssued": {
         "type": "string",

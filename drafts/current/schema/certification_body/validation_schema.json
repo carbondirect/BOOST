@@ -22,12 +22,13 @@
       },
       "cbId": {
         "type": "string",
+        "pattern": "^CB-[A-Z0-9-_]+$",
         "description": "Unique identifier for the certification body (primary key)",
         "minLength": 1,
         "examples": [
-          "SFI",
-          "FSC-US",
-          "PEFC-001",
+          "CB-SFI",
+          "CB-FSC-US",
+          "CB-PEFC-001",
           "ANSI-ASQ"
         ]
       },

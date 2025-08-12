@@ -19,6 +19,7 @@
       },
       "transactionBatchId": {
         "type": "string",
+        "pattern": "^TB-[A-Z0-9-_]+$",
         "description": "Unique identifier for the physical material batch"
       },
       "transactionId": {

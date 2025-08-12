@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "biometricId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^BIO-[A-Z0-9-_]+$"
       },
       "traceableUnitId": {
         "type": "string"

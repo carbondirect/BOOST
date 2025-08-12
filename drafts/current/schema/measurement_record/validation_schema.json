@@ -20,10 +20,12 @@
         "format": "uri"
       },
       "recordId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^MR-[A-Z0-9-_]+$"
       },
       "traceableUnitId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$"
       },
       "measuredVolume": {
         "type": "number",
@@ -47,17 +49,20 @@
         ]
       },
       "measurementGeographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$"
       },
       "measurementTimestamp": {
         "type": "string",
         "format": "date-time"
       },
       "operatorId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$"
       },
       "trackingPointId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TP-[A-Z0-9-_]+$"
       },
       "speciesMeasurements": {
         "type": "array",

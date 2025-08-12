@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "claimId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^CLA-[A-Z0-9-_]+$"
       },
       "TraceableUnitId": {
         "type": "string",

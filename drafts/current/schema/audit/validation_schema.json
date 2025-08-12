@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "auditId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^AUD-[A-Z0-9-_]+$"
       },
       "auditType": {
         "type": "string",
@@ -33,10 +34,12 @@
         "format": "date"
       },
       "organizationId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$"
       },
       "cbId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^CB-[A-Z0-9-_]+$"
       },
       "findings": {
         "type": "string"
@@ -46,7 +49,8 @@
         "format": "uri"
       },
       "auditGeographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$"
       }
     },
     "required": [
