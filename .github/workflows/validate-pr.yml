@@ -17,6 +17,7 @@ jobs:
   schema-validation:
     name: 🔍 Schema Validation
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # Schema validation should be quick
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

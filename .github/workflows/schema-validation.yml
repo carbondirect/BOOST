@@ -34,6 +34,7 @@ jobs:
   detect-changes:
     name: 📋 Detect Schema Changes
     runs-on: ubuntu-latest
+    timeout-minutes: 5  # Change detection should be very quick
     outputs:
       schema-changed: ${{ steps.changes.outputs.schema }}
       python-changed: ${{ steps.changes.outputs.python }}
@@ -79,6 +80,7 @@ jobs:
   validate-schemas:
     name: 🧪 Validate JSON Schemas
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # Schema validation should be quick
     needs: detect-changes
     if: needs.detect-changes.outputs.schema-changed == 'true' || github.event_name == 'workflow_dispatch'
     
@@ -249,6 +251,7 @@ jobs:
   validate-foreign-keys:
     name: 🔗 Validate Foreign Key Relationships
     runs-on: ubuntu-latest
+    timeout-minutes: 8  # FK validation should be quick
     needs: [detect-changes, validate-schemas]
     if: needs.detect-changes.outputs.schema-changed == 'true' || github.event_name == 'workflow_dispatch'
     
@@ -379,6 +382,7 @@ jobs:
   validate-python-models:
     name: 🐍 Validate Python Models
     runs-on: ubuntu-latest
+    timeout-minutes: 12  # Python model validation may take longer
     needs: detect-changes
     if: needs.detect-changes.outputs.python-changed == 'true' || github.event_name == 'workflow_dispatch'
     
@@ -475,6 +479,7 @@ jobs:
   validation-summary:
     name: 📋 Validation Summary
     runs-on: ubuntu-latest
+    timeout-minutes: 5  # Summary generation should be very quick
     needs: [validate-schemas, validate-foreign-keys, validate-python-models]
     if: always() && (needs.detect-changes.outputs.schema-changed == 'true' || github.event_name == 'workflow_dispatch')
     

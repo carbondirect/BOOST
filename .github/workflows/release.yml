@@ -30,6 +30,7 @@ jobs:
   build-release:
     name: 📦 Build Release Documentation
     runs-on: ubuntu-latest
+    timeout-minutes: 20  # Prevent stuck release builds - Docker should be ~3-5 min
     container:
       image: ghcr.io/carbondirect/boost/boost-builder:latest
       options: --pull=missing
@@ -363,6 +364,7 @@ jobs:
   create-github-release:
     name: 🚀 Create GitHub Release
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # Release creation should be quick
     needs: build-release
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     
