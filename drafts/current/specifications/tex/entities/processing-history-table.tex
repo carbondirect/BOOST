@@ -22,6 +22,6 @@
 \field{processingGeographicDataId} & string & Foreign key to location where processing occurred \\
 \field{qualityChangeDescription} & string & Description of quality changes during processing \\
 \field{speciesCompositionChange} & enum(5 values) & How species composition changed during processing \\
-\field{volumeChangeRatio} & number (≥0, ≤2.0) & Ratio of output volume to input volume (1.0 = no change) \\
+\field{volumeChangeRatio} & number (\geq 0, \leq 2.0) & Ratio of output volume to input volume (1.0 = no change) \\
 \field{volumeConservationData} & object (structured) & Volume conservation validation data \\
 \end{entitytable}

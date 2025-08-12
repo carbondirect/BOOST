@@ -4,10 +4,6 @@ on:
   push:
     branches: 
       - main                    # Full build + deploy
-      - develop                 # Build only (no deploy)
-      - 'feature/**'           # Build only (no deploy)  
-      - 'fix/**'               # Build only (no deploy)
-      - 'docs/**'              # Build only (no deploy)
     paths:
       - 'drafts/current/specifications/**'
       - 'drafts/current/schema/**'
@@ -22,10 +18,10 @@ on:
         type: boolean
         default: false
 
-# Ensure only one build runs at a time
+# Ensure only one build runs at a time per branch, cancel previous runs
 concurrency:
   group: build-deploy-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   BOOST_DOC_VERSION: ${{ github.ref_name }}
@@ -34,6 +30,10 @@ jobs:
   build-documentation:
     name: 📚 Build Documentation
     runs-on: ubuntu-latest
+    timeout-minutes: 15  # Prevent stuck builds - Docker should be ~2-3 min
+    container:
+      image: ghcr.io/carbondirect/boost/boost-builder:latest
+      options: --pull=missing
     outputs:
       version: ${{ steps.extract-version.outputs.version }}
       build-timestamp: ${{ steps.extract-version.outputs.timestamp }}
@@ -44,33 +44,13 @@ jobs:
         with:
           fetch-depth: 0  # Need full git history for version extraction
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install system dependencies
+      - name: Verify containerized environment
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            python3-pip \
-            python3-pygments \
-            texlive-latex-base \
-            texlive-latex-recommended \
-            texlive-latex-extra \
-            texlive-fonts-recommended \
-            texlive-fonts-extra \
-            pandoc
-
-      - name: Install Python dependencies
-        run: |
-          pip install --upgrade pip
-          pip install bikeshed jsonschema pydantic[email] requests
-
-      - name: Initialize Bikeshed
-        run: |
-          bikeshed update
+          echo "🐳 Docker containerized build environment"
+          echo "Python version: $(python3 --version)"
+          echo "Bikeshed version: $(bikeshed --version)"
+          echo "TeXLive available: $(which pdflatex && echo 'Yes' || echo 'No')"
+          echo "Pandoc version: $(pandoc --version | head -1)"
 
       - name: Extract version information
         id: extract-version

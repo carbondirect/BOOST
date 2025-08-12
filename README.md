@@ -1,9 +1,9 @@
-# Biomass Chain of Custody (CoC) Data Standard Community Group
+# Biomass Open Origin Standard for Tracking (BOOST) Community Group
 
 ## Overview
-This repository contains the working draft and artifacts of the Biomass Chain of Custody (CoC) Data Standard, which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
+This repository contains the working draft and artifacts of the Biomass Open Origin Standard for Tracking (BOOST), which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
-**Current Version: v2.2.1** - Repository cleanup and ERD consolidation with single source of truth ERD Navigator, eliminated redundant code, and consistent terminology.
+**Current Version: v3.0.3** - Docker containerized builds, automatic releases for all semantic versions, and comprehensive GitHub Actions workflow automation.
 
 - **Charter:** [BOOST_Charter.org](BOOST_Charter.org)
 - **Charter Effective Date:** 
@@ -51,8 +51,12 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 │   ├── ISSUE_TEMPLATE/
 │   │   ├── bug_report.md
 │   │   └── feature_request.md
-│   └── workflows/
-│       └── ci.yml           # Placeholder for GitHub Actions (not auto-created)
+│   ├── workflows/           # Automated CI/CD workflows
+│   │   ├── release.yml              # Release automation for all semantic versions
+│   │   ├── build-deploy.yml         # Development builds and GitHub Pages deployment  
+│   │   ├── version-check.yml        # Version analysis and guidance
+│   │   └── docker-image.yml         # Container image maintenance
+│   └── WORKFLOWS.md         # Comprehensive workflow documentation
 ├── erd-navigator/           # Interactive ERD Navigator for stakeholder feedback
 │   ├── index.html                   # Main interactive ERD interface
 │   └── README.md                    # Navigator documentation
@@ -157,6 +161,59 @@ Each entity has a dedicated GitHub discussion thread accessible via the ERD. Thi
 - **✅ Complete**: Interactive ERD Navigator with GitHub discussion integration
 - **✅ Complete**: Integration testing scenarios and migration documentation
 - **🔄 Active**: Community feedback integration and use case expansion
+
+## 🤖 Automated CI/CD Workflows
+
+The BOOST repository includes comprehensive GitHub Actions automation for documentation building, validation, and release management.
+
+### Key Features
+- **🐳 Docker Containerization**: All builds use pre-built containers for 4-6x faster execution
+- **🚀 Automatic Releases**: Every semantic version tag triggers complete release packages
+- **✅ Schema Validation**: Comprehensive validation of all 33+ entity schemas
+- **📄 Multi-Format Output**: HTML, PDF, and interactive ERD Navigator generation
+
+### Workflow Overview
+
+| Workflow | Trigger | Purpose | Performance |
+|----------|---------|---------|------------|
+| **Release Documentation** | Version tags (`v*.*.*`) | Build & publish releases | ~3-4 min |
+| **Build Documentation** | Branch pushes | Development builds + Pages deploy | ~2-3 min |
+| **Version Management** | Version tags | Version analysis & guidance | ~5 sec |
+| **Docker Image Builder** | Dockerfile changes | Container maintenance | ~5-8 min |
+
+### Quick Start
+
+#### Create a Release
+```bash
+# Any semantic version automatically triggers release
+git tag v3.1.0
+git push origin v3.1.0
+
+# This automatically:
+# 1. Builds complete documentation (HTML + PDF)
+# 2. Validates all schemas and relationships
+# 3. Creates GitHub release with downloadable packages
+# 4. Updates documentation website
+```
+
+#### Development Workflow
+```bash
+# Push to any branch triggers development build
+git push origin feature/new-entity
+
+# For main branch pushes, also updates:
+# - https://carbondirect.github.io/BOOST/
+# - Interactive ERD Navigator
+# - Schema file access
+```
+
+### Performance Improvements
+- **Before Docker**: 8-10 minute builds with dependency installation
+- **After Docker**: 2-4 minute builds using pre-built containers
+- **Reliability**: Eliminated dependency installation failures
+- **Consistency**: Same environment for all builds
+
+📖 **Full Documentation**: See [.github/WORKFLOWS.md](.github/WORKFLOWS.md) for comprehensive workflow documentation, troubleshooting guides, and maintenance procedures.
 
 ## 🔧 Development Tools
 

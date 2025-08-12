@@ -31,6 +31,10 @@ jobs:
   build-dev-documentation:
     name: 📖 Build Documentation (Development)
     runs-on: ubuntu-latest
+    timeout-minutes: 15  # Prevent stuck dev builds - Docker should be ~2-3 min
+    container:
+      image: ghcr.io/carbondirect/boost/boost-builder:latest
+      options: --pull=missing
     
     steps:
       - name: Checkout repository
@@ -38,33 +42,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install system dependencies
+      - name: Verify containerized environment
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            python3-pip \
-            python3-pygments \
-            texlive-latex-base \
-            texlive-latex-recommended \
-            texlive-latex-extra \
-            texlive-fonts-recommended \
-            texlive-fonts-extra \
-            pandoc
-
-      - name: Install Python dependencies
-        run: |
-          pip install --upgrade pip
-          pip install bikeshed jsonschema pydantic[email] requests
-
-      - name: Initialize Bikeshed
-        run: |
-          bikeshed update
+          echo "🐳 Docker containerized development build environment"
+          echo "Python version: $(python3 --version)"
+          echo "Bikeshed version: $(bikeshed --version)"
+          echo "TeXLive available: $(which pdflatex && echo 'Yes' || echo 'No')"
+          echo "Pandoc version: $(pandoc --version | head -1)"
 
       - name: Extract version information
         id: version-info
@@ -138,38 +122,44 @@ jobs:
         if: github.event.inputs.include_pdf != 'false'
         working-directory: drafts/current/specifications
         run: |
-          echo "📄 Building PDF documentation..."
+          echo "📄 Building PDF documentation for development..."
           
-          # Try LaTeX build first
+          # Try LaTeX build with simplified approach
           if [ -f "boost-spec.tex" ]; then
-            echo "🔧 Attempting LaTeX PDF build with shell-escape..."
-            echo "📄 Running first LaTeX pass..."
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
-            echo "📄 Running second LaTeX pass (for TOC, LOF, LOT)..."
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
-            echo "📄 Running third LaTeX pass (for cross-references)..."
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            echo "🔧 Building PDF from LaTeX..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX first pass warnings normal"
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX second pass warnings normal"
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX third pass completed"
             
-            # Check auxiliary files generated
-            echo "🔍 Checking generated auxiliary files..."
-            ls -la *.aux *.toc *.lof *.lot *.log 2>/dev/null || echo "Some auxiliary files missing"
-            
-            # Check if PDF was actually generated (ignore LaTeX warnings)
             if [ -f "boost-spec.pdf" ]; then
-              echo "✅ LaTeX PDF generation successful (boost-spec.pdf)"
+              echo "✅ PDF generated from LaTeX: boost-spec.pdf"
             else
-              echo "⚠️ LaTeX build failed - no PDF output, trying Pandoc fallback..."
+              echo "⚠️ LaTeX build failed, trying Pandoc fallback..."
             fi
           fi
           
-          # Pandoc HTML->PDF conversion (fallback if LaTeX failed)
+          # Fallback to Pandoc HTML->PDF conversion
           if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
             echo "🔄 Converting HTML to PDF with Pandoc..."
             
-            # Clean HTML for PDF using external script
-            python3 ../../../.github/scripts/clean-html-for-pdf.py boost-spec.html boost-spec-clean.html
+            # Create clean HTML for PDF conversion
+            python3 -c "
+            import re
+            with open('boost-spec.html', 'r') as f:
+                html = f.read()
             
-            # Generate PDF with enhanced options
+            # Remove interactive elements and styling that don't work in PDF
+            html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL)
+            html = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL) 
+            html = re.sub(r'onclick=\"[^\"]*\"', '', html)
+            html = re.sub(r'class=\"[^\"]*\"', '', html)
+            html = re.sub(r'id=\"toc\"', '', html)  # Remove TOC for cleaner PDF
+            
+            with open('boost-spec-clean.html', 'w') as f:
+                f.write(html)
+            "
+            
+            # Generate PDF with Pandoc
             pandoc boost-spec-clean.html \
               -o "boost-spec.pdf" \
               --pdf-engine=xelatex \
@@ -181,19 +171,12 @@ jobs:
               --toc \
               --toc-depth=3 \
               --number-sections \
-              --highlight-style=github \
-              --variable colorlinks=true \
-              --variable linkcolor=blue \
-              --variable urlcolor=blue \
-              --variable toccolor=blue \
               || echo "⚠️ PDF generation failed"
             
-            # Cleanup
             rm -f boost-spec-clean.html
             
             if [ -f "boost-spec.pdf" ]; then
-              PDF_SIZE=$(wc -c < "boost-spec.pdf")
-              echo "✅ PDF generated via Pandoc: boost-spec.pdf ($(echo $PDF_SIZE | numfmt --to=iec-i --suffix=B))"
+              echo "✅ PDF generated from HTML: boost-spec.pdf"
             else
               echo "❌ PDF generation failed"
             fi
@@ -234,6 +217,7 @@ jobs:
 
       - name: Generate development build report
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
           cat > dev-build-report.md << EOF
           # 📚 BOOST Development Build Report

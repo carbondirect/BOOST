@@ -16,7 +16,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
+** [View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
 
 % Transaction Entity Table
 % Auto-generated from JSON schema
@@ -25,7 +25,7 @@ This entity references the following entities:
 \textbf{\field{CustomerId}} & string (pattern) & Customer organization (buyer) - uses EntityNameId convention referencing Cust... \\
 \textbf{\field{OrganizationId}} & string (pattern) & Primary organization involved in transaction (seller/supplier) \\
 \textbf{\field{contractCurrency}} & enum(9 values) & Currency code for contract value \\
-\textbf{\field{contractValue}} & number (≥0, ≤999999999.99) & Total monetary value of the transaction \\
+\textbf{\field{contractValue}} & number (\geq 0, \leq 999999999.99) & Total monetary value of the transaction \\
 \textbf{\field{transactionDate}} & string (date) & Date of business agreement \\
 \textbf{\field{transactionId}} & string (pattern) & Unique identifier for the business transaction \\
 \textbf{\field{transactionStatus}} & enum(6 values) & Current status of business transaction \\
@@ -39,7 +39,7 @@ This entity references the following entities:
 \field{expectedDeliveryDate} & ['string', 'null'] & Expected completion/delivery date \\
 \field{financialTerms} & object (structured) & Detailed financial terms and conditions \\
 \field{fuelCategory} & enum(10 values) & Category of fuel for LCFS classification \\
-\field{fuelVolume} & number (≥0) & Volume of fuel in transaction for LCFS reporting \\
+\field{fuelVolume} & number (\geq 0) & Volume of fuel in transaction for LCFS reporting \\
 \field{fuelVolumeUnit} & enum(gallons, liters, GGE) & Unit of measurement for fuel volume \\
 \field{lastUpdated} & string (date-time) & Timestamp of last modification \\
 \field{manipulationTimestamps} & array<string> & Processing step timestamps \\
@@ -69,14 +69,14 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
+** [View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
 
 % Transaction Batch Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Transaction Batch}
 \textbf{\field{batchStatus}} & enum(6 values) & Current status of the physical batch \\
-\textbf{\field{quantity}} & number (≥0) & Physical quantity of material in this batch \\
+\textbf{\field{quantity}} & number (\geq 0) & Physical quantity of material in this batch \\
 \textbf{\field{quantityUnit}} & enum(7 values) & Unit of measurement for quantity \\
 \textbf{\field{traceableUnitIds}} & array<string> & Array of TRU IDs included in this batch \\
 \textbf{\field{transactionBatchId}} & string & Unique identifier for the physical material batch \\
@@ -115,7 +115,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
+** [View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
 
 % Sales Delivery Document Entity Table
 % Auto-generated from JSON schema

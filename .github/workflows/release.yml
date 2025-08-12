@@ -3,7 +3,7 @@ name: 🏷️ Release Documentation
 on:
   push:
     tags:
-      - 'v[0-9]+.0.0'  # Only major version releases: v1.0.0, v2.0.0, v3.0.0, etc.
+      - 'v[0-9]+.[0-9]+.[0-9]+'  # All semantic versions: v1.0.0, v1.2.3, v2.1.0, etc.
 
   # Allow manual triggering for any version (with validation)
   workflow_dispatch:
@@ -30,6 +30,10 @@ jobs:
   build-release:
     name: 📦 Build Release Documentation
     runs-on: ubuntu-latest
+    timeout-minutes: 20  # Prevent stuck release builds - Docker should be ~3-5 min
+    container:
+      image: ghcr.io/carbondirect/boost/boost-builder:latest
+      options: --pull=missing
     outputs:
       version: ${{ steps.version-info.outputs.version }}
       release-name: ${{ steps.version-info.outputs.release-name }}
@@ -64,31 +68,38 @@ jobs:
           MINOR=$(echo "$VERSION_CLEAN" | cut -d. -f2) 
           PATCH=$(echo "$VERSION_CLEAN" | cut -d. -f3)
           
-          # Check if this is a major version (x.0.0)
-          IS_MAJOR_VERSION="false"
+          # Determine version type
           if [ "$MINOR" = "0" ] && [ "$PATCH" = "0" ]; then
+            VERSION_TYPE="major"
             IS_MAJOR_VERSION="true"
-            echo "✅ Major version detected: $VERSION"
+            echo "🎉 Major version detected: $VERSION"
+          elif [ "$PATCH" = "0" ]; then
+            VERSION_TYPE="minor"
+            IS_MAJOR_VERSION="false"
+            echo "🔄 Minor version detected: $VERSION"
           else
-            echo "⚠️ Non-major version: $VERSION (Minor: $MINOR, Patch: $PATCH)"
+            VERSION_TYPE="patch"
+            IS_MAJOR_VERSION="false"
+            echo "🩹 Patch version detected: $VERSION"
           fi
           
-          # For manual dispatch, check force_release flag
-          FORCE_RELEASE="${{ github.event.inputs.force_release || 'false' }}"
+          echo "✅ All version types now trigger automatic releases"
           
-          if [ "$IS_MAJOR_VERSION" = "false" ] && [ "$FORCE_RELEASE" = "false" ]; then
-            echo "❌ Release workflow only runs for major versions (x.0.0)"
-            echo "   Current version: $VERSION"
-            echo "   To release non-major versions, use manual dispatch with 'force_release' option"
-            exit 1
-          fi
-          
-          # Generate release name
-          if [ "$IS_MAJOR_VERSION" = "true" ]; then
-            RELEASE_NAME="BOOST Data Standard $VERSION - Major Release"
-          else
-            RELEASE_NAME="BOOST Data Standard $VERSION"
-          fi
+          # Generate release name based on version type
+          case "$VERSION_TYPE" in
+            "major")
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION - Major Release"
+              ;;
+            "minor")  
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION - Minor Release"
+              ;;
+            "patch")
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION - Patch Release"
+              ;;
+            *)
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION"
+              ;;
+          esac
           
           # Check if pre-release (contains alpha, beta, rc)
           IS_PRERELEASE="false"
@@ -103,33 +114,13 @@ jobs:
           
           echo "::notice title=Release Build::Building $RELEASE_NAME"
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install system dependencies
+      - name: Verify containerized environment
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            python3-pip \
-            texlive-latex-base \
-            texlive-latex-recommended \
-            texlive-latex-extra \
-            texlive-fonts-recommended \
-            texlive-fonts-extra \
-            texlive-xetex \
-            pandoc
-
-      - name: Install Python dependencies
-        run: |
-          pip install --upgrade pip
-          pip install bikeshed jsonschema pydantic[email] requests
-
-      - name: Initialize Bikeshed
-        run: |
-          bikeshed update
+          echo "🐳 Docker containerized release build environment"
+          echo "Python version: $(python3 --version)"
+          echo "Bikeshed version: $(bikeshed --version)"
+          echo "TeXLive available: $(which pdflatex && echo 'Yes' || echo 'No')"
+          echo "Pandoc version: $(pandoc --version | head -1)"
 
       - name: Run full schema validation
         working-directory: drafts/current/specifications
@@ -203,25 +194,33 @@ jobs:
 
       - name: Generate PDF documentation
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
+          set +e  # Don't exit on LaTeX warnings
+          
           echo "📄 Generating PDF documentation..."
           
           # Check if we have LaTeX source
           if [ -f "boost-spec.tex" ]; then
             echo "Building PDF from LaTeX source..."
             
-            # Run LaTeX build (3 passes for references)
-            pdflatex -interaction=nonstopmode boost-spec.tex
-            pdflatex -interaction=nonstopmode boost-spec.tex
-            pdflatex -interaction=nonstopmode boost-spec.tex
+            # Run LaTeX build (3 passes for references) - warnings are normal
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true  
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
             
+            # Check if PDF was actually generated (this is what matters)
             if [ -f "boost-spec.pdf" ]; then
               echo "✅ PDF generated from LaTeX: boost-spec.pdf"
               mv boost-spec.pdf boost-spec-${{ steps.version-info.outputs.version }}.pdf
+              echo "✅ PDF renamed to boost-spec-${{ steps.version-info.outputs.version }}.pdf"
+              ls -la boost-spec-${{ steps.version-info.outputs.version }}.pdf
             else
               echo "⚠️ LaTeX PDF generation failed, attempting Pandoc conversion..."
             fi
           fi
+          
+          set -e  # Re-enable exit on error for subsequent steps
           
           # Fallback: Generate PDF from HTML using Pandoc
           if [ ! -f "boost-spec-${{ steps.version-info.outputs.version }}.pdf" ]; then
@@ -275,6 +274,7 @@ jobs:
 
       - name: Create release package
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
           echo "📦 Creating release package..."
           
@@ -364,6 +364,7 @@ jobs:
   create-github-release:
     name: 🚀 Create GitHub Release
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # Release creation should be quick
     needs: build-release
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     
@@ -389,9 +390,9 @@ jobs:
           
           # Generate release notes
           cat > release-notes.md << EOF
-          # BOOST Data Standard ${VERSION}
+          # Biomass Open Origin Standard for Tracking (BOOST) ${VERSION}
           
-          This release contains the complete BOOST (Biomass Origin and Ownership Supply-chain Tracking) Data Standard documentation and schemas.
+          This release contains the complete Biomass Open Origin Standard for Tracking (BOOST) documentation and schemas.
           EOF
           
           # Add major version specific content
@@ -401,7 +402,7 @@ jobs:
           
           ## 🎉 Major Release Highlights
           
-          This is a **major version release** (${VERSION}) containing significant updates and improvements to the BOOST Data Standard.
+          This is a **major version release** (${VERSION}) containing significant updates and improvements to the Biomass Open Origin Standard for Tracking (BOOST).
           
           ### What's New in This Major Version
           - Breaking changes may be included - please review documentation

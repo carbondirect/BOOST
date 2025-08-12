@@ -14,7 +14,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Measurement Record in ERD Navigator](erd-navigator/index.html?focus=MeasurementRecord)**
+** [View Measurement Record in ERD Navigator](erd-navigator/index.html?focus=MeasurementRecord)**
 
 % Measurement Record Entity Table
 % Auto-generated from JSON schema
@@ -25,12 +25,12 @@ This entity references the following entities:
 \textbf{\field{recordId}} & string & No description provided \\
 \textbf{\field{traceableUnitId}} & string & No description provided \\
 \field{lastUpdated} & string (date-time) & No description provided \\
-\field{measuredDiameter} & number (≥0) & No description provided \\
-\field{measuredLength} & number (≥0) & No description provided \\
-\field{measuredVolume} & number (≥0) & No description provided \\
+\field{measuredDiameter} & number (\geq 0) & No description provided \\
+\field{measuredLength} & number (\geq 0) & No description provided \\
+\field{measuredVolume} & number (\geq 0) & No description provided \\
 \field{measurementGeographicDataId} & string & No description provided \\
-\field{moistureAccuracy} & number (≥0) & Estimated accuracy of moisture measurement (± percentage points) \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage of weight contributed by water (0-100\textback... \\
+\field{moistureAccuracy} & number (\geq 0) & Estimated accuracy of moisture measurement (± percentage points) \\
+\field{moistureContent} & number (\geq 0, \leq 100) & Moisture content as percentage of weight contributed by water (0-100\textback... \\
 \field{moistureMethod} & enum(8 values) & Method used to determine moisture content \\
 \field{moistureStandard} & enum(5 values) & Standard procedure followed for moisture measurement \\
 \field{operatorId} & string & No description provided \\
@@ -52,7 +52,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Claim in ERD Navigator](erd-navigator/index.html?focus=Claim)**
+** [View Claim in ERD Navigator](erd-navigator/index.html?focus=Claim)**
 
 % Claim Entity Table
 % Auto-generated from JSON schema
@@ -66,7 +66,7 @@ This entity references the following entities:
 \field{CertificationSchemeId} & string & Certification scheme - uses EntityNameId convention referencing Certification... \\
 \field{applicableSpecies} & array<string> & No description provided \\
 \field{claimExpiry} & string (date-time) & No description provided \\
-\field{claimPercentage} & number (≥0, ≤100) & No description provided \\
+\field{claimPercentage} & number (\geq 0, \leq 100) & No description provided \\
 \field{claimScope} & enum(4 values) & No description provided \\
 \field{evidenceDocumentId} & string & No description provided \\
 \field{inheritedFromTRU} & array<string> & No description provided \\
@@ -82,7 +82,7 @@ This entity references the following entities:
 
 VerificationStatement entity in BOOST data model
 
-**🗂️ [View Verification Statement in ERD Navigator](erd-navigator/index.html?focus=VerificationStatement)**
+** [View Verification Statement in ERD Navigator](erd-navigator/index.html?focus=VerificationStatement)**
 
 % Verification Statement Entity Table
 % Auto-generated from JSON schema
@@ -102,7 +102,7 @@ VerificationStatement entity in BOOST data model
 
 Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard
 
-**🗂️ [View BOOST Moisture Content Validation Rules in ERD Navigator](erd-navigator/index.html?focus=BOOSTMoistureContentValidationRules)**
+** [View BOOST Moisture Content Validation Rules in ERD Navigator](erd-navigator/index.html?focus=BOOSTMoistureContentValidationRules)**
 
 % BOOST Moisture Content Validation Rules Entity Table
 % Auto-generated from JSON schema
