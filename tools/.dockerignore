@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# Build outputs
+drafts/current/specifications/boost-spec.html
+drafts/current/specifications/boost-spec.pdf
+drafts/current/specifications/boost-spec.tex
+drafts/current/specifications/erd-navigator/
+drafts/current/specifications/build-report.md
+boost-spec-temp.html
+
+# Node modules (if any)
+node_modules
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# GitHub Actions
+.github/
+
+# Documentation build artifacts
+*.tmp
+*.log

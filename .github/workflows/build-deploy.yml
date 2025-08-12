@@ -34,6 +34,7 @@ jobs:
   build-documentation:
     name: 📚 Build Documentation
     runs-on: ubuntu-latest
+    container: ghcr.io/${{ github.repository }}/boost-builder:latest
     outputs:
       version: ${{ steps.extract-version.outputs.version }}
       build-timestamp: ${{ steps.extract-version.outputs.timestamp }}
@@ -43,33 +44,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Need full git history for version extraction
-
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            python3-pip \
-            python3-pygments \
-            texlive-latex-base \
-            texlive-latex-recommended \
-            texlive-latex-extra \
-            texlive-fonts-recommended \
-            texlive-fonts-extra
-
-      - name: Install Python dependencies
-        run: |
-          pip install --upgrade pip
-          pip install bikeshed jsonschema pydantic[email] requests
-
-      - name: Initialize Bikeshed
-        run: |
-          bikeshed update
 
       - name: Extract version information
         id: extract-version
@@ -171,10 +145,6 @@ jobs:
         working-directory: drafts/current/specifications
         run: |
           echo "📄 Building PDF documentation for ${{ github.ref_name }} branch..."
-          
-          # Install additional LaTeX packages if needed
-          sudo apt-get update
-          sudo apt-get install -y pandoc
           
           # Determine PDF filename based on branch
           if [ "${{ github.ref_name }}" = "main" ]; then
