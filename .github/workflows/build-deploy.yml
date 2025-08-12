@@ -370,28 +370,72 @@ jobs:
             exit 1
           fi
           
-          # Create index.html redirect with PDF link
+          # Create index.html landing page with download options (no auto-redirect)
           cat > ./pages-content/index.html << EOF
           <!DOCTYPE html>
           <html>
           <head>
               <meta charset="utf-8">
               <title>BOOST Data Standard Documentation</title>
-              <meta http-equiv="refresh" content="0; url=./boost-spec.html">
               <link rel="canonical" href="./boost-spec.html">
               <style>
-                  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
-                  .download-links { margin: 20px 0; }
-                  .download-links a { display: inline-block; margin: 10px 15px 10px 0; padding: 10px 20px; background: #0066cc; color: white; text-decoration: none; border-radius: 5px; }
+                  body { 
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+                      max-width: 800px; 
+                      margin: 50px auto; 
+                      padding: 20px; 
+                      line-height: 1.6;
+                  }
+                  .hero-section { 
+                      text-align: center; 
+                      margin-bottom: 40px; 
+                      padding: 30px; 
+                      background: #f8f9fa; 
+                      border-radius: 10px; 
+                  }
+                  .main-button { 
+                      display: inline-block; 
+                      margin: 15px; 
+                      padding: 15px 30px; 
+                      background: #28a745; 
+                      color: white; 
+                      text-decoration: none; 
+                      border-radius: 8px; 
+                      font-size: 18px; 
+                      font-weight: 600;
+                  }
+                  .main-button:hover { background: #218838; }
+                  .download-links { margin: 30px 0; }
+                  .download-links a { 
+                      display: inline-block; 
+                      margin: 8px 12px 8px 0; 
+                      padding: 10px 20px; 
+                      background: #0066cc; 
+                      color: white; 
+                      text-decoration: none; 
+                      border-radius: 5px; 
+                  }
                   .download-links a:hover { background: #0052a3; }
+                  .description { 
+                      color: #666; 
+                      margin-bottom: 30px; 
+                      font-size: 16px; 
+                  }
               </style>
           </head>
           <body>
-              <h1>BOOST Data Standard Documentation</h1>
-              <p><a href="./boost-spec.html">📖 View HTML Documentation</a></p>
+              <div class="hero-section">
+                  <h1>🌱 BOOST Data Standard</h1>
+                  <p class="description">
+                      Biomass Origin and Ownership Supply-chain Tracking (BOOST) provides a comprehensive 
+                      data standard for tracking biomass materials through complex supply chains with 
+                      complete traceability and sustainability verification.
+                  </p>
+                  <a href="./boost-spec.html" class="main-button">📖 View Documentation Online</a>
+              </div>
               
               <div class="download-links">
-                  <h2>Download Options</h2>
+                  <h2>📥 Download & Resources</h2>
           EOF
           
           # Add PDF link if PDF exists
@@ -407,7 +451,7 @@ jobs:
                   <a href="./schema/">📋 JSON Schemas</a>
               </div>
               
-              <p><em>You will be automatically redirected to the HTML documentation in a few seconds...</em></p>
+              <p><em>Choose how you'd like to access the BOOST Data Standard documentation above.</em></p>
           </body>
           </html>
           EOF
