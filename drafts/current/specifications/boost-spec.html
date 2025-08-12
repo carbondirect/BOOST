@@ -1,7 +1,7 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>BOOST Data Standard</title>
+  <title>Biomass Open Origin Standard for Tracking (BOOST) Data Standard</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 <style data-fill-with="stylesheet">/******************************************************************************
  *                   Style sheet for the W3C specifications                   *
@@ -88,8 +88,8 @@
 		counter-reset: example figure issue;
 
 		/* Layout */
-		max-width: 50em;			  /* limit line length to 50em for readability   */
-		margin: 0 auto;				/* center text within page                    */
+		
+		
 		padding: 1.6em 1.5em 2em 50px; /* assume 16px font size for downlevel clients */
 		padding: 1.6em 1.5em 2em calc(26px + 1.5em); /* leave space for status flag    */
 
@@ -1003,7 +1003,7 @@
 	}
 	table.data caption,
 	table.index caption {
-		max-width: 50em;
+		
 		margin: 0 auto 1em;
 	}
 
@@ -1323,7 +1323,7 @@ Possible extra rowspan handling
 	bottom: 50%;
 	left: 0;
 	right: 0;
-	margin: 0 auto;
+	margin: 0;
 	width: 50%;
 	background: maroon;
 	background: var(--outdated-bg);
@@ -1448,7 +1448,7 @@ Possible extra rowspan handling
 	}
 	.overlarge > table {
 		/* limit preferred width of table */
-		max-width: 50em;
+		
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -1489,7 +1489,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 3f621ba99, updated Mon Jul 28 15:38:36 2025 -0700" name="generator">
-  <meta content="f41a3ac5c82dac9d8b9ec3acfe2ff1b9ce6b027a" name="revision">
+  <meta content="ef94ac9b50de3c2c35ca7ff0a3545ee299f1048d" name="revision">
   <meta content="dark light" name="color-scheme">
 <style>
 .erd-preview-container {
@@ -1960,7 +1960,7 @@ figcaption:not(.no-marker)::before {
     position: fixed;
     left: 8px;
     bottom: 2em;
-    margin: 0 auto;
+    margin: 0;
     max-width: calc(100vw - 1.5em - .4em - .5em);
     max-height: 30vh;
     transition: left 1s ease-out, bottom 1s ease-out;
@@ -2333,7 +2333,7 @@ html {
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-color) !important;
     color: var(--text-color);
     font-family: var(--body-font);
     font-size: 16px;
@@ -2342,20 +2342,24 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    
-    /* Enhanced Layout */
-    max-width: 50em;
-    margin: 0 auto;
-    padding: 1.6em 1.5em 2em calc(26px + 1.5em);
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100vw !important;
     
     /* Better mobile padding */
     @media (max-width: 768px) {
         font-size: 15px;
-        padding: 1.6em 1em 2em 1em;
     }
 }
 
-/* W3C CSS already handles sidebar spacing - no additional rules needed */
+/* Override any remaining Bikeshed centering */
+body.h-entry {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100vw !important;
+}
 
 /* Enhanced Headings */
 h1, h2, h3, h4, h5, h6 {
@@ -2556,7 +2560,43 @@ li {
     line-height: 1.6;
 }
 
-/* Navigation Sidebar - Override W3C styles */
+/* Page Layout with Sidebar - Remove flexbox since HTML structure is already set */
+
+/* Navigation Sidebar - Collapsible */
+#toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--subtle-bg);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    padding: 1.5rem 1rem;
+    z-index: 1000;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+#toc.collapsed {
+    width: 48px !important;
+    padding: 1.5rem 0.5rem !important;
+    overflow: hidden !important;
+}
+
+#toc.collapsed .toc {
+    display: none !important;
+}
+
+#toc.collapsed h2 {
+    display: none !important;
+}
+
+/* Smooth transition for TOC collapse */
+#toc {
+    transition: width 0.3s ease, padding 0.3s ease !important;
+}
 
 #toc h2 {
     font-size: 1.125rem;
@@ -2567,8 +2607,117 @@ li {
     border-bottom: 2px solid var(--border-color);
 }
 
-/* Table of Contents Styling - Let W3C CSS handle backgrounds */
+/* Main Content Container */
+.main-content-wrapper {
+    margin-left: 300px; /* Add 20px margin between TOC and content */
+    width: calc(100vw - 300px);
+    padding: 2rem;
+    box-sizing: border-box;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    max-width: none; /* Prevent any max-width constraints */
+}
+
+.main-content-wrapper.toc-collapsed {
+    margin-left: 68px; /* Add 20px margin when collapsed */
+    width: calc(100vw - 68px);
+}
+
+/* Override Bikeshed media queries at 78em (1248px) and above */
+@media screen and (min-width: 78em) {
+    /* Force override of Bikeshed's body padding */
+    body:not(.toc-inline) {
+        padding-left: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+        width: 100vw !important;
+    }
+    
+    /* Prevent Bikeshed from changing our TOC styles */
+    body:not(.toc-inline) #toc,
+    body.toc-sidebar #toc {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 280px !important;
+        max-width: 280px !important;
+        height: 100vh !important;
+        background: var(--subtle-bg) !important;
+        border-right: 1px solid var(--border-color) !important;
+        overflow-y: auto !important;
+        padding: 1.5rem 1rem !important;
+        z-index: 1000 !important;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1) !important;
+        color: var(--text-color) !important;
+    }
+    
+    /* Override Bikeshed TOC heading styles */
+    body:not(.toc-inline) #toc h2,
+    body.toc-sidebar #toc h2 {
+        font-size: 1.125rem !important;
+        font-weight: 600 !important;
+        color: var(--heading-color) !important;
+        margin: 0 0 1rem 0 !important;
+        padding-bottom: 0.5rem !important;
+        border-bottom: 2px solid var(--border-color) !important;
+        font-variant: normal !important;
+        text-transform: none !important;
+    }
+    
+    /* Maintain our main content layout */
+    .main-content-wrapper {
+        margin-left: 300px !important;
+        width: calc(100vw - 300px) !important;
+        max-width: none !important;
+        padding: 2rem !important;
+        box-sizing: border-box !important;
+    }
+    
+    .main-content-wrapper.toc-collapsed {
+        margin-left: 68px !important;
+        width: calc(100vw - 68px) !important;
+    }
+    
+    /* Override TOC collapsed state */
+    #toc.collapsed {
+        width: 48px !important;
+        padding: 1.5rem 0.5rem !important;
+        overflow: hidden !important;
+    }
+    
+    #toc.collapsed .toc {
+        display: none !important;
+    }
+    
+    #toc.collapsed h2 {
+        display: none !important;
+    }
+}
+
+/* Also override 90em media query */
+@media screen and (min-width: 90em) {
+    body:not(.toc-inline) {
+        padding-left: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+        width: 100vw !important;
+    }
+    
+    .main-content-wrapper {
+        margin-left: 300px !important;
+        width: calc(100vw - 300px) !important;
+        max-width: none !important;
+    }
+    
+    .main-content-wrapper.toc-collapsed {
+        margin-left: 68px !important;
+        width: calc(100vw - 68px) !important;
+    }
+}
+
+/* Table of Contents Styling */
 .toc {
+    background: transparent;
     border: none;
     border-radius: 0;
     padding: 0;
@@ -2595,8 +2744,7 @@ li {
     line-height: 1.4;
 }
 
-/* Custom ToC link styles only for inline mode - W3C handles sidebar mode */
-body.toc-inline .toc a {
+.toc a {
     color: var(--text-color);
     display: block;
     padding: 0.375rem 0.75rem;
@@ -2607,30 +2755,48 @@ body.toc-inline .toc a {
     border-left: 3px solid transparent;
 }
 
-body.toc-inline .toc a:hover {
+.toc a:hover {
     background: var(--border-color);
     border-left-color: var(--link-color);
     transform: translateX(2px);
 }
 
-body.toc-inline .toc a:focus {
+.toc a:focus {
     background: var(--border-color);
     border-left-color: var(--link-color);
     outline: 2px solid var(--link-color);
     outline-offset: 2px;
 }
 
-/* Section number styling in ToC - only for inline mode */
-body.toc-inline .toc .secno {
+/* Section number styling in ToC */
+.toc .secno {
     color: var(--link-color);
     font-weight: 600;
     margin-right: 0.5rem;
     font-size: 0.8em;
 }
 
-/* Remove conflicting mobile styles - W3C CSS handles this */
+/* Toggle button removed - Bikeshed conflicts prevented proper functionality */
 
-/* Remove these problematic rules - handled by W3C styles */
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    #toc {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    #toc.show {
+        transform: translateX(0);
+    }
+    
+    .main-content-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 1rem 1.5rem 2rem 1.5rem;
+    }
+    
+    /* Toggle button CSS removed */
+}
 
 /* Print Styles */
 @media print {
@@ -2698,33 +2864,7 @@ select:focus {
     }
 }
 </style>
- <body class="h-entry">
-  <div class="head">
-   <p data-fill-with="logo"></p>
-   <h1 class="p-name no-ref" id="title">BOOST Data Standard</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">A Collection of Interesting Ideas,
-    <time class="dt-updated" datetime="2025-08-06">6 August 2025</time></span></h2>
-   <div data-fill-with="spec-metadata">
-    <dl>
-     <dt>Issue Tracking:
-     <dd><a href="https://github.com/carbondirect/CA_biomass_CoC_data_standard/issues/">GitHub</a>
-     <dt class="editor">Editors:
-     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:peter@carbondirect.org">Peter Tittmann</a> (<span class="p-org org">Carbon Direct</span>)
-     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:public-boost-01@w3.org">BOOST W3C Community Group</a>
-    </dl>
-   </div>
-   <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright">
-Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">W3C Software and Document License</a>.
-</p>
-   <hr title="Separator for header">
-  </div>
-  <div class="p-summary" data-fill-with="abstract">
-   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
-   <p>The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 29 interconnected entities organized into 7 thematic areas.</p>
-  </div>
-  <div data-fill-with="at-risk"></div>
-  <nav data-fill-with="table-of-contents" id="toc">
+ <body class="h-entry"><nav data-fill-with="table-of-contents" id="toc">
    <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
    <ol class="toc" role="directory">
     <li>
@@ -2905,11 +3045,22 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
         <li><a href="#validation-rules②"><span class="secno">11.1.6</span> <span class="content">Validation Rules</span></a>
         <li><a href="#example-use-cases④"><span class="secno">11.1.7</span> <span class="content">Example Use Cases</span></a>
         <li><a href="#relationships④"><span class="secno">11.1.8</span> <span class="content">Relationships</span></a>
+        <li><a href="#processing-history"><span class="secno">11.1.9</span> <span class="content">ProcessingHistory</span></a>
+       </ol>
+      <li><a href="#required-fields"><span class="secno">11.2</span> <span class="content">Required Fields</span></a>
+      <li><a href="#optional-fields"><span class="secno">11.3</span> <span class="content">Optional Fields</span></a>
+      <li>
+       <a href="#key-capabilities"><span class="secno">11.4</span> <span class="content">Key Capabilities</span></a>
+       <ol class="toc">
+        <li><a href="#chronological-processing-timeline"><span class="secno">11.4.1</span> <span class="content">Chronological Processing Timeline</span></a>
+        <li><a href="#genealogy-tracking"><span class="secno">11.4.2</span> <span class="content">Genealogy Tracking</span></a>
+        <li><a href="#claim-inheritance-management"><span class="secno">11.4.3</span> <span class="content">Claim Inheritance Management</span></a>
+        <li><a href="#business-intelligence-support"><span class="secno">11.4.4</span> <span class="content">Business Intelligence Support</span></a>
        </ol>
       <li>
-       <a href="#organizational-entities"><span class="secno">11.2</span> <span class="content">Organizational Foundation Entities</span></a>
+       <a href="#organizational-entities"><span class="secno">11.5</span> <span class="content">Organizational Foundation Entities</span></a>
        <ol class="toc">
-        <li><a href="#certificate"><span class="secno">11.2.1</span> <span class="content">Certificate</span></a>
+        <li><a href="#certificate"><span class="secno">11.5.1</span> <span class="content">Certificate</span></a>
        </ol>
      </ol>
     <li>
@@ -3086,263 +3237,236 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
         <li><a href="#validation-rules⑨"><span class="secno">19.1.7</span> <span class="content">Validation Rules</span></a>
         <li><a href="#example-use-cases①⓪"><span class="secno">19.1.8</span> <span class="content">Example Use Cases</span></a>
         <li><a href="#relationships①②"><span class="secno">19.1.9</span> <span class="content">Relationships</span></a>
-        <li><a href="#processing-history"><span class="secno">19.1.10</span> <span class="content">ProcessingHistory</span></a>
+        <li><a href="#data-reconciliation"><span class="secno">19.1.10</span> <span class="content">DataReconciliation</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#processinghistory"><span class="secno">20</span> <span class="content">ProcessingHistory</span></a>
+     <a href="#datareconciliation"><span class="secno">20</span> <span class="content">DataReconciliation</span></a>
      <ol class="toc">
       <li>
-       <a href="#processinghistory①"><span class="secno">20.1</span> <span class="content">ProcessingHistory</span></a>
+       <a href="#datareconciliation①"><span class="secno">20.1</span> <span class="content">DataReconciliation</span></a>
        <ol class="toc">
         <li><a href="#overview①③"><span class="secno">20.1.1</span> <span class="content">Overview</span></a>
-        <li><a href="#purpose"><span class="secno">20.1.2</span> <span class="content">Purpose</span></a>
-        <li><a href="#fields①②"><span class="secno">20.1.3</span> <span class="content">Fields</span></a>
-        <li><a href="#processing-event-types"><span class="secno">20.1.4</span> <span class="content">Processing Event Types</span></a>
-        <li><a href="#volume-conservation-data"><span class="secno">20.1.5</span> <span class="content">Volume Conservation Data</span></a>
-        <li><a href="#media-break-data"><span class="secno">20.1.6</span> <span class="content">Media Break Data</span></a>
-        <li><a href="#claim-inheritance-data"><span class="secno">20.1.7</span> <span class="content">Claim Inheritance Data</span></a>
+        <li><a href="#fields①②"><span class="secno">20.1.2</span> <span class="content">Fields</span></a>
+        <li><a href="#reconciliation-status-values"><span class="secno">20.1.3</span> <span class="content">Reconciliation Status Values</span></a>
+        <li><a href="#key-features①①"><span class="secno">20.1.4</span> <span class="content">Key Features</span></a>
+        <li><a href="#discrepancy-analysis"><span class="secno">20.1.5</span> <span class="content">Discrepancy Analysis</span></a>
+        <li><a href="#validation-rules①⓪"><span class="secno">20.1.6</span> <span class="content">Validation Rules</span></a>
+        <li><a href="#example-use-cases①①"><span class="secno">20.1.7</span> <span class="content">Example Use Cases</span></a>
         <li><a href="#relationships①③"><span class="secno">20.1.8</span> <span class="content">Relationships</span></a>
-        <li>
-         <a href="#usage-examples"><span class="secno">20.1.9</span> <span class="content">Usage Examples</span></a>
-         <ol class="toc">
-          <li><a href="#simple-transformation-chain"><span class="secno">20.1.9.1</span> <span class="content">Simple Transformation Chain</span></a>
-          <li><a href="#split-operation-tracking"><span class="secno">20.1.9.2</span> <span class="content">Split Operation Tracking</span></a>
-          <li><a href="#volume-conservation-analysis"><span class="secno">20.1.9.3</span> <span class="content">Volume Conservation Analysis</span></a>
-         </ol>
-        <li><a href="#transportation-classification-framework"><span class="secno">20.1.10</span> <span class="content">Transportation Classification Framework</span></a>
-        <li><a href="#business-rules①"><span class="secno">20.1.11</span> <span class="content">Business Rules</span></a>
-        <li><a href="#integration-with-boost-traceability-system"><span class="secno">20.1.12</span> <span class="content">Integration with BOOST Traceability System</span></a>
-        <li><a href="#data-reconciliation"><span class="secno">20.1.13</span> <span class="content">DataReconciliation</span></a>
+       </ol>
+      <li>
+       <a href="#certification-claims-entities"><span class="secno">20.2</span> <span class="content">Certification and Claims Entities</span></a>
+       <ol class="toc">
+        <li><a href="#certification-body"><span class="secno">20.2.1</span> <span class="content">CertificationBody</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#datareconciliation"><span class="secno">21</span> <span class="content">DataReconciliation</span></a>
+     <a href="#certificationbody"><span class="secno">21</span> <span class="content">CertificationBody</span></a>
      <ol class="toc">
+      <li><a href="#overview①④"><span class="secno">21.1</span> <span class="content">Overview</span></a>
+      <li><a href="#fields①③"><span class="secno">21.2</span> <span class="content">Fields</span></a>
       <li>
-       <a href="#datareconciliation①"><span class="secno">21.1</span> <span class="content">DataReconciliation</span></a>
+       <a href="#relationships①④"><span class="secno">21.3</span> <span class="content">Relationships</span></a>
        <ol class="toc">
-        <li><a href="#overview①④"><span class="secno">21.1.1</span> <span class="content">Overview</span></a>
-        <li><a href="#fields①③"><span class="secno">21.1.2</span> <span class="content">Fields</span></a>
-        <li><a href="#reconciliation-status-values"><span class="secno">21.1.3</span> <span class="content">Reconciliation Status Values</span></a>
-        <li><a href="#key-features①①"><span class="secno">21.1.4</span> <span class="content">Key Features</span></a>
-        <li><a href="#discrepancy-analysis"><span class="secno">21.1.5</span> <span class="content">Discrepancy Analysis</span></a>
-        <li><a href="#validation-rules①⓪"><span class="secno">21.1.6</span> <span class="content">Validation Rules</span></a>
-        <li><a href="#example-use-cases①①"><span class="secno">21.1.7</span> <span class="content">Example Use Cases</span></a>
-        <li><a href="#relationships①④"><span class="secno">21.1.8</span> <span class="content">Relationships</span></a>
+        <li><a href="#parent-entities①"><span class="secno">21.3.1</span> <span class="content">Parent Entities</span></a>
+        <li><a href="#child-entities①"><span class="secno">21.3.2</span> <span class="content">Child Entities</span></a>
        </ol>
+      <li><a href="#business-rules①"><span class="secno">21.4</span> <span class="content">Business Rules</span></a>
       <li>
-       <a href="#certification-claims-entities"><span class="secno">21.2</span> <span class="content">Certification and Claims Entities</span></a>
+       <a href="#common-queries①"><span class="secno">21.5</span> <span class="content">Common Queries</span></a>
        <ol class="toc">
-        <li><a href="#certification-body"><span class="secno">21.2.1</span> <span class="content">CertificationBody</span></a>
+        <li><a href="#certification-scheme"><span class="secno">21.5.1</span> <span class="content">CertificationScheme</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#certificationbody"><span class="secno">22</span> <span class="content">CertificationBody</span></a>
+     <a href="#certificationscheme"><span class="secno">22</span> <span class="content">CertificationScheme</span></a>
      <ol class="toc">
-      <li><a href="#overview①⑤"><span class="secno">22.1</span> <span class="content">Overview</span></a>
-      <li><a href="#fields①④"><span class="secno">22.2</span> <span class="content">Fields</span></a>
       <li>
-       <a href="#relationships①⑤"><span class="secno">22.3</span> <span class="content">Relationships</span></a>
+       <a href="#certificationscheme①"><span class="secno">22.1</span> <span class="content">CertificationScheme</span></a>
        <ol class="toc">
-        <li><a href="#parent-entities①"><span class="secno">22.3.1</span> <span class="content">Parent Entities</span></a>
-        <li><a href="#child-entities①"><span class="secno">22.3.2</span> <span class="content">Child Entities</span></a>
-       </ol>
-      <li><a href="#business-rules②"><span class="secno">22.4</span> <span class="content">Business Rules</span></a>
-      <li>
-       <a href="#common-queries①"><span class="secno">22.5</span> <span class="content">Common Queries</span></a>
-       <ol class="toc">
-        <li><a href="#certification-scheme"><span class="secno">22.5.1</span> <span class="content">CertificationScheme</span></a>
+        <li><a href="#overview①⑤"><span class="secno">22.1.1</span> <span class="content">Overview</span></a>
+        <li><a href="#fields①④"><span class="secno">22.1.2</span> <span class="content">Fields</span></a>
+        <li><a href="#scheme-types"><span class="secno">22.1.3</span> <span class="content">Scheme Types</span></a>
+        <li><a href="#key-features①②"><span class="secno">22.1.4</span> <span class="content">Key Features</span></a>
+        <li><a href="#chain-of-custody-systems"><span class="secno">22.1.5</span> <span class="content">Chain of Custody Systems</span></a>
+        <li><a href="#documentation-requirements"><span class="secno">22.1.6</span> <span class="content">Documentation Requirements</span></a>
+        <li><a href="#validation-rules①①"><span class="secno">22.1.7</span> <span class="content">Validation Rules</span></a>
+        <li><a href="#example-use-cases①②"><span class="secno">22.1.8</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#relationships①⑤"><span class="secno">22.1.9</span> <span class="content">Relationships</span></a>
+        <li><a href="#claim"><span class="secno">22.1.10</span> <span class="content">Claim</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#certificationscheme"><span class="secno">23</span> <span class="content">CertificationScheme</span></a>
+     <a href="#claim①"><span class="secno">23</span> <span class="content">Claim</span></a>
      <ol class="toc">
       <li>
-       <a href="#certificationscheme①"><span class="secno">23.1</span> <span class="content">CertificationScheme</span></a>
+       <a href="#claim②"><span class="secno">23.1</span> <span class="content">Claim</span></a>
        <ol class="toc">
         <li><a href="#overview①⑥"><span class="secno">23.1.1</span> <span class="content">Overview</span></a>
         <li><a href="#fields①⑤"><span class="secno">23.1.2</span> <span class="content">Fields</span></a>
-        <li><a href="#scheme-types"><span class="secno">23.1.3</span> <span class="content">Scheme Types</span></a>
-        <li><a href="#key-features①②"><span class="secno">23.1.4</span> <span class="content">Key Features</span></a>
-        <li><a href="#chain-of-custody-systems"><span class="secno">23.1.5</span> <span class="content">Chain of Custody Systems</span></a>
-        <li><a href="#documentation-requirements"><span class="secno">23.1.6</span> <span class="content">Documentation Requirements</span></a>
-        <li><a href="#validation-rules①①"><span class="secno">23.1.7</span> <span class="content">Validation Rules</span></a>
-        <li><a href="#example-use-cases①②"><span class="secno">23.1.8</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#claim-types"><span class="secno">23.1.3</span> <span class="content">Claim Types</span></a>
+        <li><a href="#claim-scopes"><span class="secno">23.1.4</span> <span class="content">Claim Scopes</span></a>
+        <li><a href="#key-features①③"><span class="secno">23.1.5</span> <span class="content">Key Features</span></a>
+        <li><a href="#claim-inheritance-rules"><span class="secno">23.1.6</span> <span class="content">Claim Inheritance Rules</span></a>
+        <li><a href="#validation-rules①②"><span class="secno">23.1.7</span> <span class="content">Validation Rules</span></a>
+        <li><a href="#example-use-cases①③"><span class="secno">23.1.8</span> <span class="content">Example Use Cases</span></a>
         <li><a href="#relationships①⑥"><span class="secno">23.1.9</span> <span class="content">Relationships</span></a>
-        <li><a href="#claim"><span class="secno">23.1.10</span> <span class="content">Claim</span></a>
+       </ol>
+      <li>
+       <a href="#supply-chain-commerce-entities"><span class="secno">23.2</span> <span class="content">Supply Chain and Commerce Entities</span></a>
+       <ol class="toc">
+        <li><a href="#product-group"><span class="secno">23.2.1</span> <span class="content">ProductGroup</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#claim①"><span class="secno">24</span> <span class="content">Claim</span></a>
+     <a href="#productgroup"><span class="secno">24</span> <span class="content">ProductGroup</span></a>
      <ol class="toc">
       <li>
-       <a href="#claim②"><span class="secno">24.1</span> <span class="content">Claim</span></a>
+       <a href="#productgroup①"><span class="secno">24.1</span> <span class="content">ProductGroup</span></a>
        <ol class="toc">
         <li><a href="#overview①⑦"><span class="secno">24.1.1</span> <span class="content">Overview</span></a>
         <li><a href="#fields①⑥"><span class="secno">24.1.2</span> <span class="content">Fields</span></a>
-        <li><a href="#claim-types"><span class="secno">24.1.3</span> <span class="content">Claim Types</span></a>
-        <li><a href="#claim-scopes"><span class="secno">24.1.4</span> <span class="content">Claim Scopes</span></a>
-        <li><a href="#key-features①③"><span class="secno">24.1.5</span> <span class="content">Key Features</span></a>
-        <li><a href="#claim-inheritance-rules"><span class="secno">24.1.6</span> <span class="content">Claim Inheritance Rules</span></a>
-        <li><a href="#validation-rules①②"><span class="secno">24.1.7</span> <span class="content">Validation Rules</span></a>
-        <li><a href="#example-use-cases①③"><span class="secno">24.1.8</span> <span class="content">Example Use Cases</span></a>
-        <li><a href="#relationships①⑦"><span class="secno">24.1.9</span> <span class="content">Relationships</span></a>
+        <li><a href="#material-object"><span class="secno">24.1.3</span> <span class="content">Material Object</span></a>
+        <li><a href="#example-use-cases①④"><span class="secno">24.1.4</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#relationships①⑦"><span class="secno">24.1.5</span> <span class="content">Relationships</span></a>
        </ol>
       <li>
-       <a href="#supply-chain-commerce-entities"><span class="secno">24.2</span> <span class="content">Supply Chain and Commerce Entities</span></a>
+       <a href="#regulatory-compliance-entities"><span class="secno">24.2</span> <span class="content">Regulatory and Compliance Entities</span></a>
        <ol class="toc">
-        <li><a href="#product-group"><span class="secno">24.2.1</span> <span class="content">ProductGroup</span></a>
+        <li><a href="#lcfs-pathway"><span class="secno">24.2.1</span> <span class="content">LCFSPathway</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#productgroup"><span class="secno">25</span> <span class="content">ProductGroup</span></a>
+     <a href="#lcfspathway"><span class="secno">25</span> <span class="content">LcfsPathway</span></a>
      <ol class="toc">
       <li>
-       <a href="#productgroup①"><span class="secno">25.1</span> <span class="content">ProductGroup</span></a>
+       <a href="#lcfspathway①"><span class="secno">25.1</span> <span class="content">LCFSPathway</span></a>
        <ol class="toc">
         <li><a href="#overview①⑧"><span class="secno">25.1.1</span> <span class="content">Overview</span></a>
         <li><a href="#fields①⑦"><span class="secno">25.1.2</span> <span class="content">Fields</span></a>
-        <li><a href="#material-object"><span class="secno">25.1.3</span> <span class="content">Material Object</span></a>
-        <li><a href="#example-use-cases①④"><span class="secno">25.1.4</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#key-features①④"><span class="secno">25.1.3</span> <span class="content">Key Features</span></a>
+        <li><a href="#example-use-cases①⑤"><span class="secno">25.1.4</span> <span class="content">Example Use Cases</span></a>
         <li><a href="#relationships①⑧"><span class="secno">25.1.5</span> <span class="content">Relationships</span></a>
-       </ol>
-      <li>
-       <a href="#regulatory-compliance-entities"><span class="secno">25.2</span> <span class="content">Regulatory and Compliance Entities</span></a>
-       <ol class="toc">
-        <li><a href="#lcfs-pathway"><span class="secno">25.2.1</span> <span class="content">LCFSPathway</span></a>
+        <li><a href="#credit-calculation-formula"><span class="secno">25.1.6</span> <span class="content">Credit Calculation Formula</span></a>
+        <li><a href="#validation-rules①③"><span class="secno">25.1.7</span> <span class="content">Validation Rules</span></a>
+        <li><a href="#lcfs-reporting"><span class="secno">25.1.8</span> <span class="content">LCFSReporting</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#lcfspathway"><span class="secno">26</span> <span class="content">LcfsPathway</span></a>
+     <a href="#lcfsreporting"><span class="secno">26</span> <span class="content">LcfsReporting</span></a>
      <ol class="toc">
       <li>
-       <a href="#lcfspathway①"><span class="secno">26.1</span> <span class="content">LCFSPathway</span></a>
+       <a href="#lcfsreporting①"><span class="secno">26.1</span> <span class="content">LCFSReporting</span></a>
        <ol class="toc">
         <li><a href="#overview①⑨"><span class="secno">26.1.1</span> <span class="content">Overview</span></a>
         <li><a href="#fields①⑧"><span class="secno">26.1.2</span> <span class="content">Fields</span></a>
-        <li><a href="#key-features①④"><span class="secno">26.1.3</span> <span class="content">Key Features</span></a>
-        <li><a href="#example-use-cases①⑤"><span class="secno">26.1.4</span> <span class="content">Example Use Cases</span></a>
-        <li><a href="#relationships①⑨"><span class="secno">26.1.5</span> <span class="content">Relationships</span></a>
-        <li><a href="#credit-calculation-formula"><span class="secno">26.1.6</span> <span class="content">Credit Calculation Formula</span></a>
-        <li><a href="#validation-rules①③"><span class="secno">26.1.7</span> <span class="content">Validation Rules</span></a>
-        <li><a href="#lcfs-reporting"><span class="secno">26.1.8</span> <span class="content">LCFSReporting</span></a>
-       </ol>
-     </ol>
-    <li>
-     <a href="#lcfsreporting"><span class="secno">27</span> <span class="content">LcfsReporting</span></a>
-     <ol class="toc">
-      <li>
-       <a href="#lcfsreporting①"><span class="secno">27.1</span> <span class="content">LCFSReporting</span></a>
-       <ol class="toc">
-        <li><a href="#overview②⓪"><span class="secno">27.1.1</span> <span class="content">Overview</span></a>
-        <li><a href="#fields①⑨"><span class="secno">27.1.2</span> <span class="content">Fields</span></a>
         <li>
-         <a href="#nested-structures"><span class="secno">27.1.3</span> <span class="content">Nested Structures</span></a>
+         <a href="#nested-structures"><span class="secno">26.1.3</span> <span class="content">Nested Structures</span></a>
          <ol class="toc">
-          <li><a href="#pathway-summary"><span class="secno">27.1.3.1</span> <span class="content">Pathway Summary</span></a>
-          <li><a href="#calculation-parameters"><span class="secno">27.1.3.2</span> <span class="content">Calculation Parameters</span></a>
-          <li><a href="#compliance-metrics"><span class="secno">27.1.3.3</span> <span class="content">Compliance Metrics</span></a>
+          <li><a href="#pathway-summary"><span class="secno">26.1.3.1</span> <span class="content">Pathway Summary</span></a>
+          <li><a href="#calculation-parameters"><span class="secno">26.1.3.2</span> <span class="content">Calculation Parameters</span></a>
+          <li><a href="#compliance-metrics"><span class="secno">26.1.3.3</span> <span class="content">Compliance Metrics</span></a>
          </ol>
-        <li><a href="#key-features①⑤"><span class="secno">27.1.4</span> <span class="content">Key Features</span></a>
-        <li><a href="#example-use-cases①⑥"><span class="secno">27.1.5</span> <span class="content">Example Use Cases</span></a>
-        <li><a href="#relationships②⓪"><span class="secno">27.1.6</span> <span class="content">Relationships</span></a>
-        <li><a href="#credit-calculation-logic"><span class="secno">27.1.7</span> <span class="content">Credit Calculation Logic</span></a>
-        <li><a href="#validation-rules①④"><span class="secno">27.1.8</span> <span class="content">Validation Rules</span></a>
+        <li><a href="#key-features①⑤"><span class="secno">26.1.4</span> <span class="content">Key Features</span></a>
+        <li><a href="#example-use-cases①⑥"><span class="secno">26.1.5</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#relationships①⑨"><span class="secno">26.1.6</span> <span class="content">Relationships</span></a>
+        <li><a href="#credit-calculation-logic"><span class="secno">26.1.7</span> <span class="content">Credit Calculation Logic</span></a>
+        <li><a href="#validation-rules①④"><span class="secno">26.1.8</span> <span class="content">Validation Rules</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#schema-definitions"><span class="secno">28</span> <span class="content">Schema Definitions</span></a>
+     <a href="#schema-definitions"><span class="secno">27</span> <span class="content">Schema Definitions</span></a>
      <ol class="toc">
-      <li><a href="#json-schema-format"><span class="secno">28.1</span> <span class="content">JSON Schema Format</span></a>
-      <li><a href="#business-logic"><span class="secno">28.2</span> <span class="content">Business Logic Validation</span></a>
+      <li><a href="#json-schema-format"><span class="secno">27.1</span> <span class="content">JSON Schema Format</span></a>
+      <li><a href="#business-logic"><span class="secno">27.2</span> <span class="content">Business Logic Validation</span></a>
      </ol>
     <li>
-     <a href="#serialization"><span class="secno">29</span> <span class="content">Serialization and Exchange</span></a>
+     <a href="#serialization"><span class="secno">28</span> <span class="content">Serialization and Exchange</span></a>
      <ol class="toc">
-      <li><a href="#json-ld"><span class="secno">29.1</span> <span class="content">JSON-LD as Primary Format</span></a>
-      <li><a href="#context-definitions"><span class="secno">29.2</span> <span class="content">Context Definitions</span></a>
+      <li><a href="#json-ld"><span class="secno">28.1</span> <span class="content">JSON-LD as Primary Format</span></a>
+      <li><a href="#context-definitions"><span class="secno">28.2</span> <span class="content">Context Definitions</span></a>
      </ol>
     <li>
-     <a href="#use-cases"><span class="secno">30</span> <span class="content">Use Cases and Requirements</span></a>
+     <a href="#use-cases"><span class="secno">29</span> <span class="content">Use Cases and Requirements</span></a>
      <ol class="toc">
       <li>
-       <a href="#core-use-case-categories"><span class="secno">30.1</span> <span class="content">Core Use Case Categories</span></a>
+       <a href="#core-use-case-categories"><span class="secno">29.1</span> <span class="content">Core Use Case Categories</span></a>
        <ol class="toc">
-        <li><a href="#1-complete-harvest-to-mill-traceability-chain"><span class="secno">30.1.1</span> <span class="content">1. Complete Harvest-to-Mill Traceability Chain</span></a>
-        <li><a href="#2-multi-species-mixed-material-processing"><span class="secno">30.1.2</span> <span class="content">2. Multi-Species Mixed Material Processing</span></a>
-        <li><a href="#3-california-lcfs-regulatory-compliance"><span class="secno">30.1.3</span> <span class="content">3. California LCFS Regulatory Compliance</span></a>
-        <li><a href="#4-multi-certification-scheme-management"><span class="secno">30.1.4</span> <span class="content">4. Multi-Certification Scheme Management</span></a>
-        <li><a href="#5-biometric-media-interruption-free-tracking"><span class="secno">30.1.5</span> <span class="content">5. Biometric Media-Interruption-Free Tracking</span></a>
-        <li><a href="#6-plant-part-value-optimization"><span class="secno">30.1.6</span> <span class="content">6. Plant Part Value Optimization</span></a>
+        <li><a href="#1-complete-harvest-to-mill-traceability-chain"><span class="secno">29.1.1</span> <span class="content">1. Complete Harvest-to-Mill Traceability Chain</span></a>
+        <li><a href="#2-multi-species-mixed-material-processing"><span class="secno">29.1.2</span> <span class="content">2. Multi-Species Mixed Material Processing</span></a>
+        <li><a href="#3-california-lcfs-regulatory-compliance"><span class="secno">29.1.3</span> <span class="content">3. California LCFS Regulatory Compliance</span></a>
+        <li><a href="#4-multi-certification-scheme-management"><span class="secno">29.1.4</span> <span class="content">4. Multi-Certification Scheme Management</span></a>
+        <li><a href="#5-biometric-media-interruption-free-tracking"><span class="secno">29.1.5</span> <span class="content">5. Biometric Media-Interruption-Free Tracking</span></a>
+        <li><a href="#6-plant-part-value-optimization"><span class="secno">29.1.6</span> <span class="content">6. Plant Part Value Optimization</span></a>
        </ol>
       <li>
-       <a href="#stakeholder-specific-use-cases"><span class="secno">30.2</span> <span class="content">Stakeholder-Specific Use Cases</span></a>
+       <a href="#stakeholder-specific-use-cases"><span class="secno">29.2</span> <span class="content">Stakeholder-Specific Use Cases</span></a>
        <ol class="toc">
-        <li><a href="#forest-management-organizations"><span class="secno">30.2.1</span> <span class="content">Forest Management Organizations</span></a>
-        <li><a href="#processing-facilities"><span class="secno">30.2.2</span> <span class="content">Processing Facilities</span></a>
-        <li><a href="#transportation-companies"><span class="secno">30.2.3</span> <span class="content">Transportation Companies</span></a>
-        <li><a href="#regulatory-agencies"><span class="secno">30.2.4</span> <span class="content">Regulatory Agencies</span></a>
-        <li><a href="#certification-bodies"><span class="secno">30.2.5</span> <span class="content">Certification Bodies</span></a>
+        <li><a href="#forest-management-organizations"><span class="secno">29.2.1</span> <span class="content">Forest Management Organizations</span></a>
+        <li><a href="#processing-facilities"><span class="secno">29.2.2</span> <span class="content">Processing Facilities</span></a>
+        <li><a href="#transportation-companies"><span class="secno">29.2.3</span> <span class="content">Transportation Companies</span></a>
+        <li><a href="#regulatory-agencies"><span class="secno">29.2.4</span> <span class="content">Regulatory Agencies</span></a>
+        <li><a href="#certification-bodies"><span class="secno">29.2.5</span> <span class="content">Certification Bodies</span></a>
        </ol>
       <li>
-       <a href="#primary-use-cases"><span class="secno">30.3</span> <span class="content">Primary Use Cases</span></a>
+       <a href="#primary-use-cases"><span class="secno">29.3</span> <span class="content">Primary Use Cases</span></a>
        <ol class="toc">
-        <li><a href="#california-use-case"><span class="secno">30.3.1</span> <span class="content">California Biomass Supply Chain Tracking</span></a>
-        <li><a href="#multi-cert-use-case"><span class="secno">30.3.2</span> <span class="content">Multi-Certification Scheme Management</span></a>
-       </ol>
-     </ol>
-    <li>
-     <a href="#examples"><span class="secno">31</span> <span class="content">Examples</span></a>
-     <ol class="toc">
-      <li>
-       <a href="#python-implementation-examples"><span class="secno">31.1</span> <span class="content">Python Implementation Examples</span></a>
-       <ol class="toc">
-        <li><a href="#basic-client-usage"><span class="secno">31.1.1</span> <span class="content">Basic Client Usage</span></a>
-        <li><a href="#creating-organizations"><span class="secno">31.1.2</span> <span class="content">Creating Organizations</span></a>
-        <li><a href="#creating-traceableunits"><span class="secno">31.1.3</span> <span class="content">Creating TraceableUnits</span></a>
-        <li><a href="#comprehensive-validation"><span class="secno">31.1.4</span> <span class="content">Comprehensive Validation</span></a>
-       </ol>
-      <li>
-       <a href="#supply-chain-workflow-example"><span class="secno">31.2</span> <span class="content">Supply Chain Workflow Example</span></a>
-       <ol class="toc">
-        <li><a href="#complete-harvest-to-processing-chain"><span class="secno">31.2.1</span> <span class="content">Complete Harvest-to-Processing Chain</span></a>
-       </ol>
-      <li><a href="#basic-tru-example"><span class="secno">31.3</span> <span class="content">Basic TraceableUnit Example</span></a>
-     </ol>
-    <li>
-     <a href="#resources-community"><span class="secno">32</span> <span class="content">Resources &amp; Community</span></a>
-     <ol class="toc">
-      <li>
-       <a href="#presentations"><span class="secno">32.1</span> <span class="content">Presentations &amp; Demonstrations</span></a>
-       <ol class="toc">
-        <li><a href="#core-presentations"><span class="secno">32.1.1</span> <span class="content">Core Presentations</span></a>
-        <li><a href="#agency-engagement"><span class="secno">32.1.2</span> <span class="content">Agency Engagement</span></a>
-        <li><a href="#standards-technical"><span class="secno">32.1.3</span> <span class="content">Standards &amp; Technical</span></a>
-       </ol>
-      <li>
-       <a href="#interactive-tools"><span class="secno">32.2</span> <span class="content">Interactive Tools</span></a>
-       <ol class="toc">
-        <li><a href="#erd-navigator-section"><span class="secno">32.2.1</span> <span class="content">Entity Relationship Diagram Navigator</span></a>
-       </ol>
-      <li>
-       <a href="#working-group-docs"><span class="secno">32.3</span> <span class="content">Working Group Documentation</span></a>
-       <ol class="toc">
-        <li><a href="#meeting-notes"><span class="secno">32.3.1</span> <span class="content">Meeting Notes</span></a>
-       </ol>
-      <li>
-       <a href="#community-participation"><span class="secno">32.4</span> <span class="content">Community Participation</span></a>
-       <ol class="toc">
-        <li><a href="#boost-membership"><span class="secno">32.4.1</span> <span class="content">BOOST Membership</span></a>
-        <li><a href="#stakeholder-feedback"><span class="secno">32.4.2</span> <span class="content">Stakeholder Feedback</span></a>
+        <li><a href="#california-use-case"><span class="secno">29.3.1</span> <span class="content">California Biomass Supply Chain Tracking</span></a>
+        <li><a href="#multi-cert-use-case"><span class="secno">29.3.2</span> <span class="content">Multi-Certification Scheme Management</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#security"><span class="secno">33</span> <span class="content">Security Considerations</span></a>
+     <a href="#examples"><span class="secno">30</span> <span class="content">Examples</span></a>
      <ol class="toc">
-      <li><a href="#data-privacy"><span class="secno">33.1</span> <span class="content">Data Privacy</span></a>
-      <li><a href="#data-integrity"><span class="secno">33.2</span> <span class="content">Data Integrity</span></a>
-      <li><a href="#supply-chain-security"><span class="secno">33.3</span> <span class="content">Supply Chain Security</span></a>
+      <li>
+       <a href="#python-implementation-examples"><span class="secno">30.1</span> <span class="content">Python Implementation Examples</span></a>
+       <ol class="toc">
+        <li><a href="#basic-client-usage"><span class="secno">30.1.1</span> <span class="content">Basic Client Usage</span></a>
+        <li><a href="#creating-organizations"><span class="secno">30.1.2</span> <span class="content">Creating Organizations</span></a>
+        <li><a href="#creating-traceableunits"><span class="secno">30.1.3</span> <span class="content">Creating TraceableUnits</span></a>
+        <li><a href="#comprehensive-validation"><span class="secno">30.1.4</span> <span class="content">Comprehensive Validation</span></a>
+       </ol>
+      <li>
+       <a href="#supply-chain-workflow-example"><span class="secno">30.2</span> <span class="content">Supply Chain Workflow Example</span></a>
+       <ol class="toc">
+        <li><a href="#complete-harvest-to-processing-chain"><span class="secno">30.2.1</span> <span class="content">Complete Harvest-to-Processing Chain</span></a>
+       </ol>
+      <li><a href="#basic-tru-example"><span class="secno">30.3</span> <span class="content">Basic TraceableUnit Example</span></a>
+     </ol>
+    <li>
+     <a href="#resources-community"><span class="secno">31</span> <span class="content">Resources &amp; Community</span></a>
+     <ol class="toc">
+      <li>
+       <a href="#presentations"><span class="secno">31.1</span> <span class="content">Presentations &amp; Demonstrations</span></a>
+       <ol class="toc">
+        <li><a href="#core-presentations"><span class="secno">31.1.1</span> <span class="content">Core Presentations</span></a>
+        <li><a href="#agency-engagement"><span class="secno">31.1.2</span> <span class="content">Agency Engagement</span></a>
+        <li><a href="#standards-technical"><span class="secno">31.1.3</span> <span class="content">Standards &amp; Technical</span></a>
+       </ol>
+      <li>
+       <a href="#interactive-tools"><span class="secno">31.2</span> <span class="content">Interactive Tools</span></a>
+       <ol class="toc">
+        <li><a href="#erd-navigator-section"><span class="secno">31.2.1</span> <span class="content">Entity Relationship Diagram Navigator</span></a>
+       </ol>
+      <li>
+       <a href="#working-group-docs"><span class="secno">31.3</span> <span class="content">Working Group Documentation</span></a>
+       <ol class="toc">
+        <li><a href="#meeting-notes"><span class="secno">31.3.1</span> <span class="content">Meeting Notes</span></a>
+       </ol>
+      <li>
+       <a href="#community-participation"><span class="secno">31.4</span> <span class="content">Community Participation</span></a>
+       <ol class="toc">
+        <li><a href="#boost-membership"><span class="secno">31.4.1</span> <span class="content">BOOST Membership</span></a>
+        <li><a href="#stakeholder-feedback"><span class="secno">31.4.2</span> <span class="content">Stakeholder Feedback</span></a>
+       </ol>
+     </ol>
+    <li>
+     <a href="#security"><span class="secno">32</span> <span class="content">Security Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#data-privacy"><span class="secno">32.1</span> <span class="content">Data Privacy</span></a>
+      <li><a href="#data-integrity"><span class="secno">32.2</span> <span class="content">Data Integrity</span></a>
+      <li><a href="#supply-chain-security"><span class="secno">32.3</span> <span class="content">Supply Chain Security</span></a>
      </ol>
     <li><a href="#acknowledgments"><span class="secno"></span> <span class="content">Acknowledgments</span></a>
     <li><a href="#spec-index"><span class="secno"></span> <span class="content">Index</span></a>
@@ -3360,7 +3484,35 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
       <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
    </ol>
-  </nav>
+  </nav><div class="main-content-wrapper">
+  <div class="head">
+   <p data-fill-with="logo"></p>
+   <h1 class="p-name no-ref" id="title">Biomass Open Origin Standard for Tracking (BOOST) Data Standard</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Living Document,
+    <time class="dt-updated" datetime="2025-08-11">11 August 2025</time></span></h2>
+   <div data-fill-with="spec-metadata">
+    <dl>
+     <dt>Issue Tracking:
+     <dd><a href="https://github.com/carbondirect/CA_biomass_CoC_data_standard/issues/">GitHub</a>
+     <dt class="editor">Editors:
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:peter@carbondirect.org">Peter Tittmann</a> (<span class="p-org org">Carbon Direct</span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:liam@carbondirect.org">Liam Killroy</a> (<span class="p-org org">Carbon Direct</span>)
+     <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:public-boost-01@w3.org">BOOST W3C Community Group</a>
+     <dt>Version:
+     <dd>v3.0.9
+    </dl>
+   </div>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright">
+Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">W3C Software and Document License</a>.
+</p>
+   <hr title="Separator for header">
+  </div>
+  <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <p>The Biomass Open Origin Standard for Tracking (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.</p>
+  </div>
+  <div data-fill-with="at-risk"></div>
   <main>
    <h2 class="no-num no-toc heading settled" id="sotd"><span class="content">Status of This Document</span></h2>
    <p>This specification was published by the <a href="https://www.w3.org/community/boost-01/">Biomass Open Origin Standard for Tracking (BOOST) W3C Community Group</a>. It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the <a href="https://www.w3.org/community/about/process/final/">W3C Community Final Specification Agreement (FSA)</a> other conditions apply. Learn more about <a href="https://www.w3.org/community/">W3C Community and Business Groups</a>.</p>
@@ -3379,7 +3531,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
      <p>Join the <a href="https://lists.w3.org/Archives/Public/public-boost-01/">W3C Community Group mailing list</a> for broader discussions</p>
    </ol>
    <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
-   <p>The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy.</p>
+   <p>The Biomass Open Origin Standard for Tracking (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy.</p>
    <h3 class="heading settled" data-level="1.1" id="community-process"><span class="secno">1.1. </span><span class="content">Community Development Process</span><a class="self-link" href="#community-process"></a></h3>
    <p>BOOST is developed through the <a href="https://www.w3.org/community/boost-01/">BOOST W3C Community Group</a> with collaborative input from industry stakeholders, regulatory agencies, and technical experts. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities.</p>
    <p><strong>Working Group Leadership:</strong></p>
@@ -3392,7 +3544,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
      <p><strong>Community Participants:</strong> 15+ active members from across the biomass supply chain</p>
    </ul>
    <h3 class="heading settled" data-level="1.2" id="development-status"><span class="secno">1.2. </span><span class="content">Current Development Status</span><a class="self-link" href="#development-status"></a></h3>
-   <p><strong>Current Version:</strong> v2.7.0 - Location-aware Core conformance with enhanced traceability requirements</p>
+   <p><strong>Current Version:</strong> v3.0.9 - Complete BOOST Documentation Build System with integrated HTML and PDF generation</p>
    <p><strong>Recent Enhancements:</strong></p>
    <ul>
     <li data-md>
@@ -3418,7 +3570,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
    </ul>
    <p><strong>Meeting Schedule:</strong> Regular working group meetings with notes and action items published via GitHub</p>
    <h3 class="heading settled" data-level="1.4" id="purpose-scope"><span class="secno">1.4. </span><span class="content">Purpose and Scope</span><a class="self-link" href="#purpose-scope"></a></h3>
-   <p>This specification defines the BOOST (Biomass Open-Source Traceability) data standard for biomass supply chain tracking and verification. The standard provides:</p>
+   <p>This specification defines the BOOST (Biomass Open Origin Standard for Tracking) data standard for biomass supply chain tracking and verification. The standard provides:</p>
    <ul>
     <li data-md>
      <p>A unified data model for biomass custody transfers</p>
@@ -3470,7 +3622,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
     <li data-md>
      <p>JSON-LD serialization format</p>
     <li data-md>
-     <p>Schema validation according to <a href="#schema-definitions">§ 28 Schema Definitions</a></p>
+     <p>Schema validation according to <a href="#schema-definitions">§ 27 Schema Definitions</a></p>
    </ul>
    <h4 class="heading settled" data-level="2.1.2" id="extended-conformance"><span class="secno">2.1.2. </span><span class="content">BOOST Extended Conformance</span><a class="self-link" href="#extended-conformance"></a></h4>
    <p>Implementations claiming BOOST Extended conformance MUST support Core conformance plus:</p>
@@ -3488,7 +3640,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
    <p>Implementations claiming BOOST Full conformance MUST support Extended conformance plus:</p>
    <ul>
     <li data-md>
-     <p>All 29 BOOST entities</p>
+     <p>All 33 BOOST entities</p>
     <li data-md>
      <p>Complete business logic validation</p>
     <li data-md>
@@ -3605,12 +3757,12 @@ MaterialProcessing entities provide comprehensive audit trails by:
      <p>Quality assessment throughout processing</p>
    </ul>
    <h2 class="heading settled" data-level="4" id="data-model"><span class="secno">4. </span><span class="content">Data Model Architecture</span><a class="self-link" href="#data-model"></a></h2>
-   <p>The BOOST data model provides a comprehensive framework for representing all aspects of biomass supply chain operations. The model consists of 29 interconnected entities that work together to provide complete traceability from forest to final product.</p>
+   <p>The BOOST data model provides a comprehensive framework for representing all aspects of biomass supply chain operations. The model consists of 33 interconnected entities that work together to provide complete traceability from forest to final product.</p>
    <h3 class="heading settled" data-level="4.1" id="-key-features"><span class="secno">4.1. </span><span class="content">🌟 Key Features</span><a class="self-link" href="#-key-features"></a></h3>
    <h4 class="heading settled" data-level="4.1.1" id="comprehensive-entity-system"><span class="secno">4.1.1. </span><span class="content">Comprehensive Entity System</span><a class="self-link" href="#comprehensive-entity-system"></a></h4>
    <ul>
     <li data-md>
-     <p><strong>29 Interconnected Entities</strong> - Complete data model covering all aspects of biomass supply chains across 7 thematic areas</p>
+     <p><strong>33 Interconnected Entities</strong> - Complete data model covering all aspects of biomass supply chains across 7 thematic areas</p>
     <li data-md>
      <p><strong>JSON-LD Validation</strong> - Structured schemas with business rules and examples</p>
     <li data-md>
@@ -3831,7 +3983,7 @@ The system supports comprehensive waste stream management:
      <p><strong>pellets</strong> - Densified processed material</p>
    </ul>
    <h2 class="heading settled" data-level="6" id="core-entities"><span class="secno">6. </span><span class="content">Core Data Entities</span><a class="self-link" href="#core-entities"></a></h2>
-   <p>The BOOST data model defines 29 core entities organized into 7 thematic areas. Each entity serves a specific purpose in the biomass supply chain tracking ecosystem and maintains relationships with other entities to ensure complete traceability.</p>
+   <p>The BOOST data model defines 33 core entities organized into 7 thematic areas. Each entity serves a specific purpose in the biomass supply chain tracking ecosystem and maintains relationships with other entities to ensure complete traceability.</p>
    <h3 class="heading settled" data-level="6.1" id="core-traceability-entities"><span class="secno">6.1. </span><span class="content">Core Traceability Entities</span><a class="self-link" href="#core-traceability-entities"></a></h3>
    <p>Implementations claiming BOOST Core conformance MUST support these entities:</p>
    <h4 class="heading settled" data-level="6.1.1" id="traceable-unit"><span class="secno">6.1.1. </span><span class="content">TraceableUnit</span><a class="self-link" href="#traceable-unit"></a></h4>
@@ -5595,9 +5747,133 @@ The <code>MaterialProcessing</code> entity tracks all technical manipulations wi
     <li data-md>
      <p>MaterialProcessing enables processing chain audit trails</p>
    </ul>
-   <h3 class="heading settled" data-level="11.2" id="organizational-entities"><span class="secno">11.2. </span><span class="content">Organizational Foundation Entities</span><a class="self-link" href="#organizational-entities"></a></h3>
+   <h4 class="heading settled" data-level="11.1.9" id="processing-history"><span class="secno">11.1.9. </span><span class="content">ProcessingHistory</span><a class="self-link" href="#processing-history"></a></h4>
+   <p>Chronological tracking of all processing operations affecting <a href="#traceable-unit">TraceableUnit</a> entities throughout their lifecycle. Complements <a href="#material-processing">MaterialProcessing</a> with TRU-centric audit trails and genealogy tracking.</p>
+   <p>**🗂️ <a href="erd-navigator/index.html?focus=ProcessingHistory">View ProcessingHistory in ERD Navigator</a>**</p>
+   <p>The ProcessingHistory entity provides chronological tracking of all processing operations that affect a TraceableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting media-interruption-free traceability requirements of the BOOST traceability system.</p>
+   <p>ProcessingHistory serves as the TRU-centric complement to the operation-centric MaterialProcessing entity, providing a unified timeline view of how materials evolve through the supply chain.</p>
+   <h3 class="heading settled" data-level="11.2" id="required-fields"><span class="secno">11.2. </span><span class="content">Required Fields</span><a class="self-link" href="#required-fields"></a></h3>
+   <p>All ProcessingHistory implementations MUST include the following required fields:</p>
+   <ul>
+    <li data-md>
+     <p>**<code>processingHistoryId</code>** (string) - Unique identifier for processing history record (primary key)
+Examples: <code>PROC-HIST-TRU-LOG-CA-042-001</code>, <code>PROC-HIST-SPLIT-KLA-015</code></p>
+    <li data-md>
+     <p>**<code>traceableUnitId</code>** (string, foreign key) - Reference to TRU this history record belongs to
+Examples: <code>TRU-LOG-CA-042</code>, <code>TRU-PILE-SORTED-001</code></p>
+    <li data-md>
+     <p>**<code>materialProcessingId</code>** (string, foreign key) - Reference to MaterialProcessing operation
+Examples: <code>PROC-FELL-KLA-042</code>, <code>PROC-CROSSCUT-001</code></p>
+    <li data-md>
+     <p>**<code>processType</code>** (string enum) - Type of processing operation performed
+Valid values: <code>harvest</code>, <code>transport</code>, <code>sort</code>, <code>crosscut</code>, <code>debarking</code>, <code>drying</code>, <code>sawmill</code>, <code>split</code>, <code>merge</code></p>
+    <li data-md>
+     <p>**<code>processTimestamp</code>** (string, ISO 8601) - When processing operation occurred
+Examples: <code>2025-07-21T14:30:00Z</code>, <code>2025-07-22T09:15:00Z</code></p>
+    <li data-md>
+     <p>**<code>inputVolumeM3</code>** (number) - Volume before processing operation
+Examples: <code>25.5</code>, <code>100.75</code>, <code>0.0</code> (for new TRU creation)</p>
+    <li data-md>
+     <p>**<code>outputVolumeM3</code>** (number) - Volume after processing operation
+Examples: <code>22.8</code>, <code>95.25</code>, <code>150.0</code> (for TRU merge operations)</p>
+   </ul>
+   <h3 class="heading settled" data-level="11.3" id="optional-fields"><span class="secno">11.3. </span><span class="content">Optional Fields</span><a class="self-link" href="#optional-fields"></a></h3>
+   <p>ProcessingHistory entities MAY include additional fields for enhanced tracking:</p>
+   <ul>
+    <li data-md>
+     <p>**<code>qualityGradeBefore</code>** (string) - Quality grade before processing
+Examples: <code>Grade-A</code>, <code>Grade-B</code>, <code>Sawlog</code>, <code>Pulpwood</code></p>
+    <li data-md>
+     <p>**<code>qualityGradeAfter</code>** (string) - Quality grade after processing
+Examples: <code>Grade-A</code>, <code>Grade-B</code>, <code>Sawlog</code>, <code>Pulpwood</code></p>
+    <li data-md>
+     <p>**<code>volumeLossReason</code>** (string) - Explanation for volume changes
+Examples: <code>moisture-loss</code>, <code>defect-removal</code>, <code>bark-removal</code>, <code>processing-waste</code></p>
+    <li data-md>
+     <p>
+      **<code>parentTraceableUnitIds</code>** (array
+      <string>) - Source TRUs for merge operations
+Example: <code>["TRU-LOG-001", "TRU-LOG-002"]</code></string>
+     </p>
+    <li data-md>
+     <p>
+      **<code>childTraceableUnitIds</code>** (array
+      <string>) - Resulting TRUs from split operations
+Example: <code>["TRU-LOG-003", "TRU-LOG-004", "TRU-CHIP-001"]</code></string>
+     </p>
+    <li data-md>
+     <p>**<code>processingNotes</code>** (string) - Additional processing details
+Examples: <code>"Removed bark defects"</code>, <code>"Split log at defect location"</code></p>
+    <li data-md>
+     <p>**<code>moistureContentBefore</code>** (number) - Moisture content percentage before processing
+Examples: <code>45.2</code>, <code>18.5</code>, <code>25.0</code></p>
+    <li data-md>
+     <p>**<code>moistureContentAfter</code>** (number) - Moisture content percentage after processing
+Examples: <code>42.1</code>, <code>15.2</code>, <code>12.0</code></p>
+    <li data-md>
+     <p>**<code>operatorId</code>** (string, foreign key) - Reference to processing operator
+Examples: <code>OP-SAWYER-001</code>, <code>OP-MACHINE-FORWARDER-03</code></p>
+   </ul>
+   <h3 class="heading settled" data-level="11.4" id="key-capabilities"><span class="secno">11.4. </span><span class="content">Key Capabilities</span><a class="self-link" href="#key-capabilities"></a></h3>
+   <h4 class="heading settled" data-level="11.4.1" id="chronological-processing-timeline"><span class="secno">11.4.1. </span><span class="content">Chronological Processing Timeline</span><a class="self-link" href="#chronological-processing-timeline"></a></h4>
+   
+ProcessingHistory maintains complete ordered sequences of processing events:
+
+   <ul>
+    <li data-md>
+     <p>Time-stamped processing operations in chronological order</p>
+    <li data-md>
+     <p>Volume conservation tracking across all processing steps</p>
+    <li data-md>
+     <p>Quality grade evolution throughout TRU lifecycle</p>
+    <li data-md>
+     <p>Complete audit trail from harvest to end product</p>
+   </ul>
+   <h4 class="heading settled" data-level="11.4.2" id="genealogy-tracking"><span class="secno">11.4.2. </span><span class="content">Genealogy Tracking</span><a class="self-link" href="#genealogy-tracking"></a></h4>
+   
+Support for complex parent-child relationships:
+
+   <ul>
+    <li data-md>
+     <p><strong>Split Operations</strong>: Single TRU becomes multiple child TRUs</p>
+    <li data-md>
+     <p><strong>Merge Operations</strong>: Multiple parent TRUs combine into single TRU</p>
+    <li data-md>
+     <p><strong>Processing Chains</strong>: Linked sequence of transformations</p>
+    <li data-md>
+     <p><strong>Volume Conservation</strong>: Mathematical validation of input/output volumes</p>
+   </ul>
+   <h4 class="heading settled" data-level="11.4.3" id="claim-inheritance-management"><span class="secno">11.4.3. </span><span class="content">Claim Inheritance Management</span><a class="self-link" href="#claim-inheritance-management"></a></h4>
+   
+Sustainability claims propagation through processing:
+
+   <ul>
+    <li data-md>
+     <p>Certification claim tracking through processing chain</p>
+    <li data-md>
+     <p>Percentage-based claim allocation for split operations</p>
+    <li data-md>
+     <p>Claim validation against processing requirements</p>
+    <li data-md>
+     <p>Regulatory compliance documentation</p>
+   </ul>
+   <h4 class="heading settled" data-level="11.4.4" id="business-intelligence-support"><span class="secno">11.4.4. </span><span class="content">Business Intelligence Support</span><a class="self-link" href="#business-intelligence-support"></a></h4>
+   
+ProcessingHistory enables advanced analytics:
+
+   <ul>
+    <li data-md>
+     <p>Processing efficiency measurement and optimization</p>
+    <li data-md>
+     <p>Volume recovery rate analysis across operations</p>
+    <li data-md>
+     <p>Quality improvement tracking through processing steps</p>
+    <li data-md>
+     <p>Equipment performance monitoring and maintenance scheduling</p>
+   </ul>
+   <h3 class="heading settled" data-level="11.5" id="organizational-entities"><span class="secno">11.5. </span><span class="content">Organizational Foundation Entities</span><a class="self-link" href="#organizational-entities"></a></h3>
    <p>*Note: Organization is now part of Core Traceability Entities - see <a href="#organization-core">§ 7.1.6 Organization</a>*</p>
-   <h4 class="heading settled" data-level="11.2.1" id="certificate"><span class="secno">11.2.1. </span><span class="content">Certificate</span><a class="self-link" href="#certificate"></a></h4>
+   <h4 class="heading settled" data-level="11.5.1" id="certificate"><span class="secno">11.5.1. </span><span class="content">Certificate</span><a class="self-link" href="#certificate"></a></h4>
    <p>Certification documents for <a href="#organization-core">Organization</a> entities. Links to <a href="#certification-body">CertificationBody</a> and <a href="#certification-scheme">CertificationScheme</a> for comprehensive certification management.</p>
    <p>**🗂️ <a href="erd-navigator/index.html?focus=Certificate">View Certificate in ERD Navigator</a>**</p>
    <h2 class="heading settled" data-level="12" id="certificate①"><span class="secno">12. </span><span class="content">Certificate</span><a class="self-link" href="#certificate①"></a></h2>
@@ -7998,486 +8274,15 @@ The <code>TrackingPoint</code> entity implements the three critical tracking poi
     <li data-md>
      <p>TrackingPoint supports LocationHistory event recording</p>
    </ul>
-   <h4 class="heading settled" data-level="19.1.10" id="processing-history"><span class="secno">19.1.10. </span><span class="content">ProcessingHistory</span><a class="self-link" href="#processing-history"></a></h4>
-   <h2 class="heading settled" data-level="20" id="processinghistory"><span class="secno">20. </span><span class="content">ProcessingHistory</span><a class="self-link" href="#processinghistory"></a></h2>
-   <h3 class="heading settled" data-level="20.1" id="processinghistory①"><span class="secno">20.1. </span><span class="content">ProcessingHistory</span><a class="self-link" href="#processinghistory①"></a></h3>
+   <h4 class="heading settled" data-level="19.1.10" id="data-reconciliation"><span class="secno">19.1.10. </span><span class="content">DataReconciliation</span><a class="self-link" href="#data-reconciliation"></a></h4>
+   <h2 class="heading settled" data-level="20" id="datareconciliation"><span class="secno">20. </span><span class="content">DataReconciliation</span><a class="self-link" href="#datareconciliation"></a></h2>
+   <h3 class="heading settled" data-level="20.1" id="datareconciliation①"><span class="secno">20.1. </span><span class="content">DataReconciliation</span><a class="self-link" href="#datareconciliation①"></a></h3>
    <h4 class="heading settled" data-level="20.1.1" id="overview①③"><span class="secno">20.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①③"></a></h4>
-   
-The <code>ProcessingHistory</code> entity provides chronological tracking of all processing operations that affect a TracableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting media-interruption-free traceability requirements of the BOOST traceability system.
-
-
-   <p>ProcessingHistory serves as the TRU-centric complement to the operation-centric MaterialProcessing entity, providing a unified timeline view of how materials evolve through the supply chain.</p>
-   <h4 class="heading settled" data-level="20.1.2" id="purpose"><span class="secno">20.1.2. </span><span class="content">Purpose</span><a class="self-link" href="#purpose"></a></h4>
-   <ul>
-    <li data-md>
-     <p><strong>Chronological Processing Timeline</strong>: Complete ordered sequence of processing events for each TRU</p>
-    <li data-md>
-     <p><strong>Genealogy Tracking</strong>: Parent/child relationships through split and merge operations</p>
-    <li data-md>
-     <p><strong>Volume Conservation Validation</strong>: Track volume changes and losses across processing chain</p>
-    <li data-md>
-     <p><strong>Claim Inheritance Management</strong>: Sustainability claim propagation through processing steps</p>
-    <li data-md>
-     <p><strong>Audit Trail Completeness</strong>: Support regulatory compliance and third-party verification</p>
-    <li data-md>
-     <p><strong>Processing Analytics</strong>: Enable business intelligence on processing efficiency and quality</p>
-   </ul>
-   <h4 class="heading settled" data-level="20.1.3" id="fields①②"><span class="secno">20.1.3. </span><span class="content">Fields</span><a class="self-link" href="#fields①②"></a></h4>
-   <table class="data">
-    <thead>
-     <tr>
-      <th>Field
-
-      <th>Type
-
-      <th>Required
-
-      <th>Description
-
-      <th>Examples
-
-    <tbody>
-     <tr>
-      <td><code>processingHistoryId</code>
-
-      <td>string
-
-      <td>Yes
-
-      <td>Unique identifier for the processing history record (primary key)
-
-      <td><code>PROC-HIST-TRU-LOG-CA-042-001</code>, <code>PROC-HIST-SPLIT-KLA-015</code>
-
-     <tr>
-      <td><code>traceableUnitId</code>
-
-      <td>string (FK)
-
-      <td>Yes
-
-      <td>Foreign key to TRU this history record belongs to
-
-      <td><code>TRU-LOG-CA-042</code>, <code>TRU-PILE-SORTED-001</code>
-
-     <tr>
-      <td><code>materialProcessingId</code>
-
-      <td>string (FK)
-
-      <td>Yes
-
-      <td>Foreign key to MaterialProcessing operation that created this history
-
-      <td><code>PROC-FELL-KLA-042</code>, <code>PROC-CROSSCUT-001</code>
-
-     <tr>
-      <td><code>timestamp</code>
-
-      <td>string (date-time)
-
-      <td>Yes
-
-      <td>When this processing step occurred
-
-      <td><code>2025-07-15T08:30:00Z</code>
-
-     <tr>
-      <td><code>processSequenceNumber</code>
-
-      <td>integer
-
-      <td>Yes
-
-      <td>Sequential order of this processing step for the TRU (starts at 1)
-
-      <td><code>1</code>, <code>2</code>, <code>3</code>
-
-     <tr>
-      <td><code>processingEventType</code>
-
-      <td>string
-
-      <td>Yes
-
-      <td>Type of processing event (enum)
-
-      <td><code>transformation</code>, <code>split</code>, <code>merge</code>, <code>quality_change</code>, <code>loading</code>
-
-     <tr>
-      <td><code>inputTRUIds</code>
-
-      <td>string[]
-
-      <td>Yes
-
-      <td>Array of input TRU IDs (multiple for merge operations)
-
-      <td><code>["TRU-TREE-CA-042"]</code>, <code>["TRU-LOG-001", "TRU-LOG-002"]</code>
-
-     <tr>
-      <td><code>outputTRUIds</code>
-
-      <td>string[]
-
-      <td>Yes
-
-      <td>Array of output TRU IDs (multiple for split operations)
-
-      <td><code>["TRU-LOG-CA-042"]</code>, <code>["TRU-PILE-A", "TRU-PILE-B"]</code>
-
-     <tr>
-      <td><code>processingDuration</code>
-
-      <td>string (ISO8601)
-
-      <td>No
-
-      <td>ISO 8601 duration format for processing time
-
-      <td><code>PT45M</code>, <code>PT2H30M</code>, <code>PT1D</code>
-
-     <tr>
-      <td><code>qualityChangeDescription</code>
-
-      <td>string
-
-      <td>No
-
-      <td>Description of quality changes during processing
-
-      <td><code>Grade assessment: A-grade sawlog</code>, <code>Moisture reduced from 25% to 15%</code>
-
-     <tr>
-      <td><code>operatorId</code>
-
-      <td>string (FK)
-
-      <td>No
-
-      <td>Foreign key to operator who performed processing
-
-      <td><code>OP-HARVESTER-KLA-001</code>, <code>OP-MILL-TECH-02</code>
-
-     <tr>
-      <td><code>equipmentUsed</code>
-
-      <td>string
-
-      <td>No
-
-      <td>Equipment used for this processing step
-
-      <td><code>harvester_head_001</code>, <code>crosscut_saw</code>, <code>loader_CAT_320</code>
-
-     <tr>
-      <td><code>volumeChangeRatio</code>
-
-      <td>number
-
-      <td>No
-
-      <td>Ratio of output volume to input volume (1.0 = no change)
-
-      <td><code>0.94</code>, <code>1.0</code>, <code>0.85</code>
-
-     <tr>
-      <td><code>speciesCompositionChange</code>
-
-      <td>string
-
-      <td>No
-
-      <td>How species composition changed during processing (enum)
-
-      <td><code>unchanged</code>, <code>separated</code>, <code>mixed</code>
-
-     <tr>
-      <td><code>plantPartTransformation</code>
-
-      <td>string
-
-      <td>No
-
-      <td>Summary of plant part changes during processing
-
-      <td><code>trunk→trunk (sized)</code>, <code>branches→chips</code>
-
-     <tr>
-      <td><code>isCurrentProcessingState</code>
-
-      <td>boolean
-
-      <td>No
-
-      <td>True if this represents the current processing state
-
-      <td><code>true</code>, <code>false</code>
-
-     <tr>
-      <td><code>processingGeographicDataId</code>
-
-      <td>string (FK)
-
-      <td>No
-
-      <td>Foreign key to location where processing occurred
-
-      <td><code>GEO-HARVEST-KLAMATH-04</code>, <code>GEO-MILL-001</code>
-
-     <tr>
-      <td><code>previousProcessingHistoryId</code>
-
-      <td>string (FK)
-
-      <td>No
-
-      <td>Foreign key to previous processing history record (forms chain)
-
-      <td><code>PROC-HIST-TRU-LOG-CA-042-001</code>, <code>null</code>
-
-     <tr>
-      <td><code>nextProcessingHistoryIds</code>
-
-      <td>string[]
-
-      <td>No
-
-      <td>Array of next processing history record IDs (for split operations)
-
-      <td><code>["PROC-HIST-TRU-042-002"]</code>, <code>["PROC-HIST-A", "PROC-HIST-B"]</code>
-
-     <tr>
-      <td><code>volumeConservationData</code>
-
-      <td>object
-
-      <td>No
-
-      <td>Volume conservation validation data
-
-      <td>See Volume Conservation section
-
-     <tr>
-      <td><code>mediaBreakData</code>
-
-      <td>object
-
-      <td>No
-
-      <td>Media break detection and recovery information
-
-      <td>See Media Break section
-
-     <tr>
-      <td><code>claimInheritanceData</code>
-
-      <td>object
-
-      <td>No
-
-      <td>Sustainability claim inheritance tracking
-
-      <td>See Claim Inheritance section
-
-     <tr>
-      <td><code>@id</code>
-
-      <td>string (uri)
-
-      <td>Yes
-
-      <td>Unique URI identifier for JSON-LD
-
-      <td><code>https://github.com/carbondirect/BOOST/schemas/processing-history/PROC-HIST-001</code>
-
-   </table>
-   <h4 class="heading settled" data-level="20.1.4" id="processing-event-types"><span class="secno">20.1.4. </span><span class="content">Processing Event Types</span><a class="self-link" href="#processing-event-types"></a></h4>
-   <ol>
-    <li data-md>
-     <p><strong>transformation</strong>
- Standard processing operations that change material characteristics
- Includes felling, delimbing, crosscutting, chipping, debarking
- Single input TRU → Single output TRU with changed properties
- Volume, quality, or plant part composition changes</p>
-    <li data-md>
-     <p><strong>split</strong>
- One input TRU divided into multiple output TRUs
- Examples: Log crosscutting, pile sorting by grade, load division
- Single input TRU → Multiple output TRUs
- Volume conservation across all outputs required</p>
-    <li data-md>
-     <p><strong>merge</strong>
- Multiple input TRUs combined into single output TRU
- Examples: Pile consolidation, load combining, batch aggregation
- Multiple input TRUs → Single output TRU
- Species and plant part composition tracking required</p>
-    <li data-md>
-     <p><strong>quality_change</strong>
- Processing that primarily affects quality without volume change
- Examples: Grading, moisture testing, defect assessment
- Quality characteristics updated without physical transformation
- May trigger claim validation requirements</p>
-    <li data-md>
-     <p><strong>loading</strong>
- Transportation-related processing with material transformation
- Examples: Pile to truck conversion with volume settling
- Configuration or accessibility changes during transport preparation
- Bridges pure movement (LocationHistory) with processing</p>
-    <li data-md>
-     <p><strong>transport_processing</strong>
- Processing operations that occur during transportation
- Examples: In-transit sorting, consolidation stops, quality monitoring
- Combines spatial movement with material transformation
- Requires both ProcessingHistory and LocationHistory records</p>
-    <li data-md>
-     <p><strong>measurement</strong>
- Processing events focused on data collection and validation
- Examples: Volume reconciliation, biometric scanning, quality testing
- May not change material but updates TRU characteristics
- Critical for media-break prevention and data validation</p>
-   </ol>
-   <h4 class="heading settled" data-level="20.1.5" id="volume-conservation-data"><span class="secno">20.1.5. </span><span class="content">Volume Conservation Data</span><a class="self-link" href="#volume-conservation-data"></a></h4>
-   <p>Complex object tracking volume conservation across processing operations:</p>
-<pre class="language-json highlight"><c- p>{</c->
-  <c- f>"totalInputVolume"</c-><c- p>:</c-> <c- mf>25.5</c-><c- p>,</c->
-  <c- f>"totalOutputVolume"</c-><c- p>:</c-> <c- mf>24.2</c-><c- p>,</c-> 
-  <c- f>"volumeLoss"</c-><c- p>:</c-> <c- mf>1.3</c-><c- p>,</c->
-  <c- f>"lossReason"</c-><c- p>:</c-> <c- u>"sawdust"</c-><c- p>,</c->
-  <c- f>"conservationValidated"</c-><c- p>:</c-> <c- kc>true</c->
-<c- p>}</c->
-</pre>
-   <p><strong>Volume Loss Reasons:</strong></p>
-   <ul>
-    <li data-md>
-     <p><code>sawdust</code>: Material lost as sawdust during cutting operations</p>
-    <li data-md>
-     <p><code>trimming</code>: Volume lost during quality improvement trimming</p>
-    <li data-md>
-     <p><code>moisture_loss</code>: Volume reduction due to drying/seasoning</p>
-    <li data-md>
-     <p><code>handling_damage</code>: Volume lost due to handling damage</p>
-    <li data-md>
-     <p><code>sorting_loss</code>: Volume lost during sorting/grading operations</p>
-    <li data-md>
-     <p><code>measurement_variance</code>: Apparent loss due to measurement differences</p>
-   </ul>
-   <h4 class="heading settled" data-level="20.1.6" id="media-break-data"><span class="secno">20.1.6. </span><span class="content">Media Break Data</span><a class="self-link" href="#media-break-data"></a></h4>
-   <p>Information about media breaks and recovery procedures:</p>
-<pre class="language-json highlight"><c- p>{</c->
-  <c- f>"mediaBreakOccurred"</c-><c- p>:</c-> <c- kc>false</c-><c- p>,</c->
-  <c- f>"breakDuration"</c-><c- p>:</c-> <c- kc>null</c-><c- p>,</c->
-  <c- f>"breakReason"</c-><c- p>:</c-> <c- kc>null</c-><c- p>,</c-> 
-  <c- f>"recoveryMethod"</c-><c- p>:</c-> <c- kc>null</c-><c- p>,</c->
-  <c- f>"dataIntegrityValidated"</c-><c- p>:</c-> <c- kc>true</c->
-<c- p>}</c->
-</pre>
-   <p><strong>Media Break Recovery Methods:</strong></p>
-   <ul>
-    <li data-md>
-     <p><code>biometric_verification</code>: Recovery using optical biometric patterns</p>
-    <li data-md>
-     <p><code>rfid_backup</code>: Recovery using backup RFID identification</p>
-    <li data-md>
-     <p><code>operator_verification</code>: Manual verification by qualified operator</p>
-    <li data-md>
-     <p><code>measurement_reconciliation</code>: Recovery through volume/dimension matching</p>
-   </ul>
-   <h4 class="heading settled" data-level="20.1.7" id="claim-inheritance-data"><span class="secno">20.1.7. </span><span class="content">Claim Inheritance Data</span><a class="self-link" href="#claim-inheritance-data"></a></h4>
-   <p>Tracking sustainability claim inheritance through processing:</p>
-<pre class="language-json highlight"><c- p>{</c->
-  <c- f>"inheritedClaims"</c-><c- p>:</c-> <c- p>[</c-><c- u>"CLAIM-FSC-MIX-KLA-042"</c-><c- p>],</c->
-  <c- f>"newClaims"</c-><c- p>:</c-> <c- p>[</c-><c- u>"CLAIM-GRADE-A-SAWLOG"</c-><c- p>],</c->
-  <c- f>"claimValidationRequired"</c-><c- p>:</c-> <c- kc>true</c-><c- p>,</c->
-  <c- f>"claimValidationCompleted"</c-><c- p>:</c-> <c- kc>true</c->
-<c- p>}</c->
-</pre>
-   <h4 class="heading settled" data-level="20.1.8" id="relationships①③"><span class="secno">20.1.8. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①③"></a></h4>
-   <ul>
-    <li data-md>
-     <p><strong>ProcessingHistory</strong> belongs to <strong>TraceableUnit</strong> (many-to-one)</p>
-    <li data-md>
-     <p><strong>ProcessingHistory</strong> references <strong>MaterialProcessing</strong> (many-to-one)</p>
-    <li data-md>
-     <p><strong>ProcessingHistory</strong> references <strong>GeographicData</strong> (many-to-one)</p>
-    <li data-md>
-     <p><strong>ProcessingHistory</strong> references <strong>Operator</strong> (many-to-one)</p>
-    <li data-md>
-     <p><strong>ProcessingHistory</strong> forms processing chains with other <strong>ProcessingHistory</strong> records (linked list)</p>
-    <li data-md>
-     <p><strong>ProcessingHistory</strong> supports split/merge through multiple input/output TRU references</p>
-   </ul>
-   <h4 class="heading settled" data-level="20.1.9" id="usage-examples"><span class="secno">20.1.9. </span><span class="content">Usage Examples</span><a class="self-link" href="#usage-examples"></a></h4>
-   <h5 class="heading settled" data-level="20.1.9.1" id="simple-transformation-chain"><span class="secno">20.1.9.1. </span><span class="content">Simple Transformation Chain</span><a class="self-link" href="#simple-transformation-chain"></a></h5>
-<pre class="language-sql highlight"><c- c1>-- Get complete processing timeline for TRU</c->
-<c- k>SELECT</c-> <c- o>*</c-> <c- k>FROM</c-> <c- n>ProcessingHistory</c-> 
-<c- k>WHERE</c-> <c- n>traceableUnitId</c-> <c- o>=</c-> <c- t>'TRU-LOG-CA-042'</c->
-<c- k>ORDER</c-> <c- k>BY</c-> <c- n>processSequenceNumber</c-><c- p>;</c->
-</pre>
-   <h5 class="heading settled" data-level="20.1.9.2" id="split-operation-tracking"><span class="secno">20.1.9.2. </span><span class="content">Split Operation Tracking</span><a class="self-link" href="#split-operation-tracking"></a></h5>
-<pre class="language-sql highlight"><c- c1>-- Find all TRUs created from split operation</c->
-<c- k>SELECT</c-> <c- n>outputTRUIds</c-> <c- k>FROM</c-> <c- n>ProcessingHistory</c->
-<c- k>WHERE</c-> <c- n>processingEventType</c-> <c- o>=</c-> <c- t>'split'</c-> 
-<c- k>AND</c-> <c- t>'TRU-PILE-ORIGINAL'</c-> <c- o>=</c-> <c- k>ANY</c-><c- p>(</c-><c- n>inputTRUIds</c-><c- p>);</c->
-</pre>
-   <h5 class="heading settled" data-level="20.1.9.3" id="volume-conservation-analysis"><span class="secno">20.1.9.3. </span><span class="content">Volume Conservation Analysis</span><a class="self-link" href="#volume-conservation-analysis"></a></h5>
-<pre class="language-sql highlight"><c- c1>-- Analyze volume losses by processing type</c->
-<c- k>SELECT</c-> 
-  <c- n>mph</c-><c- p>.</c-><c- n>processType</c-><c- p>,</c->
-  <c- k>AVG</c-><c- p>(</c-><c- n>ph</c-><c- p>.</c-><c- n>volumeChangeRatio</c-><c- p>)</c-> <c- k>as</c-> <c- n>avg_recovery_rate</c-><c- p>,</c->
-  <c- k>SUM</c-><c- p>((</c-><c- n>ph</c-><c- p>.</c-><c- n>volumeConservationData</c-><c- o>->></c-><c- t>'volumeLoss'</c-><c- p>)::</c->numeric<c- p>)</c-> <c- k>as</c-> <c- n>total_loss</c->
-<c- k>FROM</c-> <c- n>ProcessingHistory</c-> <c- n>ph</c->
-<c- k>JOIN</c-> <c- n>MaterialProcessing</c-> <c- n>mph</c-> <c- k>ON</c-> <c- n>ph</c-><c- p>.</c-><c- n>materialProcessingId</c-> <c- o>=</c-> <c- n>mph</c-><c- p>.</c-><c- n>processingId</c->
-<c- k>GROUP</c-> <c- k>BY</c-> <c- n>mph</c-><c- p>.</c-><c- n>processType</c-><c- p>;</c->
-</pre>
-   <h4 class="heading settled" data-level="20.1.10" id="transportation-classification-framework"><span class="secno">20.1.10. </span><span class="content">Transportation Classification Framework</span><a class="self-link" href="#transportation-classification-framework"></a></h4>
-   <p>This entity supports the transportation classification framework where:</p>
-   <ol>
-    <li data-md>
-     <p><strong>Pure Transportation</strong> → LocationHistory only (spatial movement)</p>
-    <li data-md>
-     <p><strong>Transformative Transportation</strong> → ProcessingHistory + MaterialProcessing (material changes)</p>
-    <li data-md>
-     <p><strong>Complex Transportation</strong> → Both ProcessingHistory and LocationHistory (movement + transformation)</p>
-   </ol>
-   <p>See transportation classification documentation for detailed decision framework.</p>
-   <h4 class="heading settled" data-level="20.1.11" id="business-rules①"><span class="secno">20.1.11. </span><span class="content">Business Rules</span><a class="self-link" href="#business-rules①"></a></h4>
-   <ol>
-    <li data-md>
-     <p><strong>Sequence Integrity</strong>: ProcessSequenceNumber must be sequential and unique per TRU</p>
-    <li data-md>
-     <p><strong>Volume Conservation</strong>: Total input volume should equal total output volume plus documented losses</p>
-    <li data-md>
-     <p><strong>Claim Inheritance</strong>: Claims must be properly inherited based on volume percentages and processing type</p>
-    <li data-md>
-     <p><strong>Media Break Prevention</strong>: Each processing step must maintain traceability chain integrity</p>
-    <li data-md>
-     <p><strong>Geographic Consistency</strong>: Processing location should be consistent with LocationHistory records</p>
-    <li data-md>
-     <p><strong>Temporal Ordering</strong>: Timestamp sequence should align with processSequenceNumber ordering</p>
-   </ol>
-   <h4 class="heading settled" data-level="20.1.12" id="integration-with-boost-traceability-system"><span class="secno">20.1.12. </span><span class="content">Integration with BOOST Traceability System</span><a class="self-link" href="#integration-with-boost-traceability-system"></a></h4>
-   <p>ProcessingHistory directly supports BOOST traceability system requirements:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Media-Interruption-Free Traceability</strong>: Complete chronological processing chain</p>
-    <li data-md>
-     <p><strong>Volume Conservation</strong>: Detailed tracking of volume changes and losses</p>
-    <li data-md>
-     <p><strong>Biometric Integration</strong>: Links to biometric identification at each processing step</p>
-    <li data-md>
-     <p><strong>Three Critical Tracking Points</strong>: Processing events at harvest, transport, and mill locations</p>
-    <li data-md>
-     <p><strong>Equipment Integration</strong>: Direct connection to harvesting and processing equipment data</p>
-   </ul>
-   <h4 class="heading settled" data-level="20.1.13" id="data-reconciliation"><span class="secno">20.1.13. </span><span class="content">DataReconciliation</span><a class="self-link" href="#data-reconciliation"></a></h4>
-   <h2 class="heading settled" data-level="21" id="datareconciliation"><span class="secno">21. </span><span class="content">DataReconciliation</span><a class="self-link" href="#datareconciliation"></a></h2>
-   <h3 class="heading settled" data-level="21.1" id="datareconciliation①"><span class="secno">21.1. </span><span class="content">DataReconciliation</span><a class="self-link" href="#datareconciliation①"></a></h3>
-   <h4 class="heading settled" data-level="21.1.1" id="overview①④"><span class="secno">21.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①④"></a></h4>
    
 The <code>DataReconciliation</code> entity reconciles measurements between forest and mill with TRU references and species-specific discrepancies to ensure data accuracy and prevent media breaks. This entity enables automated comparison of harvest measurements with mill scale measurements, identifies discrepancies, and tracks resolution status as required by the BOOST traceability system for measurement validation.
 
 
-   <h4 class="heading settled" data-level="21.1.2" id="fields①③"><span class="secno">21.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①③"></a></h4>
+   <h4 class="heading settled" data-level="20.1.2" id="fields①②"><span class="secno">20.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①②"></a></h4>
    <table class="data">
     <thead>
      <tr>
@@ -8658,7 +8463,7 @@ The <code>DataReconciliation</code> entity reconciles measurements between fores
       <td><code>2025-07-21T15:30:00Z</code>
 
    </table>
-   <h4 class="heading settled" data-level="21.1.3" id="reconciliation-status-values"><span class="secno">21.1.3. </span><span class="content">Reconciliation Status Values</span><a class="self-link" href="#reconciliation-status-values"></a></h4>
+   <h4 class="heading settled" data-level="20.1.3" id="reconciliation-status-values"><span class="secno">20.1.3. </span><span class="content">Reconciliation Status Values</span><a class="self-link" href="#reconciliation-status-values"></a></h4>
    <ol>
     <li data-md>
      <p><strong>pending</strong>
@@ -8679,7 +8484,7 @@ The <code>DataReconciliation</code> entity reconciles measurements between fores
  TRU processing may be held pending resolution
  Escalation to quality assurance team</p>
    </ol>
-   <h4 class="heading settled" data-level="21.1.4" id="key-features①①"><span class="secno">21.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①①"></a></h4>
+   <h4 class="heading settled" data-level="20.1.4" id="key-features①①"><span class="secno">20.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①①"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Automated Comparison</strong>
@@ -8706,7 +8511,7 @@ The <code>DataReconciliation</code> entity reconciles measurements between fores
  Operator accountability tracking
  Measurement record validation</p>
    </ol>
-   <h4 class="heading settled" data-level="21.1.5" id="discrepancy-analysis"><span class="secno">21.1.5. </span><span class="content">Discrepancy Analysis</span><a class="self-link" href="#discrepancy-analysis"></a></h4>
+   <h4 class="heading settled" data-level="20.1.5" id="discrepancy-analysis"><span class="secno">20.1.5. </span><span class="content">Discrepancy Analysis</span><a class="self-link" href="#discrepancy-analysis"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Common Discrepancy Reasons</strong>
@@ -8728,7 +8533,7 @@ The <code>DataReconciliation</code> entity reconciles measurements between fores
  <strong>Systematic error</strong>: Calibrate equipment, adjust process
  <strong>Species composition</strong>: Verify species identification</p>
    </ol>
-   <h4 class="heading settled" data-level="21.1.6" id="validation-rules①⓪"><span class="secno">21.1.6. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①⓪"></a></h4>
+   <h4 class="heading settled" data-level="20.1.6" id="validation-rules①⓪"><span class="secno">20.1.6. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①⓪"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Measurement Consistency</strong>
@@ -8746,7 +8551,7 @@ The <code>DataReconciliation</code> entity reconciles measurements between fores
  reconciliationDate must be ≥ TRU measurement timestamps
  Species discrepancies must match TRU species composition</p>
    </ol>
-   <h4 class="heading settled" data-level="21.1.7" id="example-use-cases①①"><span class="secno">21.1.7. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①①"></a></h4>
+   <h4 class="heading settled" data-level="20.1.7" id="example-use-cases①①"><span class="secno">20.1.7. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①①"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Standard Reconciliation</strong>
@@ -8769,7 +8574,7 @@ The <code>DataReconciliation</code> entity reconciles measurements between fores
  Individual species discrepancies documented
  Species composition validation completed</p>
    </ol>
-   <h4 class="heading settled" data-level="21.1.8" id="relationships①④"><span class="secno">21.1.8. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①④"></a></h4>
+   <h4 class="heading settled" data-level="20.1.8" id="relationships①③"><span class="secno">20.1.8. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①③"></a></h4>
    <ul>
     <li data-md>
      <p>DataReconciliation belongs to one TraceableUnit</p>
@@ -8784,15 +8589,15 @@ The <code>DataReconciliation</code> entity reconciles measurements between fores
     <li data-md>
      <p>DataReconciliation enables TRU quality assurance workflows</p>
    </ul>
-   <h3 class="heading settled" data-level="21.2" id="certification-claims-entities"><span class="secno">21.2. </span><span class="content">Certification and Claims Entities</span><a class="self-link" href="#certification-claims-entities"></a></h3>
-   <h4 class="heading settled" data-level="21.2.1" id="certification-body"><span class="secno">21.2.1. </span><span class="content">CertificationBody</span><a class="self-link" href="#certification-body"></a></h4>
-   <h2 class="heading settled" data-level="22" id="certificationbody"><span class="secno">22. </span><span class="content">CertificationBody</span><a class="self-link" href="#certificationbody"></a></h2>
-   <h3 class="heading settled" data-level="22.1" id="overview①⑤"><span class="secno">22.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑤"></a></h3>
+   <h3 class="heading settled" data-level="20.2" id="certification-claims-entities"><span class="secno">20.2. </span><span class="content">Certification and Claims Entities</span><a class="self-link" href="#certification-claims-entities"></a></h3>
+   <h4 class="heading settled" data-level="20.2.1" id="certification-body"><span class="secno">20.2.1. </span><span class="content">CertificationBody</span><a class="self-link" href="#certification-body"></a></h4>
+   <h2 class="heading settled" data-level="21" id="certificationbody"><span class="secno">21. </span><span class="content">CertificationBody</span><a class="self-link" href="#certificationbody"></a></h2>
+   <h3 class="heading settled" data-level="21.1" id="overview①④"><span class="secno">21.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①④"></a></h3>
    
 The <code>CertificationBody</code> object represents an independent organization authorized to issue certificates under specific certification schemes. The primary key is <code>cbId</code>.
 
 
-   <h3 class="heading settled" data-level="22.2" id="fields①④"><span class="secno">22.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①④"></a></h3>
+   <h3 class="heading settled" data-level="21.2" id="fields①③"><span class="secno">21.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①③"></a></h3>
    <table class="data">
     <thead>
      <tr>
@@ -8907,13 +8712,13 @@ The <code>CertificationBody</code> object represents an independent organization
       <td><code>{"start": "2020-01-01", "end": "2025-12-31"}</code>
 
    </table>
-   <h3 class="heading settled" data-level="22.3" id="relationships①⑤"><span class="secno">22.3. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑤"></a></h3>
-   <h4 class="heading settled" data-level="22.3.1" id="parent-entities①"><span class="secno">22.3.1. </span><span class="content">Parent Entities</span><a class="self-link" href="#parent-entities①"></a></h4>
+   <h3 class="heading settled" data-level="21.3" id="relationships①④"><span class="secno">21.3. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①④"></a></h3>
+   <h4 class="heading settled" data-level="21.3.1" id="parent-entities①"><span class="secno">21.3.1. </span><span class="content">Parent Entities</span><a class="self-link" href="#parent-entities①"></a></h4>
    <ul>
     <li data-md>
      <p><strong>AccreditationBody</strong> (external) - Organization that provides accreditation oversight</p>
    </ul>
-   <h4 class="heading settled" data-level="22.3.2" id="child-entities①"><span class="secno">22.3.2. </span><span class="content">Child Entities</span><a class="self-link" href="#child-entities①"></a></h4>
+   <h4 class="heading settled" data-level="21.3.2" id="child-entities①"><span class="secno">21.3.2. </span><span class="content">Child Entities</span><a class="self-link" href="#child-entities①"></a></h4>
    <ul>
     <li data-md>
      <p><strong>Certificate</strong> - Certificates issued by this certification body</p>
@@ -8922,7 +8727,7 @@ The <code>CertificationBody</code> object represents an independent organization
     <li data-md>
      <p><strong>Audit</strong> - Audits conducted by this certification body</p>
    </ul>
-   <h3 class="heading settled" data-level="22.4" id="business-rules②"><span class="secno">22.4. </span><span class="content">Business Rules</span><a class="self-link" href="#business-rules②"></a></h3>
+   <h3 class="heading settled" data-level="21.4" id="business-rules①"><span class="secno">21.4. </span><span class="content">Business Rules</span><a class="self-link" href="#business-rules①"></a></h3>
    <ol>
     <li data-md>
      <p><strong>Unique Identification</strong>: <code>cbId</code> must be unique across all certification bodies</p>
@@ -8935,7 +8740,7 @@ The <code>CertificationBody</code> object represents an independent organization
     <li data-md>
      <p><strong>Validity Period</strong>: Cannot issue certificates outside <code>validityPeriod</code></p>
    </ol>
-   <h3 class="heading settled" data-level="22.5" id="common-queries①"><span class="secno">22.5. </span><span class="content">Common Queries</span><a class="self-link" href="#common-queries①"></a></h3>
+   <h3 class="heading settled" data-level="21.5" id="common-queries①"><span class="secno">21.5. </span><span class="content">Common Queries</span><a class="self-link" href="#common-queries①"></a></h3>
    <ul>
     <li data-md>
      <p>Find certification bodies authorized for specific schemes</p>
@@ -8948,15 +8753,15 @@ The <code>CertificationBody</code> object represents an independent organization
     <li data-md>
      <p>Generate CB performance and compliance reports</p>
    </ul>
-   <h4 class="heading settled" data-level="22.5.1" id="certification-scheme"><span class="secno">22.5.1. </span><span class="content">CertificationScheme</span><a class="self-link" href="#certification-scheme"></a></h4>
-   <h2 class="heading settled" data-level="23" id="certificationscheme"><span class="secno">23. </span><span class="content">CertificationScheme</span><a class="self-link" href="#certificationscheme"></a></h2>
-   <h3 class="heading settled" data-level="23.1" id="certificationscheme①"><span class="secno">23.1. </span><span class="content">CertificationScheme</span><a class="self-link" href="#certificationscheme①"></a></h3>
-   <h4 class="heading settled" data-level="23.1.1" id="overview①⑥"><span class="secno">23.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑥"></a></h4>
+   <h4 class="heading settled" data-level="21.5.1" id="certification-scheme"><span class="secno">21.5.1. </span><span class="content">CertificationScheme</span><a class="self-link" href="#certification-scheme"></a></h4>
+   <h2 class="heading settled" data-level="22" id="certificationscheme"><span class="secno">22. </span><span class="content">CertificationScheme</span><a class="self-link" href="#certificationscheme"></a></h2>
+   <h3 class="heading settled" data-level="22.1" id="certificationscheme①"><span class="secno">22.1. </span><span class="content">CertificationScheme</span><a class="self-link" href="#certificationscheme①"></a></h3>
+   <h4 class="heading settled" data-level="22.1.1" id="overview①⑤"><span class="secno">22.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑤"></a></h4>
    
 The <code>CertificationScheme</code> entity defines certification standards and requirements with geographic applicability as part of Phase 2 BOOST traceability system enhancements. This entity provides the foundational definitions for sustainability certifications, their requirements, and applicable contexts for use throughout the timber supply chain.
 
 
-   <h4 class="heading settled" data-level="23.1.2" id="fields①⑤"><span class="secno">23.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑤"></a></h4>
+   <h4 class="heading settled" data-level="22.1.2" id="fields①④"><span class="secno">22.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①④"></a></h4>
    <table class="data">
     <thead>
      <tr>
@@ -9148,7 +8953,7 @@ The <code>CertificationScheme</code> entity defines certification standards and 
       <td><code>2025-07-21T15:45:00Z</code>
 
    </table>
-   <h4 class="heading settled" data-level="23.1.3" id="scheme-types"><span class="secno">23.1.3. </span><span class="content">Scheme Types</span><a class="self-link" href="#scheme-types"></a></h4>
+   <h4 class="heading settled" data-level="22.1.3" id="scheme-types"><span class="secno">22.1.3. </span><span class="content">Scheme Types</span><a class="self-link" href="#scheme-types"></a></h4>
    <ol>
     <li data-md>
      <p><strong>forest_management</strong>
@@ -9193,7 +8998,7 @@ The <code>CertificationScheme</code> entity defines certification standards and 
  Environmental impact assessment and mitigation
  Stakeholder engagement and reporting</p>
    </ol>
-   <h4 class="heading settled" data-level="23.1.4" id="key-features①②"><span class="secno">23.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①②"></a></h4>
+   <h4 class="heading settled" data-level="22.1.4" id="key-features①②"><span class="secno">22.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①②"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Geographic Applicability</strong>
@@ -9224,7 +9029,7 @@ The <code>CertificationScheme</code> entity defines certification standards and 
  Stakeholder consultation processes
  Complaint and dispute resolution procedures</p>
    </ol>
-   <h4 class="heading settled" data-level="23.1.5" id="chain-of-custody-systems"><span class="secno">23.1.5. </span><span class="content">Chain of Custody Systems</span><a class="self-link" href="#chain-of-custody-systems"></a></h4>
+   <h4 class="heading settled" data-level="22.1.5" id="chain-of-custody-systems"><span class="secno">22.1.5. </span><span class="content">Chain of Custody Systems</span><a class="self-link" href="#chain-of-custody-systems"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Physical Separation</strong>
@@ -9248,7 +9053,7 @@ The <code>CertificationScheme</code> entity defines certification standards and 
  Complex accounting and verification requirements
  Maximum supply chain flexibility</p>
    </ol>
-   <h4 class="heading settled" data-level="23.1.6" id="documentation-requirements"><span class="secno">23.1.6. </span><span class="content">Documentation Requirements</span><a class="self-link" href="#documentation-requirements"></a></h4>
+   <h4 class="heading settled" data-level="22.1.6" id="documentation-requirements"><span class="secno">22.1.6. </span><span class="content">Documentation Requirements</span><a class="self-link" href="#documentation-requirements"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Purchase Records</strong>
@@ -9279,7 +9084,7 @@ The <code>CertificationScheme</code> entity defines certification standards and 
  Continuous improvement and corrective actions
  Management system documentation</p>
    </ol>
-   <h4 class="heading settled" data-level="23.1.7" id="validation-rules①①"><span class="secno">23.1.7. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①①"></a></h4>
+   <h4 class="heading settled" data-level="22.1.7" id="validation-rules①①"><span class="secno">22.1.7. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①①"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Scheme Identification</strong>
@@ -9300,7 +9105,7 @@ The <code>CertificationScheme</code> entity defines certification standards and 
  documentationRequirements must support verification needs
  validityPeriod must align with scheme standards</p>
    </ol>
-   <h4 class="heading settled" data-level="23.1.8" id="example-use-cases①②"><span class="secno">23.1.8. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①②"></a></h4>
+   <h4 class="heading settled" data-level="22.1.8" id="example-use-cases①②"><span class="secno">22.1.8. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①②"></a></h4>
    <ol>
     <li data-md>
      <p><strong>FSC Chain of Custody Implementation</strong>
@@ -9324,7 +9129,7 @@ The <code>CertificationScheme</code> entity defines certification standards and 
  Energy efficiency and carbon footprint reduction
  Independent third-party evaluation</p>
    </ol>
-   <h4 class="heading settled" data-level="23.1.9" id="relationships①⑥"><span class="secno">23.1.9. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑥"></a></h4>
+   <h4 class="heading settled" data-level="22.1.9" id="relationships①⑤"><span class="secno">22.1.9. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑤"></a></h4>
    <ul>
     <li data-md>
      <p>CertificationScheme issued by one Organization</p>
@@ -9341,15 +9146,15 @@ The <code>CertificationScheme</code> entity defines certification standards and 
     <li data-md>
      <p>CertificationScheme enables species-specific sustainability tracking</p>
    </ul>
-   <h4 class="heading settled" data-level="23.1.10" id="claim"><span class="secno">23.1.10. </span><span class="content">Claim</span><a class="self-link" href="#claim"></a></h4>
-   <h2 class="heading settled" data-level="24" id="claim①"><span class="secno">24. </span><span class="content">Claim</span><a class="self-link" href="#claim①"></a></h2>
-   <h3 class="heading settled" data-level="24.1" id="claim②"><span class="secno">24.1. </span><span class="content">Claim</span><a class="self-link" href="#claim②"></a></h3>
-   <h4 class="heading settled" data-level="24.1.1" id="overview①⑦"><span class="secno">24.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑦"></a></h4>
+   <h4 class="heading settled" data-level="22.1.10" id="claim"><span class="secno">22.1.10. </span><span class="content">Claim</span><a class="self-link" href="#claim"></a></h4>
+   <h2 class="heading settled" data-level="23" id="claim①"><span class="secno">23. </span><span class="content">Claim</span><a class="self-link" href="#claim①"></a></h2>
+   <h3 class="heading settled" data-level="23.1" id="claim②"><span class="secno">23.1. </span><span class="content">Claim</span><a class="self-link" href="#claim②"></a></h3>
+   <h4 class="heading settled" data-level="23.1.1" id="overview①⑥"><span class="secno">23.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑥"></a></h4>
    
 The <code>Claim</code> entity enables species-specific sustainability claims with TRU references and inheritance tracking for comprehensive certification chain-of-custody in the BOOST traceability system. This entity supports multiple certification schemes and enables granular tracking of sustainability claims through the processing chain, including parent-child TRU inheritance.
 
 
-   <h4 class="heading settled" data-level="24.1.2" id="fields①⑥"><span class="secno">24.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑥"></a></h4>
+   <h4 class="heading settled" data-level="23.1.2" id="fields①⑤"><span class="secno">23.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑤"></a></h4>
    <table class="data">
     <thead>
      <tr>
@@ -9541,7 +9346,7 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
       <td><code>2025-07-21T15:45:00Z</code>
 
    </table>
-   <h4 class="heading settled" data-level="24.1.3" id="claim-types"><span class="secno">24.1.3. </span><span class="content">Claim Types</span><a class="self-link" href="#claim-types"></a></h4>
+   <h4 class="heading settled" data-level="23.1.3" id="claim-types"><span class="secno">23.1.3. </span><span class="content">Claim Types</span><a class="self-link" href="#claim-types"></a></h4>
    <ol>
     <li data-md>
      <p><strong>FSC Mix</strong>
@@ -9593,7 +9398,7 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
  Land use change restrictions
  Sustainability governance requirements</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.4" id="claim-scopes"><span class="secno">24.1.4. </span><span class="content">Claim Scopes</span><a class="self-link" href="#claim-scopes"></a></h4>
+   <h4 class="heading settled" data-level="23.1.4" id="claim-scopes"><span class="secno">23.1.4. </span><span class="content">Claim Scopes</span><a class="self-link" href="#claim-scopes"></a></h4>
    <ol>
     <li data-md>
      <p><strong>harvest</strong>
@@ -9624,7 +9429,7 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
  Multi-stakeholder verification
  Complete chain of custody</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.5" id="key-features①③"><span class="secno">24.1.5. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①③"></a></h4>
+   <h4 class="heading settled" data-level="23.1.5" id="key-features①③"><span class="secno">23.1.5. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①③"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Species-Specific Claims</strong>
@@ -9655,7 +9460,7 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
  Validation timestamp tracking
  Auditor accountability</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.6" id="claim-inheritance-rules"><span class="secno">24.1.6. </span><span class="content">Claim Inheritance Rules</span><a class="self-link" href="#claim-inheritance-rules"></a></h4>
+   <h4 class="heading settled" data-level="23.1.6" id="claim-inheritance-rules"><span class="secno">23.1.6. </span><span class="content">Claim Inheritance Rules</span><a class="self-link" href="#claim-inheritance-rules"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Split Operations</strong>
@@ -9679,7 +9484,7 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
  Segregation requirement compliance
  Processing facility certification requirements</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.7" id="validation-rules①②"><span class="secno">24.1.7. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①②"></a></h4>
+   <h4 class="heading settled" data-level="23.1.7" id="validation-rules①②"><span class="secno">23.1.7. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①②"></a></h4>
    <ol>
     <li data-md>
      <p><strong>TRU Integration</strong>
@@ -9700,7 +9505,7 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
  Multi-species claims must account for all species
  Species claim percentages must align with composition</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.8" id="example-use-cases①③"><span class="secno">24.1.8. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①③"></a></h4>
+   <h4 class="heading settled" data-level="23.1.8" id="example-use-cases①③"><span class="secno">23.1.8. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①③"></a></h4>
    <ol>
     <li data-md>
      <p><strong>FSC Mix Inheritance</strong>
@@ -9724,7 +9529,7 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
  Processing facility certification verified
  Final product maintains SBP compliance</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.9" id="relationships①⑦"><span class="secno">24.1.9. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑦"></a></h4>
+   <h4 class="heading settled" data-level="23.1.9" id="relationships①⑥"><span class="secno">23.1.9. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑥"></a></h4>
    <ul>
     <li data-md>
      <p>Claim belongs to one TraceableUnit</p>
@@ -9741,16 +9546,16 @@ The <code>Claim</code> entity enables species-specific sustainability claims wit
     <li data-md>
      <p>Claim supports mass balance chain of custody calculations</p>
    </ul>
-   <h3 class="heading settled" data-level="24.2" id="supply-chain-commerce-entities"><span class="secno">24.2. </span><span class="content">Supply Chain and Commerce Entities</span><a class="self-link" href="#supply-chain-commerce-entities"></a></h3>
-   <h4 class="heading settled" data-level="24.2.1" id="product-group"><span class="secno">24.2.1. </span><span class="content">ProductGroup</span><a class="self-link" href="#product-group"></a></h4>
-   <h2 class="heading settled" data-level="25" id="productgroup"><span class="secno">25. </span><span class="content">ProductGroup</span><a class="self-link" href="#productgroup"></a></h2>
-   <h3 class="heading settled" data-level="25.1" id="productgroup①"><span class="secno">25.1. </span><span class="content">ProductGroup</span><a class="self-link" href="#productgroup①"></a></h3>
-   <h4 class="heading settled" data-level="25.1.1" id="overview①⑧"><span class="secno">25.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑧"></a></h4>
+   <h3 class="heading settled" data-level="23.2" id="supply-chain-commerce-entities"><span class="secno">23.2. </span><span class="content">Supply Chain and Commerce Entities</span><a class="self-link" href="#supply-chain-commerce-entities"></a></h3>
+   <h4 class="heading settled" data-level="23.2.1" id="product-group"><span class="secno">23.2.1. </span><span class="content">ProductGroup</span><a class="self-link" href="#product-group"></a></h4>
+   <h2 class="heading settled" data-level="24" id="productgroup"><span class="secno">24. </span><span class="content">ProductGroup</span><a class="self-link" href="#productgroup"></a></h2>
+   <h3 class="heading settled" data-level="24.1" id="productgroup①"><span class="secno">24.1. </span><span class="content">ProductGroup</span><a class="self-link" href="#productgroup①"></a></h3>
+   <h4 class="heading settled" data-level="24.1.1" id="overview①⑦"><span class="secno">24.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑦"></a></h4>
    
 The <code>ProductGroup</code> object represents a distinct category of materials or products, classified based on shared characteristics such as origin, transformation method, and chain-of-custody rules. These groups support traceability, classification, and certification alignment in biomass and materials supply chains. The primary key is <code>productGroupId</code>.
 
 
-   <h4 class="heading settled" data-level="25.1.2" id="fields①⑦"><span class="secno">25.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑦"></a></h4>
+   <h4 class="heading settled" data-level="24.1.2" id="fields①⑥"><span class="secno">24.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑥"></a></h4>
    <table class="data">
     <thead>
      <tr>
@@ -9899,7 +9704,7 @@ The <code>ProductGroup</code> object represents a distinct category of materials
 
    </table>
    <hr>
-   <h4 class="heading settled" data-level="25.1.3" id="material-object"><span class="secno">25.1.3. </span><span class="content">Material Object</span><a class="self-link" href="#material-object"></a></h4>
+   <h4 class="heading settled" data-level="24.1.3" id="material-object"><span class="secno">24.1.3. </span><span class="content">Material Object</span><a class="self-link" href="#material-object"></a></h4>
    <table class="data">
     <thead>
      <tr>
@@ -9932,7 +9737,7 @@ The <code>ProductGroup</code> object represents a distinct category of materials
 
    </table>
    <hr>
-   <h4 class="heading settled" data-level="25.1.4" id="example-use-cases①④"><span class="secno">25.1.4. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①④"></a></h4>
+   <h4 class="heading settled" data-level="24.1.4" id="example-use-cases①④"><span class="secno">24.1.4. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①④"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Forest Slash-Derived Biochar</strong>
@@ -9947,7 +9752,7 @@ The <code>ProductGroup</code> object represents a distinct category of materials
  Standards: EN 14214, ASTM D6751
  Certifications: ISCC EU, RSB Global</p>
    </ol>
-   <h4 class="heading settled" data-level="25.1.5" id="relationships①⑧"><span class="secno">25.1.5. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑧"></a></h4>
+   <h4 class="heading settled" data-level="24.1.5" id="relationships①⑦"><span class="secno">24.1.5. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑦"></a></h4>
    <ul>
     <li data-md>
      <p>Organization defines multiple ProductGroups</p>
@@ -9958,16 +9763,16 @@ The <code>ProductGroup</code> object represents a distinct category of materials
     <li data-md>
      <p>Certificate certifies multiple ProductGroups</p>
    </ul>
-   <h3 class="heading settled" data-level="25.2" id="regulatory-compliance-entities"><span class="secno">25.2. </span><span class="content">Regulatory and Compliance Entities</span><a class="self-link" href="#regulatory-compliance-entities"></a></h3>
-   <h4 class="heading settled" data-level="25.2.1" id="lcfs-pathway"><span class="secno">25.2.1. </span><span class="content">LCFSPathway</span><a class="self-link" href="#lcfs-pathway"></a></h4>
-   <h2 class="heading settled" data-level="26" id="lcfspathway"><span class="secno">26. </span><span class="content">LcfsPathway</span><a class="self-link" href="#lcfspathway"></a></h2>
-   <h3 class="heading settled" data-level="26.1" id="lcfspathway①"><span class="secno">26.1. </span><span class="content">LCFSPathway</span><a class="self-link" href="#lcfspathway①"></a></h3>
-   <h4 class="heading settled" data-level="26.1.1" id="overview①⑨"><span class="secno">26.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑨"></a></h4>
+   <h3 class="heading settled" data-level="24.2" id="regulatory-compliance-entities"><span class="secno">24.2. </span><span class="content">Regulatory and Compliance Entities</span><a class="self-link" href="#regulatory-compliance-entities"></a></h3>
+   <h4 class="heading settled" data-level="24.2.1" id="lcfs-pathway"><span class="secno">24.2.1. </span><span class="content">LCFSPathway</span><a class="self-link" href="#lcfs-pathway"></a></h4>
+   <h2 class="heading settled" data-level="25" id="lcfspathway"><span class="secno">25. </span><span class="content">LcfsPathway</span><a class="self-link" href="#lcfspathway"></a></h2>
+   <h3 class="heading settled" data-level="25.1" id="lcfspathway①"><span class="secno">25.1. </span><span class="content">LCFSPathway</span><a class="self-link" href="#lcfspathway①"></a></h3>
+   <h4 class="heading settled" data-level="25.1.1" id="overview①⑧"><span class="secno">25.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑧"></a></h4>
    
 The <code>LCFSPathway</code> entity represents CARB-certified fuel pathways for California’s Low Carbon Fuel Standard (LCFS) compliance. Each pathway defines the carbon intensity, feedstock type, production process, and regulatory status for specific fuel production routes. This entity enables LCFS credit calculations and regulatory reporting by linking transactions to certified carbon intensities.
 
 
-   <h4 class="heading settled" data-level="26.1.2" id="fields①⑧"><span class="secno">26.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑧"></a></h4>
+   <h4 class="heading settled" data-level="25.1.2" id="fields①⑦"><span class="secno">25.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑦"></a></h4>
    <table class="data">
     <thead>
      <tr>
@@ -10160,7 +9965,7 @@ The <code>LCFSPathway</code> entity represents CARB-certified fuel pathways for 
 
    </table>
    <hr>
-   <h4 class="heading settled" data-level="26.1.3" id="key-features①④"><span class="secno">26.1.3. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①④"></a></h4>
+   <h4 class="heading settled" data-level="25.1.3" id="key-features①④"><span class="secno">25.1.3. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①④"></a></h4>
    <ol>
     <li data-md>
      <p><strong>CARB Pathway Integration</strong>
@@ -10183,7 +9988,7 @@ The <code>LCFSPathway</code> entity represents CARB-certified fuel pathways for 
  Certification and expiration date management
  CA-GREET version compatibility</p>
    </ol>
-   <h4 class="heading settled" data-level="26.1.4" id="example-use-cases①⑤"><span class="secno">26.1.4. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①⑤"></a></h4>
+   <h4 class="heading settled" data-level="25.1.4" id="example-use-cases①⑤"><span class="secno">25.1.4. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①⑤"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Renewable Diesel from Forest Residue</strong>
@@ -10204,7 +10009,7 @@ The <code>LCFSPathway</code> entity represents CARB-certified fuel pathways for 
  Carbon Intensity: 12.41 gCO2e/MJ
  Energy Economy Ratio: 1.0</p>
    </ol>
-   <h4 class="heading settled" data-level="26.1.5" id="relationships①⑨"><span class="secno">26.1.5. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑨"></a></h4>
+   <h4 class="heading settled" data-level="25.1.5" id="relationships①⑧"><span class="secno">25.1.5. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑧"></a></h4>
    <ul>
     <li data-md>
      <p>LCFSPathway referenced by Transaction entities for LCFS reporting</p>
@@ -10217,7 +10022,7 @@ The <code>LCFSPathway</code> entity represents CARB-certified fuel pathways for 
     <li data-md>
      <p>LCFSPathway integrated with TraceableUnit for feedstock traceability</p>
    </ul>
-   <h4 class="heading settled" data-level="26.1.6" id="credit-calculation-formula"><span class="secno">26.1.6. </span><span class="content">Credit Calculation Formula</span><a class="self-link" href="#credit-calculation-formula"></a></h4>
+   <h4 class="heading settled" data-level="25.1.6" id="credit-calculation-formula"><span class="secno">25.1.6. </span><span class="content">Credit Calculation Formula</span><a class="self-link" href="#credit-calculation-formula"></a></h4>
    <p>LCFS credits are calculated using pathway data:</p>
 <pre>Credits = (Benchmark_CI - Pathway_CI) × Fuel_Volume_MJ × EER
 </pre>
@@ -10232,7 +10037,7 @@ The <code>LCFSPathway</code> entity represents CARB-certified fuel pathways for 
     <li data-md>
      <p><strong>EER</strong>: <code>energyEconomyRatio</code> field value</p>
    </ul>
-   <h4 class="heading settled" data-level="26.1.7" id="validation-rules①③"><span class="secno">26.1.7. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①③"></a></h4>
+   <h4 class="heading settled" data-level="25.1.7" id="validation-rules①③"><span class="secno">25.1.7. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①③"></a></h4>
    <ul>
     <li data-md>
      <p>Pathway IDs must follow CARB format: <code>CA-{FUEL}-{YEAR}-{FEEDSTOCK}-{NUMBER}</code></p>
@@ -10245,15 +10050,15 @@ The <code>LCFSPathway</code> entity represents CARB-certified fuel pathways for 
     <li data-md>
      <p>Active pathways must have future expiration dates</p>
    </ul>
-   <h4 class="heading settled" data-level="26.1.8" id="lcfs-reporting"><span class="secno">26.1.8. </span><span class="content">LCFSReporting</span><a class="self-link" href="#lcfs-reporting"></a></h4>
-   <h2 class="heading settled" data-level="27" id="lcfsreporting"><span class="secno">27. </span><span class="content">LcfsReporting</span><a class="self-link" href="#lcfsreporting"></a></h2>
-   <h3 class="heading settled" data-level="27.1" id="lcfsreporting①"><span class="secno">27.1. </span><span class="content">LCFSReporting</span><a class="self-link" href="#lcfsreporting①"></a></h3>
-   <h4 class="heading settled" data-level="27.1.1" id="overview②⓪"><span class="secno">27.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview②⓪"></a></h4>
+   <h4 class="heading settled" data-level="25.1.8" id="lcfs-reporting"><span class="secno">25.1.8. </span><span class="content">LCFSReporting</span><a class="self-link" href="#lcfs-reporting"></a></h4>
+   <h2 class="heading settled" data-level="26" id="lcfsreporting"><span class="secno">26. </span><span class="content">LcfsReporting</span><a class="self-link" href="#lcfsreporting"></a></h2>
+   <h3 class="heading settled" data-level="26.1" id="lcfsreporting①"><span class="secno">26.1. </span><span class="content">LCFSReporting</span><a class="self-link" href="#lcfsreporting①"></a></h3>
+   <h4 class="heading settled" data-level="26.1.1" id="overview①⑨"><span class="secno">26.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑨"></a></h4>
    
 The <code>LCFSReporting</code> entity represents quarterly compliance reports submitted by regulated entities to the California Air Resources Board (CARB) for the Low Carbon Fuel Standard (LCFS) program. Each report aggregates transaction data, calculates credit/deficit positions, and tracks submission status for regulatory compliance.
 
 
-   <h4 class="heading settled" data-level="27.1.2" id="fields①⑨"><span class="secno">27.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑨"></a></h4>
+   <h4 class="heading settled" data-level="26.1.2" id="fields①⑧"><span class="secno">26.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①⑧"></a></h4>
    <table class="data">
     <thead>
      <tr>
@@ -10468,8 +10273,8 @@ The <code>LCFSReporting</code> entity represents quarterly compliance reports su
 
    </table>
    <hr>
-   <h4 class="heading settled" data-level="27.1.3" id="nested-structures"><span class="secno">27.1.3. </span><span class="content">Nested Structures</span><a class="self-link" href="#nested-structures"></a></h4>
-   <h5 class="heading settled" data-level="27.1.3.1" id="pathway-summary"><span class="secno">27.1.3.1. </span><span class="content">Pathway Summary</span><a class="self-link" href="#pathway-summary"></a></h5>
+   <h4 class="heading settled" data-level="26.1.3" id="nested-structures"><span class="secno">26.1.3. </span><span class="content">Nested Structures</span><a class="self-link" href="#nested-structures"></a></h4>
+   <h5 class="heading settled" data-level="26.1.3.1" id="pathway-summary"><span class="secno">26.1.3.1. </span><span class="content">Pathway Summary</span><a class="self-link" href="#pathway-summary"></a></h5>
    
 Each pathway summary object contains:
 
@@ -10485,7 +10290,7 @@ Each pathway summary object contains:
     <li data-md>
      <p><code>creditsGenerated</code> (number, required): Credits generated from this pathway</p>
    </ul>
-   <h5 class="heading settled" data-level="27.1.3.2" id="calculation-parameters"><span class="secno">27.1.3.2. </span><span class="content">Calculation Parameters</span><a class="self-link" href="#calculation-parameters"></a></h5>
+   <h5 class="heading settled" data-level="26.1.3.2" id="calculation-parameters"><span class="secno">26.1.3.2. </span><span class="content">Calculation Parameters</span><a class="self-link" href="#calculation-parameters"></a></h5>
    <ul>
     <li data-md>
      <p><code>conversionFactor</code> (number): Energy conversion factor (MJ/gallon)</p>
@@ -10498,7 +10303,7 @@ Each pathway summary object contains:
     <li data-md>
      <p><code>defaultEER</code> (number): Default energy economy ratio</p>
    </ul>
-   <h5 class="heading settled" data-level="27.1.3.3" id="compliance-metrics"><span class="secno">27.1.3.3. </span><span class="content">Compliance Metrics</span><a class="self-link" href="#compliance-metrics"></a></h5>
+   <h5 class="heading settled" data-level="26.1.3.3" id="compliance-metrics"><span class="secno">26.1.3.3. </span><span class="content">Compliance Metrics</span><a class="self-link" href="#compliance-metrics"></a></h5>
    <ul>
     <li data-md>
      <p><code>creditValue</code> (object): Monetary valuation of credits</p>
@@ -10520,7 +10325,7 @@ Each pathway summary object contains:
      <p><code>equivalentCarsRemoved</code> (integer): Equivalent number of cars removed from roads</p>
    </ul>
    <hr>
-   <h4 class="heading settled" data-level="27.1.4" id="key-features①⑤"><span class="secno">27.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①⑤"></a></h4>
+   <h4 class="heading settled" data-level="26.1.4" id="key-features①⑤"><span class="secno">26.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①⑤"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Quarterly Reporting Compliance</strong>
@@ -10543,7 +10348,7 @@ Each pathway summary object contains:
  Transaction count and volume aggregation
  Feedstock type categorization</p>
    </ol>
-   <h4 class="heading settled" data-level="27.1.5" id="example-use-cases①⑥"><span class="secno">27.1.5. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①⑥"></a></h4>
+   <h4 class="heading settled" data-level="26.1.5" id="example-use-cases①⑥"><span class="secno">26.1.5. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①⑥"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Large Regulated Producer</strong>
@@ -10561,7 +10366,7 @@ Each pathway summary object contains:
  Deficit position requiring credit purchases
  Complex pathway attribution</p>
    </ol>
-   <h4 class="heading settled" data-level="27.1.6" id="relationships②⓪"><span class="secno">27.1.6. </span><span class="content">Relationships</span><a class="self-link" href="#relationships②⓪"></a></h4>
+   <h4 class="heading settled" data-level="26.1.6" id="relationships①⑨"><span class="secno">26.1.6. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①⑨"></a></h4>
    <ul>
     <li data-md>
      <p>LCFSReporting references Organization entity for regulated party</p>
@@ -10574,7 +10379,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>LCFSReporting connects to EnergyCarbonData for calculation validation</p>
    </ul>
-   <h4 class="heading settled" data-level="27.1.7" id="credit-calculation-logic"><span class="secno">27.1.7. </span><span class="content">Credit Calculation Logic</span><a class="self-link" href="#credit-calculation-logic"></a></h4>
+   <h4 class="heading settled" data-level="26.1.7" id="credit-calculation-logic"><span class="secno">26.1.7. </span><span class="content">Credit Calculation Logic</span><a class="self-link" href="#credit-calculation-logic"></a></h4>
    <p>The report aggregates credits calculated at the transaction level:</p>
 <pre>Total Credits = Σ[(Benchmark_CI - Pathway_CI) × Transaction_Volume_MJ × EER]
 </pre>
@@ -10589,7 +10394,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>Energy Economy Ratios from pathway specifications</p>
    </ul>
-   <h4 class="heading settled" data-level="27.1.8" id="validation-rules①④"><span class="secno">27.1.8. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①④"></a></h4>
+   <h4 class="heading settled" data-level="26.1.8" id="validation-rules①④"><span class="secno">26.1.8. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①④"></a></h4>
    <ul>
     <li data-md>
      <p>Reporting periods must follow YYYY-QN format</p>
@@ -10604,9 +10409,9 @@ Each pathway summary object contains:
     <li data-md>
      <p>All volumes and credits must be non-negative numbers</p>
    </ul>
-   <h2 class="heading settled" data-level="28" id="schema-definitions"><span class="secno">28. </span><span class="content">Schema Definitions</span><a class="self-link" href="#schema-definitions"></a></h2>
+   <h2 class="heading settled" data-level="27" id="schema-definitions"><span class="secno">27. </span><span class="content">Schema Definitions</span><a class="self-link" href="#schema-definitions"></a></h2>
    <p>The BOOST schema system provides comprehensive validation and structure definitions for all entities in the data model. All schemas are defined using JSON Schema Draft-07 format and include business logic validation rules.</p>
-   <h3 class="heading settled" data-level="28.1" id="json-schema-format"><span class="secno">28.1. </span><span class="content">JSON Schema Format</span><a class="self-link" href="#json-schema-format"></a></h3>
+   <h3 class="heading settled" data-level="27.1" id="json-schema-format"><span class="secno">27.1. </span><span class="content">JSON Schema Format</span><a class="self-link" href="#json-schema-format"></a></h3>
    <p>All BOOST entity definitions MUST be provided as <a data-link-type="biblio" href="#biblio-json-schema" title="JSON Schema: A Media Type for Describing JSON Documents">[JSON-SCHEMA]</a> Draft-07 compliant schemas with the following REQUIRED structure:</p>
 <pre class="example highlight" id="example-6a6dde5b"><a class="self-link" href="#example-6a6dde5b"></a><c- p>{</c->
   <c- f>"schema"</c-><c- p>:</c-> <c- p>{</c->
@@ -10619,7 +10424,7 @@ Each pathway summary object contains:
   <c- p>}</c->
 <c- p>}</c->
 </pre>
-   <h3 class="heading settled" data-level="28.2" id="business-logic"><span class="secno">28.2. </span><span class="content">Business Logic Validation</span><a class="self-link" href="#business-logic"></a></h3>
+   <h3 class="heading settled" data-level="27.2" id="business-logic"><span class="secno">27.2. </span><span class="content">Business Logic Validation</span><a class="self-link" href="#business-logic"></a></h3>
    <p>Implementations MUST validate entities against 8 categories of business rules:</p>
    <ol>
     <li data-md>
@@ -10639,9 +10444,9 @@ Each pathway summary object contains:
     <li data-md>
      <p><strong>Quality Assurance</strong> - Material quality constraints</p>
    </ol>
-   <h2 class="heading settled" data-level="29" id="serialization"><span class="secno">29. </span><span class="content">Serialization and Exchange</span><a class="self-link" href="#serialization"></a></h2>
+   <h2 class="heading settled" data-level="28" id="serialization"><span class="secno">28. </span><span class="content">Serialization and Exchange</span><a class="self-link" href="#serialization"></a></h2>
    <p>BOOST supports multiple serialization formats to enable broad interoperability across different systems and use cases. JSON-LD is the preferred format for semantic web integration and linked data applications.</p>
-   <h3 class="heading settled" data-level="29.1" id="json-ld"><span class="secno">29.1. </span><span class="content">JSON-LD as Primary Format</span><a class="self-link" href="#json-ld"></a></h3>
+   <h3 class="heading settled" data-level="28.1" id="json-ld"><span class="secno">28.1. </span><span class="content">JSON-LD as Primary Format</span><a class="self-link" href="#json-ld"></a></h3>
    <p>BOOST data MUST be serializable to <a data-link-type="biblio" href="#biblio-json-ld11" title="JSON-LD 1.1">[JSON-LD11]</a> format with:</p>
    <ul>
     <li data-md>
@@ -10651,7 +10456,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>Unique <code>@id</code> values for all entities</p>
    </ul>
-   <h3 class="heading settled" data-level="29.2" id="context-definitions"><span class="secno">29.2. </span><span class="content">Context Definitions</span><a class="self-link" href="#context-definitions"></a></h3>
+   <h3 class="heading settled" data-level="28.2" id="context-definitions"><span class="secno">28.2. </span><span class="content">Context Definitions</span><a class="self-link" href="#context-definitions"></a></h3>
    <p>The BOOST JSON-LD context MUST define:</p>
    <ul>
     <li data-md>
@@ -10663,10 +10468,10 @@ Each pathway summary object contains:
     <li data-md>
      <p>Language specifications for internationalization</p>
    </ul>
-   <h2 class="heading settled" data-level="30" id="use-cases"><span class="secno">30. </span><span class="content">Use Cases and Requirements</span><a class="self-link" href="#use-cases"></a></h2>
+   <h2 class="heading settled" data-level="29" id="use-cases"><span class="secno">29. </span><span class="content">Use Cases and Requirements</span><a class="self-link" href="#use-cases"></a></h2>
    <p>BOOST addresses critical use cases across the biomass supply chain, from forest management and harvesting through processing, transportation, and final delivery. The standard supports both regulatory compliance and voluntary certification scenarios.</p>
-   <h3 class="heading settled" data-level="30.1" id="core-use-case-categories"><span class="secno">30.1. </span><span class="content">Core Use Case Categories</span><a class="self-link" href="#core-use-case-categories"></a></h3>
-   <h4 class="heading settled" data-level="30.1.1" id="1-complete-harvest-to-mill-traceability-chain"><span class="secno">30.1.1. </span><span class="content">1. Complete Harvest-to-Mill Traceability Chain</span><a class="self-link" href="#1-complete-harvest-to-mill-traceability-chain"></a></h4>
+   <h3 class="heading settled" data-level="29.1" id="core-use-case-categories"><span class="secno">29.1. </span><span class="content">Core Use Case Categories</span><a class="self-link" href="#core-use-case-categories"></a></h3>
+   <h4 class="heading settled" data-level="29.1.1" id="1-complete-harvest-to-mill-traceability-chain"><span class="secno">29.1.1. </span><span class="content">1. Complete Harvest-to-Mill Traceability Chain</span><a class="self-link" href="#1-complete-harvest-to-mill-traceability-chain"></a></h4>
    <p><strong>Objective</strong>: Verify end-to-end traceability from standing tree to mill processing</p>
    <p><strong>Key Steps</strong>:</p>
    <ul>
@@ -10681,7 +10486,7 @@ Each pathway summary object contains:
     <li data-md>
      <p><strong>Audit Trail Generation</strong> for complete supply chain documentation</p>
    </ul>
-   <h4 class="heading settled" data-level="30.1.2" id="2-multi-species-mixed-material-processing"><span class="secno">30.1.2. </span><span class="content">2. Multi-Species Mixed Material Processing</span><a class="self-link" href="#2-multi-species-mixed-material-processing"></a></h4>
+   <h4 class="heading settled" data-level="29.1.2" id="2-multi-species-mixed-material-processing"><span class="secno">29.1.2. </span><span class="content">2. Multi-Species Mixed Material Processing</span><a class="self-link" href="#2-multi-species-mixed-material-processing"></a></h4>
    <p><strong>Objective</strong>: Track individual species within mixed material flows</p>
    <p><strong>Key Features</strong>:</p>
    <ul>
@@ -10696,7 +10501,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>Processing transformations with species-level tracking</p>
    </ul>
-   <h4 class="heading settled" data-level="30.1.3" id="3-california-lcfs-regulatory-compliance"><span class="secno">30.1.3. </span><span class="content">3. California LCFS Regulatory Compliance</span><a class="self-link" href="#3-california-lcfs-regulatory-compliance"></a></h4>
+   <h4 class="heading settled" data-level="29.1.3" id="3-california-lcfs-regulatory-compliance"><span class="secno">29.1.3. </span><span class="content">3. California LCFS Regulatory Compliance</span><a class="self-link" href="#3-california-lcfs-regulatory-compliance"></a></h4>
    <p><strong>Objective</strong>: Generate quarterly LCFS compliance reports with complete audit trails</p>
    <p><strong>Integration Points</strong>:</p>
    <ul>
@@ -10711,7 +10516,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>Credit/deficit position tracking with automated calculations</p>
    </ul>
-   <h4 class="heading settled" data-level="30.1.4" id="4-multi-certification-scheme-management"><span class="secno">30.1.4. </span><span class="content">4. Multi-Certification Scheme Management</span><a class="self-link" href="#4-multi-certification-scheme-management"></a></h4>
+   <h4 class="heading settled" data-level="29.1.4" id="4-multi-certification-scheme-management"><span class="secno">29.1.4. </span><span class="content">4. Multi-Certification Scheme Management</span><a class="self-link" href="#4-multi-certification-scheme-management"></a></h4>
    <p><strong>Objective</strong>: Maintain multiple certification claims across processing operations</p>
    <p><strong>Capabilities</strong>:</p>
    <ul>
@@ -10726,7 +10531,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>Chain of custody validation across organizational boundaries</p>
    </ul>
-   <h4 class="heading settled" data-level="30.1.5" id="5-biometric-media-interruption-free-tracking"><span class="secno">30.1.5. </span><span class="content">5. Biometric Media-Interruption-Free Tracking</span><a class="self-link" href="#5-biometric-media-interruption-free-tracking"></a></h4>
+   <h4 class="heading settled" data-level="29.1.5" id="5-biometric-media-interruption-free-tracking"><span class="secno">29.1.5. </span><span class="content">5. Biometric Media-Interruption-Free Tracking</span><a class="self-link" href="#5-biometric-media-interruption-free-tracking"></a></h4>
    <p><strong>Objective</strong>: Maintain continuous traceability without physical tag dependencies</p>
    <p><strong>Technical Features</strong>:</p>
    <ul>
@@ -10741,7 +10546,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>Data continuity validation across all processing steps</p>
    </ul>
-   <h4 class="heading settled" data-level="30.1.6" id="6-plant-part-value-optimization"><span class="secno">30.1.6. </span><span class="content">6. Plant Part Value Optimization</span><a class="self-link" href="#6-plant-part-value-optimization"></a></h4>
+   <h4 class="heading settled" data-level="29.1.6" id="6-plant-part-value-optimization"><span class="secno">29.1.6. </span><span class="content">6. Plant Part Value Optimization</span><a class="self-link" href="#6-plant-part-value-optimization"></a></h4>
    <p><strong>Objective</strong>: Optimize material routing based on plant part composition</p>
    <p><strong>Economic Applications</strong>:</p>
    <ul>
@@ -10756,8 +10561,8 @@ Each pathway summary object contains:
     <li data-md>
      <p>Circular economy integration with waste stream minimization</p>
    </ul>
-   <h3 class="heading settled" data-level="30.2" id="stakeholder-specific-use-cases"><span class="secno">30.2. </span><span class="content">Stakeholder-Specific Use Cases</span><a class="self-link" href="#stakeholder-specific-use-cases"></a></h3>
-   <h4 class="heading settled" data-level="30.2.1" id="forest-management-organizations"><span class="secno">30.2.1. </span><span class="content">Forest Management Organizations</span><a class="self-link" href="#forest-management-organizations"></a></h4>
+   <h3 class="heading settled" data-level="29.2" id="stakeholder-specific-use-cases"><span class="secno">29.2. </span><span class="content">Stakeholder-Specific Use Cases</span><a class="self-link" href="#stakeholder-specific-use-cases"></a></h3>
+   <h4 class="heading settled" data-level="29.2.1" id="forest-management-organizations"><span class="secno">29.2.1. </span><span class="content">Forest Management Organizations</span><a class="self-link" href="#forest-management-organizations"></a></h4>
    <ul>
     <li data-md>
      <p><strong>Harvest Planning</strong> with sustainability claim optimization</p>
@@ -10768,7 +10573,7 @@ Each pathway summary object contains:
     <li data-md>
      <p><strong>Equipment Integration</strong> with harvester-mounted measurement systems</p>
    </ul>
-   <h4 class="heading settled" data-level="30.2.2" id="processing-facilities"><span class="secno">30.2.2. </span><span class="content">Processing Facilities</span><a class="self-link" href="#processing-facilities"></a></h4>
+   <h4 class="heading settled" data-level="29.2.2" id="processing-facilities"><span class="secno">29.2.2. </span><span class="content">Processing Facilities</span><a class="self-link" href="#processing-facilities"></a></h4>
    <ul>
     <li data-md>
      <p><strong>Material Flow Optimization</strong> based on plant part composition</p>
@@ -10779,7 +10584,7 @@ Each pathway summary object contains:
     <li data-md>
      <p><strong>Volume Conservation</strong> validation with tolerance checking</p>
    </ul>
-   <h4 class="heading settled" data-level="30.2.3" id="transportation-companies"><span class="secno">30.2.3. </span><span class="content">Transportation Companies</span><a class="self-link" href="#transportation-companies"></a></h4>
+   <h4 class="heading settled" data-level="29.2.3" id="transportation-companies"><span class="secno">29.2.3. </span><span class="content">Transportation Companies</span><a class="self-link" href="#transportation-companies"></a></h4>
    <ul>
     <li data-md>
      <p><strong>Chain of Custody Maintenance</strong> across organizational boundaries</p>
@@ -10790,7 +10595,7 @@ Each pathway summary object contains:
     <li data-md>
      <p><strong>Arrival Verification</strong> with measurement validation</p>
    </ul>
-   <h4 class="heading settled" data-level="30.2.4" id="regulatory-agencies"><span class="secno">30.2.4. </span><span class="content">Regulatory Agencies</span><a class="self-link" href="#regulatory-agencies"></a></h4>
+   <h4 class="heading settled" data-level="29.2.4" id="regulatory-agencies"><span class="secno">29.2.4. </span><span class="content">Regulatory Agencies</span><a class="self-link" href="#regulatory-agencies"></a></h4>
    <ul>
     <li data-md>
      <p><strong>Compliance Monitoring</strong> with automated report generation</p>
@@ -10801,7 +10606,7 @@ Each pathway summary object contains:
     <li data-md>
      <p><strong>Sustainability Verification</strong> with third-party evidence</p>
    </ul>
-   <h4 class="heading settled" data-level="30.2.5" id="certification-bodies"><span class="secno">30.2.5. </span><span class="content">Certification Bodies</span><a class="self-link" href="#certification-bodies"></a></h4>
+   <h4 class="heading settled" data-level="29.2.5" id="certification-bodies"><span class="secno">29.2.5. </span><span class="content">Certification Bodies</span><a class="self-link" href="#certification-bodies"></a></h4>
    <ul>
     <li data-md>
      <p><strong>Multi-scheme Support</strong> with standardized data formats</p>
@@ -10812,9 +10617,9 @@ Each pathway summary object contains:
     <li data-md>
      <p><strong>Evidence Documentation</strong> with tamper-proof data integrity</p>
    </ul>
-   <h3 class="heading settled" data-level="30.3" id="primary-use-cases"><span class="secno">30.3. </span><span class="content">Primary Use Cases</span><a class="self-link" href="#primary-use-cases"></a></h3>
+   <h3 class="heading settled" data-level="29.3" id="primary-use-cases"><span class="secno">29.3. </span><span class="content">Primary Use Cases</span><a class="self-link" href="#primary-use-cases"></a></h3>
    <p>BOOST addresses the following primary use cases:</p>
-   <h4 class="heading settled" data-level="30.3.1" id="california-use-case"><span class="secno">30.3.1. </span><span class="content">California Biomass Supply Chain Tracking</span><a class="self-link" href="#california-use-case"></a></h4>
+   <h4 class="heading settled" data-level="29.3.1" id="california-use-case"><span class="secno">29.3.1. </span><span class="content">California Biomass Supply Chain Tracking</span><a class="self-link" href="#california-use-case"></a></h4>
    <ul>
     <li data-md>
      <p>Forest management organization harvests certified timber</p>
@@ -10825,7 +10630,7 @@ Each pathway summary object contains:
     <li data-md>
      <p>Regulatory agencies verify compliance with LCFS requirements</p>
    </ul>
-   <h4 class="heading settled" data-level="30.3.2" id="multi-cert-use-case"><span class="secno">30.3.2. </span><span class="content">Multi-Certification Scheme Management</span><a class="self-link" href="#multi-cert-use-case"></a></h4>
+   <h4 class="heading settled" data-level="29.3.2" id="multi-cert-use-case"><span class="secno">29.3.2. </span><span class="content">Multi-Certification Scheme Management</span><a class="self-link" href="#multi-cert-use-case"></a></h4>
    <ul>
     <li data-md>
      <p>Single TRU maintains multiple certification claims (FSC, SBP, PEFC)</p>
@@ -10836,11 +10641,11 @@ Each pathway summary object contains:
     <li data-md>
      <p>Third-party verification validates claim accuracy</p>
    </ul>
-   <h2 class="heading settled" data-level="31" id="examples"><span class="secno">31. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
+   <h2 class="heading settled" data-level="30" id="examples"><span class="secno">30. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h2>
    <p>This section provides practical examples of BOOST data structures and common implementation patterns to help developers understand how to work with the standard.</p>
    <p>All examples use the JSON-LD format with the BOOST context definition to ensure semantic interoperability.</p>
-   <h3 class="heading settled" data-level="31.1" id="python-implementation-examples"><span class="secno">31.1. </span><span class="content">Python Implementation Examples</span><a class="self-link" href="#python-implementation-examples"></a></h3>
-   <h4 class="heading settled" data-level="31.1.1" id="basic-client-usage"><span class="secno">31.1.1. </span><span class="content">Basic Client Usage</span><a class="self-link" href="#basic-client-usage"></a></h4>
+   <h3 class="heading settled" data-level="30.1" id="python-implementation-examples"><span class="secno">30.1. </span><span class="content">Python Implementation Examples</span><a class="self-link" href="#python-implementation-examples"></a></h3>
+   <h4 class="heading settled" data-level="30.1.1" id="basic-client-usage"><span class="secno">30.1.1. </span><span class="content">Basic Client Usage</span><a class="self-link" href="#basic-client-usage"></a></h4>
 <pre class="language-python highlight"><c- kn>from</c-> <c- nn>boost_client</c-> <c- kn>import</c-> <c- n>create_client</c->
 
 <c- c1># Initialize BOOST client with dynamic schema loading</c->
@@ -10854,7 +10659,7 @@ print<c- p>(</c->f<c- u>"Available entities: </c-><c- si>{</c-><c- n>schema_info
 <c- n>org_types</c-> <c- o>=</c-> <c- n>client</c-><c- o>.</c-><c- n>get_available_enum_values</c-><c- p>(</c-><c- t>'organization'</c-><c- p>,</c-> <c- t>'organizationType'</c-><c- p>)</c->
 print<c- p>(</c->f<c- u>"Valid organization types: </c-><c- si>{</c-><c- n>org_types</c-><c- si>}</c-><c- u>"</c-><c- p>)</c->
 </pre>
-   <h4 class="heading settled" data-level="31.1.2" id="creating-organizations"><span class="secno">31.1.2. </span><span class="content">Creating Organizations</span><a class="self-link" href="#creating-organizations"></a></h4>
+   <h4 class="heading settled" data-level="30.1.2" id="creating-organizations"><span class="secno">30.1.2. </span><span class="content">Creating Organizations</span><a class="self-link" href="#creating-organizations"></a></h4>
 <pre class="language-python highlight"><c- c1># Create an organization using schema-validated enum values</c->
 <c- n>harvester</c-> <c- o>=</c-> <c- n>client</c-><c- o>.</c-><c- n>create_organization</c-><c- p>(</c->
     <c- n>organization_id</c-><c- o>=</c-><c- u>"ORG-FOREST-001"</c-><c- p>,</c->
@@ -10864,7 +10669,7 @@ print<c- p>(</c->f<c- u>"Valid organization types: </c-><c- si>{</c-><c- n>org_t
     <c- n>contact_phone</c-><c- o>=</c-><c- u>"+15415550123"</c->  <c- c1># Must match schema pattern</c->
 <c- p>)</c->
 </pre>
-   <h4 class="heading settled" data-level="31.1.3" id="creating-traceableunits"><span class="secno">31.1.3. </span><span class="content">Creating TraceableUnits</span><a class="self-link" href="#creating-traceableunits"></a></h4>
+   <h4 class="heading settled" data-level="30.1.3" id="creating-traceableunits"><span class="secno">30.1.3. </span><span class="content">Creating TraceableUnits</span><a class="self-link" href="#creating-traceableunits"></a></h4>
 <pre class="language-python highlight"><c- c1># Get available unit types from schema</c->
 <c- n>unit_types</c-> <c- o>=</c-> <c- n>client</c-><c- o>.</c-><c- n>get_available_enum_values</c-><c- p>(</c-><c- t>'traceable_unit'</c-><c- p>,</c-> <c- t>'unitType'</c-><c- p>)</c->
 print<c- p>(</c->f<c- u>"Valid unit types: </c-><c- si>{</c-><c- n>unit_types</c-><c- si>}</c-><c- u>"</c-><c- p>)</c->
@@ -10881,7 +10686,7 @@ print<c- p>(</c->f<c- u>"Valid unit types: </c-><c- si>{</c-><c- n>unit_types</c
     <c- n>is_multi_species</c-><c- o>=</c-><c- kc>False</c->  <c- c1># Required by schema</c->
 <c- p>)</c->
 </pre>
-   <h4 class="heading settled" data-level="31.1.4" id="comprehensive-validation"><span class="secno">31.1.4. </span><span class="content">Comprehensive Validation</span><a class="self-link" href="#comprehensive-validation"></a></h4>
+   <h4 class="heading settled" data-level="30.1.4" id="comprehensive-validation"><span class="secno">30.1.4. </span><span class="content">Comprehensive Validation</span><a class="self-link" href="#comprehensive-validation"></a></h4>
 <pre class="language-python highlight"><c- c1># Comprehensive validation using dynamic business rules</c->
 <c- n>validation</c-> <c- o>=</c-> <c- n>client</c-><c- o>.</c-><c- n>validate_all</c-><c- p>()</c->
 <c- k>if</c-> <c- n>validation</c-><c- p>[</c-><c- t>'valid'</c-><c- p>]:</c->
@@ -10895,8 +10700,8 @@ print<c- p>(</c->f<c- u>"Valid unit types: </c-><c- si>{</c-><c- n>unit_types</c
 <c- n>jsonld_output</c-> <c- o>=</c-> <c- n>client</c-><c- o>.</c-><c- n>export_to_jsonld</c-><c- p>()</c->
 print<c- p>(</c-><c- n>jsonld_output</c-><c- p>)</c->
 </pre>
-   <h3 class="heading settled" data-level="31.2" id="supply-chain-workflow-example"><span class="secno">31.2. </span><span class="content">Supply Chain Workflow Example</span><a class="self-link" href="#supply-chain-workflow-example"></a></h3>
-   <h4 class="heading settled" data-level="31.2.1" id="complete-harvest-to-processing-chain"><span class="secno">31.2.1. </span><span class="content">Complete Harvest-to-Processing Chain</span><a class="self-link" href="#complete-harvest-to-processing-chain"></a></h4>
+   <h3 class="heading settled" data-level="30.2" id="supply-chain-workflow-example"><span class="secno">30.2. </span><span class="content">Supply Chain Workflow Example</span><a class="self-link" href="#supply-chain-workflow-example"></a></h3>
+   <h4 class="heading settled" data-level="30.2.1" id="complete-harvest-to-processing-chain"><span class="secno">30.2.1. </span><span class="content">Complete Harvest-to-Processing Chain</span><a class="self-link" href="#complete-harvest-to-processing-chain"></a></h4>
 <pre class="language-python highlight"><c- c1># 1. Create harvest operation</c->
 <c- n>harvest_site</c-> <c- o>=</c-> <c- n>client</c-><c- o>.</c-><c- n>create_geographic_data</c-><c- p>(</c->
     <c- n>geographic_data_id</c-><c- o>=</c-><c- u>"GEO-HARVEST-SITE-001"</c-><c- p>,</c->
@@ -10938,7 +10743,7 @@ print<c- p>(</c-><c- n>jsonld_output</c-><c- p>)</c->
     <c- n>facility_id</c-><c- o>=</c-><c- u>"FAC-SAWMILL-PORTLAND"</c->
 <c- p>)</c->
 </pre>
-   <h3 class="heading settled" data-level="31.3" id="basic-tru-example"><span class="secno">31.3. </span><span class="content">Basic TraceableUnit Example</span><a class="self-link" href="#basic-tru-example"></a></h3>
+   <h3 class="heading settled" data-level="30.3" id="basic-tru-example"><span class="secno">30.3. </span><span class="content">Basic TraceableUnit Example</span><a class="self-link" href="#basic-tru-example"></a></h3>
 <pre class="example highlight" id="example-d227b2b8"><a class="self-link" href="#example-d227b2b8"></a><c- p>{</c->
   <c- f>"@context"</c-><c- p>:</c-> <c- u>"https://boost-standard.org/context.jsonld"</c-><c- p>,</c->
   <c- f>"@type"</c-><c- p>:</c-> <c- u>"TraceableUnit"</c-><c- p>,</c->
@@ -10953,10 +10758,10 @@ print<c- p>(</c-><c- n>jsonld_output</c-><c- p>)</c->
   <c- f>"currentGeographicDataId"</c-><c- p>:</c-> <c- u>"GEO-MILL-YARD-07"</c->
 <c- p>}</c->
 </pre>
-   <h2 class="heading settled" data-level="32" id="resources-community"><span class="secno">32. </span><span class="content">Resources &amp; Community</span><a class="self-link" href="#resources-community"></a></h2>
+   <h2 class="heading settled" data-level="31" id="resources-community"><span class="secno">31. </span><span class="content">Resources &amp; Community</span><a class="self-link" href="#resources-community"></a></h2>
    <p>This section provides access to BOOST presentations, working group documentation, and community resources.</p>
-   <h3 class="heading settled" data-level="32.1" id="presentations"><span class="secno">32.1. </span><span class="content">Presentations &amp; Demonstrations</span><a class="self-link" href="#presentations"></a></h3>
-   <h4 class="heading settled" data-level="32.1.1" id="core-presentations"><span class="secno">32.1.1. </span><span class="content">Core Presentations</span><a class="self-link" href="#core-presentations"></a></h4>
+   <h3 class="heading settled" data-level="31.1" id="presentations"><span class="secno">31.1. </span><span class="content">Presentations &amp; Demonstrations</span><a class="self-link" href="#presentations"></a></h3>
+   <h4 class="heading settled" data-level="31.1.1" id="core-presentations"><span class="secno">31.1.1. </span><span class="content">Core Presentations</span><a class="self-link" href="#core-presentations"></a></h4>
    <div class="presentation-grid">
     <p><strong>📊 BOOST Kickoff Presentation</strong>
 Overview of the BOOST data standard initiative, project goals, and working group approach.
@@ -10965,7 +10770,7 @@ Overview of the BOOST data standard initiative, project goals, and working group
 Technical demonstration of data structures and transaction examples in the BOOST standard.
 <a class="presentation-link" href="../presentations/transaction_object_examples.html">View Examples →</a></p>
    </div>
-   <h4 class="heading settled" data-level="32.1.2" id="agency-engagement"><span class="secno">32.1.2. </span><span class="content">Agency Engagement</span><a class="self-link" href="#agency-engagement"></a></h4>
+   <h4 class="heading settled" data-level="31.1.2" id="agency-engagement"><span class="secno">31.1.2. </span><span class="content">Agency Engagement</span><a class="self-link" href="#agency-engagement"></a></h4>
    <p>Presentations developed for California state agencies to demonstrate BOOST applicability and gather feedback.</p>
    <div class="presentation-grid">
     <p><strong>🏛️ CalRecycle Engagement</strong>
@@ -10978,15 +10783,15 @@ BOOST presentation for California Department of Food and Agriculture, exploring 
 BOOST presentation for California Department of Conservation, focusing on forest management data standards and conservation tracking requirements.
 <a class="presentation-link" href="../presentations/ae_doc.html">View Presentation →</a></p>
    </div>
-   <h4 class="heading settled" data-level="32.1.3" id="standards-technical"><span class="secno">32.1.3. </span><span class="content">Standards &amp; Technical</span><a class="self-link" href="#standards-technical"></a></h4>
+   <h4 class="heading settled" data-level="31.1.3" id="standards-technical"><span class="secno">31.1.3. </span><span class="content">Standards &amp; Technical</span><a class="self-link" href="#standards-technical"></a></h4>
    <p>Technical presentations exploring BOOST integration with existing regulatory frameworks and standards.</p>
    <div class="presentation-grid">
     <p><strong>⛽ BOOST + LCFS Integration</strong>
 Technical presentation on BOOST integration with California’s Low Carbon Fuel Standard (LCFS), covering relevant entities and chain of custody requirements.
 <a class="presentation-link" href="../presentations/st_lcfs.html">View Presentation →</a></p>
    </div>
-   <h3 class="heading settled" data-level="32.2" id="interactive-tools"><span class="secno">32.2. </span><span class="content">Interactive Tools</span><a class="self-link" href="#interactive-tools"></a></h3>
-   <h4 class="heading settled" data-level="32.2.1" id="erd-navigator-section"><span class="secno">32.2.1. </span><span class="content">Entity Relationship Diagram Navigator</span><a class="self-link" href="#erd-navigator-section"></a></h4>
+   <h3 class="heading settled" data-level="31.2" id="interactive-tools"><span class="secno">31.2. </span><span class="content">Interactive Tools</span><a class="self-link" href="#interactive-tools"></a></h3>
+   <h4 class="heading settled" data-level="31.2.1" id="erd-navigator-section"><span class="secno">31.2.1. </span><span class="content">Entity Relationship Diagram Navigator</span><a class="self-link" href="#erd-navigator-section"></a></h4>
    <p>Explore the complete BOOST data model through our interactive ERD Navigator, featuring all 33 entities across 7 thematic areas.</p>
    <p>**🗂️ <a href="erd-navigator/index.html">Interactive ERD Navigator</a>**</p>
    <p>The ERD Navigator provides:</p>
@@ -11003,8 +10808,8 @@ Technical presentation on BOOST integration with California’s Low Carbon Fuel 
      <p>Direct links to entity documentation sections</p>
    </ul>
    <p><a class="erd-navigator-link" href="erd-navigator/index.html">🌟 Launch ERD Navigator →</a></p>
-   <h3 class="heading settled" data-level="32.3" id="working-group-docs"><span class="secno">32.3. </span><span class="content">Working Group Documentation</span><a class="self-link" href="#working-group-docs"></a></h3>
-   <h4 class="heading settled" data-level="32.3.1" id="meeting-notes"><span class="secno">32.3.1. </span><span class="content">Meeting Notes</span><a class="self-link" href="#meeting-notes"></a></h4>
+   <h3 class="heading settled" data-level="31.3" id="working-group-docs"><span class="secno">31.3. </span><span class="content">Working Group Documentation</span><a class="self-link" href="#working-group-docs"></a></h3>
+   <h4 class="heading settled" data-level="31.3.1" id="meeting-notes"><span class="secno">31.3.1. </span><span class="content">Meeting Notes</span><a class="self-link" href="#meeting-notes"></a></h4>
    <p>Access notes and documentation from BOOST working group meetings and presentations.</p>
    <div class="meeting-grid">
     <p><strong>📋 Kickoff Meeting</strong>
@@ -11020,8 +10825,8 @@ Latest working group meeting notes and updates from June 25th session.
 <a class="meeting-link" href="https://github.com/carbondirect/BOOST/blob/main/meetings/BOOST_meeting_6_25_2025.md">Meeting Notes →</a>
 <a class="meeting-link secondary" href="https://github.com/carbondirect/BOOST/blob/main/meetings/meetingNotes_6_25_25.md">Additional Notes →</a></p>
    </div>
-   <h3 class="heading settled" data-level="32.4" id="community-participation"><span class="secno">32.4. </span><span class="content">Community Participation</span><a class="self-link" href="#community-participation"></a></h3>
-   <h4 class="heading settled" data-level="32.4.1" id="boost-membership"><span class="secno">32.4.1. </span><span class="content">BOOST Membership</span><a class="self-link" href="#boost-membership"></a></h4>
+   <h3 class="heading settled" data-level="31.4" id="community-participation"><span class="secno">31.4. </span><span class="content">Community Participation</span><a class="self-link" href="#community-participation"></a></h3>
+   <h4 class="heading settled" data-level="31.4.1" id="boost-membership"><span class="secno">31.4.1. </span><span class="content">BOOST Membership</span><a class="self-link" href="#boost-membership"></a></h4>
    <p><strong>Chair:</strong></p>
    <ul>
     <li data-md>
@@ -11060,7 +10865,7 @@ Latest working group meeting notes and updates from June 25th session.
     <li data-md>
      <p>Martin Twer (The Watershed Research &amp; Training Center)</p>
    </ul>
-   <h4 class="heading settled" data-level="32.4.2" id="stakeholder-feedback"><span class="secno">32.4.2. </span><span class="content">Stakeholder Feedback</span><a class="self-link" href="#stakeholder-feedback"></a></h4>
+   <h4 class="heading settled" data-level="31.4.2" id="stakeholder-feedback"><span class="secno">31.4.2. </span><span class="content">Stakeholder Feedback</span><a class="self-link" href="#stakeholder-feedback"></a></h4>
    <p>We welcome feedback from industry stakeholders on our entity schemas. Use our <a href="erd-navigator/index.html">interactive ERD Navigator</a> to explore the data model and provide input on each entity definition.</p>
    <p><strong>How to Provide Feedback:</strong></p>
    <ol>
@@ -11073,9 +10878,9 @@ Latest working group meeting notes and updates from June 25th session.
     <li data-md>
      <p>Join our <a href="https://lists.w3.org/Archives/Public/public-boost-01/">W3C Community Group discussions</a></p>
    </ol>
-   <h2 class="heading settled" data-level="33" id="security"><span class="secno">33. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
+   <h2 class="heading settled" data-level="32" id="security"><span class="secno">32. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
    <p>The BOOST data standard involves the exchange of sensitive commercial and operational data across biomass supply chains. Implementations must carefully consider security implications at multiple levels:</p>
-   <h3 class="heading settled" data-level="33.1" id="data-privacy"><span class="secno">33.1. </span><span class="content">Data Privacy</span><a class="self-link" href="#data-privacy"></a></h3>
+   <h3 class="heading settled" data-level="32.1" id="data-privacy"><span class="secno">32.1. </span><span class="content">Data Privacy</span><a class="self-link" href="#data-privacy"></a></h3>
    <p>Implementations SHOULD consider privacy implications of biomass tracking data:</p>
    <ul>
     <li data-md>
@@ -11085,7 +10890,7 @@ Latest working group meeting notes and updates from June 25th session.
     <li data-md>
      <p>Personal operator information needs appropriate access controls</p>
    </ul>
-   <h3 class="heading settled" data-level="33.2" id="data-integrity"><span class="secno">33.2. </span><span class="content">Data Integrity</span><a class="self-link" href="#data-integrity"></a></h3>
+   <h3 class="heading settled" data-level="32.2" id="data-integrity"><span class="secno">32.2. </span><span class="content">Data Integrity</span><a class="self-link" href="#data-integrity"></a></h3>
    <p>Critical security measures include:</p>
    <ul>
     <li data-md>
@@ -11097,7 +10902,7 @@ Latest working group meeting notes and updates from June 25th session.
     <li data-md>
      <p>Validation of external data sources and certificates</p>
    </ul>
-   <h3 class="heading settled" data-level="33.3" id="supply-chain-security"><span class="secno">33.3. </span><span class="content">Supply Chain Security</span><a class="self-link" href="#supply-chain-security"></a></h3>
+   <h3 class="heading settled" data-level="32.3" id="supply-chain-security"><span class="secno">32.3. </span><span class="content">Supply Chain Security</span><a class="self-link" href="#supply-chain-security"></a></h3>
    <p>Implementations SHOULD address:</p>
    <ul>
     <li data-md>
@@ -11169,6 +10974,86 @@ Latest working group meeting notes and updates from June 25th session.
    <p class="note" role="note">
             Note, this is an informative note.</p>
   </div>
+
+<script>
+// Override Bikeshed's toggle functionality completely
+createSidebarToggle = function() {}; // Disable Bikeshed toggle creation
+toggleSidebar = function() {}; // Disable Bikeshed toggle function
+// Disable any problematic Bikeshed media queries and auto-toggles
+if (typeof sidebarMedia !== 'undefined') {
+    sidebarMedia.removeListener = function() {};
+    sidebarMedia.addListener = function() {};
+}
+// Prevent Bikeshed from adding toc-sidebar/toc-inline classes
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.remove('toc-sidebar', 'toc-inline');
+    
+    // Add event listener as backup in case onclick fails
+    const toggle = document.querySelector('.toc-toggle');
+    if (toggle) {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleToc();
+        });
+    }
+});
+// Override any window resize handlers that might interfere
+window.addEventListener('resize', function() {
+    document.body.classList.remove('toc-sidebar', 'toc-inline');
+});
+
+function toggleToc() {
+    const toc = document.getElementById('toc');
+    const toggle = document.querySelector('.toc-toggle');
+    const mainContent = document.querySelector('.main-content-wrapper');
+    
+    if (!toc || !toggle || !mainContent) {
+        console.error('TOC toggle: Required elements not found');
+        return;
+    }
+    
+    // Toggle collapsed state for desktop
+    if (window.innerWidth > 768) {
+        toc.classList.toggle('collapsed');
+        toggle.classList.toggle('collapsed');
+        mainContent.classList.toggle('toc-collapsed');
+    } else {
+        // Mobile behavior - show/hide sidebar
+        toc.classList.toggle('show');
+        toggle.classList.toggle('active');
+    }
+}
+
+// Close ToC when clicking outside on mobile
+document.addEventListener('click', function(event) {
+    if (window.innerWidth <= 768) {
+        const toc = document.getElementById('toc');
+        const toggle = document.querySelector('.toc-toggle');
+        
+        if (!toc.contains(event.target) && !toggle.contains(event.target)) {
+            toc.classList.remove('show');
+            toggle.classList.remove('active');
+        }
+    }
+});
+
+// Handle window resize to ensure proper state
+window.addEventListener('resize', function() {
+    const toc = document.getElementById('toc');
+    const toggle = document.querySelector('.toc-toggle');
+    
+    if (window.innerWidth > 768) {
+        // Reset mobile classes when switching to desktop
+        toc.classList.remove('show');
+        toggle.classList.remove('active');
+    } else {
+        // Reset desktop classes when switching to mobile
+        toc.classList.remove('collapsed');
+        toggle.classList.remove('collapsed');
+        document.querySelector('.main-content-wrapper').classList.remove('toc-collapsed');
+    }
+});
+</script>
 <script>
 (function() {
   "use strict";
@@ -11182,15 +11067,12 @@ Latest working group meeting notes and updates from June 25th session.
   var sidebarMedia = window.matchMedia('screen and (min-width: 78em)');
   var autoToggle   = function(e){ toggleSidebar(e.matches) };
   if(sidebarMedia.addListener) {
-    sidebarMedia.addListener(autoToggle);
+    
   }
-  
-  // Start in toc-inline mode by default
-  document.body.classList.add('toc-inline');
 
   function toggleSidebar(on) {
     if (on == undefined) {
-      on = !document.body.classList.contains('toc-sidebar') && !document.body.classList.contains('toc-inline');
+      on = !document.body.classList.contains('toc-sidebar');
     }
 
     /* Don't scroll to compensate for the ToC if we're above it already. */
@@ -11206,26 +11088,20 @@ Latest working group meeting notes and updates from June 25th session.
     var tocNav = document.getElementById('toc');
     if (on) {
       var tocHeight = tocNav.offsetHeight;
-      // On wide screens, use sidebar-with-space mode, on narrow screens use overlay mode
-      if (sidebarMedia.matches) {
-        document.body.classList.remove('toc-inline');
-        document.body.classList.remove('toc-sidebar');
-      } else {
-        document.body.classList.add('toc-sidebar');
-        document.body.classList.remove('toc-inline');
-      }
+      document.body.classList.add('toc-sidebar');
+      document.body.classList.remove('toc-inline');
       toggle.innerHTML = collapseSidebarText;
-      if (!skipScroll && !sidebarMedia.matches) {
+      if (!skipScroll) {
         window.scrollBy(0, 0 - tocHeight);
       }
       tocNav.focus();
-      sidebarMedia.addListener(autoToggle); // auto-collapse when out of room
+       // auto-collapse when out of room
     }
     else {
       document.body.classList.add('toc-inline');
       document.body.classList.remove('toc-sidebar');
       toggle.innerHTML = expandSidebarText;
-      if (!skipScroll && !sidebarMedia.matches) {
+      if (!skipScroll) {
         window.scrollBy(0, tocNav.offsetHeight);
       }
       if (toggle.matches(':hover')) {
@@ -11241,15 +11117,15 @@ Latest working group meeting notes and updates from June 25th session.
     var toggle = document.createElement('a');
       /* This should probably be a button, but appearance isn't standards-track.*/
     toggle.id = 'toc-toggle';
-    toggle.className = 'toc-toggle';
+    toggle.class = 'toc-toggle';
     toggle.href = '#toc';
-    toggle.innerHTML = expandSidebarText; // Start with expand text
+    toggle.innerHTML = collapseSidebarText;
 
-    sidebarMedia.addListener(autoToggle);
+    
     var toggler = function(e) {
       e.preventDefault();
       sidebarMedia.removeListener(autoToggle); // persist explicit off states
-      toggleSidebar();
+      
       return false;
     }
     toggle.addEventListener('click', toggler, false);
@@ -11278,20 +11154,15 @@ Latest working group meeting notes and updates from June 25th session.
 
   var toc = document.getElementById('toc');
   if (toc) {
-    createSidebarToggle();
-    // Initialize: sidebar on wide screens, inline on narrow screens
-    if (sidebarMedia.matches) {
-      toggleSidebar(true);
-    } else {
-      toggleSidebar(false);
-    }
+    
+    
 
     /* If the sidebar has been manually opened and is currently overlaying the text
        (window too small for the MQ to add the margin to body),
        then auto-close the sidebar once you click on something in there. */
     toc.addEventListener('click', function(e) {
       if(e.target.tagName.toLowerCase() == "a" && document.body.classList.contains('toc-sidebar') && !sidebarMedia.matches) {
-        toggleSidebar(false);
+        
       }
     }, false);
   }
@@ -11926,4 +11797,4 @@ function genLinkingSyntaxes(dfn) {
     ];
 }
 }
-</script>
+</script></div>
