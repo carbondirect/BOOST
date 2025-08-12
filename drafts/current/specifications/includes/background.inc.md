@@ -1,0 +1,3 @@
+The development of comprehensive biomass traceability systems addresses critical needs for sustainability verification, regulatory compliance, and supply chain transparency in the growing biomass economy. This standard enables interoperability between reporting systems, registries, and certification bodies.
+
+The initial version of this data standard is funded through a grant from the California Department of Conservation, with an initial focus on California as the jurisdictional context while maintaining broad applicability to generalized biomass chain of custody requirements.

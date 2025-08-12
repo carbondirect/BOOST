@@ -4,6 +4,24 @@
     "$id": "https://github.com/carbondirect/BOOST/schemas/moisture-content-validation",
     "title": "BOOST Moisture Content Validation Rules",
     "description": "Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard",
+    "type": "object",
+    "properties": {
+      "moistureContentId": {
+        "type": "string",
+        "pattern": "^MOI-[A-Z0-9-_]+$",
+        "description": "Unique identifier for moisture content record"
+      },
+      "moistureContent": {
+        "$ref": "#/definitions/moistureContentValue"
+      },
+      "measurementMethod": {
+        "$ref": "#/definitions/moistureMeasurementMethod"  
+      },
+      "qualityAssurance": {
+        "$ref": "#/definitions/moistureQualityAssurance"
+      }
+    },
+    "required": ["moistureContentId", "moistureContent", "measurementMethod"],
     "definitions": {
       "moistureContentValue": {
         "type": "number",
@@ -203,8 +221,8 @@
   },
   "boost_metadata": {
     "entity": {
-      "name": "MoistureContentValidation",
-      "primaryKey": "validationId",
+      "name": "MoistureContent",
+      "primaryKey": "moistureContentId",
       "area": "measurement_verification",
       "description": "Moisture content validation rules and business logic"
     },

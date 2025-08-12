@@ -1,4 +1,4 @@
-# Data Dictionary
+# LcfsReporting
 
 ## LCFSReporting
 
@@ -7,27 +7,145 @@ The `LCFSReporting` entity represents quarterly compliance reports submitted by 
 
 ### Fields
 
-| Field                    | Type                    | Required | Description                                                           | Examples                                    |
-|--------------------------|-------------------------|----------|-----------------------------------------------------------------------|---------------------------------------------|
-| `reportingId`            | string                  | Yes      | Unique identifier for quarterly report (primary key)                 | `LCFS-RPT-2025-Q1-PACIFIC001`             |
-| `regulatedEntityId`      | string (FK)             | Yes      | Reference to regulated Organization entity                            | `pacific-renewable-fuels-001`              |
-| `reportingPeriod`        | string                  | Yes      | Reporting quarter in YYYY-QN format                                  | `2025-Q1`, `2025-Q2`, `2025-Q3`           |
-| `totalFuelVolume`        | number                  | Yes      | Total fuel volume reported in gallons                                | `5075000.0`, `8250000.0`                  |
-| `totalCreditsGenerated`  | number                  | Yes      | Total LCFS credits generated in reporting period                      | `54580477.10`, `0.0`                      |
-| `totalDeficitsIncurred`  | number                  | Yes      | Total LCFS deficits incurred in reporting period                      | `0.0`, `2500000.0`                        |
-| `netPosition`            | number                  | Yes      | Net credit/deficit position (credits - deficits)                     | `54580477.10`, `-2500000.0`               |
-| `complianceStatus`       | string (enum)           | Yes      | Overall compliance status for reporting period                        | `compliant`, `deficit`, `pending`          |
-| `submissionDate`         | string (date-time)      | No       | Date and time report was submitted to CARB                           | `2025-04-15T10:30:00Z`                    |
-| `verificationDate`       | string (date-time)      | No       | Date of third-party verification completion                           | `2025-04-10T14:00:00Z`                    |
-| `verificationRequired`   | boolean                 | No       | Whether third-party verification is required                          | `true`, `false`                           |
-| `reportingDeadline`      | string (date)           | No       | CARB deadline for report submission                                   | `2025-05-15`                              |
-| `transactionIds`         | array<string>           | No       | Array of Transaction entity IDs included in report                    | `["TXN-2025-Q1-001", "TXN-2025-Q1-002"]` |
-| `pathwaySummary`         | array<object>           | No       | Summary of activity by LCFS pathway                                   | See pathway summary structure below        |
-| `calculationParameters`  | object                  | No       | Calculation parameters used for credit computation                     | See calculation parameters structure       |
-| `complianceMetrics`      | object                  | No       | Additional compliance and environmental impact metrics                 | See compliance metrics structure           |
-| `@id`                    | string (uri)            | Yes      | Unique URI identifier for JSON-LD                                     | `https://github.com/carbondirect/BOOST/schemas/lcfs-reporting/LCFS-RPT-2025-Q1-PACIFIC001` |
-| `lastUpdated`            | string (date-time)      | No       | Timestamp of most recent report update                                | `2025-07-21T16:45:00Z`                    |
-
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`reportingId`
+<td>string
+<td>Yes
+<td>Unique identifier for quarterly report (primary key)
+<td>`LCFS-RPT-2025-Q1-PACIFIC001`
+</tr>
+<tr>
+<td>`regulatedEntityId`
+<td>string (FK)
+<td>Yes
+<td>Reference to regulated Organization entity
+<td>`pacific-renewable-fuels-001`
+</tr>
+<tr>
+<td>`reportingPeriod`
+<td>string
+<td>Yes
+<td>Reporting quarter in YYYY-QN format
+<td>`2025-Q1`, `2025-Q2`, `2025-Q3`
+</tr>
+<tr>
+<td>`totalFuelVolume`
+<td>number
+<td>Yes
+<td>Total fuel volume reported in gallons
+<td>`5075000.0`, `8250000.0`
+</tr>
+<tr>
+<td>`totalCreditsGenerated`
+<td>number
+<td>Yes
+<td>Total LCFS credits generated in reporting period
+<td>`54580477.10`, `0.0`
+</tr>
+<tr>
+<td>`totalDeficitsIncurred`
+<td>number
+<td>Yes
+<td>Total LCFS deficits incurred in reporting period
+<td>`0.0`, `2500000.0`
+</tr>
+<tr>
+<td>`netPosition`
+<td>number
+<td>Yes
+<td>Net credit/deficit position (credits - deficits)
+<td>`54580477.10`, `-2500000.0`
+</tr>
+<tr>
+<td>`complianceStatus`
+<td>string (enum)
+<td>Yes
+<td>Overall compliance status for reporting period
+<td>`compliant`, `deficit`, `pending`
+</tr>
+<tr>
+<td>`submissionDate`
+<td>string (date-time)
+<td>No
+<td>Date and time report was submitted to CARB
+<td>`2025-04-15T10:30:00Z`
+</tr>
+<tr>
+<td>`verificationDate`
+<td>string (date-time)
+<td>No
+<td>Date of third-party verification completion
+<td>`2025-04-10T14:00:00Z`
+</tr>
+<tr>
+<td>`verificationRequired`
+<td>boolean
+<td>No
+<td>Whether third-party verification is required
+<td>`true`, `false`
+</tr>
+<tr>
+<td>`reportingDeadline`
+<td>string (date)
+<td>No
+<td>CARB deadline for report submission
+<td>`2025-05-15`
+</tr>
+<tr>
+<td>`transactionIds`
+<td>array&lt;string&gt;
+<td>No
+<td>Array of Transaction entity IDs included in report
+<td>`["TXN-2025-Q1-001", "TXN-2025-Q1-002"]`
+</tr>
+<tr>
+<td>`pathwaySummary`
+<td>array&lt;object&gt;
+<td>No
+<td>Summary of activity by LCFS pathway
+<td>See pathway summary structure below
+</tr>
+<tr>
+<td>`calculationParameters`
+<td>object
+<td>No
+<td>Calculation parameters used for credit computation
+<td>See calculation parameters structure
+</tr>
+<tr>
+<td>`complianceMetrics`
+<td>object
+<td>No
+<td>Additional compliance and environmental impact metrics
+<td>See compliance metrics structure
+</tr>
+<tr>
+<td>`@id`
+<td>string (uri)
+<td>Yes
+<td>Unique URI identifier for JSON-LD
+<td>`https://github.com/carbondirect/BOOST/schemas/lcfs-reporting/LCFS-RPT-2025-Q1-PACIFIC001`
+</tr>
+<tr>
+<td>`lastUpdated`
+<td>string (date-time)
+<td>No
+<td>Timestamp of most recent report update
+<td>`2025-07-21T16:45:00Z`
+</tr>
+</tbody>
+</table>
 ---
 
 ### Nested Structures
@@ -63,41 +181,41 @@ Each pathway summary object contains:
 ### Key Features
 
 1. **Quarterly Reporting Compliance**
-   - Standardized reporting period format (YYYY-QN)
-   - Automatic deadline calculation and tracking
-   - Submission status monitoring
+     Standardized reporting period format (YYYY-QN)
+     Automatic deadline calculation and tracking
+     Submission status monitoring
 
 2. **Credit/Deficit Calculation**
-   - Aggregated credit generation from all transactions
-   - Net position calculation (credits - deficits)
-   - Compliance status determination
+     Aggregated credit generation from all transactions
+     Net position calculation (credits - deficits)
+     Compliance status determination
 
 3. **Third-Party Verification**
-   - Verification requirement tracking based on entity size
-   - Verification completion date tracking
-   - Compliance timeline management
+     Verification requirement tracking based on entity size
+     Verification completion date tracking
+     Compliance timeline management
 
 4. **Pathway Activity Summary**
-   - Breakdown of activity by CARB pathway
-   - Transaction count and volume aggregation
-   - Feedstock type categorization
+     Breakdown of activity by CARB pathway
+     Transaction count and volume aggregation
+     Feedstock type categorization
 
 ### Example Use Cases
 
 1. **Large Regulated Producer**
-   - Multiple pathways and high transaction volume
-   - Third-party verification required
-   - Net credit generator with surplus for trading
+     Multiple pathways and high transaction volume
+     Third-party verification required
+     Net credit generator with surplus for trading
 
 2. **Small Regulated Importer** 
-   - Single pathway, lower transaction volume
-   - Self-certification allowed
-   - Compliance through purchased credits
+     Single pathway, lower transaction volume
+     Self-certification allowed
+     Compliance through purchased credits
 
 3. **Blender/Distributor**
-   - Mix of conventional and renewable fuels
-   - Deficit position requiring credit purchases
-   - Complex pathway attribution
+     Mix of conventional and renewable fuels
+     Deficit position requiring credit purchases
+     Complex pathway attribution
 
 ### Relationships
 - LCFSReporting references Organization entity for regulated party

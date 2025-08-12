@@ -1,0 +1,24 @@
+% Equipment Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Equipment}
+\textbf{\field{equipmentId}} & string (pattern) & Unique identifier for the equipment \\
+\textbf{\field{equipmentName}} & string & Descriptive name of the equipment \\
+\textbf{\field{equipmentType}} & enum(12 values) & Type of forestry equipment \\
+\textbf{\field{operationalStatus}} & enum(5 values) & Current operational status of the equipment \\
+\textbf{\field{organizationId}} & string (pattern) & Foreign key to owning organization \\
+\field{acquisitionCost} & number (≥0) & Equipment acquisition cost in USD \\
+\field{acquisitionDate} & string (date) & Date equipment was acquired by organization \\
+\field{assignedTrackingPointId} & string (pattern) & Foreign key to current location/assignment \\
+\field{certifications} & array<string> & Equipment certifications (safety, emissions, etc.) \\
+\field{currentOperatorId} & string (pattern) & Foreign key to current operator (if assigned) \\
+\field{insuranceInfo} & object (structured) & Equipment insurance information \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{maintenanceSchedule} & object (structured) & Maintenance schedule information \\
+\field{manufacturer} & string & Equipment manufacturer \\
+\field{model} & string & Equipment model designation \\
+\field{notes} & string & Additional notes or comments about the equipment \\
+\field{serialNumber} & string & Manufacturer serial number \\
+\field{specifications} & object (structured) & Technical specifications for the equipment \\
+\field{yearManufactured} & integer & Year the equipment was manufactured \\
+\end{entitytable}

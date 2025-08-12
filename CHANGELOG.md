@@ -2,6 +2,193 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.0.2] - 2025-08-12 - Documentation Consistency Fixes
+
+### Fixed
+- **Entity Count Consistency** - Standardized all references to show correct count of 33 entities
+  - **boost-spec.bs**: Updated abstract and full conformance sections (29→33)
+  - **core-entities.inc.md**: Updated data model description (29→33)
+  - **BOOST_FORMAL_DOCUMENTATION_OUTLINE.md**: Updated all references (29→33)
+  - **includes/data-model.inc.md**: Updated framework description (29→33)
+  - **erd-navigator/README.md**: Updated explorer documentation (29→33)
+  - **erd-navigator/index.html**: Updated discussion coverage text (29→33)
+  - **relationship_definition_system_consolidation_proposal.md**: Updated scope (32→33)
+- **BOOST Acronym Consistency** - Corrected all expansions to proper "Biomass Open Origin Standard for Tracking"
+  - **boost-spec.bs**: Fixed abstract and specification definition
+  - **BOOST_FORMAL_DOCUMENTATION_OUTLINE.md**: Fixed abstract
+  - **includes/introduction.inc.md**: Fixed opening paragraph
+  - **tex/introduction.tex**: Fixed LaTeX introduction
+  - **reference-implementations/python/README.md**: Fixed library description
+
+### Technical Improvements
+- **Documentation Accuracy** - All current documentation now consistently reflects actual schema structure
+- **Acronym Standardization** - Eliminated inconsistent "Biomass Open-Source Traceability" references
+- **Historical Preservation** - CHANGELOG entries maintained as accurate for their time periods
+
+*These fixes ensure professional consistency across all documentation formats and eliminate confusion about entity counts and proper BOOST terminology.*
+
+## [3.0.0] - 2025-08-12 - Complete CI/CD Documentation Build System
+
+### Major Enhancements
+- **Complete CI/CD Pipeline** - Comprehensive GitHub Actions workflow system for automated documentation build and deployment
+  - **6 Workflows**: build-deploy, build-dev-docs, release, schema-validation, status-badges, validate-pr, version-check
+  - **Multi-Environment Support**: Production (main), development (feature branches), and release builds
+  - **GitHub Pages Integration**: Automated deployment to carbondirect.github.io/BOOST with proper versioning
+  - **Quality Gates**: Schema validation, integrity checks, and comprehensive testing before deployment
+- **Automated Version Management** - Git tag-based version extraction replacing hardcoded version references
+  - **Dynamic Version Injection**: {{VERSION}} placeholders automatically replaced during build
+  - **Release Policy**: Major versions only (v1.0.0, v2.0.0, v3.0.0) trigger production releases
+  - **Development Versioning**: Branch-specific versions for development builds (e.g., v2.9.0-dev-abc123)
+- **Multi-Format Documentation Generation** - Complete HTML and PDF generation with LaTeX support
+  - **HTML**: ReSpec-based interactive documentation with enhanced CSS styling and navigation
+  - **PDF**: Multi-pass LaTeX compilation ensuring complete table of contents, list of figures, and list of tables
+  - **Schema Integration**: Automatic entity table generation and cross-references
+
+### Infrastructure Improvements
+- **Schema Integrity Validation** - Comprehensive validation system ensuring data model consistency
+  - **Foreign Key Integrity**: Automated checking for orphaned references and missing entities
+  - **Cross-Entity Validation**: Ensures all relationships are properly defined and accessible
+  - **Pattern Consistency**: Validates ID patterns and field naming conventions across all entities
+- **Enhanced Build System** - Robust build process with error handling and quality assurance
+  - **Multi-Pass LaTeX**: 3-pass compilation for complete PDF navigation and cross-references
+  - **HTML Cleaning**: Automated HTML cleanup for PDF conversion using external Python scripts
+  - **Artifact Management**: Systematic artifact retention and organization for different build types
+- **Development Tools Enhancement** - Comprehensive tooling for local development and testing
+  - **Local Testing**: Complete local testing environment with Docker support and quick-test scripts
+  - **Script Automation**: Python scripts for HTML cleaning, schema validation, and LaTeX generation
+  - **Documentation**: Extensive CI/CD documentation and troubleshooting guides
+
+### Technical Architecture
+- **Build Environment Standardization** - Consistent build environments across all workflows
+  - **Python 3.11**: Standardized Python environment with comprehensive dependency management
+  - **LaTeX Distribution**: Full texlive installation with minted package for syntax highlighting
+  - **System Dependencies**: Automated installation of required packages (pygments, pandoc)
+- **Workflow Orchestration** - Sophisticated workflow management with proper dependencies and concurrency
+  - **Parallel Execution**: Multiple validation and build steps run concurrently for performance
+  - **Conditional Logic**: Smart deployment logic ensuring only main branch deployments reach production
+  - **Error Handling**: Comprehensive error handling with detailed logging and failure reporting
+- **Artifact Management** - Professional artifact handling with proper retention policies
+  - **Development Builds**: 7-day retention for feature branch artifacts
+  - **Production Builds**: 30-day retention for main branch artifacts
+  - **Release Packages**: 90-day retention for tagged releases with complete documentation packages
+
+### Enhanced Documentation
+- **PDF Navigation Completeness** - Fully functional PDF with complete navigation elements
+  - **Table of Contents**: Multi-level TOC with proper page references and hyperlinks
+  - **List of Figures**: Comprehensive figure list with captions and page references
+  - **List of Tables**: Complete table inventory with descriptive captions
+  - **Cross-References**: Working internal links and references throughout the document
+- **LaTeX Integration** - Professional LaTeX styling and formatting
+  - **Entity Tables**: Automated LaTeX table generation from JSON schemas
+  - **Figure Management**: Placeholder figures with proper captions for List of Figures functionality
+  - **Styling**: Custom BOOST styling with thematic colors and professional typography
+- **Interactive ERD Navigator** - Enhanced entity relationship diagram with improved functionality
+  - **Schema Integration**: Real-time loading from JSON schema files
+  - **Relationship Examples**: Interactive examples for all major entity relationships
+  - **Navigation Enhancement**: Improved filtering and search capabilities
+
+### Quality Assurance
+- **Comprehensive Testing** - Multi-layer testing ensuring documentation quality and consistency
+  - **Schema Validation**: All 33+ entity schemas validated for structure and integrity
+  - **Build Validation**: HTML size, content presence, and styling verification
+  - **Cross-Reference Validation**: Ensures all internal links and references are functional
+- **Error Prevention** - Proactive error detection and prevention systems
+  - **Pre-commit Validation**: Schema integrity checks before any commit
+  - **PR Validation**: Comprehensive pull request validation with quality gates
+  - **Release Validation**: Additional validation layers for production releases
+- **Performance Optimization** - Build system optimized for speed and reliability
+  - **Caching**: Intelligent caching of dependencies and build artifacts
+  - **Parallel Processing**: Concurrent execution of independent build steps
+  - **Incremental Updates**: Smart detection of changes requiring rebuild
+
+### Migration and Deployment
+- **GitHub Pages Deployment** - Complete deployment pipeline to GitHub Pages
+  - **URL Structure**: Clean URLs with proper redirects and canonical references
+  - **Content Organization**: Systematic organization of HTML, PDF, schemas, and ERD Navigator
+  - **Version Tracking**: Build timestamps and version information embedded in deployed content
+- **Backward Compatibility** - Maintains compatibility with existing documentation consumers
+  - **URL Preservation**: Existing documentation URLs continue to function
+  - **Format Support**: Both HTML and PDF formats available with consistent content
+  - **API Stability**: Schema file locations and formats remain stable
+
+### Developer Experience
+- **Comprehensive Documentation** - Detailed documentation for all CI/CD components
+  - **Setup Guides**: Step-by-step setup instructions for local development
+  - **Troubleshooting**: Common issues and solutions documented
+  - **Best Practices**: Guidelines for contributing to the documentation system
+- **Local Development Support** - Complete local development environment
+  - **Quick Testing**: Rapid local testing with ./quick-test.sh script
+  - **Development Server**: Local HTTP server for testing HTML documentation
+  - **Build Scripts**: Standalone build scripts for individual components
+
+### Business Impact
+- **Automated Documentation Delivery** - Eliminates manual documentation build and deployment processes
+- **Quality Assurance** - Ensures consistent, high-quality documentation with automated validation
+- **Developer Productivity** - Streamlined contribution process with immediate feedback on changes
+- **Stakeholder Access** - Reliable, always-current documentation accessible via GitHub Pages
+- **Professional Presentation** - Publication-quality documentation suitable for standards organizations
+
+*This major release establishes BOOST as having enterprise-grade documentation infrastructure with automated quality assurance, multi-format output, and professional deployment capabilities.*
+
+## [2.7.0] - 2025-08-04 - Core Traceability Entity Restructuring
+
+### Breaking Changes
+- **TraceableUnit Schema** - `harvestGeographicDataId` is now REQUIRED for all new TraceableUnit instances
+  - **Impact**: Core conformance implementations must provide harvest geographic data
+  - **Migration**: Existing systems must update data creation workflows to include mandatory harvest location
+  - **Validation**: Schema validation will reject TraceableUnit instances without `harvestGeographicDataId`
+
+### Added
+- **Location-Aware Core Conformance** - Enhanced Core traceability requirements for meaningful supply chain transparency
+  - **Four Core Entities**: TraceableUnit, Organization, Material, GeographicData now form complete self-contained traceability system
+  - **Geographic Origin Tracking**: Mandatory harvest location tracking for all traceable units
+  - **Complete Dependency Graph**: Core entities form closed dependency loop with no external requirements
+- **Extended Traceability Entities Section** - New conformance level for enhanced functionality
+  - **MaterialProcessing**: Moved from Core to Extended conformance level
+  - **Processing Operations**: Now classified as enhancement rather than core requirement
+  - **Clear Separation**: Distinct Core vs Extended conformance requirements
+
+### Enhanced
+- **BOOST Conformance Classes** - Updated conformance requirements to match actual entity dependencies
+  - **Core Conformance**: Now explicitly requires TraceableUnit, Organization, Material, GeographicData entities
+  - **Extended Conformance**: Added MaterialProcessing operations and location history tracking
+  - **Full Conformance**: Maintains all 29+ entities for complete functionality
+- **Entity Organization** - Restructured specification sections for clarity
+  - **Core Traceability Entities**: Contains only entities required for Core conformance
+  - **Cross-References**: Added navigation links from original entity sections to Core locations
+  - **Extended Entities**: Separate section for Extended conformance requirements
+
+### Fixed
+- **Schema Consistency Issues** - Resolved critical mismatches between documentation and validation schemas
+  - **TraceableUnit JSON Schema**: Added `harvestGeographicDataId` to required fields array
+  - **Cross-Entity Validation**: Updated validation rules to enforce mandatory harvest location
+  - **Relationship Metadata**: Updated TraceableUnit relationships to reflect required geographic dependency
+- **ERD Configuration Alignment** - Updated visualization to reflect new conformance structure
+  - **MaterialProcessing Classification**: Moved from core_traceability to material_supply_chain area
+  - **Visual Consistency**: ERD now correctly shows MaterialProcessing as Extended conformance entity
+
+### Technical Improvements
+- **Self-Contained Core Architecture** - Core entities now form complete dependency graph
+  - **Foreign Key Resolution**: All Core entity FK references resolved within Core entity set
+  - **Implementation Simplicity**: Core implementations need only 4 entities for basic traceability
+  - **Validation Consistency**: Schema validation, cross-entity rules, and relationship metadata synchronized
+- **Conformance Level Clarity** - Clear separation between conformance requirements
+  - **Core**: Essential traceability with geographic origin tracking (4 entities)
+  - **Extended**: Enhanced functionality with processing operations and history tracking
+  - **Full**: Complete BOOST ecosystem with all regulatory and compliance features
+
+### Migration Guide
+- **Core Implementations**: Must update to include GeographicData entity and mandatory harvest locations
+- **Data Creation**: All TraceableUnit creation workflows must provide `harvestGeographicDataId`
+- **Extended Features**: MaterialProcessing operations now require Extended conformance level
+- **Validation Updates**: Update validation frameworks to enforce new Core requirements
+
+### Business Impact
+- **Supply Chain Transparency**: Core conformance now guarantees geographic origin tracking
+- **Implementation Clarity**: Clear separation between essential vs enhanced functionality  
+- **Market Adoption**: Lower barrier for Core implementation while maintaining traceability value
+- **Regulatory Alignment**: Core requirements align with EUDR and other geographic origin regulations
+
 ## [2.6.1] - 2025-08-01 - Schema Integrity Enhancements and Development Tools
 
 ### Added

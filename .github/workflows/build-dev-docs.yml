@@ -1,0 +1,310 @@
+name: 📚 Build Development Documentation
+
+on:
+  push:
+    branches: 
+      - develop
+      - 'feature/**'
+      - 'fix/**'
+      - 'docs/**'
+      - boost-doc              # Your current development branch
+    paths:
+      - 'drafts/current/specifications/**'
+      - 'drafts/current/schema/**'
+      - '.github/workflows/**'
+
+  # Allow manual triggering for any branch
+  workflow_dispatch:
+    inputs:
+      include_pdf:
+        description: 'Generate PDF documentation'
+        required: false
+        type: boolean
+        default: true
+
+# Allow concurrent builds on different branches
+concurrency:
+  group: build-dev-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-dev-documentation:
+    name: 📖 Build Documentation (Development)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            python3-pip \
+            python3-pygments \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-fonts-extra \
+            pandoc
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install bikeshed jsonschema pydantic[email] requests
+
+      - name: Initialize Bikeshed
+        run: |
+          bikeshed update
+
+      - name: Extract version information
+        id: version-info
+        run: |
+          cd drafts/current/specifications
+          
+          # Extract version for development builds
+          if git rev-parse --git-dir >/dev/null 2>&1; then
+              VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
+              if [ -z "$VERSION" ]; then
+                  SHORT_HASH=$(git rev-parse --short HEAD)
+                  VERSION="v0.0.0-dev-${SHORT_HASH}"
+              else
+                  SHORT_HASH=$(git rev-parse --short HEAD)
+                  VERSION="${VERSION}-dev-${SHORT_HASH}"
+              fi
+          else
+              VERSION="v0.0.0-dev"
+          fi
+          
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          BRANCH_NAME="${{ github.ref_name }}"
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          echo "::notice title=Development Build::Building BOOST Documentation $VERSION on branch $BRANCH_NAME"
+
+      - name: Run schema validation
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🔍 Running schema validation..."
+          python3 -c "
+          import json
+          import sys
+          from pathlib import Path
+          
+          schema_dir = Path('../schema')
+          errors = []
+          validated = 0
+          
+          for schema_file in schema_dir.rglob('validation_schema.json'):
+              try:
+                  with open(schema_file, 'r') as f:
+                      schema_data = json.load(f)
+                  validated += 1
+              except Exception as e:
+                  errors.append(f'Error in {schema_file}: {e}')
+          
+          if errors:
+              for error in errors:
+                  print(f'❌ {error}')
+              sys.exit(1)
+          
+          print(f'✅ Schema validation passed for {validated} schemas')
+          "
+
+      - name: Build HTML documentation
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🏗️ Building HTML documentation..."
+          echo "📋 Branch: ${{ steps.version-info.outputs.branch }}"
+          echo "🔧 Version: ${{ steps.version-info.outputs.version }}"
+          echo "🎯 Build type: Development (no deployment)"
+          
+          chmod +x build-spec.sh
+          ./build-spec.sh
+
+      - name: Build PDF documentation
+        if: github.event.inputs.include_pdf != 'false'
+        working-directory: drafts/current/specifications
+        run: |
+          echo "📄 Building PDF documentation..."
+          
+          # Try LaTeX build first
+          if [ -f "boost-spec.tex" ]; then
+            echo "🔧 Attempting LaTeX PDF build with shell-escape..."
+            echo "📄 Running first LaTeX pass..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            echo "📄 Running second LaTeX pass (for TOC, LOF, LOT)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            echo "📄 Running third LaTeX pass (for cross-references)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            
+            # Check auxiliary files generated
+            echo "🔍 Checking generated auxiliary files..."
+            ls -la *.aux *.toc *.lof *.lot *.log 2>/dev/null || echo "Some auxiliary files missing"
+            
+            # Check if PDF was actually generated (ignore LaTeX warnings)
+            if [ -f "boost-spec.pdf" ]; then
+              echo "✅ LaTeX PDF generation successful (boost-spec.pdf)"
+            else
+              echo "⚠️ LaTeX build failed - no PDF output, trying Pandoc fallback..."
+            fi
+          fi
+          
+          # Pandoc HTML->PDF conversion (fallback if LaTeX failed)
+          if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
+            echo "🔄 Converting HTML to PDF with Pandoc..."
+            
+            # Clean HTML for PDF using external script
+            python3 ../../../.github/scripts/clean-html-for-pdf.py boost-spec.html boost-spec-clean.html
+            
+            # Generate PDF with enhanced options
+            pandoc boost-spec-clean.html \
+              -o "boost-spec.pdf" \
+              --pdf-engine=xelatex \
+              --from=html \
+              --to=pdf \
+              --metadata title="BOOST Data Standard - Development (${{ steps.version-info.outputs.branch }})" \
+              --metadata author="BOOST Consortium" \
+              --metadata date="$(date +%Y-%m-%d)" \
+              --toc \
+              --toc-depth=3 \
+              --number-sections \
+              --highlight-style=github \
+              --variable colorlinks=true \
+              --variable linkcolor=blue \
+              --variable urlcolor=blue \
+              --variable toccolor=blue \
+              || echo "⚠️ PDF generation failed"
+            
+            # Cleanup
+            rm -f boost-spec-clean.html
+            
+            if [ -f "boost-spec.pdf" ]; then
+              PDF_SIZE=$(wc -c < "boost-spec.pdf")
+              echo "✅ PDF generated via Pandoc: boost-spec.pdf ($(echo $PDF_SIZE | numfmt --to=iec-i --suffix=B))"
+            else
+              echo "❌ PDF generation failed"
+            fi
+          fi
+
+      - name: Validate build output
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🔍 Validating development build output..."
+          
+          # Check HTML
+          if [ ! -f "boost-spec.html" ]; then
+            echo "❌ HTML documentation not generated"
+            exit 1
+          fi
+          
+          HTML_SIZE=$(wc -c < boost-spec.html)
+          if [ "$HTML_SIZE" -lt 100000 ]; then
+            echo "❌ HTML file too small ($HTML_SIZE bytes)"
+            exit 1
+          fi
+          
+          # Check content
+          if ! grep -q "BOOST" boost-spec.html; then
+            echo "❌ HTML missing BOOST content"
+            exit 1
+          fi
+          
+          # Check ERD Navigator
+          if [ ! -f "erd-navigator/index.html" ]; then
+            echo "⚠️ ERD Navigator not found"
+          else
+            echo "✅ ERD Navigator present"
+          fi
+          
+          echo "✅ Development build validation passed"
+          echo "📊 HTML Size: $(echo $HTML_SIZE | numfmt --to=iec-i --suffix=B)"
+
+      - name: Generate development build report
+        working-directory: drafts/current/specifications
+        run: |
+          cat > dev-build-report.md << EOF
+          # 📚 BOOST Development Build Report
+          
+          **Branch:** ${{ steps.version-info.outputs.branch }}
+          **Version:** ${{ steps.version-info.outputs.version }}
+          **Build Time:** ${{ steps.version-info.outputs.timestamp }}
+          **Commit:** ${GITHUB_SHA::8}
+          **Build Type:** Development (No Deployment)
+          
+          ## 🏗️ Build Results
+          
+          - ✅ **HTML Documentation:** $(wc -c < boost-spec.html | numfmt --to=iec-i --suffix=B)
+          - $([ -f "boost-spec.pdf" ] && echo "✅ **PDF Documentation:** $(wc -c < boost-spec.pdf | numfmt --to=iec-i --suffix=B)" || echo "❌ **PDF Documentation:** Not generated")
+          - ✅ **ERD Navigator:** Interactive tool included
+          - ✅ **Schema Files:** $(find ../schema -name "validation_schema.json" | wc -l) validated schemas
+          
+          ## 📋 Development Notes
+          
+          This is a development build from the **${{ steps.version-info.outputs.branch }}** branch.
+          - No deployment to GitHub Pages
+          - Artifacts retained for 7 days
+          - PDF optimized for development review
+          
+          ## 🔗 Next Steps
+          
+          - Review documentation changes
+          - Test ERD Navigator functionality  
+          - Validate schema modifications
+          - Create PR to main branch for production deployment
+          
+          ---
+          
+          💡 **Tip:** Use the artifacts below to download and review the complete documentation package.
+          EOF
+          
+          echo "📋 Development Build Report:"
+          cat dev-build-report.md
+
+      - name: Upload development build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: boost-dev-docs-${{ steps.version-info.outputs.branch }}-${{ github.run_number }}
+          path: |
+            drafts/current/specifications/boost-spec.html
+            drafts/current/specifications/boost-spec.pdf
+            drafts/current/specifications/dev-build-report.md
+            drafts/current/specifications/erd-navigator/
+            drafts/current/schema/
+            drafts/current/specifications/respec-style.css
+          retention-days: 7
+
+      - name: Development build summary
+        run: |
+          echo "## 🎉 Development Build Completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ steps.version-info.outputs.branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ steps.version-info.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Time:** ${{ steps.version-info.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Generated Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- 📄 HTML Documentation with ReSpec styling" >> $GITHUB_STEP_SUMMARY
+          echo "- $([ -f "drafts/current/specifications/boost-spec.pdf" ] && echo "📋 PDF Documentation for offline review" || echo "⚠️ PDF generation skipped or failed")" >> $GITHUB_STEP_SUMMARY
+          echo "- 🔍 Interactive ERD Navigator" >> $GITHUB_STEP_SUMMARY
+          echo "- 📊 All schema validation files" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚀 Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Download artifacts to review documentation" >> $GITHUB_STEP_SUMMARY
+          echo "2. Test functionality and validate changes" >> $GITHUB_STEP_SUMMARY
+          echo "3. Create PR to main branch for production deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "💡 This build does not deploy - it's for development review only!" >> $GITHUB_STEP_SUMMARY

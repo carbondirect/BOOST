@@ -1,0 +1,341 @@
+\documentclass[12pt,a4paper]{article}
+
+% ================================
+% BOOST SPECIFICATION DOCUMENT
+% ================================
+% Main LaTeX document for BOOST W3C Community Group Specification
+% Utilizes boost-spec.sty package for professional W3C formatting
+% Version: 2.8.0 - Integrated ERD Navigator + Bikeshed Documentation System
+
+\usepackage{boost-spec-minimal}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{cmbright}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% ================================
+% DOCUMENT METADATA
+% ================================
+
+\title{BOOST Data Standard}
+\author{Peter Tittmann \and BOOST W3C Community Group}
+\date{August 2025}
+
+% W3C Specification Metadata - handled by \makew3ctitle
+% \w3cstatus{W3C Community Group Final Specification}
+% \w3cversion{2.8.0}
+% \w3cdate{August 6, 2025}
+% \w3ceditors{Peter Tittmann, Carbon Direct}
+% \w3ccontributors{See Acknowledgments section}
+% \w3crepository{https://github.com/carbondirect/BOOST}
+
+% ================================
+% DOCUMENT SETUP
+% ================================
+
+% Hyperref configuration for PDF bookmarks and links
+\hypersetup{
+    pdftitle={BOOST Data Standard},
+    pdfauthor={BOOST W3C Community Group},
+    pdfsubject={Biomass Open Origin Standard for Tracking Data Standard},
+    pdfkeywords={biomass, traceability, W3C, data standard, supply chain, LCFS, certification},
+    pdfcreator={LaTeX with boost-spec.sty},
+    pdfproducer={BOOST Community Group},
+    colorlinks=true,
+    linkcolor=w3cblue,
+    citecolor=reference,
+    urlcolor=w3cblue,
+    bookmarksopen=true,
+    bookmarksopenlevel=2
+}
+
+% Page layout and headers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{BOOST Data Standard}
+\fancyhead[R]{v2.8.0 - \today}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{15pt}
+
+% Table of contents formatting
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{4}
+
+\begin{document}
+
+% ================================
+% TITLE PAGE
+% ================================
+
+\boosttitle
+
+% ================================
+% FRONT MATTER
+% ================================
+
+\newpage
+\pagenumbering{roman}
+
+% Abstract
+\begin{abstract}
+The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.
+\end{abstract}
+
+% Status of This Document
+\begin{w3cstatus}
+This specification was published by the Biomass Open Origin Standard for Tracking (BOOST) W3C Community Group (\url{https://www.w3.org/community/boost-01/}). It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the W3C Community Final Specification Agreement (FSA) other conditions apply. Learn more about W3C Community and Business Groups at \url{https://www.w3.org/community/}.
+
+This document is governed by the W3C Community License Agreement (CLA). A human-readable summary is available at \url{https://www.w3.org/community/about/process/cla-deed/}.
+
+Publication as a Community Group Report does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
+\end{w3cstatus}
+
+% How to Give Feedback
+\section*{How to Give Feedback}
+This specification is primarily developed on GitHub (\url{https://github.com/carbondirect/BOOST}). The best way to contribute to this specification is to:
+
+\begin{enumerate}
+    \item File issues and suggestions in the BOOST GitHub repository (\url{https://github.com/carbondirect/BOOST/issues})
+    \item Submit pull requests for specific changes
+    \item Participate in community discussions via GitHub Discussions (\url{https://github.com/carbondirect/BOOST/discussions})
+    \item Join the W3C Community Group mailing list (\url{https://lists.w3.org/Archives/Public/public-boost-01/}) for broader discussions
+\end{enumerate}
+
+% Table of Contents
+\newpage
+\tableofcontents
+
+% List of Tables
+\newpage
+\listoftables
+
+% List of Figures  
+\newpage
+\listoffigures
+
+% ================================
+% MAIN CONTENT
+% ================================
+
+\newpage
+\pagenumbering{arabic}
+
+% Chapter 1: Introduction
+\section{Introduction}
+\label{sec:introduction}
+\input{tex/introduction}
+
+\subsection{Purpose and Scope}
+\label{sec:purpose-scope}
+
+This specification defines the BOOST (Biomass Open-Source Traceability) data standard for biomass supply chain tracking and verification. The standard provides:
+
+\begin{itemize}
+    \item A unified data model for biomass custody transfers
+    \item Format constraints for serializing chain of custody data
+    \item Integration specifications for certification systems
+    \item Regulatory compliance frameworks for multiple jurisdictions
+\end{itemize}
+
+\subsection{Background and Motivation}
+\label{sec:background-motivation}
+\input{tex/background}
+
+\subsection{Relationship to Existing Standards}
+\label{sec:existing-standards}
+
+BOOST builds upon and integrates with established standards including:
+\begin{itemize}
+    \item ISO 38200~\cite{ISO38200} Chain of custody of wood and wood-based products
+    \item SBP Standard 4~\cite{SBP-STANDARD-4} and SBP Standard 5~\cite{SBP-STANDARD-5} from Sustainable Biomass Partnership
+    \item FSC-STD-40-004~\cite{FSC-STD-40-004} Forest Stewardship Council certification standards
+    \item PEFC-ST-2002~\cite{PEFC-ST-2002} Programme for Endorsement of Forest Certification standards
+    \item California LCFS~\cite{CA-LCFS} Low Carbon Fuel Standard requirements
+    \item EU RED II~\cite{EU-RED-II} European Union Renewable Energy Directive II
+\end{itemize}
+
+\subsection{Community Group Process}
+\label{sec:community-process}
+\input{tex/community-process}
+
+% Chapter 2: Conformance
+\section{Conformance}
+\label{sec:conformance}
+\input{tex/conformance}
+
+% Chapter 3: BOOST Traceability System
+\section{BOOST Traceability System}
+\label{sec:traceability-system}
+\input{tex/traceability-system}
+
+% Chapter 4: Data Model Architecture
+\section{Data Model Architecture}
+\label{sec:data-model}
+\input{tex/data-model}
+
+% Chapter 5: Plant Part Categorization System  
+\section{Plant Part Categorization System}
+\label{sec:plant-parts}
+\input{tex/plant-parts}
+
+% Chapter 6: Complete Entity Definitions
+\section{Complete Entity Definitions}
+\label{sec:complete-entities}
+
+% All 7 thematic areas with comprehensive entity tables
+\input{tex/core-traceability-entities}
+\input{tex/organizational-foundation-entities}
+\input{tex/material-and-supply-chain-entities}
+\input{tex/transaction-management-entities}
+\input{tex/measurement-and-verification-entities}
+\input{tex/geographic-and-tracking-entities}
+\input{tex/compliance-and-reporting-entities}
+
+% Chapter 7: Schema Definitions
+\section{Schema Definitions}
+\label{sec:schema-definitions}
+\input{tex/schema-definitions}
+
+% Chapter 8: Serialization and Exchange
+\section{Serialization and Exchange}
+\label{sec:serialization}
+\input{tex/serialization}
+
+% Chapter 9: Use Cases and Requirements
+\section{Use Cases and Requirements}
+\label{sec:use-cases}
+\input{tex/use-cases}
+
+% Chapter 10: Examples
+\section{Examples}
+\label{sec:examples}
+\input{tex/examples}
+
+% Chapter 11: Resources \& Community
+\section{Resources \& Community}
+\label{sec:resources-community}
+\input{tex/resources-community}
+
+% Chapter 12: Security Considerations
+\section{Security Considerations}
+\label{sec:security}
+\input{tex/security-considerations}
+
+% ================================
+% APPENDICES
+% ================================
+
+\appendix
+
+% Appendix A: Entity Relationship Diagrams
+\section{Entity Relationship Diagrams}
+\label{app:erd}
+\input{tex/erd-diagrams}
+
+% Appendix B: Complete Entity Reference
+\section{Complete Entity Reference}
+\label{app:entity-reference}
+\input{tex/entity-reference-generated}
+
+% Appendix C: JSON Schema Reference
+\section{JSON Schema Reference}
+\label{app:schema-reference}
+\input{tex/schema-reference}
+
+% ================================
+% BACK MATTER
+% ================================
+
+% Bibliography
+\newpage
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+\begin{thebibliography}{99}
+
+% Normative References
+\bibitem{RFC2119}
+S. Bradner. \textit{Key words for use in RFCs to Indicate Requirement Levels}. RFC 2119, IETF, March 1997. 
+\url{https://tools.ietf.org/rfc/rfc2119}
+
+\bibitem{RFC8174}
+B. Leiba. \textit{Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words}. RFC 8174, IETF, May 2017.
+\url{https://tools.ietf.org/rfc/rfc8174}
+
+\bibitem{JSON-LD11}
+Gregg Kellogg, Pierre-Antoine Champin, Dave Longley. \textit{JSON-LD 1.1}. W3C Recommendation, 16 July 2020.
+\url{https://www.w3.org/TR/json-ld11/}
+
+\bibitem{JSON-SCHEMA}
+Austin Wright, Henry Andrews. \textit{JSON Schema: A Media Type for Describing JSON Documents}. March 2019.
+\url{https://json-schema.org/specification.html}
+
+\bibitem{GEOJSON}
+H. Butler, M. Daly, A. Doyle, S. Gillies, S. Hagen, T. Schaub. \textit{The GeoJSON Format}. RFC 7946, IETF, August 2016.
+\url{https://tools.ietf.org/rfc/rfc7946}
+
+% Industry Standards
+\bibitem{ISO38200}
+\textit{Chain of custody of wood and wood-based products}. ISO 38200:2018, International Organization for Standardization, 2018.
+\url{https://www.iso.org/standard/69429.html}
+
+\bibitem{SBP-STANDARD-4}
+\textit{Chain of Custody Standard}. SBP Standard 4, Version 1.0, Sustainable Biomass Partnership, 2013.
+\url{https://sbp-cert.org/documents/standards-documents/}
+
+\bibitem{SBP-STANDARD-5}
+\textit{Collection and Communication of Data}. SBP Standard 5, Version 1.0, Sustainable Biomass Partnership, 2013.
+\url{https://sbp-cert.org/documents/standards-documents/}
+
+\bibitem{FSC-STD-40-004}
+\textit{Chain of Custody Certification}. FSC-STD-40-004, Version 3.0, Forest Stewardship Council, 2017.
+\url{https://fsc.org/en/document-centre/documents/resource/392}
+
+\bibitem{PEFC-ST-2002}
+\textit{Chain of Custody of Forest Based Products}. PEFC ST 2002:2020, Programme for Endorsement of Forest Certification, 2020.
+\url{https://www.pefc.org/standards/chain-of-custody}
+
+% Regulatory References  
+\bibitem{CA-LCFS}
+\textit{Low Carbon Fuel Standard Regulation}. California Air Resources Board, 2024.
+\url{https://ww2.arb.ca.gov/our-work/programs/low-carbon-fuel-standard}
+
+\bibitem{EU-RED-II}
+\textit{Renewable Energy Directive II}. Directive (EU) 2018/2001, European Union, 2018.
+\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv:OJ.L_.2018.328.01.0082.01.ENG}
+
+% Technical References
+\bibitem{KAULEN-2023}
+D. Kaulen, P. Tittmann, et al. \textit{Systematics of Forestry Technology for Tracing the Timber Supply Chain}. 2023.
+\url{https://github.com/carbondirect/BOOST/tree/main/references}
+
+\end{thebibliography}
+
+% Acknowledgments
+\section*{Acknowledgments}
+\addcontentsline{toc}{section}{Acknowledgments}
+
+This specification was developed through the collaborative efforts of the BOOST W3C Community Group with significant contributions from:
+
+\begin{itemize}
+    \item \textbf{California Department of Conservation} - Funding and regulatory guidance
+    \item \textbf{Forest industry stakeholders} - Requirements analysis and use case development  
+    \item \textbf{Certification bodies} - Standards alignment and validation procedures
+    \item \textbf{Technology providers} - Implementation guidance and tool development
+    \item \textbf{Academic institutions} - Research and analysis support
+    \item \textbf{Environmental organizations} - Sustainability criteria and verification methods
+\end{itemize}
+
+Special recognition to the contributors of the Interactive ERD Navigator, Python reference implementation, and comprehensive schema validation tools that support this specification.
+
+% Index
+\newpage
+\printindex
+
+\end{document}

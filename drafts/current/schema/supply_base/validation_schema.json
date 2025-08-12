@@ -18,10 +18,12 @@
         "format": "uri"
       },
       "supplyBaseId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^SB-[A-Z0-9-_]+$"
       },
       "OrganizationId": {
         "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$",
         "description": "Managing organization - uses EntityNameId convention referencing Organization"
       },
       "supplyBaseName": {
@@ -68,6 +70,7 @@
       },
       "GeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Supply base location - uses EntityNameId convention referencing GeographicData"
       }
     },

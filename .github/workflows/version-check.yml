@@ -1,0 +1,264 @@
+name: 🏷️ Version Management
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # All version tags
+      - '!v[0-9]+.0.0'  # Exclude major versions (they trigger release.yml)
+
+  # Manual trigger for version planning
+  workflow_dispatch:
+    inputs:
+      next-version:
+        description: 'Next planned version (e.g., v2.1.0)'
+        required: true
+        type: string
+      version-type:
+        description: 'Type of version increment'
+        required: true
+        type: choice
+        options:
+          - minor
+          - patch
+          - major
+
+jobs:
+  analyze-version:
+    name: 📋 Analyze Version Tag
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Analyze version tag
+        run: |
+          VERSION="${{ github.ref_name }}"
+          
+          echo "🏷️ Version tag pushed: $VERSION"
+          
+          # Parse version components
+          VERSION_CLEAN=$(echo "$VERSION" | sed 's/^v//')
+          MAJOR=$(echo "$VERSION_CLEAN" | cut -d. -f1)
+          MINOR=$(echo "$VERSION_CLEAN" | cut -d. -f2)
+          PATCH=$(echo "$VERSION_CLEAN" | cut -d. -f3)
+          
+          echo "📊 Version components:"
+          echo "  - Major: $MAJOR"
+          echo "  - Minor: $MINOR"  
+          echo "  - Patch: $PATCH"
+          
+          # Determine version type
+          if [ "$MINOR" = "0" ] && [ "$PATCH" = "0" ]; then
+            VERSION_TYPE="major"
+            echo "🎉 This is a MAJOR version - Release workflow will trigger automatically"
+          elif [ "$PATCH" = "0" ]; then
+            VERSION_TYPE="minor"
+            echo "🔄 This is a MINOR version - No automatic release"
+          else
+            VERSION_TYPE="patch"
+            echo "🩹 This is a PATCH version - No automatic release"
+          fi
+          
+          # Add to step summary
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          # 🏷️ Version Analysis: $VERSION
+          
+          ## Version Type: **${VERSION_TYPE^^}**
+          
+          | Component | Value |
+          |-----------|-------|
+          | Major     | $MAJOR |
+          | Minor     | $MINOR |
+          | Patch     | $PATCH |
+          
+          ## Automated Actions
+          
+          EOF
+          
+          if [ "$VERSION_TYPE" = "major" ]; then
+            cat >> $GITHUB_STEP_SUMMARY << EOF
+          ✅ **Release workflow will trigger automatically**
+          - Complete documentation build
+          - PDF generation
+          - GitHub release creation
+          - Artifact packages created
+          EOF
+          else
+            cat >> $GITHUB_STEP_SUMMARY << EOF
+          ⏸️ **No automatic release for ${VERSION_TYPE} versions**
+          - Documentation will be built on next main branch push
+          - To create a release package, use manual dispatch in Release workflow
+          - Or use the \`force_release\` option in the Release workflow
+          
+          ## Manual Release Options
+          
+          1. **GitHub Actions UI**: Go to Actions → Release Documentation → Run workflow
+             - Enter version: \`$VERSION\`
+             - Check "Force release even if not major version"
+          
+          2. **Command Line**: 
+             \`\`\`bash
+             # Trigger manual release via GitHub CLI
+             gh workflow run release.yml -f version=$VERSION -f force_release=true
+             \`\`\`
+          EOF
+          fi
+
+  plan-next-version:
+    name: 📈 Plan Next Version
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Analyze version plan
+        run: |
+          NEXT_VERSION="${{ github.event.inputs.next-version }}"
+          VERSION_TYPE="${{ github.event.inputs.version-type }}"
+          
+          echo "📈 Planning next version: $NEXT_VERSION ($VERSION_TYPE)"
+          
+          # Get current latest tag
+          CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "📋 Current latest tag: $CURRENT_TAG"
+          
+          # Validate version format
+          if ! echo "$NEXT_VERSION" | grep -qE "^v[0-9]+\.[0-9]+\.[0-9]+$"; then
+            echo "❌ Invalid version format: $NEXT_VERSION"
+            echo "Expected format: v1.2.3"
+            exit 1
+          fi
+          
+          # Parse versions
+          CURRENT_CLEAN=$(echo "$CURRENT_TAG" | sed 's/^v//')
+          NEXT_CLEAN=$(echo "$NEXT_VERSION" | sed 's/^v//')
+          
+          CURRENT_MAJOR=$(echo "$CURRENT_CLEAN" | cut -d. -f1)
+          CURRENT_MINOR=$(echo "$CURRENT_CLEAN" | cut -d. -f2)
+          CURRENT_PATCH=$(echo "$CURRENT_CLEAN" | cut -d. -f3)
+          
+          NEXT_MAJOR=$(echo "$NEXT_CLEAN" | cut -d. -f1)
+          NEXT_MINOR=$(echo "$NEXT_CLEAN" | cut -d. -f2)
+          NEXT_PATCH=$(echo "$NEXT_CLEAN" | cut -d. -f3)
+          
+          # Validate increment type
+          ACTUAL_TYPE=""
+          if [ "$NEXT_MAJOR" -gt "$CURRENT_MAJOR" ]; then
+            ACTUAL_TYPE="major"
+          elif [ "$NEXT_MINOR" -gt "$CURRENT_MINOR" ] && [ "$NEXT_MAJOR" -eq "$CURRENT_MAJOR" ]; then
+            ACTUAL_TYPE="minor"
+          elif [ "$NEXT_PATCH" -gt "$CURRENT_PATCH" ] && [ "$NEXT_MINOR" -eq "$CURRENT_MINOR" ] && [ "$NEXT_MAJOR" -eq "$CURRENT_MAJOR" ]; then
+            ACTUAL_TYPE="patch"
+          else
+            echo "❌ Invalid version increment"
+            echo "Current: $CURRENT_TAG → Next: $NEXT_VERSION"
+            exit 1
+          fi
+          
+          if [ "$ACTUAL_TYPE" != "$VERSION_TYPE" ]; then
+            echo "⚠️ Version type mismatch:"
+            echo "  - Specified: $VERSION_TYPE"
+            echo "  - Actual: $ACTUAL_TYPE"
+            echo "  - Continuing with actual type: $ACTUAL_TYPE"
+          fi
+          
+          # Generate version plan summary
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          # 📈 Version Plan: $NEXT_VERSION
+          
+          ## Current → Next
+          
+          | | Current | Next | Change |
+          |---|---------|------|--------|
+          | **Version** | $CURRENT_TAG | $NEXT_VERSION | +$(echo "$NEXT_CLEAN - $CURRENT_CLEAN" | bc 2>/dev/null || echo "N/A") |
+          | **Major** | $CURRENT_MAJOR | $NEXT_MAJOR | $([ "$NEXT_MAJOR" -gt "$CURRENT_MAJOR" ] && echo "🎉 +$((NEXT_MAJOR - CURRENT_MAJOR))" || echo "→") |
+          | **Minor** | $CURRENT_MINOR | $NEXT_MINOR | $([ "$NEXT_MINOR" -gt "$CURRENT_MINOR" ] && echo "🔄 +$((NEXT_MINOR - CURRENT_MINOR))" || echo "→") |
+          | **Patch** | $CURRENT_PATCH | $NEXT_PATCH | $([ "$NEXT_PATCH" -gt "$CURRENT_PATCH" ] && echo "🩹 +$((NEXT_PATCH - CURRENT_PATCH))" || echo "→") |
+          
+          ## Version Type: **${ACTUAL_TYPE^^}**
+          
+          EOF
+          
+          if [ "$ACTUAL_TYPE" = "major" ]; then
+            cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## 🎉 Major Version Release Plan
+          
+          **Automatic Release:** ✅ Yes (when tag is pushed)
+          
+          **What happens when you create tag \`$NEXT_VERSION\`:**
+          1. Release workflow triggers automatically
+          2. Complete documentation build with PDF
+          3. GitHub release created with artifacts
+          4. Breaking changes warning included
+          
+          **To create this release:**
+          \`\`\`bash
+          git tag $NEXT_VERSION
+          git push origin $NEXT_VERSION
+          \`\`\`
+          EOF
+          else
+            cat >> $GITHUB_STEP_SUMMARY << EOF
+          ## 🔄 ${ACTUAL_TYPE^} Version Release Plan
+          
+          **Automatic Release:** ❌ No (manual release required)
+          
+          **What happens when you create tag \`$NEXT_VERSION\`:**
+          1. This version-check workflow runs
+          2. No automatic release created
+          3. Documentation updated on next main branch push
+          
+          **To create this version:**
+          \`\`\`bash
+          git tag $NEXT_VERSION
+          git push origin $NEXT_VERSION
+          \`\`\`
+          
+          **To create a release package:**
+          1. Use manual dispatch in Release workflow with \`force_release=true\`
+          2. Or wait for next major version
+          EOF
+          fi
+
+  notify-version-policy:
+    name: 📢 Version Policy Reminder
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && !startsWith(github.ref_name, 'v') || (github.event_name == 'push' && !contains(github.ref_name, '.0.0'))
+    
+    steps:
+      - name: Version policy reminder
+        run: |
+          VERSION="${{ github.ref_name }}"
+          
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          # 📢 BOOST Version Release Policy
+          
+          ## Current Policy: Major Versions Only
+          
+          **Automatic Releases:** Only for major versions (v1.0.0, v2.0.0, v3.0.0, etc.)
+          
+          **Your tag:** \`$VERSION\` 
+          
+          This is a $(echo "$VERSION" | sed 's/^v//; s/\.0\.0$//; s/\.[0-9]*\.0$/ minor/; s/\.[0-9]*\.[1-9][0-9]*$/ patch/') version and will not trigger an automatic release.
+          
+          ## Options for Non-Major Versions
+          
+          1. **Wait for Major Version**: Accumulate changes for next major release
+          2. **Manual Release**: Use workflow dispatch with \`force_release=true\`
+          3. **Documentation Only**: Changes deploy automatically to GitHub Pages
+          
+          ## When to Use Each Version Type
+          
+          - **Major (x.0.0)**: Breaking changes, major new features
+          - **Minor (x.y.0)**: New features, backwards compatible  
+          - **Patch (x.y.z)**: Bug fixes, small improvements
+          
+          EOF

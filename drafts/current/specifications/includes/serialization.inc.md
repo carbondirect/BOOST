@@ -1,0 +1,1 @@
+BOOST supports multiple serialization formats to enable broad interoperability across different systems and use cases. JSON-LD is the preferred format for semantic web integration and linked data applications.

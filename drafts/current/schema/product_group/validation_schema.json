@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "productGroupId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^PG-[A-Z0-9-_]+$"
       },
       "productGroupName": {
         "type": "string"

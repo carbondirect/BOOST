@@ -7,8 +7,7 @@ data validation, serialization, and JSON-LD context management.
 
 from datetime import datetime
 from typing import Optional, List, Dict, Any, Union
-from pydantic import BaseModel, Field, validator, root_validator
-from pydantic import model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from enum import Enum
 
 
@@ -26,8 +25,6 @@ class BOOSTBaseModel(BaseModel):
     
     class Config:
         populate_by_name = True
-        validate_assignment = True
-        allow_population_by_field_name = True
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
@@ -118,9 +115,9 @@ class Organization(BOOSTBaseModel):
         description="Organization website URL"
     )
     
-    # @validator('type', pre=True, always=True)
-    # def set_type(cls, v):
-    #     return "Organization"
+    @field_validator('type', mode='before')
+    def set_type(cls, v):
+        return "Organization"
 
 
 class UnitType(str, Enum):
@@ -243,9 +240,9 @@ class TraceableUnit(BOOSTBaseModel):
         description="Any chain of custody breaks"
     )
     
-    # @validator('type', pre=True, always=True)
-    # def set_type(cls, v):
-    #     return "TraceableUnit"
+    @field_validator('type', mode='before')
+    def set_type(cls, v):
+        return "TraceableUnit"
 
 
 class Transaction(BOOSTBaseModel):
@@ -259,14 +256,14 @@ class Transaction(BOOSTBaseModel):
     )
     organization_id: str = Field(
         ...,
-        alias="OrganizationId", # TODO: This should be organizationId for consistency
+        alias="OrganizationId",
         pattern=r"^ORG-[A-Z0-9-_]+$",
         description="Seller organization ID"
     )
     customer_id: str = Field(
         ...,
         alias="CustomerId",
-        pattern=r"^ORG-[A-Z0-9-_]+$",
+        pattern=r"^CUST-[A-Z0-9-_]+$",
         description="Buyer customer ID"
     )
     traceable_unit_id: Optional[str] = Field(
@@ -307,9 +304,9 @@ class Transaction(BOOSTBaseModel):
         description="Associated sales/delivery document"
     )
     
-    # @validator('type', pre=True, always=True)
-    # def set_type(cls, v):
-    #     return "Transaction"
+    @field_validator('type', mode='before')
+    def set_type(cls, v):
+        return "Transaction"
 
 
 class ProcessType(str, Enum):
@@ -329,19 +326,19 @@ class MaterialProcessing(BOOSTBaseModel):
         ...,
         alias="processingId",
         pattern=r"^PROC-[A-Z0-9-_]+$",
-        description="Unique processing identifier"
+        description="Unique identifier for processing operation"
     )
     input_traceable_unit_id: str = Field(
         ...,
         alias="inputTraceableUnitId",
         pattern=r"^TRU-[A-Z0-9-_]+$",
-        description="Input traceable unit ID"
+        description="Input traceable unit"
     )
     output_traceable_unit_id: str = Field(
         ...,
-        alias="outputTraceableUnitId",
+        alias="outputTraceableUnitId", 
         pattern=r"^TRU-[A-Z0-9-_]+$",
-        description="Output traceable unit ID"
+        description="Output traceable unit"
     )
     process_type: ProcessType = Field(
         ...,
@@ -396,16 +393,16 @@ class MaterialProcessing(BOOSTBaseModel):
         description="Operator who performed processing"
     )
     
-    # @validator('type', pre=True, always=True)
-    # def set_type(cls, v):
-    #     return "MaterialProcessing"
+    @field_validator('type', mode='before')
+    def set_type(cls, v):
+        return "MaterialProcessing"
     
-    # @root_validator
-    # def validate_volume_conservation(cls, values):
-    #     """Validate that volume is conserved during processing."""
-    #     input_vol = values.get('input_volume')
-    #     output_vol = values.get('output_volume')
-    #     vol_loss = values.get('volume_loss', 0)
+    @model_validator(mode='before')
+    def validate_volume_conservation(cls, values):
+        """Validate that volume is conserved during processing."""
+        input_vol = values.get('input_volume')
+        output_vol = values.get('output_volume')
+        vol_loss = values.get('volume_loss', 0)
         
     #     if all(v is not None for v in [input_vol, output_vol, vol_loss]):
     #         if input_vol < (output_vol + vol_loss):
@@ -432,7 +429,7 @@ class Claim(BOOSTBaseModel):
         ...,
         alias="claimId",
         pattern=r"^CLAIM-[A-Z0-9-_]+$",
-        description="Unique claim identifier"
+        description="Unique identifier for the claim"
     )
     traceable_unit_id: str = Field(
         ...,
@@ -502,9 +499,9 @@ class Claim(BOOSTBaseModel):
         description="TRU IDs from which claim was inherited"
     )
     
-    # @validator('type', pre=True, always=True)
-    # def set_type(cls, v):
-    #     return "Claim"
+    @field_validator('type', mode='before')
+    def set_type(cls, v):
+        return "Claim"
 
 
 # Additional models can be added here following the same pattern

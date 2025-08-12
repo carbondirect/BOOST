@@ -1,0 +1,50 @@
+% Core Data Entities Section
+% Placeholder - will be enhanced with entity tables
+
+\subsection{Core Traceability Entities}
+\label{sec:core-traceability-entities}
+
+Implementations claiming BOOST Core conformance \MUST{} support these entities:
+
+\subsubsection{TraceableUnit}
+\label{sec:entity-traceable-unit}
+
+The central entity in BOOST's hub-and-spoke architecture. Every TRU connects to \secref{sec:entity-organization}, \secref{sec:entity-material}, and \secref{sec:entity-geographic-data} entities.
+
+\begin{normative}[title=TraceableUnit Requirements]
+Every \TRU{} \MUST{} have:
+\begin{itemize}
+    \item Unique identifier with biometric signature capability
+    \item Material type classification
+    \item Volume and mass measurements
+    \item Geographic location data
+    \item Processing history linkage
+\end{itemize}
+\end{normative}
+
+% Entity table will be generated from schema files
+\input{tex/entities/traceable-unit-table}
+
+\subsubsection{Organization}
+\label{sec:entity-organization}
+
+Defines harvesters, processors, and supply chain participants. Referenced by \TRU{} entities and connects to Certificate entities for certification management.
+
+% Entity table will be generated from schema files
+\input{tex/entities/organization-table}
+
+\subsubsection{Material}
+\label{sec:entity-material}
+
+Material type classifications referenced by \TRU{} entities. For multi-species materials, connects to SpeciesComponent entities.
+
+% Entity table will be generated from schema files
+\input{tex/entities/material-table}
+
+\subsubsection{GeographicData}
+\label{sec:entity-geographic-data}
+
+Spatial data in GeoJSON format for location tracking. Referenced by \TRU{} and LocationHistory entities for comprehensive location management.
+
+% Entity table will be generated from schema files
+\input{tex/entities/geographic-data-table}

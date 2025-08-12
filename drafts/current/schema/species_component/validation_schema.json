@@ -21,10 +21,12 @@
       },
       "componentId": {
         "type": "string",
+        "pattern": "^SC-[A-Z0-9-_]+$",
         "description": "Unique identifier for the species component"
       },
       "traceableUnitId": {
         "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$",
         "description": "Foreign key back reference to TraceableUnit"
       },
       "species": {
@@ -48,6 +50,7 @@
       },
       "sourceGeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Foreign key to geographic origin of this species"
       },
       "harvestingMethod": {

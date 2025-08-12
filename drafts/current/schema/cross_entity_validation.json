@@ -95,7 +95,7 @@
               "properties": {
                 "targetEntity": {"const": "GeographicData"},
                 "targetField": {"const": "geographicDataId"},
-                "required": false,
+                "required": true,
                 "description": "Harvest location must reference valid GeographicData"
               }
             },
@@ -390,6 +390,15 @@
             "description": "Related geographic references must be logically consistent",
             "validation": "Processing locations should be within reasonable distance of harvest locations"
           }
+        },
+        "moistureContentValidation": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "moisture_validation_active"},
+            "description": "Moisture content validation rules must be properly applied to measurements",
+            "applies_to": ["MeasurementRecord.moistureContent", "Material.standardMoistureContent"],
+            "validation": "Moisture content measurements must reference valid MoistureContent validation rules and comply with defined business rules"
+          }
         }
       }
     },
@@ -430,6 +439,20 @@
               "percentage_sum": "Sum of SpeciesComponent.percentage = 100.0",
               "processing_inheritance": "Output TRU species composition derived from input TRU",
               "transaction_match": "Transaction material type consistent with TRU species"
+            }
+          }
+        },
+        "moistureContentConsistency": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "moisture_content_validation_compliance"},
+            "description": "Moisture content measurements must comply with MoistureContent validation rules",
+            "validation": {
+              "measurement_range": "MeasurementRecord.moistureContent must be within 0-100% range",
+              "method_compatibility": "MeasurementRecord measurement method must be valid per MoistureContent rules",
+              "quality_grade_compliance": "Material quality grades must match moisture content limits defined in MoistureContent business rules",
+              "processing_consistency": "MaterialProcessing operations must follow moisture change rules from MoistureContent validation algorithms",
+              "temporal_accuracy": "Moisture measurements must be taken within appropriate frequency as defined in MoistureContent data consistency rules"
             }
           }
         }

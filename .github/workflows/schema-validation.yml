@@ -1,0 +1,522 @@
+name: 🔍 Schema Validation
+
+on:
+  pull_request:
+    paths:
+      - 'drafts/current/schema/**/*.json'
+      - 'drafts/current/reference-implementations/**'
+  
+  push:
+    branches: [main]
+    paths:
+      - 'drafts/current/schema/**/*.json'
+      - 'drafts/current/reference-implementations/**'
+
+  # Manual trigger for comprehensive schema validation
+  workflow_dispatch:
+    inputs:
+      validation-level:
+        description: 'Validation level'
+        required: true
+        default: 'comprehensive'
+        type: choice
+        options:
+        - basic
+        - comprehensive
+        - strict
+
+# Allow concurrent validation runs
+concurrency:
+  group: schema-validation-${{ github.ref }}-${{ github.event.inputs.validation-level || 'auto' }}
+  cancel-in-progress: true
+
+jobs:
+  detect-changes:
+    name: 📋 Detect Schema Changes
+    runs-on: ubuntu-latest
+    outputs:
+      schema-changed: ${{ steps.changes.outputs.schema }}
+      python-changed: ${{ steps.changes.outputs.python }}
+      changed-schemas: ${{ steps.list-changes.outputs.schemas }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect file changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            schema:
+              - 'drafts/current/schema/**/*.json'
+            python:
+              - 'drafts/current/reference-implementations/python/**'
+
+      - name: List changed schema files
+        id: list-changes
+        if: steps.changes.outputs.schema == 'true'
+        run: |
+          # Get list of changed schema files
+          CHANGED_SCHEMAS=$(git diff --name-only ${{ github.event.before }}..HEAD -- 'drafts/current/schema/**/*.json' | tr '\n' ' ')
+          
+          # If no before commit (e.g., new branch), compare with main
+          if [ -z "$CHANGED_SCHEMAS" ] && [ "${{ github.event_name }}" = "pull_request" ]; then
+            CHANGED_SCHEMAS=$(git diff --name-only origin/main..HEAD -- 'drafts/current/schema/**/*.json' | tr '\n' ' ')
+          fi
+          
+          echo "schemas=$CHANGED_SCHEMAS" >> $GITHUB_OUTPUT
+          
+          if [ -n "$CHANGED_SCHEMAS" ]; then
+            echo "📋 Changed schema files:"
+            echo "$CHANGED_SCHEMAS" | tr ' ' '\n' | sed 's/^/  - /'
+          else
+            echo "📋 No schema files changed"
+          fi
+
+  validate-schemas:
+    name: 🧪 Validate JSON Schemas
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.schema-changed == 'true' || github.event_name == 'workflow_dispatch'
+    
+    strategy:
+      matrix:
+        validation-type: [syntax, structure, metadata, patterns]
+      fail-fast: false
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install jsonschema jsonref pydantic[email] requests
+
+      - name: Run ${{ matrix.validation-type }} validation
+        run: |
+          cd drafts/current/specifications
+          
+          echo "🔍 Running ${{ matrix.validation-type }} validation..."
+          
+          python3 -c "
+          import json
+          import re
+          import sys
+          from pathlib import Path
+          from collections import defaultdict
+          
+          schema_dir = Path('../schema')
+          validation_type = '${{ matrix.validation-type }}'
+          errors = []
+          warnings = []
+          
+          # Load all validation schemas
+          schema_files = list(schema_dir.rglob('validation_schema.json'))
+          print(f'Found {len(schema_files)} schema files to validate')
+          
+          for schema_file in schema_files:
+              try:
+                  with open(schema_file, 'r') as f:
+                      schema_data = json.load(f)
+                  
+                  entity_name = schema_file.parent.name
+                  
+                  if validation_type == 'syntax':
+                      # JSON syntax validation (already done by json.load)
+                      print(f'✅ {entity_name}: JSON syntax valid')
+                  
+                  elif validation_type == 'structure':
+                      # Validate required top-level structure
+                      required_keys = ['schema']
+                      for key in required_keys:
+                          if key not in schema_data:
+                              errors.append(f'{entity_name}: Missing required key: {key}')
+                      
+                      if 'schema' in schema_data:
+                          schema = schema_data['schema']
+                          schema_required = ['type', 'properties']
+                          for key in schema_required:
+                              if key not in schema:
+                                  errors.append(f'{entity_name}: Schema missing required key: {key}')
+                      
+                      print(f'✅ {entity_name}: Structure validation passed')
+                  
+                  elif validation_type == 'metadata':
+                      # Validate BOOST metadata
+                      if 'boost_metadata' not in schema_data:
+                          errors.append(f'{entity_name}: Missing boost_metadata')
+                          continue
+                      
+                      metadata = schema_data['boost_metadata']
+                      if 'entity' not in metadata:
+                          errors.append(f'{entity_name}: Missing entity metadata')
+                          continue
+                      
+                      entity_meta = metadata['entity']
+                      required_meta = ['name', 'primaryKey', 'area', 'description']
+                      for key in required_meta:
+                          if key not in entity_meta:
+                              errors.append(f'{entity_name}: Missing entity metadata: {key}')
+                      
+                      # Validate area is one of expected values
+                      valid_areas = {
+                          'organizational_foundation',
+                          'core_traceability', 
+                          'material_supply_chain',
+                          'transaction_management',
+                          'measurement_verification',
+                          'geographic_tracking',
+                          'compliance_reporting'
+                      }
+                      
+                      if 'area' in entity_meta:
+                          area = entity_meta['area']
+                          if area not in valid_areas:
+                              warnings.append(f'{entity_name}: Unexpected area value: {area}')
+                      
+                      print(f'✅ {entity_name}: Metadata validation passed')
+                  
+                  elif validation_type == 'patterns':
+                      # Validate foreign key patterns
+                      if 'schema' not in schema_data:
+                          continue
+                      
+                      schema = schema_data['schema']
+                      properties = schema.get('properties', {})
+                      
+                      # Expected FK patterns
+                      fk_patterns = {
+                          'ORG-': ['Organization', 'organization'],
+                          'TRU-': ['TraceableUnit', 'traceable_unit'],  
+                          'OP-': ['Operator', 'operator'],
+                          'GEO-': ['GeographicData', 'geographic_data'],
+                          'PROC-': ['MaterialProcessing', 'material_processing'],
+                          'TXN-': ['Transaction', 'transaction'],
+                          'CUST-': ['Customer', 'customer'],
+                          'CLAIM-': ['Claim', 'claim'],
+                          'CERT-': ['Certificate', 'certificate']
+                      }
+                      
+                      # Find primary key
+                      if 'boost_metadata' in schema_data:
+                          pk_field = schema_data['boost_metadata']['entity'].get('primaryKey')
+                          if pk_field in properties and 'pattern' not in properties[pk_field]:
+                              errors.append(f'{entity_name}: Primary key {pk_field} missing validation pattern')
+                      
+                      # Validate FK patterns
+                      for prop_name, prop_def in properties.items():
+                          if 'pattern' in prop_def:
+                              pattern = prop_def['pattern']
+                              # Extract prefix (e.g., '^ORG-' from '^ORG-[A-Z0-9-_]+$')
+                              match = re.search(r'\\^([A-Z]+-)', pattern)
+                              if match:
+                                  prefix = match.group(1)
+                                  if prefix not in fk_patterns:
+                                      warnings.append(f'{entity_name}.{prop_name}: Unknown FK pattern prefix: {prefix}')
+                      
+                      print(f'✅ {entity_name}: Pattern validation passed')
+              
+              except json.JSONDecodeError as e:
+                  errors.append(f'{entity_name}: Invalid JSON - {e}')
+              except Exception as e:
+                  errors.append(f'{entity_name}: Validation error - {e}')
+          
+          # Report results
+          if errors:
+              print(f'\\n❌ {validation_type.title()} validation failed:')
+              for error in errors:
+                  print(f'  - {error}')
+              sys.exit(1)
+          
+          if warnings:
+              print(f'\\n⚠️ {validation_type.title()} validation warnings:')
+              for warning in warnings:
+                  print(f'  - {warning}')
+          
+          print(f'\\n✅ {validation_type.title()} validation passed for {len(schema_files)} schemas')
+          "
+
+  validate-foreign-keys:
+    name: 🔗 Validate Foreign Key Relationships
+    runs-on: ubuntu-latest
+    needs: [detect-changes, validate-schemas]
+    if: needs.detect-changes.outputs.schema-changed == 'true' || github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run comprehensive FK validation
+        run: |
+          cd drafts/current/specifications
+          
+          echo "🔗 Running comprehensive foreign key relationship validation..."
+          
+          python3 -c "
+          import json
+          import re
+          import sys
+          from pathlib import Path
+          from collections import defaultdict, Counter
+          
+          schema_dir = Path('../schema')
+          
+          # Load all schemas and build entity registry
+          entities = {}
+          fk_relationships = defaultdict(list)
+          orphaned_fks = []
+          
+          print('📋 Building entity registry...')
+          for schema_file in schema_dir.rglob('validation_schema.json'):
+              try:
+                  with open(schema_file, 'r') as f:
+                      schema_data = json.load(f)
+                  
+                  if 'boost_metadata' not in schema_data:
+                      continue
+                  
+                  entity_info = schema_data['boost_metadata']['entity']
+                  entity_name = entity_info['name']
+                  primary_key = entity_info['primaryKey']
+                  
+                  entities[entity_name] = {
+                      'primary_key': primary_key,
+                      'schema_file': schema_file,
+                      'properties': schema_data['schema'].get('properties', {}),
+                      'area': entity_info.get('area', 'unknown')
+                  }
+                  
+              except Exception as e:
+                  print(f'Error loading {schema_file}: {e}')
+                  continue
+          
+          print(f'✅ Loaded {len(entities)} entities')
+          
+          # Define FK pattern mappings
+          fk_patterns = {
+              'ORG-': 'Organization',
+              'TRU-': 'TraceableUnit', 
+              'OP-': 'Operator',
+              'GEO-': 'GeographicData',
+              'PROC-': 'MaterialProcessing',
+              'TXN-': 'Transaction',
+              'CUST-': 'Customer',
+              'CLAIM-': 'Claim',
+              'CERT-': 'Certificate'
+          }
+          
+          # Validate all FK relationships
+          print('\\n🔍 Analyzing foreign key relationships...')
+          
+          for entity_name, entity_data in entities.items():
+              properties = entity_data['properties']
+              
+              for prop_name, prop_def in properties.items():
+                  # Check for FK patterns
+                  if 'pattern' in prop_def:
+                      pattern = prop_def['pattern']
+                      match = re.search(r'\\^([A-Z]+-)', pattern)
+                      
+                      if match:
+                          prefix = match.group(1)
+                          target_entity = fk_patterns.get(prefix)
+                          
+                          if target_entity:
+                              if target_entity in entities:
+                                  fk_relationships[entity_name].append({
+                                      'field': prop_name,
+                                      'target_entity': target_entity,
+                                      'pattern': pattern
+                                  })
+                                  print(f'✓ {entity_name}.{prop_name} -> {target_entity}')
+                              else:
+                                  orphaned_fks.append({
+                                      'entity': entity_name,
+                                      'field': prop_name,
+                                      'target_entity': target_entity,
+                                      'pattern': pattern
+                                  })
+                                  print(f'❌ {entity_name}.{prop_name} -> {target_entity} (MISSING)')
+          
+          # Report results
+          total_fks = sum(len(rels) for rels in fk_relationships.values())
+          
+          print(f'\\n📊 Foreign Key Analysis Summary:')
+          print(f'  - Total entities: {len(entities)}')
+          print(f'  - Valid FK relationships: {total_fks}')
+          print(f'  - Orphaned FKs: {len(orphaned_fks)}')
+          
+          # Entity area distribution
+          area_counts = Counter(e['area'] for e in entities.values())
+          print(f'\\n📋 Entity distribution by area:')
+          for area, count in area_counts.items():
+              print(f'  - {area}: {count} entities')
+          
+          if orphaned_fks:
+              print(f'\\n❌ Orphaned Foreign Keys Found:')
+              for fk in orphaned_fks:
+                  print(f'  - {fk[\"entity\"]}.{fk[\"field\"]} -> {fk[\"target_entity\"]} (missing entity)')
+              sys.exit(1)
+          
+          print(f'\\n✅ All {total_fks} foreign key relationships are valid!')
+          "
+
+  validate-python-models:
+    name: 🐍 Validate Python Models
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.python-changed == 'true' || github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install 'pydantic[email]>=2.0.0' jsonschema requests
+
+      - name: Validate Python model syntax
+        working-directory: drafts/current/reference-implementations/python
+        run: |
+          echo "🐍 Validating Python model syntax..."
+          python3 -m py_compile models.py
+          echo "✅ Python syntax validation passed"
+
+      - name: Test Pydantic model imports
+        working-directory: drafts/current/reference-implementations/python  
+        run: |
+          echo "🔍 Testing Pydantic model imports..."
+          python3 -c "
+          import sys
+          from models import *
+          
+          # Test that key models can be imported
+          required_models = [
+              'Organization', 
+              'TraceableUnit',
+              'Transaction',
+              'MaterialProcessing',
+              'Claim'
+          ]
+          
+          for model_name in required_models:
+              if model_name not in globals():
+                  print(f'❌ Model {model_name} not found')
+                  sys.exit(1)
+              else:
+                  print(f'✅ {model_name} imported successfully')
+          
+          print('✅ All required Pydantic models imported successfully')
+          "
+
+      - name: Test model validation
+        working-directory: drafts/current/reference-implementations/python
+        run: |
+          echo "🧪 Testing model validation..."
+          python3 -c "
+          import sys
+          from models import Organization, TraceableUnit
+          
+          # Test Organization model
+          try:
+              org = Organization(
+                  context={},
+                  type='Organization',
+                  id='https://example.com/org/1',
+                  organization_id='ORG-TEST-001',
+                  organization_name='Test Organization',
+                  organization_type='harvester'
+              )
+              print('✅ Organization model validation passed')
+          except Exception as e:
+              print(f'❌ Organization model validation failed: {e}')
+              sys.exit(1)
+          
+          # Test TraceableUnit model  
+          try:
+              tru = TraceableUnit(
+                  context={},
+                  type='TraceableUnit',
+                  id='https://example.com/tru/1',
+                  traceable_unit_id='TRU-TEST-001',
+                  unit_type='log',
+                  harvester_id='ORG-HARVEST-001'
+              )
+              print('✅ TraceableUnit model validation passed')
+          except Exception as e:
+              print(f'❌ TraceableUnit model validation failed: {e}')
+              sys.exit(1)
+          
+          print('✅ Model validation tests passed')
+          "
+
+  validation-summary:
+    name: 📋 Validation Summary
+    runs-on: ubuntu-latest
+    needs: [validate-schemas, validate-foreign-keys, validate-python-models]
+    if: always() && (needs.detect-changes.outputs.schema-changed == 'true' || github.event_name == 'workflow_dispatch')
+    
+    steps:
+      - name: Generate validation summary
+        run: |
+          echo "# 📋 Schema Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Check job results
+          SCHEMA_STATUS="${{ needs.validate-schemas.result }}"
+          FK_STATUS="${{ needs.validate-foreign-keys.result }}"
+          PYTHON_STATUS="${{ needs.validate-python-models.result }}"
+          
+          echo "| Validation Type | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "$SCHEMA_STATUS" = "success" ]; then
+            echo "| JSON Schema Syntax/Structure | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| JSON Schema Syntax/Structure | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "$FK_STATUS" = "success" ]; then
+            echo "| Foreign Key Relationships | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Foreign Key Relationships | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "$PYTHON_STATUS" = "success" ]; then
+            echo "| Python Model Validation | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+          elif [ "$PYTHON_STATUS" = "skipped" ]; then
+            echo "| Python Model Validation | ⏭️ Skipped (no changes) |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Python Model Validation | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Quick Links" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- [Schema Files](../schema/)" >> $GITHUB_STEP_SUMMARY
+          echo "- [Python Models](../reference-implementations/python/)" >> $GITHUB_STEP_SUMMARY
+          echo "- [ERD Navigator](../specifications/erd-navigator/)" >> $GITHUB_STEP_SUMMARY

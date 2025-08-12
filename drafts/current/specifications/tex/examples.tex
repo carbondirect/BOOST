@@ -1,0 +1,29 @@
+% Examples Section
+% Placeholder
+
+\subsection{Basic TraceableUnit Example}
+\label{sec:basic-tru-example}
+
+\begin{jsonexample}{TraceableUnit JSON-LD Example}
+\begin{minted}[
+    bgcolor=example!5!white,
+    frame=leftline,
+    framerule=2pt,
+    rulecolor=example!75!black,
+    fontsize=\small
+]{json}
+{
+  "@context": "https://boost-standard.org/context.jsonld",
+  "@type": "TraceableUnit", 
+  "@id": "https://example.com/tru/TRU-001",
+  "traceableUnitId": "TRU-FOREST-001",
+  "unitType": "pile",
+  "uniqueIdentifier": "BIOMETRIC-SIGNATURE-ABC123",
+  "totalVolumeM3": 125.5,
+  "materialTypeId": "MAT-DOUGLAS-FIR-SAWLOG", 
+  "isMultiSpecies": false,
+  "harvesterId": "ORG-PACIFIC-FOREST",
+  "currentGeographicDataId": "GEO-MILL-YARD-07"
+}
+\end{minted}
+\end{jsonexample}

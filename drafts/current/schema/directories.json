@@ -18,6 +18,7 @@
     "material",
     "material_processing",
     "measurement_record",
+    "moisture_content",
     "operator",
     "organization",
     "processing_history",
@@ -34,6 +35,6 @@
     "verification_statement"
   ],
   "last_updated": "2025-08-01T00:00:00Z",
-  "total_entities": 32,
+  "total_entities": 33,
   "description": "Comprehensive list of all BOOST schema directories for ERD Navigator auto-discovery"
 }
