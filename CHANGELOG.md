@@ -2,6 +2,31 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.0.2] - 2025-08-12 - Documentation Consistency Fixes
+
+### Fixed
+- **Entity Count Consistency** - Standardized all references to show correct count of 33 entities
+  - **boost-spec.bs**: Updated abstract and full conformance sections (29→33)
+  - **core-entities.inc.md**: Updated data model description (29→33)
+  - **BOOST_FORMAL_DOCUMENTATION_OUTLINE.md**: Updated all references (29→33)
+  - **includes/data-model.inc.md**: Updated framework description (29→33)
+  - **erd-navigator/README.md**: Updated explorer documentation (29→33)
+  - **erd-navigator/index.html**: Updated discussion coverage text (29→33)
+  - **relationship_definition_system_consolidation_proposal.md**: Updated scope (32→33)
+- **BOOST Acronym Consistency** - Corrected all expansions to proper "Biomass Open Origin Standard for Tracking"
+  - **boost-spec.bs**: Fixed abstract and specification definition
+  - **BOOST_FORMAL_DOCUMENTATION_OUTLINE.md**: Fixed abstract
+  - **includes/introduction.inc.md**: Fixed opening paragraph
+  - **tex/introduction.tex**: Fixed LaTeX introduction
+  - **reference-implementations/python/README.md**: Fixed library description
+
+### Technical Improvements
+- **Documentation Accuracy** - All current documentation now consistently reflects actual schema structure
+- **Acronym Standardization** - Eliminated inconsistent "Biomass Open-Source Traceability" references
+- **Historical Preservation** - CHANGELOG entries maintained as accurate for their time periods
+
+*These fixes ensure professional consistency across all documentation formats and eliminate confusion about entity counts and proper BOOST terminology.*
+
 ## [3.0.0] - 2025-08-12 - Complete CI/CD Documentation Build System
 
 ### Major Enhancements
