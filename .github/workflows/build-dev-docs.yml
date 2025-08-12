@@ -217,6 +217,7 @@ jobs:
 
       - name: Generate development build report
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
           cat > dev-build-report.md << EOF
           # 📚 BOOST Development Build Report
