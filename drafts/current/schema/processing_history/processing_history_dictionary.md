@@ -1,4 +1,4 @@
-# Data Dictionary
+# ProcessingHistory
 
 ## ProcessingHistory
 
@@ -17,75 +17,223 @@ ProcessingHistory serves as the TRU-centric complement to the operation-centric 
 
 ### Fields
 
-| Field                        | Type             | Required | Description                                                                 | Examples                                    |
-|-----------------------------|------------------|----------|-----------------------------------------------------------------------------|---------------------------------------------|
-| `processingHistoryId`       | string           | Yes      | Unique identifier for the processing history record (primary key)        | `PROC-HIST-TRU-LOG-CA-042-001`, `PROC-HIST-SPLIT-KLA-015` |
-| `traceableUnitId`           | string (FK)      | Yes      | Foreign key to TRU this history record belongs to                        | `TRU-LOG-CA-042`, `TRU-PILE-SORTED-001`   |
-| `materialProcessingId`      | string (FK)      | Yes      | Foreign key to MaterialProcessing operation that created this history    | `PROC-FELL-KLA-042`, `PROC-CROSSCUT-001`  |
-| `timestamp`                 | string (date-time)| Yes     | When this processing step occurred                                        | `2025-07-15T08:30:00Z`                    |
-| `processSequenceNumber`     | integer          | Yes      | Sequential order of this processing step for the TRU (starts at 1)      | `1`, `2`, `3`                              |
-| `processingEventType`       | string           | Yes      | Type of processing event (enum)                                          | `transformation`, `split`, `merge`, `quality_change`, `loading` |
-| `inputTRUIds`               | string[]         | Yes      | Array of input TRU IDs (multiple for merge operations)                  | `["TRU-TREE-CA-042"]`, `["TRU-LOG-001", "TRU-LOG-002"]` |
-| `outputTRUIds`              | string[]         | Yes      | Array of output TRU IDs (multiple for split operations)                 | `["TRU-LOG-CA-042"]`, `["TRU-PILE-A", "TRU-PILE-B"]` |
-| `processingDuration`        | string (ISO8601) | No       | ISO 8601 duration format for processing time                            | `PT45M`, `PT2H30M`, `PT1D`                |
-| `qualityChangeDescription` | string           | No       | Description of quality changes during processing                          | `Grade assessment: A-grade sawlog`, `Moisture reduced from 25% to 15%` |
-| `operatorId`                | string (FK)      | No       | Foreign key to operator who performed processing                         | `OP-HARVESTER-KLA-001`, `OP-MILL-TECH-02` |
-| `equipmentUsed`             | string           | No       | Equipment used for this processing step                                  | `harvester_head_001`, `crosscut_saw`, `loader_CAT_320` |
-| `volumeChangeRatio`         | number           | No       | Ratio of output volume to input volume (1.0 = no change)               | `0.94`, `1.0`, `0.85`                     |
-| `speciesCompositionChange`  | string           | No       | How species composition changed during processing (enum)                 | `unchanged`, `separated`, `mixed`          |
-| `plantPartTransformation`   | string           | No       | Summary of plant part changes during processing                          | `trunk→trunk (sized)`, `branches→chips`   |
-| `isCurrentProcessingState`  | boolean          | No       | True if this represents the current processing state                     | `true`, `false`                            |
-| `processingGeographicDataId`| string (FK)      | No       | Foreign key to location where processing occurred                        | `GEO-HARVEST-KLAMATH-04`, `GEO-MILL-001`  |
-| `previousProcessingHistoryId`| string (FK)     | No       | Foreign key to previous processing history record (forms chain)         | `PROC-HIST-TRU-LOG-CA-042-001`, `null`    |
-| `nextProcessingHistoryIds`  | string[]         | No       | Array of next processing history record IDs (for split operations)     | `["PROC-HIST-TRU-042-002"]`, `["PROC-HIST-A", "PROC-HIST-B"]` |
-| `volumeConservationData`    | object           | No       | Volume conservation validation data                                      | See Volume Conservation section            |
-| `mediaBreakData`            | object           | No       | Media break detection and recovery information                           | See Media Break section                   |
-| `claimInheritanceData`      | object           | No       | Sustainability claim inheritance tracking                                | See Claim Inheritance section             |
-| `@id`                       | string (uri)     | Yes      | Unique URI identifier for JSON-LD                                       | `https://github.com/carbondirect/BOOST/schemas/processing-history/PROC-HIST-001` |
-
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`processingHistoryId`
+<td>string
+<td>Yes
+<td>Unique identifier for the processing history record (primary key)
+<td>`PROC-HIST-TRU-LOG-CA-042-001`, `PROC-HIST-SPLIT-KLA-015`
+</tr>
+<tr>
+<td>`traceableUnitId`
+<td>string (FK)
+<td>Yes
+<td>Foreign key to TRU this history record belongs to
+<td>`TRU-LOG-CA-042`, `TRU-PILE-SORTED-001`
+</tr>
+<tr>
+<td>`materialProcessingId`
+<td>string (FK)
+<td>Yes
+<td>Foreign key to MaterialProcessing operation that created this history
+<td>`PROC-FELL-KLA-042`, `PROC-CROSSCUT-001`
+</tr>
+<tr>
+<td>`timestamp`
+<td>string (date-time)
+<td>Yes
+<td>When this processing step occurred
+<td>`2025-07-15T08:30:00Z`
+</tr>
+<tr>
+<td>`processSequenceNumber`
+<td>integer
+<td>Yes
+<td>Sequential order of this processing step for the TRU (starts at 1)
+<td>`1`, `2`, `3`
+</tr>
+<tr>
+<td>`processingEventType`
+<td>string
+<td>Yes
+<td>Type of processing event (enum)
+<td>`transformation`, `split`, `merge`, `quality_change`, `loading`
+</tr>
+<tr>
+<td>`inputTRUIds`
+<td>string[]
+<td>Yes
+<td>Array of input TRU IDs (multiple for merge operations)
+<td>`["TRU-TREE-CA-042"]`, `["TRU-LOG-001", "TRU-LOG-002"]`
+</tr>
+<tr>
+<td>`outputTRUIds`
+<td>string[]
+<td>Yes
+<td>Array of output TRU IDs (multiple for split operations)
+<td>`["TRU-LOG-CA-042"]`, `["TRU-PILE-A", "TRU-PILE-B"]`
+</tr>
+<tr>
+<td>`processingDuration`
+<td>string (ISO8601)
+<td>No
+<td>ISO 8601 duration format for processing time
+<td>`PT45M`, `PT2H30M`, `PT1D`
+</tr>
+<tr>
+<td>`qualityChangeDescription`
+<td>string
+<td>No
+<td>Description of quality changes during processing
+<td>`Grade assessment: A-grade sawlog`, `Moisture reduced from 25% to 15%`
+</tr>
+<tr>
+<td>`operatorId`
+<td>string (FK)
+<td>No
+<td>Foreign key to operator who performed processing
+<td>`OP-HARVESTER-KLA-001`, `OP-MILL-TECH-02`
+</tr>
+<tr>
+<td>`equipmentUsed`
+<td>string
+<td>No
+<td>Equipment used for this processing step
+<td>`harvester_head_001`, `crosscut_saw`, `loader_CAT_320`
+</tr>
+<tr>
+<td>`volumeChangeRatio`
+<td>number
+<td>No
+<td>Ratio of output volume to input volume (1.0 = no change)
+<td>`0.94`, `1.0`, `0.85`
+</tr>
+<tr>
+<td>`speciesCompositionChange`
+<td>string
+<td>No
+<td>How species composition changed during processing (enum)
+<td>`unchanged`, `separated`, `mixed`
+</tr>
+<tr>
+<td>`plantPartTransformation`
+<td>string
+<td>No
+<td>Summary of plant part changes during processing
+<td>`trunk→trunk (sized)`, `branches→chips`
+</tr>
+<tr>
+<td>`isCurrentProcessingState`
+<td>boolean
+<td>No
+<td>True if this represents the current processing state
+<td>`true`, `false`
+</tr>
+<tr>
+<td>`processingGeographicDataId`
+<td>string (FK)
+<td>No
+<td>Foreign key to location where processing occurred
+<td>`GEO-HARVEST-KLAMATH-04`, `GEO-MILL-001`
+</tr>
+<tr>
+<td>`previousProcessingHistoryId`
+<td>string (FK)
+<td>No
+<td>Foreign key to previous processing history record (forms chain)
+<td>`PROC-HIST-TRU-LOG-CA-042-001`, `null`
+</tr>
+<tr>
+<td>`nextProcessingHistoryIds`
+<td>string[]
+<td>No
+<td>Array of next processing history record IDs (for split operations)
+<td>`["PROC-HIST-TRU-042-002"]`, `["PROC-HIST-A", "PROC-HIST-B"]`
+</tr>
+<tr>
+<td>`volumeConservationData`
+<td>object
+<td>No
+<td>Volume conservation validation data
+<td>See Volume Conservation section
+</tr>
+<tr>
+<td>`mediaBreakData`
+<td>object
+<td>No
+<td>Media break detection and recovery information
+<td>See Media Break section
+</tr>
+<tr>
+<td>`claimInheritanceData`
+<td>object
+<td>No
+<td>Sustainability claim inheritance tracking
+<td>See Claim Inheritance section
+</tr>
+<tr>
+<td>`@id`
+<td>string (uri)
+<td>Yes
+<td>Unique URI identifier for JSON-LD
+<td>`https://github.com/carbondirect/BOOST/schemas/processing-history/PROC-HIST-001`
+</tr>
+</tbody>
+</table>
 ### Processing Event Types
 
 1. **transformation**
-   - Standard processing operations that change material characteristics
-   - Includes felling, delimbing, crosscutting, chipping, debarking
-   - Single input TRU → Single output TRU with changed properties
-   - Volume, quality, or plant part composition changes
+     Standard processing operations that change material characteristics
+     Includes felling, delimbing, crosscutting, chipping, debarking
+     Single input TRU → Single output TRU with changed properties
+     Volume, quality, or plant part composition changes
 
 2. **split**
-   - One input TRU divided into multiple output TRUs
-   - Examples: Log crosscutting, pile sorting by grade, load division
-   - Single input TRU → Multiple output TRUs
-   - Volume conservation across all outputs required
+     One input TRU divided into multiple output TRUs
+     Examples: Log crosscutting, pile sorting by grade, load division
+     Single input TRU → Multiple output TRUs
+     Volume conservation across all outputs required
 
 3. **merge**
-   - Multiple input TRUs combined into single output TRU
-   - Examples: Pile consolidation, load combining, batch aggregation
-   - Multiple input TRUs → Single output TRU
-   - Species and plant part composition tracking required
+     Multiple input TRUs combined into single output TRU
+     Examples: Pile consolidation, load combining, batch aggregation
+     Multiple input TRUs → Single output TRU
+     Species and plant part composition tracking required
 
 4. **quality_change**
-   - Processing that primarily affects quality without volume change
-   - Examples: Grading, moisture testing, defect assessment
-   - Quality characteristics updated without physical transformation
-   - May trigger claim validation requirements
+     Processing that primarily affects quality without volume change
+     Examples: Grading, moisture testing, defect assessment
+     Quality characteristics updated without physical transformation
+     May trigger claim validation requirements
 
 5. **loading** 
-   - Transportation-related processing with material transformation
-   - Examples: Pile to truck conversion with volume settling
-   - Configuration or accessibility changes during transport preparation
-   - Bridges pure movement (LocationHistory) with processing
+     Transportation-related processing with material transformation
+     Examples: Pile to truck conversion with volume settling
+     Configuration or accessibility changes during transport preparation
+     Bridges pure movement (LocationHistory) with processing
 
 6. **transport_processing**
-   - Processing operations that occur during transportation
-   - Examples: In-transit sorting, consolidation stops, quality monitoring
-   - Combines spatial movement with material transformation
-   - Requires both ProcessingHistory and LocationHistory records
+     Processing operations that occur during transportation
+     Examples: In-transit sorting, consolidation stops, quality monitoring
+     Combines spatial movement with material transformation
+     Requires both ProcessingHistory and LocationHistory records
 
 7. **measurement**
-   - Processing events focused on data collection and validation
-   - Examples: Volume reconciliation, biometric scanning, quality testing
-   - May not change material but updates TRU characteristics
-   - Critical for media-break prevention and data validation
+     Processing events focused on data collection and validation
+     Examples: Volume reconciliation, biometric scanning, quality testing
+     May not change material but updates TRU characteristics
+     Critical for media-break prevention and data validation
 
 ### Volume Conservation Data
 

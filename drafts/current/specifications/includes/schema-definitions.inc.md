@@ -1,0 +1,1 @@
+The BOOST schema system provides comprehensive validation and structure definitions for all entities in the data model. All schemas are defined using JSON Schema Draft-07 format and include business logic validation rules.

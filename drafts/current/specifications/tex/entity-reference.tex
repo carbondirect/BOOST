@@ -1,0 +1,20 @@
+% Complete Entity Reference Appendix
+% Placeholder - will be populated with entity tables
+
+\subsection{Entity Summary Table}
+\label{sec:entity-summary}
+
+% This section will contain a comprehensive table of all 33 entities
+% with their thematic areas, primary keys, and key relationships
+
+\subsection{Foreign Key Reference}
+\label{sec:foreign-key-reference}
+
+\begin{normative}[title=Foreign Key Conventions]
+All foreign key relationships \MUST{} follow the EntityNameId pattern:
+\begin{itemize}
+    \item Field names \MUST{} end with "Id"
+    \item Field names \MUST{} reference the target entity name in PascalCase
+    \item Examples: \field{OrganizationId}, \field{TraceableUnitId}, \field{GeographicDataId}
+\end{itemize}
+\end{normative}

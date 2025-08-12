@@ -7,7 +7,7 @@ data validation, serialization, and JSON-LD context management.
 
 from datetime import datetime
 from typing import Optional, List, Dict, Any, Union
-from pydantic import BaseModel, Field, validator, root_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from enum import Enum
 
 
@@ -20,7 +20,7 @@ class BOOSTBaseModel(BaseModel):
     last_updated: Optional[datetime] = Field(None, alias="lastUpdated")
     
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
@@ -46,7 +46,7 @@ class Organization(BOOSTBaseModel):
     organization_id: str = Field(
         ..., 
         alias="organizationId",
-        regex=r"^ORG-[A-Z0-9-_]+$",
+        pattern=r"^ORG-[A-Z0-9-_]+$",
         min_length=5,
         max_length=50,
         description="Unique identifier for the organization"
@@ -66,7 +66,7 @@ class Organization(BOOSTBaseModel):
     primary_geographic_data_id: Optional[str] = Field(
         None,
         alias="primaryGeographicDataId",
-        regex=r"^GEO-[A-Z0-9-_]+$",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
         description="Foreign key to primary operational location"
     )
     operational_areas: Optional[List[str]] = Field(
@@ -103,7 +103,7 @@ class Organization(BOOSTBaseModel):
         description="Organization website URL"
     )
     
-    @validator('type', pre=True, always=True)
+    @field_validator('type', mode='before')
     def set_type(cls, v):
         return "Organization"
 
@@ -123,7 +123,7 @@ class TraceableUnit(BOOSTBaseModel):
     traceable_unit_id: str = Field(
         ...,
         alias="traceableUnitId",
-        regex=r"^TRU-[A-Z0-9-_]+$",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
         description="Unique identifier for the traceable unit"
     )
     unit_type: UnitType = Field(
@@ -145,13 +145,13 @@ class TraceableUnit(BOOSTBaseModel):
     current_geographic_data_id: Optional[str] = Field(
         None,
         alias="currentGeographicDataId",
-        regex=r"^GEO-[A-Z0-9-_]+$",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
         description="Current location of the unit"
     )
     harvest_geographic_data_id: Optional[str] = Field(
         None,
         alias="harvestGeographicDataId",
-        regex=r"^GEO-[A-Z0-9-_]+$",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
         description="Original harvest location"
     )
     created_timestamp: Optional[datetime] = Field(
@@ -162,13 +162,13 @@ class TraceableUnit(BOOSTBaseModel):
     harvester_id: Optional[str] = Field(
         None,
         alias="harvesterId",
-        regex=r"^ORG-[A-Z0-9-_]+$",
+        pattern=r"^ORG-[A-Z0-9-_]+$",
         description="Organization that harvested this unit"
     )
     operator_id: Optional[str] = Field(
         None,
         alias="operatorId",
-        regex=r"^OP-[A-Z0-9-_]+$",
+        pattern=r"^OP-[A-Z0-9-_]+$",
         description="Operator responsible for this unit"
     )
     material_type_id: Optional[str] = Field(
@@ -204,7 +204,7 @@ class TraceableUnit(BOOSTBaseModel):
     parent_traceable_unit_id: Optional[str] = Field(
         None,
         alias="parentTraceableUnitId",
-        regex=r"^TRU-[A-Z0-9-_]+$",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
         description="Parent TRU ID if derived from another unit"
     )
     child_traceable_unit_ids: Optional[List[str]] = Field(
@@ -228,7 +228,7 @@ class TraceableUnit(BOOSTBaseModel):
         description="Any chain of custody breaks"
     )
     
-    @validator('type', pre=True, always=True)
+    @field_validator('type', mode='before')
     def set_type(cls, v):
         return "TraceableUnit"
 
@@ -239,25 +239,25 @@ class Transaction(BOOSTBaseModel):
     transaction_id: str = Field(
         ...,
         alias="transactionId",
-        regex=r"^TXN-[A-Z0-9-_]+$",
+        pattern=r"^TXN-[A-Z0-9-_]+$",
         description="Unique identifier for the transaction"
     )
     organization_id: str = Field(
         ...,
         alias="OrganizationId",
-        regex=r"^ORG-[A-Z0-9-_]+$",
+        pattern=r"^ORG-[A-Z0-9-_]+$",
         description="Seller organization ID"
     )
     customer_id: str = Field(
         ...,
         alias="CustomerId",
-        regex=r"^CUST-[A-Z0-9-_]+$",
+        pattern=r"^CUST-[A-Z0-9-_]+$",
         description="Buyer customer ID"
     )
     traceable_unit_id: Optional[str] = Field(
         None,
         alias="TraceableUnitId",
-        regex=r"^TRU-[A-Z0-9-_]+$",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
         description="Traceable unit being transacted"
     )
     transaction_date: str = Field(
@@ -292,7 +292,7 @@ class Transaction(BOOSTBaseModel):
         description="Associated sales/delivery document"
     )
     
-    @validator('type', pre=True, always=True)
+    @field_validator('type', mode='before')
     def set_type(cls, v):
         return "Transaction"
 
@@ -313,19 +313,19 @@ class MaterialProcessing(BOOSTBaseModel):
     processing_id: str = Field(
         ...,
         alias="processingId",
-        regex=r"^PROC-[A-Z0-9-_]+$",
+        pattern=r"^PROC-[A-Z0-9-_]+$",
         description="Unique identifier for processing operation"
     )
     input_traceable_unit_id: str = Field(
         ...,
         alias="inputTraceableUnitId",
-        regex=r"^TRU-[A-Z0-9-_]+$",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
         description="Input traceable unit"
     )
     output_traceable_unit_id: str = Field(
         ...,
         alias="outputTraceableUnitId", 
-        regex=r"^TRU-[A-Z0-9-_]+$",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
         description="Output traceable unit"
     )
     process_type: ProcessType = Field(
@@ -371,21 +371,21 @@ class MaterialProcessing(BOOSTBaseModel):
     processing_geographic_data_id: Optional[str] = Field(
         None,
         alias="processingGeographicDataId",
-        regex=r"^GEO-[A-Z0-9-_]+$",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
         description="Location where processing occurred"
     )
     operator_id: Optional[str] = Field(
         None,
         alias="operatorId",
-        regex=r"^OP-[A-Z0-9-_]+$",
+        pattern=r"^OP-[A-Z0-9-_]+$",
         description="Operator who performed processing"
     )
     
-    @validator('type', pre=True, always=True)
+    @field_validator('type', mode='before')
     def set_type(cls, v):
         return "MaterialProcessing"
     
-    @root_validator
+    @model_validator(mode='before')
     def validate_volume_conservation(cls, values):
         """Validate that volume is conserved during processing."""
         input_vol = values.get('input_volume')
@@ -416,13 +416,13 @@ class Claim(BOOSTBaseModel):
     claim_id: str = Field(
         ...,
         alias="claimId",
-        regex=r"^CLAIM-[A-Z0-9-_]+$",
+        pattern=r"^CLAIM-[A-Z0-9-_]+$",
         description="Unique identifier for the claim"
     )
     traceable_unit_id: str = Field(
         ...,
         alias="traceableUnitId",
-        regex=r"^TRU-[A-Z0-9-_]+$",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
         description="TRU this claim applies to"
     )
     claim_type: ClaimType = Field(
@@ -433,7 +433,7 @@ class Claim(BOOSTBaseModel):
     certification_scheme_id: Optional[str] = Field(
         None,
         alias="certificationSchemeId",
-        regex=r"^CERT-[A-Z0-9-_]+$",
+        pattern=r"^CERT-[A-Z0-9-_]+$",
         description="Certification scheme details"
     )
     statement: str = Field(
@@ -487,7 +487,7 @@ class Claim(BOOSTBaseModel):
         description="TRU IDs from which claim was inherited"
     )
     
-    @validator('type', pre=True, always=True)
+    @field_validator('type', mode='before')
     def set_type(cls, v):
         return "Claim"
 

@@ -1,4 +1,4 @@
-# Data Dictionary
+# LcfsPathway
 
 ## LCFSPathway
 
@@ -7,68 +7,174 @@ The `LCFSPathway` entity represents CARB-certified fuel pathways for California'
 
 ### Fields
 
-| Field                | Type               | Required | Description                                            | Examples                                                                        |
-|----------------------|--------------------|----------|--------------------------------------------------------|---------------------------------------------------------------------------------|
-| `pathwayId`          | string             | Yes      | CARB-assigned pathway identifier (primary key)         | `CA-RD-2025-LMR-001`, `CA-ET-2025-CRN-042`                                      |
-| `pathwayType`        | string (enum)      | Yes      | CARB pathway certification tier                        | `Lookup_Table`, `Tier_1`, `Tier_2`                                              |
-| `feedstockCategory`  | string (enum)      | Yes      | Primary feedstock type for pathway                     | `logging_and_mill_residue`, `corn`, `algae`                                     |
-| `fuelProduct`        | string (enum)      | Yes      | Final fuel product produced                            | `renewable_diesel`, `ethanol`, `biodiesel`                                      |
-| `facilityLocation`   | string             | Yes      | Production facility location                           | `Stockton, CA`, `Iowa`, `Western_US`                                            |
-| `carbonIntensity`    | number             | Yes      | Certified carbon intensity in gCO2e/MJ                 | `19.85`, `74.32`, `12.41`                                                       |
-| `energyEconomyRatio` | number             | Yes      | Energy economy ratio multiplier for credit calculation | `1.0`, `1.5`, `2.0`                                                             |
-| `certificationDate`  | string (date)      | Yes      | CARB pathway certification date                        | `2025-01-15`                                                                    |
-| `expirationDate`     | string (date)      | No       | Pathway certification expiration date                  | `2028-01-15`                                                                    |
-| `verificationStatus` | string (enum)      | Yes      | Current CARB verification status                       | `active`, `suspended`, `expired`                                                |
-| `caGreetVersion`     | string             | Yes      | CA-GREET model version used for certification          | `3.0`, `2.1`                                                                    |
-| `facilityCapacity`   | number             | No       | Annual production capacity in gallons                  | `50000000`, `125000000`                                                         |
-| `processDescription` | string             | No       | Brief description of production process                | `Hydrotreated renewable diesel production`                                      |
-| `geographicScope`    | string (enum)      | No       | Geographic applicability of pathway                    | `California`, `Western_US`, `National`                                          |
-| `@id`                | string (uri)       | Yes      | Unique URI identifier for JSON-LD                      | `https://github.com/carbondirect/BOOST/schemas/lcfs-pathway/CA-RD-2025-LMR-001` |
-| `lastUpdated`        | string (date-time) | No       | Timestamp of most recent pathway data update           | `2025-07-21T14:30:00Z`                                                          |
-
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`pathwayId`
+<td>string
+<td>Yes
+<td>CARB-assigned pathway identifier (primary key)
+<td>`CA-RD-2025-LMR-001`, `CA-ET-2025-CRN-042`
+</tr>
+<tr>
+<td>`pathwayType`
+<td>string (enum)
+<td>Yes
+<td>CARB pathway certification tier
+<td>`Lookup_Table`, `Tier_1`, `Tier_2`
+</tr>
+<tr>
+<td>`feedstockCategory`
+<td>string (enum)
+<td>Yes
+<td>Primary feedstock type for pathway
+<td>`logging_and_mill_residue`, `corn`, `algae`
+</tr>
+<tr>
+<td>`fuelProduct`
+<td>string (enum)
+<td>Yes
+<td>Final fuel product produced
+<td>`renewable_diesel`, `ethanol`, `biodiesel`
+</tr>
+<tr>
+<td>`facilityLocation`
+<td>string
+<td>Yes
+<td>Production facility location
+<td>`Stockton, CA`, `Iowa`, `Western_US`
+</tr>
+<tr>
+<td>`carbonIntensity`
+<td>number
+<td>Yes
+<td>Certified carbon intensity in gCO2e/MJ
+<td>`19.85`, `74.32`, `12.41`
+</tr>
+<tr>
+<td>`energyEconomyRatio`
+<td>number
+<td>Yes
+<td>Energy economy ratio multiplier for credit calculation
+<td>`1.0`, `1.5`, `2.0`
+</tr>
+<tr>
+<td>`certificationDate`
+<td>string (date)
+<td>Yes
+<td>CARB pathway certification date
+<td>`2025-01-15`
+</tr>
+<tr>
+<td>`expirationDate`
+<td>string (date)
+<td>No
+<td>Pathway certification expiration date
+<td>`2028-01-15`
+</tr>
+<tr>
+<td>`verificationStatus`
+<td>string (enum)
+<td>Yes
+<td>Current CARB verification status
+<td>`active`, `suspended`, `expired`
+</tr>
+<tr>
+<td>`caGreetVersion`
+<td>string
+<td>Yes
+<td>CA-GREET model version used for certification
+<td>`3.0`, `2.1`
+</tr>
+<tr>
+<td>`facilityCapacity`
+<td>number
+<td>No
+<td>Annual production capacity in gallons
+<td>`50000000`, `125000000`
+</tr>
+<tr>
+<td>`processDescription`
+<td>string
+<td>No
+<td>Brief description of production process
+<td>`Hydrotreated renewable diesel production`
+</tr>
+<tr>
+<td>`geographicScope`
+<td>string (enum)
+<td>No
+<td>Geographic applicability of pathway
+<td>`California`, `Western_US`, `National`
+</tr>
+<tr>
+<td>`@id`
+<td>string (uri)
+<td>Yes
+<td>Unique URI identifier for JSON-LD
+<td>`https://github.com/carbondirect/BOOST/schemas/lcfs-pathway/CA-RD-2025-LMR-001`
+</tr>
+<tr>
+<td>`lastUpdated`
+<td>string (date-time)
+<td>No
+<td>Timestamp of most recent pathway data update
+<td>`2025-07-21T14:30:00Z`
+</tr>
+</tbody>
+</table>
 ---
 
 ### Key Features
 
 1. **CARB Pathway Integration**
-   - Direct mapping to official CARB pathway database
-   - Standardized pathway ID format validation
-   - Certification tier tracking (Lookup Table, Tier 1, Tier 2)
+     Direct mapping to official CARB pathway database
+     Standardized pathway ID format validation
+     Certification tier tracking (Lookup Table, Tier 1, Tier 2)
 
 2. **Carbon Intensity Tracking**
-   - Certified CI values from CA-GREET modeling
-   - Energy Economy Ratio for electric vehicle pathways
-   - Regulatory benchmark comparison support
+     Certified CI values from CA-GREET modeling
+     Energy Economy Ratio for electric vehicle pathways
+     Regulatory benchmark comparison support
 
 3. **Feedstock Classification**
-   - Comprehensive feedstock categories for all LCFS fuel types
-   - Forest biomass subcategories for waste vs. purpose-grown materials
-   - Integration with BOOST material tracking entities
+     Comprehensive feedstock categories for all LCFS fuel types
+     Forest biomass subcategories for waste vs. purpose-grown materials
+     Integration with BOOST material tracking entities
 
 4. **Regulatory Compliance**
-   - Active/suspended/expired status tracking
-   - Certification and expiration date management
-   - CA-GREET version compatibility
+     Active/suspended/expired status tracking
+     Certification and expiration date management
+     CA-GREET version compatibility
 
 ### Example Use Cases
 
 1. **Renewable Diesel from Forest Residue**
-   - Pathway Type: Tier_1
-   - Feedstock: logging_and_mill_residue
-   - Carbon Intensity: 19.85 gCO2e/MJ
-   - Energy Economy Ratio: 1.0
+     Pathway Type: Tier_1
+     Feedstock: logging_and_mill_residue
+     Carbon Intensity: 19.85 gCO2e/MJ
+     Energy Economy Ratio: 1.0
 
 2. **Ethanol from Corn**
-   - Pathway Type: Lookup_Table
-   - Feedstock: corn
-   - Carbon Intensity: 74.32 gCO2e/MJ
-   - Energy Economy Ratio: 1.0
+     Pathway Type: Lookup_Table
+     Feedstock: corn
+     Carbon Intensity: 74.32 gCO2e/MJ
+     Energy Economy Ratio: 1.0
 
 3. **Sustainable Aviation Fuel**
-   - Pathway Type: Tier_2
-   - Feedstock: used_cooking_oil
-   - Carbon Intensity: 12.41 gCO2e/MJ
-   - Energy Economy Ratio: 1.0
+     Pathway Type: Tier_2
+     Feedstock: used_cooking_oil
+     Carbon Intensity: 12.41 gCO2e/MJ
+     Energy Economy Ratio: 1.0
 
 ### Relationships
 - LCFSPathway referenced by Transaction entities for LCFS reporting

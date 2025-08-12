@@ -1,6 +1,6 @@
 # BOOST Python Reference Implementation
 
-A comprehensive Python library for working with the BOOST (Biomass Open-Source Traceability) standard, providing **dynamic, schema-driven** data models, validation, and supply chain tracking capabilities for biomass chain of custody operations.
+A comprehensive Python library for working with the BOOST (Biomass Open Origin Standard for Tracking) standard, providing **dynamic, schema-driven** data models, validation, and supply chain tracking capabilities for biomass chain of custody operations.
 
 ## Overview
 

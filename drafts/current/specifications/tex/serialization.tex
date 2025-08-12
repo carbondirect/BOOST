@@ -1,0 +1,16 @@
+% Serialization and Exchange Section
+% Placeholder
+
+\subsection{JSON-LD as Primary Format}
+\label{sec:json-ld}
+
+BOOST data \MUST{} be serializable to JSON-LD format with:
+\begin{itemize}
+    \item Valid \texttt{@context} referencing BOOST context definition
+    \item Entity \texttt{@type} declarations matching schema names  
+    \item Unique \texttt{@id} values for all entities
+\end{itemize}
+
+\begin{normative}[title=JSON-LD Requirements]
+All BOOST data exchanges \MUST{} use valid JSON-LD 1.1 format with appropriate context definitions and semantic annotations.
+\end{normative}

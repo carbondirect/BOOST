@@ -1,26 +1,120 @@
-# Certificate Data Dictionary
+# Certificate
 
 ## Overview
 The `Certificate` object represents a formal record of certification issued by a certification body (cbId) to an organization under a specific certification scheme. The primary key is `certificateNumber`.
 
 ## Fields
-| Field | Type | Required | Description | Examples |
-|-------|------|----------|-------------|----------|
-| `certificateId` | string | No | Optional internal identifier | `SFI-CERT-001` |
-| `certificateNumber` | string | Yes | Official certificate number (primary key) | `SFI-2025-12345` |
-| `certificationSchemeId` | string | Yes | FK to Certification Scheme | `SFI-CoC` |
-| `cbId` | string | Yes | FK to Certification Body | `SFI` |
-| `organizationId` | string | Yes | FK to Organization receiving the certificate | `ORG-FORESTCO-001` |
-| `dateOfIssue` | string (date) | Yes | Date of issuance | `2025-01-01` |
-| `dateOfExpiry` | string (date) | Yes | Expiry date | `2030-01-01` |
-| `status` | string | Yes | Current certificate status | `active`, `expired`, `revoked`, etc. |
-| `scopeOfCertification` | string | Yes | Summary of certification coverage | `Chain of Custody for lumber and pulp` |
-| `versionNumber` | string | Yes | Version of standard applied | `2022` |
-| `conditionalRequirements` | array | No | Special conditions or requirements | `[{"type": "surveillance", "frequency": "annual"}]` |
-| `suspensionHistory` | array | No | History of suspensions | `[{"date": "2023-06-01", "reason": "non-compliance"}]` |
-| `auditSchedule` | object | No | Scheduled audit information | `{"nextAudit": "2025-12-01", "type": "surveillance"}` |
-| `certificateDocument` | string | No | Link or reference to certificate document | `https://sfiprogram.org/certificates/2025-12345.pdf` |
-
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`certificateId`
+<td>string
+<td>No
+<td>Optional internal identifier
+<td>`SFI-CERT-001`
+</tr>
+<tr>
+<td>`certificateNumber`
+<td>string
+<td>Yes
+<td>Official certificate number (primary key)
+<td>`SFI-2025-12345`
+</tr>
+<tr>
+<td>`certificationSchemeId`
+<td>string
+<td>Yes
+<td>FK to Certification Scheme
+<td>`SFI-CoC`
+</tr>
+<tr>
+<td>`cbId`
+<td>string
+<td>Yes
+<td>FK to Certification Body
+<td>`SFI`
+</tr>
+<tr>
+<td>`organizationId`
+<td>string
+<td>Yes
+<td>FK to Organization receiving the certificate
+<td>`ORG-FORESTCO-001`
+</tr>
+<tr>
+<td>`dateOfIssue`
+<td>string (date)
+<td>Yes
+<td>Date of issuance
+<td>`2025-01-01`
+</tr>
+<tr>
+<td>`dateOfExpiry`
+<td>string (date)
+<td>Yes
+<td>Expiry date
+<td>`2030-01-01`
+</tr>
+<tr>
+<td>`status`
+<td>string
+<td>Yes
+<td>Current certificate status
+<td>`active`, `expired`, `revoked`, etc.
+</tr>
+<tr>
+<td>`scopeOfCertification`
+<td>string
+<td>Yes
+<td>Summary of certification coverage
+<td>`Chain of Custody for lumber and pulp`
+</tr>
+<tr>
+<td>`versionNumber`
+<td>string
+<td>Yes
+<td>Version of standard applied
+<td>`2022`
+</tr>
+<tr>
+<td>`conditionalRequirements`
+<td>array
+<td>No
+<td>Special conditions or requirements
+<td>`[{"type": "surveillance", "frequency": "annual"}]`
+</tr>
+<tr>
+<td>`suspensionHistory`
+<td>array
+<td>No
+<td>History of suspensions
+<td>`[{"date": "2023-06-01", "reason": "non-compliance"}]`
+</tr>
+<tr>
+<td>`auditSchedule`
+<td>object
+<td>No
+<td>Scheduled audit information
+<td>`{"nextAudit": "2025-12-01", "type": "surveillance"}`
+</tr>
+<tr>
+<td>`certificateDocument`
+<td>string
+<td>No
+<td>Link or reference to certificate document
+<td>`https://sfiprogram.org/certificates/2025-12345.pdf`
+</tr>
+</tbody>
+</table>
 ## Relationships
 
 ### Parent Entities

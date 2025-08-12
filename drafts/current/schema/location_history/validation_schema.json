@@ -20,13 +20,16 @@
         "format": "uri"
       },
       "locationHistoryId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^LH-[A-Z0-9-_]+$"
       },
       "traceableUnitId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$"
       },
       "geographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$"
       },
       "timestamp": {
         "type": "string",
@@ -46,10 +49,12 @@
         "type": [
           "string",
           "null"
-        ]
+        ],
+        "pattern": "^MP-[A-Z0-9-_]+$"
       },
       "operatorId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$"
       },
       "equipmentUsed": {
         "type": "string"

@@ -20,13 +20,16 @@
         "format": "uri"
       },
       "processingId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^MP-[A-Z0-9-_]+$"
       },
       "inputTraceableUnitId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$"
       },
       "outputTraceableUnitId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$"
       },
       "processType": {
         "type": "string",
@@ -44,10 +47,12 @@
         "format": "date-time"
       },
       "processingGeographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$"
       },
       "operatorId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$"
       },
       "inputComposition": {
         "type": "string"

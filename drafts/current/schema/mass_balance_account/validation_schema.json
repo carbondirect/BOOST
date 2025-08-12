@@ -18,13 +18,16 @@
         "format": "uri"
       },
       "accountId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^MBA-[A-Z0-9-_]+$"
       },
       "organizationId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$"
       },
       "productGroupId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^PG-[A-Z0-9-_]+$"
       },
       "periodInputs": {
         "type": "number"

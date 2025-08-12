@@ -29,9 +29,29 @@ __pycache__/
 *.vrb
 *.fls
 *.fdb_latexmk
-_minted-*
+*.idx
+*.ind
+*.lof
+*.lot
+_minted-*/
+**/_minted-*/
 */~undo-tree*
 .DS_Store
+
+# Build system outputs
+build/
+**/build/
+drafts/current/specifications/boost-spec.pdf
+drafts/current/specifications/boost-spec.html
+drafts/current/specifications/boost-spec-original.html
+
+# Server and development files
+server.log
+test-*.pdf
+test-*.html
+test-*.aux
+test-*.log
+test-*.out
 
 # California agencies directory - keep local but don't track
 drafts/current/communications/california_agencies/
@@ -41,3 +61,37 @@ cd_report/
 
 # IAWG notes - keep local but don't track
 meetings/IAWG_NOTES_*.md
+
+# Local CI/CD testing
+.github/local-testing/.secrets
+.github/local-testing/.env
+.github/local-testing/logs/
+.github/local-testing/artifacts/
+
+# Additional build artifacts
+boost-spec-temp.html
+*.html.tmp
+*.bak
+*.bak2
+
+# Node.js artifacts (if added accidentally)
+package-lock.json  
+package.json
+node_modules/
+
+# Personal tools and prompts
+tools/DocumentationPrompt.md
+
+# OS generated files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

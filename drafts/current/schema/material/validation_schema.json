@@ -20,7 +20,8 @@
         "format": "uri"
       },
       "materialTypeId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^MAT-[A-Z0-9-_]+$"
       },
       "materialName": {
         "type": "string"

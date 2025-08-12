@@ -1,0 +1,43 @@
+% Schema Definitions Section
+% Placeholder - will be enhanced with schema details
+
+\subsection{JSON Schema Format}
+\label{sec:json-schema-format}
+
+All BOOST entity definitions \MUST{} be provided as JSON Schema Draft-07 compliant schemas with the following \REQUIRED{} structure:
+
+\begin{jsonexample}{Entity Schema Structure}
+\jsoncode{%
+\{\\
+~~"schema": \{\\
+~~~~"\$schema": "http://json-schema.org/draft-07/schema\#",\\
+~~~~"\$id": "https://github.com/carbondirect/BOOST/\\
+~~~~~~~~~~~~schemas/entity-name",\\
+~~~~"title": "Entity Name",\\
+~~~~"type": "object",\\
+~~~~"properties": \{ ... \},\\
+~~~~"required": [ ... ]\\
+~~\}\\
+\}%
+}
+\end{jsonexample}
+
+\subsection{Business Logic Validation}
+\label{sec:business-logic}
+
+Implementations \MUST{} validate entities against 8 categories of business rules:
+
+\begin{enumerate}
+    \item \textbf{Volume/Mass Conservation} - Physical conservation laws
+    \item \textbf{Temporal Logic} - Date consistency validation
+    \item \textbf{Geographic Logic} - Spatial relationship validation
+    \item \textbf{Species Composition} - Percentage validation (sum to 100\%)
+    \item \textbf{Certification Logic} - Chain of custody validation
+    \item \textbf{Regulatory Compliance} - Jurisdiction-specific rules
+    \item \textbf{Economic Logic} - Price and payment validation
+    \item \textbf{Quality Assurance} - Material quality constraints
+\end{enumerate}
+
+\begin{normative}[title=Validation Requirements]
+Conforming implementations \MUST{} validate data against BOOST JSON schemas and implement all required business logic validation rules for their conformance level.
+\end{normative}

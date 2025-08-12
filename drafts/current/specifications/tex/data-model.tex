@@ -1,0 +1,76 @@
+% Data Model Architecture Section
+% Converted from includes/data-model.inc.md
+
+The BOOST data model provides a comprehensive framework for representing all aspects of biomass supply chain operations. The model consists of 33 interconnected entities that work together to provide complete traceability from forest to final product.
+
+\subsection{Key Features}
+\label{sec:data-model-features}
+
+\subsubsection{Comprehensive Entity System}
+\label{sec:comprehensive-entity-system}
+
+\begin{important}[title=Complete Data Model Coverage]
+\begin{itemize}
+    \item \textbf{33 Interconnected Entities} - Complete data model covering all aspects of biomass supply chains across 7 thematic areas
+    \item \textbf{JSON-LD Validation} - Structured schemas with business rules and examples  
+    \item \textbf{Interactive ERD Navigator} - Dynamic exploration with GitHub discussion integration
+    \item \textbf{Sustainability Claims} - Species-specific claims with inheritance through processing
+\end{itemize}
+\end{important}
+
+\subsubsection{Enhanced Geographic Integration}
+\label{sec:enhanced-geographic-integration}
+
+\begin{informative}[title=Spatial Data Management]
+\begin{itemize}
+    \item \textbf{GeoJSON Compliance} - Spatial data support for all location-aware entities
+    \item \textbf{California Agency Ready} - Administrative boundary and jurisdiction tracking
+    \item \textbf{Supply Base Management} - Infrastructure mapping with harvest sites and transportation routes
+\end{itemize}
+\end{informative}
+
+The data model implements a hub-and-spoke architecture with \TRU{} as the central hub. All other entities \MUST{} maintain direct or indirect relationships to TRUs to ensure complete traceability.
+
+\subsection{Entity Organization by Thematic Areas}
+\label{sec:entity-thematic-areas}
+
+The 33 BOOST entities are organized into 7 thematic areas (see \tabref{tab:entity-thematic-areas}):
+
+\begin{table}[H]
+\centering
+\caption{BOOST Entity Organization by Thematic Areas}
+\label{tab:entity-thematic-areas}
+\begin{tabular}{@{}llr@{}}
+\toprule
+\textbf{Thematic Area} & \textbf{Description} & \textbf{Count} \\
+\midrule
+\coretraceability{Core Traceability} & Central tracking infrastructure & 5 \\
+\organizational{Organizational Foundation} & Business entities and certifications & 6 \\
+\materialsupply{Material \& Supply Chain} & Material definitions and supply management & 7 \\
+\transaction{Transaction Management} & Business transaction processing & 3 \\
+\sustainability{Measurement \& Verification} & Measurement records and claims & 4 \\
+\geographic{Geographic \& Tracking} & Spatial data and location services & 2 \\
+\reporting{Compliance \& Reporting} & Analytics, reporting, and regulatory compliance & 6 \\
+\midrule
+\textbf{Total} & & \textbf{33} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{normative}[title=Entity Relationship Requirements]
+All entities \MUST{} follow the hub-and-spoke design pattern with direct or indirect relationships to \TRU{} entities to maintain complete traceability chain integrity.
+\end{normative}
+
+\subsection{Foreign Key Conventions}
+\label{sec:foreign-key-conventions}
+
+All foreign key relationships \MUST{} follow the EntityNameId pattern:
+\begin{itemize}
+    \item Field names \MUST{} end with ``Id''
+    \item Field names \MUST{} reference the target entity name in PascalCase
+    \item Examples: \field{OrganizationId}, \field{TraceableUnitId}, \field{GeographicDataId}
+\end{itemize}
+
+\begin{normative}[title=Foreign Key Naming Convention]
+Implementations \MUST{} validate that all foreign key field names follow the EntityNameId pattern to ensure consistent referential integrity across the data model.
+\end{normative}

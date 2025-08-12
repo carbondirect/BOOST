@@ -1,0 +1,105 @@
+% Complete Entity Reference Appendix
+% Auto-generated from JSON schemas
+
+\subsection{Entity Summary Table}
+\label{sec:entity-summary-generated}
+
+\begin{longtable}{@{}p{0.25\textwidth}p{0.15\textwidth}p{0.45\textwidth}p{0.1\textwidth}@{}}
+\caption{Complete BOOST Entity Summary with Thematic Areas}
+\label{tab:entity-summary}\\
+\toprule
+\textbf{Entity} & \textbf{Thematic Area} & \textbf{Description} & \textbf{Fields} \\
+\midrule
+\endfirsthead
+
+\multicolumn{4}{c}{\textbf{Table \thetable{} (continued): Complete BOOST Entity Summary with Thematic Areas}} \\
+\toprule
+\textbf{Entity} & \textbf{Thematic Area} & \textbf{Description} & \textbf{Fields} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Data Reconciliation & Compliance & Reporting & DataReconciliation entity in BOOST data model & 14 \\
+Energy Carbon Data & Compliance & Reporting & EnergyCarbonData entity in BOOST data model & 18 \\
+LCFS Pathway & Compliance & Reporting & CARB-certified fuel pathway for LCFS compliance with carb... & 15 \\
+LCFS Reporting & Compliance & Reporting & Quarterly LCFS compliance report for regulated entities w... & 18 \\
+Mass Balance Account & Compliance & Reporting & MassBalanceAccount entity in BOOST data model & 8 \\
+Product Group & Compliance & Reporting & ProductGroup entity in BOOST data model & 11 \\
+Biometric Identifier & Core Traceability & BiometricIdentifier entity in BOOST data model & 8 \\
+Location History & Core Traceability & Historical movement records of TRUs & 14 \\
+Material Processing & Core Traceability & Processing operations that transform TRUs with plant part... & 18 \\
+Processing History & Core Traceability & Complete timeline of processing events with moisture trac... & 22 \\
+Traceable Unit & Core Traceability & Unique biomass tracking unit with BOOST traceability syst... & 21 \\
+Geographic Data & Geographic & Tracking & GeographicData entity in BOOST data model & 10 \\
+Tracking Point & Geographic & Tracking & TrackingPoint entity in BOOST data model & 6 \\
+Customer & Material & Supply Chain & Customer entity in BOOST data model & 4 \\
+Equipment & Material & Supply Chain & Equipment entity representing forestry machinery and equi... & 19 \\
+Material & Material & Supply Chain & Material types and specifications & 15 \\
+Species Component & Material & Supply Chain & Species composition within TRUs & 20 \\
+Supplier & Material & Supply Chain & Supplier entity in BOOST data model & 7 \\
+Supply Base & Material & Supply Chain & SupplyBase entity in BOOST data model & 11 \\
+Supply Base Report & Material & Supply Chain & SupplyBaseReport entity in BOOST data model & 9 \\
+BOOST Moisture Content Validation Rules & Measurement & Verification & Comprehensive validation rules and business logic for moi... & 0 \\
+Claim & Measurement & Verification & Claim entity in BOOST data model & 15 \\
+Measurement Record & Measurement & Verification & Quality measurements and dimensional data & 16 \\
+Verification Statement & Measurement & Verification & VerificationStatement entity in BOOST data model & 5 \\
+Audit & Organizational Foundation & Audit entity in BOOST data model & 8 \\
+BOOST Operator Entity Validation Schema & Organizational Foundation & Validation schema for personnel and operator management w... & 13 \\
+Certificate & Organizational Foundation & Certificate entity representing formal certification reco... & 16 \\
+CertificationBody & Organizational Foundation & Certification Body entity representing independent organi... & 11 \\
+CertificationScheme & Organizational Foundation & CertificationScheme entity defining certification standar... & 15 \\
+Organization & Organizational Foundation & Organization entity with geographic data references and c... & 20 \\
+Sales Delivery Document & Transaction Management & SalesDeliveryDocument entity in BOOST data model & 11 \\
+Transaction & Transaction Management & Transaction entity in BOOST data model & 30 \\
+Transaction Batch & Transaction Management & TransactionBatch entity in BOOST data model & 24 \\
+\end{longtable}
+
+\subsection{Entity Relationship Map}
+\label{sec:entity-relationships-generated}
+
+The following table shows all foreign key relationships between entities:
+
+\begin{longtable}{@{}p{0.2\textwidth}p{0.2\textwidth}p{0.2\textwidth}p{0.3\textwidth}@{}}
+\caption{BOOST Entity Relationship Foreign Key Mappings}
+\label{tab:entity-relationships}\\
+\toprule
+\textbf{Source Entity} & \textbf{Field} & \textbf{Target Entity} & \textbf{Description} \\
+\midrule
+\endfirsthead
+
+\multicolumn{4}{c}{\textbf{Table \thetable{} (continued): BOOST Entity Relationship Foreign Key Mappings}} \\
+\toprule
+\textbf{Source Entity} & \textbf{Field} & \textbf{Target Entity} & \textbf{Description} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Audit & \field{auditId} & Audit &  \\
+Audit & \field{organizationId} & Organization &  \\
+Certificate & \field{certificateId} & Certificate & Standard certificate identifier using... \\
+Certificate & \field{OrganizationId} & Organization & Uses EntityNameId convention referenc... \\
+Claim & \field{claimId} & Claim &  \\
+Customer & \field{customerId} & Customer & Unique identifier for the customer \\
+Data Reconciliation & \field{transactionId} & Transaction &  \\
+Equipment & \field{equipmentId} & Equipment & Unique identifier for the equipment \\
+Equipment & \field{organizationId} & Organization & Foreign key to owning organization \\
+Location History & \field{operatorId} & Operator &  \\
+Mass Balance Account & \field{organizationId} & Organization &  \\
+Material Processing & \field{operatorId} & Operator &  \\
+Measurement Record & \field{operatorId} & Operator &  \\
+BOOST Operator Entity Validation Schema & \field{operatorId} & Operator & Unique identifier for the operator (P... \\
+BOOST Operator Entity Validation Schema & \field{OrganizationId} & Organization & Employing organization - uses EntityN... \\
+Organization & \field{organizationId} & Organization & Unique identifier for the organization \\
+Processing History & \field{operatorId} & Operator & Foreign key to operator who performed... \\
+Sales Delivery Document & \field{transactionId} & Transaction &  \\
+Supplier & \field{supplierId} & Supplier &  \\
+Supply Base & \field{OrganizationId} & Organization & Managing organization - uses EntityNa... \\
+Supply Base Report & \field{organizationId} & Organization &  \\
+Traceable Unit & \field{operatorId} & Operator & Foreign key to operator \\
+Tracking Point & \field{operatorId} & Operator &  \\
+Transaction & \field{transactionId} & Transaction & Unique identifier for the business tr... \\
+Transaction & \field{OrganizationId} & Organization & Primary organization involved in tran... \\
+Transaction & \field{CustomerId} & Customer & Customer organization (buyer) - uses ... \\
+Transaction Batch & \field{transactionId} & Transaction & Foreign key to parent business transa... \\
+Transaction Batch & \field{claimId} & Claim & Foreign key to primary sustainability... \\
+\end{longtable}

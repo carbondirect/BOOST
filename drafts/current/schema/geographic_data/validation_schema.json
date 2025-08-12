@@ -19,6 +19,7 @@
       },
       "geographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Unique identifier for the geographic data"
       },
       "geoJsonData": {

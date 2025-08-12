@@ -21,14 +21,17 @@
       },
       "processingHistoryId": {
         "type": "string",
+        "pattern": "^PH-[A-Z0-9-_]+$",
         "description": "Unique identifier for the processing history record"
       },
       "traceableUnitId": {
         "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$",
         "description": "Foreign key to TRU this history record belongs to"
       },
       "materialProcessingId": {
         "type": "string",
+        "pattern": "^MP-[A-Z0-9-_]+$",
         "description": "Foreign key to MaterialProcessing operation"
       },
       "timestamp": {
@@ -81,6 +84,7 @@
       },
       "operatorId": {
         "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$",
         "description": "Foreign key to operator who performed processing"
       },
       "equipmentUsed": {
@@ -114,6 +118,7 @@
       },
       "processingGeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Foreign key to location where processing occurred"
       },
       "previousProcessingHistoryId": {
@@ -121,6 +126,7 @@
           "string",
           "null"
         ],
+        "pattern": "^PH-[A-Z0-9-_]+$",
         "description": "Foreign key to previous processing history record (forms chain)"
       },
       "nextProcessingHistoryIds": {

@@ -19,10 +19,12 @@
       },
       "transactionBatchId": {
         "type": "string",
+        "pattern": "^TB-[A-Z0-9-_]+$",
         "description": "Unique identifier for the physical material batch"
       },
       "transactionId": {
         "type": "string",
+        "pattern": "^TXN-[A-Z0-9-_]+$",
         "description": "Foreign key to parent business transaction"
       },
       "productionBatchId": {
@@ -30,6 +32,7 @@
           "string",
           "null"
         ],
+        "pattern": "^TB-[A-Z0-9-_]+$",
         "description": "Foreign key to source production batch"
       },
       "quantity": {
@@ -63,6 +66,7 @@
           "string",
           "null"
         ],
+        "pattern": "^CLA-[A-Z0-9-_]+$",
         "description": "Foreign key to primary sustainability claim"
       },
       "additionalClaimIds": {
@@ -175,6 +179,7 @@
           "string",
           "null"
         ],
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Foreign key to delivery location"
       },
       "qualityMetrics": {

@@ -1,0 +1,1 @@
+The BOOST data standard involves the exchange of sensitive commercial and operational data across biomass supply chains. Implementations must carefully consider security implications at multiple levels:

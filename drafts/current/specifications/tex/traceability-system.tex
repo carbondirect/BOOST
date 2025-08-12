@@ -1,0 +1,61 @@
+% BOOST Traceability System Section
+% Converted from includes/traceability-system.inc.md
+
+The BOOST Traceability System implements a revolutionary approach to biomass supply chain tracking that eliminates the traditional weak points where traceability is lost during material transfers and processing operations.
+
+\subsection{Key Implementation Features}
+\label{sec:key-implementation-features}
+
+\subsubsection{Media-Interruption-Free Traceability}
+\label{sec:media-interruption-free}
+
+\begin{important}[title=Revolutionary Traceability Approach]
+\TRU{} entities maintain continuous identification through biometric signatures and optical pattern recognition, eliminating dependency on physical tags or attachments that can be lost or damaged during handling and processing operations.
+\end{important}
+
+\subsubsection{Three Critical Tracking Points}
+\label{sec:three-critical-tracking-points}
+
+The system establishes standardized measurement and verification infrastructure at:
+
+\begin{itemize}
+    \item \textbf{\enum{harvest\_site}} - Initial TRU creation with biometric capture and volume measurement
+    \item \textbf{\enum{skid\_road}/\enum{forest\_road}} - Transportation consolidation points with reconciliation validation
+    \item \textbf{\enum{mill\_entrance}} - Processing facility entry points with final verification before transformation
+\end{itemize}
+
+\begin{normative}[title=Critical Tracking Point Requirements]
+Implementations \MUST{} support measurement and verification at all three critical tracking points to ensure complete traceability chain integrity.
+\end{normative}
+
+\subsubsection{Multi-Species Support}
+\label{sec:multi-species-support}
+
+Species-specific tracking capabilities enable:
+
+\begin{itemize}
+    \item Individual species identification within mixed material flows
+    \item Species-specific sustainability claim application and inheritance
+    \item Detailed composition tracking with percentage validation
+    \item Regulatory compliance for jurisdiction-specific species requirements
+\end{itemize}
+
+\begin{informative}[title=Species Composition Validation]
+\coretraceability{SpeciesComponent} entities provide detailed composition tracking with automatic percentage validation to ensure accuracy in multi-species materials.
+\end{informative}
+
+\subsubsection{Complete Processing Chain Documentation}
+\label{sec:processing-chain-documentation}
+
+\coretraceability{MaterialProcessing} entities provide comprehensive audit trails by:
+
+\begin{itemize}
+    \item Linking input TRUs to output TRUs for every transformation
+    \item Tracking plant part changes and transformations during processing
+    \item Validating volume and mass conservation across processing steps
+    \item Supporting split and merge operations with complete genealogy tracking
+\end{itemize}
+
+\begin{normative}[title=Processing Chain Requirements]
+All material transformations \MUST{} be documented through \entity{MaterialProcessing} entities that maintain complete input-to-output traceability with validated volume and mass conservation.
+\end{normative}

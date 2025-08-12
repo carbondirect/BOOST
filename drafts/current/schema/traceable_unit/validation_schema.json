@@ -21,6 +21,7 @@
       },
       "traceableUnitId": {
         "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$",
         "description": "Unique ID for each TRU"
       },
       "unitType": {
@@ -44,10 +45,12 @@
       },
       "currentGeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Current location - uses EntityNameId convention referencing GeographicData"
       },
       "harvestGeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Harvest location - uses EntityNameId convention referencing GeographicData"
       },
       "createdTimestamp": {
@@ -62,10 +65,12 @@
       },
       "operatorId": {
         "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$",
         "description": "Foreign key to operator"
       },
       "materialTypeId": {
         "type": "string",
+        "pattern": "^MAT-[A-Z0-9-_]+$",
         "description": "Foreign key to Material entity (reference table)"
       },
       "assortmentType": {
@@ -156,7 +161,8 @@
       "createdTimestamp",
       "harvesterId",
       "materialTypeId",
-      "isMultiSpecies"
+      "isMultiSpecies",
+      "harvestGeographicDataId"
     ]
   },
   "rules": {
@@ -271,7 +277,7 @@
         "field": "harvestGeographicDataId", 
         "targetEntity": "GeographicData",
         "relationshipType": "many-to-one",
-        "required": false,
+        "required": true,
         "label": "harvested at",
         "example": "TRU-123 was harvested at 'Olympic Forest Block 7A'"
       },

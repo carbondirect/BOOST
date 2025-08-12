@@ -1,0 +1,379 @@
+# Transaction
+
+## Transaction
+
+### Overview
+The `Transaction` entity manages comprehensive business transactions within the BOOST traceability system. Transactions represent formal business agreements for the transfer of biomass materials, wood products, or energy feedstocks between organizations. This entity integrates financial management, regulatory compliance, supply chain traceability, risk management, and contract administration to support complete transaction lifecycle management across complex supply chain operations.
+
+### Fields
+
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`transactionId`
+<td>string
+<td>Yes
+<td>Unique identifier for the business transaction (primary key)
+<td>`TXN-001`, `TXN-PACIFIC-2024-001`
+</tr>
+<tr>
+<td>`OrganizationId`
+<td>string (FK)
+<td>Yes
+<td>Primary organization involved in transaction (seller/supplier)
+<td>`ORG-PACIFIC-FOREST-001`, `ORG-KLAMATH-HARVEST`
+</tr>
+<tr>
+<td>`CustomerId`
+<td>string (FK)
+<td>Yes
+<td>Customer organization (buyer)
+<td>`CUST-GREEN-ENERGY-CORP`, `CUST-PACIFIC-PAPER-MILLS`
+</tr>
+<tr>
+<td>`transactionDate`
+<td>string (date)
+<td>Yes
+<td>Date of business agreement
+<td>`2024-03-15`, `2024-07-22`
+</tr>
+<tr>
+<td>`SalesDeliveryDocumentId`
+<td>string (FK)
+<td>No
+<td>Foreign key to sales/delivery documentation
+<td>`SDD-PACIFIC-DELIVERY-2024-001`, `SDD-BIOMASS-SHIPMENT-789`
+</tr>
+<tr>
+<td>`contractValue`
+<td>number
+<td>Yes
+<td>Total monetary value of the transaction
+<td>`125000.00`, `2500000.50`, `850000.00`
+</tr>
+<tr>
+<td>`contractCurrency`
+<td>string
+<td>Yes
+<td>Currency code for contract value (enum)
+<td>`USD`, `EUR`, `CAD`, `GBP`
+</tr>
+<tr>
+<td>`contractTerms`
+<td>string
+<td>No
+<td>Incoterms delivery conditions (enum)
+<td>`FOB`, `CIF`, `DDP`, `EXW`, `FCA`
+</tr>
+<tr>
+<td>`paymentTerms`
+<td>string
+<td>No
+<td>Payment conditions and timeline
+<td>`Net 30 days`, `50% down, balance on delivery`, `Letter of credit`
+</tr>
+<tr>
+<td>`transactionStatus`
+<td>string
+<td>Yes
+<td>Current status of business transaction (enum)
+<td>`pending`, `confirmed`, `delivered`, `completed`, `cancelled`
+</tr>
+<tr>
+<td>`GeographicDataId`
+<td>string (FK)
+<td>No
+<td>Primary transaction location
+<td>`GEO-MILL-ENTRANCE-001`, `GEO-PORT-EXPORT-TERMINAL`
+</tr>
+<tr>
+<td>`BrokerOrganizationId`
+<td>string (FK)
+<td>No
+<td>Optional intermediary broker organization
+<td>`ORG-TIMBER-BROKER-PACIFIC`, `ORG-BIOMASS-TRADING-001`
+</tr>
+<tr>
+<td>`contractSignedDate`
+<td>string (date)
+<td>No
+<td>Date when contract was executed
+<td>`2024-03-10`, `2024-07-18`
+</tr>
+<tr>
+<td>`expectedDeliveryDate`
+<td>string (date)
+<td>No
+<td>Expected completion/delivery date
+<td>`2024-04-15`, `2024-08-30`
+</tr>
+<tr>
+<td>`complianceRequirements`
+<td>array&lt;string&gt;
+<td>No
+<td>Regulatory compliance requirements for transaction
+<td>`["FSC_Chain_of_Custody", "LCFS_Reporting", "SBP_DTS_Registration"]`
+</tr>
+<tr>
+<td>`LcfsPathwayId`
+<td>string (FK)
+<td>No
+<td>CARB-certified pathway identifier for LCFS compliance
+<td>`CA-RD-001-Tier1-Bio`, `CA-ET-002-LookupTable`
+</tr>
+<tr>
+<td>`fuelVolume`
+<td>number
+<td>No
+<td>Volume of fuel in transaction for LCFS reporting
+<td>`50000.0`, `125000.5`, `2500000.0`
+</tr>
+<tr>
+<td>`fuelVolumeUnit`
+<td>string
+<td>No
+<td>Unit of measurement for fuel volume (enum)
+<td>`gallons`, `liters`, `GGE`
+</tr>
+<tr>
+<td>`fuelCategory`
+<td>string
+<td>No
+<td>Category of fuel for LCFS classification (enum)
+<td>`renewable_diesel`, `ethanol`, `sustainable_aviation_fuel`, `biodiesel`
+</tr>
+<tr>
+<td>`reportingPeriod`
+<td>string
+<td>No
+<td>LCFS reporting quarter in YYYY-QN format
+<td>`2024-Q1`, `2024-Q3`, `2025-Q2`
+</tr>
+<tr>
+<td>`regulatedPartyRole`
+<td>string
+<td>No
+<td>Role of regulated party in LCFS transaction (enum)
+<td>`producer`, `importer`, `blender`, `distributor`
+</tr>
+<tr>
+<td>`traceableUnitIds`
+<td>array&lt;string&gt;
+<td>No
+<td>TRUs included in this transaction
+<td>`["TRU-LOG-001", "TRU-PILE-002", "TRU-BATCH-003"]`
+</tr>
+<tr>
+<td>`reconciliationStatus`
+<td>string
+<td>No
+<td>Transaction reconciliation status (enum)
+<td>`pending`, `resolved`, `disputed`
+</tr>
+<tr>
+<td>`trackingPointIds`
+<td>array&lt;string&gt;
+<td>No
+<td>Location trail references
+<td>`["TP-HARVEST-001", "TP-FOREST-ROAD-002", "TP-MILL-ENTRANCE-003"]`
+</tr>
+<tr>
+<td>`speciesCompositionAtTransaction`
+<td>array&lt;object&gt;
+<td>No
+<td>Species breakdown at transaction time
+<td>`[{"species": "Douglas Fir", "percentage": 65.0}, {"species": "Hemlock", "percentage": 35.0}]`
+</tr>
+<tr>
+<td>`@id`
+<td>string (uri)
+<td>Yes
+<td>Unique URI identifier for JSON-LD
+<td>`https://github.com/carbondirect/BOOST/schemas/transaction/TXN-001`
+</tr>
+</tbody>
+</table>
+
+### Transaction Status Workflow
+
+1. **pending**
+    - Initial transaction creation and negotiation phase
+    - Contract terms under discussion
+    - Awaiting final approvals and signatures
+    - No material transfer or payment processing
+
+2. **confirmed**
+    - Contract signed and terms finalized
+    - Transaction authorized for execution
+    - Material preparation and logistics coordination
+    - Payment processing initiated according to terms
+
+3. **delivered**
+    - Materials physically delivered to customer
+    - Delivery documentation completed and verified
+    - Quality inspection and acceptance procedures
+    - Awaiting final payment and transaction closure
+
+4. **completed**
+    - All contract obligations fulfilled
+    - Payment processed and received
+    - Documentation finalized and archived
+    - Transaction closed with full compliance
+
+5. **cancelled**
+    - Transaction terminated before completion
+    - Cancellation terms and penalties applied
+    - Partial deliveries and payments reconciled
+    - Documentation updated for audit trail
+
+6. **disputed**
+    - Transaction issues under dispute resolution
+    - Quality, quantity, or delivery discrepancies
+    - Legal or arbitration proceedings active
+    - Resolution pending with partial execution
+
+### Financial Terms Management
+
+1. **Contract Value Structure**
+    - Base price per unit or total contract value
+    - Currency specification and exchange rate handling
+    - Price adjustments for quality variations
+    - Volume-based pricing tiers and discounts
+
+2. **Payment Terms**
+    - Payment schedule and milestone requirements
+    - Down payment and progress payment structures
+    - Payment methods and processing procedures
+    - Late payment penalties and interest charges
+
+3. **Risk Management**
+    - Force majeure clauses and conditions
+    - Quality guarantees and performance bonds
+    - Insurance requirements and coverage
+    - Dispute resolution mechanisms and procedures
+
+4. **Financial Controls**
+    - Credit limits and approval authorities
+    - Payment security and collateral requirements
+    - Multi-currency transaction management
+    - Financial reporting and audit trail requirements
+
+### LCFS Compliance Integration
+
+1. **Pathway Management**
+    - CARB-certified pathway identification and validation
+    - Carbon intensity value assignment and tracking
+    - Energy economy ratio calculations
+    - Regulatory benchmark comparison and compliance
+
+2. **Fuel Classification**
+    - Renewable fuel category determination
+    - Advanced biofuel qualification assessment
+    - Low carbon fuel standard compliance verification
+    - California Air Resources Board reporting requirements
+
+3. **Credit Calculations**
+    - LCFS credit generation calculations
+    - Fuel volume and energy content verification
+    - Lifecycle emission reductions quantification
+    - Quarterly reporting aggregation and submission
+
+4. **Regulated Party Compliance**
+    - Producer, importer, blender role identification
+    - Compliance obligation calculation and tracking
+    - Credit trading and banking system integration
+    - Annual compliance demonstration requirements
+
+### Supply Chain Integration
+
+1. **TRU Traceability**
+    - Complete traceable unit inclusion and tracking
+    - Species composition documentation and verification
+    - Processing history and transformation tracking
+    - Quality specifications and grade compliance
+
+2. **Tracking Point Coordination**
+    - Multi-point location tracking and verification
+    - Chain of custody maintenance across locations
+    - Media-interruption-free tracking validation
+    - Geographic verification and compliance
+
+3. **Processing Integration**
+    - Material processing coordination and scheduling
+    - Quality control and specification compliance
+    - Volume reconciliation and measurement validation
+    - Processing facility integration and coordination
+
+4. **Documentation Management**
+    - Sales and delivery document coordination
+    - Certificate and compliance documentation
+    - Audit trail maintenance and verification
+    - Regulatory reporting and submission coordination
+
+### Example Use Cases
+
+1. **Renewable Diesel Feedstock Transaction**
+    - Transaction: Large-scale used cooking oil supply contract
+    - LCFS Compliance: Tier 1 pathway with verified carbon intensity
+    - Financial Terms: $2.5M contract with quarterly deliveries
+    - Traceability: Complete supply chain documentation from collection to processing
+    - Compliance: CARB LCFS reporting with verified sustainability claims
+
+2. **Export Lumber Transaction**
+    - Transaction: Container shipment of certified lumber to international customer
+    - Certification: FSC Chain of Custody with species-specific claims
+    - Financial Terms: Letter of credit with FOB shipping terms
+    - Traceability: Individual log tracking from forest to port
+    - Compliance: Phytosanitary certification and export documentation
+
+3. **Biomass Energy Supply Agreement**
+    - Transaction: Long-term biomass fuel supply contract
+    - SBP Compliance: Sustainable biomass partnership verification
+    - Financial Terms: Multi-year agreement with price escalation clauses
+    - Traceability: Supply base reporting and mass balance tracking
+    - Compliance: Regional risk assessment and mitigation measures
+
+### Validation Rules
+
+1. **Transaction Requirements**
+    - transactionId must be unique across system
+    - OrganizationId and CustomerId must reference valid entities
+    - contractValue must be positive number
+    - transactionStatus must follow valid workflow progression
+
+2. **Financial Consistency**
+    - contractCurrency must be supported currency code
+    - Payment terms must be realistic and enforceable
+    - Contract value must align with material quantities and market rates
+    - Financial terms must comply with applicable regulations
+
+3. **LCFS Integration**
+    - LcfsPathwayId must reference valid CARB-certified pathway
+    - Fuel category must align with pathway feedstock specifications
+    - Fuel volume must be consistent with TRU quantities
+    - Reporting period must be current or future quarter
+
+4. **Supply Chain Consistency**
+    - traceableUnitIds must reference valid TRUs available for transaction
+    - trackingPointIds must represent logical supply chain progression
+    - Species composition must align with TRU species data
+    - Geographic locations must be consistent with operational areas
+
+### Relationships
+- Transaction between one Organization (seller) and one Customer (buyer)
+- Transaction may involve one Broker Organization for intermediary services
+- Transaction documented by one SalesDeliveryDocument
+- Transaction conducted at one primary GeographicData location
+- Transaction includes multiple TraceableUnits for material transfer
+- Transaction tracked through multiple TrackingPoints for chain of custody
+- Transaction may reference one LCFSPathway for regulatory compliance
+- Transaction enables reconciliation through DataReconciliation processes

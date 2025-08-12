@@ -18,7 +18,8 @@
         "format": "uri"
       },
       "energyCarbonDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^ECD-[A-Z0-9-_]+$"
       },
       "dataType": {
         "type": "string",
@@ -72,17 +73,20 @@
         ]
       },
       "traceableUnitId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$"
       },
       "measurementRecordId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^MR-[A-Z0-9-_]+$"
       },
       "measurementTimestamp": {
         "type": "string",
         "format": "date-time"
       },
       "measurementGeographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$"
       },
       "temperatureConditions": {
         "type": "number"

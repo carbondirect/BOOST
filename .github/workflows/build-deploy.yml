@@ -1,0 +1,344 @@
+name: 🚀 Build & Deploy Documentation
+
+on:
+  push:
+    branches: 
+      - main                    # Full build + deploy
+      - develop                 # Build only (no deploy)
+      - 'feature/**'           # Build only (no deploy)  
+      - 'fix/**'               # Build only (no deploy)
+      - 'docs/**'              # Build only (no deploy)
+    paths:
+      - 'drafts/current/specifications/**'
+      - 'drafts/current/schema/**'
+      - '.github/workflows/**'
+
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to GitHub Pages (main branch only)'
+        required: false
+        type: boolean
+        default: false
+
+# Ensure only one build runs at a time
+concurrency:
+  group: build-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  BOOST_DOC_VERSION: ${{ github.ref_name }}
+
+jobs:
+  build-documentation:
+    name: 📚 Build Documentation
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-version.outputs.version }}
+      build-timestamp: ${{ steps.extract-version.outputs.timestamp }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full git history for version extraction
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            python3-pip \
+            python3-pygments \
+            texlive-latex-base \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-fonts-extra
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install bikeshed jsonschema pydantic[email] requests
+
+      - name: Initialize Bikeshed
+        run: |
+          bikeshed update
+
+      - name: Extract version information
+        id: extract-version
+        run: |
+          cd drafts/current/specifications
+          
+          # Extract version using same logic as build script
+          if git rev-parse --git-dir >/dev/null 2>&1; then
+              VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
+              if [ -z "$VERSION" ]; then
+                  SHORT_HASH=$(git rev-parse --short HEAD)
+                  VERSION="v0.0.0-${SHORT_HASH}"
+                  echo "No git tags found, using commit hash: $VERSION"
+              else
+                  echo "Using git tag: $VERSION"
+              fi
+          else
+              VERSION="v2.9.0"
+              echo "Not a git repository, using fallback: $VERSION"
+          fi
+          
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          
+          echo "::notice title=Build Version::Building BOOST Documentation $VERSION"
+
+      - name: Run comprehensive schema validation
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🔍 Running comprehensive schema validation..."
+          python3 ../../../.github/scripts/validate-schemas.py
+
+      - name: Build HTML documentation
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🏗️ Building HTML documentation..."
+          echo "📋 Branch: ${{ github.ref_name }}"
+          echo "🎯 Build type: ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}"
+          chmod +x build-spec.sh
+          ./build-spec.sh
+
+      - name: Validate build output
+        working-directory: drafts/current/specifications
+        run: |
+          # Comprehensive validation of build output
+          echo "🔍 Validating build output..."
+          
+          # Check HTML generation
+          if [ ! -f "boost-spec.html" ]; then
+            echo "❌ boost-spec.html was not generated"
+            exit 1
+          fi
+          
+          HTML_SIZE=$(wc -c < boost-spec.html)
+          echo "📊 Generated HTML size: $(echo $HTML_SIZE | numfmt --to=iec-i --suffix=B)"
+          
+          if [ "$HTML_SIZE" -lt 200000 ]; then
+            echo "❌ Generated HTML file is too small ($HTML_SIZE bytes)"
+            exit 1
+          fi
+          
+          # Validate HTML content
+          if ! grep -q "BOOST" boost-spec.html; then
+            echo "❌ Generated HTML missing BOOST content"
+            exit 1
+          fi
+          
+          # Check for ReSpec styling
+          if ! grep -q "main-content-wrapper" boost-spec.html; then
+            echo "❌ ReSpec styling not applied correctly"
+            exit 1
+          fi
+          
+          # Validate ERD Navigator
+          if [ ! -f "erd-navigator/index.html" ]; then
+            echo "❌ ERD Navigator missing"
+            exit 1
+          fi
+          
+          if [ ! -f "erd-navigator/erd-config.json" ]; then
+            echo "❌ ERD Navigator configuration missing"
+            exit 1
+          fi
+          
+          # Check schema count
+          SCHEMA_COUNT=$(find ../schema -name "validation_schema.json" | wc -l)
+          echo "📊 Total schemas: $SCHEMA_COUNT"
+          
+          if [ "$SCHEMA_COUNT" -lt 30 ]; then
+            echo "⚠️ Schema count lower than expected ($SCHEMA_COUNT)"
+          fi
+          
+          echo "✅ Build output validation passed"
+
+      - name: Build PDF documentation (development branches)
+        if: github.ref != 'refs/heads/main'
+        working-directory: drafts/current/specifications
+        run: |
+          echo "📄 Building PDF documentation for development branch..."
+          
+          # Install additional LaTeX packages if needed
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+          
+          # Try LaTeX build first
+          if [ -f "boost-spec.tex" ]; then
+            echo "🔧 Building PDF from LaTeX..."
+            echo "📄 Running first LaTeX pass..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX first pass failed"
+            echo "📄 Running second LaTeX pass (for TOC, LOF, LOT)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX second pass failed"
+            echo "📄 Running third LaTeX pass (for cross-references)..."
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX third pass failed, trying Pandoc..."
+          fi
+          
+          # Fallback to Pandoc HTML->PDF conversion
+          if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
+            echo "🔄 Converting HTML to PDF with Pandoc..."
+            
+            # Create clean HTML for PDF conversion using external script
+            python3 ../../../.github/scripts/clean-html-for-pdf.py boost-spec.html boost-spec-clean.html
+            
+            # Generate PDF with Pandoc
+            pandoc boost-spec-clean.html \
+              -o "boost-spec-dev-${{ github.ref_name }}.pdf" \
+              --pdf-engine=xelatex \
+              --from=html \
+              --to=pdf \
+              --metadata title="BOOST Data Standard (Dev: ${{ github.ref_name }})" \
+              --metadata author="BOOST Consortium" \
+              --metadata date="$(date +%Y-%m-%d)" \
+              --toc \
+              --toc-depth=3 \
+              --number-sections \
+              || echo "⚠️ PDF generation failed"
+            
+            rm -f boost-spec-clean.html
+            
+            if [ -f "boost-spec-dev-${{ github.ref_name }}.pdf" ]; then
+              echo "✅ PDF generated: boost-spec-dev-${{ github.ref_name }}.pdf"
+            else
+              echo "❌ PDF generation failed"
+            fi
+          fi
+
+      - name: Generate build report
+        working-directory: drafts/current/specifications
+        run: |
+          echo "📋 Generating build report..."
+          cat > build-report.md << EOF
+          # BOOST Documentation Build Report
+          
+          **Version:** ${{ steps.extract-version.outputs.version }}
+          **Build Time:** ${{ steps.extract-version.outputs.timestamp }}
+          **Commit:** ${GITHUB_SHA::8}
+          **Branch:** ${GITHUB_REF_NAME}
+          **Build Type:** ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}
+          
+          ## Build Statistics
+          
+          - **HTML Size:** $(wc -c < boost-spec.html | numfmt --to=iec-i --suffix=B)
+          - **Schema Files:** $(find ../schema -name "validation_schema.json" | wc -l)
+          - **Dictionary Files:** $(find ../schema -name "*_dictionary.md" | wc -l)
+          - **Include Modules:** $(find includes -name "*.md" | wc -l)
+          
+          ## Generated Artifacts
+          
+          - ✅ HTML Documentation (boost-spec.html)
+          - ✅ ERD Navigator (erd-navigator/)  
+          - ✅ Schema Files (../schema/)
+          - ✅ ReSpec Styling Applied
+          
+          ## Validation Results
+          
+          - ✅ Schema Validation Passed
+          - ✅ FK Integrity Validation Passed  
+          - ✅ HTML Generation Successful
+          - ✅ Content Validation Passed
+          EOF
+          
+          echo "📋 Build Report Generated"
+          cat build-report.md
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: boost-documentation-${{ steps.extract-version.outputs.version }}-${{ github.ref_name }}
+          path: |
+            drafts/current/specifications/boost-spec.html
+            drafts/current/specifications/boost-spec-dev-*.pdf
+            drafts/current/specifications/boost-spec.pdf
+            drafts/current/specifications/build-report.md
+            drafts/current/specifications/erd-navigator/
+            drafts/current/schema/
+          retention-days: ${{ github.ref == 'refs/heads/main' && 30 || 7 }}
+
+  deploy-github-pages:
+    name: 🌐 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build-documentation
+    if: github.ref == 'refs/heads/main'
+    
+    # Grant write permissions for Pages deployment
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: boost-documentation-${{ needs.build-documentation.outputs.version }}-${{ github.ref_name }}
+          path: ./build-output
+
+      - name: Prepare Pages deployment
+        run: |
+          mkdir -p ./pages-content
+          
+          # Copy main documentation
+          cp -r build-output/drafts/current/specifications/* ./pages-content/
+          
+          # Copy schema files  
+          cp -r build-output/drafts/current/schema ./pages-content/
+          
+          # Create index.html redirect
+          cat > ./pages-content/index.html << EOF
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <meta charset="utf-8">
+              <title>BOOST Data Standard Documentation</title>
+              <meta http-equiv="refresh" content="0; url=./boost-spec.html">
+              <link rel="canonical" href="./boost-spec.html">
+          </head>
+          <body>
+              <h1>BOOST Data Standard Documentation</h1>
+              <p><a href="./boost-spec.html">Click here if you are not redirected automatically</a></p>
+          </body>
+          </html>
+          EOF
+          
+          # Add version info
+          echo "${{ needs.build-documentation.outputs.version }}" > ./pages-content/VERSION
+          echo "${{ needs.build-documentation.outputs.build-timestamp }}" > ./pages-content/BUILD_TIME
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./pages-content
+
+      - name: Deploy to GitHub Pages  
+        id: deployment
+        uses: actions/deploy-pages@v2
+
+      - name: Update deployment status
+        run: |
+          echo "🌐 Documentation deployed to: ${{ steps.deployment.outputs.page_url }}"
+          echo "📚 BOOST Specification: ${{ steps.deployment.outputs.page_url }}boost-spec.html"
+          echo "🔍 ERD Navigator: ${{ steps.deployment.outputs.page_url }}erd-navigator/"

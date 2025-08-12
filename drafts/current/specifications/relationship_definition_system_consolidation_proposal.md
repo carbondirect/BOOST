@@ -149,7 +149,7 @@ class ERDConfigGenerator:
    - Create validation rules for relationship definitions
 
 3. **Update Schema Metadata**
-   - Enhance all 32 entity schemas with complete relationship information
+   - Enhance all 33 entity schemas with complete relationship information
    - Ensure bidirectional consistency (A→B implies B←A where appropriate)
    - Add missing relationships discovered in ERD config
 
@@ -166,7 +166,7 @@ class ERDConfigGenerator:
 
 3. **Validation and Testing**
    - Verify generated ERD config produces identical visualization
-   - Test with all 32 entities and current relationship set
+   - Test with all 33 entities and current relationship set
    - Ensure no relationships are lost or misconfigured
 
 ### Phase 3: Integration and Migration (Week 5)
