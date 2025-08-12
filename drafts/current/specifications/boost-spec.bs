@@ -432,12 +432,6 @@ path: schema/measurement_record/measurement_record_dictionary.md
 path: schema/tracking_point/tracking_point_dictionary.md
 </pre>
 
-### ProcessingHistory ### {#processing-history}
-
-<pre class=include>
-path: schema/processing_history/processing_history_dictionary.md
-</pre>
-
 ### DataReconciliation ### {#data-reconciliation}
 
 <pre class=include>
