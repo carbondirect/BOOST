@@ -7,10 +7,8 @@
 % Utilizes boost-spec.sty package for professional W3C formatting
 % Version: 3.0.9 - GitHub Actions Workflow Optimization and Enhanced Entity Documentation
 
-\usepackage{boost-spec-minimal}
+\usepackage{boost-spec}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
 % \usepackage{microtype}  % Commented out - causes font expansion issues in CI
 \usepackage{float}
 \usepackage{graphicx}
@@ -202,27 +200,32 @@ BOOST builds upon and integrates with established standards including:
 \label{sec:schema-definitions}
 \input{tex/schema-definitions}
 
-% Chapter 8: Serialization and Exchange
+% Chapter 8: Python Reference Implementation
+\section{Python Reference Implementation}
+\label{sec:python-implementation}
+\input{tex/python-implementation}
+
+% Chapter 9: Serialization and Exchange
 \section{Serialization and Exchange}
 \label{sec:serialization}
 \input{tex/serialization}
 
-% Chapter 9: Use Cases and Requirements
+% Chapter 10: Use Cases and Requirements
 \section{Use Cases and Requirements}
 \label{sec:use-cases}
 \input{tex/use-cases}
 
-% Chapter 10: Examples
+% Chapter 11: Examples
 \section{Examples}
 \label{sec:examples}
 \input{tex/examples}
 
-% Chapter 11: Resources \& Community
+% Chapter 12: Resources \& Community
 \section{Resources \& Community}
 \label{sec:resources-community}
 \input{tex/resources-community}
 
-% Chapter 12: Security Considerations
+% Chapter 13: Security Considerations
 \section{Security Considerations}
 \label{sec:security}
 \input{tex/security-considerations}
