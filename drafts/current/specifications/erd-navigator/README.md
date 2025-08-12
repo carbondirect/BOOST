@@ -5,7 +5,7 @@ This directory contains the interactive Entity Relationship Diagram navigator fo
 ## Purpose
 
 The Interactive ERD Navigator provides a comprehensive interface for stakeholders to:
-- **Explore** the complete BOOST data model with 29 entities across 7 thematic areas
+- **Explore** the complete BOOST data model with 33 entities across 7 thematic areas
 - **Navigate** directly to GitHub discussions via purple chat icons in each entity
 - **Filter** entities by thematic areas (Core Traceability, Organizational, Material & Supply, etc.)
 - **Provide feedback** without requiring deep technical knowledge of GitHub or version control
@@ -20,7 +20,7 @@ The Interactive ERD Navigator provides a comprehensive interface for stakeholder
 
 ### 💬 Direct Discussion Access
 - **Purple Chat Icons**: Each entity header has a 💬 icon linking directly to its GitHub discussion
-- **Complete Coverage**: All 29 entities have dedicated discussion threads (#90-107, #166-179)
+- **Complete Coverage**: All 33 entities have dedicated discussion threads (#90-107, #166-179, plus additional threads)
 - **Schema Integration**: Discussions include complete field definitions and validation requirements
 
 ### 🏗️ Advanced Visualization
@@ -125,7 +125,7 @@ This interactive navigator replaced the previous static Mermaid-based ERD system
 - **Dynamic schema integration** vs static entity definitions
 - **Interactive filtering and exploration** vs fixed view
 - **Direct discussion access** vs separate entity link sections  
-- **29 entities** vs previous 16 entities
+- **33 entities** vs previous 16 entities
 - **Advanced decluttering** with TraceableUnit focus mode
 
 The site maintains full backward compatibility and integrates seamlessly with the existing GitHub Pages setup.

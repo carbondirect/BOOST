@@ -1,1 +1,1 @@
-The BOOST data model defines 29 core entities organized into 7 thematic areas. Each entity serves a specific purpose in the biomass supply chain tracking ecosystem and maintains relationships with other entities to ensure complete traceability.
+The BOOST data model defines 33 core entities organized into 7 thematic areas. Each entity serves a specific purpose in the biomass supply chain tracking ecosystem and maintains relationships with other entities to ensure complete traceability.

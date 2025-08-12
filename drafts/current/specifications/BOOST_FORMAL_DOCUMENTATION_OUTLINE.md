@@ -10,7 +10,7 @@
 
 ## Abstract
 
-The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 29 interconnected entities organized into 7 thematic areas.
+The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.
 
 ## Status of This Document
 
@@ -80,7 +80,7 @@ Implementations claiming BOOST Extended conformance MUST support Core conformanc
 
 #### 2.1.3 BOOST Full Conformance
 Implementations claiming BOOST Full conformance MUST support Extended conformance plus:
-- All 29 BOOST entities
+- All 33 BOOST entities
 - Complete business logic validation
 - Multi-certification scheme support
 - LCFS regulatory integration
@@ -125,7 +125,7 @@ All material transformations MUST be documented through:
 ## 4. Data Model Architecture *(Normative)*
 
 ### 4.1 Entity-Relationship Overview
-The BOOST data model consists of 29 interconnected entities organized into 7 thematic areas:
+The BOOST data model consists of 33 interconnected entities organized into 7 thematic areas:
 
 1. **Core Traceability** (9 entities) - Central tracking infrastructure
 2. **Organizational Foundation** (4 entities) - Business entities and certifications  
@@ -425,7 +425,7 @@ Special recognition to the contributors of the Interactive ERD Navigator, Python
 
 ## Appendix A: Complete Entity Schema Registry *(Informative)*
 
-[Complete definitions of all 29 BOOST entities with required fields, optional fields, relationships, and examples]
+[Complete definitions of all 33 BOOST entities with required fields, optional fields, relationships, and examples]
 
 ## Appendix B: Implementation Examples *(Informative)*
 

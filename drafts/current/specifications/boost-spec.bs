@@ -7,7 +7,7 @@ Date: 2025-08-11
 !Version: {{VERSION}}
 Editor: Peter Tittmann, Carbon Direct, peter@carbondirect.org
 Editor: BOOST W3C Community Group, public-boost-01@w3.org
-Abstract: The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 29 interconnected entities organized into 7 thematic areas.
+Abstract: The Biomass Open-Source Traceability (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.
 Markup Shorthands: markdown yes
 </pre>
 
@@ -186,7 +186,7 @@ Implementations claiming BOOST Extended conformance MUST support Core conformanc
 ### BOOST Full Conformance ### {#full-conformance}
 
 Implementations claiming BOOST Full conformance MUST support Extended conformance plus:
-- All 29 BOOST entities
+- All 33 BOOST entities
 - Complete business logic validation
 - Multi-certification scheme support
 - LCFS regulatory integration
