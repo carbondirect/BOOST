@@ -47,6 +47,14 @@ jobs:
         with:
           fetch-depth: 0  # Need full git history for version extraction
 
+      - name: Verify containerized environment
+        run: |
+          echo "🐳 Docker containerized build environment"
+          echo "Python version: $(python3 --version)"
+          echo "Bikeshed version: $(bikeshed --version)"
+          echo "TeXLive available: $(which pdflatex && echo 'Yes' || echo 'No')"
+          echo "Pandoc version: $(pandoc --version | head -1)"
+
       - name: Extract version information
         id: extract-version
         run: |
