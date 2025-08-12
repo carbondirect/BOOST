@@ -151,7 +151,7 @@
   },
   "boost_metadata": {
     "entity": {
-      "name": "LCFSPathway",
+      "name": "LcfsPathway",
       "primaryKey": "pathwayId",
       "area": "compliance_reporting",
       "description": "LCFS pathway definitions for fuel lifecycle tracking"

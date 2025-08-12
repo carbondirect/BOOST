@@ -6,10 +6,10 @@
     "description": "Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard",
     "type": "object",
     "properties": {
-      "validationId": {
+      "moistureContentId": {
         "type": "string",
-        "pattern": "^MCV-[A-Z0-9-_]+$",
-        "description": "Unique identifier for moisture content validation record"
+        "pattern": "^MOI-[A-Z0-9-_]+$",
+        "description": "Unique identifier for moisture content record"
       },
       "moistureContent": {
         "$ref": "#/definitions/moistureContentValue"
@@ -21,7 +21,7 @@
         "$ref": "#/definitions/moistureQualityAssurance"
       }
     },
-    "required": ["validationId", "moistureContent", "measurementMethod"],
+    "required": ["moistureContentId", "moistureContent", "measurementMethod"],
     "definitions": {
       "moistureContentValue": {
         "type": "number",
@@ -221,8 +221,8 @@
   },
   "boost_metadata": {
     "entity": {
-      "name": "MoistureContentValidation",
-      "primaryKey": "validationId",
+      "name": "MoistureContent",
+      "primaryKey": "moistureContentId",
       "area": "measurement_verification",
       "description": "Moisture content validation rules and business logic"
     },

@@ -239,7 +239,7 @@
   },
   "boost_metadata": {
     "entity": {
-      "name": "LCFSReporting",
+      "name": "LcfsReporting",
       "primaryKey": "reportingId",
       "area": "compliance_reporting",
       "description": "LCFS compliance reports for regulated entities"
