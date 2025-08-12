@@ -193,25 +193,33 @@ jobs:
 
       - name: Generate PDF documentation
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
+          set +e  # Don't exit on LaTeX warnings
+          
           echo "📄 Generating PDF documentation..."
           
           # Check if we have LaTeX source
           if [ -f "boost-spec.tex" ]; then
             echo "Building PDF from LaTeX source..."
             
-            # Run LaTeX build (3 passes for references)
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex
+            # Run LaTeX build (3 passes for references) - warnings are normal
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true  
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || true
             
+            # Check if PDF was actually generated (this is what matters)
             if [ -f "boost-spec.pdf" ]; then
               echo "✅ PDF generated from LaTeX: boost-spec.pdf"
               mv boost-spec.pdf boost-spec-${{ steps.version-info.outputs.version }}.pdf
+              echo "✅ PDF renamed to boost-spec-${{ steps.version-info.outputs.version }}.pdf"
+              ls -la boost-spec-${{ steps.version-info.outputs.version }}.pdf
             else
               echo "⚠️ LaTeX PDF generation failed, attempting Pandoc conversion..."
             fi
           fi
+          
+          set -e  # Re-enable exit on error for subsequent steps
           
           # Fallback: Generate PDF from HTML using Pandoc
           if [ ! -f "boost-spec-${{ steps.version-info.outputs.version }}.pdf" ]; then

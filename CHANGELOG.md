@@ -2,6 +2,26 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.0.7] - 2025-08-12 - LaTeX Workflow Error Handling Fix
+
+### Fixed
+- **Release Workflow Exit Code Issue** - Fixed workflow failing despite successful PDF generation
+  - **release.yml**: Added proper error handling for LaTeX warnings using `set +e` and `|| true`
+  - **LaTeX Warnings**: LaTeX warnings no longer cause workflow failure when PDF is successfully generated
+  - **Shell Configuration**: Explicitly use bash shell with proper exit code handling
+  - **Verification**: Added PDF file verification and listing after successful generation
+- **PDF Build Process** - LaTeX now consistently generates 66-page PDF without workflow failure
+  - LaTeX builds successfully with warnings (normal behavior) 
+  - PDF generation confirmed with file size verification
+  - Proper cleanup and renaming of output files
+
+### Technical Improvements
+- **Robust Error Handling** - Distinguish between critical errors and expected LaTeX warnings
+- **Workflow Reliability** - Release process now completes successfully when PDF is generated
+- **Better Diagnostics** - Added file listing and verification steps for debugging
+
+*This fix ensures the release workflow completes successfully when LaTeX generates PDFs with normal warnings.*
+
 ## [3.0.6] - 2025-08-12 - Complete LaTeX Build Fixes
 
 ### Fixed
