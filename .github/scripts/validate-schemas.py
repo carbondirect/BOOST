@@ -9,7 +9,7 @@ from pathlib import Path
 
 def validate_schemas():
     """Run comprehensive schema validation"""
-    schema_dir = Path('../schema')
+    schema_dir = Path('schema')
     errors = []
     warnings = []
     
@@ -32,12 +32,40 @@ def validate_schemas():
     
     print(f'✅ Loaded and validated {len(entities)} entity schemas')
     
-    # Additional production validations
+    # Additional production validations - All entity patterns
     fk_patterns = {
         'ORG-': 'Organization',
         'TRU-': 'TraceableUnit', 
         'OP-': 'Operator',
-        'GEO-': 'GeographicData'
+        'GEO-': 'GeographicData',
+        'AUD-': 'Audit',
+        'BIO-': 'BiometricIdentifier',
+        'CB-': 'CertificationBody',
+        'CERT-': 'Certificate',
+        'CERT-SCHEME-': 'CertificationScheme',
+        'CLA-': 'Claim',
+        'CUST-': 'Customer',
+        'DOC-': 'SalesDeliveryDocument',
+        'ECD-': 'EnergyCarbonData',
+        'EQ-': 'Equipment',
+        'LCFS-RPT-': 'LcfsReporting',
+        'LH-': 'LocationHistory',
+        'MAT-': 'Material',
+        'MBA-': 'MassBalanceAccount',
+        'MCV-': 'MoistureContent',
+        'MP-': 'MaterialProcessing',
+        'MR-': 'MeasurementRecord',
+        'PG-': 'ProductGroup',
+        'PH-': 'ProcessingHistory',
+        'REC-': 'DataReconciliation',
+        'SB-': 'SupplyBase',
+        'SBR-': 'SupplyBaseReport',
+        'SC-': 'SpeciesComponent',
+        'SUP-': 'Supplier',
+        'TB-': 'TransactionBatch',
+        'TP-': 'TrackingPoint',
+        'TXN-': 'Transaction',
+        'VS-': 'VerificationStatement'
     }
     
     # Validate FK integrity
