@@ -41,6 +41,7 @@
       },
       "SalesDeliveryDocumentId": {
         "type": "string",
+        "pattern": "^DOC-[A-Z0-9-_]+$",
         "description": "Foreign key to sales/delivery documentation - uses EntityNameId convention referencing SalesDeliveryDocument"
       },
       "contractValue": {
@@ -97,6 +98,7 @@
       },
       "GeographicDataId": {
         "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
         "description": "Primary transaction location - uses EntityNameId convention referencing GeographicData"
       },
       "BrokerOrganizationId": {
@@ -104,6 +106,7 @@
           "string",
           "null"
         ],
+        "pattern": "^ORG-[A-Z0-9-_]+$",
         "description": "Optional intermediary broker organization - uses EntityNameId convention referencing Organization"
       },
       "contractSignedDate": {

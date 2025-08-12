@@ -63,10 +63,12 @@
       },
       "operatorId": {
         "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$",
         "description": "Foreign key to operator"
       },
       "materialTypeId": {
         "type": "string",
+        "pattern": "^MAT-[A-Z0-9-_]+$",
         "description": "Foreign key to Material entity (reference table)"
       },
       "assortmentType": {

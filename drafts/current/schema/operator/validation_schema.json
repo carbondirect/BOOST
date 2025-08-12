@@ -31,8 +31,9 @@
           "OP-PACIFIC-MILL-QA-042"
         ]
       },
-      "OrganizationId": {
+      "organizationId": {
         "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$",
         "description": "Employing organization - uses EntityNameId convention referencing Organization",
         "examples": [
           "ORG-KLAMATH-HARVEST-OPERATIONS-001"
