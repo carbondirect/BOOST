@@ -14,7 +14,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Traceable Unit in ERD Navigator](erd-navigator/index.html?focus=TraceableUnit)**
+** [View Traceable Unit in ERD Navigator](erd-navigator/index.html?focus=TraceableUnit)**
 
 % Traceable Unit Entity Table
 % Auto-generated from JSON schema
@@ -25,7 +25,7 @@ This entity references the following entities:
 \textbf{\field{harvesterId}} & string (pattern) & Foreign key to harvesting organization \\
 \textbf{\field{isMultiSpecies}} & boolean & True if contains multiple species \\
 \textbf{\field{materialTypeId}} & string & Foreign key to Material entity (reference table) \\
-\textbf{\field{totalVolumeM3}} & number (≥0) & Total volume of the traceable unit in cubic meters \\
+\textbf{\field{totalVolumeM3}} & number (\geq 0) & Total volume of the traceable unit in cubic meters \\
 \textbf{\field{traceableUnitId}} & string & Unique ID for each TRU \\
 \textbf{\field{uniqueIdentifier}} & string & Biometric signature, RFID tag, or QR code \\
 \textbf{\field{unitType}} & enum(4 values) & Type of traceable unit \\
@@ -57,16 +57,16 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Material Processing in ERD Navigator](erd-navigator/index.html?focus=MaterialProcessing)**
+** [View Material Processing in ERD Navigator](erd-navigator/index.html?focus=MaterialProcessing)**
 
 % Material Processing Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Material Processing}
 \textbf{\field{inputTraceableUnitId}} & string & No description provided \\
-\textbf{\field{inputVolume}} & number (≥0) & No description provided \\
+\textbf{\field{inputVolume}} & number (\geq 0) & No description provided \\
 \textbf{\field{outputTraceableUnitId}} & string & No description provided \\
-\textbf{\field{outputVolume}} & number (≥0) & No description provided \\
+\textbf{\field{outputVolume}} & number (\geq 0) & No description provided \\
 \textbf{\field{processTimestamp}} & string (date-time) & No description provided \\
 \textbf{\field{processType}} & enum(6 values) & No description provided \\
 \textbf{\field{processingId}} & string & No description provided \\
@@ -80,7 +80,7 @@ This entity references the following entities:
 \field{plantPartTransformations} & array<object> & Specific plant part transformations during processing \\
 \field{processingGeographicDataId} & string & No description provided \\
 \field{qualityMetrics} & string & No description provided \\
-\field{volumeLoss} & number (≥0) & No description provided \\
+\field{volumeLoss} & number (\geq 0) & No description provided \\
 \end{entitytable}
 
 
@@ -97,7 +97,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Processing History in ERD Navigator](erd-navigator/index.html?focus=ProcessingHistory)**
+** [View Processing History in ERD Navigator](erd-navigator/index.html?focus=ProcessingHistory)**
 
 % Processing History Entity Table
 % Auto-generated from JSON schema
@@ -123,7 +123,7 @@ This entity references the following entities:
 \field{processingGeographicDataId} & string & Foreign key to location where processing occurred \\
 \field{qualityChangeDescription} & string & Description of quality changes during processing \\
 \field{speciesCompositionChange} & enum(5 values) & How species composition changed during processing \\
-\field{volumeChangeRatio} & number (≥0, ≤2.0) & Ratio of output volume to input volume (1.0 = no change) \\
+\field{volumeChangeRatio} & number (\geq 0, \leq 2.0) & Ratio of output volume to input volume (1.0 = no change) \\
 \field{volumeConservationData} & object (structured) & Volume conservation validation data \\
 \end{entitytable}
 
@@ -141,7 +141,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Location History in ERD Navigator](erd-navigator/index.html?focus=LocationHistory)**
+** [View Location History in ERD Navigator](erd-navigator/index.html?focus=LocationHistory)**
 
 % Location History Entity Table
 % Auto-generated from JSON schema
@@ -153,7 +153,7 @@ This entity references the following entities:
 \textbf{\field{locationHistoryId}} & string & No description provided \\
 \textbf{\field{timestamp}} & string (date-time) & No description provided \\
 \textbf{\field{traceableUnitId}} & string & No description provided \\
-\field{distanceTraveled} & number (≥0) & No description provided \\
+\field{distanceTraveled} & number (\geq 0) & No description provided \\
 \field{equipmentUsed} & string & No description provided \\
 \field{lastUpdated} & string (date-time) & No description provided \\
 \field{materialProcessingId} & ['string', 'null'] & No description provided \\
@@ -170,7 +170,7 @@ This entity references the following entities:
 
 BiometricIdentifier entity in BOOST data model
 
-**🗂️ [View Biometric Identifier in ERD Navigator](erd-navigator/index.html?focus=BiometricIdentifier)**
+** [View Biometric Identifier in ERD Navigator](erd-navigator/index.html?focus=BiometricIdentifier)**
 
 % Biometric Identifier Entity Table
 % Auto-generated from JSON schema
