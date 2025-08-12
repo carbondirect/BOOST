@@ -101,12 +101,35 @@ class UnitType(str, Enum):
     PROCESSED_BATCH = "processed_batch"
 
 
+class ProcessType(str, Enum):
+    """Material processing types."""
+    FELLING = "felling"
+    DELIMBING = "delimbing"
+    CROSSCUTTING = "crosscutting"
+    CHIPPING = "chipping"
+    DEBARKING = "debarking"
+    ASSORTMENT = "assortment"
+
+
 class PermitStatus(str, Enum):
     """Permit status options."""
     ACTIVE = "active"
     EXPIRED = "expired"
     PENDING = "pending"
     NOT_REQUIRED = "not_required"
+
+class ClaimType(str, Enum):
+    """Sustainability claim types."""
+    SBP_COMPLIANT = "SBP-compliant"
+    FSC_MIX = "FSC Mix"
+    RSB_GLOBAL = "RSB Global"
+    PEFC = "PEFC"
+    ORGANIC = "organic"
+    FSC_100 = "FSC 100%"
+    FSC_RECYCLED = "FSC Recycled"
+    ISCC_EU = "ISCC EU"
+    RED_II = "RED II"
+
 
 
 class Organization(BOOSTBaseModel):
@@ -307,6 +330,91 @@ class TraceableUnit(BOOSTBaseModel):
     )
 
 
+class MaterialProcessing(BOOSTBaseModel):
+    """Material Processing entity model for processing operations."""
+    
+    processing_id: str = Field(
+        ...,
+        alias="processingId",
+        pattern=r"^MP-[A-Z0-9-_]+$",
+        min_length=5,
+        max_length=50,
+        description="Unique identifier for processing operation"
+    )
+    input_traceable_unit_id: str = Field(
+        ...,
+        alias="inputTraceableUnitId",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
+        description="Input traceable unit being processed"
+    )
+    output_traceable_unit_id: str = Field(
+        ...,
+        alias="outputTraceableUnitId", 
+        pattern=r"^TRU-[A-Z0-9-_]+$",
+        description="Output traceable unit created"
+    )
+    process_type: ProcessType = Field(
+        ...,
+        alias="processType",
+        description="Type of processing operation"
+    )
+    process_timestamp: datetime = Field(
+        ...,
+        alias="processTimestamp",
+        description="When the processing operation occurred"
+    )
+    input_volume: float = Field(
+        ...,
+        alias="inputVolume",
+        ge=0,
+        description="Input volume before processing (cubic meters)"
+    )
+    output_volume: float = Field(
+        ...,
+        alias="outputVolume",
+        ge=0,
+        description="Output volume after processing (cubic meters)"
+    )
+    volume_loss: Optional[float] = Field(
+        None,
+        alias="volumeLoss",
+        ge=0,
+        description="Volume lost during processing (cubic meters)"
+    )
+    processing_geographic_data_id: Optional[str] = Field(
+        None,
+        alias="processingGeographicDataId",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
+        description="Location where processing occurred"
+    )
+    operator_id: Optional[str] = Field(
+        None,
+        alias="operatorId",
+        pattern=r"^OP-[A-Z0-9-_]+$",
+        description="Operator who performed processing"
+    )
+    input_composition: Optional[str] = Field(
+        None,
+        alias="inputComposition",
+        description="Species composition before processing"
+    )
+    output_composition: Optional[str] = Field(
+        None,
+        alias="outputComposition",
+        description="Species composition after processing"
+    )
+    quality_metrics: Optional[str] = Field(
+        None,
+        alias="qualityMetrics",
+        description="Quality assessment metrics"
+    )
+    equipment_used: Optional[str] = Field(
+        None,
+        alias="equipmentUsed",
+        description="Equipment used for processing"
+    )
+
+
 
 class Transaction(BOOSTBaseModel):
     """Transaction entity model with BioRAM support."""
@@ -420,6 +528,66 @@ class Transaction(BOOSTBaseModel):
         alias="materialEligibilityConfirmed",
         description="Confirmation that material meets BioRAM eligibility"
     )
+
+class Claim(BOOSTBaseModel):
+    """Sustainability claim entity model."""
+    
+    claim_id: str = Field(
+        ...,
+        alias="claimId",
+        pattern=r"^CLA-[A-Z0-9-_]+$",
+        min_length=5,
+        max_length=50,
+        description="Unique identifier for the claim"
+    )
+    traceable_unit_id: str = Field(
+        ...,
+        alias="TraceableUnitId",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
+        description="Referenced traceable unit"
+    )
+    claim_type: ClaimType = Field(
+        ...,
+        alias="claimType",
+        description="Type of sustainability claim"
+    )
+    certification_scheme_id: Optional[str] = Field(
+        None,
+        alias="CertificationSchemeId",
+        pattern=r"^CERT-SCHEME-[A-Z0-9-_]+$",
+        description="Certification scheme reference"
+    )
+    statement: str = Field(
+        ...,
+        description="Formal claim statement"
+    )
+    validated: bool = Field(
+        ...,
+        description="Whether claim has been validated"
+    )
+    validated_by: Optional[str] = Field(
+        None,
+        alias="validatedBy",
+        description="Validator organization/person ID"
+    )
+    validation_date: Optional[datetime] = Field(
+        None,
+        alias="validationDate",
+        description="When claim was validated"
+    )
+    applicable_species: Optional[List[str]] = Field(
+        None,
+        alias="applicableSpecies",
+        description="Species this claim applies to"
+    )
+    claim_percentage: Optional[float] = Field(
+        None,
+        alias="claimPercentage",
+        ge=0,
+        le=100,
+        description="Percentage of material covered by claim"
+    )
+
 
 
 # BioRAM Program Entities
