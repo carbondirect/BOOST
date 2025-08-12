@@ -330,25 +330,123 @@ ls -la build/_minted-*
 
 ## CI/CD Integration
 
-### Automated Builds
+### Docker Containerization
+The BOOST build system uses Docker containerization for fast, consistent builds across all environments.
+
+#### Pre-Built Container Image
+- **Image**: `ghcr.io/carbondirect/boost/boost-builder:latest`
+- **Contents**: Ubuntu 22.04 + full LaTeX + Python + Bikeshed + Pandoc
+- **Performance**: 4-6x faster builds (2-4 min vs 8-10 min)
+- **Reliability**: Eliminates dependency installation failures
+
+#### Local Testing with Docker
+```bash
+# Use the same container as CI/CD
+docker pull ghcr.io/carbondirect/boost/boost-builder:latest
+
+# Run interactive build environment
+docker run -it --rm -v $(pwd):/workspace ghcr.io/carbondirect/boost/boost-builder:latest
+
+# Inside container
+cd /workspace/drafts/current/specifications
+./build-spec.sh
+```
+
+### GitHub Actions Workflows
+The repository includes comprehensive automation workflows:
+
+#### Release Documentation (`release.yml`)
 ```yaml
-# Example GitHub Actions workflow
-- name: Build Documentation
-  run: |
-    cd drafts/current/specifications
-    ./build-all.sh
-    
-- name: Archive PDF
-  uses: actions/upload-artifact@v3
-  with:
-    name: boost-specification
-    path: drafts/current/specifications/build/boost-spec.pdf
+# Triggered by any semantic version tag
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/carbondirect/boost/boost-builder:latest
+      options: --pull=missing
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Build HTML documentation
+        working-directory: drafts/current/specifications
+        run: ./build-spec.sh
+      
+      - name: Generate PDF documentation  
+        working-directory: drafts/current/specifications
+        run: |
+          # Multi-pass LaTeX compilation
+          pdflatex -interaction=nonstopmode boost-spec.tex
+          pdflatex -interaction=nonstopmode boost-spec.tex
+          pdflatex -interaction=nonstopmode boost-spec.tex
+```
+
+#### Development Builds (`build-deploy.yml`)
+```yaml
+# Triggered by branch pushes
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/carbondirect/boost/boost-builder:latest
+      options: --pull=missing
+    steps:
+      - name: Build HTML documentation
+        working-directory: drafts/current/specifications
+        run: ./build-spec.sh
+      
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        # Deploy to https://carbondirect.github.io/BOOST/
+```
+
+#### Version Management (`version-check.yml`)
+```yaml
+# Provides version analysis and release guidance
+# Runtime: ~5 seconds (no container needed)
+```
+
+#### Docker Image Maintenance (`docker-image.yml`)
+```yaml
+# Builds and maintains the container image
+# Triggered by changes to tools/Dockerfile
 ```
 
 ### Quality Gates
-- Build must complete without errors
-- PDF must have expected page count
-- All 33 entities must be documented
-- No LaTeX warnings above threshold
+All automated builds enforce comprehensive quality standards:
+
+#### Schema Validation
+- All 33+ entity schemas must validate successfully
+- JSON syntax correctness across all schema files
+- Foreign key integrity validation (no orphaned references)
+- BOOST metadata completeness for all entities
+
+#### Build Validation  
+- HTML documentation must generate without errors
+- PDF compilation must complete successfully (when applicable)
+- ERD Navigator must build with all entity relationships
+- File size validation (HTML >200KB, reasonable PDF size)
+
+#### Content Validation
+- All entity schemas documented in generated content
+- Cross-references and links functional
+- Required content sections present (introduction, entities, examples)
+- No critical LaTeX warnings or build failures
+
+#### Performance Standards
+- **Containerized builds**: Complete within 2-4 minutes
+- **Release builds**: Complete within 3-4 minutes including full validation
+- **Schema validation**: Complete within 30 seconds
+- **Container availability**: Image pulls successful
+
+#### Deployment Requirements (Main Branch)
+- GitHub Pages deployment successful
+- Landing page generation with working links  
+- ERD Navigator accessibility
+- Schema file availability through GitHub repository links
+
+**Workflow Documentation**: See [.github/WORKFLOWS.md](../../../../.github/WORKFLOWS.md) for complete workflow documentation and troubleshooting guides.
 
 This build system provides a robust, maintainable foundation for the BOOST specification documentation, ensuring consistency, quality, and ease of maintenance as the specification evolves.
