@@ -201,9 +201,9 @@ jobs:
             echo "Building PDF from LaTeX source..."
             
             # Run LaTeX build (3 passes for references)
-            pdflatex -interaction=nonstopmode boost-spec.tex
-            pdflatex -interaction=nonstopmode boost-spec.tex
-            pdflatex -interaction=nonstopmode boost-spec.tex
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex
+            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex
             
             if [ -f "boost-spec.pdf" ]; then
               echo "✅ PDF generated from LaTeX: boost-spec.pdf"

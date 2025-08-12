@@ -2,6 +2,27 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.0.6] - 2025-08-12 - Complete LaTeX Build Fixes
+
+### Fixed
+- **LaTeX Compilation Errors** - Resolved all remaining LaTeX build issues in CI environment
+  - **release.yml**: Added `-shell-escape` flag to pdflatex commands for minted package compatibility
+  - **tex files**: Removed problematic Unicode emoji characters (🗂️) that caused LaTeX errors
+  - **tex files**: Replaced Unicode mathematical symbols (≤, ≥) with proper LaTeX commands (\leq, \geq)
+  - **Minted package**: Fixed "You must invoke LaTeX with the -shell-escape flag" error
+  - **Unicode support**: Fixed "Unicode character not set up for use with LaTeX" errors
+- **PDF Generation Reliability** - LaTeX now builds successfully generating 68-page PDF
+  - Verified locally with pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex
+  - All Unicode characters properly converted to LaTeX-compatible format
+  - Mathematical symbols now render correctly in PDF output
+
+### Technical Improvements
+- **CI/CD Compatibility** - LaTeX build process now fully compatible with containerized environment
+- **Character Encoding** - Systematic removal of problematic Unicode characters from all .tex files
+- **Mathematical Notation** - Proper LaTeX mathematical symbol usage throughout documentation
+
+*These fixes ensure reliable PDF generation in both local and CI environments without Unicode or package errors.*
+
 ## [3.0.5] - 2025-08-12 - LaTeX Build Fixes and Name Standardization
 
 ### Fixed
