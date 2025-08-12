@@ -2,6 +2,25 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.0.8] - 2025-08-12 - Shell Compatibility Fix for Release Packaging
+
+### Fixed
+- **Release Package Creation Error** - Fixed "Bad substitution" error in release workflow
+  - **release.yml**: Added `shell: bash` to release package creation step
+  - **Parameter Expansion**: `${GITHUB_SHA::8}` requires bash, not default sh shell
+  - **Shell Compatibility**: Ensure bash-specific syntax works in release package creation
+- **Workflow Progression** - PDF generation now works, but packaging step was failing
+  - LaTeX PDF generation: ✅ Working (66 pages)
+  - HTML documentation: ✅ Working  
+  - Release packaging: ✅ Fixed shell compatibility
+
+### Technical Improvements
+- **Consistent Shell Usage** - All workflow steps requiring bash features now explicitly use bash
+- **Parameter Expansion** - Proper handling of Git SHA truncation in release notes
+- **Error Isolation** - Each step now uses appropriate shell for its requirements
+
+*This fix ensures the complete release workflow from PDF generation through package creation.*
+
 ## [3.0.7] - 2025-08-12 - LaTeX Workflow Error Handling Fix
 
 ### Fixed

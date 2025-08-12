@@ -273,6 +273,7 @@ jobs:
 
       - name: Create release package
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
           echo "📦 Creating release package..."
           
