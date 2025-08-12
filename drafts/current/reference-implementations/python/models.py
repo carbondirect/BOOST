@@ -93,6 +93,14 @@ class HaulUnit(str, Enum):
     KILOMETERS = "kilometers"
 
 
+class UnitType(str, Enum):
+    """Traceable unit types."""
+    INDIVIDUAL_LOG = "individual_log"
+    PILE = "pile"
+    VOLUME_AGGREGATION = "volume_aggregation"
+    PROCESSED_BATCH = "processed_batch"
+
+
 class PermitStatus(str, Enum):
     """Permit status options."""
     ACTIVE = "active"
@@ -183,6 +191,121 @@ class Organization(BOOSTBaseModel):
         alias="fireHazardZoneDesignation",
         description="CAL FIRE fire hazard severity zone designation"
     )
+
+class TraceableUnit(BOOSTBaseModel):
+    """Traceable Unit entity model with BOOST traceability integration."""
+    
+    traceable_unit_id: str = Field(
+        ...,
+        alias="traceableUnitId",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
+        min_length=5,
+        max_length=50,
+        description="Unique identifier for the traceable unit"
+    )
+    unit_type: UnitType = Field(
+        ...,
+        alias="unitType",
+        description="Type of traceable unit"
+    )
+    unique_identifier: str = Field(
+        ...,
+        alias="uniqueIdentifier",
+        description="Biometric signature, RFID tag, or QR code"
+    )
+    total_volume_m3: float = Field(
+        ...,
+        alias="totalVolumeM3",
+        ge=0,
+        description="Total volume in cubic meters"
+    )
+    current_geographic_data_id: Optional[str] = Field(
+        None,
+        alias="currentGeographicDataId",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
+        description="Current location - uses EntityNameId convention"
+    )
+    harvest_geographic_data_id: str = Field(
+        ...,
+        alias="harvestGeographicDataId",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
+        description="Harvest location - uses EntityNameId convention"
+    )
+    created_timestamp: datetime = Field(
+        ...,
+        alias="createdTimestamp",
+        description="When the TRU was created"
+    )
+    harvester_id: str = Field(
+        ...,
+        alias="harvesterId",
+        pattern=r"^ORG-[A-Z0-9-_]+$",
+        description="Foreign key to harvesting organization"
+    )
+    operator_id: Optional[str] = Field(
+        None,
+        alias="operatorId",
+        pattern=r"^OP-[A-Z0-9-_]+$",
+        description="Foreign key to operator"
+    )
+    material_type_id: str = Field(
+        ...,
+        alias="materialTypeId",
+        pattern=r"^MAT-[A-Z0-9-_]+$",
+        description="Foreign key to Material entity"
+    )
+    assortment_type: Optional[str] = Field(
+        None,
+        alias="assortmentType",
+        description="Type of wood assortment"
+    )
+    quality_grade: Optional[str] = Field(
+        None,
+        alias="qualityGrade",
+        description="Quality grade classification"
+    )
+    is_multi_species: bool = Field(
+        ...,
+        alias="isMultiSpecies",
+        description="True if contains multiple species"
+    )
+    attached_information: Optional[List[str]] = Field(
+        None,
+        alias="attachedInformation",
+        description="All data linked to this TRU"
+    )
+    processing_history: Optional[List[str]] = Field(
+        None,
+        alias="processingHistory",
+        description="Complete processing chain references"
+    )
+    parent_traceable_unit_id: Optional[str] = Field(
+        None,
+        alias="parentTraceableUnitId",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
+        description="For split/merge operations"
+    )
+    child_traceable_unit_ids: Optional[List[str]] = Field(
+        None,
+        alias="childTraceableUnitIds",
+        description="For split/merge operations"
+    )
+    current_status: Optional[str] = Field(
+        None,
+        alias="currentStatus",
+        description="Current status of the TRU"
+    )
+    sustainability_certification: Optional[str] = Field(
+        None,
+        alias="sustainabilityCertification",
+        description="FSC, PEFC, etc. claims"
+    )
+    media_break_flags: Optional[List[str]] = Field(
+        None,
+        alias="mediaBreakFlags",
+        description="Points where data continuity was lost"
+    )
+
 
 
 class Transaction(BOOSTBaseModel):
