@@ -234,7 +234,9 @@ class BOOSTValidator:
             'material_processing': 'processingId',
             'claim': 'claimId',
             'certificate': 'certificateId',
-            'geographic_data': 'geographicDataId'
+            'geographic_data': 'geographicDataId',
+            'bioram_pathway': 'pathwayId',
+            'bioram_reporting': 'reportingId'
         }
         return primary_key_mapping.get(entity_type.lower())
     
