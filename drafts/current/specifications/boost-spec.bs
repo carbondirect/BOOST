@@ -350,6 +350,16 @@ Documents material transformation operations linking input and output [[#traceab
 path: schema/material_processing/material_processing_dictionary.md
 </pre>
 
+### ProcessingHistory ### {#processing-history}
+
+Chronological tracking of all processing operations affecting [[#traceable-unit|TraceableUnit]] entities throughout their lifecycle. Complements [[#material-processing|MaterialProcessing]] with TRU-centric audit trails and genealogy tracking.
+
+**🗂️ [View ProcessingHistory in ERD Navigator](erd-navigator/index.html?focus=ProcessingHistory)**
+
+<pre class=include>
+path: includes/entities/processing-history.inc.md
+</pre>
+
 ## Organizational Foundation Entities ## {#organizational-entities}
 
 *Note: Organization is now part of Core Traceability Entities - see [[#organization-core]]*
