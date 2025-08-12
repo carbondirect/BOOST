@@ -87,16 +87,16 @@ jobs:
           # Generate release name based on version type
           case "$VERSION_TYPE" in
             "major")
-              RELEASE_NAME="BOOST Data Standard $VERSION - Major Release"
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION - Major Release"
               ;;
             "minor")  
-              RELEASE_NAME="BOOST Data Standard $VERSION - Minor Release"
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION - Minor Release"
               ;;
             "patch")
-              RELEASE_NAME="BOOST Data Standard $VERSION - Patch Release"
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION - Patch Release"
               ;;
             *)
-              RELEASE_NAME="BOOST Data Standard $VERSION"
+              RELEASE_NAME="Biomass Open Origin Standard for Tracking (BOOST) $VERSION"
               ;;
           esac
           
@@ -379,9 +379,9 @@ jobs:
           
           # Generate release notes
           cat > release-notes.md << EOF
-          # BOOST Data Standard ${VERSION}
+          # Biomass Open Origin Standard for Tracking (BOOST) ${VERSION}
           
-          This release contains the complete BOOST (Biomass Origin and Ownership Supply-chain Tracking) Data Standard documentation and schemas.
+          This release contains the complete Biomass Open Origin Standard for Tracking (BOOST) documentation and schemas.
           EOF
           
           # Add major version specific content
@@ -391,7 +391,7 @@ jobs:
           
           ## 🎉 Major Release Highlights
           
-          This is a **major version release** (${VERSION}) containing significant updates and improvements to the BOOST Data Standard.
+          This is a **major version release** (${VERSION}) containing significant updates and improvements to the Biomass Open Origin Standard for Tracking (BOOST).
           
           ### What's New in This Major Version
           - Breaking changes may be included - please review documentation

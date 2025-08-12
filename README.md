@@ -1,7 +1,7 @@
-# Biomass Chain of Custody (CoC) Data Standard Community Group
+# Biomass Open Origin Standard for Tracking (BOOST) Community Group
 
 ## Overview
-This repository contains the working draft and artifacts of the Biomass Chain of Custody (CoC) Data Standard, which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
+This repository contains the working draft and artifacts of the Biomass Open Origin Standard for Tracking (BOOST), which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
 **Current Version: v3.0.3** - Docker containerized builds, automatic releases for all semantic versions, and comprehensive GitHub Actions workflow automation.
 

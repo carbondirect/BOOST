@@ -50,9 +50,9 @@ Builds and publishes complete release packages for **all semantic version types*
    - Validates semantic version format (`v1.2.3`)
    - Determines version type (major/minor/patch)
    - Generates appropriate release names:
-     - Major: "BOOST Data Standard v3.0.0 - Major Release"  
-     - Minor: "BOOST Data Standard v2.1.0 - Minor Release"
-     - Patch: "BOOST Data Standard v2.0.1 - Patch Release"
+     - Major: "Biomass Open Origin Standard for Tracking (BOOST) v3.0.0 - Major Release"  
+     - Minor: "Biomass Open Origin Standard for Tracking (BOOST) v2.1.0 - Minor Release"
+     - Patch: "Biomass Open Origin Standard for Tracking (BOOST) v2.0.1 - Patch Release"
 
 3. **Schema Validation**
    - Validates all 33+ entity schemas for release quality

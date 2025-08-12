@@ -2,6 +2,26 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.0.4] - 2025-08-12 - Standard Name Standardization
+
+### Fixed
+- **Standard Name Consistency** - Corrected all references to use proper "Biomass Open Origin Standard for Tracking (BOOST)" name
+  - **README.md**: Updated title from "Biomass Chain of Custody (CoC) Data Standard" to correct name
+  - **Release Workflow**: Fixed release names for major, minor, and patch versions
+  - **GitHub Actions Workflows**: Updated all workflow documentation with correct standard name
+  - **Version Management**: Corrected release notes generation text
+- **Release Strategy Enhancement** - Updated release workflow to build and release all semantic versions (major, minor, patch)
+  - Previously only major versions (v1.0.0, v2.0.0) triggered releases
+  - Now all versions (v1.0.0, v1.2.3, v2.1.0) trigger automatic releases with appropriate naming
+- **Workflow Documentation** - Updated comprehensive workflow documentation with correct standard name references
+
+### Technical Improvements  
+- **Name Standardization** - Eliminated inconsistent references like "BOOST Data Standard" and "Biomass Chain of Custody"
+- **Release Automation** - Enhanced release workflow to properly handle all semantic version types
+- **Documentation Accuracy** - All references now consistently use "Biomass Open Origin Standard for Tracking (BOOST)"
+
+*These fixes ensure consistent and correct standard naming across all documentation, workflows, and release processes.*
+
 ## [3.0.2] - 2025-08-12 - Documentation Consistency Fixes
 
 ### Fixed
