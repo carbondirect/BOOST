@@ -2,6 +2,25 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.0.5] - 2025-08-12 - LaTeX Build Fixes and Name Standardization
+
+### Fixed
+- **LaTeX Build Issues** - Fixed font expansion errors and syntax issues in PDF generation
+  - **boost-spec.tex**: Removed problematic `microtype` package causing font expansion errors
+  - **boost-spec.tex**: Switched from `cmbright` to `lmodern` font for better CI compatibility
+  - **boost-spec-minimal.sty**: Updated `\boosttitle` command with proper syntax and correct standard name
+  - **boost-spec-minimal.sty**: Commented out `cmbright` font that caused CI build failures
+- **LaTeX Title Updates** - All LaTeX titles now use correct "Biomass Open Origin Standard for Tracking (BOOST)" name
+  - **boost-spec.tex**: Updated document title, PDF metadata, and headers with correct standard name
+  - **boost-spec-minimal.sty**: Updated title page generation with correct name and version info
+
+### Technical Improvements
+- **PDF Generation Reliability** - LaTeX now builds successfully without font expansion errors
+- **CI/CD Compatibility** - Removed font packages that caused issues in containerized builds
+- **Version Updates** - Updated LaTeX version references to v3.0.5 and current date
+
+*These fixes ensure reliable PDF generation in both local and CI environments while maintaining correct standard naming.*
+
 ## [3.0.4] - 2025-08-12 - Standard Name Standardization
 
 ### Fixed
