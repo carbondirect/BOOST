@@ -10,6 +10,12 @@ This directory contains Claude Code sub-agents for comprehensive BOOST schema va
 
 **Location**: `tools/agents/schema-integrity-reviewer.md`
 
+### documentation-consistency-reviewer
+
+**Purpose**: Ensure consistency between documentation formats (PDF, HTML, LaTeX) and authoritative BOOST standard content. Cross-validates entity definitions, schema references, examples, and technical specifications across all documentation outputs.
+
+**Location**: `tools/agents/documentation-consistency-reviewer.md`
+
 ## Setup Instructions
 
 ### Method 1: Claude Code Agent Directory Configuration
@@ -48,21 +54,33 @@ You can also reference the agent directly:
 
 ## Usage
 
-Once configured, invoke the agent in Claude Code:
+Once configured, invoke the agents in Claude Code:
 
 ```
 schema-integrity-reviewer
 ```
 
-The agent will automatically:
+The schema integrity agent will automatically:
 - Scan all 32 entity schemas for integrity issues
 - Validate foreign key relationships and detect orphaned references  
 - Check ERD configuration alignment
 - Test Python reference implementation synchronization
 - Generate detailed reports with actionable fixes
 
+```
+documentation-consistency-reviewer
+```
+
+The documentation consistency agent will automatically:
+- Compare entity definitions across PDF, HTML, and LaTeX formats
+- Validate schema content matches all documentation outputs
+- Check example data consistency across formats
+- Verify cross-references and links work properly
+- Identify missing or outdated documentation content
+
 ## Agent Capabilities
 
+### Schema Integrity Reviewer
 - **Orphaned Foreign Key Detection**: Finds broken references and missing entities
 - **Data Model Design Validation**: Identifies normalization violations and data duplication
 - **Multi-System Alignment**: Ensures consistency across schemas, ERD, and validation rules
@@ -71,13 +89,32 @@ The agent will automatically:
 - **Cross-Entity Validation**: Tests business logic rules and constraints
 - **Comprehensive Reporting**: Provides specific file locations and fix instructions
 
+### Documentation Consistency Reviewer
+- **Multi-Format Validation**: Compares PDF, HTML, and LaTeX documentation consistency
+- **Schema-Documentation Alignment**: Ensures documentation reflects current schema definitions
+- **Content Gap Detection**: Identifies missing or incomplete documentation
+- **Example Synchronization**: Validates example data across all formats
+- **Cross-Reference Integrity**: Checks internal links and references work properly
+- **Technical Accuracy**: Verifies implementation guidance matches actual schemas
+- **Professional Quality Assessment**: Evaluates documentation against professional standards
+- **Change Impact Analysis**: Identifies documentation needing updates after schema changes
+
 ## When to Use
 
+### Schema Integrity Reviewer
 - After modifying any JSON schema files
 - Before creating pull requests with schema changes
 - When adding new entities or relationships
 - During troubleshooting of validation errors
 - As part of regular schema maintenance
+
+### Documentation Consistency Reviewer
+- After updating documentation content (PDF, HTML, LaTeX)
+- When schema changes require documentation updates
+- Before releasing new versions of the standard
+- When inconsistencies are suspected between formats
+- During documentation quality reviews
+- Before important presentations or publications
 
 ## Troubleshooting
 
