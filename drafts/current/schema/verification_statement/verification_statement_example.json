@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "VerificationStatement",
+  "@id": "https://boost.example.com/verification/VS-2025-FSC-001",
+  "verificationStatementId": "VS-2025-FSC-001",
+  "verificationBody": "CB-FSC-SMARTWOOD",
+  "verificationDate": "2025-06-15",
+  "verificationScope": "Chain of custody verification for biomass feedstock supply",
+  "verificationStandard": "FSC-STD-40-004",
+  "verificationResult": "conformant",
+  "validityPeriod": "P1Y",
+  "expiryDate": "2026-06-15",
+  "statementUrl": "https://certificates.fsc.org/verification/VS-2025-FSC-001.pdf",
+  "lastUpdated": "2025-06-16T09:30:00Z"
+}

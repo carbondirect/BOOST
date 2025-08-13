@@ -1,0 +1,368 @@
+% JSON-LD Context and Semantic Web Integration
+% Documentation for BOOST JSON-LD support
+
+\section{JSON-LD Context and Semantic Web Integration}
+\label{sec:jsonld-context}
+
+BOOST implements JSON-LD (JSON for Linking Data) as its primary serialization format, enabling semantic web compatibility, data linking, and machine-readable context definitions. This section explains the JSON-LD context structure, semantic annotations, and integration with existing ontologies.
+
+\subsection{JSON-LD Overview}
+\label{sec:jsonld-overview}
+
+JSON-LD extends standard JSON with semantic web capabilities through:
+
+\begin{itemize}
+    \item \textbf{@context}: Defines mappings between JSON properties and RDF vocabularies
+    \item \textbf{@id}: Provides unique identifiers for entities (IRIs)
+    \item \textbf{@type}: Specifies the semantic type of an entity
+    \item \textbf{@vocab}: Sets a default vocabulary for properties
+    \item \textbf{Linked Data}: Enables connections between distributed datasets
+\end{itemize}
+
+\subsection{BOOST Context Definition}
+\label{sec:boost-context}
+
+The BOOST JSON-LD context maps entity properties to established vocabularies:
+
+\begin{jsonexample}{BOOST Core Context}
+{
+  "@context": {
+    "schema": "http://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "gs1": "https://gs1.org/voc/",
+    "biomass": "http://example.org/biomass#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    
+    "TraceableUnit": "biomass:TraceableUnit",
+    "Organization": "schema:Organization",
+    "Transaction": "schema:Order",
+    "MaterialProcessing": "prov:Activity",
+    
+    "traceableUnitId": {
+      "@id": "schema:identifier",
+      "@type": "schema:Text"
+    },
+    "organizationId": {
+      "@id": "schema:identifier",
+      "@type": "schema:Text"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "modifiedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}
+\end{jsonexample}
+
+\subsection{Vocabulary Mappings}
+\label{sec:vocabulary-mappings}
+
+\subsubsection{Schema.org Integration}
+
+BOOST entities map to Schema.org types for web compatibility:
+
+\begin{itemize}
+    \item \textbf{Organization} → \texttt{schema:Organization}
+    \item \textbf{Transaction} → \texttt{schema:Order}
+    \item \textbf{GeographicData} → \texttt{schema:Place}
+    \item \textbf{Certificate} → \texttt{schema:Certification}
+    \item \textbf{Claim} → \texttt{schema:Claim}
+\end{itemize}
+
+\subsubsection{W3C PROV Ontology}
+
+Provenance tracking using PROV vocabulary:
+
+\begin{itemize}
+    \item \textbf{MaterialProcessing} → \texttt{prov:Activity}
+    \item \textbf{ProcessingHistory} → \texttt{prov:Entity}
+    \item \textbf{Operator} → \texttt{prov:Agent}
+    \item \textbf{wasGeneratedBy} → \texttt{prov:wasGeneratedBy}
+    \item \textbf{wasAttributedTo} → \texttt{prov:wasAttributedTo}
+\end{itemize}
+
+\subsubsection{GS1 Vocabulary}
+
+Supply chain standards alignment:
+
+\begin{itemize}
+    \item \textbf{productCode} → \texttt{gs1:gtin}
+    \item \textbf{locationCode} → \texttt{gs1:gln}
+    \item \textbf{shipmentId} → \texttt{gs1:sscc}
+    \item \textbf{batchNumber} → \texttt{gs1:batchNumber}
+\end{itemize}
+
+\subsection{Entity Context Examples}
+\label{sec:entity-context-examples}
+
+\subsubsection{TraceableUnit with Context}
+
+Complete JSON-LD representation of a TraceableUnit:
+
+\begin{jsonexample}{TraceableUnit JSON-LD}
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@type": "biomass:TraceableUnit",
+  "@id": "https://example.org/tru/TRU-2025-001",
+  
+  "traceableUnitId": "TRU-2025-001",
+  "unitType": "pile",
+  "totalVolume": {
+    "@type": "qudt:QuantityValue",
+    "qudt:value": 500.0,
+    "qudt:unit": "unit:M3"
+  },
+  "speciesComposition": [{
+    "@type": "biomass:SpeciesComponent",
+    "species": "Pseudotsuga menziesii",
+    "percentage": 75.0
+  }],
+  "harvestLocation": {
+    "@type": "geo:Point",
+    "geo:lat": 45.5231,
+    "geo:long": -122.6765
+  },
+  "prov:wasGeneratedBy": {
+    "@id": "https://example.org/harvest/HARV-2025-001"
+  },
+  "prov:wasAttributedTo": {
+    "@id": "https://example.org/org/ORG-FOREST-001"
+  }
+}
+\end{jsonexample}
+
+\subsubsection{Transaction with Linked Data}
+
+Transaction linking multiple entities:
+
+\begin{jsonexample}{Linked Transaction}
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@type": "schema:Order",
+  "@id": "https://example.org/txn/TXN-2025-001",
+  
+  "transactionId": "TXN-2025-001",
+  "schema:seller": {
+    "@id": "https://example.org/org/ORG-SUPPLIER-001"
+  },
+  "schema:buyer": {
+    "@id": "https://example.org/org/ORG-BUYER-001"
+  },
+  "schema:orderedItem": [{
+    "@id": "https://example.org/tru/TRU-2025-001"
+  }],
+  "schema:price": {
+    "@type": "schema:PriceSpecification",
+    "schema:price": 85.50,
+    "schema:priceCurrency": "USD"
+  },
+  "prov:startedAtTime": "2025-01-15T09:00:00Z",
+  "prov:endedAtTime": "2025-01-15T14:30:00Z"
+}
+\end{jsonexample}
+
+\subsection{Advanced Features}
+\label{sec:jsonld-advanced}
+
+\subsubsection{Named Graphs}
+
+Support for multi-source data using named graphs:
+
+\begin{jsonexample}{Named Graph Structure}
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@graph": [{
+    "@id": "https://example.org/graph/supplier",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "organizationId": "ORG-001",
+        "name": "Forest Products Inc"
+      }
+    ]
+  }, {
+    "@id": "https://example.org/graph/certification",
+    "@graph": [
+      {
+        "@type": "Certificate",
+        "certificateId": "CERT-FSC-001",
+        "issuedTo": {"@id": "ORG-001"}
+      }
+    ]
+  }]
+}
+\end{jsonexample}
+
+\subsubsection{Framing}
+
+JSON-LD framing for specific data views:
+
+\begin{jsonexample}{Frame Definition}
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@type": "TraceableUnit",
+  "harvestedBy": {
+    "@type": "Organization",
+    "certifications": {
+      "@type": "Certificate",
+      "certificationType": "FSC"
+    }
+  }
+}
+\end{jsonexample}
+
+\subsubsection{Compaction and Expansion}
+
+BOOST supports JSON-LD algorithms:
+
+\begin{itemize}
+    \item \textbf{Compaction}: Shortens IRIs using context
+    \item \textbf{Expansion}: Expands to full IRIs
+    \item \textbf{Flattening}: Creates flat graph structure
+    \item \textbf{Normalization}: Canonical RDF representation
+\end{itemize}
+
+\subsection{Context Negotiation}
+\label{sec:context-negotiation}
+
+\subsubsection{Content Type Headers}
+
+HTTP content negotiation support:
+
+\begin{itemize}
+    \item \texttt{application/ld+json} - JSON-LD format
+    \item \texttt{application/json} - Plain JSON (context link in header)
+    \item \texttt{text/turtle} - RDF Turtle format
+    \item \texttt{application/n-quads} - N-Quads format
+\end{itemize}
+
+\subsubsection{Profile Parameters}
+
+Profile-based context selection:
+
+\begin{verbatim}
+Accept: application/ld+json; 
+        profile="https://boost.org/profiles/extended"
+\end{verbatim}
+
+\subsection{Implementation Guidance}
+\label{sec:jsonld-implementation}
+
+\subsubsection{Python Implementation}
+
+Using PyLD library for JSON-LD processing:
+
+\begin{pythonexample}{JSON-LD Processing}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+from pyld import jsonld
+import json
+
+# Load BOOST context
+with open('boost_context.jsonld') as f:
+    context = json.load(f)
+
+# Create entity with context
+tru = {
+    "@context": context,
+    "@type": "TraceableUnit",
+    "traceableUnitId": "TRU-001",
+    "totalVolume": 100.0
+}
+
+# Expand to full IRIs
+expanded = jsonld.expand(tru)
+
+# Compact with custom context
+compacted = jsonld.compact(expanded, context)
+
+# Convert to RDF
+rdf = jsonld.to_rdf(tru)
+
+# Frame for specific view
+frame = {"@type": "TraceableUnit"}
+framed = jsonld.frame(tru, frame)
+\end{minted}
+\end{pythonexample}
+
+\subsubsection{JavaScript Implementation}
+
+Browser and Node.js support:
+
+\begin{jsonexample}{JavaScript JSON-LD}
+const jsonld = require('jsonld');
+
+// Process BOOST data
+async function processBoostData(data) {
+  // Add context
+  data['@context'] = 'https://boost.org/context.jsonld';
+  
+  // Validate structure
+  const expanded = await jsonld.expand(data);
+  
+  // Generate RDF
+  const nquads = await jsonld.toRDF(data, {format: 'N-Quads'});
+  
+  return nquads;
+}
+\end{jsonexample}
+
+\subsection{Semantic Validation}
+\label{sec:semantic-validation}
+
+\subsubsection{SHACL Constraints}
+
+Shape validation for semantic correctness:
+
+\begin{jsonexample}{SHACL Shape}
+{
+  "@context": {"sh": "http://www.w3.org/ns/shacl#"},
+  "@type": "sh:NodeShape",
+  "sh:targetClass": "biomass:TraceableUnit",
+  "sh:property": [{
+    "sh:path": "biomass:totalVolume",
+    "sh:datatype": "xsd:decimal",
+    "sh:minInclusive": 0,
+    "sh:maxInclusive": 10000
+  }]
+}
+\end{jsonexample}
+
+\subsubsection{Reasoning and Inference}
+
+Automatic inference capabilities:
+
+\begin{itemize}
+    \item Type inheritance from parent classes
+    \item Property domain/range validation
+    \item Transitive relationship discovery
+    \item Consistency checking
+\end{itemize}
+
+\subsection{Benefits and Use Cases}
+\label{sec:jsonld-benefits}
+
+\subsubsection{Interoperability Benefits}
+
+\begin{itemize}
+    \item \textbf{Global Identifiers}: IRIs enable worldwide unique identification
+    \item \textbf{Vocabulary Reuse}: Leverage existing ontologies
+    \item \textbf{Tool Ecosystem}: Compatible with RDF/SPARQL tools
+    \item \textbf{Web Integration}: SEO and knowledge graph inclusion
+\end{itemize}
+
+\subsubsection{Supply Chain Use Cases}
+
+\begin{itemize}
+    \item \textbf{Cross-Organization Linking}: Connect data across partners
+    \item \textbf{Provenance Tracking}: Complete chain of custody
+    \item \textbf{Regulatory Reporting}: Machine-readable compliance data
+    \item \textbf{Certification Verification}: Linked certificate validation
+\end{itemize}
+
+The JSON-LD context provides BOOST with semantic web capabilities essential for modern supply chain interoperability and regulatory compliance.

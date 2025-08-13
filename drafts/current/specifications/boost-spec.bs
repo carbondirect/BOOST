@@ -359,7 +359,7 @@ Chronological tracking of all processing operations affecting [[#traceable-unit|
 **🗂️ [View ProcessingHistory in ERD Navigator](erd-navigator/index.html?focus=ProcessingHistory)**
 
 <pre class=include>
-path: includes/entities/processing-history.inc.md
+path: schema/processing_history/processing_history_dictionary.md
 </pre>
 
 ## Organizational Foundation Entities ## {#organizational-entities}
@@ -428,6 +428,12 @@ path: schema/location_history/location_history_dictionary.md
 path: schema/measurement_record/measurement_record_dictionary.md
 </pre>
 
+### MoistureContent ### {#moisture-content}
+
+<pre class=include>
+path: schema/moisture_content/moisture_content_dictionary.md
+</pre>
+
 ### TrackingPoint ### {#tracking-point}
 
 <pre class=include>
@@ -468,6 +474,48 @@ path: schema/claim/claim_dictionary.md
 path: schema/product_group/product_group_dictionary.md
 </pre>
 
+### Transaction ### {#transaction}
+
+<pre class=include>
+path: schema/transaction/transaction_dictionary.md
+</pre>
+
+### TransactionBatch ### {#transaction-batch}
+
+<pre class=include>
+path: schema/transaction_batch/transaction_batch_dictionary.md
+</pre>
+
+### SalesDeliveryDocument ### {#sales-delivery-document}
+
+<pre class=include>
+path: schema/sales_delivery_document/sales_delivery_document_dictionary.md
+</pre>
+
+### Customer ### {#customer}
+
+<pre class=include>
+path: schema/customer/customer_dictionary.md
+</pre>
+
+### Supplier ### {#supplier}
+
+<pre class=include>
+path: schema/supplier/supplier_dictionary.md
+</pre>
+
+### SupplyBase ### {#supply-base}
+
+<pre class=include>
+path: schema/supply_base/supply_base_dictionary.md
+</pre>
+
+### SupplyBaseReport ### {#supply-base-report}
+
+<pre class=include>
+path: schema/supply_base_report/supply_base_report_dictionary.md
+</pre>
+
 ## Regulatory and Compliance Entities ## {#regulatory-compliance-entities}
 
 ### LCFSPathway ### {#lcfs-pathway}
@@ -480,6 +528,30 @@ path: schema/lcfs_pathway/lcfs_pathway_dictionary.md
 
 <pre class=include>
 path: schema/lcfs_reporting/lcfs_reporting_dictionary.md
+</pre>
+
+### Audit ### {#audit}
+
+<pre class=include>
+path: schema/audit/audit_dictionary.md
+</pre>
+
+### VerificationStatement ### {#verification-statement}
+
+<pre class=include>
+path: schema/verification_statement/verification_statement_dictionary.md
+</pre>
+
+### MassBalanceAccount ### {#mass-balance-account}
+
+<pre class=include>
+path: schema/mass_balance_account/mass_balance_account_dictionary.md
+</pre>
+
+### EnergyCarbonData ### {#energy-carbon-data}
+
+<pre class=include>
+path: schema/energy_carbon_data/energy_carbon_data_dictionary.md
 </pre>
 
 # Schema Definitions # {#schema-definitions}
@@ -507,6 +579,608 @@ NOTE: The [Python reference implementation](#python-implementation) automaticall
 }
 </pre>
 
+# JSON-LD Context and Semantic Web Integration # {#jsonld-context}
+
+BOOST implements JSON-LD (JSON for Linking Data) as its primary serialization format, enabling semantic web compatibility, data linking, and machine-readable context definitions. This section explains the JSON-LD context structure, semantic annotations, and integration with existing ontologies.
+
+## JSON-LD Overview ## {#jsonld-overview}
+
+JSON-LD extends standard JSON with semantic web capabilities through:
+
+- **@context**: Defines mappings between JSON properties and RDF vocabularies
+- **@id**: Provides unique identifiers for entities (IRIs)
+- **@type**: Specifies the semantic type of an entity
+- **@vocab**: Sets a default vocabulary for properties
+- **Linked Data**: Enables connections between distributed datasets
+
+## BOOST Context Definition ## {#boost-context}
+
+The BOOST JSON-LD context maps entity properties to established vocabularies:
+
+<pre class="json">
+{
+  "@context": {
+    "schema": "http://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "gs1": "https://gs1.org/voc/",
+    "biomass": "http://example.org/biomass#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "unit": "http://qudt.org/vocab/unit/",
+    
+    "TraceableUnit": "biomass:TraceableUnit",
+    "Organization": "schema:Organization",
+    "Transaction": "schema:Order",
+    "MaterialProcessing": "prov:Activity",
+    
+    "traceableUnitId": {
+      "@id": "schema:identifier",
+      "@type": "schema:Text"
+    },
+    "organizationId": {
+      "@id": "schema:identifier",
+      "@type": "schema:Text"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "modifiedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}
+</pre>
+
+## Vocabulary Mappings ## {#vocabulary-mappings}
+
+### Schema.org Integration ### {#schema-org-integration}
+
+BOOST entities map to Schema.org types for web compatibility:
+
+- **Organization** → `schema:Organization`
+- **Transaction** → `schema:Order`
+- **GeographicData** → `schema:Place`
+- **Certificate** → `schema:Certification`
+- **Claim** → `schema:Claim`
+
+### W3C PROV Ontology ### {#prov-ontology}
+
+Provenance tracking using PROV vocabulary:
+
+- **MaterialProcessing** → `prov:Activity`
+- **ProcessingHistory** → `prov:Entity`
+- **Operator** → `prov:Agent`
+- **wasGeneratedBy** → `prov:wasGeneratedBy`
+- **wasAttributedTo** → `prov:wasAttributedTo`
+
+### GS1 Vocabulary ### {#gs1-vocabulary}
+
+Supply chain standards alignment:
+
+- **productCode** → `gs1:gtin`
+- **locationCode** → `gs1:gln`
+- **shipmentId** → `gs1:sscc`
+- **batchNumber** → `gs1:batchNumber`
+
+## Entity Context Examples ## {#entity-context-examples}
+
+### TraceableUnit with Context ### {#tru-with-context}
+
+Complete JSON-LD representation of a TraceableUnit:
+
+<pre class="json">
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@type": "biomass:TraceableUnit",
+  "@id": "https://example.org/tru/TRU-2025-001",
+  
+  "traceableUnitId": "TRU-2025-001",
+  "unitType": "pile",
+  "totalVolume": {
+    "@type": "qudt:QuantityValue",
+    "qudt:value": 500.0,
+    "qudt:unit": "unit:M3"
+  },
+  "speciesComposition": [{
+    "@type": "biomass:SpeciesComponent",
+    "species": "Pseudotsuga menziesii",
+    "percentage": 75.0
+  }],
+  "harvestLocation": {
+    "@type": "geo:Point",
+    "geo:lat": 45.5231,
+    "geo:long": -122.6765
+  },
+  "prov:wasGeneratedBy": {
+    "@id": "https://example.org/harvest/HARV-2025-001"
+  },
+  "prov:wasAttributedTo": {
+    "@id": "https://example.org/org/ORG-FOREST-001"
+  }
+}
+</pre>
+
+### Transaction with Linked Data ### {#linked-transaction}
+
+Transaction linking multiple entities:
+
+<pre class="json">
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@type": "schema:Order",
+  "@id": "https://example.org/txn/TXN-2025-001",
+  
+  "transactionId": "TXN-2025-001",
+  "schema:seller": {
+    "@id": "https://example.org/org/ORG-SUPPLIER-001"
+  },
+  "schema:buyer": {
+    "@id": "https://example.org/org/ORG-BUYER-001"
+  },
+  "schema:orderedItem": [{
+    "@id": "https://example.org/tru/TRU-2025-001"
+  }],
+  "schema:price": {
+    "@type": "schema:PriceSpecification",
+    "schema:price": 85.50,
+    "schema:priceCurrency": "USD"
+  },
+  "prov:startedAtTime": "2025-01-15T09:00:00Z",
+  "prov:endedAtTime": "2025-01-15T14:30:00Z"
+}
+</pre>
+
+## Advanced Features ## {#jsonld-advanced}
+
+### Named Graphs ### {#named-graphs}
+
+Support for multi-source data using named graphs:
+
+<pre class="json">
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@graph": [{
+    "@id": "https://example.org/graph/supplier",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "organizationId": "ORG-001",
+        "name": "Forest Products Inc"
+      }
+    ]
+  }, {
+    "@id": "https://example.org/graph/certification",
+    "@graph": [
+      {
+        "@type": "Certificate",
+        "certificateId": "CERT-FSC-001",
+        "issuedTo": {"@id": "ORG-001"}
+      }
+    ]
+  }]
+}
+</pre>
+
+### Framing ### {#jsonld-framing}
+
+JSON-LD framing for specific data views:
+
+<pre class="json">
+{
+  "@context": "https://boost.org/context.jsonld",
+  "@type": "TraceableUnit",
+  "harvestedBy": {
+    "@type": "Organization",
+    "certifications": {
+      "@type": "Certificate",
+      "certificationType": "FSC"
+    }
+  }
+}
+</pre>
+
+### Compaction and Expansion ### {#compaction-expansion}
+
+BOOST supports JSON-LD algorithms:
+
+- **Compaction**: Shortens IRIs using context
+- **Expansion**: Expands to full IRIs
+- **Flattening**: Creates flat graph structure
+- **Normalization**: Canonical RDF representation
+
+## Context Negotiation ## {#context-negotiation}
+
+### Content Type Headers ### {#content-type-headers}
+
+HTTP content negotiation support:
+
+- `application/ld+json` - JSON-LD format
+- `application/json` - Plain JSON (context link in header)
+- `text/turtle` - RDF Turtle format
+- `application/n-quads` - N-Quads format
+
+### Profile Parameters ### {#profile-parameters}
+
+Profile-based context selection:
+
+```
+Accept: application/ld+json; 
+        profile="https://boost.org/profiles/extended"
+```
+
+## Implementation Guidance ## {#jsonld-implementation}
+
+### Python Implementation ### {#python-jsonld}
+
+Using PyLD library for JSON-LD processing:
+
+```python
+from pyld import jsonld
+import json
+
+# Load BOOST context
+with open('boost_context.jsonld') as f:
+    context = json.load(f)
+
+# Create entity with context
+tru = {
+    "@context": context,
+    "@type": "TraceableUnit",
+    "traceableUnitId": "TRU-001",
+    "totalVolume": 100.0
+}
+
+# Expand to full IRIs
+expanded = jsonld.expand(tru)
+
+# Compact with custom context
+compacted = jsonld.compact(expanded, context)
+
+# Convert to RDF
+rdf = jsonld.to_rdf(tru)
+
+# Frame for specific view
+frame = {"@type": "TraceableUnit"}
+framed = jsonld.frame(tru, frame)
+```
+
+### JavaScript Implementation ### {#javascript-jsonld}
+
+Browser and Node.js support:
+
+```javascript
+const jsonld = require('jsonld');
+
+// Process BOOST data
+async function processBoostData(data) {
+  // Add context
+  data['@context'] = 'https://boost.org/context.jsonld';
+  
+  // Validate structure
+  const expanded = await jsonld.expand(data);
+  
+  // Generate RDF
+  const nquads = await jsonld.toRDF(data, {format: 'N-Quads'});
+  
+  return nquads;
+}
+```
+
+## Semantic Validation ## {#semantic-validation}
+
+### SHACL Constraints ### {#shacl-constraints}
+
+Shape validation for semantic correctness:
+
+<pre class="json">
+{
+  "@context": {"sh": "http://www.w3.org/ns/shacl#"},
+  "@type": "sh:NodeShape",
+  "sh:targetClass": "biomass:TraceableUnit",
+  "sh:property": [{
+    "sh:path": "biomass:totalVolume",
+    "sh:datatype": "xsd:decimal",
+    "sh:minInclusive": 0,
+    "sh:maxInclusive": 10000
+  }]
+}
+</pre>
+
+### Reasoning and Inference ### {#reasoning-inference}
+
+Automatic inference capabilities:
+
+- Type inheritance from parent classes
+- Property domain/range validation
+- Transitive relationship discovery
+- Consistency checking
+
+## Benefits and Use Cases ## {#jsonld-benefits}
+
+### Interoperability Benefits ### {#interoperability-benefits}
+
+- **Global Identifiers**: IRIs enable worldwide unique identification
+- **Vocabulary Reuse**: Leverage existing ontologies
+- **Tool Ecosystem**: Compatible with RDF/SPARQL tools
+- **Web Integration**: SEO and knowledge graph inclusion
+
+### Supply Chain Use Cases ### {#supply-chain-use-cases}
+
+- **Cross-Organization Linking**: Connect data across partners
+- **Provenance Tracking**: Complete chain of custody
+- **Regulatory Reporting**: Machine-readable compliance data
+- **Certification Verification**: Linked certificate validation
+
+The JSON-LD context provides BOOST with semantic web capabilities essential for modern supply chain interoperability and regulatory compliance.
+# Regulatory Program Compliance # {#regulatory-compliance}
+
+The BOOST standard provides comprehensive support for regulatory compliance across multiple biofuel programs, with primary focus on the California Low Carbon Fuel Standard (LCFS). This section documents programmatic reporting workflows, compliance requirements, and implementation guidance for regulatory submissions.
+
+## Low Carbon Fuel Standard (LCFS) Overview ## {#lcfs-overview}
+
+The California Low Carbon Fuel Standard, administered by the California Air Resources Board (CARB), is a market-based regulation designed to reduce greenhouse gas emissions from transportation fuels. BOOST provides specialized entities and validation rules to support complete LCFS compliance workflows.
+
+### Regulatory Context ### {#lcfs-regulatory-context}
+
+The LCFS program requires regulated parties to:
+
+- Track all fuel transactions with certified pathway attribution
+- Calculate carbon intensity using CARB-approved methodologies
+- Submit quarterly reports with complete audit trails
+- Maintain third-party verification documentation
+- Demonstrate compliance with sustainability criteria
+
+### BOOST's Role in LCFS Compliance ### {#boost-lcfs-role}
+
+BOOST enables LCFS compliance through:
+
+- **Pathway Management**: `LcfsPathway` entity for CARB-certified pathways
+- **Transaction Tracking**: Enhanced `Transaction` with LCFS-specific fields
+- **Quarterly Reporting**: `LcfsReporting` entity for regulatory submissions
+- **Credit Calculations**: Automated credit/deficit calculation with validation
+- **Audit Trail**: Complete traceability from feedstock to fuel product
+
+## LCFS Entity Integration ## {#lcfs-entities}
+
+### LcfsPathway Entity ### {#lcfspathway-entity}
+
+The `LcfsPathway` entity manages CARB-certified fuel pathways:
+
+- `pathwayId`: CARB-assigned pathway identifier
+- `pathwayType`: Lookup Table, Tier 1, or Tier 2 pathway
+- `carbonIntensity`: Certified CI value (gCO2e/MJ)
+- `energyEconomyRatio`: EER for credit calculation
+- `certificationDate`: CARB certification date
+- `expirationDate`: Pathway expiration date
+- `verificationStatus`: Active, suspended, or expired
+- `caGreetVersion`: CA-GREET model version used
+
+**Pathway Validation Rules:**
+
+- Pathway must be active for transaction date
+- Carbon intensity must match CARB database
+- Feedstock must align with pathway specifications
+- Facility location must match certified production site
+
+### Enhanced Transaction Entity ### {#enhanced-transaction}
+
+LCFS-specific transaction fields include:
+
+- `lcfsPathwayId`: Foreign key to certified pathway
+- `fuelVolume`: Volume in gallons or GGE
+- `fuelCategory`: Fuel type classification
+- `reportingPeriod`: YYYY-Q# format
+- `regulatedPartyRole`: Producer, importer, blender, or distributor
+
+### LcfsReporting Entity ### {#lcfsreporting-entity}
+
+Quarterly reporting aggregation:
+
+- `reportingPeriod`: Quarter identifier (e.g., "2025-Q1")
+- `totalFuelVolume`: Aggregate fuel volume
+- `totalCreditsGenerated`: Credits from CI below benchmark
+- `totalDeficitsIncurred`: Deficits from CI above benchmark
+- `netPosition`: Net credit/deficit position
+- `verificationStatus`: Third-party verification status
+
+## Programmatic Reporting Workflows ## {#lcfs-workflows}
+
+### Quarterly Report Generation ### {#quarterly-reports}
+
+The quarterly reporting process follows these steps:
+
+1. **Transaction Aggregation**: Collect all transactions for reporting period
+2. **Pathway Validation**: Verify pathway status and attributes
+3. **Credit Calculation**: Apply CARB formulas with EER adjustment
+4. **Report Generation**: Create structured report for submission
+5. **Verification**: Third-party review if required
+6. **Submission**: Upload to CARB reporting system
+
+### Credit Calculation Methodology ### {#credit-calculation}
+
+LCFS credits are calculated using the formula:
+
+```
+Credits = (Benchmark CI - Pathway CI) × Fuel Volume × Energy Density × EER × 10^-6
+```
+
+Where:
+- Benchmark CI = CARB-specified carbon intensity target
+- Pathway CI = Certified pathway carbon intensity
+- Fuel Volume = Transaction volume in gallons
+- Energy Density = MJ per gallon for fuel type
+- EER = Energy Economy Ratio for application
+
+### Data Reconciliation Process ### {#data-reconciliation}
+
+Monthly reconciliation ensures data integrity:
+
+1. Compare transaction records with physical inventory
+2. Validate pathway assignments against production records
+3. Cross-check credit calculations with manual verification
+4. Document discrepancies in `DataReconciliation` entity
+5. Generate reconciliation report for audit trail
+
+## Implementation Examples ## {#lcfs-examples}
+
+### Renewable Diesel Production Example ### {#renewable-diesel-example}
+
+Complete workflow for renewable diesel with forest residue feedstock:
+
+<pre class="json">
+{
+  "transactionId": "TXN-LCFS-2025Q1-001",
+  "transactionType": "fuel_sale",
+  "fuelVolume": 10000,
+  "fuelVolumeUnit": "gallons",
+  "fuelCategory": "renewable_diesel",
+  "lcfsPathwayId": "PATH-CARB-RD-001",
+  "reportingPeriod": "2025-Q1",
+  "organizationId": "ORG-PACIFIC-001",
+  "regulatedPartyRole": "producer",
+  "traceableUnitIds": ["TRU-FOREST-001", "TRU-FOREST-002"],
+  "carbonIntensity": 35.5,
+  "benchmarkCI": 94.17,
+  "creditsGenerated": 5862.5
+}
+</pre>
+
+### Credit Calculation Example ### {#credit-calc-example}
+
+Using actual CARB values for renewable diesel:
+
+- Fuel Volume: 10,000 gallons
+- Energy Density: 129.65 MJ/gallon (renewable diesel)
+- Benchmark CI: 94.17 gCO2e/MJ (2025 diesel target)
+- Pathway CI: 35.50 gCO2e/MJ (certified pathway)
+- EER: 1.0 (heavy-duty diesel application)
+
+**Calculation:**
+```
+Credits = (94.17 - 35.50) × 10,000 × 129.65 × 1.0 × 10^-6
+        = 58.67 × 10,000 × 129.65 × 10^-6
+        = 7,607 MT CO2e credits
+```
+
+## Multi-Program Compliance Framework ## {#multi-program}
+
+### Renewable Fuel Standard (RFS) Integration ### {#rfs-integration}
+
+BOOST supports RFS compliance through:
+
+- RIN generation and tracking capabilities
+- D-code classification for renewable fuel categories
+- EPA pathway registration support
+- Quarterly RFS reporting integration
+
+### EU Renewable Energy Directive (RED II) Compliance ### {#red-compliance}
+
+European compliance features include:
+
+- GHG savings calculation (minimum 65% for new facilities)
+- Sustainability criteria verification
+- Land use change documentation
+- Mass balance chain of custody
+- ISCC certification integration
+
+### Regional Program Extensions ### {#regional-programs}
+
+Support for state-level programs:
+
+- **Oregon Clean Fuels Program**: Similar to LCFS with state-specific pathways
+- **Washington Clean Fuel Standard**: Launched 2023 with unique requirements
+- **British Columbia LCFS**: Provincial program with federal alignment
+- **Canada Clean Fuel Regulations**: National program with credit trading
+
+## Data Quality and Compliance ## {#lcfs-data-quality}
+
+### CARB Data Validation Requirements ### {#carb-validation}
+
+All submissions must meet CARB data quality standards:
+
+- **Completeness**: 100% transaction coverage required
+- **Accuracy**: Volume tolerance ±0.5%
+- **Timeliness**: Quarterly submission within 45 days
+- **Consistency**: Cross-period reconciliation required
+- **Traceability**: Complete audit trail maintained
+
+### Third-Party Verification ### {#third-party-verification}
+
+Large regulated entities require annual verification:
+
+1. Engage CARB-accredited verification body
+2. Provide access to BOOST data systems
+3. Support site visits and record reviews
+4. Address verification findings
+5. Submit verification statement with annual report
+
+## Technical Implementation ## {#lcfs-technical}
+
+### API Endpoints for LCFS Data ### {#lcfs-api}
+
+RESTful API design for LCFS operations:
+
+- `GET /lcfs/pathways` - Retrieve active pathways
+- `POST /lcfs/transactions` - Submit fuel transaction
+- `GET /lcfs/reports/{period}` - Generate quarterly report
+- `POST /lcfs/credits/calculate` - Calculate credits/deficits
+- `GET /lcfs/reconciliation/{period}` - Reconciliation report
+
+### Automated Report Generation ### {#automated-reports}
+
+Python implementation for quarterly reports:
+
+```python
+from boost_client import create_client
+from datetime import datetime
+
+client = create_client()
+
+# Generate Q1 2025 LCFS report
+report = client.generate_lcfs_report(
+    reporting_period="2025-Q1",
+    organization_id="ORG-PACIFIC-001"
+)
+
+# Aggregate transactions by pathway
+pathway_summary = report.aggregate_by_pathway()
+
+# Calculate total credits/deficits
+total_credits = sum(t.credits for t in report.transactions)
+total_deficits = sum(t.deficits for t in report.transactions)
+net_position = total_credits - total_deficits
+
+# Generate CARB submission format
+carb_report = report.format_for_carb_submission()
+
+# Export to required XML format
+report.export_to_xml("lcfs_2025_q1_submission.xml")
+```
+
+### Error Handling and Validation ### {#error-handling}
+
+Comprehensive validation before submission:
+
+- Pathway expiration checking
+- Volume balance verification
+- Credit calculation validation
+- Duplicate transaction detection
+- Missing data identification
+- Format compliance checking
+
+## Regulatory Change Management ## {#regulatory-changes}
+
+BOOST adapts to regulatory updates through:
+
+- **Schema Versioning**: Track regulatory requirement changes
+- **Validation Rule Updates**: Modify business logic for new requirements
+- **Backward Compatibility**: Maintain historical data integrity
+- **Migration Tools**: Update existing data to new standards
+- **Compliance Alerts**: Notify users of regulatory changes
+
+This comprehensive framework ensures BOOST implementations maintain full regulatory compliance while adapting to evolving program requirements across multiple jurisdictions.
 # Python Reference Implementation # {#python-implementation}
 
 The BOOST standard provides a comprehensive Python reference implementation that demonstrates dynamic, schema-driven data models, validation, and supply chain tracking capabilities for biomass chain of custody operations.
@@ -1479,6 +2153,28 @@ Entities managing material specifications, suppliers, and supply chain relations
 - **Purpose**: Periodic reporting on supply base activities and sustainability metrics
 - **Key Relationships**: SupplyBase (reported area), Organization (reporting entity)
 - **Critical Fields**: `reportingPeriod`, `volumeHarvested`, `sustainabilityMetrics`
+
+## Transaction Management Entities ## {#transaction-management-entities-reference}
+
+Entities handling commercial transactions and order fulfillment:
+
+### Transaction ### {#ref-transaction}
+- **Primary Key**: `transactionId`
+- **Purpose**: Commercial transactions and sales of biomass materials
+- **Key Relationships**: Organization (seller), Customer (buyer), TraceableUnit (material sold)
+- **Critical Fields**: `transactionDate`, `quantityM3`, `price`, `deliveryTerms`
+
+### TransactionBatch ### {#ref-transaction-batch}
+- **Primary Key**: `transactionBatchId`
+- **Purpose**: Grouping multiple transactions for batch processing and reporting
+- **Key Relationships**: Transaction (grouped transactions), Organization (batch processor)
+- **Critical Fields**: `batchDate`, `totalQuantity`, `batchStatus`, `transactionIds`
+
+### SalesDeliveryDocument ### {#ref-sales-delivery-document}
+- **Primary Key**: `salesDeliveryDocumentId`
+- **Purpose**: Formal delivery documentation for material transfers
+- **Key Relationships**: Transaction (documented sale), TraceableUnit (delivered materials)
+- **Critical Fields**: `documentNumber`, `deliveryDate`, `shippingDetails`, `receiverSignature`
 
 ## Geographic & Tracking Entities ## {#geographic-tracking-entities-reference}
 

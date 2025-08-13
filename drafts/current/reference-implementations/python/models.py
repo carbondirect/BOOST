@@ -7,7 +7,7 @@ data validation, serialization, and JSON-LD context management.
 
 from datetime import datetime
 from typing import Optional, List, Dict, Any, Union
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
 from enum import Enum
 
 
@@ -19,11 +19,18 @@ class BOOSTBaseModel(BaseModel):
     id: str = Field(..., alias="@id", description="Unique URI identifier")
     last_updated: Optional[datetime] = Field(None, alias="lastUpdated")
     
-    class Config:
-        populate_by_name = True
-        json_encoders = {
-            datetime: lambda v: v.isoformat()
-        }
+    model_config = ConfigDict(
+        populate_by_name=True
+    )
+    
+    def model_dump(self, **kwargs):
+        """Override model_dump to handle datetime serialization."""
+        data = super().model_dump(**kwargs)
+        # Handle datetime fields
+        for key, value in data.items():
+            if isinstance(value, datetime):
+                data[key] = value.isoformat()
+        return data
 
 
 class OrganizationType(str, Enum):

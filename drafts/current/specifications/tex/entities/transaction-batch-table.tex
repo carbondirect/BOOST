@@ -3,11 +3,11 @@
 
 \begin{entitytable}{Transaction Batch}
 \textbf{\field{batchStatus}} & enum(6 values) & Current status of the physical batch \\
-\textbf{\field{quantity}} & number ($\geq$ 0) & Physical quantity of material in this batch \\
+\textbf{\field{quantity}} & number (≥0) & Physical quantity of material in this batch \\
 \textbf{\field{quantityUnit}} & enum(7 values) & Unit of measurement for quantity \\
 \textbf{\field{traceableUnitIds}} & array<string> & Array of TRU IDs included in this batch \\
-\textbf{\field{transactionBatchId}} & string & Unique identifier for the physical material batch \\
-\textbf{\field{transactionId}} & string & Foreign key to parent business transaction \\
+\textbf{\field{transactionBatchId}} & string (pattern) & Unique identifier for the physical material batch \\
+\textbf{\field{transactionId}} & string (pattern) & Foreign key to parent business transaction \\
 \field{additionalClaimIds} & array<string> & Array of secondary claim IDs \\
 \field{batchCreatedDate} & string (date-time) & When the batch was prepared/created \\
 \field{certificationValidation} & object (structured) & Certification and compliance validation data \\

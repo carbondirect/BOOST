@@ -4,13 +4,13 @@
 \begin{entitytable}{LCFS Reporting}
 \textbf{\field{complianceStatus}} & enum(4 values) & Overall compliance status for the reporting period \\
 \textbf{\field{netPosition}} & number & Net credit/deficit position (credits - deficits) \\
-\textbf{\field{regulatedEntityId}} & string & Reference to regulated Organization entity \\
+\textbf{\field{regulatedEntityId}} & string (pattern) & Reference to regulated Organization entity \\
 \textbf{\field{reportingId}} & string (pattern) & Unique identifier for the quarterly report \\
 \textbf{\field{reportingPeriod}} & string (pattern) & Reporting quarter in YYYY-QN format \\
-\textbf{\field{totalCreditsGenerated}} & number ($\geq$ 0) & Total LCFS credits generated in the reporting period \\
-\textbf{\field{totalDeficitsIncurred}} & number ($\geq$ 0) & Total LCFS deficits incurred in the reporting period \\
-\textbf{\field{totalFuelVolume}} & number ($\geq$ 0) & Total fuel volume reported in gallons \\
-\field{VerificationStatementId} & string & Uses EntityNameId convention referencing VerificationStatement for third-part... \\
+\textbf{\field{totalCreditsGenerated}} & number (≥0) & Total LCFS credits generated in the reporting period \\
+\textbf{\field{totalDeficitsIncurred}} & number (≥0) & Total LCFS deficits incurred in the reporting period \\
+\textbf{\field{totalFuelVolume}} & number (≥0) & Total fuel volume reported in gallons \\
+\field{VerificationStatementId} & string (pattern) & Uses EntityNameId convention referencing VerificationStatement for third-part... \\
 \field{calculationParameters} & object (structured) & Calculation parameters used for credit computation \\
 \field{complianceMetrics} & object (structured) & Additional compliance and environmental impact metrics \\
 \field{lastUpdated} & string (date-time) & Timestamp of most recent report update \\

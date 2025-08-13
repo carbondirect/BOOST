@@ -1,0 +1,1607 @@
+<pre class='metadata'>
+Title: Biomass Open Origin Standard for Tracking (BOOST) Data Standard
+Shortname: boost
+Level: 1
+Status: LD
+Date: 2025-08-11
+!Version: {{VERSION}}
+Editor: Peter Tittmann, Carbon Direct, peter@carbondirect.org  
+Editor: Liam Killroy, Carbon Direct, liam@carbondirect.org
+Editor: BOOST W3C Community Group, public-boost-01@w3.org
+Abstract: The Biomass Open Origin Standard for Tracking (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.
+Markup Shorthands: markdown yes
+</pre>
+
+<pre class="biblio">
+{
+  "RFC2119": {
+    "authors": ["S. Bradner"],
+    "href": "https://tools.ietf.org/rfc/rfc2119",
+    "title": "Key words for use in RFCs to Indicate Requirement Levels",
+    "publisher": "IETF",
+    "date": "March 1997"
+  },
+  "RFC8174": {
+    "authors": ["B. Leiba"],
+    "href": "https://tools.ietf.org/rfc/rfc8174",
+    "title": "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words",
+    "publisher": "IETF",
+    "date": "May 2017"
+  },
+  "JSON-LD11": {
+    "authors": ["Gregg Kellogg", "Pierre-Antoine Champin", "Dave Longley"],
+    "href": "https://www.w3.org/TR/json-ld11/",
+    "title": "JSON-LD 1.1",
+    "publisher": "W3C",
+    "date": "16 July 2020"
+  },
+  "JSON-SCHEMA": {
+    "authors": ["Austin Wright", "Henry Andrews"],
+    "href": "https://json-schema.org/specification.html",
+    "title": "JSON Schema: A Media Type for Describing JSON Documents",
+    "date": "March 2019"
+  },
+  "GEOJSON": {
+    "authors": ["H. Butler", "M. Daly", "A. Doyle", "S. Gillies", "S. Hagen", "T. Schaub"],
+    "href": "https://tools.ietf.org/rfc/rfc7946",
+    "title": "The GeoJSON Format",
+    "publisher": "IETF",
+    "date": "August 2016"
+  },
+  "ISO38200": {
+    "href": "https://www.iso.org/standard/69429.html",
+    "title": "Chain of custody of wood and wood-based products",
+    "publisher": "ISO",
+    "date": "2018"
+  },
+  "SBP-STANDARD-4": {
+    "href": "https://sbp-cert.org/documents/standards-documents/",
+    "title": "Chain of Custody Standard",
+    "publisher": "Sustainable Biomass Partnership",
+    "date": "Version 1.0, 2013"
+  },
+  "SBP-STANDARD-5": {
+    "href": "https://sbp-cert.org/documents/standards-documents/",
+    "title": "Collection and Communication of Data",
+    "publisher": "Sustainable Biomass Partnership", 
+    "date": "Version 1.0, 2013"
+  },
+  "FSC-STD-40-004": {
+    "href": "https://fsc.org/en/document-centre/documents/resource/392",
+    "title": "Chain of Custody Certification",
+    "publisher": "Forest Stewardship Council",
+    "date": "Version 3.0, 2017"
+  },
+  "PEFC-ST-2002": {
+    "href": "https://www.pefc.org/standards/chain-of-custody",
+    "title": "Chain of Custody of Forest Based Products",
+    "publisher": "Programme for Endorsement of Forest Certification",
+    "date": "2020"
+  },
+  "CA-LCFS": {
+    "href": "https://ww2.arb.ca.gov/our-work/programs/low-carbon-fuel-standard",
+    "title": "Low Carbon Fuel Standard Regulation",
+    "publisher": "California Air Resources Board",
+    "date": "2024"
+  },
+  "EU-RED-II": {
+    "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv:OJ.L_.2018.328.01.0082.01.ENG",
+    "title": "Renewable Energy Directive II",
+    "publisher": "European Union",
+    "date": "Directive (EU) 2018/2001"
+  },
+  "KAULEN-2023": {
+    "authors": ["D. Kaulen", "P. Tittmann", "et al."],
+    "href": "https://github.com/carbondirect/BOOST/tree/main/references",
+    "title": "Systematics of Forestry Technology for Tracing the Timber Supply Chain",
+    "date": "2023"
+  }
+}
+</pre>
+
+<div boilerplate="copyright">
+Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">W3C Software and Document License</a>.
+</div>
+
+<h2 id="sotd" class="no-num no-toc">Status of This Document</h2>
+
+This specification was published by the [Biomass Open Origin Standard for Tracking (BOOST) W3C Community Group](https://www.w3.org/community/boost-01/). It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the [W3C Community Final Specification Agreement (FSA)](https://www.w3.org/community/about/process/final/) other conditions apply. Learn more about [W3C Community and Business Groups](https://www.w3.org/community/).
+
+This document is governed by the [W3C Community License Agreement (CLA)](https://www.w3.org/community/about/process/cla/). A human-readable [summary](https://www.w3.org/community/about/process/cla-deed/) is available.
+
+Publication as a Community Group Report does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is inappropriate to cite this document as other than work in progress.
+
+<h2 id="feedback" class="no-num no-toc">How to Give Feedback</h2>
+
+This specification is primarily developed on [GitHub](https://github.com/carbondirect/BOOST). The best way to contribute to this specification is to:
+
+1. File issues and suggestions in the [BOOST GitHub repository](https://github.com/carbondirect/BOOST/issues)
+2. Submit pull requests for specific changes
+3. Participate in community discussions via [GitHub Discussions](https://github.com/carbondirect/BOOST/discussions)
+4. Join the [W3C Community Group mailing list](https://lists.w3.org/Archives/Public/public-boost-01/) for broader discussions
+
+# Introduction # {#introduction}
+
+<pre class=include>
+path: includes/introduction.inc.md
+</pre>
+
+## Purpose and Scope ## {#purpose-scope}
+
+This specification defines the BOOST (Biomass Open Origin Standard for Tracking) data standard for biomass supply chain tracking and verification. The standard provides:
+
+- A unified data model for biomass custody transfers
+- Format constraints for serializing chain of custody data
+- Integration specifications for certification systems
+- Regulatory compliance frameworks for multiple jurisdictions
+
+## Background and Motivation ## {#background-motivation}
+
+<pre class=include>
+path: includes/background.inc.md
+</pre>
+
+## Relationship to Existing Standards ## {#existing-standards}
+
+BOOST builds upon and integrates with established standards including:
+- [[ISO38200]] Chain of custody of wood and wood-based products
+- [[SBP-STANDARD-4]] and [[SBP-STANDARD-5]] from Sustainable Biomass Partnership
+- [[FSC-STD-40-004]] Forest Stewardship Council certification standards
+- [[PEFC-ST-2002]] Programme for Endorsement of Forest Certification standards
+- [[CA-LCFS]] California Low Carbon Fuel Standard requirements
+- [[EU-RED-II]] European Union Renewable Energy Directive II
+
+## Community Group Process ## {#community-process}
+
+<pre class=include>
+path: includes/community-process.inc.md
+</pre>
+
+# Conformance # {#conformance-section}
+
+<pre class=include>
+path: includes/conformance.inc.md
+</pre>
+
+## Conformance Classes ## {#conformance-classes}
+
+### BOOST Core Conformance ### {#core-conformance}
+
+Implementations claiming BOOST Core conformance MUST support:
+- TraceableUnit entity with required fields (including mandatory harvest origin)
+- Organization entity for harvester identification  
+- Material entity for material type reference
+- GeographicData entity for location tracking (GeoJSON format)
+- Basic material tracking and identification
+- JSON-LD serialization format
+- Schema validation according to [[#schema-definitions]]
+
+### BOOST Extended Conformance ### {#extended-conformance}
+
+Implementations claiming BOOST Extended conformance MUST support Core conformance plus:
+- Multi-species composition tracking
+- Material processing operations
+- Location history tracking
+- Basic sustainability claims management
+
+### BOOST Full Conformance ### {#full-conformance}
+
+Implementations claiming BOOST Full conformance MUST support Extended conformance plus:
+- All 33 BOOST entities
+- Complete business logic validation
+- Multi-certification scheme support
+- LCFS regulatory integration
+
+## Implementation Requirements ## {#implementation-requirements}
+
+Conforming implementations MUST:
+
+NOTE: A comprehensive [Python reference implementation](#python-implementation) is available that demonstrates all required BOOST conformance features with dynamic schema adaptation capabilities.
+- Validate data against BOOST JSON schemas
+- Preserve entity relationships and referential integrity
+- Support JSON-LD context and semantic annotations
+- Implement required business logic validation rules
+
+# BOOST Traceability System # {#traceability-system}
+
+<pre class=include>
+path: includes/traceability-system.inc.md
+</pre>
+
+## TraceableUnit (TRU) Central Concept ## {#tru-concept}
+
+The <dfn export>TraceableUnit</dfn> entity serves as the central hub for all biomass tracking operations. Every TRU MUST have:
+- Unique identifier with biometric signature capability
+- Material type classification
+- Volume and mass measurements
+- Geographic location data
+- Processing history linkage
+
+## Media-Interruption-Free Tracking ## {#media-interruption-free}
+
+BOOST implementations MUST support continuous traceability through:
+- Biometric identification without physical attachments
+- Optical pattern recognition for TRU identification
+- Data continuity validation across processing steps
+- Media break detection and flagging mechanisms
+
+## Three Critical Tracking Points ## {#critical-tracking-points}
+
+Implementations MUST support measurement and verification at:
+- **harvest_site** - Initial TRU creation and measurement
+- **skid_road/forest_road** - Transportation consolidation points  
+- **mill_entrance** - Processing facility entry points
+
+## Processing Chain Methodology ## {#processing-chain}
+
+All material transformations MUST be documented through:
+- <dfn export>MaterialProcessing</dfn> entities linking input and output TRUs
+- Volume and mass conservation validation
+- Plant part transformation tracking
+- Quality assessment throughout processing
+
+# Data Model Architecture # {#data-model}
+
+<pre class=include>
+path: includes/data-model.inc.md
+</pre>
+
+<pre class=include>
+path: includes/erd-integration.inc.md
+</pre>
+
+## Hub-and-Spoke Design ## {#hub-spoke}
+
+The data model implements a hub-and-spoke architecture with TraceableUnit as the central hub. All other entities MUST maintain direct or indirect relationships to TRUs to ensure complete traceability.
+
+## Foreign Key Conventions ## {#foreign-key-conventions}
+
+All foreign key relationships MUST follow the EntityNameId pattern:
+- Field names MUST end with "Id" 
+- Field names MUST reference the target entity name in PascalCase
+- Examples: `OrganizationId`, `TraceableUnitId`, `GeographicDataId`
+
+# Plant Part Categorization System # {#plant-parts}
+
+<pre class=include>
+path: includes/plant-parts.inc.md
+</pre>
+
+## Standardized Plant Parts Taxonomy ## {#plant-parts-taxonomy}
+
+Implementations MUST support the following 17 standardized plant parts:
+- **trunk** - Main stem/bole of tree
+- **heartwood** - Inner, non-living wood
+- **sapwood** - Outer, living wood
+- **bark** - Protective outer layer
+- **branches** - Secondary stems
+- **leaves** - Photosynthetic organs
+- **seeds** - Reproductive structures
+- **roots** - Below-ground structures
+- **twigs** - Small branches
+- **cones** - Seed-bearing structures
+- **needles** - Coniferous leaves
+- **foliage** - All leaf matter
+- **crown** - Above-ground branching structure
+- **stump** - Remaining base after felling
+- **chips** - Mechanically processed fragments
+- **sawdust** - Fine processing residue
+- **pellets** - Densified processed material
+
+# Core Data Entities # {#core-entities}
+
+<pre class=include>
+path: includes/core-entities.inc.md
+</pre>
+
+## Core Traceability Entities ## {#core-traceability-entities}
+
+Implementations claiming BOOST Core conformance MUST support these entities:
+
+### TraceableUnit ### {#traceable-unit}
+
+The central entity in BOOST's hub-and-spoke architecture. Every TRU connects to [[#organization-core|Organization]], [[#material-core|Material]], and [[#geographic-data|GeographicData]] entities.
+
+**🗂️ [View TraceableUnit in ERD Navigator](erd-navigator/index.html?focus=TraceableUnit)**
+
+<pre class=include>
+path: schema/traceable_unit/traceable_unit_dictionary.md
+</pre>
+
+### Organization ### {#organization-core}
+
+Defines harvesters, processors, and supply chain participants. Referenced by [[#traceable-unit|TraceableUnit]] and connects to [[#certificate|Certificate]] entities for certification management.
+
+**🗂️ [View Organization in ERD Navigator](erd-navigator/index.html?focus=Organization)**
+
+<pre class=include>
+path: schema/organization/organization_dictionary.md
+</pre>
+
+### Material ### {#material-core}
+
+Material type classifications referenced by [[#traceable-unit|TraceableUnit]]. For multi-species materials, connect to [[#species-component|SpeciesComponent]] entities.
+
+**🗂️ [View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
+
+<pre class=include>
+path: schema/material/material_dictionary.md
+</pre>
+
+### GeographicData ### {#geographic-data}
+
+Spatial data in GeoJSON format for location tracking. Referenced by [[#traceable-unit|TraceableUnit]] and [[#location-history|LocationHistory]] for comprehensive location management.
+
+**🗂️ [View GeographicData in ERD Navigator](erd-navigator/index.html?focus=GeographicData)**
+
+<pre class=include>
+path: schema/geographic_data/geographic_data_dictionary.md
+</pre>
+
+## Extended Traceability Entities ## {#extended-traceability-entities}
+
+Implementations claiming BOOST Extended conformance MUST support Core entities plus these additional entities:
+
+### MaterialProcessing ### {#material-processing}
+
+Documents material transformation operations linking input and output [[#traceable-unit|TraceableUnit]] entities. Often references [[#equipment|Equipment]] and [[#operator|Operator]] entities for operational details.
+
+**🗂️ [View MaterialProcessing in ERD Navigator](erd-navigator/index.html?focus=MaterialProcessing)**
+
+<pre class=include>
+path: schema/material_processing/material_processing_dictionary.md
+</pre>
+
+### ProcessingHistory ### {#processing-history}
+
+Chronological tracking of all processing operations affecting [[#traceable-unit|TraceableUnit]] entities throughout their lifecycle. Complements [[#material-processing|MaterialProcessing]] with TRU-centric audit trails and genealogy tracking.
+
+**🗂️ [View ProcessingHistory in ERD Navigator](erd-navigator/index.html?focus=ProcessingHistory)**
+
+<pre class=include>
+path: includes/entities/processing-history.inc.md
+</pre>
+
+## Organizational Foundation Entities ## {#organizational-entities}
+
+*Note: Organization is now part of Core Traceability Entities - see [[#organization-core]]*
+
+### Certificate ### {#certificate}
+
+Certification documents for [[#organization-core|Organization]] entities. Links to [[#certification-body|CertificationBody]] and [[#certification-scheme|CertificationScheme]] for comprehensive certification management.
+
+**🗂️ [View Certificate in ERD Navigator](erd-navigator/index.html?focus=Certificate)**
+
+<pre class=include>
+path: schema/certificate/certificate_dictionary.md
+</pre>
+
+## Additional Essential Entities ## {#additional-essential-entities}
+
+*Note: Material is now part of Core Traceability Entities - see [[#material-core]]*
+
+### SpeciesComponent ### {#species-component}
+
+Multi-species composition data for [[#material-core|Material]] entities. Essential for mixed-species [[#traceable-unit|TraceableUnit]] tracking with percentage validation.
+
+**🗂️ [View SpeciesComponent in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
+
+<pre class=include>
+path: schema/species_component/species_component_dictionary.md
+</pre>
+
+### Operator ### {#operator}
+
+<pre class=include>
+path: schema/operator/operator_dictionary.md
+</pre>
+
+### Equipment ### {#equipment}
+
+<pre class=include>
+path: schema/equipment/equipment_dictionary.md
+</pre>
+
+### BiometricIdentifier ### {#biometric-identifier}
+
+Enables media-interruption-free tracking for [[#traceable-unit|TraceableUnit]] entities through optical pattern recognition and biometric signatures.
+
+**🗂️ [View BiometricIdentifier in ERD Navigator](erd-navigator/index.html?focus=BiometricIdentifier)**
+
+<pre class=include>
+path: schema/biometric_identifier/biometric_identifier_dictionary.md
+</pre>
+
+### LocationHistory ### {#location-history}
+
+Tracks movement history for [[#traceable-unit|TraceableUnit]] entities, connecting to [[#geographic-data|GeographicData]] and [[#tracking-point|TrackingPoint]] entities.
+
+**🗂️ [View LocationHistory in ERD Navigator](erd-navigator/index.html?focus=LocationHistory)**
+
+<pre class=include>
+path: schema/location_history/location_history_dictionary.md
+</pre>
+
+### MeasurementRecord ### {#measurement-record}
+
+<pre class=include>
+path: schema/measurement_record/measurement_record_dictionary.md
+</pre>
+
+### TrackingPoint ### {#tracking-point}
+
+<pre class=include>
+path: schema/tracking_point/tracking_point_dictionary.md
+</pre>
+
+### DataReconciliation ### {#data-reconciliation}
+
+<pre class=include>
+path: schema/data_reconciliation/data_reconciliation_dictionary.md
+</pre>
+
+## Certification and Claims Entities ## {#certification-claims-entities}
+
+### CertificationBody ### {#certification-body}
+
+<pre class=include>
+path: schema/certification_body/certification_body_dictionary.md
+</pre>
+
+### CertificationScheme ### {#certification-scheme}
+
+<pre class=include>
+path: schema/certification_scheme/certification_scheme_dictionary.md
+</pre>
+
+### Claim ### {#claim}
+
+<pre class=include>
+path: schema/claim/claim_dictionary.md
+</pre>
+
+## Supply Chain and Commerce Entities ## {#supply-chain-commerce-entities}
+
+### ProductGroup ### {#product-group}
+
+<pre class=include>
+path: schema/product_group/product_group_dictionary.md
+</pre>
+
+## Regulatory and Compliance Entities ## {#regulatory-compliance-entities}
+
+### LCFSPathway ### {#lcfs-pathway}
+
+<pre class=include>
+path: schema/lcfs_pathway/lcfs_pathway_dictionary.md
+</pre>
+
+### LCFSReporting ### {#lcfs-reporting}
+
+<pre class=include>
+path: schema/lcfs_reporting/lcfs_reporting_dictionary.md
+</pre>
+
+# Schema Definitions # {#schema-definitions}
+
+<pre class=include>
+path: includes/schema-definitions.inc.md
+</pre>
+
+## JSON Schema Format ## {#json-schema-format}
+
+All BOOST entity definitions MUST be provided as [[JSON-SCHEMA]] Draft-07 compliant schemas with the following REQUIRED structure:
+
+NOTE: The [Python reference implementation](#python-implementation) automatically loads and generates dynamic models from these schema definitions.
+
+<pre class="example highlight" highlight="json">
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/entity-name",
+    "title": "Entity Name",
+    "type": "object",
+    "properties": { ... },
+    "required": [ ... ]
+  }
+}
+</pre>
+
+# JSON-LD Context and Semantic Web Integration # {#jsonld-context}
+
+<div boilerplate="include" data-path="includes/jsonld-context.md"></div>
+
+# Regulatory Program Compliance # {#regulatory-compliance}
+
+<div boilerplate="include" data-path="includes/regulatory-compliance.md"></div>
+
+# Python Reference Implementation # {#python-implementation}
+
+The BOOST standard provides a comprehensive Python reference implementation that demonstrates dynamic, schema-driven data models, validation, and supply chain tracking capabilities for biomass chain of custody operations.
+
+## Overview ## {#python-overview}
+
+The Python reference implementation uses a **dynamic, schema-driven architecture** that automatically adapts to changes in BOOST JSON schemas without requiring code modifications. Key features include:
+
+- **🔄 Dynamic Schema-Driven Architecture**: Automatically adapts to schema changes without code modifications
+- **✅ Comprehensive Validation**: Schema, business logic, and cross-entity validation with 8 categories of business rules
+- **🏗️ Dynamic Model Generation**: Pydantic models generated directly from JSON schemas at runtime
+- **📋 Configuration-Driven Business Rules**: Business logic validation rules defined in configuration files
+- **🔗 Supply Chain Tracking**: Complete traceability with automatic relationship discovery
+- **🏷️ Multi-Certification Support**: FSC, SBP, PEFC, ISCC, RED II compliance validation
+- **⚖️ Mass Balance Accounting**: Volume and mass conservation validation with configurable tolerance checking
+- **🌐 JSON-LD Export/Import**: Full semantic web compatibility with schema.org and W3C PROV ontology support
+- **🛡️ Schema Version Compatibility**: Graceful handling of schema evolution and backward compatibility
+
+## Installation ## {#python-installation}
+
+### Prerequisites ### {#python-prerequisites}
+
+The Python reference implementation requires:
+
+- Python 3.8 or higher
+- pip package manager
+
+### Dependencies ### {#python-dependencies}
+
+Core dependencies are defined in `requirements.txt`:
+
+```
+pydantic>=2.0.0      # Data validation and settings management
+jsonschema>=4.0.0    # JSON Schema validation
+requests>=2.28.0     # HTTP library for API calls
+pyld>=2.0.0          # JSON-LD processor
+```
+
+Installation:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Architecture ## {#python-architecture}
+
+The implementation follows a layered architecture with three main components:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    BOOST JSON Schemas                          │
+│                                                                 │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌──────────┐  │
+│  │organization/│ │traceable_   │ │transaction/ │ │   ...    │  │
+│  │validation_  │ │unit/        │ │validation_  │ │          │  │
+│  │schema.json  │ │validation_  │ │schema.json  │ │          │  │
+│  └─────────────┘ │schema.json  │ └─────────────┘ └──────────┘  │
+│                  └─────────────┘                               │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│            Schema Loader (Dynamic Model Generation)            │
+│                                                                 │
+│  • Automatic Schema Discovery  • Dynamic Model Generation      │
+│  • Enum Generation            • Relationship Discovery        │
+│  • Primary Key Detection      • Metadata Extraction           │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│       Dynamic Validation (Configuration-Driven Rules)         │
+│                                                                 │
+│  • Schema Validation       • Cross-Entity Validation          │
+│  • Business Logic Rules    • Temporal Consistency            │
+│  • Mass Balance Validation • Certification Logic             │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│        BOOST Client (High-Level API Interface)                │
+│                                                                 │
+│  • Entity Creation         • Supply Chain Analysis            │
+│  • Schema Introspection    • JSON-LD Export/Import           │
+│  • Comprehensive Validation • ID Generation                   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Core Components ## {#python-core-components}
+
+### SchemaLoader ### {#python-schema-loader}
+
+The **SchemaLoader** (`schema_loader.py`) is the foundation component that provides dynamic schema loading and model generation:
+
+**Key Features:**
+- **Automatic Schema Discovery**: Scans directories for `validation_schema.json` files
+- **Dynamic Model Generation**: Creates Pydantic models from JSON schemas at runtime
+- **Enum Generation**: Dynamically creates Python enums from schema definitions
+- **Relationship Discovery**: Analyzes schemas to discover foreign key relationships automatically
+- **Primary Key Detection**: Identifies primary key fields from schema patterns
+
+**Usage Example:**
+
+```python
+from schema_loader import SchemaLoader
+
+# Initialize with automatic schema discovery
+loader = SchemaLoader()
+
+# Get dynamically generated Pydantic models
+OrganizationModel = loader.get_model('organization')
+TraceableUnitModel = loader.get_model('traceable_unit')
+
+# Get enum values directly from current schemas
+org_types = loader.get_field_enum_values('organization', 'organizationType')
+print(f"Available organization types: {org_types}")
+
+# Access relationship information discovered from schemas
+relationships = loader.get_relationships('traceable_unit')
+primary_key = loader.get_primary_key('organization')
+```
+
+### DynamicBOOSTValidator ### {#python-validator}
+
+The **DynamicBOOSTValidator** (`dynamic_validation.py`) provides comprehensive, schema-driven validation using configuration-based business rules:
+
+**Validation Categories:**
+1. **Schema Validation**: JSON Schema compliance and structural validation
+2. **Volume/Mass Conservation**: Physical conservation laws with configurable tolerance checking
+3. **Temporal Logic**: Date/time consistency rules and processing sequence validation
+4. **Geographic Logic**: Location-based constraints and transport distance validation
+5. **Species Composition**: Biological consistency and percentage validation
+6. **Certification Logic**: Chain of custody validation and certificate integrity
+7. **Regulatory Compliance**: LCFS, EU RED, and sustainability criteria validation
+8. **Economic/Quality Logic**: Market constraints and quality assurance validation
+
+**Usage Example:**
+
+```python
+from dynamic_validation import DynamicBOOSTValidator
+
+validator = DynamicBOOSTValidator()
+
+# Schema validation against current schema
+is_valid, errors = validator.validate_entity("organization", org_data)
+
+# Configuration-driven business logic validation
+is_valid, errors = validator.validate_business_logic("material_processing", processing_data)
+
+# Comprehensive cross-entity validation
+entities = {
+    'organization': [org1, org2],
+    'traceable_unit': [tru1, tru2],
+    'transaction': [txn1]
+}
+results = validator.comprehensive_validation(entities)
+```
+
+### BOOSTClient ### {#python-client}
+
+The **BOOSTClient** (`boost_client.py`) provides a high-level interface that uses the dynamic models and validation system:
+
+**Core Functions:**
+- **Entity Creation**: Create entities using dynamically generated models with automatic validation
+- **Schema Introspection**: Query available entities, enums, and constraints from current schemas
+- **Supply Chain Analysis**: Trace relationships and analyze supply chains using dynamic models
+- **Validation**: Comprehensive validation using all dynamic rules and business logic
+- **JSON-LD Support**: Export/import with semantic annotations and context management
+
+**Usage Example:**
+
+```python
+from boost_client import create_client
+
+# Initialize client with dynamic schema loading
+client = create_client()
+
+# Schema introspection
+schema_info = client.get_schema_info()
+print(f"Available entities: {schema_info['available_entities']}")
+
+# Dynamic enum discovery
+org_types = client.get_available_enum_values('organization', 'organizationType')
+
+# Entity creation with schema validation
+org = client.create_organization(
+    organization_id="ORG-FOREST-001",
+    name="Pacific Forest Products",
+    org_type="harvester",  # Validated against current schema
+    contact_email="ops@pacificforest.com"
+)
+
+# Comprehensive validation
+validation = client.validate_all()
+if validation['valid']:
+    print("✓ All entities pass validation!")
+```
+
+## Dynamic Schema Adaptation ## {#python-schema-adaptation}
+
+A key strength of the Python implementation is its **automatic adaptation to schema changes**. Most schema modifications require **no code changes**:
+
+### Automatically Handled Changes ### {#python-auto-changes}
+
+**Adding New Fields:**
+- New optional fields are immediately available
+- Required fields trigger validation updates automatically
+- Default values from schemas are applied automatically
+
+**Adding New Enum Values:**
+- New enum values become available immediately after schema reload
+- Validation rules update automatically
+- No code changes required
+
+**Adding New Entity Types:**
+- New schema files are discovered automatically
+- Dynamic models are generated on first access
+- All validation rules apply automatically
+
+**Modifying Business Logic Rules:**
+- Configuration file changes are applied automatically
+- Tolerance values and thresholds update dynamically
+- Cross-entity validation rules adapt to changes
+
+### Schema Change Detection ### {#python-change-detection}
+
+The system provides built-in tools for schema change management:
+
+```python
+# Check current schema status
+client = create_client()
+schema_info = client.get_schema_info()
+
+# Validate against current schema
+validation = client.validate_all()
+if not validation['valid']:
+    print("Schema changes detected - validation errors:")
+    for error in validation['errors']:
+        print(f"  - {error}")
+
+# Refresh schemas after updates
+client.refresh_schemas()
+```
+
+## Usage Examples ## {#python-examples}
+
+### Basic Workflow ### {#python-basic-workflow}
+
+Complete example demonstrating fundamental BOOST operations:
+
+```python
+from boost_client import create_client
+
+# Initialize BOOST client
+client = create_client()
+
+# Create organizations with schema validation
+harvester = client.create_organization(
+    organization_id="ORG-001",
+    name="Forest Products Inc",
+    org_type="harvester",
+    contact_email="ops@forestproducts.com"
+)
+
+processor = client.create_organization(
+    organization_id="ORG-002", 
+    name="Sawmill Operations LLC",
+    org_type="processor",
+    contact_email="info@sawmill.com"
+)
+
+# Create traceable units with automatic model generation
+log_pile = client.create_traceable_unit(
+    traceable_unit_id="TRU-LOGS-001",
+    unit_type="pile",
+    harvester_id="ORG-001",
+    total_volume_m3=125.5,
+    sustainability_certification="FSC Mix Credit 70%"
+)
+
+# Process materials with conservation validation
+lumber = client.create_material_processing(
+    processing_id="MP-001",
+    input_tru_id="TRU-LOGS-001",
+    process_type="sawing",
+    processor_id="ORG-002",
+    output_volume_m3=95.2  # Validates against conservation rules
+)
+
+# Execute transaction with comprehensive validation
+transaction = client.create_transaction(
+    transaction_id="TXN-001",
+    organization_id="ORG-002",
+    customer_id="CUST-001",
+    transaction_date="2025-08-12",
+    quantity_m3=50.0
+)
+
+# Comprehensive validation using all dynamic rules
+validation = client.validate_all()
+if validation['valid']:
+    print("✓ All entities validated successfully!")
+    
+# Export to JSON-LD with semantic annotations
+jsonld_output = client.export_to_jsonld(include_context=True)
+```
+
+### Certification Management ### {#python-certification}
+
+Example showing certification claim management:
+
+```python
+# Create FSC certified organization
+fsc_harvester = client.create_organization(
+    organization_id="ORG-FSC-001",
+    name="Certified Forest Management",
+    org_type="harvester",
+    certifications=["FSC-FM/COC-001234"]
+)
+
+# Create certified traceable unit
+certified_logs = client.create_traceable_unit(
+    traceable_unit_id="TRU-FSC-001",
+    unit_type="pile",
+    harvester_id="ORG-FSC-001",
+    total_volume_m3=200.0,
+    sustainability_certification="FSC Mix Credit 70%",
+    certification_claims=["FSC-FM/COC-001234"]
+)
+
+# Validate certification chain integrity
+cert_validation = client.validate_certification_chain("TRU-FSC-001")
+print(f"Certification valid: {cert_validation['valid']}")
+```
+
+### Mass Balance Validation ### {#python-mass-balance}
+
+Example demonstrating conservation law validation:
+
+```python
+# Multiple input materials
+input_tru_1 = client.create_traceable_unit(
+    traceable_unit_id="TRU-INPUT-001",
+    unit_type="pile", 
+    total_volume_m3=100.0
+)
+
+input_tru_2 = client.create_traceable_unit(
+    traceable_unit_id="TRU-INPUT-002",
+    unit_type="pile",
+    total_volume_m3=75.0
+)
+
+# Processing with multiple inputs
+pellet_production = client.create_material_processing(
+    processing_id="MP-PELLETS-001",
+    input_tru_ids=["TRU-INPUT-001", "TRU-INPUT-002"],
+    process_type="pelletizing",
+    total_input_volume_m3=175.0,
+    total_output_volume_m3=140.0,  # Within tolerance for pelletizing
+    efficiency_percent=80.0
+)
+
+# Validate mass balance with configurable tolerance
+balance_validation = client.validate_mass_balance("MP-PELLETS-001")
+print(f"Mass balance valid: {balance_validation['valid']}")
+print(f"Efficiency: {balance_validation['efficiency']}%")
+```
+
+## Integration Guidance ## {#python-integration}
+
+### API Development ### {#python-api-development}
+
+Using the reference implementation for API development:
+
+```python
+from boost_client import create_client
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+boost_client = create_client()
+
+@app.route('/organizations', methods=['POST'])
+def create_organization():
+    data = request.json
+    try:
+        # Dynamic validation using current schema
+        org = boost_client.create_organization(**data)
+        return jsonify(org.model_dump(by_alias=True))
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/validate/<entity_type>', methods=['POST'])
+def validate_entity(entity_type):
+    data = request.json
+    validation = boost_client.validator.validate_entity(entity_type, data)
+    return jsonify({
+        "valid": validation[0],
+        "errors": validation[1]
+    })
+
+# Schema introspection endpoint
+@app.route('/schema/info')
+def schema_info():
+    return jsonify(boost_client.get_schema_info())
+```
+
+### External System Integration ### {#python-external-integration}
+
+Integration patterns for external systems:
+
+```python
+# Custom validation rules for specific systems
+class CustomValidator(DynamicBOOSTValidator):
+    def validate_regulatory_compliance(self, entity_type, entity_data):
+        """Custom regulatory validation."""
+        base_validation = super().validate_business_logic(entity_type, entity_data)
+        
+        # Add custom rules
+        custom_rules = self.apply_custom_regulatory_rules(entity_data)
+        
+        return base_validation and custom_rules
+
+# Integration with existing databases
+def sync_with_existing_db(boost_client, db_connection):
+    """Sync BOOST entities with existing database."""
+    # Export BOOST data
+    jsonld_data = boost_client.export_to_jsonld()
+    
+    # Transform and import to existing system
+    transformed_data = transform_boost_to_legacy(jsonld_data)
+    db_connection.bulk_insert(transformed_data)
+```
+
+## Configuration ## {#python-configuration}
+
+### Schema Path Configuration ### {#python-schema-config}
+
+Customize schema loading:
+
+```python
+# Default: automatic discovery from ../schema/
+client = create_client()
+
+# Custom schema path
+client = create_client(schema_path="/path/to/boost/schemas")
+
+# Multiple schema sources
+loader = SchemaLoader()
+loader.add_schema_source("/additional/schemas")
+```
+
+### Business Logic Configuration ### {#python-business-config}
+
+Business logic rules are defined in configuration files:
+
+**business_logic_validation.json:**
+```json
+{
+  "volumeMassConservation": {
+    "materialProcessing": {
+      "sawing": {
+        "tolerance": 0.05,
+        "efficiency_range": [0.7, 0.9]
+      },
+      "pelletizing": {
+        "tolerance": 0.10,
+        "efficiency_range": [0.75, 0.85]
+      }
+    }
+  },
+  "temporalLogic": {
+    "processingWindows": {
+      "harvest_to_processing_max_days": 90
+    }
+  }
+}
+```
+
+## Testing and Validation ## {#python-testing}
+
+### Comprehensive Test Suite ### {#python-test-suite}
+
+The implementation includes comprehensive tests:
+
+```python
+# Run all tests
+python test_enhanced_entities.py
+
+# Test specific validation categories
+python -m unittest test_enhanced_entities.TestDynamicValidation.test_mass_balance_validation
+
+# Test schema change robustness
+python -m unittest test_enhanced_entities.TestSchemaRobustness
+```
+
+### Validation Examples ### {#python-validation-examples}
+
+Test validation with example data:
+
+```python
+# Load and validate example data
+with open('examples/validation/comprehensive_validation_test_suite.json') as f:
+    test_data = json.load(f)
+
+validator = DynamicBOOSTValidator()
+results = validator.comprehensive_validation(test_data)
+
+print(f"Validation results: {results['summary']}")
+for category, result in results['by_category'].items():
+    print(f"  {category}: {'PASS' if result['valid'] else 'FAIL'}")
+```
+
+## Performance Characteristics ## {#python-performance}
+
+### Initialization Performance ### {#python-init-performance}
+
+- **Schema Loading**: O(n) where n = number of schema files
+- **Model Generation**: O(m) where m = number of entity properties  
+- **Caching**: Models cached after first generation for O(1) access
+
+### Runtime Performance ### {#python-runtime-performance}
+
+- **Validation**: O(1) for schema validation, O(r) for relationship validation where r = relationships
+- **Entity Creation**: O(1) with cached models
+- **Memory Usage**: Moderate (dynamic models cached in memory)
+
+### Scalability Considerations ### {#python-scalability}
+
+- **Large Datasets**: Supports batch validation operations
+- **Memory Management**: Efficient caching with configurable limits
+- **Concurrent Access**: Thread-safe validation operations
+
+## Standards Compliance ## {#python-standards}
+
+The Python reference implementation fully supports:
+
+- **BOOST Data Standard** (with automatic adaptation to schema updates)
+- **JSON-LD 1.1 Specification** [[JSON-LD11]]
+- **JSON Schema Draft-07** [[JSON-SCHEMA]]
+- **Schema.org Vocabulary** for semantic annotations
+- **W3C PROV Ontology** for provenance tracking
+
+# Business Logic Validation # {#business-logic}
+
+Implementations MUST validate entities against 8 categories of business rules to ensure data consistency, regulatory compliance, and supply chain integrity throughout the BOOST traceability system.
+
+NOTE: The [Python reference implementation](#python-implementation) provides a comprehensive example of all business logic validation categories with configuration-driven rules.
+
+## Core Validation Categories ## {#core-validation-categories}
+
+### Volume/Mass Conservation ### {#volume-mass-conservation}
+Physical conservation laws MUST be enforced across all processing operations:
+- Input volume/mass MUST equal output volume/mass plus documented losses
+- Volume loss reasons MUST be specified (moisture loss, defect removal, processing waste)
+- Mass balance calculations MUST validate within acceptable tolerance ranges
+- Split operations MUST conserve total volume across all resulting TraceableUnits
+
+### Temporal Logic ### {#temporal-logic}
+Date and time consistency validation MUST ensure chronological accuracy:
+- Processing dates MUST follow logical sequence (harvest → transport → processing)
+- Certificate validity periods MUST encompass all related transactions
+- TraceableUnit creation dates MUST precede all processing operations
+- Location history timestamps MUST maintain chronological order
+
+### Geographic Logic ### {#geographic-logic}
+Spatial relationship validation MUST verify location consistency:
+- TraceableUnit locations MUST be within operational boundaries of responsible Organization
+- Transport routes MUST connect valid origin and destination points
+- Harvest locations MUST align with Organization's certified operational areas
+- Processing facilities MUST be authorized for specific material types
+
+### Species Composition ### {#species-composition}
+Percentage validation for multi-species materials MUST enforce mathematical consistency:
+- All SpeciesComponent percentages MUST sum to exactly 100%
+- Individual species percentages MUST be greater than 0% and less than or equal to 100%
+- Species composition changes through processing MUST be documented and validated
+- Mixed-species claims MUST be supported by appropriate certification
+
+### Certification Logic ### {#certification-logic}
+Chain of custody validation MUST ensure certification integrity:
+- All Organizations MUST possess valid certificates for their role and materials
+- Certificate scopes MUST cover the specific materials and operations performed
+- Certification claims MUST not exceed the certified percentage of input materials
+- Certificate expiration dates MUST not precede transaction completion dates
+
+### Regulatory Compliance ### {#regulatory-compliance}
+Jurisdiction-specific rules MUST be enforced based on operational location:
+- LCFS pathway requirements MUST be validated for California operations
+- Species-specific regulations MUST be enforced for protected or restricted materials
+- Import/export requirements MUST be verified for cross-border transactions
+- Regional certification requirements MUST be met for specific market destinations
+
+### Economic Logic ### {#economic-logic}
+Price and payment validation MUST ensure commercial reasonableness:
+- Transaction prices MUST fall within acceptable market range for material type and quality
+- Payment terms MUST align with standard industry practices
+- Currency conversions MUST use appropriate exchange rates and dates
+- Volume-based pricing MUST correlate with documented material quantities
+
+### Quality Assurance ### {#quality-assurance}
+Material quality constraints MUST be enforced throughout the supply chain:
+- Material quality grades MUST be appropriate for intended end use
+- Moisture content levels MUST meet specification requirements
+- Quality degradation through processing MUST be documented and validated
+- Quality improvement claims MUST be supported by appropriate processing documentation
+
+## Implementation Requirements ## {#validation-implementation-requirements}
+
+All BOOST conforming implementations MUST:
+- Validate data against ALL applicable business logic categories
+- Provide clear error messages for validation failures
+- Support configurable validation rules for jurisdiction-specific requirements
+- Maintain validation audit trails for compliance verification
+- Enable batch validation for bulk data operations
+
+Validation failures MUST prevent data acceptance and clearly indicate the specific rule violations to enable corrective action.
+
+# Serialization and Exchange # {#serialization}
+
+<pre class=include>
+path: includes/serialization.inc.md
+</pre>
+
+## JSON-LD as Primary Format ## {#json-ld}
+
+### What is JSON-LD? ### {#json-ld-overview}
+
+JSON for Linking Data (JSON-LD) is a lightweight Linked Data format built on top of JSON that provides a way to express Linked Data using JSON syntax. Unlike standard JSON, JSON-LD includes semantic context that makes data self-describing and machine-interpretable across different systems and organizations.
+
+Key characteristics of JSON-LD:
+- **JSON-compatible**: Any valid JSON-LD document is also valid JSON
+- **Context-driven**: Uses `@context` to define semantic meaning of terms
+- **Linked Data**: Enables creation of a Web of Data through IRIs (Internationalized Resource Identifiers)
+- **Interoperable**: Facilitates data exchange between heterogeneous systems
+
+### Why BOOST Uses JSON-LD ### {#json-ld-rationale}
+
+BOOST adopts JSON-LD as its primary serialization format to address critical challenges in biomass supply chain data exchange:
+
+#### Semantic Interoperability #### {#semantic-interoperability}
+Traditional JSON lacks semantic context, making it difficult for different organizations to exchange data without extensive coordination. JSON-LD's semantic context ensures that:
+- Field meanings are precisely defined across all participants
+- Data structures are self-documenting and machine-interpretable
+- Integration with existing systems requires minimal custom mapping
+
+#### Supply Chain Integration #### {#supply-chain-integration}
+Biomass supply chains involve diverse participants (harvesters, processors, certifiers, regulators) using different systems:
+- **Forestry companies** using forest management software
+- **Processing facilities** with manufacturing execution systems
+- **Certification bodies** with audit and compliance platforms
+- **Regulatory agencies** with reporting and monitoring systems
+
+JSON-LD enables seamless data flow between these heterogeneous systems without requiring proprietary APIs or custom integration points.
+
+#### Regulatory Compliance #### {#regulatory-compliance}
+Multiple jurisdictions have different reporting requirements:
+- **California LCFS** requires specific carbon intensity data
+- **EU REDII** mandates sustainability criteria verification  
+- **FSC/SFI/PEFC** certification schemes have unique data requirements
+
+JSON-LD's semantic flexibility allows the same core data to satisfy multiple regulatory frameworks simultaneously.
+
+#### Future-Proofing #### {#future-proofing}
+As new regulations, technologies, and participants enter the biomass ecosystem:
+- **Extensibility**: New properties can be added without breaking existing implementations
+- **Versioning**: Context evolution maintains backward compatibility
+- **Standards alignment**: Integration with emerging W3C and industry standards
+
+### JSON-LD Benefits in BOOST ### {#json-ld-benefits}
+
+#### Enhanced Data Exchange #### {#enhanced-data-exchange}
+```json
+{
+  "@context": "https://boost-standard.org/context/v1",
+  "@type": "TraceableUnit", 
+  "@id": "https://forestco.example/tru/LOG-001",
+  "traceableUnitId": "TRU-LOG-CA-042",
+  "totalVolumeM3": 25.5,
+  "harvesterId": "https://forestco.example/org/HARVESTER-001",
+  "materialTypeId": "https://boost-standard.org/materials/douglas-fir"
+}
+```
+
+This example demonstrates how JSON-LD makes BOOST data:
+- **Self-describing**: The `@context` provides complete semantic definitions
+- **Globally unique**: IRIs ensure no identifier conflicts across organizations
+- **Linkable**: References to other entities use resolvable URIs
+- **Interoperable**: Standard JSON parsers can process the data structure
+
+#### Cross-System Compatibility #### {#cross-system-compatibility}
+Organizations can:
+- **Consume data** using existing JSON processing tools
+- **Validate semantics** using JSON-LD processors
+- **Transform data** using SPARQL queries and RDF tools
+- **Integrate systems** without custom mapping layers
+
+#### Knowledge Graph Integration #### {#knowledge-graph-integration}
+JSON-LD enables transformation to RDF triples for:
+- **Complex queries** across supply chain relationships
+- **Data analytics** using graph databases and machine learning
+- **Compliance verification** through automated reasoning
+- **Supply chain visualization** with graph analysis tools
+
+### Technical Requirements ### {#json-ld-technical-requirements}
+
+BOOST data MUST be serializable to [[JSON-LD11]] format with:
+- Valid `@context` referencing BOOST context definition
+- Entity `@type` declarations matching schema names  
+- Unique `@id` values for all entities using IRI format
+- Property mappings consistent with BOOST vocabulary definitions
+
+#### JSON-LD Context Structure #### {#json-ld-context-structure}
+```json
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "https://boost-standard.org/",
+    "boost": "https://boost-standard.org/vocab/",
+    "TraceableUnit": "boost:TraceableUnit",
+    "traceableUnitId": "boost:traceableUnitId",
+    "totalVolumeM3": {
+      "@id": "boost:totalVolumeM3",
+      "@type": "xsd:decimal"
+    },
+    "harvesterId": {
+      "@id": "boost:harvesterId", 
+      "@type": "@id"
+    }
+  }
+}
+```
+
+## Context Definitions ## {#context-definitions}
+
+The BOOST JSON-LD context MUST define:
+
+### Vocabulary Mappings ### {#vocabulary-mappings}
+- **Entity types**: All BOOST entities mapped to vocabulary IRIs
+- **Property definitions**: Field semantics with appropriate data types
+- **Relationship properties**: Foreign key mappings for linked data navigation
+- **Enumeration values**: Controlled vocabularies for standardized terms
+
+### Data Type Specifications ### {#data-type-specifications}
+- **Primitive types**: Strings, numbers, booleans with XSD type mappings
+- **Complex types**: Dates, timestamps, geographic coordinates
+- **Reference types**: Entity references using `@id` and `@type`
+- **Collection types**: Arrays and nested objects with proper context
+
+### Internationalization Support ### {#internationalization-support}
+- **Language tags**: Multi-language content using `@language`
+- **Regional variations**: Context adaptations for different jurisdictions
+- **Cultural considerations**: Date formats, measurement units, naming conventions
+
+### Implementation Guidelines ### {#implementation-guidelines}
+
+#### Context Management #### {#context-management}
+Implementations SHOULD:
+- Cache BOOST context definitions for performance
+- Validate context consistency across data exchanges
+- Support context versioning for backward compatibility
+- Handle context evolution gracefully
+
+#### Data Processing #### {#data-processing}
+Systems MUST:
+- Preserve JSON-LD structure during data transformations
+- Maintain semantic consistency during data aggregation
+- Support both compact and expanded JSON-LD forms
+- Enable RDF serialization when required for compliance
+
+# Use Cases and Requirements # {#use-cases}
+
+<pre class=include>
+path: includes/use-cases.inc.md
+</pre>
+
+## Primary Use Cases ## {#primary-use-cases}
+
+BOOST addresses the following primary use cases:
+
+### California Biomass Supply Chain Tracking ### {#california-use-case}
+- Forest management organization harvests certified timber
+- Processing facilities transform raw materials into biofuels
+- Transportation companies maintain chain of custody
+- Regulatory agencies verify compliance with LCFS requirements
+
+### Multi-Certification Scheme Management ### {#multi-cert-use-case}
+- Single TRU maintains multiple certification claims (FSC, SBP, PEFC)
+- Processing operations preserve claim integrity
+- Species-specific claims apply to mixed-species materials
+- Third-party verification validates claim accuracy
+
+# Examples # {#examples}
+
+<pre class=include>
+path: includes/examples.inc.md
+</pre>
+
+## Basic TraceableUnit Example ## {#basic-tru-example}
+
+<pre class="example highlight" highlight="json">
+{
+  "@context": "https://boost-standard.org/context.jsonld",
+  "@type": "TraceableUnit",
+  "@id": "https://example.com/tru/TRU-001",
+  "traceableUnitId": "TRU-FOREST-001",
+  "unitType": "pile",
+  "uniqueIdentifier": "BIOMETRIC-SIGNATURE-ABC123",
+  "totalVolumeM3": 125.5,
+  "materialTypeId": "MAT-DOUGLAS-FIR-SAWLOG",
+  "isMultiSpecies": false,
+  "harvesterId": "ORG-PACIFIC-FOREST",
+  "currentGeographicDataId": "GEO-MILL-YARD-07"
+}
+</pre>
+
+<pre class=include>
+path: includes/resources-community.inc.md
+</pre>
+
+# Security Considerations # {#security}
+
+<pre class=include>
+path: includes/security-considerations.inc.md
+</pre>
+
+## Data Privacy ## {#data-privacy}
+
+Implementations SHOULD consider privacy implications of biomass tracking data:
+- Location data may reveal sensitive commercial information
+- Biometric identifiers require secure storage and transmission
+- Personal operator information needs appropriate access controls
+
+## Data Integrity ## {#data-integrity}
+
+Critical security measures include:
+- Digital signatures for high-value transactions
+- Audit trails for all data modifications
+- Backup and recovery procedures for critical supply chain data
+- Validation of external data sources and certificates
+
+## Supply Chain Security ## {#supply-chain-security}
+
+Implementations SHOULD address:
+- Authentication of supply chain participants
+- Authorization controls for data access and modification
+- Secure communication channels for data exchange
+- Fraud detection and prevention mechanisms
+
+# Complete Entity Reference # {#entity-reference}
+
+This section provides a comprehensive reference to all 33 BOOST entities organized by thematic areas for improved usability and logical structure.
+
+## Core Traceability Entities ## {#core-traceability-entities-reference}
+
+The foundational entities that enable end-to-end biomass supply chain tracking:
+
+### TraceableUnit ### {#ref-traceable-unit}
+- **Primary Key**: `traceableUnitId`
+- **Purpose**: Central hub for biomass tracking with media-interruption-free identification
+- **Key Relationships**: Links to Organization (harvester), Material (type), GeographicData (location)
+- **Critical Fields**: `unitType`, `totalVolumeM3`, `uniqueIdentifier`, `isMultiSpecies`
+
+### MaterialProcessing ### {#ref-material-processing}
+- **Primary Key**: `materialProcessingId`
+- **Purpose**: Documents transformation operations linking input/output TraceableUnits
+- **Key Relationships**: Input/output TraceableUnits, Equipment, Operator
+- **Critical Fields**: `processType`, `inputTraceableUnitIds`, `outputTraceableUnitIds`, `processTimestamp`
+
+### ProcessingHistory ### {#ref-processing-history}
+- **Primary Key**: `processingHistoryId`
+- **Purpose**: Chronological audit trail of all processing operations per TraceableUnit
+- **Key Relationships**: TraceableUnit, MaterialProcessing operations
+- **Critical Fields**: `processType`, `inputVolumeM3`, `outputVolumeM3`, `volumeLossReason`
+
+### LocationHistory ### {#ref-location-history}
+- **Primary Key**: `locationHistoryId`
+- **Purpose**: Movement tracking and location change documentation
+- **Key Relationships**: TraceableUnit, GeographicData, TrackingPoint
+- **Critical Fields**: `eventType`, `timestamp`, `previousLocation`, `currentLocation`
+
+### BiometricIdentifier ### {#ref-biometric-identifier}
+- **Primary Key**: `biometricIdentifierId`
+- **Purpose**: Tamper-proof identification through optical pattern recognition
+- **Key Relationships**: TraceableUnit (media-interruption-free tracking)
+- **Critical Fields**: `identifierType`, `biometricData`, `captureMethod`, `confidence`
+
+## Organizational Foundation Entities ## {#organizational-entities-reference}
+
+Entities managing organizations, certifications, and supply chain participants:
+
+### Organization ### {#ref-organization}
+- **Primary Key**: `organizationId`
+- **Purpose**: All business entities in biomass supply chain (harvesters, processors, certifiers)
+- **Key Relationships**: Certificates, operational GeographicData areas
+- **Critical Fields**: `organizationName`, `organizationType`, `contactEmail`, `certifications`
+
+### Certificate ### {#ref-certificate}
+- **Primary Key**: `certificateNumber`
+- **Purpose**: Formal certification records (FSC, SFI, PEFC, etc.)
+- **Key Relationships**: Organization, CertificationBody, CertificationScheme
+- **Critical Fields**: `dateOfIssue`, `dateOfExpiry`, `status`, `scopeOfCertification`
+
+### CertificationBody ### {#ref-certification-body}
+- **Primary Key**: `cbId`
+- **Purpose**: Independent organizations that issue certifications
+- **Key Relationships**: Issues Certificates, operates under CertificationSchemes
+- **Critical Fields**: `cbName`, `accreditationStatus`, `authorizedSchemes`
+
+### CertificationScheme ### {#ref-certification-scheme}
+- **Primary Key**: `certificationSchemeId`
+- **Purpose**: Certification standards and frameworks (FSC-CoC, SFI, PEFC)
+- **Key Relationships**: Implemented by CertificationBodies, referenced by Certificates
+- **Critical Fields**: `schemeName`, `schemeType`, `versionNumber`, `standardDocument`
+
+### Operator ### {#ref-operator}
+- **Primary Key**: `operatorId`
+- **Purpose**: Personnel responsible for equipment operation and material processing
+- **Key Relationships**: Organization (employer), Equipment (operated)
+- **Critical Fields**: `operatorName`, `qualifications`, `certificationLevel`
+
+### Audit ### {#ref-audit}
+- **Primary Key**: `auditId`
+- **Purpose**: Third-party verification and compliance audit records
+- **Key Relationships**: Organization (audited), CertificationBody (auditor)
+- **Critical Fields**: `auditType`, `auditDate`, `findings`, `complianceStatus`
+
+## Material & Supply Chain Entities ## {#material-supply-chain-entities-reference}
+
+Entities managing material specifications, suppliers, and supply chain relationships:
+
+### Material ### {#ref-material}
+- **Primary Key**: `materialId`
+- **Purpose**: Biomass material types and specifications with quality parameters
+- **Key Relationships**: TraceableUnit (material type), SpeciesComponent (multi-species)
+- **Critical Fields**: `materialType`, `qualityGrade`, `plantPartCategory`, `moistureContentRange`
+
+### SpeciesComponent ### {#ref-species-component}
+- **Primary Key**: `speciesComponentId`
+- **Purpose**: Individual species composition within multi-species materials
+- **Key Relationships**: Material (parent), TraceableUnit (composition tracking)
+- **Critical Fields**: `speciesName`, `percentage`, `scientificName`, `plantParts`
+
+### Equipment ### {#ref-equipment}
+- **Primary Key**: `equipmentId`
+- **Purpose**: Forestry machinery and processing equipment with specifications
+- **Key Relationships**: Operator (assignments), Organization (owner), MaterialProcessing operations
+- **Critical Fields**: `equipmentType`, `specifications`, `calibrationDate`, `operationalStatus`
+
+### Supplier ### {#ref-supplier}
+- **Primary Key**: `supplierId`
+- **Purpose**: Upstream suppliers in biomass supply chain
+- **Key Relationships**: Organization (supplier entity), SupplyBase (supply areas)
+- **Critical Fields**: `supplierName`, `supplierType`, `certificationStatus`
+
+### Customer ### {#ref-customer}
+- **Primary Key**: `customerId`
+- **Purpose**: Downstream customers and end-users
+- **Key Relationships**: Organization (customer entity), transaction records
+- **Critical Fields**: `customerName`, `customerType`, `requirementSpecifications`
+
+### SupplyBase ### {#ref-supply-base}
+- **Primary Key**: `supplyBaseId`
+- **Purpose**: Geographic areas and forest management units supplying biomass
+- **Key Relationships**: Supplier (operates), GeographicData (boundaries)
+- **Critical Fields**: `supplyBaseName`, `totalArea`, `managementType`, `certificationStatus`
+
+### SupplyBaseReport ### {#ref-supply-base-report}
+- **Primary Key**: `supplyBaseReportId`
+- **Purpose**: Periodic reporting on supply base activities and sustainability metrics
+- **Key Relationships**: SupplyBase (reported area), Organization (reporting entity)
+- **Critical Fields**: `reportingPeriod`, `volumeHarvested`, `sustainabilityMetrics`
+
+## Geographic & Tracking Entities ## {#geographic-tracking-entities-reference}
+
+Entities providing location data and spatial tracking capabilities:
+
+### GeographicData ### {#ref-geographic-data}
+- **Primary Key**: `geographicDataId`
+- **Purpose**: Spatial data in GeoJSON format for precise location tracking
+- **Key Relationships**: TraceableUnit (locations), Organization (operational areas)
+- **Critical Fields**: `geoJsonGeometry`, `locationType`, `coordinates`, `accuracy`
+
+### TrackingPoint ### {#ref-tracking-point}
+- **Primary Key**: `trackingPointId`
+- **Purpose**: Specific locations for material handling and processing operations
+- **Key Relationships**: GeographicData (location), LocationHistory (events)
+- **Critical Fields**: `pointType`, `facilityName`, `operationalHours`, `handlingCapacity`
+
+## Measurement & Verification Entities ## {#measurement-verification-entities-reference}
+
+Entities supporting quality measurement, claims management, and verification:
+
+### MeasurementRecord ### {#ref-measurement-record}
+- **Primary Key**: `measurementRecordId`
+- **Purpose**: Quality measurements and dimensional data with calibrated equipment
+- **Key Relationships**: TraceableUnit (measured), Equipment (measurement tools)
+- **Critical Fields**: `measurementType`, `value`, `unit`, `calibrationCertificate`
+
+### Claim ### {#ref-claim}
+- **Primary Key**: `claimId`
+- **Purpose**: Sustainability and certification claims with verification data
+- **Key Relationships**: TraceableUnit (claimed), Certificate (supporting certification)
+- **Critical Fields**: `claimType`, `claimScope`, `verificationMethod`, `claimPercentage`
+
+### VerificationStatement ### {#ref-verification-statement}
+- **Primary Key**: `verificationStatementId`
+- **Purpose**: Third-party verification of sustainability claims and compliance
+- **Key Relationships**: Claim (verified), CertificationBody (verifier)
+- **Critical Fields**: `verificationDate`, `verificationMethod`, `verificationResult`
+
+### MoistureContent ### {#ref-moisture-content}
+- **Primary Key**: `moistureContentId`
+- **Purpose**: Moisture content measurements with comprehensive validation rules
+- **Key Relationships**: TraceableUnit (measured), MeasurementRecord (data)
+- **Critical Fields**: `moisturePercentage`, `measurementMethod`, `dryBasisValue`
+
+## Compliance & Reporting Entities ## {#compliance-reporting-entities-reference}
+
+Entities supporting regulatory compliance and comprehensive reporting:
+
+### LCFSPathway ### {#ref-lcfs-pathway}
+- **Primary Key**: `lcfsPathwayId`
+- **Purpose**: CARB-certified fuel pathways for California LCFS compliance
+- **Key Relationships**: LCFSReporting (pathway usage), Organization (pathway holder)
+- **Critical Fields**: `pathwayCode`, `carbonIntensity`, `feedstockType`, `approvalDate`
+
+### LCFSReporting ### {#ref-lcfs-reporting}
+- **Primary Key**: `lcfsReportId`
+- **Purpose**: Quarterly LCFS compliance reporting for regulated entities
+- **Key Relationships**: LCFSPathway (used pathways), Organization (reporting entity)
+- **Critical Fields**: `reportingQuarter`, `volumeReported`, `creditsGenerated`
+
+### ProductGroup ### {#ref-product-group}
+- **Primary Key**: `productGroupId`
+- **Purpose**: Product categorization for reporting and compliance tracking
+- **Key Relationships**: TraceableUnit (product classification), regulatory requirements
+- **Critical Fields**: `productCategory`, `regulatoryClassification`, `reportingRequirements`
+
+### MassBalanceAccount ### {#ref-mass-balance-account}
+- **Primary Key**: `massBalanceAccountId`
+- **Purpose**: Mass balance accounting for certified material flow tracking
+- **Key Relationships**: Organization (account holder), certification claims
+- **Critical Fields**: `accountType`, `certifiedInputVolume`, `certifiedOutputVolume`
+
+### DataReconciliation ### {#ref-data-reconciliation}
+- **Primary Key**: `dataReconciliationId`
+- **Purpose**: Data quality assurance and discrepancy resolution
+- **Key Relationships**: Multiple entities (reconciled data), audit trails
+- **Critical Fields**: `reconciliationType`, `discrepancyAmount`, `resolutionStatus`
+
+### EnergyCarbonData ### {#ref-energy-carbon-data}
+- **Primary Key**: `energyCarbonDataId`
+- **Purpose**: Energy consumption and carbon footprint data for lifecycle assessment
+- **Key Relationships**: MaterialProcessing (energy usage), LCFSReporting (carbon accounting)
+- **Critical Fields**: `energyType`, `consumptionAmount`, `carbonEmissionFactor`
+
+## Entity Relationship Summary ## {#entity-relationship-summary}
+
+### Core Dependencies ### {#core-dependencies}
+- **TraceableUnit** connects to: Organization, Material, GeographicData (required)
+- **MaterialProcessing** connects to: TraceableUnit (input/output), Equipment, Operator
+- **Certificate** connects to: Organization, CertificationBody, CertificationScheme
+
+### Thematic Integration ### {#thematic-integration}
+- **Traceability Chain**: TraceableUnit → MaterialProcessing → ProcessingHistory → LocationHistory
+- **Certification Chain**: Organization → Certificate → CertificationBody → CertificationScheme  
+- **Compliance Chain**: LCFSPathway → LCFSReporting → ProductGroup → DataReconciliation
+
+### Optional Relationships ### {#optional-relationships}
+- Multi-species materials: TraceableUnit ↔ SpeciesComponent
+- Biometric tracking: TraceableUnit ↔ BiometricIdentifier
+- Quality assurance: TraceableUnit ↔ MeasurementRecord ↔ Claim
+
+<h2 id="acknowledgments" class="no-num">Acknowledgments</h2>
+
+This specification was developed through the collaborative efforts of the BOOST W3C Community Group with significant contributions from:
+
+- **California Department of Conservation** - Funding and regulatory guidance
+- **Forest industry stakeholders** - Requirements analysis and use case development  
+- **Certification bodies** - Standards alignment and validation procedures
+- **Technology providers** - Implementation guidance and tool development
+- **Academic institutions** - Research and analysis support
+- **Environmental organizations** - Sustainability criteria and verification methods
+
+Special recognition to the contributors of the Interactive ERD Navigator, Python reference implementation, and comprehensive schema validation tools that support this specification.
+
+<h2 id="spec-index" class="no-num">Index</h2>
+
+<div data-fill-with="index"></div>

@@ -13,7 +13,7 @@ from collections import defaultdict
 from typing import Dict, List, Any, Optional
 
 class BOOSTSchemaProcessor:
-    def __init__(self, schema_dir: str = "schema", output_dir: str = "tex"):
+    def __init__(self, schema_dir: str = "../schema", output_dir: str = "tex"):
         self.schema_dir = Path(schema_dir)
         self.output_dir = Path(output_dir)
         self.entities = {}

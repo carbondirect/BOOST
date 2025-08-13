@@ -3,25 +3,25 @@
 
 \begin{entitytable}{Processing History}
 \textbf{\field{inputTRUIds}} & array<string> & Array of input TRU IDs (multiple for merge operations) \\
-\textbf{\field{materialProcessingId}} & string & Foreign key to MaterialProcessing operation \\
+\textbf{\field{materialProcessingId}} & string (pattern) & Foreign key to MaterialProcessing operation \\
 \textbf{\field{outputTRUIds}} & array<string> & Array of output TRU IDs (multiple for split operations) \\
 \textbf{\field{processSequenceNumber}} & integer & Sequential order of this processing step for the TRU \\
 \textbf{\field{processingEventType}} & enum(7 values) & Type of processing event \\
-\textbf{\field{processingHistoryId}} & string & Unique identifier for the processing history record \\
+\textbf{\field{processingHistoryId}} & string (pattern) & Unique identifier for the processing history record \\
 \textbf{\field{timestamp}} & string (date-time) & When this processing step occurred \\
-\textbf{\field{traceableUnitId}} & string & Foreign key to TRU this history record belongs to \\
+\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to TRU this history record belongs to \\
 \field{claimInheritanceData} & object (structured) & Sustainability claim inheritance tracking \\
 \field{equipmentUsed} & string & Equipment used for this processing step \\
 \field{isCurrentProcessingState} & boolean & True if this represents the current processing state \\
 \field{mediaBreakData} & object (structured) & Media break detection and recovery information \\
 \field{nextProcessingHistoryIds} & array<string> & Array of next processing history record IDs (for split operations) \\
-\field{operatorId} & string & Foreign key to operator who performed processing \\
+\field{operatorId} & string (pattern) & Foreign key to operator who performed processing \\
 \field{plantPartTransformation} & string & Summary of plant part changes during processing \\
 \field{previousProcessingHistoryId} & ['string', 'null'] & Foreign key to previous processing history record (forms chain) \\
 \field{processingDuration} & string (pattern) & ISO 8601 duration format for processing time \\
-\field{processingGeographicDataId} & string & Foreign key to location where processing occurred \\
+\field{processingGeographicDataId} & string (pattern) & Foreign key to location where processing occurred \\
 \field{qualityChangeDescription} & string & Description of quality changes during processing \\
 \field{speciesCompositionChange} & enum(5 values) & How species composition changed during processing \\
-\field{volumeChangeRatio} & number ($\geq$ 0, $\leq$ 2.0) & Ratio of output volume to input volume (1.0 = no change) \\
+\field{volumeChangeRatio} & number (≥0, ≤2.0) & Ratio of output volume to input volume (1.0 = no change) \\
 \field{volumeConservationData} & object (structured) & Volume conservation validation data \\
 \end{entitytable}

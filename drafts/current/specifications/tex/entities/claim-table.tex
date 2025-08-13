@@ -2,15 +2,15 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Claim}
-\textbf{\field{TraceableUnitId}} & string & Referenced traceable unit - uses EntityNameId convention referencing Traceabl... \\
-\textbf{\field{claimId}} & string & No description provided \\
+\textbf{\field{TraceableUnitId}} & string (pattern) & Referenced traceable unit - uses EntityNameId convention referencing Traceabl... \\
+\textbf{\field{claimId}} & string (pattern) & No description provided \\
 \textbf{\field{claimType}} & enum(9 values) & No description provided \\
 \textbf{\field{statement}} & string & No description provided \\
 \textbf{\field{validated}} & boolean & No description provided \\
-\field{CertificationSchemeId} & string & Certification scheme - uses EntityNameId convention referencing Certification... \\
+\field{CertificationSchemeId} & string (pattern) & Certification scheme - uses EntityNameId convention referencing Certification... \\
 \field{applicableSpecies} & array<string> & No description provided \\
 \field{claimExpiry} & string (date-time) & No description provided \\
-\field{claimPercentage} & number ($\geq$ 0, $\leq$ 100) & No description provided \\
+\field{claimPercentage} & number (≥0, ≤100) & No description provided \\
 \field{claimScope} & enum(4 values) & No description provided \\
 \field{evidenceDocumentId} & string & No description provided \\
 \field{inheritedFromTRU} & array<string> & No description provided \\

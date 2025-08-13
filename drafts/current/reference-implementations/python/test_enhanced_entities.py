@@ -43,6 +43,7 @@ def test_enhanced_transaction_entity():
             traceable_unit_id=tru_id,
             unit_type="individual_log",
             harvester_id=org_id,
+            harvest_geographic_data_id=f"GEO-HARVEST-SITE-{i+1:02d}",
             # Required fields for TraceableUnit schema
             uniqueIdentifier=f"UNIQUE-{tru_id}",
             totalVolumeM3=2.5 + i * 0.5,  # Different volumes
@@ -150,6 +151,7 @@ def test_enhanced_organization_entity():
             traceable_unit_id=tru_id,
             unit_type="individual_log",
             harvester_id=org_id,
+            harvest_geographic_data_id=f"GEO-TIMBER-SITE-{i+1:02d}",
             # Required fields for TraceableUnit schema
             uniqueIdentifier=f"UNIQUE-{tru_id}",
             totalVolumeM3=3.0 + i * 0.3,  # Different volumes
@@ -223,6 +225,7 @@ def test_comprehensive_validation():
             traceable_unit_id=tru_id,
             unit_type="individual_log",
             harvester_id=harvester_id,
+            harvest_geographic_data_id=f"GEO-PACIFIC-SITE-{i+1:02d}",
             # Required fields for TraceableUnit schema
             uniqueIdentifier=f"UNIQUE-{tru_id}",
             totalVolumeM3=4.0 + i * 0.5,  # Different volumes

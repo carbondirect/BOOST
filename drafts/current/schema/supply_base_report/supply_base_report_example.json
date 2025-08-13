@@ -1,0 +1,22 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "SupplyBaseReport",
+  "@id": "https://boost.example.com/report/SBR-2024-PACIFIC-NORTHWEST",
+  "supplyBaseReportId": "SBR-2024-PACIFIC-NORTHWEST",
+  "supplyBaseId": "SB-PACIFIC-NORTHWEST", 
+  "organizationId": "ORG-PACIFIC-FOREST-001",
+  "reportingYear": 2024,
+  "reportType": "annual_sustainability",
+  "publicationDate": "2025-03-31",
+  "totalBiomassHarvested": 8245.5,
+  "biomassUnit": "cubic_meters",
+  "sustainablePercentage": 98.2,
+  "certificationCompliance": true,
+  "riskMitigationMeasures": ["Biodiversity monitoring", "Soil conservation practices", "Water quality protection"],
+  "reportUrl": "https://reports.pacificforest.com/sustainability/2024/supply-base-report.pdf",
+  "lastUpdated": "2025-03-31T16:45:00Z"
+}

@@ -299,6 +299,17 @@ if [ -f "boost-spec.html" ]; then
     echo "   - Dictionary files available: $DICT_COUNT"
     echo "   - Using direct dictionary references via symlinks ✨"
     
+    # Run consistency validation if script exists
+    if [ -f "scripts/validate-consistency.py" ]; then
+        echo ""
+        echo "🔍 Running documentation consistency check..."
+        if python3 scripts/validate-consistency.py >/dev/null 2>&1; then
+            echo "   ✅ HTML/PDF consistency check passed"
+        else
+            echo "   ⚠️  Consistency check found issues (see build/consistency-report.json)"
+        fi
+    fi
+    
 else
     echo "❌ Build failed!"
     exit 1

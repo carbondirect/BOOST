@@ -1,0 +1,17 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "Audit",
+  "@id": "https://boost.example.com/audit/AUD-2025-FSC-001",
+  "auditId": "AUD-2025-FSC-001",
+  "auditType": "Surveillance",
+  "auditDate": "2025-06-15",
+  "organizationId": "ORG-PACIFIC-FOREST-001",
+  "cbId": "CB-FSC-SMARTWOOD",
+  "findings": "Organization maintains compliance with FSC-STD-20-007. Minor observation regarding documentation updates recommended for next surveillance.",
+  "reportUrl": "https://certificates.fsc.org/audit-reports/AUD-2025-FSC-001.pdf",
+  "auditGeographicDataId": "GEO-MILL-PACIFIC-001"
+}

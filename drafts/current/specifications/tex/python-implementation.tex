@@ -39,16 +39,20 @@ The Python reference implementation requires:
 Core dependencies are defined in \code{requirements.txt}:
 
 \begin{pythonexample}{Python Dependencies}
-\pythoncode{pydantic>=2.0.0      # Data validation and settings management
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+pydantic>=2.0.0      # Data validation and settings management
 jsonschema>=4.0.0    # JSON Schema validation  
 requests>=2.28.0     # HTTP library for API calls
-pyld>=2.0.0          # JSON-LD processor}
+pyld>=2.0.0          # JSON-LD processor
+\end{minted}
 \end{pythonexample}
 
 Installation:
 
 \begin{pythonexample}{Installation Command}
-\pythoncode{pip install -r requirements.txt}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+pip install -r requirements.txt
+\end{minted}
 \end{pythonexample}
 
 \subsection{Architecture}
@@ -84,7 +88,8 @@ The \textbf{SchemaLoader} (\code{schema\_loader.py}) is the foundation component
 \textbf{Usage Example:}
 
 \begin{pythonexample}{SchemaLoader Usage}
-\pythoncode{from schema_loader import SchemaLoader
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+from schema_loader import SchemaLoader
 
 # Initialize with automatic schema discovery
 loader = SchemaLoader()
@@ -100,7 +105,8 @@ print(f"Available organization types: {org_types}")
 
 # Access relationship information discovered from schemas
 relationships = loader.get_relationships('traceable_unit')
-primary_key = loader.get_primary_key('organization')}
+primary_key = loader.get_primary_key('organization')
+\end{minted}
 \end{pythonexample}
 
 \subsubsection{DynamicBOOSTValidator}
@@ -123,7 +129,8 @@ The \textbf{DynamicBOOSTValidator} (\code{dynamic\_validation.py}) provides comp
 \textbf{Usage Example:}
 
 \begin{pythonexample}{DynamicBOOSTValidator Usage}
-\pythoncode{from dynamic_validation import DynamicBOOSTValidator
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+from dynamic_validation import DynamicBOOSTValidator
 
 validator = DynamicBOOSTValidator()
 
@@ -140,7 +147,8 @@ entities = {
     'traceable_unit': [tru1, tru2],
     'transaction': [txn1]
 }
-results = validator.comprehensive_validation(entities)}
+results = validator.comprehensive_validation(entities)
+\end{minted}
 \end{pythonexample}
 
 \subsubsection{BOOSTClient}
@@ -160,7 +168,8 @@ The \textbf{BOOSTClient} (\code{boost\_client.py}) provides a high-level interfa
 \textbf{Usage Example:}
 
 \begin{pythonexample}{BOOSTClient Usage}
-\pythoncode{from boost_client import create_client
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+from boost_client import create_client
 
 # Initialize client with dynamic schema loading
 client = create_client()
@@ -184,7 +193,8 @@ org = client.create_organization(
 # Comprehensive validation
 validation = client.validate_all()
 if validation['valid']:
-    print("✓ All entities pass validation!")}
+    print("✓ All entities pass validation!")
+\end{minted}
 \end{pythonexample}
 
 \subsection{Dynamic Schema Adaptation}
@@ -229,7 +239,8 @@ A key strength of the Python implementation is its \textbf{automatic adaptation 
 The system provides built-in tools for schema change management:
 
 \begin{pythonexample}{Schema Change Detection}
-\pythoncode{# Check current schema status
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+# Check current schema status
 client = create_client()
 schema_info = client.get_schema_info()
 
@@ -241,7 +252,8 @@ if not validation['valid']:
         print(f"  - {error}")
 
 # Refresh schemas after updates
-client.refresh_schemas()}
+client.refresh_schemas()
+\end{minted}
 \end{pythonexample}
 
 \subsection{Usage Examples}
@@ -253,7 +265,8 @@ client.refresh_schemas()}
 Complete example demonstrating fundamental BOOST operations:
 
 \begin{pythonexample}{Basic Workflow Example}
-\pythoncode{from boost_client import create_client
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+from boost_client import create_client
 
 # Initialize BOOST client
 client = create_client()
@@ -306,7 +319,8 @@ if validation['valid']:
     print("✓ All entities validated successfully!")
     
 # Export to JSON-LD with semantic annotations
-jsonld_output = client.export_to_jsonld(include_context=True)}
+jsonld_output = client.export_to_jsonld(include_context=True)
+\end{minted}
 \end{pythonexample}
 
 \subsubsection{Certification Management}
@@ -315,7 +329,8 @@ jsonld_output = client.export_to_jsonld(include_context=True)}
 Example showing certification claim management:
 
 \begin{pythonexample}{Certification Management Example}
-\pythoncode{# Create FSC certified organization
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+# Create FSC certified organization
 fsc_harvester = client.create_organization(
     organization_id="ORG-FSC-001",
     name="Certified Forest Management",
@@ -335,7 +350,8 @@ certified_logs = client.create_traceable_unit(
 
 # Validate certification chain integrity
 cert_validation = client.validate_certification_chain("TRU-FSC-001")
-print(f"Certification valid: {cert_validation['valid']}")}
+print(f"Certification valid: {cert_validation['valid']}")
+\end{minted}}
 \end{pythonexample}
 
 \subsubsection{Mass Balance Validation}
@@ -344,7 +360,8 @@ print(f"Certification valid: {cert_validation['valid']}")}
 Example demonstrating conservation law validation:
 
 \begin{pythonexample}{Mass Balance Validation Example}
-\pythoncode{# Multiple input materials
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+# Multiple input materials
 input_tru_1 = client.create_traceable_unit(
     traceable_unit_id="TRU-INPUT-001",
     unit_type="pile", 
@@ -370,7 +387,8 @@ pellet_production = client.create_material_processing(
 # Validate mass balance with configurable tolerance
 balance_validation = client.validate_mass_balance("MP-PELLETS-001")
 print(f"Mass balance valid: {balance_validation['valid']}")
-print(f"Efficiency: {balance_validation['efficiency']}%")}
+print(f"Efficiency: {balance_validation['efficiency']}%")
+\end{minted}}
 \end{pythonexample}
 
 \subsection{Integration Guidance}
@@ -382,7 +400,8 @@ print(f"Efficiency: {balance_validation['efficiency']}%")}
 Using the reference implementation for API development:
 
 \begin{pythonexample}{API Development Example}
-\pythoncode{from boost_client import create_client
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+from boost_client import create_client
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
@@ -397,6 +416,7 @@ def create_organization():
         return jsonify(org.model_dump(by_alias=True))
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+\end{minted}
 
 @app.route('/validate/<entity_type>', methods=['POST'])
 def validate_entity(entity_type):
@@ -422,7 +442,8 @@ def schema_info():
 Customize schema loading:
 
 \begin{pythonexample}{Schema Path Configuration}
-\pythoncode{# Default: automatic discovery from ../schema/
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+# Default: automatic discovery from ../schema/
 client = create_client()
 
 # Custom schema path
@@ -430,7 +451,8 @@ client = create_client(schema_path="/path/to/boost/schemas")
 
 # Multiple schema sources
 loader = SchemaLoader()
-loader.add_schema_source("/additional/schemas")}
+loader.add_schema_source("/additional/schemas")
+\end{minted}
 \end{pythonexample}
 
 \subsubsection{Business Logic Configuration}
@@ -469,14 +491,16 @@ Business logic rules are defined in configuration files:
 The implementation includes comprehensive tests:
 
 \begin{pythonexample}{Running Tests}
-\pythoncode{# Run all tests
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+# Run all tests
 python test_enhanced_entities.py
 
 # Test specific validation categories
 python -m unittest test_enhanced_entities.TestDynamicValidation.test_mass_balance_validation
 
 # Test schema change robustness
-python -m unittest test_enhanced_entities.TestSchemaRobustness}
+python -m unittest test_enhanced_entities.TestSchemaRobustness
+\end{minted}
 \end{pythonexample}
 
 \subsubsection{Validation Examples}
@@ -485,7 +509,8 @@ python -m unittest test_enhanced_entities.TestSchemaRobustness}
 Test validation with example data:
 
 \begin{pythonexample}{Validation Examples}
-\pythoncode{# Load and validate example data
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true]{python}
+# Load and validate example data
 with open('examples/validation/comprehensive_validation_test_suite.json') as f:
     test_data = json.load(f)
 
@@ -494,7 +519,8 @@ results = validator.comprehensive_validation(test_data)
 
 print(f"Validation results: {results['summary']}")
 for category, result in results['by_category'].items():
-    print(f"  {category}: {'PASS' if result['valid'] else 'FAIL'}")}
+    print(f"  {category}: {'PASS' if result['valid'] else 'FAIL'}")
+\end{minted}}
 \end{pythonexample}
 
 \subsection{Performance Characteristics}

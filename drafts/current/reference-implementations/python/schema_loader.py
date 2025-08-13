@@ -11,7 +11,7 @@ import re
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Type, Union, Tuple
 from pathlib import Path
-from pydantic import BaseModel, Field, create_model, validator
+from pydantic import BaseModel, Field, create_model, field_validator, model_validator
 from pydantic.fields import FieldInfo
 from enum import Enum
 
@@ -175,17 +175,17 @@ class SchemaLoader:
         # Create model class name
         model_name = entity_name.title().replace('_', '')
         
-        # Create the dynamic model
-        model_config = type('Config', (), {
-            'populate_by_name': True,
-            'json_encoders': {datetime: lambda v: v.isoformat()},
-            'validate_assignment': True
-        })
+        # Create the dynamic model with Pydantic v2 configuration
+        from pydantic import ConfigDict
         
         dynamic_model = create_model(
             model_name,
-            __config__=model_config,
-            **model_fields
+            **model_fields,
+            __config__=ConfigDict(
+                populate_by_name=True,
+                validate_assignment=True,
+                # Note: json_encoders is deprecated in v2, but we'll handle serialization differently
+            )
         )
         
         # Add custom validators if needed
@@ -293,27 +293,30 @@ class SchemaLoader:
         # Add type validator to ensure @type is set correctly
         expected_type = schema.get('properties', {}).get('@type', {}).get('const')
         if expected_type:
+            @field_validator('type', mode='before')
+            @classmethod
             def validate_type(cls, v):
                 return expected_type
             
             # Add validator to model
-            setattr(model_class, 'validate_type', validator('type', pre=True, always=True)(validate_type))
+            setattr(model_class, 'validate_type', validate_type)
         
         # Add business logic validators based on entity type
         if entity_name == 'material_processing':
-            def validate_volume_conservation(cls, values):
-                input_vol = values.get('input_volume')
-                output_vol = values.get('output_volume') 
-                vol_loss = values.get('volume_loss', 0)
+            @model_validator(mode='after')
+            @classmethod
+            def validate_volume_conservation(cls, model):
+                input_vol = getattr(model, 'input_volume', None)
+                output_vol = getattr(model, 'output_volume', None)
+                vol_loss = getattr(model, 'volume_loss', 0)
                 
                 if all(v is not None for v in [input_vol, output_vol, vol_loss]):
                     if input_vol < (output_vol + vol_loss):
                         raise ValueError("Volume conservation violation: input must be >= output + loss")
-                return values
+                return model
             
-            # Add root validator
-            setattr(model_class, 'validate_volume_conservation', 
-                   validator('*', pre=False, allow_reuse=True)(lambda cls, v, values: validate_volume_conservation(cls, values)))
+            # Add model validator
+            setattr(model_class, 'validate_volume_conservation', validate_volume_conservation)
     
     def get_model(self, entity_name: str) -> Optional[Type[BaseModel]]:
         """Get dynamic model for entity type."""

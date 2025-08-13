@@ -4,7 +4,7 @@
 \begin{entitytable}{CertificationBody}
 \textbf{\field{accreditationStatus}} & enum(5 values) & Current accreditation status \\
 \textbf{\field{authorizedSchemes}} & array<string> & List of certification schemes the CB can certify under \\
-\textbf{\field{cbId}} & string & Unique identifier for the certification body (primary key) \\
+\textbf{\field{cbId}} & string (pattern) & Unique identifier for the certification body (primary key) \\
 \textbf{\field{cbName}} & string & Official name of the certification body \\
 \textbf{\field{cbType}} & enum(4 values) & Type or category of certification body \\
 \textbf{\field{contactInformation}} & object (structured) & Contact details for the certification body \\
