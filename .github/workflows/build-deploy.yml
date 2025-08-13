@@ -246,6 +246,7 @@ jobs:
 
       - name: Generate build report
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
           echo "📋 Generating build report..."
           cat > build-report.md << EOF
@@ -254,7 +255,7 @@ jobs:
           **Version:** ${{ steps.extract-version.outputs.version }}
           **Build Time:** ${{ steps.extract-version.outputs.timestamp }}
           **Commit:** ${GITHUB_SHA::8}
-          **Branch:** ${GITHUB_REF_NAME}
+          **Branch:** ${{ github.ref_name }}
           **Build Type:** ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}
           
           ## Build Statistics
