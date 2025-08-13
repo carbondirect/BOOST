@@ -454,7 +454,7 @@ class BOOSTClient:
                     OrganizationModel = self.schema_loader.get_model('organization')
                     if OrganizationModel:
                         org = OrganizationModel(**entity_data)
-                        org_data = org.dict(by_alias=True)
+                        org_data = org.model_dump(by_alias=True)
                         self.organizations[org_data['organizationId']] = org
                         results['imported']['organizations'] += 1
                     
@@ -462,7 +462,7 @@ class BOOSTClient:
                     TraceableUnitModel = self.schema_loader.get_model('traceable_unit')
                     if TraceableUnitModel:
                         tru = TraceableUnitModel(**entity_data)
-                        tru_data = tru.dict(by_alias=True)
+                        tru_data = tru.model_dump(by_alias=True)
                         self.traceable_units[tru_data['traceableUnitId']] = tru
                         results['imported']['traceable_units'] += 1
                     
@@ -470,7 +470,7 @@ class BOOSTClient:
                     TransactionModel = self.schema_loader.get_model('transaction')
                     if TransactionModel:
                         txn = TransactionModel(**entity_data)
-                        txn_data = txn.dict(by_alias=True)
+                        txn_data = txn.model_dump(by_alias=True)
                         self.transactions[txn_data['transactionId']] = txn
                         results['imported']['transactions'] += 1
                     
@@ -478,7 +478,7 @@ class BOOSTClient:
                     MaterialProcessingModel = self.schema_loader.get_model('material_processing')
                     if MaterialProcessingModel:
                         proc = MaterialProcessingModel(**entity_data)
-                        proc_data = proc.dict(by_alias=True)
+                        proc_data = proc.model_dump(by_alias=True)
                         self.material_processing[proc_data['processingId']] = proc
                         results['imported']['material_processing'] += 1
                     
@@ -486,7 +486,7 @@ class BOOSTClient:
                     ClaimModel = self.schema_loader.get_model('claim')
                     if ClaimModel:
                         claim = ClaimModel(**entity_data)
-                        claim_data = claim.dict(by_alias=True)
+                        claim_data = claim.model_dump(by_alias=True)
                         self.claims[claim_data['claimId']] = claim
                         results['imported']['claims'] += 1
                     
@@ -553,6 +553,7 @@ class BOOSTClient:
         """
         self.schema_loader.refresh_schemas()
         # Validator will automatically use updated schema_loader
+
     
     def add_tru_to_transaction(self, transaction_id: str, tru_id: str) -> bool:
         """
@@ -733,6 +734,7 @@ class BOOSTClient:
         self.transactions[transaction_id] = updated_transaction
         
         return True
+
 
 
 def create_client(context_url: Optional[str] = None, schema_path: Optional[str] = None) -> BOOSTClient:

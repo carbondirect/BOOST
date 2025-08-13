@@ -65,6 +65,9 @@ cd_report/
 # IAWG notes - keep local but don't track
 meetings/IAWG_NOTES_*.md
 
+# Ignore local venvs
+venv/
+
 # Local CI/CD testing
 .github/local-testing/.secrets
 .github/local-testing/.env

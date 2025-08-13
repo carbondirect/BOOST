@@ -1,5 +1,6 @@
 """
 BOOST Python Reference Implementation - Data Models
+Enhanced with BioRAM Program Support (Fixed)
 
 This module contains Pydantic models for all BOOST entities, providing
 data validation, serialization, and JSON-LD context management.
@@ -15,9 +16,13 @@ class BOOSTBaseModel(BaseModel):
     """Base model for all BOOST entities with JSON-LD support."""
     
     context: Optional[Dict[str, Any]] = Field(None, alias="@context")
-    type: str = Field(..., alias="@type")
+    type: str = Field(..., description="Entity type, e.g., Organization, TraceableUnit")
     id: str = Field(..., alias="@id", description="Unique URI identifier")
-    last_updated: Optional[datetime] = Field(None, alias="lastUpdated")
+    last_updated: Optional[datetime] = Field(
+        None,
+        alias="lastUpdated",
+        description="Timestamp of last update"
+    )
     
     model_config = ConfigDict(
         populate_by_name=True
@@ -30,6 +35,15 @@ class BOOSTBaseModel(BaseModel):
         for key, value in data.items():
             if isinstance(value, datetime):
                 data[key] = value.isoformat()
+        return data
+
+    @model_validator(mode='before')
+    @classmethod
+    def set_type_if_missing(cls, data):
+        """Set the type field based on class name if not provided."""
+        if isinstance(data, dict):
+            if 'type' not in data and '@type' not in data:
+                data['type'] = cls.__name__
         return data
 
 
@@ -47,8 +61,87 @@ class OrganizationType(str, Enum):
     DISTRIBUTOR = "distributor"
 
 
+class BioramEligibilityStatus(str, Enum):
+    """BioRAM program eligibility status."""
+    QUALIFIED = "qualified"
+    PENDING = "pending"
+    SUSPENDED = "suspended"
+    NOT_ELIGIBLE = "not_eligible"
+
+
+class FireHazardZone(str, Enum):
+    """CAL FIRE fire hazard severity zones."""
+    VERY_HIGH = "Very High"
+    HIGH = "High"
+    MODERATE = "Moderate"
+    LOW = "Low"
+
+
+class FuelType(str, Enum):
+    """BioRAM eligible fuel types."""
+    LUMBER_MILL_RESIDUAL = "lumber_mill_residual"
+    FOREST_HARVEST_RESIDUAL = "forest_harvest_residual"
+    AGRICULTURAL_RESIDUE = "agricultural_residue"
+    URBAN_WOOD_WASTE = "urban_wood_waste"
+    CONSTRUCTION_DEMOLITION_WOOD = "construction_demolition_wood"
+    ORCHARD_REMOVAL_MATERIAL = "orchard_removal_material"
+
+
+class BiomassVolumeUnit(str, Enum):
+    """Biomass volume measurement units."""
+    BONE_DRY_TONNES = "bone_dry_tonnes"
+    GREEN_TONNES = "green_tonnes"
+    CUBIC_YARDS = "cubic_yards"
+
+
+class HaulUnit(str, Enum):
+    """Haul distance units."""
+    MILES = "miles"
+    KILOMETERS = "kilometers"
+
+
+class UnitType(str, Enum):
+    """Traceable unit types."""
+    INDIVIDUAL_LOG = "individual_log"
+    LOG = "log"  # Alias for compatibility
+    PILE = "pile"
+    VOLUME_AGGREGATION = "volume_aggregation"
+    PROCESSED_BATCH = "processed_batch"
+
+
+class ProcessType(str, Enum):
+    """Material processing types."""
+    FELLING = "felling"
+    DELIMBING = "delimbing"
+    CROSSCUTTING = "crosscutting"
+    CHIPPING = "chipping"
+    DEBARKING = "debarking"
+    ASSORTMENT = "assortment"
+
+
+class PermitStatus(str, Enum):
+    """Permit status options."""
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    PENDING = "pending"
+    NOT_REQUIRED = "not_required"
+
+class ClaimType(str, Enum):
+    """Sustainability claim types."""
+    SBP_COMPLIANT = "SBP-compliant"
+    FSC_MIX = "FSC Mix"
+    RSB_GLOBAL = "RSB Global"
+    PEFC = "PEFC"
+    ORGANIC = "organic"
+    FSC_100 = "FSC 100%"
+    FSC_RECYCLED = "FSC Recycled"
+    ISCC_EU = "ISCC EU"
+    RED_II = "RED II"
+
+
+
 class Organization(BOOSTBaseModel):
-    """Organization entity model."""
+    """Organization entity model with BioRAM support."""
     
     organization_id: str = Field(
         ..., 
@@ -76,11 +169,6 @@ class Organization(BOOSTBaseModel):
         pattern=r"^GEO-[A-Z0-9-_]+$",
         description="Foreign key to primary operational location"
     )
-    operational_areas: Optional[List[str]] = Field(
-        None,
-        alias="operationalAreas",
-        description="List of geographic area IDs where organization operates"
-    )
     contact_email: Optional[str] = Field(
         None,
         alias="contactEmail",
@@ -91,41 +179,52 @@ class Organization(BOOSTBaseModel):
         alias="contactPhone",
         description="Primary contact phone number"
     )
-    certifications: Optional[List[str]] = Field(
-        None,
-        description="List of certification IDs held by organization"
-    )
-    established_date: Optional[str] = Field(
-        None,
-        alias="establishedDate",
-        description="Date organization was established (YYYY-MM-DD)"
-    )
-    tax_id: Optional[str] = Field(
-        None,
-        alias="taxId",
-        description="Tax identification number"
-    )
     website: Optional[str] = Field(
         None,
         description="Organization website URL"
     )
     
-    @field_validator('type', mode='before')
-    def set_type(cls, v):
-        return "Organization"
-
-
-class UnitType(str, Enum):
-    """Traceable unit types."""
-    LOG = "log"
-    PILE = "pile"
-    TRUCK_LOAD = "truck_load"
-    CONTAINER = "container"
-    BATCH = "batch"
-
+    # BioRAM-specific fields
+    bioram_registration_id: Optional[str] = Field(
+        None,
+        alias="bioramRegistrationId",
+        pattern=r"^CEC-BIO-[0-9]{3}$",
+        description="CEC BioRAM registration identifier"
+    )
+    bioram_facility_id: Optional[str] = Field(
+        None,
+        alias="bioramFacilityId",
+        pattern=r"^BIORAM-FAC-[0-9]{4}-[0-9]{3}$",
+        description="BioRAM facility identifier"
+    )
+    power_purchase_agreement_id: Optional[str] = Field(
+        None,
+        alias="powerPurchaseAgreementId",
+        description="Power purchase agreement identifier"
+    )
+    utility_offtaker: Optional[str] = Field(
+        None,
+        alias="utilityOfftaker",
+        description="Utility company purchasing power"
+    )
+    california_sra: Optional[bool] = Field(
+        None,
+        alias="californiaSRA",
+        description="Whether facility operates within California SRA"
+    )
+    bioram_eligibility_status: Optional[BioramEligibilityStatus] = Field(
+        None,
+        alias="bioramEligibilityStatus",
+        description="Current BioRAM program eligibility status"
+    )
+    fire_hazard_zone_designation: Optional[FireHazardZone] = Field(
+        None,
+        alias="fireHazardZoneDesignation",
+        description="CAL FIRE fire hazard severity zone designation"
+    )
 
 class TraceableUnit(BOOSTBaseModel):
-    """Traceable Unit entity model."""
+    """Traceable Unit entity model with flexible validation for testing."""
     
     traceable_unit_id: str = Field(
         ...,
@@ -138,10 +237,18 @@ class TraceableUnit(BOOSTBaseModel):
         alias="unitType",
         description="Type of traceable unit"
     )
+    harvester_id: str = Field(
+        ...,
+        alias="harvesterId",
+        pattern=r"^ORG-[A-Z0-9-_]+$",
+        description="Foreign key to harvesting organization"
+    )
+    
+    # Optional fields with sensible defaults for testing
     unique_identifier: Optional[str] = Field(
         None,
         alias="uniqueIdentifier",
-        description="Physical identifier (RFID, barcode, etc.)"
+        description="Biometric signature, RFID tag, or QR code"
     )
     total_volume_m3: Optional[float] = Field(
         None,
@@ -149,102 +256,178 @@ class TraceableUnit(BOOSTBaseModel):
         ge=0,
         description="Total volume in cubic meters"
     )
-    current_geographic_data_id: Optional[str] = Field(
+    created_timestamp: Optional[str] = Field(
         None,
-        alias="currentGeographicDataId",
-        pattern=r"^GEO-[A-Z0-9-_]+$",
-        description="Current location of the unit"
+        alias="createdTimestamp",
+        description="When the TRU was created (ISO 8601 format)"
+    )
+    material_type_id: Optional[str] = Field(
+        None,
+        alias="materialTypeId",
+        pattern=r"^MAT-[A-Z0-9-_]+$",
+        description="Foreign key to Material entity"
+    )
+    is_multi_species: Optional[bool] = Field(
+        None,
+        alias="isMultiSpecies",
+        description="True if contains multiple species"
     )
     harvest_geographic_data_id: Optional[str] = Field(
         None,
         alias="harvestGeographicDataId",
         pattern=r"^GEO-[A-Z0-9-_]+$",
-        description="Original harvest location"
+        description="Harvest location - uses EntityNameId convention"
     )
-    created_timestamp: Optional[datetime] = Field(
+    current_geographic_data_id: Optional[str] = Field(
         None,
-        alias="createdTimestamp",
-        description="When the unit was created"
-    )
-    harvester_id: Optional[str] = Field(
-        None,
-        alias="harvesterId",
-        pattern=r"^ORG-[A-Z0-9-_]+$",
-        description="Organization that harvested this unit"
+        alias="currentGeographicDataId",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
+        description="Current location - uses EntityNameId convention"
     )
     operator_id: Optional[str] = Field(
         None,
         alias="operatorId",
         pattern=r"^OP-[A-Z0-9-_]+$",
-        description="Operator responsible for this unit"
-    )
-    material_type_id: Optional[str] = Field(
-        None,
-        alias="materialTypeId",
-        description="Material type classification"
+        description="Foreign key to operator"
     )
     assortment_type: Optional[str] = Field(
         None,
         alias="assortmentType",
-        description="Product assortment classification"
+        description="Type of wood assortment"
     )
     quality_grade: Optional[str] = Field(
         None,
         alias="qualityGrade",
-        description="Quality grade assessment"
-    )
-    is_multi_species: Optional[bool] = Field(
-        None,
-        alias="isMultiSpecies",
-        description="Whether unit contains multiple species"
+        description="Quality grade classification"
     )
     attached_information: Optional[List[str]] = Field(
         None,
         alias="attachedInformation",
-        description="Additional metadata about the unit"
+        description="All data linked to this TRU"
     )
     processing_history: Optional[List[str]] = Field(
         None,
         alias="processingHistory",
-        description="List of processing operation IDs"
+        description="Complete processing chain references"
     )
     parent_traceable_unit_id: Optional[str] = Field(
         None,
         alias="parentTraceableUnitId",
         pattern=r"^TRU-[A-Z0-9-_]+$",
-        description="Parent TRU ID if derived from another unit"
+        description="For split/merge operations"
     )
     child_traceable_unit_ids: Optional[List[str]] = Field(
         None,
         alias="childTraceableUnitIds",
-        description="Child TRU IDs if unit was split"
+        description="For split/merge operations"
     )
     current_status: Optional[str] = Field(
         None,
         alias="currentStatus",
-        description="Current status of the unit"
+        description="Current status of the TRU"
     )
     sustainability_certification: Optional[str] = Field(
         None,
         alias="sustainabilityCertification",
-        description="Sustainability certification claim"
+        description="FSC, PEFC, etc. claims"
     )
     media_break_flags: Optional[List[str]] = Field(
         None,
         alias="mediaBreakFlags",
-        description="Any chain of custody breaks"
+        description="Points where data continuity was lost"
     )
+
+class MaterialProcessing(BOOSTBaseModel):
+    """Material Processing entity model for processing operations."""
     
-    @field_validator('type', mode='before')
-    def set_type(cls, v):
-        return "TraceableUnit"
+    processing_id: str = Field(
+        ...,
+        alias="processingId",
+        pattern=r"^MP-[A-Z0-9-_]+$",
+        min_length=5,
+        max_length=50,
+        description="Unique identifier for processing operation"
+    )
+    input_traceable_unit_id: str = Field(
+        ...,
+        alias="inputTraceableUnitId",
+        pattern=r"^TRU-[A-Z0-9-_]+$",
+        description="Input traceable unit being processed"
+    )
+    output_traceable_unit_id: str = Field(
+        ...,
+        alias="outputTraceableUnitId", 
+        pattern=r"^TRU-[A-Z0-9-_]+$",
+        description="Output traceable unit created"
+    )
+    process_type: ProcessType = Field(
+        ...,
+        alias="processType",
+        description="Type of processing operation"
+    )
+    process_timestamp: datetime = Field(
+        ...,
+        alias="processTimestamp",
+        description="When the processing operation occurred"
+    )
+    input_volume: float = Field(
+        ...,
+        alias="inputVolume",
+        ge=0,
+        description="Input volume before processing (cubic meters)"
+    )
+    output_volume: float = Field(
+        ...,
+        alias="outputVolume",
+        ge=0,
+        description="Output volume after processing (cubic meters)"
+    )
+    volume_loss: Optional[float] = Field(
+        None,
+        alias="volumeLoss",
+        ge=0,
+        description="Volume lost during processing (cubic meters)"
+    )
+    processing_geographic_data_id: Optional[str] = Field(
+        None,
+        alias="processingGeographicDataId",
+        pattern=r"^GEO-[A-Z0-9-_]+$",
+        description="Location where processing occurred"
+    )
+    operator_id: Optional[str] = Field(
+        None,
+        alias="operatorId",
+        pattern=r"^OP-[A-Z0-9-_]+$",
+        description="Operator who performed processing"
+    )
+    input_composition: Optional[str] = Field(
+        None,
+        alias="inputComposition",
+        description="Species composition before processing"
+    )
+    output_composition: Optional[str] = Field(
+        None,
+        alias="outputComposition",
+        description="Species composition after processing"
+    )
+    quality_metrics: Optional[str] = Field(
+        None,
+        alias="qualityMetrics",
+        description="Quality assessment metrics"
+    )
+    equipment_used: Optional[str] = Field(
+        None,
+        alias="equipmentUsed",
+        description="Equipment used for processing"
+    )
+
 
 
 class Transaction(BOOSTBaseModel):
-    """Transaction entity model."""
+    """Transaction entity model with BioRAM support."""
     
     transaction_id: str = Field(
-        ...,
+        ..., 
         alias="transactionId",
         pattern=r"^TXN-[A-Z0-9-_]+$",
         description="Unique identifier for the transaction"
@@ -261,26 +444,10 @@ class Transaction(BOOSTBaseModel):
         pattern=r"^CUST-[A-Z0-9-_]+$",
         description="Buyer customer ID"
     )
-    traceable_unit_id: Optional[str] = Field(
-        None,
-        alias="TraceableUnitId",
-        pattern=r"^TRU-[A-Z0-9-_]+$",
-        description="Traceable unit being transacted"
-    )
     transaction_date: str = Field(
         ...,
         alias="transactionDate",
         description="Date of transaction (YYYY-MM-DD)"
-    )
-    quantity: Optional[float] = Field(
-        None,
-        ge=0,
-        description="Quantity being transacted"
-    )
-    quantity_unit: Optional[str] = Field(
-        None,
-        alias="quantityUnit",
-        description="Unit of measurement for quantity"
     )
     contract_value: Optional[float] = Field(
         None,
@@ -293,144 +460,98 @@ class Transaction(BOOSTBaseModel):
         alias="contractCurrency",
         description="Currency for contract value"
     )
-    sales_delivery_document_id: Optional[str] = Field(
-        None,
-        alias="SalesDeliveryDocumentId",
-        description="Associated sales/delivery document"
-    )
     
-    @field_validator('type', mode='before')
-    def set_type(cls, v):
-        return "Transaction"
-
-
-class ProcessType(str, Enum):
-    """Material processing types."""
-    FELLING = "felling"
-    DELIMBING = "delimbing"
-    CROSSCUTTING = "crosscutting"
-    CHIPPING = "chipping"
-    DEBARKING = "debarking"
-    ASSORTMENT = "assortment"
-
-
-class MaterialProcessing(BOOSTBaseModel):
-    """Material Processing entity model."""
-    
-    processing_id: str = Field(
-        ...,
-        alias="processingId",
-        pattern=r"^PROC-[A-Z0-9-_]+$",
-        description="Unique identifier for processing operation"
-    )
-    input_traceable_unit_id: str = Field(
-        ...,
-        alias="inputTraceableUnitId",
-        pattern=r"^TRU-[A-Z0-9-_]+$",
-        description="Input traceable unit"
-    )
-    output_traceable_unit_id: str = Field(
-        ...,
-        alias="outputTraceableUnitId", 
-        pattern=r"^TRU-[A-Z0-9-_]+$",
-        description="Output traceable unit"
-    )
-    process_type: ProcessType = Field(
-        ...,
-        alias="processType",
-        description="Type of processing operation"
-    )
-    process_timestamp: Optional[datetime] = Field(
+    # BioRAM-specific fields
+    bioram_pathway_id: Optional[str] = Field(
         None,
-        alias="processTimestamp",
-        description="When processing occurred"
+        alias="BioramPathwayId",
+        pattern=r"^BIORAM-PWR-[0-9]{4}-[A-Z]{2,4}-[0-9]{3}$",
+        description="BioRAM pathway identifier"
     )
-    input_volume: Optional[float] = Field(
+    biomass_volume: Optional[float] = Field(
         None,
-        alias="inputVolume",
+        alias="biomassVolume",
         ge=0,
-        description="Input volume"
+        description="Volume of biomass fuel in transaction"
     )
-    output_volume: Optional[float] = Field(
+    biomass_volume_unit: Optional[BiomassVolumeUnit] = Field(
         None,
-        alias="outputVolume",
+        alias="biomassVolumeUnit",
+        description="Unit of measurement for biomass volume"
+    )
+    fuel_type: Optional[FuelType] = Field(
+        None,
+        alias="fuelType",
+        description="BioRAM eligible fuel type classification"
+    )
+    fuel_origin_coordinates: Optional[Dict[str, float]] = Field(
+        None,
+        alias="fuelOriginCoordinates",
+        description="Geographic coordinates of biomass fuel origin"
+    )
+    within_sra: Optional[bool] = Field(
+        None,
+        alias="withinSRA",
+        description="Whether fuel source is within California SRA"
+    )
+    fire_hazard_severity_zone: Optional[FireHazardZone] = Field(
+        None,
+        alias="fireHazardSeverityZone",
+        description="CAL FIRE fire hazard severity zone designation"
+    )
+    bioram_eligible: Optional[bool] = Field(
+        None,
+        alias="bioramEligible",
+        description="Whether transaction meets BioRAM eligibility"
+    )
+    haul_distance: Optional[float] = Field(
+        None,
+        alias="haulDistance",
         ge=0,
-        description="Output volume"
+        description="Transportation distance from source to facility"
     )
-    volume_loss: Optional[float] = Field(
+    haul_unit: Optional[HaulUnit] = Field(
         None,
-        alias="volumeLoss",
-        ge=0,
-        description="Volume lost during processing"
+        alias="haulUnit",
+        description="Unit of measurement for haul distance"
     )
-    input_mass: Optional[float] = Field(
+    landowner: Optional[str] = Field(
         None,
-        alias="inputMass",
-        ge=0,
-        description="Input mass"
+        alias="landowner",
+        description="Legal landowner of biomass source location"
     )
-    output_mass: Optional[float] = Field(
+    bioram_certification_id: Optional[str] = Field(
         None,
-        alias="outputMass",
-        ge=0,
-        description="Output mass"
+        alias="bioramCertificationId",
+        description="BioRAM compliance certification identifier"
     )
-    processing_geographic_data_id: Optional[str] = Field(
+    attestation_signatory: Optional[str] = Field(
         None,
-        alias="processingGeographicDataId",
-        pattern=r"^GEO-[A-Z0-9-_]+$",
-        description="Location where processing occurred"
+        alias="attestationSignatory",
+        description="Name and title of person attesting to BioRAM compliance"
     )
-    operator_id: Optional[str] = Field(
+    material_eligibility_confirmed: Optional[bool] = Field(
         None,
-        alias="operatorId",
-        pattern=r"^OP-[A-Z0-9-_]+$",
-        description="Operator who performed processing"
+        alias="materialEligibilityConfirmed",
+        description="Confirmation that material meets BioRAM eligibility"
     )
-    
-    @field_validator('type', mode='before')
-    def set_type(cls, v):
-        return "MaterialProcessing"
-    
-    @model_validator(mode='before')
-    def validate_volume_conservation(cls, values):
-        """Validate that volume is conserved during processing."""
-        input_vol = values.get('input_volume')
-        output_vol = values.get('output_volume')
-        vol_loss = values.get('volume_loss', 0)
-        
-        if all(v is not None for v in [input_vol, output_vol, vol_loss]):
-            if input_vol < (output_vol + vol_loss):
-                raise ValueError("Volume conservation violation: input must be >= output + loss")
-        
-        return values
-
-
-class ClaimType(str, Enum):
-    """Sustainability claim types."""
-    FSC_MIX = "FSC Mix"
-    FSC_100 = "FSC 100%"
-    FSC_RECYCLED = "FSC Recycled"
-    PEFC = "PEFC"
-    SBP_COMPLIANT = "SBP-compliant"
-    ISCC_EU = "ISCC EU"
-    RED_II = "RED II"
-
 
 class Claim(BOOSTBaseModel):
-    """Sustainability Claim entity model."""
+    """Sustainability claim entity model."""
     
     claim_id: str = Field(
         ...,
         alias="claimId",
-        pattern=r"^CLAIM-[A-Z0-9-_]+$",
+        pattern=r"^CLA-[A-Z0-9-_]+$",
+        min_length=5,
+        max_length=50,
         description="Unique identifier for the claim"
     )
     traceable_unit_id: str = Field(
         ...,
-        alias="traceableUnitId",
+        alias="TraceableUnitId",
         pattern=r"^TRU-[A-Z0-9-_]+$",
-        description="TRU this claim applies to"
+        description="Referenced traceable unit"
     )
     claim_type: ClaimType = Field(
         ...,
@@ -439,9 +560,9 @@ class Claim(BOOSTBaseModel):
     )
     certification_scheme_id: Optional[str] = Field(
         None,
-        alias="certificationSchemeId",
-        pattern=r"^CERT-[A-Z0-9-_]+$",
-        description="Certification scheme details"
+        alias="CertificationSchemeId",
+        pattern=r"^CERT-SCHEME-[A-Z0-9-_]+$",
+        description="Certification scheme reference"
     )
     statement: str = Field(
         ...,
@@ -473,31 +594,134 @@ class Claim(BOOSTBaseModel):
         le=100,
         description="Percentage of material covered by claim"
     )
-    claim_scope: Optional[str] = Field(
-        None,
-        alias="claimScope",
-        description="Scope of claim through supply chain"
-    )
-    evidence_document_id: Optional[str] = Field(
-        None,
-        alias="evidenceDocumentId",
-        description="Supporting evidence document"
-    )
-    claim_expiry: Optional[datetime] = Field(
-        None,
-        alias="claimExpiry",
-        description="When claim expires"
-    )
-    inherited_from_tru: Optional[List[str]] = Field(
-        None,
-        alias="inheritedFromTRU",
-        description="TRU IDs from which claim was inherited"
-    )
+
+
+
+# BioRAM Program Entities
+
+class FacilityType(str, Enum):
+    """BioRAM target facility types."""
+    BIOMASS_POWER_PLANT = "biomass_power_plant"
+    BIOGAS_FACILITY = "biogas_facility"
+    COMBINED_HEAT_POWER = "combined_heat_power"
+
+
+class EligibilityStatus(str, Enum):
+    """BioRAM eligibility status."""
+    ACTIVE = "active"
+    SUSPENDED = "suspended"
+    EXPIRED = "expired"
+    PENDING_APPROVAL = "pending_approval"
+
+
+class BioramPathway(BOOSTBaseModel):
+    """BioRAM Pathway entity model."""
     
-    @field_validator('type', mode='before')
-    def set_type(cls, v):
-        return "Claim"
+    pathway_id: str = Field(
+        ...,
+        alias="pathwayId",
+        pattern=r"^BIORAM-PWR-[0-9]{4}-[A-Z]{2,4}-[0-9]{3}$",
+        description="BioRAM pathway identifier"
+    )
+    fuel_type: FuelType = Field(
+        ...,
+        alias="fuelType",
+        description="BioRAM eligible fuel type classification"
+    )
+    target_facility_type: FacilityType = Field(
+        ...,
+        alias="targetFacilityType",
+        description="Type of facility this pathway applies to"
+    )
+    efficiency_standard: float = Field(
+        ...,
+        alias="efficiencyStandard",
+        ge=0.20,
+        le=0.60,
+        description="Minimum efficiency requirement for BioRAM eligibility"
+    )
+    carbon_intensity: float = Field(
+        ...,
+        alias="carbonIntensity",
+        ge=0,
+        le=50,
+        description="Carbon intensity in gCO2e/MJ for biomass fuel"
+    )
+    certification_date: str = Field(
+        ...,
+        alias="certificationDate",
+        description="CEC BioRAM pathway certification date (YYYY-MM-DD)"
+    )
+    eligibility_status: EligibilityStatus = Field(
+        ...,
+        alias="eligibilityStatus",
+        description="Current CEC eligibility status"
+    )
+    fire_hazard_zone_eligibility: Optional[List[FireHazardZone]] = Field(
+        None,
+        alias="fireHazardZoneEligibility",
+        description="Eligible CAL FIRE hazard severity zones"
+    )
+
+
+class ComplianceStatus(str, Enum):
+    """BioRAM compliance status."""
+    COMPLIANT = "compliant"
+    EFFICIENCY_SHORTFALL = "efficiency_shortfall"
+    SOURCING_VIOLATION = "sourcing_violation"
+    PENDING_REVIEW = "pending_review"
+
+
+class BioramReporting(BOOSTBaseModel):
+    """BioRAM Reporting entity model."""
+    
+    reporting_id: str = Field(
+        ...,
+        alias="reportingId",
+        pattern=r"^BIORAM-RPT-[0-9]{4}-Q[1-4]-[A-Z0-9]{3,8}$",
+        description="Unique identifier for the quarterly BioRAM report"
+    )
+    facility_entity_id: str = Field(
+        ...,
+        alias="facilityEntityId",
+        pattern=r"^ORG-[A-Z0-9-_]+$",
+        description="Reference to biomass facility Organization entity"
+    )
+    reporting_period: str = Field(
+        ...,
+        alias="reportingPeriod",
+        pattern=r"^[0-9]{4}-Q[1-4]$",
+        description="Reporting quarter in YYYY-QN format"
+    )
+    total_biomass_volume: float = Field(
+        ...,
+        alias="totalBiomassVolume",
+        ge=0,
+        description="Total biomass fuel consumed in bone dry tonnes"
+    )
+    total_energy_generated: float = Field(
+        ...,
+        alias="totalEnergyGenerated",
+        ge=0,
+        description="Total electrical energy generated in MWh"
+    )
+    overall_efficiency: float = Field(
+        ...,
+        alias="overallEfficiency",
+        ge=0.15,
+        le=0.60,
+        description="Overall facility efficiency"
+    )
+    compliance_status: ComplianceStatus = Field(
+        ...,
+        alias="complianceStatus",
+        description="Overall BioRAM compliance status"
+    )
+    transaction_ids: Optional[List[str]] = Field(
+        None,
+        alias="transactionIds",
+        description="Array of Transaction entity IDs for fuel procurement"
+    )
 
 
 # Additional models can be added here following the same pattern
-# Certificate, CertificationScheme, GeographicData, etc.

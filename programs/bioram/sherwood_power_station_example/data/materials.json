@@ -1,0 +1,23 @@
+[
+  {
+    "materialId": "MAT-LMR-2025-001",
+    "biomassType": "lumber_mill_residual",
+    "moistureContent": 0.35,
+    "certification": "SFI-CERTIFIED",
+    "sustainabilityInfo": {
+      "certificationNumber": "SFI-00123",
+      "certificationDate": "2025-01-01",
+      "expirationDate": "2026-01-01"
+    },
+    "source": {
+      "facilityName": "Anderson Mills",
+      "location": "Placer County, CA",
+      "sourceType": "lumber_mill"
+    },
+    "specifications": {
+      "particleSize": "3-inch minus",
+      "contaminantLevel": "Grade A",
+      "energyContent": "19.5 GJ/tonne"
+    }
+  }
+]

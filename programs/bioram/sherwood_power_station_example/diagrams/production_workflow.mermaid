@@ -1,0 +1,47 @@
+graph TB
+    %% Clean styling
+    classDef transactionClass fill:#f9f9f9,stroke:#f57c00,stroke-width:2px
+    classDef summaryClass fill:#f9f9f9,stroke:#7b1fa2,stroke-width:3px
+    
+    %% BOOST Transaction Entities
+    subgraph PRODUCTION["BOOST Transaction Entities"]
+        TXN_SUMMARY["Transaction Summary<br/>biomassVolume: 4,200 BDT<br/>totalEnergyGenerated: 3,360 MWh<br/>reportingPeriod: 2025-Q3"]
+        
+        subgraph DETAILS[" "]
+            direction TB
+            DETAILS_TITLE["Individual Transaction Entities<br/>Q3 2025 Biomass Procurement"]
+            TXN1["Transaction Entity<br/>biomassVolume: 1,500 BDT<br/>pathwayId: BIORAM-PWR-2025-LMR-001<br/>supplier: Anderson Mills"]
+            TXN2["Transaction Entity<br/>biomassVolume: 800 BDT<br/>pathwayId: BIORAM-PWR-2025-FHR-001<br/>supplier: Sierra Forest Products"]
+            TXN3["Transaction Entity<br/>biomassVolume: 1,200 BDT<br/>pathwayId: BIORAM-PWR-2025-LMR-001<br/>supplier: Valley Lumber Co."]
+            TXN4["Transaction Entity<br/>biomassVolume: 700 BDT<br/>pathwayId: BIORAM-PWR-2025-FHR-001<br/>supplier: Mountain Ridge Forestry"]
+        end
+    end
+    
+    %% BOOST BioRAMReporting Entity
+    subgraph QUARTERLY["BOOST BioRAMReporting Entity"]
+        SUMMARY["BioRAMReporting Entity<br/>totalBiomassVolume: 4,200 BDT<br/>totalEnergyGenerated: 3,360 MWh<br/>weightedCarbonIntensity: 16.2 gCO2e/MJ<br/>actualEfficiency: 36%<br/>complianceStatus: compliant"]
+    end
+    
+    %% Energy Conversion Process
+    subgraph CONVERSION["Power Generation Process"]
+        COMBUSTION["Direct Combustion<br/>Boiler Efficiency: 85%<br/>Turbine Efficiency: 42%<br/>Overall Efficiency: 36%"]
+        POWER_OUT["Electricity Output<br/>3,360 MWh delivered<br/>to PG&E grid"]
+    end
+    
+    %% Relationships
+    TXN_SUMMARY -->|"quarterly aggregation"| SUMMARY
+    TXN1 -->|"includes"| TXN_SUMMARY
+    TXN2 -->|"includes"| TXN_SUMMARY
+    TXN3 -->|"includes"| TXN_SUMMARY
+    TXN4 -->|"includes"| TXN_SUMMARY
+    
+    %% Energy flow
+    TXN_SUMMARY -->|"biomass input"| COMBUSTION
+    COMBUSTION -->|"power generation"| POWER_OUT
+    POWER_OUT -->|"performance metrics"| SUMMARY
+    
+    %% Apply styles
+    class TXN1,TXN2,TXN3,TXN4,TXN_SUMMARY transactionClass
+    class SUMMARY summaryClass
+    class DETAILS_TITLE fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    class COMBUSTION,POWER_OUT fill:#fff3e0,stroke:#e65100,stroke-width:2px

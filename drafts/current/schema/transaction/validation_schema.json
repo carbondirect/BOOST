@@ -255,6 +255,142 @@
         ],
         "description": "Role of regulated party in LCFS transaction"
       },
+      "BioramPathwayId": {
+        "type": "string",
+        "description": "BioRAM pathway identifier for biomass power generation - uses EntityNameId convention referencing BioramPathway",
+        "pattern": "^BIORAM-PWR-[0-9]{4}-[A-Z]{2,4}-[0-9]{3}$"
+      },
+      "biomassVolume": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Volume of biomass fuel in transaction for BioRAM reporting"
+      },
+      "biomassVolumeUnit": {
+        "type": "string",
+        "enum": [
+          "bone_dry_tonnes",
+          "green_tonnes",
+          "cubic_yards"
+        ],
+        "description": "Unit of measurement for biomass volume"
+      },
+      "fuelType": {
+        "type": "string",
+        "enum": [
+          "lumber_mill_residual",
+          "forest_harvest_residual",
+          "agricultural_residue",
+          "urban_wood_waste",
+          "construction_demolition_wood",
+          "orchard_removal_material"
+        ],
+        "description": "BioRAM eligible fuel type classification"
+      },
+      "fuelOriginCoordinates": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude of fuel origin location"
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude of fuel origin location"
+          }
+        },
+        "required": ["latitude", "longitude"],
+        "description": "Geographic coordinates of biomass fuel origin"
+      },
+      "fuelOriginFacilityId": {
+        "type": "string",
+        "description": "Identifier for source facility or harvest site"
+      },
+      "withinSRA": {
+        "type": "boolean",
+        "description": "Whether fuel source is within California State Responsibility Area"
+      },
+      "fireHazardSeverityZone": {
+        "type": "string",
+        "enum": [
+          "Very High",
+          "High",
+          "Moderate",
+          "Low"
+        ],
+        "description": "CAL FIRE fire hazard severity zone designation"
+      },
+      "fhszVerificationSource": {
+        "type": "string",
+        "description": "Source of fire hazard zone verification (e.g., CAL_FIRE_2024_MAPS)"
+      },
+      "bioramEligible": {
+        "type": "boolean",
+        "description": "Whether transaction meets BioRAM program eligibility requirements"
+      },
+      "haulDistance": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Transportation distance from source to facility in miles"
+      },
+      "haulUnit": {
+        "type": "string",
+        "enum": [
+          "miles",
+          "kilometers"
+        ],
+        "description": "Unit of measurement for haul distance"
+      },
+      "landowner": {
+        "type": "string",
+        "description": "Legal landowner of biomass source location"
+      },
+      "parcelId": {
+        "type": "string",
+        "description": "Assessor parcel number or legal land description"
+      },
+      "calFirePermitNumber": {
+        "type": "string",
+        "description": "CAL FIRE permit number for harvest or treatment activities"
+      },
+      "permitStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "expired",
+          "pending",
+          "not_required"
+        ],
+        "description": "Status of required permits for biomass harvesting"
+      },
+      "timberHarvestPlan": {
+        "type": "string",
+        "description": "Timber harvest plan identifier if applicable"
+      },
+      "bioramCertificationId": {
+        "type": "string",
+        "description": "BioRAM compliance certification identifier for transaction"
+      },
+      "attestationSignatory": {
+        "type": "string",
+        "description": "Name and title of person attesting to BioRAM compliance"
+      },
+      "attestationDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date of BioRAM compliance attestation"
+      },
+      "materialEligibilityConfirmed": {
+        "type": "boolean",
+        "description": "Confirmation that material meets BioRAM eligibility criteria"
+      },
+      "reportingAccuracyConfirmed": {
+        "type": "boolean",
+        "description": "Confirmation of reporting data accuracy for BioRAM compliance"
+      },
       "traceableUnitIds": {
         "type": "array",
         "items": {
@@ -388,6 +524,13 @@
         "relationshipType": "many-to-one",
         "required": false,
         "label": "LCFS pathway"
+      },
+      {
+        "field": "BioramPathwayId",
+        "targetEntity": "BioramPathway",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "BioRAM pathway"
       },
       {
         "field": "traceableUnitIds",

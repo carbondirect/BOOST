@@ -1,0 +1,77 @@
+erDiagram
+    %% BOOST Entity Relationship Diagram for BIORAM
+    %% Demonstrates biomass power generation data model
+
+    ORGANIZATION {
+        string organizationId PK
+        string bioramRegistrationId
+        string facilityType
+        decimal powerGenerationCapacity
+        decimal biomassStorageCapacity
+        string organizationName
+        string contactInfo
+    }
+
+    MATERIAL {
+        string materialId PK
+        string biomassType
+        decimal moistureContent
+        string certification
+        string sustainabilityInfo
+        string source
+    }
+
+    BIORAM_PATHWAY {
+        string pathwayId PK
+        string pathwayType
+        decimal carbonIntensity
+        decimal energyConversionEfficiency
+        decimal annualBiomassLimit
+        string verificationStatus
+        string feedstockCategory
+    }
+
+    ENERGY_CARBON_DATA {
+        string energyCarbonDataId PK
+        string pathwayId FK
+        decimal value
+        string measurementMethod
+        decimal regulatoryBenchmark
+        string lifecycleStage
+        string calculationMethod
+    }
+
+    TRANSACTION {
+        string transactionId PK
+        string organizationId FK
+        string pathwayId FK
+        decimal biomassVolume
+        string volumeUnit
+        decimal haulDistance
+        string haulUnit
+        string fireHazardZoneStatus
+        datetime transactionDate
+    }
+
+    BIORAM_REPORTING {
+        string reportingId PK
+        string organizationId FK
+        string reportingPeriod
+        decimal totalBiomassVolume
+        decimal totalEnergyGenerated
+        decimal weightedCarbonIntensity
+        string complianceStatus
+        string verificationStatus
+        datetime submissionDate
+    }
+
+    %% Relationships with cardinality
+    ORGANIZATION ||--o{ TRANSACTION : "receives"
+    ORGANIZATION ||--|| BIORAM_REPORTING : "submits"
+    BIORAM_PATHWAY ||--o{ TRANSACTION : "categorizes"
+    BIORAM_PATHWAY ||--|| ENERGY_CARBON_DATA : "defines"
+    MATERIAL ||--|| BIORAM_PATHWAY : "maps_to"
+    TRANSACTION }o--|| BIORAM_REPORTING : "aggregates_into"
+    
+    %% Additional relationships for data integrity
+    ENERGY_CARBON_DATA ||--o{ TRANSACTION : "calculates_emissions_for"

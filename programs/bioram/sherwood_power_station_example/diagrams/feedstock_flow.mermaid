@@ -1,0 +1,48 @@
+flowchart LR
+    %% BIORAM Data Flow Through BOOST Entities
+    %% Shows biomass sourcing through power generation compliance
+
+    subgraph SOURCES["External Data Sources"]
+        FS["Biomass Sourcing Data<br/>2.1M records<br/>Sustainability certifications<br/>Chain of custody"]
+        BIORAM["BIORAM Pathway Database<br/>500K records<br/>Certified pathway definitions<br/>Efficiency benchmarks"]
+        PROD["Power Generation Data<br/>1.2M records<br/>Biomass volumes & deliveries<br/>Operational metrics"]
+        CI["Carbon Intensity Calculations<br/>400K records<br/>BIORAM-v1.0 methodology<br/>Lifecycle assessments"]
+    end
+
+    subgraph BOOST["BOOST Entity Processing"]
+        MAT["Material Entities<br/>Validation & Structuring<br/>Biomass categorization<br/>Moisture content"]
+        PATH["BioramPathway Entities<br/>Pathway certification<br/>Regulatory compliance<br/>Efficiency tracking"]
+        TXN["Transaction Entities<br/>Volume tracking<br/>Pathway attribution<br/>Energy calculations"]
+        ECD["EnergyCarbonData Entities<br/>CI data validation<br/>Benchmark comparisons<br/>Emissions tracking"]
+    end
+
+    subgraph OUTPUT["Regulatory Compliance"]
+        RPT["BioramReporting Entity<br/>Quarterly aggregation<br/>Energy generation<br/>Emissions reporting"]
+        REG_SUB["Regulatory Submission<br/>Official compliance filing<br/>25.2 GWh generated<br/>Regulatory approval"]
+    end
+
+    %% Data flow connections with volume indicators
+    FS -->|"2.1M records"| MAT
+    BIORAM -->|"500K records"| PATH
+    PROD -->|"1.2M records"| TXN
+    CI -->|"400K records"| ECD
+
+    MAT -->|"Structured data"| RPT
+    PATH -->|"Certified pathways"| RPT
+    TXN -->|"Validated transactions"| RPT
+    ECD -->|"CI calculations"| RPT
+
+    RPT -->|"Complete compliance package"| REG_SUB
+
+    %% Styling to show data volume and flow
+    classDef sourceHigh fill:#e8f5e8,stroke:#2e7d32,stroke-width:4px
+    classDef sourceMed fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    classDef sourceLow fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef processing fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
+    classDef output fill:#fce4ec,stroke:#c2185b,stroke-width:4px
+
+    class FS sourceHigh
+    class PROD,BIORAM sourceMed
+    class CI sourceLow
+    class MAT,PATH,TXN,ECD processing
+    class RPT,REG_SUB output

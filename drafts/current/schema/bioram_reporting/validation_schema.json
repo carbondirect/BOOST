@@ -1,0 +1,327 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/bioram-reporting",
+    "title": "BioRAM Reporting",
+    "description": "Quarterly BioRAM compliance report for biomass power generation facilities with fuel sourcing and efficiency tracking",
+    "type": "object",
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "reportingId",
+      "facilityEntityId",
+      "reportingPeriod",
+      "totalBiomassVolume",
+      "totalEnergyGenerated",
+      "overallEfficiency",
+      "complianceStatus"
+    ],
+    "properties": {
+      "@context": {
+        "type": "object",
+        "description": "JSON-LD context for semantic web compatibility"
+      },
+      "@type": {
+        "type": "string",
+        "const": "BioramReporting"
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri",
+        "description": "Unique URI identifier for JSON-LD"
+      },
+      "reportingId": {
+        "type": "string",
+        "description": "Unique identifier for the quarterly BioRAM report",
+        "pattern": "^BIORAM-RPT-[0-9]{4}-Q[1-4]-[A-Z0-9]{3,8}$"
+      },
+      "facilityEntityId": {
+        "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$",
+        "description": "Reference to biomass facility Organization entity"
+      },
+      "bioramContractId": {
+        "type": "string",
+        "description": "BioRAM contract identifier from competitive procurement",
+        "pattern": "^BR-RFO-[0-9]{4}-[0-9]{2}-[A-Z]$"
+      },
+      "reportingPeriod": {
+        "type": "string",
+        "description": "Reporting quarter in YYYY-QN format",
+        "pattern": "^[0-9]{4}-Q[1-4]$"
+      },
+      "totalBiomassVolume": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Total biomass fuel consumed in bone dry tonnes"
+      },
+      "totalEnergyGenerated": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Total electrical energy generated in MWh"
+      },
+      "overallEfficiency": {
+        "type": "number",
+        "minimum": 0.15,
+        "maximum": 0.60,
+        "description": "Overall facility efficiency (net electrical output / fuel energy input)"
+      },
+      "efficiencyTarget": {
+        "type": "number",
+        "minimum": 0.20,
+        "maximum": 0.55,
+        "description": "Contract efficiency target for BioRAM compliance"
+      },
+      "complianceStatus": {
+        "type": "string",
+        "enum": [
+          "compliant",
+          "efficiency_shortfall",
+          "sourcing_violation",
+          "pending_review"
+        ],
+        "description": "Overall BioRAM compliance status for the reporting period"
+      },
+      "submissionDate": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Date and time report was submitted to CEC"
+      },
+      "verificationDate": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Date of independent verification completion"
+      },
+      "verificationRequired": {
+        "type": "boolean",
+        "description": "Whether third-party verification is required for this facility"
+      },
+      "VerificationStatementId": {
+        "type": "string",
+        "pattern": "^VS-[A-Z0-9-_]+$",
+        "description": "Uses EntityNameId convention referencing VerificationStatement for independent verification"
+      },
+      "reportingDeadline": {
+        "type": "string",
+        "format": "date",
+        "description": "CEC deadline for BioRAM report submission"
+      },
+      "transactionIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^TXN-[A-Z0-9-_]+$"
+        },
+        "description": "Array of Transaction entity IDs for fuel procurement included in this report"
+      },
+      "fuelSourcingSummary": {
+        "type": "object",
+        "properties": {
+          "totalSuppliers": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Number of unique fuel suppliers"
+          },
+          "averageHaulDistance": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Average haul distance in miles"
+          },
+          "fireHazardZoneBreakdown": {
+            "type": "object",
+            "properties": {
+              "veryHighFHSZ": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Volume from Very High fire hazard zones (BDT)"
+              },
+              "highFHSZ": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Volume from High fire hazard zones (BDT)"
+              },
+              "moderateFHSZ": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Volume from Moderate fire hazard zones (BDT)"
+              },
+              "lowFHSZ": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Volume from Low fire hazard zones (BDT)"
+              }
+            },
+            "description": "Fuel volume breakdown by CAL FIRE hazard severity zones"
+          },
+          "fuelTypeBreakdown": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "fuelType",
+                "volume",
+                "percentage"
+              ],
+              "properties": {
+                "fuelType": {
+                  "type": "string",
+                  "enum": [
+                    "lumber_mill_residual",
+                    "forest_harvest_residual",
+                    "agricultural_residue",
+                    "urban_wood_waste"
+                  ]
+                },
+                "volume": {
+                  "type": "number",
+                  "minimum": 0,
+                  "description": "Volume of this fuel type in BDT"
+                },
+                "percentage": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100,
+                  "description": "Percentage of total fuel mix"
+                },
+                "pathwayId": {
+                  "type": "string",
+                  "description": "Associated BioRAM pathway identifier"
+                }
+              }
+            },
+            "description": "Breakdown of fuel consumption by BioRAM eligible types"
+          }
+        },
+        "description": "Summary of fuel sourcing compliance metrics"
+      },
+      "performanceMetrics": {
+        "type": "object",
+        "properties": {
+          "capacityFactor": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.0,
+            "description": "Facility capacity factor for the reporting period"
+          },
+          "availabilityFactor": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.0,
+            "description": "Facility availability factor (uptime)"
+          },
+          "fuelUtilizationRate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1.0,
+            "description": "Fuel utilization efficiency"
+          },
+          "gridReliabilityContribution": {
+            "type": "object",
+            "properties": {
+              "peakHoursGeneration": {
+                "type": "number",
+                "description": "Generation during peak demand hours (MWh)"
+              },
+              "gridStabilizationServices": {
+                "type": "boolean",
+                "description": "Provision of grid stabilization services"
+              }
+            }
+          }
+        },
+        "description": "Facility performance and grid contribution metrics"
+      },
+      "environmentalImpact": {
+        "type": "object",
+        "properties": {
+          "co2Reduction": {
+            "type": "number",
+            "description": "CO2 reduction compared to fossil fuel baseline (metric tons)"
+          },
+          "fireRiskMitigation": {
+            "type": "object",
+            "properties": {
+              "acresTreated": {
+                "type": "number",
+                "description": "Estimated forest acres treated through fuel removal"
+              },
+              "firebreakContribution": {
+                "type": "boolean",
+                "description": "Contribution to strategic firebreak maintenance"
+              }
+            }
+          },
+          "wasteReduction": {
+            "type": "number",
+            "description": "Waste biomass diverted from disposal (BDT)"
+          }
+        },
+        "description": "Environmental and fire hazard reduction benefits"
+      },
+      "financialSummary": {
+        "type": "object",
+        "properties": {
+          "totalContractValue": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Total BioRAM contract payment for period (USD)"
+          },
+          "fuelCosts": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Total fuel procurement costs (USD)"
+          },
+          "averageFuelPrice": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Average fuel price per BDT (USD/BDT)"
+          },
+          "contractPricePerMWh": {
+            "type": "number",
+            "minimum": 0,
+            "description": "BioRAM contract price per MWh (USD/MWh)"
+          }
+        },
+        "description": "Financial performance and cost metrics"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of most recent report update"
+      }
+    },
+    "additionalProperties": false
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "BioramReporting",
+      "primaryKey": "reportingId",
+      "area": "compliance_reporting",
+      "description": "BioRAM compliance reports for biomass power generation facilities"
+    },
+    "relationships": [
+      {
+        "field": "facilityEntityId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "reported by facility"
+      },
+      {
+        "field": "VerificationStatementId",
+        "targetEntity": "VerificationStatement",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "verified by"
+      },
+      {
+        "field": "transactionIds",
+        "targetEntity": "Transaction",
+        "relationshipType": "one-to-many",
+        "required": false,
+        "label": "includes fuel transactions"
+      }
+    ]
+  }
+}
