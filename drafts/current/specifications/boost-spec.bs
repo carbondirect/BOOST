@@ -5,7 +5,7 @@ Level: 1
 Status: LD
 Date: 2025-08-11
 !Version: {{VERSION}}
-Editor: Peter Tittmann, Chair -- BOOST Working Group, Senior Scientist -- Carbon Direct, ptittmann@carbon-direct.com  
+Editor: Peter Tittmann, Carbon Direct, ptittmann@carbon-direct.com  
 Editor: Liam Killroy, Carbon Direct, lkillroy@carbon-direct.com
 Editor: BOOST W3C Community Group, public-boost-01@w3.org
 Abstract: The Biomass Open Origin Standard for Tracking (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.
