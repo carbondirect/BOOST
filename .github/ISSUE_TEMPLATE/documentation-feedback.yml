@@ -1,0 +1,146 @@
+name: 📖 Documentation Feedback
+description: Report feedback on BOOST documentation (HTML, PDF, ERD Navigator, or Schemas)
+title: "[DOCS] "
+labels: ["documentation", "feedback"]
+assignees:
+  - ptittmann
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## BOOST Documentation Feedback
+        
+        Thank you for reviewing the BOOST documentation! Please provide detailed feedback to help us improve the documentation quality and usability.
+        
+        **Documentation Version**: Please check the current version at https://carbondirect.github.io/BOOST/VERSION
+        
+  - type: input
+    id: reviewer-name
+    attributes:
+      label: Reviewer Name
+      description: Your name for attribution
+      placeholder: "e.g., John Smith"
+    validations:
+      required: true
+
+  - type: input
+    id: reviewer-org
+    attributes:
+      label: Reviewer Organization
+      description: Your organization (optional)
+      placeholder: "e.g., Carbon Direct, University of California"
+    validations:
+      required: false
+
+  - type: input
+    id: doc-version
+    attributes:
+      label: Documentation Version Reviewed
+      description: Version found at https://carbondirect.github.io/BOOST/VERSION
+      placeholder: "e.g., v3.1.3-4-g373650e"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component Reviewed
+      description: Which part of the documentation does this feedback apply to?
+      options:
+        - HTML Documentation
+        - PDF Documentation  
+        - ERD Navigator
+        - JSON Schemas
+    validations:
+      required: true
+
+  - type: input
+    id: section
+    attributes:
+      label: Section/Page/Schema
+      description: Specific section, page number, or schema name affected
+      placeholder: "e.g., Section 7.2, Page 59, TraceableUnit schema"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feedback-type
+    attributes:
+      label: Feedback Type
+      description: What type of issue is this?
+      options:
+        - Content Error
+        - Technical Inaccuracy
+        - Clarity Issue
+        - Suggestion
+        - Missing Information
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How critical is this issue?
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Detailed description of the issue or feedback
+      placeholder: "Please describe the issue, what you expected to see, and why this is important to address..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-resolution
+    attributes:
+      label: Suggested Resolution (Optional)
+      description: If you have suggestions for how to fix or improve this, please describe them here
+      placeholder: "Consider adding an example that shows..., Clarify the wording to..., Add a diagram that illustrates..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: overall-assessment
+    attributes:
+      label: Overall Assessment (Optional)
+      description: Rate your overall impression of the documentation component
+      options:
+        - label: "Documentation Completeness: Excellent"
+        - label: "Documentation Completeness: Good"  
+        - label: "Documentation Completeness: Adequate"
+        - label: "Documentation Completeness: Needs Improvement"
+        - label: "Technical Accuracy: Excellent"
+        - label: "Technical Accuracy: Good"
+        - label: "Technical Accuracy: Adequate"  
+        - label: "Technical Accuracy: Needs Improvement"
+        - label: "Clarity and Usability: Excellent"
+        - label: "Clarity and Usability: Good"
+        - label: "Clarity and Usability: Adequate"
+        - label: "Clarity and Usability: Needs Improvement"
+
+  - type: textarea
+    id: additional-comments
+    attributes:
+      label: Additional Comments
+      description: Any other comments, suggestions, or observations about the documentation
+      placeholder: "General impressions, recommendations, or additional context..."
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        
+        **Note for Schema-specific feedback**: Please include the specific entity name and field if applicable.
+        
+        **Thank you** for taking the time to review and provide feedback on the BOOST documentation!
