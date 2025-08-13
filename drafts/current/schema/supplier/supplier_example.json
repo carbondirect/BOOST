@@ -1,0 +1,16 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "Supplier",
+  "@id": "https://boost.example.com/supplier/SUP-FOREST-PRODUCTS",
+  "supplierId": "SUP-FOREST-PRODUCTS",
+  "supplierName": "Northern Forest Products Ltd.",
+  "address": "2400 Logging Road, Eureka, CA 95503",
+  "certificateCode": "FSC-C123456",
+  "claim": "FSC-certified sustainable forestry",
+  "supplierType": "harvester",
+  "GeographicDataId": "GEO-SUPPLIER-NORTHERN-001"
+}

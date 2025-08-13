@@ -226,6 +226,24 @@ jobs:
             echo "❌ PDF generation failed for $PDF_FILENAME"
           fi
 
+      - name: Run documentation consistency validation
+        if: always()
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🔍 Running HTML/PDF consistency validation..."
+          
+          if [ -f "scripts/validate-consistency.py" ]; then
+            python3 scripts/validate-consistency.py --strict || {
+              echo "⚠️ Consistency validation found issues"
+              echo "📊 Check build/consistency-report.json for details"
+              # Don't fail the build, just warn
+              exit 0
+            }
+            echo "✅ HTML and PDF documentation are consistent"
+          else
+            echo "⚠️ Consistency validation script not found"
+          fi
+
       - name: Generate build report
         working-directory: drafts/current/specifications
         run: |

@@ -7,7 +7,7 @@
 
 Material types and specifications
 
-** [View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
+**🗂️ [View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
 
 % Material Entity Table
 % Auto-generated from JSON schema
@@ -15,7 +15,7 @@ Material types and specifications
 \begin{entitytable}{Material}
 \textbf{\field{materialCategory}} & enum(softwood, hardwood, mixed) & No description provided \\
 \textbf{\field{materialName}} & string & No description provided \\
-\textbf{\field{materialTypeId}} & string & No description provided \\
+\textbf{\field{materialTypeId}} & string (pattern) & No description provided \\
 \field{applicablePlantParts} & array<string> & Plant parts included in this material type \\
 \field{applicableProcessingTypes} & array<string> & No description provided \\
 \field{carbonStorageRate} & string & No description provided \\
@@ -37,31 +37,31 @@ Material types and specifications
 
 Species composition within TRUs
 
-** [View Species Component in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
+**🗂️ [View Species Component in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
 
 % Species Component Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Species Component}
-\textbf{\field{componentId}} & string & Unique identifier for the species component \\
-\textbf{\field{percentageByVolume}} & number (\geq 0, \leq 100) & Percentage of total TRU volume for this species \\
+\textbf{\field{componentId}} & string (pattern) & Unique identifier for the species component \\
+\textbf{\field{percentageByVolume}} & number (≥0, ≤100) & Percentage of total TRU volume for this species \\
 \textbf{\field{species}} & string & Species name (common or scientific) \\
-\textbf{\field{traceableUnitId}} & string & Foreign key back reference to TraceableUnit \\
-\textbf{\field{volumeM3}} & number (\geq 0) & Volume of this species within the TRU in cubic meters \\
+\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key back reference to TraceableUnit \\
+\textbf{\field{volumeM3}} & number (≥0) & Volume of this species within the TRU in cubic meters \\
 \field{ageYears} & integer & Estimated age in years \\
 \field{carbonStorage} & string & CO2 data for this species component \\
-\field{dbhCm} & number (\geq 0) & Diameter at breast height in centimeters \\
+\field{dbhCm} & number (≥0) & Diameter at breast height in centimeters \\
 \field{defects} & array<string> & List of defects or quality issues \\
 \field{harvestTimestamp} & string (date-time) & When this species was harvested \\
 \field{harvestingMethod} & enum(4 values) & Method used to harvest this species \\
-\field{heightM} & number (\geq 0) & Average tree height in meters \\
+\field{heightM} & number (≥0) & Average tree height in meters \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{moistureContent} & number (\geq 0, \leq 100) & Moisture content as percentage \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage \\
 \field{plantPartComposition} & object & Plant part breakdown within this species component \\
 \field{primaryPlantPart} & enum(17 values) & Primary plant part represented by this species component \\
 \field{qualityGrade} & string & Species-specific quality grade \\
 \field{scientificName} & string & Scientific/Latin name of the species \\
-\field{sourceGeographicDataId} & string & Foreign key to geographic origin of this species \\
+\field{sourceGeographicDataId} & string (pattern) & Foreign key to geographic origin of this species \\
 \field{structuralClassification} & enum(5 values) & Functional classification of the primary plant part \\
 \end{entitytable}
 
@@ -79,15 +79,15 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Supplier in ERD Navigator](erd-navigator/index.html?focus=Supplier)**
+**🗂️ [View Supplier in ERD Navigator](erd-navigator/index.html?focus=Supplier)**
 
 % Supplier Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Supplier}
-\textbf{\field{supplierId}} & string & No description provided \\
+\textbf{\field{supplierId}} & string (pattern) & No description provided \\
 \textbf{\field{supplierName}} & string & No description provided \\
-\field{GeographicDataId} & string & Supplier location - uses EntityNameId convention referencing GeographicData \\
+\field{GeographicDataId} & string (pattern) & Supplier location - uses EntityNameId convention referencing GeographicData \\
 \field{address} & string & No description provided \\
 \field{certificateCode} & string & No description provided \\
 \field{claim} & string & No description provided \\
@@ -108,7 +108,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Customer in ERD Navigator](erd-navigator/index.html?focus=Customer)**
+**🗂️ [View Customer in ERD Navigator](erd-navigator/index.html?focus=Customer)**
 
 % Customer Entity Table
 % Auto-generated from JSON schema
@@ -134,17 +134,17 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Supply Base in ERD Navigator](erd-navigator/index.html?focus=SupplyBase)**
+**🗂️ [View Supply Base in ERD Navigator](erd-navigator/index.html?focus=SupplyBase)**
 
 % Supply Base Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Supply Base}
-\textbf{\field{OrganizationId}} & string & Managing organization - uses EntityNameId convention referencing Organization \\
+\textbf{\field{OrganizationId}} & string (pattern) & Managing organization - uses EntityNameId convention referencing Organization \\
 \textbf{\field{description}} & string & No description provided \\
-\textbf{\field{supplyBaseId}} & string & No description provided \\
+\textbf{\field{supplyBaseId}} & string (pattern) & No description provided \\
 \textbf{\field{supplyBaseName}} & string & No description provided \\
-\field{GeographicDataId} & string & Supply base location - uses EntityNameId convention referencing GeographicData \\
+\field{GeographicDataId} & string (pattern) & Supply base location - uses EntityNameId convention referencing GeographicData \\
 \field{equipmentDeployment} & array<string> & No description provided \\
 \field{forestRoads} & array<string> & No description provided \\
 \field{harvestSites} & array<string> & No description provided \\
@@ -167,7 +167,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Supply Base Report in ERD Navigator](erd-navigator/index.html?focus=SupplyBaseReport)**
+**🗂️ [View Supply Base Report in ERD Navigator](erd-navigator/index.html?focus=SupplyBaseReport)**
 
 % Supply Base Report Entity Table
 % Auto-generated from JSON schema
@@ -175,7 +175,7 @@ This entity references the following entities:
 \begin{entitytable}{Supply Base Report}
 \textbf{\field{organizationId}} & string & No description provided \\
 \textbf{\field{preparationDate}} & string (date) & No description provided \\
-\textbf{\field{sbrId}} & string & No description provided \\
+\textbf{\field{sbrId}} & string (pattern) & No description provided \\
 \field{publicationUrl} & string (uri) & No description provided \\
 \field{reportGeographicDataId} & string & No description provided \\
 \field{sourcingPractices} & string & No description provided \\
@@ -199,7 +199,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Equipment in ERD Navigator](erd-navigator/index.html?focus=Equipment)**
+**🗂️ [View Equipment in ERD Navigator](erd-navigator/index.html?focus=Equipment)**
 
 % Equipment Entity Table
 % Auto-generated from JSON schema
@@ -210,7 +210,7 @@ This entity references the following entities:
 \textbf{\field{equipmentType}} & enum(12 values) & Type of forestry equipment \\
 \textbf{\field{operationalStatus}} & enum(5 values) & Current operational status of the equipment \\
 \textbf{\field{organizationId}} & string (pattern) & Foreign key to owning organization \\
-\field{acquisitionCost} & number (\geq 0) & Equipment acquisition cost in USD \\
+\field{acquisitionCost} & number (≥0) & Equipment acquisition cost in USD \\
 \field{acquisitionDate} & string (date) & Date equipment was acquired by organization \\
 \field{assignedTrackingPointId} & string (pattern) & Foreign key to current location/assignment \\
 \field{certifications} & array<string> & Equipment certifications (safety, emissions, etc.) \\

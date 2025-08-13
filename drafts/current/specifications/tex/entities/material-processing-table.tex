@@ -2,22 +2,22 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Material Processing}
-\textbf{\field{inputTraceableUnitId}} & string & No description provided \\
-\textbf{\field{inputVolume}} & number (\geq 0) & No description provided \\
-\textbf{\field{outputTraceableUnitId}} & string & No description provided \\
-\textbf{\field{outputVolume}} & number (\geq 0) & No description provided \\
+\textbf{\field{inputTraceableUnitId}} & string (pattern) & No description provided \\
+\textbf{\field{inputVolume}} & number (≥0) & No description provided \\
+\textbf{\field{outputTraceableUnitId}} & string (pattern) & No description provided \\
+\textbf{\field{outputVolume}} & number (≥0) & No description provided \\
 \textbf{\field{processTimestamp}} & string (date-time) & No description provided \\
 \textbf{\field{processType}} & enum(6 values) & No description provided \\
-\textbf{\field{processingId}} & string & No description provided \\
+\textbf{\field{processingId}} & string (pattern) & No description provided \\
 \field{equipmentUsed} & string & No description provided \\
 \field{inputComposition} & string & No description provided \\
 \field{inputPlantParts} & object & Plant parts in input TRU before processing \\
-\field{operatorId} & string & No description provided \\
+\field{operatorId} & string (pattern) & No description provided \\
 \field{outputComposition} & string & No description provided \\
 \field{outputPlantParts} & object & Plant parts in output TRU after processing \\
 \field{plantPartLosses} & object & Volume losses by plant part during processing \\
 \field{plantPartTransformations} & array<object> & Specific plant part transformations during processing \\
-\field{processingGeographicDataId} & string & No description provided \\
+\field{processingGeographicDataId} & string (pattern) & No description provided \\
 \field{qualityMetrics} & string & No description provided \\
-\field{volumeLoss} & number (\geq 0) & No description provided \\
+\field{volumeLoss} & number (≥0) & No description provided \\
 \end{entitytable}

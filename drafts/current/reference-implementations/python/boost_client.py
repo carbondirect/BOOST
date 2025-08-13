@@ -8,7 +8,7 @@ and supply chain tracking.
 
 import json
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
 
@@ -83,7 +83,7 @@ class BOOSTClient:
             "organizationId": organization_id,
             "organizationName": name,
             "organizationType": org_type,
-            "lastUpdated": datetime.utcnow(),
+            "lastUpdated": datetime.now(timezone.utc),
             **kwargs
         }
         
@@ -101,6 +101,7 @@ class BOOSTClient:
         traceable_unit_id: str,
         unit_type: str,
         harvester_id: Optional[str] = None,
+        harvest_geographic_data_id: Optional[str] = None,
         **kwargs
     ) -> Any:
         """
@@ -110,7 +111,8 @@ class BOOSTClient:
             traceable_unit_id: Unique TRU identifier
             unit_type: Type of traceable unit
             harvester_id: Organization that harvested this unit
-            **kwargs: Additional optional fields
+            harvest_geographic_data_id: Geographic location where harvesting occurred
+            **kwargs: Additional optional fields (should include materialTypeId, isMultiSpecies, totalVolumeM3, uniqueIdentifier)
             
         Returns:
             Dynamic TraceableUnit instance
@@ -120,14 +122,19 @@ class BOOSTClient:
         if valid_types and unit_type not in valid_types:
             raise ValueError(f"Invalid unit type '{unit_type}'. Valid types: {valid_types}")
         
+        # Ensure required fields are provided with defaults if needed
+        if not harvest_geographic_data_id:
+            harvest_geographic_data_id = f"GEO-HARVEST-{traceable_unit_id[-8:]}"
+        
         tru_data = {
             "@context": self.default_context["@context"],
             "@type": "TraceableUnit", 
             "@id": f"https://github.com/carbondirect/BOOST/schemas/traceable-unit/{traceable_unit_id}",
             "traceableUnitId": traceable_unit_id,
             "unitType": unit_type,
-            "createdTimestamp": datetime.utcnow(),
-            "lastUpdated": datetime.utcnow(),
+            "createdTimestamp": datetime.now(timezone.utc),
+            "lastUpdated": datetime.now(timezone.utc),
+            "harvestGeographicDataId": harvest_geographic_data_id,
             **kwargs
         }
         
@@ -172,7 +179,7 @@ class BOOSTClient:
             "OrganizationId": organization_id,
             "CustomerId": customer_id,
             "transactionDate": transaction_date,
-            "lastUpdated": datetime.utcnow(),
+            "lastUpdated": datetime.now(timezone.utc),
             **kwargs
         }
         
@@ -219,8 +226,8 @@ class BOOSTClient:
             "inputTraceableUnitId": input_tru_id,
             "outputTraceableUnitId": output_tru_id,
             "processType": process_type,
-            "processTimestamp": datetime.utcnow(),
-            "lastUpdated": datetime.utcnow(),
+            "processTimestamp": datetime.now(timezone.utc),
+            "lastUpdated": datetime.now(timezone.utc),
             **kwargs
         }
         
@@ -270,7 +277,7 @@ class BOOSTClient:
             "claimType": claim_type,
             "statement": statement,
             "validated": validated,
-            "lastUpdated": datetime.utcnow(),
+            "lastUpdated": datetime.now(timezone.utc),
             **kwargs
         }
         
@@ -571,7 +578,7 @@ class BOOSTClient:
         # Add TRU ID if not already present
         if tru_id not in transaction_data['traceableUnitIds']:
             transaction_data['traceableUnitIds'].append(tru_id)
-            transaction_data['lastUpdated'] = datetime.utcnow()
+            transaction_data['lastUpdated'] = datetime.now(timezone.utc)
             
             # Recreate the model with updated data
             TransactionModel = self.schema_loader.get_model('transaction')
@@ -604,7 +611,7 @@ class BOOSTClient:
         # Add TRU ID if not already present
         if tru_id not in org_data['traceableUnitIds']:
             org_data['traceableUnitIds'].append(tru_id)
-            org_data['lastUpdated'] = datetime.utcnow()
+            org_data['lastUpdated'] = datetime.now(timezone.utc)
             
             # Recreate the model with updated data
             OrganizationModel = self.schema_loader.get_model('organization')
@@ -637,7 +644,7 @@ class BOOSTClient:
         # Add equipment ID if not already present
         if equipment_id not in org_data['equipmentIds']:
             org_data['equipmentIds'].append(equipment_id)
-            org_data['lastUpdated'] = datetime.utcnow()
+            org_data['lastUpdated'] = datetime.now(timezone.utc)
             
             # Recreate the model with updated data
             OrganizationModel = self.schema_loader.get_model('organization')
@@ -670,7 +677,7 @@ class BOOSTClient:
         transaction_data = transaction.model_dump(by_alias=True, exclude_none=True)
         
         transaction_data['reconciliationStatus'] = status
-        transaction_data['lastUpdated'] = timestamp or datetime.utcnow()
+        transaction_data['lastUpdated'] = timestamp or datetime.now(timezone.utc)
         
         # Recreate the model with updated data
         TransactionModel = self.schema_loader.get_model('transaction')
@@ -718,7 +725,7 @@ class BOOSTClient:
         # Sort timestamps chronologically and update
         timestamp_list.sort()
         transaction_data['manipulationTimestamps'] = timestamp_list
-        transaction_data['lastUpdated'] = datetime.utcnow()
+        transaction_data['lastUpdated'] = datetime.now(timezone.utc)
         
         # Recreate the model with updated data
         TransactionModel = self.schema_loader.get_model('transaction')

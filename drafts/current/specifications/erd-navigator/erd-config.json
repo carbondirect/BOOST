@@ -808,7 +808,20 @@
     "Claim": ["ClaimId", "claimId"],
     "ProductGroup": ["ProductGroupId", "productGroupId"],
     "Equipment": ["equipmentId"],
-    "MoistureContent": ["moistureContentId"]
+    "MoistureContent": ["moistureContentId"],
+    "Audit": ["auditId"],
+    "Certificate": ["certificateId"],
+    "BiometricIdentifier": ["biometricId"],
+    "DataReconciliation": ["dataReconciliationId"],
+    "EnergyCarbonData": ["energyCarbonDataId"],
+    "LcfsReporting": ["lcfsReportingId"],
+    "LocationHistory": ["locationHistoryId"],
+    "MassBalanceAccount": ["massBalanceAccountId"],
+    "ProcessingHistory": ["processingHistoryId"],
+    "SpeciesComponent": ["speciesComponentId"],
+    "SupplyBase": ["supplyBaseId"],
+    "SupplyBaseReport": ["supplyBaseReportId"],
+    "VerificationStatement": ["verificationStatementId"]
   },
   "primary_key_mappings": {
     "LcfsReporting": "reportingId",
@@ -825,6 +838,24 @@
     "EnergyCarbonData": "energyCarbonDataId",
     "BiometricIdentifier": "biometricId",
     "Equipment": "equipmentId",
-    "MoistureContent": "moistureContentId"
+    "MoistureContent": "moistureContentId",
+    "Audit": "auditId",
+    "Certificate": "certificateId", 
+    "CertificationScheme": "certificationSchemeId",
+    "Claim": "claimId",
+    "Customer": "customerId",
+    "GeographicData": "geographicDataId",
+    "LocationHistory": "locationHistoryId",
+    "Material": "materialId",
+    "Operator": "operatorId",
+    "Organization": "organizationId",
+    "ProcessingHistory": "processingHistoryId",
+    "ProductGroup": "productGroupId",
+    "Supplier": "supplierId",
+    "SupplyBase": "supplyBaseId",
+    "TraceableUnit": "traceableUnitId",
+    "TrackingPoint": "trackingPointId",
+    "Transaction": "transactionId",
+    "TransactionBatch": "transactionBatchId"
   }
 }

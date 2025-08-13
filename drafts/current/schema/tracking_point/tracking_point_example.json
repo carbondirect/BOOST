@@ -12,7 +12,7 @@
   },
   "@type": "TrackingPoint",
   "@id": "https://github.com/carbondirect/BOOST/schemas/tracking-point/TP-MILL-ENTRANCE-Pacific-001",
-  "trackingPointId": "TP-MILL-ENTRANCE-Pacific-001",
+  "trackingPointId": "TP-MILL-001",
   "pointType": "mill_entrance",
   "geographicDataId": "GEO-MILL-ENTRANCE-Pacific-001",
   "equipmentUsed": "RFID_reader, scale_system, optical_scanner, GPS",

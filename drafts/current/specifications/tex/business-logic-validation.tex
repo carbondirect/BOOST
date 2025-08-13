@@ -1,0 +1,316 @@
+% Business Logic Validation Rules
+% Generated from business_logic_validation.json
+
+\section{Business Logic Validation Framework}
+\label{sec:business-logic-validation}
+
+The BOOST standard includes comprehensive business logic validation rules that ensure data integrity, regulatory compliance, and operational feasibility. These rules are implemented as automated validation constraints that supplement the basic JSON schema field validation.
+
+\subsection{Overview}
+\label{sec:business-logic-overview}
+
+Business logic validation operates in eight key areas, executed in the following order:
+\begin{enumerate}
+    \item \textbf{Volume \& Mass Conservation} - Physical conservation laws
+    \item \textbf{Temporal Logic Rules} - Time-based constraints
+    \item \textbf{Geographic Logic Rules} - Location-based validation
+    \item \textbf{Species Composition Rules} - Species-specific logic
+    \item \textbf{Certification Logic Rules} - Certificate validation
+    \item \textbf{Regulatory Compliance Rules} - Program-specific requirements
+    \item \textbf{Economic Logic Rules} - Market-based validation
+    \item \textbf{Quality Assurance Rules} - Quality control validation
+\end{enumerate}
+
+\subsection{Volume and Mass Conservation}
+\label{sec:volume-mass-conservation}
+
+\subsubsection{Material Processing Conservation}
+
+All material processing operations must comply with fundamental physical conservation laws:
+
+\begin{itemize}
+    \item \textbf{Volume Conservation}: \texttt{input\_volume >= output\_volume + volume\_loss}
+    \item \textbf{Mass Conservation}: \texttt{input\_mass >= output\_mass}
+    \item \textbf{Density Consistency}: Calculated density must fall within realistic species ranges
+\end{itemize}
+
+\textbf{Processing Loss Rates}
+
+Typical loss rates for common processing operations:
+\begin{itemize}
+    \item \textbf{Debarking}: 5-15\% mass loss
+    \item \textbf{Chipping}: 2-8\% mass loss
+    \item \textbf{Drying}: 15-40\% mass loss (moisture removal)
+\end{itemize}
+
+\textbf{Exception}: Chipping operations may show apparent volume \emph{increase} (up to 30\%) due to air gaps between chips.
+
+\textbf{Validation Example}:
+\begin{verbatim}
+Input: 100 m³ logs (45% moisture)
+Process: Chipping and drying
+Output: 85 m³ chips (12% moisture)
+Validation: 
+  - Volume: 100 >= 85 + 15 (loss) ✓
+  - Mass: 45,000 kg >= 38,250 kg ✓
+  - Moisture loss: 33% reduction ✓
+\end{verbatim}
+
+\subsubsection{Transaction Quantity Validation}
+
+All transactions must comply with availability constraints:
+
+\begin{itemize}
+    \item \textbf{Availability Check}: \texttt{transaction\_quantity <= available\_quantity}
+    \item \textbf{Cumulative Validation}: Total sold quantity cannot exceed TRU volume
+    \item \textbf{Minimum Thresholds}: Transactions must meet economic viability minimums
+\end{itemize}
+
+\subsection{Temporal Logic Rules}
+\label{sec:temporal-logic}
+
+\subsubsection{Harvest Season Restrictions}
+
+Certain species and regions have mandatory harvest season restrictions:
+
+\begin{itemize}
+    \item \textbf{Northern Hemisphere Hardwoods}: October-March
+    \item \textbf{Northern Hemisphere Softwoods}: June-November  
+    \item \textbf{Wetlands}: Restricted March-June (breeding season)
+    \item \textbf{Fire Season Areas}: Restricted June-September
+\end{itemize}
+
+\textbf{Validation Example}:
+\begin{verbatim}
+Harvest Date: 2025-07-15
+Location: Northern California
+Species: Douglas Fir (softwood)
+Validation:
+  - Season check: July (within June-Nov) ✓
+  - Fire restriction: July (HIGH RISK) ⚠
+  - Result: Warning - fire season harvest
+\end{verbatim}
+
+\subsubsection{Processing Time Constraints}
+
+Materials must be processed within freshness windows:
+
+\begin{itemize}
+    \item \textbf{Green Wood}: Maximum 30 days from harvest
+    \item \textbf{Agricultural Residue}: Maximum 14 days from harvest
+    \item \textbf{Bark}: Maximum 60 days from harvest
+\end{itemize}
+
+\subsubsection{Chronological Order Requirements}
+
+All operations must follow logical temporal sequence:
+
+\begin{itemize}
+    \item \textbf{Processing After Harvest}: \texttt{processing\_date >= harvest\_date}
+    \item \textbf{Sales After Production}: \texttt{transaction\_date >= final\_processing\_date}
+\end{itemize}
+
+\subsection{Geographic Logic Rules}
+\label{sec:geographic-logic}
+
+\subsubsection{Transportation Economics}
+
+Transport distances must be economically viable based on material type:
+
+\begin{itemize}
+    \item \textbf{Logs}: Maximum 500 km
+    \item \textbf{Wood Chips}: Maximum 200 km  
+    \item \textbf{Pellets}: Maximum 1,000 km
+    \item \textbf{Pulp}: Maximum 300 km
+\end{itemize}
+
+\textbf{Validation Example}:
+\begin{verbatim}
+Material: Wood chips
+Origin: Forest site (45.5231, -122.6765)
+Destination: Processing facility (45.8159, -121.2305)
+Distance: 175 km
+Validation:
+  - Distance check: 175 < 200 km ✓
+  - Economic viability: PASS
+  - Carbon impact: 12.25 kg CO2e/m³
+\end{verbatim}
+
+\subsubsection{Jurisdictional Compliance}
+
+Operations must comply with local regulatory requirements:
+
+\begin{itemize}
+    \item \textbf{Public Land}: Government permits required
+    \item \textbf{Private Land}: Landowner consent required
+    \item \textbf{Indigenous Land}: Tribal approval required
+    \item \textbf{International Movement}: Customs documentation required
+\end{itemize}
+
+\subsection{Species Composition Rules}
+\label{sec:species-composition}
+
+\subsubsection{Mathematical Constraints}
+
+Species composition must satisfy mathematical requirements:
+
+\begin{itemize}
+    \item \textbf{Percentage Sum}: All species percentages must sum to exactly 100.0\%
+    \item \textbf{Individual Bounds}: Each species percentage must be 0-100\%
+    \item \textbf{Tolerance}: Calculations use 0.01\% tolerance for rounding
+\end{itemize}
+
+\subsubsection{Ecosystem Compatibility}
+
+Mixed species must come from compatible ecosystems:
+
+\begin{itemize}
+    \item \textbf{Temperate Forest}: Pine, oak, maple, birch
+    \item \textbf{Tropical Forest}: Mahogany, teak, eucalyptus
+    \item \textbf{Boreal Forest}: Spruce, fir, pine, birch
+    \item \textbf{Grassland}: Switchgrass, miscanthus, prairie grass
+\end{itemize}
+
+\subsubsection{Plant Part Validation}
+
+Plant parts must be anatomically appropriate for species:
+
+\begin{itemize}
+    \item \textbf{Coniferous Species}: Trunk, branches, twigs, bark, needles, cones
+    \item \textbf{Deciduous Species}: Trunk, branches, twigs, bark, leaves, seeds
+    \item \textbf{Grass Species}: Stalks, leaves, seeds, roots
+    \item \textbf{Agricultural Residue}: Stalks, straw, husks, hulls, chaff, stubble
+\end{itemize}
+
+\subsection{Certification Logic Rules}
+\label{sec:certification-logic}
+
+\subsubsection{Chain of Custody Requirements}
+
+All certification claims must maintain unbroken chain of custody:
+
+\begin{itemize}
+    \item \textbf{Certificate Validity}: \texttt{expiry\_date >= transaction\_date}
+    \item \textbf{Status Check}: Certificate status must be 'valid'
+    \item \textbf{Continuous Chain}: All parties must have valid certificates
+    \item \textbf{Scope Coverage}: Material must be within certificate scope
+\end{itemize}
+
+\subsubsection{Sustainability Claims}
+
+Sustainability claims require supporting certification:
+
+\begin{itemize}
+    \item \textbf{Sustainable Forestry}: FSC or PEFC certificate required
+    \item \textbf{Responsible Sourcing}: SBP or equivalent required
+    \item \textbf{Carbon Neutral}: Carbon accounting certificate required
+    \item \textbf{Biodiversity Friendly}: Biodiversity assessment required
+\end{itemize}
+
+\subsection{Regulatory Compliance Rules}
+\label{sec:regulatory-compliance}
+
+\subsubsection{LCFS Program Compliance}
+
+California LCFS program requirements:
+
+\begin{itemize}
+    \item \textbf{Pathway Certification}: Must use CARB-certified pathways
+    \item \textbf{Pathway Validity}: \texttt{pathway\_expiry\_date >= fuel\_production\_date}
+    \item \textbf{Feedstock Match}: Feedstock must match pathway specifications
+    \item \textbf{Credit Calculation}: \texttt{(benchmark\_CI - pathway\_CI) * fuel\_volume\_MJ * EER}
+\end{itemize}
+
+\subsubsection{EU RED Compliance}
+
+European Renewable Energy Directive requirements:
+
+\begin{itemize}
+    \item \textbf{GHG Savings}: Minimum 35\% GHG emissions savings required
+    \item \textbf{Land Use}: No high carbon stock land conversion
+    \item \textbf{Biodiversity}: No high biodiversity area impacts
+\end{itemize}
+
+\subsection{Economic Logic Rules}
+\label{sec:economic-logic}
+
+\subsubsection{Market Price Validation}
+
+Contract prices must be within reasonable market ranges (USD per cubic meter or tonne):
+
+\begin{itemize}
+    \item \textbf{Softwood Logs}: \$40-120
+    \item \textbf{Hardwood Logs}: \$60-200
+    \item \textbf{Wood Chips}: \$15-45
+    \item \textbf{Wood Pellets}: \$120-300
+\end{itemize}
+
+\subsubsection{Payment Terms}
+
+Payment terms must follow industry standards:
+
+\begin{itemize}
+    \item \textbf{Maximum Payment Period}: 90 days
+    \item \textbf{Maximum Advance Payment}: 50\% of contract value
+    \item \textbf{Maximum Retention}: 10\% of contract value
+\end{itemize}
+
+\subsection{Quality Assurance Rules}
+\label{sec:quality-assurance}
+
+\subsubsection{Moisture Content Limits}
+
+Moisture content must be within realistic limits by processing stage:
+
+\begin{itemize}
+    \item \textbf{Freshly Harvested}: 30-65\% by weight
+    \item \textbf{Air Dried}: 15-25\% by weight
+    \item \textbf{Kiln Dried}: 6-12\% by weight
+\end{itemize}
+
+\subsubsection{Contamination Limits}
+
+Contamination levels must not exceed acceptable limits (\% by weight):
+
+\begin{itemize}
+    \item \textbf{Soil}: Maximum 2.0\%
+    \item \textbf{Metal}: Maximum 0.1\%
+    \item \textbf{Plastic}: Maximum 0.05\%
+    \item \textbf{Other}: Maximum 1.0\%
+\end{itemize}
+
+\subsection{Implementation Requirements}
+\label{sec:implementation-requirements}
+
+\subsubsection{Error Severity Levels}
+
+Business logic validation uses four severity levels:
+
+\begin{itemize}
+    \item \textbf{Critical}: Blocks entity creation/update completely
+    \item \textbf{Error}: Requires correction before approval
+    \item \textbf{Warning}: Advisory, does not block processing
+    \item \textbf{Info}: Informational note for review
+\end{itemize}
+
+\subsubsection{Validation Execution}
+
+Implementations must execute validation rules in the prescribed order to ensure dependencies are properly resolved. All rules are mandatory unless explicitly marked as optional or advisory.
+
+\textbf{Normative Requirements}
+
+BOOST implementations MUST implement all business logic validation rules marked as "Critical" or "Error" severity. Implementations MAY implement "Warning" and "Info" level validations but are not required to do so.
+
+\subsubsection{Cross-Entity Validation}
+
+In addition to business logic rules, implementations must enforce cross-entity validation constraints including:
+
+\begin{itemize}
+    \item \textbf{Foreign Key Integrity}: All entity references must be valid
+    \item \textbf{Circular Reference Prevention}: No cycles in entity relationships
+    \item \textbf{Cardinality Constraints}: One-to-many and many-to-one relationships enforced
+    \item \textbf{Status Consistency}: Related entities must have consistent operational status
+    \item \textbf{Data Integrity}: Quantity conservation and temporal consistency across entities
+\end{itemize}
+
+For complete technical specifications of cross-entity validation rules, see the \texttt{cross\_entity\_validation.json} schema file in the BOOST schema repository.

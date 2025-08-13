@@ -16,20 +16,62 @@ The BOOST data model comprises 33 interconnected entities organized into 7 thema
     \item \reporting{Compliance \& Reporting} (6 entities)
 \end{itemize}
 
-% Static ERD diagrams will be inserted here
-% Note: Placeholder figure for List of Figures functionality
+% ERD Thumbnail with Interactive Link
 \begin{figure}[H]
     \centering
-    \fbox{\parbox{0.8\textwidth}{\centering
-        \vspace{2cm}
-        \textbf{BOOST Entity Relationship Diagram}\\[0.5cm]
-        \textit{Complete ERD showing all 33 interconnected entities}\\
-        \textit{across 7 thematic areas}\\[0.5cm]
-        \textcolor{gray}{Interactive version available at:\\
-        \texttt{boost-spec.html\#erd-navigator}}\\
-        \vspace{2cm}
-    }}
-    \caption{Complete BOOST Entity Relationship Diagram Overview}
+    \scalebox{0.85}{%
+        \begin{tabular}{|c|}
+        \hline
+        \rule{0pt}{15pt}%
+        \textbf{\Large BOOST Entity Relationship Diagram}\\
+        \rule{0pt}{10pt}%
+        \\
+        \hline
+        \rule{0pt}{20pt}%
+        \begin{minipage}{12cm}
+            \centering
+            % Visual ERD representation using text layout
+            \footnotesize
+            \textbf{\coretraceability{CORE TRACEABILITY}} (5 entities) \\[0.2cm]
+            TraceableUnit $\leftrightarrow$ MaterialProcessing $\leftrightarrow$ ProcessingHistory \\
+            $\updownarrow$ \hspace{2cm} $\updownarrow$ \\
+            LocationHistory \hspace{1cm} BiometricIdentifier \\[0.4cm]
+            
+            \textbf{\organizational{ORGANIZATIONAL FOUNDATION}} (6 entities) \\[0.2cm]
+            Organization $\leftrightarrow$ Certificate $\leftrightarrow$ CertificationBody \\
+            $\updownarrow$ \hspace{2cm} $\updownarrow$ \\
+            Audit \hspace{1cm} CertificationScheme \\[0.4cm]
+            
+            \textbf{\materialsupply{MATERIAL \& SUPPLY CHAIN}} (7 entities) \\[0.2cm]
+            Material $\leftrightarrow$ SpeciesComponent $\leftrightarrow$ Equipment \\
+            $\updownarrow$ \hspace{2cm} $\updownarrow$ \\
+            Supplier $\leftrightarrow$ SupplyBase $\leftrightarrow$ Customer \\[0.4cm]
+            
+            \textbf{\transaction{TRANSACTION MANAGEMENT}} (3 entities) \\[0.2cm]
+            Transaction $\leftrightarrow$ TransactionBatch $\leftrightarrow$ SalesDeliveryDocument \\[0.4cm]
+            
+            \textbf{\sustainability{MEASUREMENT \& VERIFICATION}} (4 entities) \\[0.2cm]
+            MeasurementRecord $\leftrightarrow$ Claim $\leftrightarrow$ VerificationStatement \\[0.4cm]
+            
+            \textbf{\geographic{GEOGRAPHIC \& TRACKING}} (2 entities) \\[0.2cm]
+            GeographicData $\leftrightarrow$ TrackingPoint \\[0.4cm]
+            
+            \textbf{\reporting{COMPLIANCE \& REPORTING}} (6 entities) \\[0.2cm]
+            DataReconciliation $\leftrightarrow$ EnergyCarbonData $\leftrightarrow$ LCFSPathway \\
+            $\updownarrow$ \hspace{2cm} $\updownarrow$ \\
+            LCFSReporting \hspace{1cm} MassBalanceAccount
+        \end{minipage} \\[0.2cm]
+        \hline
+        \rule{0pt}{15pt}%
+        \textcolor{w3cblue}{\textbf{🔗 Interactive ERD Navigator Available}} \\
+        \url{https://carbondirect.github.io/CA_biomass_CoC_data_standard/erd-navigator/} \\
+        \textit{Click to explore relationships, field details, and validation rules} \\
+        \rule{0pt}{10pt}%
+        \\
+        \hline
+        \end{tabular}%
+    }
+    \caption{BOOST Entity Relationship Diagram Overview with Interactive Navigator Access}
     \label{fig:boost-erd-complete}
 \end{figure}
 

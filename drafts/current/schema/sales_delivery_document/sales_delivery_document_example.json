@@ -1,0 +1,23 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "SalesDeliveryDocument",
+  "@id": "https://boost.example.com/document/SDD-2025-0812-001",
+  "documentId": "SDD-2025-0812-001",
+  "transactionId": "TXN-2025-PACIFIC-001",
+  "documentType": "invoice",
+  "issueDate": "2025-08-12",
+  "deliveryDate": "2025-08-10",
+  "documentNumber": "INV-2025-0812-001",
+  "totalQuantity": 85.5,
+  "quantityUnit": "cubic_meters",
+  "totalValue": 4275.00,
+  "currency": "USD",
+  "deliveryAddress": "1500 Industrial Drive, Seattle, WA 98101",
+  "transportMode": "truck",
+  "certificationClaims": ["FSC-certified", "Chain-of-custody maintained"],
+  "lastUpdated": "2025-08-12T10:30:00Z"
+}

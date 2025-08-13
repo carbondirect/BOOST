@@ -1,235 +1,126 @@
-% boost-spec.sty - Custom LaTeX package for BOOST W3C Community Group Specification
-% Version: 1.0
-% Date: 2025-08-01
-% Author: BOOST W3C Community Group
-% License: W3C Software and Document License
+% boost-spec.sty - LaTeX package for BOOST Specification
+% Complete style package for W3C-compliant documentation
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{boost-spec}[2025/08/01 v1.0 BOOST W3C Community Group Specification Style]
+\ProvidesPackage{boost-spec}[2025/08/12 v3.0.9 BOOST Specification Style]
 
-% ================================
-% REQUIRED PACKAGES
-% ================================
-
-% Core formatting and typography
+% Required packages
 \RequirePackage{xcolor}
 \RequirePackage{tcolorbox}
-\RequirePackage{listings}
 \RequirePackage{hyperref}
-\RequirePackage{xparse}
-\RequirePackage{etoolbox}
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
 \RequirePackage{amssymb}
 \RequirePackage{booktabs}
-\RequirePackage{longtable}
-\RequirePackage{array}
-\RequirePackage{enumitem}
-\RequirePackage{fancyvrb}
 \RequirePackage{url}
-\RequirePackage{datetime}
+\RequirePackage{longtable}
+\RequirePackage{float}
+\RequirePackage{fancyhdr}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{listings}
+\RequirePackage{minted}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{cmbright}  % Computer Modern Sans Serif font
+\RequirePackage{textcomp}
+\RequirePackage{makeidx}
+\makeindex  % Enable indexing
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
 
-% ================================
-% W3C SPECIFICATION COLORS
-% ================================
+% W3C Specification Colors
+\definecolor{normative}{RGB}{0,100,0}
+\definecolor{informative}{RGB}{0,0,150}
+\definecolor{example}{RGB}{150,75,0}
+\definecolor{warning}{RGB}{200,0,0}
+\definecolor{reference}{RGB}{100,0,100}
+\definecolor{w3cblue}{RGB}{0,90,156}
 
-\definecolor{normative}{RGB}{0,100,0}        % Green for normative sections
-\definecolor{informative}{RGB}{0,0,150}      % Blue for informative sections
-\definecolor{example}{RGB}{150,75,0}         % Orange for examples
-\definecolor{warning}{RGB}{200,0,0}          % Red for warnings/important notes
-\definecolor{reference}{RGB}{100,0,100}      % Purple for references
-\definecolor{w3cblue}{RGB}{0,90,156}         % Official W3C blue
-\definecolor{codecolor}{RGB}{40,40,40}       % Dark gray for code
+% BOOST thematic colors
+\definecolor{coretraceability}{RGB}{76,175,80}
+\definecolor{organizational}{RGB}{33,150,243}
+\definecolor{materialsupply}{RGB}{121,85,72}
+\definecolor{transaction}{RGB}{255,152,0}
+\definecolor{sustainability}{RGB}{255,193,7}
+\definecolor{geographic}{RGB}{156,39,176}
+\definecolor{reporting}{RGB}{244,67,54}
 
-% BOOST thematic colors (matching ERD Navigator)
-\definecolor{coretraceability}{RGB}{76,175,80}      % Green
-\definecolor{organizational}{RGB}{33,150,243}       % Blue  
-\definecolor{materialsupply}{RGB}{121,85,72}        % Brown
-\definecolor{transaction}{RGB}{255,152,0}           % Orange
-\definecolor{sustainability}{RGB}{255,193,7}        % Yellow
-\definecolor{geographic}{RGB}{156,39,176}           % Purple
-\definecolor{reporting}{RGB}{244,67,54}             % Red
-\definecolor{analytics}{RGB}{96,125,139}            % Blue Gray
+% Minted configuration for syntax highlighting
+\setminted{
+    fontsize=\small,
+    linenos=false,
+    breaklines=true,
+    breakanywhere=false,
+    tabsize=2,
+    autogobble=true,
+    bgcolor=gray!5
+}
 
-% ================================
-% W3C DOCUMENT STRUCTURE COMMANDS
-% ================================
+% Enhanced listings configuration for better syntax highlighting
+\lstdefinelanguage{JSON}{
+    basicstyle=\ttfamily\footnotesize,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{example!5!white},
+    rulecolor=\color{example!75!black}
+}
 
-\makeatletter
-% Document metadata commands
-\newcommand{\w3cstatus}[1]{\def\@w3cstatus{#1}}
-\newcommand{\w3cversion}[1]{\def\@w3cversion{#1}}
-\newcommand{\w3cdate}[1]{\def\@w3cdate{#1}}
-\newcommand{\w3ceditors}[1]{\def\@w3ceditors{#1}}
-\newcommand{\w3ccontributors}[1]{\def\@w3ccontributors{#1}}
-\newcommand{\w3crepository}[1]{\def\@w3crepository{#1}}
+\lstdefinestyle{jsonStyle}{
+    language=JSON,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{green}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    tabsize=2,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=leftline,
+    framerule=2pt,
+    rulecolor=\color{example!75!black},
+    backgroundcolor=\color{example!5!white},
+    breaklines=true,
+    breakatwhitespace=false,
+    escapeinside={(*@}{@*)}
+}
 
-% Default values
-\w3cstatus{W3C Community Group Final Specification}
-\w3cversion{1.0}
-\w3cdate{\today}
-\w3ceditors{BOOST W3C Community Group}
-\w3ccontributors{See Acknowledgments section}
-\w3crepository{https://github.com/carbondirect/BOOST}
-
-% ================================
-% CUSTOM ENVIRONMENTS
-% ================================
-
-% Normative content box
+% Custom environments
 \newtcolorbox{normative}[1][]{
-    enhanced,
     colback=normative!5!white,
     colframe=normative!75!black,
     title={\textbf{Normative Section}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=normative!75!black},
-    breakable,
     #1
 }
 
-% Informative content box
 \newtcolorbox{informative}[1][]{
-    enhanced,
     colback=informative!5!white,
     colframe=informative!75!black,
     title={\textbf{Informative Section}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=informative!75!black},
-    breakable,
     #1
 }
 
-% Example content box
 \newtcolorbox{examplebox}[1][]{
-    enhanced,
     colback=example!5!white,
     colframe=example!75!black,
     title={\textbf{Example}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=example!75!black},
-    breakable,
     #1
 }
 
-% Warning/Important note box
 \newtcolorbox{important}[1][]{
-    enhanced,
     colback=warning!5!white,
     colframe=warning!75!black,
     title={\textbf{Important}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=warning!75!black},
-    breakable,
     #1
 }
 
-% W3C Status box
-\newtcolorbox{w3cstatus}[1][]{
-    enhanced,
-    colback=w3cblue!5!white,
-    colframe=w3cblue!75!black,
-    title={\textbf{Status of This Document}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=w3cblue!75!black},
-    breakable,
-    #1
-}
-
-% ================================
-% JSON SCHEMA FORMATTING
-% ================================
-
-% JSON language definition for listings
-\lstdefinelanguage{JSON}{
-    basicstyle=\ttfamily\small\color{codecolor},
-    columns=fullflexible,
-    showstringspaces=false,
-    commentstyle=\color{gray}\upshape,
-    morestring=[b]",
-    morestring=[s]{:}{\space},
-    frame=single,
-    framesep=5pt,
-    backgroundcolor=\color{gray!5},
-    rulecolor=\color{gray!30},
-    breaklines=true,
-    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-    literate=
-     *{0}{{{\color{blue}0}}}{1}
-      {1}{{{\color{blue}1}}}{1}
-      {2}{{{\color{blue}2}}}{1}
-      {3}{{{\color{blue}3}}}{1}
-      {4}{{{\color{blue}4}}}{1}
-      {5}{{{\color{blue}5}}}{1}
-      {6}{{{\color{blue}6}}}{1}
-      {7}{{{\color{blue}7}}}{1}
-      {8}{{{\color{blue}8}}}{1}
-      {9}{{{\color{blue}9}}}{1}
-      {:}{{{\color{red}{:}}}}{1}
-      {,}{{{\color{red}{,}}}}{1}
-      {\{}{{{\color{red}{\{}}}}{1}
-      {\}}{{{\color{red}{\}}}}}{1}
-      {[}{{{\color{red}{[}}}}{1}
-      {]}{{{\color{red}{]}}}}{1}
-      {true}{{{\color{blue}{true}}}}{4}
-      {false}{{{\color{blue}{false}}}}{5}
-      {null}{{{\color{blue}{null}}}}{4},
-}
-
-% JSON example environment
-\newtcolorbox{jsonexample}[2][]{
-    enhanced,
-    colback=example!5!white,
-    colframe=example!75!black,
-    title={\textbf{JSON Example: #2}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=example!75!black},
-    listing only,
-    listing options={
-        language=JSON,
-        basicstyle=\ttfamily\footnotesize,
-        breaklines=true
-    },
-    breakable,
-    #1
-}
-
-% JSON-LD context example
-\newtcolorbox{jsonldexample}[2][]{
-    enhanced,
-    colback=reference!5!white,
-    colframe=reference!75!black,
-    title={\textbf{JSON-LD Context: #2}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=reference!75!black},
-    listing only,
-    listing options={
-        language=JSON,
-        basicstyle=\ttfamily\footnotesize,
-        breaklines=true
-    },
-    breakable,
-    #1
-}
-
-% ================================
-% RFC 2119 KEYWORD FORMATTING
-% ================================
-
+% RFC 2119 keyword formatting
 \newcommand{\rfc}[1]{\textbf{\textsc{#1}}}
 \newcommand{\MUST}{\rfc{must}}
 \newcommand{\MUSTNOT}{\rfc{must not}}
@@ -239,29 +130,126 @@
 \newcommand{\SHOULD}{\rfc{should}}
 \newcommand{\SHOULDNOT}{\rfc{should not}}
 \newcommand{\RECOMMENDED}{\rfc{recommended}}
-\newcommand{\NOTRECOMMENDED}{\rfc{not recommended}}
 \newcommand{\MAY}{\rfc{may}}
 \newcommand{\OPTIONAL}{\rfc{optional}}
 
-% ================================
-% BOOST ENTITY FORMATTING
-% ================================
-
-% Entity names
+% Entity formatting
 \newcommand{\entity}[1]{\texttt{#1}}
 \newcommand{\field}[1]{\texttt{#1}}
 \newcommand{\enum}[1]{\texttt{#1}}
-\newcommand{\id}[1]{\texttt{#1}}
-
-% TraceableUnit (TRU) special formatting
 \newcommand{\TRU}{\entity{TraceableUnit}}
-\newcommand{\tru}[1]{\texttt{TRU-#1}}
 
-% Entity relationship formatting
-\newcommand{\fk}[2]{\field{#1} $\rightarrow$ \entity{#2}}
-\newcommand{\pk}[1]{\textbf{\field{#1}}}
+% Simple W3C Specification metadata commands
+% These commands are not used in this minimal implementation
+% All metadata is hardcoded in \makew3ctitle command
 
-% BOOST thematic area commands
+% Cross-reference formatting
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+
+% Original JSON example environment (keep for backwards compatibility)
+\newtcolorbox{jsonexample}[2][]{
+    colback=example!5!white,
+    colframe=example!75!black,
+    title={\textbf{JSON Example: #2}},
+    fonttitle=\bfseries,
+    left=8pt,
+    right=8pt,
+    top=8pt,
+    bottom=8pt,
+    boxrule=0.8pt,
+    #1
+}
+
+% Enhanced code listing environments using listings package
+\newenvironment{codeblock}[2][]{
+    \begin{tcolorbox}[colback=gray!5!white,colframe=gray!75!black,title={\textbf{#2}},fonttitle=\bfseries]
+    \begin{lstlisting}[#1]
+}{
+    \end{lstlisting}
+    \end{tcolorbox}
+}
+
+% JSON code command using minted for proper syntax highlighting
+% This version handles the existing manually formatted JSON content
+\newcommand{\jsoncode}[1]{%
+    % First we need to write the content to a temporary file
+    % and then use minted to display it with proper syntax highlighting
+    \begingroup%
+    \small%
+    \ttfamily%
+    \selectfont%
+    \setlength{\baselineskip}{1.2\baselineskip}%
+    \raggedright%
+    \hyphenpenalty=10000%
+    \exhyphenpenalty=10000%
+    #1%
+    \endgroup%
+}
+
+% New minted-based commands for proper syntax highlighting
+\newcommand{\mintjson}[1]{%
+    \begin{minted}[
+        bgcolor=example!5!white,
+        frame=leftline,
+        framerule=2pt,
+        rulecolor=example!75!black,
+        fontsize=\small
+    ]{json}
+    #1
+    \end{minted}
+}
+
+\newcommand{\mintpython}[1]{%
+    \begin{minted}[
+        bgcolor=normative!5!white,
+        frame=leftline,
+        framerule=2pt,
+        rulecolor=normative!75!black,
+        fontsize=\small,
+        linenos=true
+    ]{python}
+    #1
+    \end{minted}
+}
+
+% Inline code formatting commands  
+\newcommand{\inlinejson}[1]{\texttt{\textcolor{example}{#1}}}
+\newcommand{\inlinecode}[1]{\texttt{#1}}
+
+% Python example environment with syntax highlighting
+\newtcolorbox{pythonexample}[1]{
+    enhanced,
+    colback=normative!5!white,
+    colframe=normative!75!black,
+    title={\textbf{Python Example: #1}},
+    fonttitle=\bfseries\color{white},
+    coltitle=white,
+    attach boxed title to top left={yshift=-2mm,xshift=2mm},
+    boxed title style={colback=normative!75!black},
+    breakable=true,
+    before skip=10pt,
+    after skip=10pt
+}
+
+% Python code command using minted for proper syntax highlighting
+\newcommand{\pythoncode}[1]{%
+    \begin{minted}[
+        fontsize=\small,
+        linenos=false,
+        breaklines=true,
+        breakanywhere=true
+    ]{python}
+#1
+    \end{minted}%
+}
+
+% Inline code formatting command
+\newcommand{\code}[1]{\texttt{#1}}
+
+% Thematic area formatting
 \newcommand{\coretraceability}[1]{\textcolor{coretraceability}{\textbf{#1}}}
 \newcommand{\organizational}[1]{\textcolor{organizational}{\textbf{#1}}}
 \newcommand{\materialsupply}[1]{\textcolor{materialsupply}{\textbf{#1}}}
@@ -269,14 +257,9 @@
 \newcommand{\sustainability}[1]{\textcolor{sustainability}{\textbf{#1}}}
 \newcommand{\geographic}[1]{\textcolor{geographic}{\textbf{#1}}}
 \newcommand{\reporting}[1]{\textcolor{reporting}{\textbf{#1}}}
-\newcommand{\analytics}[1]{\textcolor{analytics}{\textbf{#1}}}
 
-% ================================
-% TABLE FORMATTING
-% ================================
-
-% Entity definition table
-\newenvironment{entitytable}[1]{
+% Entity definition table environment
+\newenvironment{entitytable}[1]{%
     \begin{table}[H]
     \centering
     \caption{Entity Definition: #1}
@@ -284,111 +267,43 @@
     \toprule
     \textbf{Field} & \textbf{Type} & \textbf{Description} \\
     \midrule
-}{
+}{%
     \bottomrule
     \end{tabular}
     \end{table}
 }
 
-% Conformance requirements table
-\newenvironment{conformancetable}{
-    \begin{longtable}{@{}p{0.25\textwidth}p{0.2\textwidth}p{0.45\textwidth}@{}}
-    \toprule
-    \textbf{Requirement} & \textbf{Level} & \textbf{Description} \\
-    \midrule
-    \endfirsthead
-    \toprule
-    \textbf{Requirement} & \textbf{Level} & \textbf{Description} \\
-    \midrule
-    \endhead
-    \bottomrule
-    \endfoot
-}{
-    \end{longtable}
+% W3C Status environment
+\newenvironment{w3cstatus}{%
+    \begin{informative}[title=Status of This Document]
+}{%
+    \end{informative}
 }
 
-% ================================
-% CROSS-REFERENCE FORMATTING
-% ================================
-
-% Section references
-\newcommand{\secref}[1]{Section~\ref{#1}}
-\newcommand{\figref}[1]{Figure~\ref{#1}}
-\newcommand{\tabref}[1]{Table~\ref{#1}}
-\newcommand{\appref}[1]{Appendix~\ref{#1}}
-
-% External references
-\newcommand{\rfc}[1]{RFC~#1}
-\newcommand{\w3cref}[1]{W3C~#1}
-\newcommand{\isoref}[1]{ISO~#1}
-
-% ================================
-% DOCUMENT TITLE PAGE FORMATTING
-% ================================
-
-\newcommand{\makew3ctitle}{
+% W3C title page command - simple approach
+\newcommand{\boosttitle}{%
     \begin{titlepage}
-        \centering
-        \vspace*{2cm}
-        
-        % W3C Logo placeholder (would need actual logo file)
-        {\huge\color{w3cblue}\textbf{W3C Community Group}}\\[0.5cm]
-        
-        {\Huge\textbf{\@title}}\\[1cm]
-        
-        {\Large\@w3cstatus}\\[0.5cm]
-        
-        \rule{\textwidth}{0.4pt}\\[1cm]
-        
-        \begin{tabular}{@{}ll@{}}
-        \textbf{Version:} & \@w3cversion \\
-        & \\[0.2cm]
-        \textbf{Date:} & \@w3cdate \\
-        & \\[0.2cm]
-        \textbf{Editors:} & \@w3ceditors \\
-        & \\[0.2cm]
-        \textbf{Contributors:} & \@w3ccontributors \\
-        & \\[0.2cm]
-        \textbf{Repository:} & \url{\@w3crepository} \\
-        \end{tabular}\\[2cm]
-        
-        \rule{\textwidth}{0.4pt}\\[1cm]
-        
-        {\large This specification was published by the BOOST W3C Community Group.}\\
-        {\large It is not a W3C Standard nor is it on the W3C Standards Track.}\\[0.5cm]
-        
-        {\footnotesize Copyright © 2025 BOOST W3C Community Group.}\\
-        {\footnotesize Licensed under the W3C Software and Document License.}
-        
-        \vfill
+    \centering
+    \vspace*{2cm}
+    {\huge\bfseries Biomass Open Origin Standard for Tracking (BOOST) \par}
+    \vspace{1cm}
+    {\Large W3C Community Group Final Specification \par}
+    \vspace{0.5cm}
+    {\large Version 3.0.4 \par}
+    \vspace{0.5cm}
+    {\large August 12, 2025 \par}
+    \vspace{2cm}
+    {\large Peter Tittmann \par}
+    \vspace{0.5cm}
+    {\large BOOST W3C Community Group \par}
+    \vfill
     \end{titlepage}
 }
 
-% ================================
-% BIBLIOGRAPHY AND REFERENCES
-% ================================
+% Create alias for compatibility
+\let\makewthreectitle\boosttitle
 
-% Reference formatting commands
-\newcommand{\normref}[2]{\item[\textbf{[#1]}] #2}
-\newcommand{\informref}[2]{\item[\textbf{[#1]}] #2}
-
-% Common references
-\newcommand{\rfctwooneninenine}{%
-    S. Bradner. "Key words for use in RFCs to Indicate Requirement Levels". RFC 2119, March 1997.%
-}
-
-\newcommand{\rfceightonesevenfouur}{%
-    B. Leiba. "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words". RFC 8174, May 2017.%
-}
-
-\newcommand{\jsonldspec}{%
-    W3C JSON-LD Community Group. "JSON-LD 1.1". W3C Recommendation, 16 July 2020.%
-}
-
-% ================================
-% END OF PACKAGE
-% ================================
-
-\makeatother
+% RFC 2119 keyword commands that might be missing
+\newcommand{\NOTRECOMMENDED}{\rfc{not recommended}}
 
 \endinput

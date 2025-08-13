@@ -16,7 +16,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
+**🗂️ [View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
 
 % Transaction Entity Table
 % Auto-generated from JSON schema
@@ -25,21 +25,21 @@ This entity references the following entities:
 \textbf{\field{CustomerId}} & string (pattern) & Customer organization (buyer) - uses EntityNameId convention referencing Cust... \\
 \textbf{\field{OrganizationId}} & string (pattern) & Primary organization involved in transaction (seller/supplier) \\
 \textbf{\field{contractCurrency}} & enum(9 values) & Currency code for contract value \\
-\textbf{\field{contractValue}} & number (\geq 0, \leq 999999999.99) & Total monetary value of the transaction \\
+\textbf{\field{contractValue}} & number (≥0, ≤999999999.99) & Total monetary value of the transaction \\
 \textbf{\field{transactionDate}} & string (date) & Date of business agreement \\
 \textbf{\field{transactionId}} & string (pattern) & Unique identifier for the business transaction \\
 \textbf{\field{transactionStatus}} & enum(6 values) & Current status of business transaction \\
 \field{BrokerOrganizationId} & ['string', 'null'] & Optional intermediary broker organization - uses EntityNameId convention refe... \\
-\field{GeographicDataId} & string & Primary transaction location - uses EntityNameId convention referencing Geogr... \\
+\field{GeographicDataId} & string (pattern) & Primary transaction location - uses EntityNameId convention referencing Geogr... \\
 \field{LcfsPathwayId} & string (pattern) & CARB-certified pathway identifier for LCFS compliance - uses EntityNameId con... \\
-\field{SalesDeliveryDocumentId} & string & Foreign key to sales/delivery documentation - uses EntityNameId convention re... \\
+\field{SalesDeliveryDocumentId} & string (pattern) & Foreign key to sales/delivery documentation - uses EntityNameId convention re... \\
 \field{complianceRequirements} & array<string> & Regulatory compliance requirements for transaction \\
 \field{contractSignedDate} & ['string', 'null'] & Date when contract was executed \\
 \field{contractTerms} & enum(8 values) & Incoterms delivery conditions \\
 \field{expectedDeliveryDate} & ['string', 'null'] & Expected completion/delivery date \\
 \field{financialTerms} & object (structured) & Detailed financial terms and conditions \\
 \field{fuelCategory} & enum(10 values) & Category of fuel for LCFS classification \\
-\field{fuelVolume} & number (\geq 0) & Volume of fuel in transaction for LCFS reporting \\
+\field{fuelVolume} & number (≥0) & Volume of fuel in transaction for LCFS reporting \\
 \field{fuelVolumeUnit} & enum(gallons, liters, GGE) & Unit of measurement for fuel volume \\
 \field{lastUpdated} & string (date-time) & Timestamp of last modification \\
 \field{manipulationTimestamps} & array<string> & Processing step timestamps \\
@@ -69,18 +69,18 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
+**🗂️ [View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
 
 % Transaction Batch Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Transaction Batch}
 \textbf{\field{batchStatus}} & enum(6 values) & Current status of the physical batch \\
-\textbf{\field{quantity}} & number (\geq 0) & Physical quantity of material in this batch \\
+\textbf{\field{quantity}} & number (≥0) & Physical quantity of material in this batch \\
 \textbf{\field{quantityUnit}} & enum(7 values) & Unit of measurement for quantity \\
 \textbf{\field{traceableUnitIds}} & array<string> & Array of TRU IDs included in this batch \\
-\textbf{\field{transactionBatchId}} & string & Unique identifier for the physical material batch \\
-\textbf{\field{transactionId}} & string & Foreign key to parent business transaction \\
+\textbf{\field{transactionBatchId}} & string (pattern) & Unique identifier for the physical material batch \\
+\textbf{\field{transactionId}} & string (pattern) & Foreign key to parent business transaction \\
 \field{additionalClaimIds} & array<string> & Array of secondary claim IDs \\
 \field{batchCreatedDate} & string (date-time) & When the batch was prepared/created \\
 \field{certificationValidation} & object (structured) & Certification and compliance validation data \\
@@ -115,7 +115,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-** [View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
+**🗂️ [View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
 
 % Sales Delivery Document Entity Table
 % Auto-generated from JSON schema
@@ -123,7 +123,7 @@ This entity references the following entities:
 \begin{entitytable}{Sales Delivery Document}
 \textbf{\field{buyerName}} & string & No description provided \\
 \textbf{\field{dateIssued}} & string (date) & No description provided \\
-\textbf{\field{documentId}} & string & No description provided \\
+\textbf{\field{documentId}} & string (pattern) & No description provided \\
 \textbf{\field{productDescription}} & string & No description provided \\
 \textbf{\field{quantity}} & number & No description provided \\
 \textbf{\field{sellerName}} & string & No description provided \\
