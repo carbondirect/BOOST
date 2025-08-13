@@ -9,27 +9,44 @@ echo "🚀 Building BOOST Specification with Direct Dictionary References..."
 
 # Extract version from environment or git tags (authoritative source)
 echo "🔧 Extracting version information..."
+echo "   Environment: RELEASE_VERSION=${RELEASE_VERSION:-'(not set)'}"
+echo "   Git available: $(command -v git >/dev/null 2>&1 && echo 'Yes' || echo 'No')"
+echo "   Git repo: $(git rev-parse --git-dir >/dev/null 2>&1 && echo 'Yes' || echo 'No')"
 
-# Check if RELEASE_VERSION is set (from CI/CD workflows)
+# Priority 1: Use RELEASE_VERSION from CI/CD workflows (pre-extracted outside Docker)
 if [ -n "$RELEASE_VERSION" ]; then
     VERSION="$RELEASE_VERSION"
-    echo "📋 Using release version from environment: $VERSION"
+    echo "✅ Using pre-extracted version from CI/CD: $VERSION"
+    echo "   Source: GitHub Actions workflow (extracted outside Docker container)"
+# Priority 2: Local development with git access
 elif git rev-parse --git-dir >/dev/null 2>&1; then
-    # Get the latest version tag, fallback to commit hash if no tags
-    VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
-    if [ -z "$VERSION" ]; then
-        # No tags found, use commit hash
-        SHORT_HASH=$(git rev-parse --short HEAD)
-        VERSION="v0.0.0-${SHORT_HASH}"
-        echo "⚠️  No git tags found, using commit hash: $VERSION"
+    # Try detailed version first (for development builds)
+    if git describe --tags >/dev/null 2>&1; then
+        VERSION=$(git describe --tags --always)
+        echo "📋 Using detailed git version: $VERSION"
+        echo "   Source: Local git repository (development mode)"
     else
-        echo "📋 Using git tag: $VERSION"
+        # Fallback to latest tag only
+        VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
+        if [ -z "$VERSION" ]; then
+            # No tags found, use commit hash
+            SHORT_HASH=$(git rev-parse --short HEAD)
+            VERSION="v0.0.0-${SHORT_HASH}"
+            echo "⚠️  No git tags found, using commit hash: $VERSION"
+            echo "   Source: Local git repository (no tags available)"
+        else
+            echo "📋 Using latest git tag: $VERSION"
+            echo "   Source: Local git repository (tagged version)"
+        fi
     fi
+# Priority 3: Fallback when neither CI environment nor git is available
 else
-    # Not a git repository, use fallback
     VERSION="v0.0.0-no-version-detected"
-    echo "⚠️  Not a git repository, using fallback: $VERSION"
+    echo "⚠️  No version detection possible, using clear fallback: $VERSION"
+    echo "   Source: Fallback (no CI environment or git repository)"
 fi
+
+echo "🎯 Final version selected: $VERSION"
 
 # Replace version placeholders in all source files
 echo "🔧 Replacing version placeholders with $VERSION..."

@@ -27,22 +27,73 @@ env:
   BOOST_DOC_VERSION: ${{ github.ref_name }}
 
 jobs:
-  build-documentation:
-    name: 📚 Build Documentation
+  extract-version:
+    name: 🏷️ Extract Version Info
     runs-on: ubuntu-latest
-    timeout-minutes: 15  # Prevent stuck builds - Docker should be ~2-3 min
-    container:
-      image: ghcr.io/carbondirect/boost/boost-builder:latest
-      options: --pull=missing
+    timeout-minutes: 5
     outputs:
-      version: ${{ steps.extract-version.outputs.version }}
-      build-timestamp: ${{ steps.extract-version.outputs.timestamp }}
-    
+      version: ${{ steps.version-info.outputs.version }}
+      build-timestamp: ${{ steps.version-info.outputs.timestamp }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Need full git history for version extraction
+      
+      - name: Extract version information
+        id: version-info
+        run: |
+          echo "🔍 Extracting version information (outside Docker container)..."
+          
+          # Determine version based on trigger type and git history
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+              # Tagged release - use exact tag
+              VERSION="${{ github.ref_name }}"
+              echo "📌 Using release tag: $VERSION"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "$BOOST_DOC_VERSION" ] && [ "$BOOST_DOC_VERSION" != "main" ]; then
+              # Manual dispatch with specific version
+              VERSION="$BOOST_DOC_VERSION"
+              echo "🎯 Using manual version: $VERSION"
+          else
+              # Development build - use git describe for detailed version
+              if git describe --tags >/dev/null 2>&1; then
+                  VERSION=$(git describe --tags --always)
+                  echo "🔧 Using development version: $VERSION"
+              else
+                  # Fallback for repos without tags
+                  SHORT_SHA=$(git rev-parse --short HEAD)
+                  VERSION="v0.0.0-${SHORT_SHA}"
+                  echo "⚠️ No tags found, using commit: $VERSION"
+              fi
+          fi
+          
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          # Store outputs
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          
+          echo "::notice title=Version Detected::$VERSION (detected outside Docker container)"
+
+  build-documentation:
+    name: 📚 Build Documentation  
+    runs-on: ubuntu-latest
+    timeout-minutes: 15  # Prevent stuck builds - Docker should be ~2-3 min
+    needs: extract-version
+    container:
+      image: ghcr.io/carbondirect/boost/boost-builder:latest
+      options: --pull=missing
+      env:
+        RELEASE_VERSION: ${{ needs.extract-version.outputs.version }}
+    outputs:
+      version: ${{ needs.extract-version.outputs.version }}
+      build-timestamp: ${{ needs.extract-version.outputs.timestamp }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Still need for schema validation scripts
 
       - name: Verify containerized environment
         run: |
@@ -52,33 +103,25 @@ jobs:
           echo "TeXLive available: $(which pdflatex && echo 'Yes' || echo 'No')"
           echo "Pandoc version: $(pandoc --version | head -1)"
 
-      - name: Extract version information
-        id: extract-version
+      - name: Confirm version information
+        id: confirm-version
         run: |
-          # Use GitHub context to determine version (works in any environment)  
-          if [ -n "$BOOST_DOC_VERSION" ] && [ "$BOOST_DOC_VERSION" != "main" ]; then
-              VERSION="$BOOST_DOC_VERSION"
-              echo "Using version from environment: $VERSION"
-          elif [ "${{ github.ref_type }}" = "tag" ]; then
-              VERSION="${{ github.ref_name }}"
-              echo "Using GitHub tag: $VERSION"
+          # Use pre-extracted version from previous job
+          VERSION="${{ needs.extract-version.outputs.version }}"
+          TIMESTAMP="${{ needs.extract-version.outputs.timestamp }}"
+          
+          echo "🏷️ Using pre-extracted version: $VERSION"
+          echo "⏰ Build timestamp: $TIMESTAMP"
+          echo "🐳 Container environment variable RELEASE_VERSION: $RELEASE_VERSION"
+          
+          # Verify the environment variable is set correctly
+          if [ "$RELEASE_VERSION" != "$VERSION" ]; then
+              echo "⚠️ Warning: Environment variable mismatch"
+              echo "  Pre-extracted: $VERSION"
+              echo "  Container env:  $RELEASE_VERSION"
           else
-              # For non-tag pushes, try to get the latest tag for this commit
-              # Use GitHub API or fallback to describe command
-              if command -v git >/dev/null 2>&1 && git rev-parse --git-dir >/dev/null 2>&1; then
-                  VERSION=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0-no-version-detected")
-                  echo "Using git tag: $VERSION"
-              else
-                  # Clear fallback when version cannot be detected
-                  VERSION="v0.0.0-no-version-detected"
-                  echo "⚠️ Version detection failed, using fallback: $VERSION"
-              fi
+              echo "✅ Version successfully passed to Docker container"
           fi
-          
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
           
           echo "::notice title=Build Version::Building BOOST Documentation $VERSION"
 
@@ -90,13 +133,12 @@ jobs:
 
       - name: Build HTML documentation
         working-directory: drafts/current/specifications
-        env:
-          RELEASE_VERSION: ${{ steps.extract-version.outputs.version }}
         run: |
           echo "🏗️ Building HTML documentation..."
           echo "📋 Branch: ${{ github.ref_name }}"
           echo "🎯 Build type: ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}"
           echo "🔧 Using version: $RELEASE_VERSION"
+          echo "📦 Version source: Pre-extracted outside Docker container"
           chmod +x build-spec.sh
           ./build-spec.sh
 
@@ -292,7 +334,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: boost-documentation-${{ steps.extract-version.outputs.version }}-${{ github.ref_name }}
+          name: boost-documentation-${{ needs.extract-version.outputs.version }}-${{ github.ref_name }}
           path: |
             drafts/current/specifications/boost-spec.html
             drafts/current/specifications/boost-spec-dev-*.pdf
@@ -305,7 +347,7 @@ jobs:
   deploy-github-pages:
     name: 🌐 Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    needs: build-documentation
+    needs: [extract-version, build-documentation]
     if: github.ref == 'refs/heads/main'
     
     # Grant write permissions for Pages deployment
@@ -325,7 +367,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: boost-documentation-${{ needs.build-documentation.outputs.version }}-${{ github.ref_name }}
+          name: boost-documentation-${{ needs.extract-version.outputs.version }}-${{ github.ref_name }}
           path: ./build-output
 
       - name: Prepare Pages deployment
@@ -461,9 +503,9 @@ jobs:
           </html>
           EOF
           
-          # Add version info
-          echo "${{ needs.build-documentation.outputs.version }}" > ./pages-content/VERSION
-          echo "${{ needs.build-documentation.outputs.build-timestamp }}" > ./pages-content/BUILD_TIME
+          # Add version info  
+          echo "${{ needs.extract-version.outputs.version }}" > ./pages-content/VERSION
+          echo "${{ needs.extract-version.outputs.build-timestamp }}" > ./pages-content/BUILD_TIME
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
