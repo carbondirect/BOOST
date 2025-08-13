@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "SupplyBase",
+  "@id": "https://boost.example.com/supply-base/SB-PACIFIC-NORTHWEST",
+  "supplyBaseId": "SB-PACIFIC-NORTHWEST",
+  "supplyBaseName": "Pacific Northwest Forest Supply Base",
+  "description": "Managed forest supply base covering Douglas Fir and Western Hemlock operations in the Pacific Northwest region with FSC certification",
+  "OrganizationId": "ORG-PACIFIC-FOREST-001",
+  "totalArea": 125000,
+  "areaUnit": "hectares",
+  "primarySpecies": ["Douglas Fir", "Western Hemlock", "Western Red Cedar"],
+  "sustainabilityCertification": "FSC-Forest-Management",
+  "averageAnnualHarvest": 8500.0,
+  "harvestUnit": "cubic_meters",
+  "supplyBaseType": "managed_forest",
+  "riskAssessmentDate": "2024-12-15",
+  "riskLevel": "low",
+  "biodiversityProtectionAreas": 12500,
+  "lastUpdated": "2025-06-01T14:20:00Z"
+}

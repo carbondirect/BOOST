@@ -15,7 +15,7 @@
   },
   "@type": "GeographicData",
   "@id": "https://github.com/carbondirect/BOOST/schemas/geographic-data/GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
-  "geographicDataId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "geographicDataId": "GEO-HARVEST-04",
   "geoJsonData": {
     "type": "Polygon",
     "coordinates": [[

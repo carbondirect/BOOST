@@ -180,6 +180,16 @@ validate_and_report() {
     else
         print_warning "⚠️  Schema/table count mismatch: $SCHEMA_COUNT schemas vs $TOTAL_ENTITIES tables"
     fi
+    
+    # Run HTML/PDF consistency validation
+    if [ -f "scripts/validate-consistency.py" ]; then
+        print_status "🔍 Running HTML/PDF consistency validation..."
+        if python3 scripts/validate-consistency.py >/dev/null 2>&1; then
+            print_success "✅ HTML and PDF documentation are consistent"
+        else
+            print_warning "⚠️  Found consistency issues between HTML and PDF (see build/consistency-report.json)"
+        fi
+    fi
 }
 
 # Clean up temporary files

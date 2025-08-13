@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "MassBalanceAccount",
+  "@id": "https://boost.example.com/mass-balance/MBA-PACIFIC-2025-07",
+  "massBalanceAccountId": "MBA-PACIFIC-2025-07",
+  "organizationId": "ORG-PACIFIC-FOREST-001",
+  "reportingPeriod": "2025-07",
+  "sustainableMaterialInput": 12500.0,
+  "nonSustainableMaterialInput": 3200.0,
+  "totalMaterialInput": 15700.0,
+  "sustainableOutputVolume": 11800.0,
+  "totalOutputVolume": 15100.0,
+  "sustainabilityPercentage": 78.1,
+  "inputUnit": "cubic_meters",
+  "outputUnit": "cubic_meters",
+  "massBalanceMethod": "proportional",
+  "certificationScheme": "SBP",
+  "auditTrail": ["TXN-2025-001", "TXN-2025-002", "TXN-2025-003"],
+  "lastUpdated": "2025-08-01T09:15:00Z"
+}

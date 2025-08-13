@@ -89,6 +89,17 @@ if [ -f "build/boost-spec.pdf" ]; then
     echo "   📖 Open: build/boost-spec.pdf"
     echo "   📁 Logs: build/latex-pass*.log"
     
+    # Run consistency validation if script exists
+    if [ -f "scripts/validate-consistency.py" ]; then
+        echo ""
+        echo "🔍 Running documentation consistency check..."
+        if python3 scripts/validate-consistency.py >/dev/null 2>&1; then
+            echo "   ✅ HTML/PDF consistency check passed"
+        else
+            echo "   ⚠️  Consistency check found issues (see build/consistency-report.json)"
+        fi
+    fi
+    
 else
     echo "❌ PDF generation failed - output file not found"
     exit 1

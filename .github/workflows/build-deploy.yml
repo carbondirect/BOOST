@@ -57,8 +57,11 @@ jobs:
         run: |
           cd drafts/current/specifications
           
-          # Extract version using same logic as build script
-          if git rev-parse --git-dir >/dev/null 2>&1; then
+          # Extract version from environment or git tags  
+          if [ -n "$BOOST_DOC_VERSION" ] && [ "$BOOST_DOC_VERSION" != "main" ]; then
+              VERSION="$BOOST_DOC_VERSION"
+              echo "Using version from environment: $VERSION"
+          elif git rev-parse --git-dir >/dev/null 2>&1; then
               VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
               if [ -z "$VERSION" ]; then
                   SHORT_HASH=$(git rev-parse --short HEAD)
@@ -87,10 +90,13 @@ jobs:
 
       - name: Build HTML documentation
         working-directory: drafts/current/specifications
+        env:
+          RELEASE_VERSION: ${{ steps.extract-version.outputs.version }}
         run: |
           echo "🏗️ Building HTML documentation..."
           echo "📋 Branch: ${{ github.ref_name }}"
           echo "🎯 Build type: ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}"
+          echo "🔧 Using version: $RELEASE_VERSION"
           chmod +x build-spec.sh
           ./build-spec.sh
 
@@ -226,8 +232,27 @@ jobs:
             echo "❌ PDF generation failed for $PDF_FILENAME"
           fi
 
+      - name: Run documentation consistency validation
+        if: always()
+        working-directory: drafts/current/specifications
+        run: |
+          echo "🔍 Running HTML/PDF consistency validation..."
+          
+          if [ -f "scripts/validate-consistency.py" ]; then
+            python3 scripts/validate-consistency.py --strict || {
+              echo "⚠️ Consistency validation found issues"
+              echo "📊 Check build/consistency-report.json for details"
+              # Don't fail the build, just warn
+              exit 0
+            }
+            echo "✅ HTML and PDF documentation are consistent"
+          else
+            echo "⚠️ Consistency validation script not found"
+          fi
+
       - name: Generate build report
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
           echo "📋 Generating build report..."
           cat > build-report.md << EOF
@@ -236,7 +261,7 @@ jobs:
           **Version:** ${{ steps.extract-version.outputs.version }}
           **Build Time:** ${{ steps.extract-version.outputs.timestamp }}
           **Commit:** ${GITHUB_SHA::8}
-          **Branch:** ${GITHUB_REF_NAME}
+          **Branch:** ${{ github.ref_name }}
           **Build Type:** ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}
           
           ## Build Statistics
@@ -312,38 +337,38 @@ jobs:
           find build-output -type f -name "*.html" -o -name "*.pdf" -o -name "*.md" | head -10
           
           # Copy main HTML documentation
-          if [ -f "build-output/drafts/current/specifications/boost-spec.html" ]; then
-            cp build-output/drafts/current/specifications/boost-spec.html ./pages-content/
+          if [ -f "build-output/specifications/boost-spec.html" ]; then
+            cp build-output/specifications/boost-spec.html ./pages-content/
             echo "✅ Copied boost-spec.html"
           else
-            echo "❌ boost-spec.html not found at build-output/drafts/current/specifications/boost-spec.html"
+            echo "❌ boost-spec.html not found at build-output/specifications/boost-spec.html"
             exit 1
           fi
           
           # Copy ERD navigator if it exists
-          if [ -d "build-output/drafts/current/specifications/erd-navigator" ]; then
-            cp -r build-output/drafts/current/specifications/erd-navigator ./pages-content/
+          if [ -d "build-output/specifications/erd-navigator" ]; then
+            cp -r build-output/specifications/erd-navigator ./pages-content/
             echo "✅ Copied ERD navigator"
           fi
           
           # Copy build report if it exists
-          if [ -f "build-output/drafts/current/specifications/build-report.md" ]; then
-            cp build-output/drafts/current/specifications/build-report.md ./pages-content/
+          if [ -f "build-output/specifications/build-report.md" ]; then
+            cp build-output/specifications/build-report.md ./pages-content/
             echo "✅ Copied build report"
           fi
           
           # Copy PDF if it exists
-          if [ -f "build-output/drafts/current/specifications/boost-spec.pdf" ]; then
-            cp build-output/drafts/current/specifications/boost-spec.pdf ./pages-content/
+          if [ -f "build-output/specifications/boost-spec.pdf" ]; then
+            cp build-output/specifications/boost-spec.pdf ./pages-content/
             echo "✅ Copied PDF documentation"
           fi
           
           # Copy schema files (for direct access to individual schema files)
-          if [ -d "build-output/drafts/current/schema" ]; then
-            cp -r build-output/drafts/current/schema ./pages-content/
+          if [ -d "build-output/schema" ]; then
+            cp -r build-output/schema ./pages-content/
             echo "✅ Copied schema directory (individual files accessible)"
           else
-            echo "❌ Schema directory not found at build-output/drafts/current/schema"
+            echo "❌ Schema directory not found at build-output/schema"
             # Debug: show what's actually in the build output
             echo "📋 Available paths in build-output:"
             find build-output -name "schema" -type d

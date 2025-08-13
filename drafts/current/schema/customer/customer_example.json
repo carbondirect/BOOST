@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "Customer",
+  "@id": "https://boost.example.com/customer/CUST-PACIFIC-MILLS",
+  "customerId": "CUST-PACIFIC-MILLS",
+  "customerName": "Pacific Mills Corporation",
+  "address": "1500 Industrial Drive, Seattle, WA 98101",
+  "GeographicDataId": "GEO-CUSTOMER-PACIFIC-001"
+}

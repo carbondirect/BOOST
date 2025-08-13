@@ -214,6 +214,353 @@
               }
             }
           }
+        },
+        "MeasurementRecord": {
+          "type": "object",
+          "properties": {
+            "measurementGeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Measurement location must be valid GeographicData"
+              }
+            },
+            "operatorId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Operator"},
+                "targetField": {"const": "operatorId"},
+                "required": false,
+                "description": "Operator performing measurement must be valid"
+              }
+            },
+            "trackingPointId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TrackingPoint"},
+                "targetField": {"const": "trackingPointId"},
+                "required": false,
+                "description": "Measurement location must be valid tracking point"
+              }
+            }
+          }
+        },
+        "ProcessingHistory": {
+          "type": "object",
+          "properties": {
+            "operatorId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Operator"},
+                "targetField": {"const": "operatorId"},
+                "required": false,
+                "description": "Operator performing processing must be valid"
+              }
+            },
+            "processingGeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Processing location must be valid GeographicData"
+              }
+            }
+          }
+        },
+        "LocationHistory": {
+          "type": "object",
+          "properties": {
+            "operatorId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Operator"},
+                "targetField": {"const": "operatorId"},
+                "required": false,
+                "description": "Operator recording location must be valid"
+              }
+            },
+            "currentGeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": true,
+                "description": "Current location must be valid GeographicData"
+              }
+            }
+          }
+        },
+        "TransactionBatch": {
+          "type": "object",
+          "properties": {
+            "transactionId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Transaction"},
+                "targetField": {"const": "transactionId"},
+                "required": true,
+                "description": "Transaction batch must reference valid transaction"
+              }
+            },
+            "claimId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Claim"},
+                "targetField": {"const": "claimId"},
+                "required": false,
+                "description": "Sustainability claim must be valid if specified"
+              }
+            }
+          }
+        },
+        "Audit": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Audited organization must be valid"
+              }
+            },
+            "cbId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "CertificationBody"},
+                "targetField": {"const": "certificationBodyId"},
+                "required": false,
+                "description": "Certification body conducting audit must be valid"
+              }
+            },
+            "auditGeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Audit location must be valid GeographicData"
+              }
+            }
+          }
+        },
+        "TrackingPoint": {
+          "type": "object",
+          "properties": {
+            "operatorId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Operator"},
+                "targetField": {"const": "operatorId"},
+                "required": false,
+                "description": "Operator managing tracking point must be valid"
+              }
+            },
+            "geographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": true,
+                "description": "Tracking point location must be valid GeographicData"
+              }
+            }
+          }
+        },
+        "Operator": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": false,
+                "description": "Employing organization must be valid"
+              }
+            }
+          }
+        },
+        "SalesDeliveryDocument": {
+          "type": "object",
+          "properties": {
+            "transactionId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Transaction"},
+                "targetField": {"const": "transactionId"},
+                "required": true,
+                "description": "Sales document must reference valid transaction"
+              }
+            }
+          }
+        },
+        "SupplyBase": {
+          "type": "object",
+          "properties": {
+            "OrganizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": false,
+                "description": "Managing organization must be valid"
+              }
+            }
+          }
+        },
+        "SupplyBaseReport": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Reporting organization must be valid"
+              }
+            }
+          }
+        },
+        "DataReconciliation": {
+          "type": "object",
+          "properties": {
+            "transactionId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Transaction"},
+                "targetField": {"const": "transactionId"},
+                "required": false,
+                "description": "Reconciled transaction must be valid"
+              }
+            }
+          }
+        },
+        "MassBalanceAccount": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Account holder organization must be valid"
+              }
+            }
+          }
+        },
+        "Customer": {
+          "type": "object",
+          "properties": {
+            "GeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Customer location must be valid GeographicData"
+              }
+            }
+          }
+        },
+        "Supplier": {
+          "type": "object",
+          "properties": {
+            "GeographicDataId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "GeographicData"},
+                "targetField": {"const": "geographicDataId"},
+                "required": false,
+                "description": "Supplier location must be valid GeographicData"
+              }
+            }
+          }
+        },
+        "LcfsReporting": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Reporting organization must be valid"
+              }
+            },
+            "pathwayId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "LcfsPathway"},
+                "targetField": {"const": "pathwayId"},
+                "required": true,
+                "description": "LCFS pathway must be valid"
+              }
+            }
+          }
+        },
+        "EnergyCarbonData": {
+          "type": "object",
+          "properties": {
+            "facilityId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "Facility must be valid organization"
+              }
+            }
+          }
+        },
+        "SpeciesComponent": {
+          "type": "object",
+          "properties": {
+            "traceableUnitId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TraceableUnit"},
+                "targetField": {"const": "traceableUnitId"},
+                "required": true,
+                "description": "Species component must reference valid TRU"
+              }
+            }
+          }
+        },
+        "BiometricIdentifier": {
+          "type": "object",
+          "properties": {
+            "traceableUnitId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "TraceableUnit"},
+                "targetField": {"const": "traceableUnitId"},
+                "required": true,
+                "description": "Biometric identifier must reference valid TRU"
+              }
+            }
+          }
+        },
+        "ProductGroup": {
+          "type": "object",
+          "properties": {
+            "organizationId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": false,
+                "description": "Managing organization must be valid"
+              }
+            }
+          }
         }
       }
     },

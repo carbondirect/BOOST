@@ -7,9 +7,14 @@ set -e  # Exit on any error
 
 echo "🚀 Building BOOST Specification with Direct Dictionary References..."
 
-# Extract version from git tags (authoritative source)
-echo "🔧 Extracting version from git tags..."
-if git rev-parse --git-dir >/dev/null 2>&1; then
+# Extract version from environment or git tags (authoritative source)
+echo "🔧 Extracting version information..."
+
+# Check if RELEASE_VERSION is set (from CI/CD workflows)
+if [ -n "$RELEASE_VERSION" ]; then
+    VERSION="$RELEASE_VERSION"
+    echo "📋 Using release version from environment: $VERSION"
+elif git rev-parse --git-dir >/dev/null 2>&1; then
     # Get the latest version tag, fallback to commit hash if no tags
     VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
     if [ -z "$VERSION" ]; then
@@ -298,6 +303,17 @@ if [ -f "boost-spec.html" ]; then
     DICT_COUNT=$(find schema -name "*_dictionary.md" | wc -l 2>/dev/null || echo "0")
     echo "   - Dictionary files available: $DICT_COUNT"
     echo "   - Using direct dictionary references via symlinks ✨"
+    
+    # Run consistency validation if script exists
+    if [ -f "scripts/validate-consistency.py" ]; then
+        echo ""
+        echo "🔍 Running documentation consistency check..."
+        if python3 scripts/validate-consistency.py >/dev/null 2>&1; then
+            echo "   ✅ HTML/PDF consistency check passed"
+        else
+            echo "   ⚠️  Consistency check found issues (see build/consistency-report.json)"
+        fi
+    fi
     
 else
     echo "❌ Build failed!"

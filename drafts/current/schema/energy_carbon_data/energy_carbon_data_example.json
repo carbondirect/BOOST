@@ -1,0 +1,29 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "EnergyCarbonData",
+  "@id": "https://boost.example.com/energy/ECD-PACIFIC-MILL-2025-Q2",
+  "energyCarbonDataId": "ECD-PACIFIC-MILL-2025-Q2",
+  "facilityId": "ORG-PACIFIC-MILL-001",
+  "reportingPeriod": "2025-Q2",
+  "totalEnergyConsumption": 125600.5,
+  "energyUnit": "MJ",
+  "electricityConsumption": 45200.0,
+  "naturalGasConsumption": 78400.5,
+  "dieselConsumption": 2000.0,
+  "renewableEnergyPercentage": 15.5,
+  "carbonEmissionsScope1": 8750.2,
+  "carbonEmissionsScope2": 5420.8,
+  "carbonEmissionsTotal": 14171.0,
+  "emissionsUnit": "kg_CO2e",
+  "carbonIntensity": 112.7,
+  "carbonIntensityUnit": "kg_CO2e_per_MWh",
+  "verificationRequired": true,
+  "verificationDate": "2025-07-30",
+  "verificationBody": "CB-CARBON-TRUST",
+  "reportingStandard": "GRI_305",
+  "lastUpdated": "2025-07-15T14:30:00Z"
+}

@@ -4,18 +4,18 @@
 \begin{entitytable}{Measurement Record}
 \textbf{\field{measurementMethod}} & enum(4 values) & No description provided \\
 \textbf{\field{measurementTimestamp}} & string (date-time) & No description provided \\
-\textbf{\field{recordId}} & string & No description provided \\
-\textbf{\field{traceableUnitId}} & string & No description provided \\
+\textbf{\field{recordId}} & string (pattern) & No description provided \\
+\textbf{\field{traceableUnitId}} & string (pattern) & No description provided \\
 \field{lastUpdated} & string (date-time) & No description provided \\
-\field{measuredDiameter} & number (\geq 0) & No description provided \\
-\field{measuredLength} & number (\geq 0) & No description provided \\
-\field{measuredVolume} & number (\geq 0) & No description provided \\
-\field{measurementGeographicDataId} & string & No description provided \\
-\field{moistureAccuracy} & number (\geq 0) & Estimated accuracy of moisture measurement (± percentage points) \\
-\field{moistureContent} & number (\geq 0, \leq 100) & Moisture content as percentage of weight contributed by water (0-100\textback... \\
+\field{measuredDiameter} & number (≥0) & No description provided \\
+\field{measuredLength} & number (≥0) & No description provided \\
+\field{measuredVolume} & number (≥0) & No description provided \\
+\field{measurementGeographicDataId} & string (pattern) & No description provided \\
+\field{moistureAccuracy} & number (≥0) & Estimated accuracy of moisture measurement (± percentage points) \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage of weight contributed by water (0-100\textback... \\
 \field{moistureMethod} & enum(8 values) & Method used to determine moisture content \\
 \field{moistureStandard} & enum(5 values) & Standard procedure followed for moisture measurement \\
-\field{operatorId} & string & No description provided \\
+\field{operatorId} & string (pattern) & No description provided \\
 \field{speciesMeasurements} & array<string> & No description provided \\
-\field{trackingPointId} & string & No description provided \\
+\field{trackingPointId} & string (pattern) & No description provided \\
 \end{entitytable}

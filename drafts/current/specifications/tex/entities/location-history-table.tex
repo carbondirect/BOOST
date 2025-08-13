@@ -2,18 +2,18 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Location History}
-\textbf{\field{geographicDataId}} & string & No description provided \\
+\textbf{\field{geographicDataId}} & string (pattern) & No description provided \\
 \textbf{\field{isCurrentLocation}} & boolean & No description provided \\
 \textbf{\field{locationEventType}} & enum(5 values) & No description provided \\
-\textbf{\field{locationHistoryId}} & string & No description provided \\
+\textbf{\field{locationHistoryId}} & string (pattern) & No description provided \\
 \textbf{\field{timestamp}} & string (date-time) & No description provided \\
-\textbf{\field{traceableUnitId}} & string & No description provided \\
-\field{distanceTraveled} & number (\geq 0) & No description provided \\
+\textbf{\field{traceableUnitId}} & string (pattern) & No description provided \\
+\field{distanceTraveled} & number (≥0) & No description provided \\
 \field{equipmentUsed} & string & No description provided \\
 \field{lastUpdated} & string (date-time) & No description provided \\
 \field{materialProcessingId} & ['string', 'null'] & No description provided \\
 \field{notes} & string & No description provided \\
-\field{operatorId} & string & No description provided \\
+\field{operatorId} & string (pattern) & No description provided \\
 \field{transportMethod} & enum(5 values) & No description provided \\
 \field{verificationMethods} & array<string> & No description provided \\
 \end{entitytable}

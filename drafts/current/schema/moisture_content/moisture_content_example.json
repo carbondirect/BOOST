@@ -1,0 +1,22 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/carbondirect/BOOST/context/",
+    "boost": "https://github.com/carbondirect/BOOST/context/",
+    "schema": "https://schema.org/"
+  },
+  "@type": "MoistureContent",
+  "@id": "https://boost.example.com/moisture/MOI-TRU-001-2025-001",
+  "moistureContentId": "MOI-TRU-001-2025-001",
+  "moistureContent": 22.5,
+  "measurementMethod": "electrical_resistance",
+  "qualityAssurance": {
+    "calibrationDate": "2025-07-15T08:30:00Z",
+    "standardReference": "ASTM_D4442",
+    "sampleSize": 5,
+    "measurementAccuracy": 1.5,
+    "environmentalConditions": {
+      "temperature": 18.5,
+      "humidity": 65
+    }
+  }
+}
