@@ -27,7 +27,7 @@ elif git rev-parse --git-dir >/dev/null 2>&1; then
     fi
 else
     # Not a git repository, use fallback
-    VERSION="v2.9.0"
+    VERSION="v0.0.0-no-version-detected"
     echo "⚠️  Not a git repository, using fallback: $VERSION"
 fi
 
