@@ -55,7 +55,7 @@ jobs:
       - name: Extract version information
         id: extract-version
         run: |
-          # Use GitHub context to determine version (works in any environment)
+          # Use GitHub context to determine version (works in any environment)  
           if [ -n "$BOOST_DOC_VERSION" ] && [ "$BOOST_DOC_VERSION" != "main" ]; then
               VERSION="$BOOST_DOC_VERSION"
               echo "Using version from environment: $VERSION"
