@@ -6,6 +6,7 @@ on:
     paths:
       - 'drafts/current/specifications/**'
       - 'drafts/current/schema/**'
+      - 'drafts/current/reference-implementations/**'
       - '.github/workflows/**'
 
 # Cancel in-progress runs for the same PR
