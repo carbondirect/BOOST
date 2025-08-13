@@ -2,6 +2,13 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [Unreleased]
+
+### Changed
+- Updated author information and affiliations (resolves #206)
+  - Updated Peter Tittmann's title to "Chair -- BOOST Working Group, Senior Scientist -- Carbon Direct"
+  - Corrected email addresses to @carbon-direct.com domain
+
 ## [3.1.0] - 2025-08-13 - Unified Documentation Build System & Complete Entity Coverage
 
 ### Added
