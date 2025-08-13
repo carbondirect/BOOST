@@ -215,10 +215,52 @@ jobs:
           print(f'\\n✅ Schema integrity validation passed for {len(entities)} entities')
           "
 
+  extract-version:
+    name: 🏷️ Extract PR Version Info
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.version-info.outputs.version }}
+      build-timestamp: ${{ steps.version-info.outputs.timestamp }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full git history for version extraction
+      
+      - name: Extract version information for PR
+        id: version-info
+        run: |
+          echo "🔍 Extracting version information for PR build..."
+          
+          # Get PR number from context
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          
+          # Create PR-specific version
+          if git describe --tags >/dev/null 2>&1; then
+              BASE_VERSION=$(git describe --tags --always)
+              VERSION="PR-${PR_NUMBER}-${BASE_VERSION}"
+              echo "🔧 Using PR version based on git: $VERSION"
+          else
+              VERSION="PR-${PR_NUMBER}-${SHORT_SHA}"
+              echo "🔧 Using PR version based on commit: $VERSION"
+          fi
+          
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          # Store outputs
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          
+          echo "::notice title=PR Version::$VERSION"
+
   build-test:
     name: 🏗️ Build Test
     runs-on: ubuntu-latest
-    needs: [schema-validation]
+    needs: [schema-validation, extract-version]
+    env:
+      RELEASE_VERSION: ${{ needs.extract-version.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -239,6 +281,13 @@ jobs:
         run: |
           pip3 install bikeshed
           bikeshed update
+
+      - name: Confirm PR version information
+        run: |
+          echo "🏷️ Using PR version: ${{ needs.extract-version.outputs.version }}"
+          echo "⏰ Build timestamp: ${{ needs.extract-version.outputs.timestamp }}"
+          echo "🔧 Environment variable RELEASE_VERSION: $RELEASE_VERSION"
+          echo "::notice title=PR Build Version::Building BOOST Documentation ${{ needs.extract-version.outputs.version }}"
 
       - name: Test documentation build
         working-directory: drafts/current/specifications
@@ -275,7 +324,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pr-build-artifacts
+          name: pr-build-artifacts-${{ needs.extract-version.outputs.version }}
           path: |
             drafts/current/specifications/boost-spec.html
             drafts/current/specifications/erd-navigator/
