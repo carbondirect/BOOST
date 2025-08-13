@@ -2,7 +2,7 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
-## [Unreleased]
+## [3.1.2] - 2025-08-13
 
 ### Changed
 - Updated author information and affiliations (resolves #206)
