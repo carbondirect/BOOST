@@ -57,8 +57,11 @@ jobs:
         run: |
           cd drafts/current/specifications
           
-          # Extract version using same logic as build script
-          if git rev-parse --git-dir >/dev/null 2>&1; then
+          # Extract version from environment or git tags  
+          if [ -n "$BOOST_DOC_VERSION" ] && [ "$BOOST_DOC_VERSION" != "main" ]; then
+              VERSION="$BOOST_DOC_VERSION"
+              echo "Using version from environment: $VERSION"
+          elif git rev-parse --git-dir >/dev/null 2>&1; then
               VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
               if [ -z "$VERSION" ]; then
                   SHORT_HASH=$(git rev-parse --short HEAD)
