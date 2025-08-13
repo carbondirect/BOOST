@@ -1,7 +1,9 @@
 {
   "schema_directories": [
     "audit",
-    "biometric_identifier", 
+    "biometric_identifier",
+    "bioram_pathway",
+    "bioram_reporting",
     "certificate",
     "certification_body",
     "certification_scheme",
@@ -34,7 +36,7 @@
     "transaction_batch",
     "verification_statement"
   ],
-  "last_updated": "2025-08-01T00:00:00Z",
-  "total_entities": 33,
+  "last_updated": "2025-01-20T00:00:00Z",
+  "total_entities": 35,
   "description": "Comprehensive list of all BOOST schema directories for ERD Navigator auto-discovery"
 }

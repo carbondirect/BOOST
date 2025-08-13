@@ -1,0 +1,29 @@
+{
+  "@context": {
+    "boost": "https://github.com/carbondirect/BOOST/contexts/",
+    "bioram": "https://github.com/carbondirect/BOOST/contexts/bioram/"
+  },
+  "@type": "BioramPathway",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/bioram-pathway/BIORAM-PWR-2025-LMR-001",
+  "pathwayId": "BIORAM-PWR-2025-LMR-001",
+  "fuelType": "lumber_mill_residual",
+  "targetFacilityType": "biomass_power_plant",
+  "efficiencyStandard": 0.35,
+  "carbonIntensity": 15.2,
+  "geographicScope": "California_SRA",
+  "fireHazardZoneEligibility": [
+    "Very High",
+    "High"
+  ],
+  "certificationDate": "2025-01-15",
+  "expirationDate": "2030-01-15",
+  "eligibilityStatus": "active",
+  "cecVersion": "2.1",
+  "haulDistanceLimit": 75,
+  "seasonalAvailability": {
+    "peakSeason": "harvest_season",
+    "availabilityFactor": 0.85
+  },
+  "sourceRegion": "Northern California Sierra Nevada",
+  "lastUpdated": "2025-03-15T10:30:00Z"
+}

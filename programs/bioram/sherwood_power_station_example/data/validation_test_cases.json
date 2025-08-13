@@ -1,0 +1,82 @@
+{
+  "test_cases": {
+    "organization_validation": [
+      {
+        "description": "Valid organization with all required fields",
+        "data": {
+          "organization_id": "ORG-TEST-001",
+          "organizationName": "Test Organization",
+          "organizationType": "supplier",
+          "contactEmail": "contact@test.com",
+          "contactPhone": "+1-555-123-4567",
+          "regulatedEntityType": "supplier",
+          "operationalStatus": "active"
+        },
+        "expected_result": "valid"
+      },
+      {
+        "description": "Organization with optional fields as null",
+        "data": {
+          "organization_id": "ORG-TEST-002",
+          "organizationName": "Test Organization 2",
+          "organizationType": "supplier",
+          "contactEmail": "contact@test2.com",
+          "contactPhone": null,
+          "regulatedEntityType": "supplier",
+          "operationalStatus": "active",
+          "facilityCapacity": null
+        },
+        "expected_result": "valid"
+      },
+      {
+        "description": "Invalid organization type enum",
+        "data": {
+          "organization_id": "ORG-TEST-003",
+          "organizationName": "Test Organization 3",
+          "organizationType": "invalid_type",
+          "contactEmail": "contact@test3.com",
+          "contactPhone": "+1-555-123-4567",
+          "regulatedEntityType": "supplier",
+          "operationalStatus": "active"
+        },
+        "expected_result": "invalid"
+      }
+    ],
+    "transaction_validation": [
+      {
+        "description": "Valid transaction with all required fields",
+        "data": {
+          "transaction_id": "TXN-TEST-001",
+          "organization_id": "ORG-TEST-001",
+          "transaction_date": "2025-01-15T00:00:00Z",
+          "contract_value": 75000.00,
+          "contract_currency": "USD",
+          "transaction_status": "completed",
+          "feedstock_type": "mill_waste",
+          "feedstock_volume": 500,
+          "feedstock_unit": "bone_dry_tonnes",
+          "pathway_id": "PATH-BIORAM-001"
+        },
+        "expected_result": "valid"
+      },
+      {
+        "description": "Transaction with optional fields as null",
+        "data": {
+          "transaction_id": "TXN-TEST-002",
+          "organization_id": "ORG-TEST-001",
+          "transaction_date": "2025-01-15T00:00:00Z",
+          "contract_value": 75000.00,
+          "contract_currency": "USD",
+          "transaction_status": "completed",
+          "feedstock_type": "mill_waste",
+          "feedstock_volume": 500,
+          "feedstock_unit": "bone_dry_tonnes",
+          "pathway_id": "PATH-BIORAM-001",
+          "additional_notes": null,
+          "delivery_location": null
+        },
+        "expected_result": "valid"
+      }
+    ]
+  }
+}

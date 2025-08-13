@@ -1,0 +1,546 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/transaction",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "Transaction"
+        ]
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri"
+      },
+      "transactionId": {
+        "type": "string",
+        "pattern": "^TXN-[A-Z0-9-_]+$",
+        "minLength": 5,
+        "maxLength": 50,
+        "description": "Unique identifier for the business transaction"
+      },
+      "OrganizationId": {
+        "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$",
+        "description": "Primary organization involved in transaction (seller/supplier)"
+      },
+      "CustomerId": {
+        "type": "string",
+        "pattern": "^CUST-[A-Z0-9-_]+$",
+        "description": "Customer organization (buyer) - uses EntityNameId convention referencing Customer entity"
+      },
+      "transactionDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date of business agreement"
+      },
+      "SalesDeliveryDocumentId": {
+        "type": "string",
+        "pattern": "^DOC-[A-Z0-9-_]+$",
+        "description": "Foreign key to sales/delivery documentation - uses EntityNameId convention referencing SalesDeliveryDocument"
+      },
+      "contractValue": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 999999999.99,
+        "multipleOf": 0.01,
+        "description": "Total monetary value of the transaction"
+      },
+      "contractCurrency": {
+        "type": "string",
+        "enum": [
+          "USD",
+          "EUR",
+          "GBP",
+          "CAD",
+          "JPY",
+          "AUD",
+          "CHF",
+          "SEK",
+          "NOK"
+        ],
+        "description": "Currency code for contract value"
+      },
+      "contractTerms": {
+        "type": "string",
+        "enum": [
+          "FOB",
+          "CIF",
+          "DDP",
+          "EXW",
+          "FCA",
+          "CPT",
+          "DAP",
+          "FAS"
+        ],
+        "description": "Incoterms delivery conditions"
+      },
+      "paymentTerms": {
+        "type": "string",
+        "description": "Payment conditions and timeline"
+      },
+      "transactionStatus": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "confirmed",
+          "delivered",
+          "completed",
+          "cancelled",
+          "disputed"
+        ],
+        "description": "Current status of business transaction"
+      },
+      "GeographicDataId": {
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
+        "description": "Primary transaction location - uses EntityNameId convention referencing GeographicData"
+      },
+      "BrokerOrganizationId": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "pattern": "^ORG-[A-Z0-9-_]+$",
+        "description": "Optional intermediary broker organization - uses EntityNameId convention referencing Organization"
+      },
+      "contractSignedDate": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date",
+        "description": "Date when contract was executed"
+      },
+      "expectedDeliveryDate": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "date",
+        "description": "Expected completion/delivery date"
+      },
+      "complianceRequirements": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "FSC_Chain_of_Custody",
+            "SBP_DTS_Registration",
+            "PEFC_Certification",
+            "RSB_Compliance",
+            "LCFS_Reporting",
+            "RFS_Reporting",
+            "EU_RED_Compliance"
+          ]
+        },
+        "description": "Regulatory compliance requirements for transaction"
+      },
+      "financialTerms": {
+        "type": "object",
+        "properties": {
+          "downPaymentAmount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "downPaymentPercentage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "retentionAmount": {
+            "type": "number",
+            "minimum": 0
+          },
+          "lateFeePercentage": {
+            "type": "number",
+            "minimum": 0
+          },
+          "discountTerms": {
+            "type": "string"
+          },
+          "creditLimit": {
+            "type": "number",
+            "minimum": 0
+          },
+          "collateralRequired": {
+            "type": "boolean"
+          }
+        },
+        "description": "Detailed financial terms and conditions"
+      },
+      "riskManagement": {
+        "type": "object",
+        "properties": {
+          "forceMarjeureClause": {
+            "type": "boolean"
+          },
+          "qualityGuarantees": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deliveryPenalties": {
+            "type": "string"
+          },
+          "insuranceRequirements": {
+            "type": "string"
+          },
+          "disputeResolutionMethod": {
+            "type": "string",
+            "enum": [
+              "arbitration",
+              "mediation",
+              "litigation",
+              "negotiation"
+            ]
+          }
+        },
+        "description": "Risk management and mitigation terms"
+      },
+      "LcfsPathwayId": {
+        "type": "string",
+        "description": "CARB-certified pathway identifier for LCFS compliance - uses EntityNameId convention referencing LcfsPathway",
+        "pattern": "^CA-[A-Z]{2,4}-[0-9]{4}-[A-Z]{3,4}-[0-9]{3}$"
+      },
+      "fuelVolume": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Volume of fuel in transaction for LCFS reporting"
+      },
+      "fuelVolumeUnit": {
+        "type": "string",
+        "enum": [
+          "gallons",
+          "liters",
+          "GGE"
+        ],
+        "description": "Unit of measurement for fuel volume"
+      },
+      "fuelCategory": {
+        "type": "string",
+        "enum": [
+          "gasoline",
+          "diesel",
+          "renewable_diesel",
+          "biodiesel",
+          "ethanol",
+          "renewable_gasoline",
+          "hydrogen",
+          "electricity",
+          "renewable_natural_gas",
+          "sustainable_aviation_fuel"
+        ],
+        "description": "Category of fuel for LCFS classification"
+      },
+      "reportingPeriod": {
+        "type": "string",
+        "pattern": "^[0-9]{4}-Q[1-4]$",
+        "description": "LCFS reporting quarter in YYYY-QN format"
+      },
+      "regulatedPartyRole": {
+        "type": "string",
+        "enum": [
+          "producer",
+          "importer",
+          "blender",
+          "distributor",
+          "not_applicable"
+        ],
+        "description": "Role of regulated party in LCFS transaction"
+      },
+      "BioramPathwayId": {
+        "type": "string",
+        "description": "BioRAM pathway identifier for biomass power generation - uses EntityNameId convention referencing BioramPathway",
+        "pattern": "^BIORAM-PWR-[0-9]{4}-[A-Z]{2,4}-[0-9]{3}$"
+      },
+      "biomassVolume": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Volume of biomass fuel in transaction for BioRAM reporting"
+      },
+      "biomassVolumeUnit": {
+        "type": "string",
+        "enum": [
+          "bone_dry_tonnes",
+          "green_tonnes",
+          "cubic_yards"
+        ],
+        "description": "Unit of measurement for biomass volume"
+      },
+      "fuelType": {
+        "type": "string",
+        "enum": [
+          "lumber_mill_residual",
+          "forest_harvest_residual",
+          "agricultural_residue",
+          "urban_wood_waste",
+          "construction_demolition_wood",
+          "orchard_removal_material"
+        ],
+        "description": "BioRAM eligible fuel type classification"
+      },
+      "fuelOriginCoordinates": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude of fuel origin location"
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude of fuel origin location"
+          }
+        },
+        "required": ["latitude", "longitude"],
+        "description": "Geographic coordinates of biomass fuel origin"
+      },
+      "fuelOriginFacilityId": {
+        "type": "string",
+        "description": "Identifier for source facility or harvest site"
+      },
+      "withinSRA": {
+        "type": "boolean",
+        "description": "Whether fuel source is within California State Responsibility Area"
+      },
+      "fireHazardSeverityZone": {
+        "type": "string",
+        "enum": [
+          "Very High",
+          "High",
+          "Moderate",
+          "Low"
+        ],
+        "description": "CAL FIRE fire hazard severity zone designation"
+      },
+      "fhszVerificationSource": {
+        "type": "string",
+        "description": "Source of fire hazard zone verification (e.g., CAL_FIRE_2024_MAPS)"
+      },
+      "bioramEligible": {
+        "type": "boolean",
+        "description": "Whether transaction meets BioRAM program eligibility requirements"
+      },
+      "haulDistance": {
+        "type": "number",
+        "minimum": 0,
+        "description": "Transportation distance from source to facility in miles"
+      },
+      "haulUnit": {
+        "type": "string",
+        "enum": [
+          "miles",
+          "kilometers"
+        ],
+        "description": "Unit of measurement for haul distance"
+      },
+      "landowner": {
+        "type": "string",
+        "description": "Legal landowner of biomass source location"
+      },
+      "parcelId": {
+        "type": "string",
+        "description": "Assessor parcel number or legal land description"
+      },
+      "calFirePermitNumber": {
+        "type": "string",
+        "description": "CAL FIRE permit number for harvest or treatment activities"
+      },
+      "permitStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "expired",
+          "pending",
+          "not_required"
+        ],
+        "description": "Status of required permits for biomass harvesting"
+      },
+      "timberHarvestPlan": {
+        "type": "string",
+        "description": "Timber harvest plan identifier if applicable"
+      },
+      "bioramCertificationId": {
+        "type": "string",
+        "description": "BioRAM compliance certification identifier for transaction"
+      },
+      "attestationSignatory": {
+        "type": "string",
+        "description": "Name and title of person attesting to BioRAM compliance"
+      },
+      "attestationDate": {
+        "type": "string",
+        "format": "date",
+        "description": "Date of BioRAM compliance attestation"
+      },
+      "materialEligibilityConfirmed": {
+        "type": "boolean",
+        "description": "Confirmation that material meets BioRAM eligibility criteria"
+      },
+      "reportingAccuracyConfirmed": {
+        "type": "boolean",
+        "description": "Confirmation of reporting data accuracy for BioRAM compliance"
+      },
+      "traceableUnitIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^TRU-[A-Z0-9-_]+$"
+        },
+        "description": "TRUs included in this transaction"
+      },
+      "reconciliationStatus": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "resolved",
+          "disputed"
+        ],
+        "description": "Transaction reconciliation status"
+      },
+      "manipulationTimestamps": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": "Processing step timestamps"
+      },
+      "trackingPointIds": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^TP-[A-Z0-9-_]+$"
+        },
+        "description": "Location trail references"
+      },
+      "mediaBreaksDetected": {
+        "type": "array",
+        "items": {
+          "type": "boolean"
+        },
+        "description": "Continuity flags per TRU"
+      },
+      "speciesCompositionAtTransaction": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "species": {
+              "type": "string",
+              "description": "Species name"
+            },
+            "percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Percentage of total volume"
+            }
+          },
+          "required": ["species", "percentage"]
+        },
+        "description": "Species breakdown at transaction time"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of last modification"
+      }
+    },
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "transactionId",
+      "OrganizationId",
+      "CustomerId",
+      "transactionDate",
+      "contractValue",
+      "contractCurrency",
+      "transactionStatus"
+    ],
+    "title": "Transaction",
+    "description": "Transaction entity in BOOST data model"
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "Transaction",
+      "primaryKey": "transactionId",
+      "area": "transaction_management",
+      "description": "🔄 Business transaction with supply chain traceability"
+    },
+    "relationships": [
+      {
+        "field": "OrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "seller organization",
+        "example": "TXN-2024-001 sold by 'Olympic Forest Products'"
+      },
+      {
+        "field": "CustomerId", 
+        "targetEntity": "Customer",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "buyer customer",
+        "example": "TXN-2024-001 purchased by customer 'Green Energy Corp'"
+      },
+      {
+        "field": "SalesDeliveryDocumentId",
+        "targetEntity": "SalesDeliveryDocument",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "delivery document",
+        "example": "TXN-2024-001 documented by delivery receipt SDD-789"
+      },
+      {
+        "field": "GeographicDataId",
+        "targetEntity": "GeographicData",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "transaction location"
+      },
+      {
+        "field": "BrokerOrganizationId",
+        "targetEntity": "Organization",
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "broker organization"
+      },
+      {
+        "field": "LcfsPathwayId",
+        "targetEntity": "LcfsPathway", 
+        "relationshipType": "many-to-one",
+        "required": false,
+        "label": "LCFS pathway"
+      },
+      {
+        "field": "traceableUnitIds",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "many-to-many",
+        "required": false,
+        "label": "includes TRUs",
+        "example": "TXN-2024-001 includes TRU-456 + TRU-789 + TRU-890"
+      },
+      {
+        "field": "trackingPointIds",
+        "targetEntity": "TrackingPoint",
+        "relationshipType": "many-to-many", 
+        "required": false,
+        "label": "location trail",
+        "example": "TXN-2024-001 tracked through TP-HARVEST-01 → TP-MILL-02"
+      }
+    ]
+  }
+}

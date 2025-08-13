@@ -15,6 +15,20 @@ from pydantic import BaseModel, Field, create_model, field_validator, model_vali
 from pydantic.fields import FieldInfo
 from enum import Enum
 
+try:
+    # Try importing Pydantic v2 (proper V2 imports)
+    from pydantic import BaseModel, Field, create_model, field_validator
+    from pydantic.fields import FieldInfo
+    PYDANTIC_V2 = True
+except ImportError:
+    try:
+        # Fallback to Pydantic v1
+        from pydantic import BaseModel, Field, create_model, validator
+        from pydantic.fields import FieldInfo
+        PYDANTIC_V2 = False
+    except ImportError:
+        raise ImportError("Pydantic v1 or v2 is required")
+
 
 class SchemaLoader:
     """Dynamic schema loader that generates models and validation from JSON schemas."""
@@ -139,6 +153,12 @@ class SchemaLoader:
         properties = schema.get('properties', {})
         required_fields = schema.get('required', [])
         
+        # Add serialization methods that work in both v1 and v2
+        def model_to_dict(self, by_alias: bool = True):
+            if hasattr(self, 'model_dump'):  # v2
+                return self.model_dump(by_alias=by_alias)
+            return self.dict(by_alias=by_alias)  # v1
+        
         # Base model fields
         model_fields = {}
         
@@ -174,10 +194,18 @@ class SchemaLoader:
         
         # Create model class name
         model_name = entity_name.title().replace('_', '')
-        
+
         # Create the dynamic model with Pydantic v2 configuration
         from pydantic import ConfigDict
+
         
+        # Add dict method that works in both v1 and v2
+        def to_dict(self, by_alias: bool = True):
+            if hasattr(self, 'model_dump'):  # v2
+                return self.model_dump(by_alias=by_alias)
+            return self.dict(by_alias=by_alias)  # v1
+        
+        # Create the base model
         dynamic_model = create_model(
             model_name,
             **model_fields,
@@ -187,6 +215,9 @@ class SchemaLoader:
                 # Note: json_encoders is deprecated in v2, but we'll handle serialization differently
             )
         )
+        
+        # Add the to_dict method to the model
+        dynamic_model.to_dict = to_dict
         
         # Add custom validators if needed
         self._add_custom_validators(dynamic_model, entity_name, schema)
@@ -299,7 +330,10 @@ class SchemaLoader:
                 return expected_type
             
             # Add validator to model
+
+
             setattr(model_class, 'validate_type', validate_type)
+
         
         # Add business logic validators based on entity type
         if entity_name == 'material_processing':
@@ -315,8 +349,10 @@ class SchemaLoader:
                         raise ValueError("Volume conservation violation: input must be >= output + loss")
                 return model
             
+
             # Add model validator
             setattr(model_class, 'validate_volume_conservation', validate_volume_conservation)
+
     
     def get_model(self, entity_name: str) -> Optional[Type[BaseModel]]:
         """Get dynamic model for entity type."""

@@ -1,0 +1,29 @@
+[
+  {
+    "reportingId": "RPT-BIORAM-2025-Q3-001",
+    "organizationId": "ORG-SHERWOOD-POWER-001",
+    "reportingPeriod": "2025-Q3",
+    "totalBiomassVolume": 1500,
+    "volumeUnit": "bone_dry_tonnes",
+    "totalEnergyGenerated": 1200,
+    "energyUnit": "MWh",
+    "weightedCarbonIntensity": 15.2,
+    "carbonIntensityUnit": "gCO2e/MJ",
+    "complianceStatus": "compliant",
+    "verificationStatus": "pending",
+    "submissionDate": "2025-10-15T00:00:00Z",
+    "pathwaySummary": [
+      {
+        "pathwayId": "BIORAM-PWR-2025-LMR-001",
+        "biomassVolume": 1500,
+        "energyGenerated": 1200
+      }
+    ],
+    "complianceMetrics": {
+      "efficiencyTarget": 0.35,
+      "actualEfficiency": 0.36,
+      "carbonIntensityTarget": 25.0,
+      "actualCarbonIntensity": 15.2
+    }
+  }
+]
