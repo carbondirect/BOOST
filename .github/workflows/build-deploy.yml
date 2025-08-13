@@ -90,10 +90,13 @@ jobs:
 
       - name: Build HTML documentation
         working-directory: drafts/current/specifications
+        env:
+          RELEASE_VERSION: ${{ steps.extract-version.outputs.version }}
         run: |
           echo "🏗️ Building HTML documentation..."
           echo "📋 Branch: ${{ github.ref_name }}"
           echo "🎯 Build type: ${{ github.ref == 'refs/heads/main' && 'Production (with deployment)' || 'Development (build only)' }}"
+          echo "🔧 Using version: $RELEASE_VERSION"
           chmod +x build-spec.sh
           ./build-spec.sh
 
