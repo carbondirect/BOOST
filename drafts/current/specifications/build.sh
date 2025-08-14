@@ -242,6 +242,11 @@ cleanup_latex_files() {
             rm -rf build/_minted
         fi
         
+        # Ensure _minted directory exists with correct permissions for Docker
+        mkdir -p build/_minted
+        chmod 755 build/_minted
+        echo "   Created _minted cache directory with proper permissions"
+        
         print_success "   ✅ Intermediate files cleaned"
     fi
 }
@@ -320,8 +325,22 @@ except Exception as e:
 build_pdf() {
     print_status "📄 Step 3: Building PDF documentation..."
     
-    # Create output directory
+    # Create output directory with proper permissions for Docker
     mkdir -p build
+    chmod 755 build
+    
+    # Verify Pygments is available for minted
+    if command -v pygmentize &> /dev/null; then
+        echo "   Pygments available at: $(which pygmentize)"
+    else
+        print_warning "⚠️  pygmentize command not found, checking for python3 -m pygments"
+        if python3 -c "import pygments; print('Pygments version:', pygments.__version__)" 2>/dev/null; then
+            echo "   Pygments Python module available"
+        else
+            print_error "❌ Pygments not available - minted syntax highlighting will fail"
+            exit 1
+        fi
+    fi
     
     # Clean intermediate files before building
     cleanup_latex_files
