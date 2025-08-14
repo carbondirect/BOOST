@@ -270,6 +270,15 @@ build_html() {
         fi
     fi
     
+    # ======================================================================
+    # ⚠️  CRITICAL: ReSpec-Style Layout System Processing
+    # ======================================================================
+    # This section implements the sophisticated hybrid Bikeshed+ReSpec system
+    # DO NOT REMOVE OR SIMPLIFY - This is intentional design architecture
+    # Reference: commit v3.1.3-5-g725c24a for working implementation
+    # See: ARCHITECTURE.md for full documentation
+    # ======================================================================
+    
     # Apply ReSpec-style CSS modifications
     print_status "🎨 Adding ReSpec-style CSS to HTML output..."
     

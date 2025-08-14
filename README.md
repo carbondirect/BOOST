@@ -1,5 +1,17 @@
 # Biomass Open Origin Standard for Tracking (BOOST) Community Group
 
+## ⚠️ Critical Documentation Architecture Notice
+
+**This repository uses a sophisticated HYBRID documentation system (Bikeshed + ReSpec layout)**
+
+🚫 **DO NOT** "simplify" or "clean up" the build system without reading [`ARCHITECTURE.md`](ARCHITECTURE.md)  
+🚫 **DO NOT** remove ReSpec-style components thinking they're "inappropriate for Bikeshed"  
+🚫 **DO NOT** remove the Python HTML processing in `build.sh`  
+
+✅ **This is intentional design** - See commit `v3.1.3-5-g725c24a` for reference implementation
+
+---
+
 [![Build & Deploy Documentation](https://github.com/carbondirect/BOOST/workflows/🚀%20Build%20&%20Deploy%20Documentation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml)
 [![Schema Validation](https://github.com/carbondirect/BOOST/workflows/🔍%20Schema%20Validation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml)
 [![PR Validation](https://github.com/carbondirect/BOOST/workflows/📋%20PR%20Validation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/validate-pr.yml)

@@ -178,11 +178,32 @@ jobs:
             exit 1
           fi
           
-          # Check for Bikeshed document structure
-          if ! grep -q "class=\"h-entry\"" boost-spec.html; then
-            echo "❌ Bikeshed document structure not found"
+          # Check for ReSpec-style layout structure (CRITICAL - DO NOT REMOVE)
+          echo "🔍 Validating ReSpec-style layout system..."
+          if ! grep -q "main-content-wrapper" boost-spec.html; then
+            echo "❌ ReSpec-style layout structure not applied correctly"
+            echo "❌ CRITICAL: main-content-wrapper div missing - layout system broken!"
+            echo "ℹ️  See ARCHITECTURE.md for details on hybrid Bikeshed+ReSpec system"
             exit 1
           fi
+          
+          WRAPPER_COUNT=$(grep -c "main-content-wrapper" boost-spec.html)
+          echo "✅ Found $WRAPPER_COUNT main-content-wrapper references"
+          
+          # Validate critical CSS is included
+          if ! grep -q "respec-style.css" boost-spec.html; then
+            echo "❌ CRITICAL: respec-style.css not included - styling broken!"
+            echo "ℹ️  This CSS is essential for the ReSpec-style layout system"
+            exit 1
+          fi
+          echo "✅ ReSpec-style CSS properly included"
+          
+          # Check for sidebar TOC structure
+          if ! grep -q "toc.*sidebar" boost-spec.html; then
+            echo "⚠️  Warning: Sidebar TOC structure may be missing"
+          fi
+          
+          echo "✅ ReSpec-style layout system validation passed"
           
           # Validate ERD Navigator
           if [ ! -f "erd-navigator/index.html" ]; then
