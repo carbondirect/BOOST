@@ -193,7 +193,7 @@ org = client.create_organization(
 # Comprehensive validation
 validation = client.validate_all()
 if validation['valid']:
-    print("✓ All entities pass validation!")
+    print("$\checkmark$ All entities pass validation!")
 \end{minted}
 \end{pythonexample}
 
@@ -316,7 +316,7 @@ transaction = client.create_transaction(
 # Comprehensive validation using all dynamic rules
 validation = client.validate_all()
 if validation['valid']:
-    print("✓ All entities validated successfully!")
+    print("$\checkmark$ All entities validated successfully!")
     
 # Export to JSON-LD with semantic annotations
 jsonld_output = client.export_to_jsonld(include_context=True)
@@ -351,7 +351,7 @@ certified_logs = client.create_traceable_unit(
 # Validate certification chain integrity
 cert_validation = client.validate_certification_chain("TRU-FSC-001")
 print(f"Certification valid: {cert_validation['valid']}")
-\end{minted}}
+\end{minted}
 \end{pythonexample}
 
 \subsubsection{Mass Balance Validation}
@@ -388,7 +388,7 @@ pellet_production = client.create_material_processing(
 balance_validation = client.validate_mass_balance("MP-PELLETS-001")
 print(f"Mass balance valid: {balance_validation['valid']}")
 print(f"Efficiency: {balance_validation['efficiency']}%")
-\end{minted}}
+\end{minted}
 \end{pythonexample}
 
 \subsection{Integration Guidance}
@@ -416,7 +416,6 @@ def create_organization():
         return jsonify(org.model_dump(by_alias=True))
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
-\end{minted}
 
 @app.route('/validate/<entity_type>', methods=['POST'])
 def validate_entity(entity_type):
@@ -430,7 +429,8 @@ def validate_entity(entity_type):
 # Schema introspection endpoint
 @app.route('/schema/info')
 def schema_info():
-    return jsonify(boost_client.get_schema_info())}
+    return jsonify(boost_client.get_schema_info())
+\end{minted}
 \end{pythonexample}
 
 \subsection{Configuration}
@@ -461,7 +461,8 @@ loader.add_schema_source("/additional/schemas")
 Business logic rules are defined in configuration files:
 
 \begin{jsonexample}{Business Logic Configuration}
-\jsoncode{{
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
+{
   "volumeMassConservation": {
     "materialProcessing": {
       "sawing": {
@@ -479,7 +480,8 @@ Business logic rules are defined in configuration files:
       "harvest_to_processing_max_days": 90
     }
   }
-}}
+}
+\end{minted}
 \end{jsonexample}
 
 \subsection{Testing and Validation}
@@ -520,7 +522,7 @@ results = validator.comprehensive_validation(test_data)
 print(f"Validation results: {results['summary']}")
 for category, result in results['by_category'].items():
     print(f"  {category}: {'PASS' if result['valid'] else 'FAIL'}")
-\end{minted}}
+\end{minted}
 \end{pythonexample}
 
 \subsection{Performance Characteristics}

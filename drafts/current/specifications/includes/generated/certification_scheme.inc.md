@@ -2,7 +2,7 @@
 
 CertificationScheme entity defining certification standards and requirements with geographic applicability for Phase 2 BOOST traceability system enhancements
 
-**🗂️ [View CertificationScheme in ERD Navigator](erd-navigator/index.html?focus=CertificationScheme)**
+**[View CertificationScheme in ERD Navigator](erd-navigator/index.html?focus=CertificationScheme)**
 
 ### Relationships ### {{.unnumbered}}
 

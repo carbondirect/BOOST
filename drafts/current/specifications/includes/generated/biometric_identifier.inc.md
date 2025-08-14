@@ -2,7 +2,7 @@
 
 BiometricIdentifier entity in BOOST data model
 
-**🗂️ [View Biometric Identifier in ERD Navigator](erd-navigator/index.html?focus=BiometricIdentifier)**
+**[View Biometric Identifier in ERD Navigator](erd-navigator/index.html?focus=BiometricIdentifier)**
 
 ### Relationships ### {{.unnumbered}}
 

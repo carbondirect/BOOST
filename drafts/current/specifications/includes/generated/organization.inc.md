@@ -2,7 +2,7 @@
 
 Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements
 
-**🗂️ [View Organization in ERD Navigator](erd-navigator/index.html?focus=Organization)**
+**[View Organization in ERD Navigator](erd-navigator/index.html?focus=Organization)**
 
 ### Properties ### {{.unnumbered}}
 
@@ -53,6 +53,48 @@ Organization entity with geographic data references and certification management
 <td>✓
 </tr>
 <tr>
+<td><code>airDistrictPermit</code>
+<td>string
+<td>Air quality management district permit identifier
+<td>
+</tr>
+<tr>
+<td><code>bioramContractId</code>
+<td>string (pattern)
+<td>BioRAM competitive procurement contract identifier
+<td>
+</tr>
+<tr>
+<td><code>bioramEligibilityStatus</code>
+<td>enum(4 values)
+<td>Current BioRAM program eligibility status
+<td>
+</tr>
+<tr>
+<td><code>bioramFacilityId</code>
+<td>string (pattern)
+<td>BioRAM facility identifier for program tracking
+<td>
+</tr>
+<tr>
+<td><code>bioramRegistrationId</code>
+<td>string (pattern)
+<td>CEC BioRAM registration identifier for biomass power facilities
+<td>
+</tr>
+<tr>
+<td><code>calFireJurisdiction</code>
+<td>string
+<td>CAL FIRE unit or jurisdiction for facility area
+<td>
+</tr>
+<tr>
+<td><code>californiaSRA</code>
+<td>boolean
+<td>Whether facility operates within California State Responsibility Area
+<td>
+</tr>
+<tr>
 <td><code>certifications</code>
 <td>array&amp;lt;string&amp;gt;
 <td>List of certification IDs held by organization
@@ -86,6 +128,18 @@ Organization entity with geographic data references and certification management
 <td><code>facilityCapacity</code>
 <td>object (structured)
 <td>Facility production or handling capacity for LCFS reporting
+<td>
+</tr>
+<tr>
+<td><code>fireHazardZoneDesignation</code>
+<td>enum(4 values)
+<td>CAL FIRE fire hazard severity zone designation for facility location
+<td>
+</tr>
+<tr>
+<td><code>gridInterconnectionPoint</code>
+<td>string
+<td>Grid interconnection substation or transmission point
 <td>
 </tr>
 <tr>
@@ -125,6 +179,12 @@ Organization entity with geographic data references and certification management
 <td>
 </tr>
 <tr>
+<td><code>powerPurchaseAgreementId</code>
+<td>string
+<td>Power purchase agreement identifier with utility offtaker
+<td>
+</tr>
+<tr>
 <td><code>primaryGeographicDataId</code>
 <td>string (pattern)
 <td>Foreign key to primary operational location
@@ -146,6 +206,12 @@ Organization entity with geographic data references and certification management
 <td><code>traceableUnitIds</code>
 <td>array&amp;lt;string&amp;gt;
 <td>TRUs managed by this organization
+<td>
+</tr>
+<tr>
+<td><code>utilityOfftaker</code>
+<td>string
+<td>Utility company purchasing power under BioRAM contract
 <td>
 </tr>
 <tr>
@@ -191,7 +257,7 @@ The `Organization` entity manages companies and institutions with geographic dat
 <td>string
 <td>Yes
 <td>Type of organization (enum)
-<td>`harvester`, `processor`, `certifier`, `transporter`
+<td>`harvester`, `processor`, `certifier`, `transporter`, `supplier`, `manufacturer`, `producer`, `importer`, `blender`, `distributor`
 </tr>
 <tr>
 <td>`primaryGeographicDataId`
@@ -302,6 +368,30 @@ The `Organization` entity manages companies and institutions with geographic dat
      Manages final product quality and specifications
      Provides consumer-ready products
      Examples: Furniture manufacturers, construction companies
+7. **producer**
+     Primary production and manufacturing of renewable fuels or products
+     Operates refineries and production facilities for biofuels
+     Manages feedstock conversion and processing operations
+     Subject to LCFS regulatory requirements and reporting
+     Examples: Renewable diesel producers, biodiesel refineries, ethanol plants
+8. **importer**
+     Import operations for renewable fuels and products
+     Manages international supply chain and customs operations
+     Handles regulatory compliance for imported fuels
+     Subject to LCFS import reporting requirements
+     Examples: Fuel importers, biofuel trading companies
+9. **blender**
+     Fuel blending and distribution operations
+     Mixes renewable fuels with conventional petroleum products
+     Manages fuel quality and specification compliance
+     Subject to LCFS blending and distribution requirements
+     Examples: Fuel blending terminals, distribution facilities
+10. **distributor**
+     Distribution and retail operations for renewable fuels
+     Manages fuel delivery and retail sales operations
+     Handles end-consumer fuel distribution
+     Subject to LCFS distribution reporting requirements
+     Examples: Fuel distributors, retail gas stations, fleet operators
 ### Key Features
 1. **Geographic Integration**
      Primary location tracking with GeographicData references

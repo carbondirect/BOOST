@@ -2,7 +2,7 @@
 
 Quality measurements and dimensional data
 
-**🗂️ [View Measurement Record in ERD Navigator](erd-navigator/index.html?focus=MeasurementRecord)**
+**[View Measurement Record in ERD Navigator](erd-navigator/index.html?focus=MeasurementRecord)**
 
 ### Relationships ### {{.unnumbered}}
 

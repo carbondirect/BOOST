@@ -2,7 +2,7 @@
 
 MassBalanceAccount entity in BOOST data model
 
-**🗂️ [View Mass Balance Account in ERD Navigator](erd-navigator/index.html?focus=MassBalanceAccount)**
+**[View Mass Balance Account in ERD Navigator](erd-navigator/index.html?focus=MassBalanceAccount)**
 
 ### Relationships ### {{.unnumbered}}
 

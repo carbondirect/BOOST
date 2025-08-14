@@ -2,7 +2,7 @@
 
 Material types and specifications
 
-**🗂️ [View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
+**[View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
 
 ### Properties ### {{.unnumbered}}
 

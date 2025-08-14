@@ -2,7 +2,7 @@
 
 Equipment entity representing forestry machinery and equipment used in biomass harvesting and processing operations
 
-**🗂️ [View Equipment in ERD Navigator](erd-navigator/index.html?focus=Equipment)**
+**[View Equipment in ERD Navigator](erd-navigator/index.html?focus=Equipment)**
 
 ### Relationships ### {{.unnumbered}}
 

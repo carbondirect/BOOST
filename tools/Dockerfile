@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     texlive-latex-extra \
     texlive-fonts-recommended \
     texlive-fonts-extra \
+    texlive-science \
+    texlive-extra-utils \
     pandoc \
     git \
     curl \

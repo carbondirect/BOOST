@@ -2,7 +2,7 @@
 
 Processing operations that transform TRUs with plant part tracking
 
-**🗂️ [View Material Processing in ERD Navigator](erd-navigator/index.html?focus=MaterialProcessing)**
+**[View Material Processing in ERD Navigator](erd-navigator/index.html?focus=MaterialProcessing)**
 
 ### Relationships ### {{.unnumbered}}
 

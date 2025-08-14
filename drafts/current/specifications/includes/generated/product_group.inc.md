@@ -2,7 +2,7 @@
 
 ProductGroup entity in BOOST data model
 
-**🗂️ [View Product Group in ERD Navigator](erd-navigator/index.html?focus=ProductGroup)**
+**[View Product Group in ERD Navigator](erd-navigator/index.html?focus=ProductGroup)**
 
 ### Relationships ### {{.unnumbered}}
 

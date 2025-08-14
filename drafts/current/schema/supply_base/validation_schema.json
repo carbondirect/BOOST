@@ -5,17 +5,20 @@
     "type": "object",
     "properties": {
       "@context": {
-        "type": "object"
+        "type": "object",
+        "description": "JSON-LD context defining semantic vocabulary mappings"
       },
       "@type": {
         "type": "string",
         "enum": [
           "SupplyBase"
-        ]
+        ],
+        "description": "Entity type identifier for JSON-LD processing"
       },
       "@id": {
         "type": "string",
-        "format": "uri"
+        "format": "uri",
+        "description": "Globally unique IRI identifying this specific entity instance"
       },
       "supplyBaseId": {
         "type": "string",

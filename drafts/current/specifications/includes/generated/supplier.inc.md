@@ -2,7 +2,7 @@
 
 Supplier entity in BOOST data model
 
-**🗂️ [View Supplier in ERD Navigator](erd-navigator/index.html?focus=Supplier)**
+**[View Supplier in ERD Navigator](erd-navigator/index.html?focus=Supplier)**
 
 ### Relationships ### {{.unnumbered}}
 

@@ -9,27 +9,49 @@
 \textbf{\field{transactionDate}} & string (date) & Date of business agreement \\
 \textbf{\field{transactionId}} & string (pattern) & Unique identifier for the business transaction \\
 \textbf{\field{transactionStatus}} & enum(6 values) & Current status of business transaction \\
+\field{BioramPathwayId} & string (pattern) & BioRAM pathway identifier for biomass power generation - uses EntityNameId co... \\
 \field{BrokerOrganizationId} & ['string', 'null'] & Optional intermediary broker organization - uses EntityNameId convention refe... \\
 \field{GeographicDataId} & string (pattern) & Primary transaction location - uses EntityNameId convention referencing Geogr... \\
 \field{LcfsPathwayId} & string (pattern) & CARB-certified pathway identifier for LCFS compliance - uses EntityNameId con... \\
 \field{SalesDeliveryDocumentId} & string (pattern) & Foreign key to sales/delivery documentation - uses EntityNameId convention re... \\
+\field{attestationDate} & string (date) & Date of BioRAM compliance attestation \\
+\field{attestationSignatory} & string & Name and title of person attesting to BioRAM compliance \\
+\field{biomassVolume} & number (≥0) & Volume of biomass fuel in transaction for BioRAM reporting \\
+\field{biomassVolumeUnit} & enum(bone\_dry\_tonnes, green\_tonnes, cubic\_yards) & Unit of measurement for biomass volume \\
+\field{bioramCertificationId} & string & BioRAM compliance certification identifier for transaction \\
+\field{bioramEligible} & boolean & Whether transaction meets BioRAM program eligibility requirements \\
+\field{calFirePermitNumber} & string & CAL FIRE permit number for harvest or treatment activities \\
 \field{complianceRequirements} & array<string> & Regulatory compliance requirements for transaction \\
 \field{contractSignedDate} & ['string', 'null'] & Date when contract was executed \\
 \field{contractTerms} & enum(8 values) & Incoterms delivery conditions \\
 \field{expectedDeliveryDate} & ['string', 'null'] & Expected completion/delivery date \\
+\field{fhszVerificationSource} & string & Source of fire hazard zone verification (e.g., CAL\_FIRE\_2024\_MAPS) \\
 \field{financialTerms} & object (structured) & Detailed financial terms and conditions \\
+\field{fireHazardSeverityZone} & enum(4 values) & CAL FIRE fire hazard severity zone designation \\
 \field{fuelCategory} & enum(10 values) & Category of fuel for LCFS classification \\
+\field{fuelOriginCoordinates} & object (structured) & Geographic coordinates of biomass fuel origin \\
+\field{fuelOriginFacilityId} & string & Identifier for source facility or harvest site \\
+\field{fuelType} & enum(6 values) & BioRAM eligible fuel type classification \\
 \field{fuelVolume} & number (≥0) & Volume of fuel in transaction for LCFS reporting \\
 \field{fuelVolumeUnit} & enum(gallons, liters, GGE) & Unit of measurement for fuel volume \\
+\field{haulDistance} & number (≥0) & Transportation distance from source to facility in miles \\
+\field{haulUnit} & enum(miles, kilometers) & Unit of measurement for haul distance \\
+\field{landowner} & string & Legal landowner of biomass source location \\
 \field{lastUpdated} & string (date-time) & Timestamp of last modification \\
 \field{manipulationTimestamps} & array<string> & Processing step timestamps \\
+\field{materialEligibilityConfirmed} & boolean & Confirmation that material meets BioRAM eligibility criteria \\
 \field{mediaBreaksDetected} & array<boolean> & Continuity flags per TRU \\
+\field{parcelId} & string & Assessor parcel number or legal land description \\
 \field{paymentTerms} & string & Payment conditions and timeline \\
+\field{permitStatus} & enum(4 values) & Status of required permits for biomass harvesting \\
 \field{reconciliationStatus} & enum(pending, resolved, disputed) & Transaction reconciliation status \\
 \field{regulatedPartyRole} & enum(5 values) & Role of regulated party in LCFS transaction \\
+\field{reportingAccuracyConfirmed} & boolean & Confirmation of reporting data accuracy for BioRAM compliance \\
 \field{reportingPeriod} & string (pattern) & LCFS reporting quarter in YYYY-QN format \\
 \field{riskManagement} & object (structured) & Risk management and mitigation terms \\
 \field{speciesCompositionAtTransaction} & array<object> & Species breakdown at transaction time \\
+\field{timberHarvestPlan} & string & Timber harvest plan identifier if applicable \\
 \field{traceableUnitIds} & array<string> & TRUs included in this transaction \\
 \field{trackingPointIds} & array<string> & Location trail references \\
+\field{withinSRA} & boolean & Whether fuel source is within California State Responsibility Area \\
 \end{entitytable}

@@ -2,7 +2,7 @@
 
 Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard
 
-**🗂️ [View BOOST Moisture Content Validation Rules in ERD Navigator](erd-navigator/index.html?focus=MoistureContent)**
+**[View BOOST Moisture Content Validation Rules in ERD Navigator](erd-navigator/index.html?focus=MoistureContent)**
 
 ### Relationships ### {{.unnumbered}}
 

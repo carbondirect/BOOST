@@ -2,7 +2,7 @@
 
 EnergyCarbonData entity in BOOST data model
 
-**🗂️ [View Energy Carbon Data in ERD Navigator](erd-navigator/index.html?focus=EnergyCarbonData)**
+**[View Energy Carbon Data in ERD Navigator](erd-navigator/index.html?focus=EnergyCarbonData)**
 
 ### Relationships ### {{.unnumbered}}
 

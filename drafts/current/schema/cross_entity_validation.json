@@ -75,6 +75,24 @@
                 "required": true,
                 "description": "Transaction must reference valid TraceableUnit"
               }
+            },
+            "lcfsPathwayId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "LcfsPathway"},
+                "targetField": {"const": "pathwayId"},
+                "required": false,
+                "description": "LCFS pathway reference must be valid if provided"
+              }
+            },
+            "bioramPathwayId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "BioramPathway"},
+                "targetField": {"const": "pathwayId"},
+                "required": false,
+                "description": "BioRAM pathway reference must be valid if provided"
+              }
             }
           }
         },
@@ -502,6 +520,29 @@
                 "targetField": {"const": "pathwayId"},
                 "required": true,
                 "description": "LCFS pathway must be valid"
+              }
+            }
+          }
+        },
+        "BioramReporting": {
+          "type": "object",
+          "properties": {
+            "facilityEntityId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": true,
+                "description": "BioRAM facility must reference valid Organization"
+              }
+            },
+            "verifierEntityId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "Organization"},
+                "targetField": {"const": "organizationId"},
+                "required": false,
+                "description": "BioRAM verifier must reference valid Organization if specified"
               }
             }
           }

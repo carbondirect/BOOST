@@ -149,7 +149,7 @@ class UnifiedContentGenerator:
         
         # Add ERD Navigator link
         entity_class = self._snake_to_pascal(entity_dir)
-        content += f"**🗂️ [View {entity_name} in ERD Navigator](erd-navigator/index.html?focus={entity_class})**\n\n"
+        content += f"**[View {entity_name} in ERD Navigator](erd-navigator/index.html?focus={entity_class})**\n\n"
         
         # Add relationships if any
         if entity_dir in self.entity_relationships:
@@ -455,7 +455,7 @@ class UnifiedContentGenerator:
         print("=" * 60)
         
         # Load schemas
-        print("\n📊 Loading schemas...")
+        print("\nLoading schemas...")
         self.load_schemas()
         
         # Generate content for both formats
@@ -518,7 +518,7 @@ def main():
     generator = UnifiedContentGenerator(args.schema_dir, args.output_dir)
     
     # Load schemas
-    print("📊 Loading schemas...")
+    print("Loading schemas...")
     generator.load_schemas()
     
     # Generate requested format(s)

@@ -40,7 +40,7 @@ def process_dictionary_file(file_path):
         print(f"  ✅ Fixed HTML escaping in {file_path}")
         return True
     else:
-        print(f"  ℹ️  No changes needed in {file_path}")
+        print(f"  INFO:  No changes needed in {file_path}")
         return False
 
 def main():

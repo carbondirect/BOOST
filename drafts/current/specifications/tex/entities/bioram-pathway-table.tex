@@ -1,0 +1,20 @@
+% BioRAM Pathway Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{BioRAM Pathway}
+\textbf{\field{carbonIntensity}} & number (≥0, ≤50) & Carbon intensity in gCO2e/MJ for biomass fuel \\
+\textbf{\field{certificationDate}} & string (date) & CEC BioRAM pathway certification date \\
+\textbf{\field{efficiencyStandard}} & number (≥0.2, ≤0.6) & Minimum efficiency requirement for BioRAM eligibility (fraction) \\
+\textbf{\field{eligibilityStatus}} & enum(4 values) & Current CEC eligibility status \\
+\textbf{\field{fuelType}} & enum(7 values) & BioRAM eligible fuel type classification \\
+\textbf{\field{pathwayId}} & string (pattern) & BioRAM pathway identifier \\
+\textbf{\field{targetFacilityType}} & enum(biomass\_power\_plant, biogas\_facility, combined\_heat\_power) & Type of facility this pathway applies to \\
+\field{cecVersion} & string (pattern) & CEC BioRAM program version used for certification \\
+\field{expirationDate} & string (date) & Pathway certification expiration date \\
+\field{fireHazardZoneEligibility} & array<string> & Eligible CAL FIRE hazard severity zones \\
+\field{geographicScope} & enum(California\_SRA, California\_Statewide, Western\_States) & Geographic applicability within State Responsibility Areas \\
+\field{haulDistanceLimit} & number (≥0, ≤200) & Maximum economical haul distance in miles \\
+\field{lastUpdated} & string (date-time) & Timestamp of most recent pathway data update \\
+\field{seasonalAvailability} & object (structured) & Seasonal fuel availability characteristics \\
+\field{sourceRegion} & string & Primary source region or forest management unit \\
+\end{entitytable}

@@ -1,9 +1,6 @@
 % JSON-LD Context and Semantic Web Integration
 % Documentation for BOOST JSON-LD support
 
-\section{JSON-LD Context and Semantic Web Integration}
-\label{sec:jsonld-context}
-
 BOOST implements JSON-LD (JSON for Linking Data) as its primary serialization format, enabling semantic web compatibility, data linking, and machine-readable context definitions. This section explains the JSON-LD context structure, semantic annotations, and integration with existing ontologies.
 
 \subsection{JSON-LD Overview}
@@ -25,6 +22,7 @@ JSON-LD extends standard JSON with semantic web capabilities through:
 The BOOST JSON-LD context maps entity properties to established vocabularies:
 
 \begin{jsonexample}{BOOST Core Context}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
 {
   "@context": {
     "schema": "http://schema.org/",
@@ -58,6 +56,7 @@ The BOOST JSON-LD context maps entity properties to established vocabularies:
     }
   }
 }
+\end{minted}
 \end{jsonexample}
 
 \subsection{Vocabulary Mappings}
@@ -106,6 +105,7 @@ Supply chain standards alignment:
 Complete JSON-LD representation of a TraceableUnit:
 
 \begin{jsonexample}{TraceableUnit JSON-LD}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
 {
   "@context": "https://boost.org/context.jsonld",
   "@type": "biomass:TraceableUnit",
@@ -135,6 +135,7 @@ Complete JSON-LD representation of a TraceableUnit:
     "@id": "https://example.org/org/ORG-FOREST-001"
   }
 }
+\end{minted}
 \end{jsonexample}
 
 \subsubsection{Transaction with Linked Data}
@@ -142,6 +143,7 @@ Complete JSON-LD representation of a TraceableUnit:
 Transaction linking multiple entities:
 
 \begin{jsonexample}{Linked Transaction}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
 {
   "@context": "https://boost.org/context.jsonld",
   "@type": "schema:Order",
@@ -165,6 +167,7 @@ Transaction linking multiple entities:
   "prov:startedAtTime": "2025-01-15T09:00:00Z",
   "prov:endedAtTime": "2025-01-15T14:30:00Z"
 }
+\end{minted}
 \end{jsonexample}
 
 \subsection{Advanced Features}
@@ -175,6 +178,7 @@ Transaction linking multiple entities:
 Support for multi-source data using named graphs:
 
 \begin{jsonexample}{Named Graph Structure}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
 {
   "@context": "https://boost.org/context.jsonld",
   "@graph": [{
@@ -197,6 +201,7 @@ Support for multi-source data using named graphs:
     ]
   }]
 }
+\end{minted}
 \end{jsonexample}
 
 \subsubsection{Framing}
@@ -204,6 +209,7 @@ Support for multi-source data using named graphs:
 JSON-LD framing for specific data views:
 
 \begin{jsonexample}{Frame Definition}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
 {
   "@context": "https://boost.org/context.jsonld",
   "@type": "TraceableUnit",
@@ -215,6 +221,7 @@ JSON-LD framing for specific data views:
     }
   }
 }
+\end{minted}
 \end{jsonexample}
 
 \subsubsection{Compaction and Expansion}
@@ -295,6 +302,7 @@ framed = jsonld.frame(tru, frame)
 Browser and Node.js support:
 
 \begin{jsonexample}{JavaScript JSON-LD}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{javascript}
 const jsonld = require('jsonld');
 
 // Process BOOST data
@@ -310,6 +318,7 @@ async function processBoostData(data) {
   
   return nquads;
 }
+\end{minted}
 \end{jsonexample}
 
 \subsection{Semantic Validation}
@@ -320,6 +329,7 @@ async function processBoostData(data) {
 Shape validation for semantic correctness:
 
 \begin{jsonexample}{SHACL Shape}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
 {
   "@context": {"sh": "http://www.w3.org/ns/shacl#"},
   "@type": "sh:NodeShape",
@@ -331,6 +341,7 @@ Shape validation for semantic correctness:
     "sh:maxInclusive": 10000
   }]
 }
+\end{minted}
 \end{jsonexample}
 
 \subsubsection{Reasoning and Inference}

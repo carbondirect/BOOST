@@ -2,7 +2,7 @@
 
 Quarterly LCFS compliance report for regulated entities with credit calculations and submission tracking
 
-**🗂️ [View LCFS Reporting in ERD Navigator](erd-navigator/index.html?focus=LcfsReporting)**
+**[View LCFS Reporting in ERD Navigator](erd-navigator/index.html?focus=LcfsReporting)**
 
 ### Relationships ### {{.unnumbered}}
 

@@ -2,7 +2,7 @@
 
 Customer entity in BOOST data model
 
-**🗂️ [View Customer in ERD Navigator](erd-navigator/index.html?focus=Customer)**
+**[View Customer in ERD Navigator](erd-navigator/index.html?focus=Customer)**
 
 ### Relationships ### {{.unnumbered}}
 

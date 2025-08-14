@@ -5,17 +5,20 @@
     "type": "object",
     "properties": {
       "@context": {
-        "type": "object"
+        "type": "object",
+        "description": "JSON-LD context defining semantic vocabulary mappings"
       },
       "@type": {
         "type": "string",
         "enum": [
           "Transaction"
-        ]
+        ],
+        "description": "Entity type identifier for JSON-LD processing"
       },
       "@id": {
         "type": "string",
-        "format": "uri"
+        "format": "uri",
+        "description": "Globally unique IRI identifying this specific entity instance"
       },
       "transactionId": {
         "type": "string",
@@ -477,7 +480,7 @@
       "name": "Transaction",
       "primaryKey": "transactionId",
       "area": "transaction_management",
-      "description": "🔄 Business transaction with supply chain traceability"
+      "description": "Business transaction with supply chain traceability"
     },
     "relationships": [
       {

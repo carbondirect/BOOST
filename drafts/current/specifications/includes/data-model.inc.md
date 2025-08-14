@@ -1,6 +1,6 @@
 The BOOST data model provides a comprehensive framework for representing all aspects of biomass supply chain operations. The model consists of 33 interconnected entities that work together to provide complete traceability from forest to final product.
 
-## 🌟 Key Features
+## Key Features
 
 ### Comprehensive Entity System
 - **33 Interconnected Entities** - Complete data model covering all aspects of biomass supply chains across 7 thematic areas

@@ -8,11 +8,11 @@ This section provides access to BOOST presentations, working group documentation
 
 <div class="presentation-grid">
 
-**📊 BOOST Kickoff Presentation**
+**BOOST Kickoff Presentation**
 Overview of the BOOST data standard initiative, project goals, and working group approach.
 <a href="../presentations/boost_kickoff.html" class="presentation-link">View Presentation →</a>
 
-**💼 Transaction Object Examples** 
+**Transaction Object Examples** 
 Technical demonstration of data structures and transaction examples in the BOOST standard.
 <a href="../presentations/transaction_object_examples.html" class="presentation-link">View Examples →</a>
 
@@ -24,15 +24,15 @@ Presentations developed for California state agencies to demonstrate BOOST appli
 
 <div class="presentation-grid">
 
-**🏛️ CalRecycle Engagement**
+**CalRecycle Engagement**
 BOOST presentation for California Department of Resources Recycling and Recovery, covering biomass conversion, SB 498 reporting, and waste diversion systems.
 <a href="../presentations/ae_calrecycle.html" class="presentation-link">View Presentation →</a>
 
-**🌾 CDFA Engagement**
+**CDFA Engagement**
 BOOST presentation for California Department of Food and Agriculture, exploring agricultural biomass traceability and potential pilot development opportunities.
 <a href="../presentations/ae_cdfa.html" class="presentation-link">View Presentation →</a>
 
-**🏞️ Department of Conservation**
+**Department of Conservation**
 BOOST presentation for California Department of Conservation, focusing on forest management data standards and conservation tracking requirements.
 <a href="../presentations/ae_doc.html" class="presentation-link">View Presentation →</a>
 
@@ -44,7 +44,7 @@ Technical presentations exploring BOOST integration with existing regulatory fra
 
 <div class="presentation-grid">
 
-**⛽ BOOST + LCFS Integration**
+**BOOST + LCFS Integration**
 Technical presentation on BOOST integration with California's Low Carbon Fuel Standard (LCFS), covering relevant entities and chain of custody requirements.
 <a href="../presentations/st_lcfs.html" class="presentation-link">View Presentation →</a>
 
@@ -56,7 +56,7 @@ Technical presentation on BOOST integration with California's Low Carbon Fuel St
 
 Explore the complete BOOST data model through our interactive ERD Navigator, featuring all 33 entities across 7 thematic areas.
 
-**🗂️ [Interactive ERD Navigator](erd-navigator/index.html)**
+**[Interactive ERD Navigator](erd-navigator/index.html)**
 
 The ERD Navigator provides:
 - Interactive visualization of all entity relationships
@@ -65,7 +65,7 @@ The ERD Navigator provides:
 - Dynamic zoom, pan, and relationship highlighting
 - Direct links to entity documentation sections
 
-<a href="erd-navigator/index.html" class="erd-navigator-link">🌟 Launch ERD Navigator →</a>
+<a href="erd-navigator/index.html" class="erd-navigator-link">Launch ERD Navigator →</a>
 
 ## Working Group Documentation ## {#working-group-docs}
 
@@ -75,17 +75,17 @@ Access notes and documentation from BOOST working group meetings and presentatio
 
 <div class="meeting-grid">
 
-**📋 Kickoff Meeting**
+**Kickoff Meeting**
 Initial project kickoff meeting notes and presentation materials.
 <a href="https://github.com/carbondirect/BOOST/blob/main/meetings/kickoff_meeting.md" class="meeting-link">Meeting Notes →</a>
 <a href="https://github.com/carbondirect/BOOST/blob/main/meetings/kickoff_meetingNotes.md" class="meeting-link secondary">Additional Notes →</a>
 
-**📅 June 11, 2025**
+**June 11, 2025**
 Working group meeting notes and action items from June 11th session.
 <a href="https://github.com/carbondirect/BOOST/blob/main/meetings/meeting_6_11_25.md" class="meeting-link">Meeting Notes →</a>
 <a href="https://github.com/carbondirect/BOOST/blob/main/meetings/meetingNotes_6_11_25.md" class="meeting-link secondary">Additional Notes →</a>
 
-**📅 June 25, 2025**
+**June 25, 2025**
 Latest working group meeting notes and updates from June 25th session.
 <a href="https://github.com/carbondirect/BOOST/blob/main/meetings/BOOST_meeting_6_25_2025.md" class="meeting-link">Meeting Notes →</a>
 <a href="https://github.com/carbondirect/BOOST/blob/main/meetings/meetingNotes_6_25_25.md" class="meeting-link secondary">Additional Notes →</a>

@@ -2,7 +2,7 @@
 
 Claim entity in BOOST data model
 
-**🗂️ [View Claim in ERD Navigator](erd-navigator/index.html?focus=Claim)**
+**[View Claim in ERD Navigator](erd-navigator/index.html?focus=Claim)**
 
 ### Relationships ### {{.unnumbered}}
 

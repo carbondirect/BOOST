@@ -2,7 +2,7 @@
 
 Certificate entity representing formal certification records issued by certification bodies
 
-**🗂️ [View Certificate in ERD Navigator](erd-navigator/index.html?focus=Certificate)**
+**[View Certificate in ERD Navigator](erd-navigator/index.html?focus=Certificate)**
 
 ### Relationships ### {{.unnumbered}}
 

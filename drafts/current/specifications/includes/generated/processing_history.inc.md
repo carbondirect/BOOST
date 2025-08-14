@@ -2,7 +2,7 @@
 
 Complete timeline of processing events with moisture tracking
 
-**🗂️ [View Processing History in ERD Navigator](erd-navigator/index.html?focus=ProcessingHistory)**
+**[View Processing History in ERD Navigator](erd-navigator/index.html?focus=ProcessingHistory)**
 
 ### Relationships ### {{.unnumbered}}
 
@@ -26,19 +26,19 @@ Complete timeline of processing events with moisture tracking
 <tr>
 <td><code>@context</code>
 <td>object (structured)
-<td>No description provided
+<td>JSON-LD context defining semantic vocabulary mappings
 <td>✓
 </tr>
 <tr>
 <td><code>@id</code>
 <td>string (uri)
-<td>No description provided
+<td>Globally unique IRI identifying this specific entity instance
 <td>✓
 </tr>
 <tr>
 <td><code>@type</code>
 <td>enum(ProcessingHistory)
-<td>No description provided
+<td>Entity type identifier for JSON-LD processing
 <td>✓
 </tr>
 <tr>

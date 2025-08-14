@@ -1,8 +1,6 @@
 % LCFS Programmatic Reporting and Biofuel Compliance
 % Comprehensive documentation for regulatory compliance
 
-\section{Regulatory Program Compliance}
-\label{sec:regulatory-compliance}
 
 The BOOST standard provides comprehensive support for regulatory compliance across multiple biofuel programs, with primary focus on the California Low Carbon Fuel Standard (LCFS). This section documents programmatic reporting workflows, compliance requirements, and implementation guidance for regulatory submissions.
 
@@ -137,6 +135,7 @@ Monthly reconciliation ensures data integrity:
 Complete workflow for renewable diesel with forest residue feedstock:
 
 \begin{jsonexample}{LCFS Transaction with Pathway}
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
 {
   "transactionId": "TXN-LCFS-2025Q1-001",
   "transactionType": "fuel_sale",
@@ -152,6 +151,7 @@ Complete workflow for renewable diesel with forest residue feedstock:
   "benchmarkCI": 94.17,
   "creditsGenerated": 5862.5
 }
+\end{minted}
 \end{jsonexample}
 
 \subsubsection{Credit Calculation Example}

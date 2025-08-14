@@ -2,7 +2,7 @@
 
 Historical movement records of TRUs
 
-**🗂️ [View Location History in ERD Navigator](erd-navigator/index.html?focus=LocationHistory)**
+**[View Location History in ERD Navigator](erd-navigator/index.html?focus=LocationHistory)**
 
 ### Relationships ### {{.unnumbered}}
 

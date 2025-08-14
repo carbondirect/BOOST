@@ -1,100 +1,50 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://github.com/carbondirect/BOOST/schemas/certificate.json",
-  "title": "Certificate",
-  "type": "object",
-  "properties": {
-    "certificateId": { "type": "string" },
-    "certificateNumber": { "type": "string" },
-    "certificationSchemeId": { "type": "string" },
-    "cbId": { "type": "string" },
-    "organizationId": { "type": "string" },
-    "dateOfIssue": { "type": "string", "format": "date" },
-    "dateOfExpiry": { "type": "string", "format": "date" },
-    "status": {
-      "type": "string",
-      "enum": ["active", "expired", "revoked", "suspended", "pending"]
-    },
-    "scopeOfCertification": { "type": "string" },
-    "versionNumber": { "type": "string" },
-    "productGroups": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "productType": { "type": "string" },
-          "materialCategories": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "controlSystems": {
-            "type": "array",
-            "items": { "type": "string" }
-          }
-        },
-        "required": ["productType"]
-      }
-    },
-    "volumeTrackingRecord": {
-      "type": "object",
-      "properties": {
-        "inputVolumeByCategory": {
-          "type": "object",
-          "additionalProperties": { "type": "number" }
-        },
-        "outputVolumeByCategory": {
-          "type": "object",
-          "additionalProperties": { "type": "number" }
-        }
-      }
-    },
-    "labelUseRecord": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "product": { "type": "string" },
-          "claimType": { "type": "string" },
-          "approvalReference": { "type": "string" }
-        }
-      }
-    },
-    "supplierInfo": {
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" },
-        "address": { "type": "string" }
-      }
-    },
-    "supplierRiskRatingDDS": {
-      "type": "object",
-      "properties": {
-        "riskRating": { "type": "string" },
-        "mitigationMeasures": { "type": "string" }
-      }
-    },
-    "attachments": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "fileName": { "type": "string" },
-          "fileUrl": { "type": "string", "format": "uri" },
-          "fileType": { "type": "string" }
-        }
-      }
-    },
-    "lastUpdated": { "type": "string", "format": "date-time" }
+  "@context": {
+    "Certificate": "https://github.com/carbondirect/BOOST/schemas#Certificate",
+    "certificateId": "https://github.com/carbondirect/BOOST/schemas#certificateId",
+    "certificateNumber": "https://github.com/carbondirect/BOOST/schemas#certificateNumber",
+    "CertificationSchemeId": "https://github.com/carbondirect/BOOST/schemas#CertificationSchemeId",
+    "CertificationBodyId": "https://github.com/carbondirect/BOOST/schemas#CertificationBodyId",
+    "OrganizationId": "https://github.com/carbondirect/BOOST/schemas#OrganizationId",
+    "dateOfIssue": "https://github.com/carbondirect/BOOST/schemas#dateOfIssue",
+    "dateOfExpiry": "https://github.com/carbondirect/BOOST/schemas#dateOfExpiry",
+    "status": "https://github.com/carbondirect/BOOST/schemas#status",
+    "scopeOfCertification": "https://github.com/carbondirect/BOOST/schemas#scopeOfCertification",
+    "versionNumber": "https://github.com/carbondirect/BOOST/schemas#versionNumber",
+    "versionYear": "https://github.com/carbondirect/BOOST/schemas#versionYear",
+    "conditionalRequirements": "https://github.com/carbondirect/BOOST/schemas#conditionalRequirements",
+    "suspensionHistory": "https://github.com/carbondirect/BOOST/schemas#suspensionHistory",
+    "auditSchedule": "https://github.com/carbondirect/BOOST/schemas#auditSchedule",
+    "certificateDocument": "https://github.com/carbondirect/BOOST/schemas#certificateDocument",
+    "VerificationStatementId": "https://github.com/carbondirect/BOOST/schemas#VerificationStatementId",
+    "id": "@id"
   },
-  "required": [
-    "certificateNumber",
-    "certificationSchemeId",
-    "cbId",
-    "organizationId",
-    "dateOfIssue",
-    "dateOfExpiry",
-    "status",
-    "scopeOfCertification",
-    "versionNumber"
-  ]
+  "@type": "Certificate",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/certificate/CERT-SFI-PACIFIC-LUMBER-001",
+  "certificateId": "CERT-SFI-PACIFIC-LUMBER-001",
+  "certificateNumber": "SFI-2025-12345",
+  "CertificationSchemeId": "CERT-SCHEME-SFI-COC",
+  "CertificationBodyId": "CB-SFI-US",
+  "OrganizationId": "ORG-PACIFIC-LUMBER-001",
+  "dateOfIssue": "2025-01-15",
+  "dateOfExpiry": "2030-01-15",
+  "status": "active",
+  "scopeOfCertification": "Chain of Custody for lumber and wood products",
+  "versionNumber": "v3.1",
+  "versionYear": 2022,
+  "conditionalRequirements": [
+    {
+      "type": "surveillance",
+      "description": "Annual surveillance audit required",
+      "dueDate": "2026-01-15"
+    }
+  ],
+  "suspensionHistory": [],
+  "auditSchedule": {
+    "nextAudit": "2026-01-15",
+    "type": "surveillance",
+    "auditorId": "AUD-SFI-001"
+  },
+  "certificateDocument": "https://sfiprogram.org/certificates/2025-12345.pdf",
+  "VerificationStatementId": "VS-SFI-PACIFIC-001"
 }

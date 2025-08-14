@@ -2,7 +2,7 @@
 
 Validation schema for personnel and operator management within the BOOST biomass chain of custody system
 
-**🗂️ [View BOOST Operator Entity Validation Schema in ERD Navigator](erd-navigator/index.html?focus=Operator)**
+**[View BOOST Operator Entity Validation Schema in ERD Navigator](erd-navigator/index.html?focus=Operator)**
 
 ### Relationships ### {{.unnumbered}}
 

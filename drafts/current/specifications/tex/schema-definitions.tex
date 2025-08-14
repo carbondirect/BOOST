@@ -7,19 +7,18 @@
 All BOOST entity definitions \MUST{} be provided as JSON Schema Draft-07 compliant schemas with the following \REQUIRED{} structure:
 
 \begin{jsonexample}{Entity Schema Structure}
-\jsoncode{%
-\{\\
-~~"schema": \{\\
-~~~~"\$schema": "http://json-schema.org/draft-07/schema\#",\\
-~~~~"\$id": "https://github.com/carbondirect/BOOST/\\
-~~~~~~~~~~~~schemas/entity-name",\\
-~~~~"title": "Entity Name",\\
-~~~~"type": "object",\\
-~~~~"properties": \{ ... \},\\
-~~~~"required": [ ... ]\\
-~~\}\\
-\}%
+\begin{minted}[fontsize=\small,linenos=false,breaklines=true,tabsize=2]{json}
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/entity-name",
+    "title": "Entity Name",
+    "type": "object",
+    "properties": { },
+    "required": [ ]
+  }
 }
+\end{minted}
 \end{jsonexample}
 
 \subsection{Business Logic Validation}

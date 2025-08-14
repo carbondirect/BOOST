@@ -2,7 +2,7 @@
 
 Species composition within TRUs
 
-**🗂️ [View Species Component in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
+**[View Species Component in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
 
 ### Relationships ### {{.unnumbered}}
 

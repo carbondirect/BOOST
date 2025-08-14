@@ -2,7 +2,7 @@
 
 GeographicData entity in BOOST data model
 
-**🗂️ [View Geographic Data in ERD Navigator](erd-navigator/index.html?focus=GeographicData)**
+**[View Geographic Data in ERD Navigator](erd-navigator/index.html?focus=GeographicData)**
 
 ### Relationships ### {{.unnumbered}}
 

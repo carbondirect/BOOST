@@ -37,7 +37,7 @@ The `Organization` entity manages companies and institutions with geographic dat
 <td>string
 <td>Yes
 <td>Type of organization (enum)
-<td>`harvester`, `processor`, `certifier`, `transporter`
+<td>`harvester`, `processor`, `certifier`, `transporter`, `supplier`, `manufacturer`, `producer`, `importer`, `blender`, `distributor`
 </tr>
 <tr>
 <td>`primaryGeographicDataId`
@@ -154,6 +154,34 @@ The `Organization` entity manages companies and institutions with geographic dat
      Manages final product quality and specifications
      Provides consumer-ready products
      Examples: Furniture manufacturers, construction companies
+
+7. **producer**
+     Primary production and manufacturing of renewable fuels or products
+     Operates refineries and production facilities for biofuels
+     Manages feedstock conversion and processing operations
+     Subject to LCFS regulatory requirements and reporting
+     Examples: Renewable diesel producers, biodiesel refineries, ethanol plants
+
+8. **importer**
+     Import operations for renewable fuels and products
+     Manages international supply chain and customs operations
+     Handles regulatory compliance for imported fuels
+     Subject to LCFS import reporting requirements
+     Examples: Fuel importers, biofuel trading companies
+
+9. **blender**
+     Fuel blending and distribution operations
+     Mixes renewable fuels with conventional petroleum products
+     Manages fuel quality and specification compliance
+     Subject to LCFS blending and distribution requirements
+     Examples: Fuel blending terminals, distribution facilities
+
+10. **distributor**
+     Distribution and retail operations for renewable fuels
+     Manages fuel delivery and retail sales operations
+     Handles end-consumer fuel distribution
+     Subject to LCFS distribution reporting requirements
+     Examples: Fuel distributors, retail gas stations, fleet operators
 
 ### Key Features
 

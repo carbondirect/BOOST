@@ -33,7 +33,7 @@
     "compliance_reporting": {
       "color": "#DC2626",
       "label": "Compliance & Reporting",
-      "entities": ["LcfsPathway", "LcfsReporting", "ProductGroup", "EnergyCarbonData", "DataReconciliation", "MassBalanceAccount"]
+      "entities": ["LcfsPathway", "LcfsReporting", "BioramPathway", "BioramReporting", "ProductGroup", "EnergyCarbonData", "DataReconciliation", "MassBalanceAccount"]
     }
   },
   "entity_display": {
@@ -71,15 +71,15 @@
     },
     "CertificationBody": {
       "emoji": "🏛️",
-      "position": {"x": 100, "y": 700}
+      "position": {"x": 100, "y": 900}
     },
     "Audit": {
       "emoji": "🔍",
-      "position": {"x": 350, "y": 700}
+      "position": {"x": 350, "y": 900}
     },
     "Operator": {
       "emoji": "👤",
-      "position": {"x": 600, "y": 700}
+      "position": {"x": 600, "y": 900}
     },
     "Material": {
       "emoji": "🪵",
@@ -145,21 +145,29 @@
       "emoji": "📈",
       "position": {"x": 3000, "y": 2000}
     },
+    "BioramPathway": {
+      "emoji": "🌲",
+      "position": {"x": 2400, "y": 2300}
+    },
+    "BioramReporting": {
+      "emoji": "📊",
+      "position": {"x": 2700, "y": 2600}
+    },
     "ProductGroup": {
       "emoji": "📦",
       "position": {"x": 3300, "y": 2000}
     },
     "EnergyCarbonData": {
       "emoji": "⚡",
-      "position": {"x": 2700, "y": 2300}
+      "position": {"x": 3000, "y": 2300}
     },
     "DataReconciliation": {
       "emoji": "🔄",
-      "position": {"x": 3000, "y": 2300}
+      "position": {"x": 3300, "y": 2300}
     },
     "MassBalanceAccount": {
       "emoji": "⚖️",
-      "position": {"x": 3300, "y": 2300}
+      "position": {"x": 3600, "y": 2300}
     },
     "Equipment": {
       "emoji": "🔧",
@@ -351,6 +359,22 @@
       "from": "LcfsPathway",
       "to": "LcfsReporting",
       "label": "certified_pathway",
+      "type": "non-identifying",
+      "from_cardinality": "one",
+      "to_cardinality": "many"
+    },
+    {
+      "from": "BioramPathway",
+      "to": "BioramReporting",
+      "label": "certified_pathway",
+      "type": "non-identifying",
+      "from_cardinality": "one",
+      "to_cardinality": "many"
+    },
+    {
+      "from": "Organization",
+      "to": "BioramReporting",
+      "label": "submits",
       "type": "non-identifying",
       "from_cardinality": "one",
       "to_cardinality": "many"
@@ -789,19 +813,20 @@
     }
   ],
   "field_mappings": {
-    "Organization": ["OrganizationId", "organizationId", "issuingOrganizationId", "regulatedEntityId", "harvesterId"],
+    "Organization": ["OrganizationId", "organizationId", "issuingOrganizationId", "regulatedEntityId", "harvesterId", "facilityEntityId", "verifierEntityId"],
     "GeographicData": ["GeographicDataId", "primaryGeographicDataId", "measurementGeographicDataId", "processingGeographicDataId", "captureGeographicDataId", "sourceGeographicDataId", "deliveryGeographicDataId", "reportGeographicDataId", "supplyBaseGeographicDataId", "customerGeographicDataId", "supplierGeographicDataId", "currentGeographicDataId", "harvestGeographicDataId"],
     "Operator": ["OperatorId", "operatorId", "auditorId", "employeeId"],
     "TraceableUnit": ["TraceableUnitId", "traceableUnitId", "inputTraceableUnitId", "outputTraceableUnitId", "parentTraceableUnitId"],
     "MaterialProcessing": ["MaterialProcessingId", "materialProcessingId"],
     "MeasurementRecord": ["MeasurementRecordId", "measurementRecordId"],
     "LcfsPathway": ["LcfsPathwayId", "pathwayId"],
+    "BioramPathway": ["BioramPathwayId", "pathwayId"],
     "CertificationBody": ["CertificationBodyId", "cbId"],
     "Material": ["MaterialId", "materialTypeId"],
     "Customer": ["CustomerId"],
     "Supplier": ["SupplierId"],
     "CertificationScheme": ["CertificationSchemeId", "certificationSchemeId"],
-    "Transaction": ["TransactionId", "transactionId"],
+    "Transaction": ["TransactionId", "transactionId", "lcfsPathwayId", "bioramPathwayId"],
     "TransactionBatch": ["TransactionBatchId", "transactionBatchId"],
     "SalesDeliveryDocument": ["SalesDeliveryDocumentId", "documentId"],
     "TrackingPoint": ["TrackingPointId", "trackingPointId"],
@@ -825,8 +850,10 @@
   },
   "primary_key_mappings": {
     "LcfsReporting": "reportingId",
+    "BioramReporting": "reportingId",
     "VerificationStatement": "statementId", 
     "LcfsPathway": "pathwayId",
+    "BioramPathway": "pathwayId",
     "CertificationBody": "cbId",
     "SupplyBaseReport": "sbrId",
     "DataReconciliation": "drId",

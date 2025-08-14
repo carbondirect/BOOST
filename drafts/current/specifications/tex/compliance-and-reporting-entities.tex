@@ -2,12 +2,12 @@
 % Auto-generated from JSON schemas
 
 
-\subsubsection{LCFS Pathway}
+\subsection{LCFS Pathway}
 \label{sec:entity-lcfs-pathway}
 
 CARB-certified fuel pathway for LCFS compliance with carbon intensity and regulatory attributes
 
-**🗂️ [View LCFS Pathway in ERD Navigator](erd-navigator/index.html?focus=LCFSPathway)**
+**[View LCFS Pathway in ERD Navigator](erd-navigator/index.html?focus=LCFSPathway)**
 
 % LCFS Pathway Entity Table
 % Auto-generated from JSON schema
@@ -21,7 +21,7 @@ CARB-certified fuel pathway for LCFS compliance with carbon intensity and regula
 \textbf{\field{feedstockCategory}} & enum(13 values) & Primary feedstock type for pathway \\
 \textbf{\field{fuelProduct}} & enum(8 values) & Final fuel product produced \\
 \textbf{\field{pathwayId}} & string (pattern) & CARB-assigned pathway identifier \\
-\textbf{\field{pathwayType}} & enum(Lookup_Table, Tier_1, Tier_2) & CARB pathway certification tier \\
+\textbf{\field{pathwayType}} & enum(Lookup\_Table, Tier\_1, Tier\_2) & CARB pathway certification tier \\
 \textbf{\field{verificationStatus}} & enum(4 values) & Current CARB verification status \\
 \field{expirationDate} & string (date) & Pathway certification expiration date \\
 \field{facilityCapacity} & number (≥0) & Annual production capacity in gallons \\
@@ -32,12 +32,12 @@ CARB-certified fuel pathway for LCFS compliance with carbon intensity and regula
 
 
 
-\subsubsection{LCFS Reporting}
+\subsection{LCFS Reporting}
 \label{sec:entity-lcfs-reporting}
 
 Quarterly LCFS compliance report for regulated entities with credit calculations and submission tracking
 
-**🗂️ [View LCFS Reporting in ERD Navigator](erd-navigator/index.html?focus=LCFSReporting)**
+**[View LCFS Reporting in ERD Navigator](erd-navigator/index.html?focus=LCFSReporting)**
 
 % LCFS Reporting Entity Table
 % Auto-generated from JSON schema
@@ -65,19 +65,19 @@ Quarterly LCFS compliance report for regulated entities with credit calculations
 
 
 
-\subsubsection{Product Group}
+\subsection{Product Group}
 \label{sec:entity-product-group}
 
 ProductGroup entity in BOOST data model
 
-**🗂️ [View Product Group in ERD Navigator](erd-navigator/index.html?focus=ProductGroup)**
+**[View Product Group in ERD Navigator](erd-navigator/index.html?focus=ProductGroup)**
 
 % Product Group Entity Table
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Product Group}
 \textbf{\field{description}} & string & No description provided \\
-\textbf{\field{productCategory}} & enum(solid_biomass, liquid_biofuel, biogas) & No description provided \\
+\textbf{\field{productCategory}} & enum(solid\_biomass, liquid\_biofuel, biogas) & No description provided \\
 \textbf{\field{productGroupId}} & string (pattern) & No description provided \\
 \textbf{\field{productGroupName}} & string & No description provided \\
 \field{certificationRequirements} & array<string> & No description provided \\
@@ -91,12 +91,12 @@ ProductGroup entity in BOOST data model
 
 
 
-\subsubsection{Energy Carbon Data}
+\subsection{Energy Carbon Data}
 \label{sec:entity-energy-carbon-data}
 
 EnergyCarbonData entity in BOOST data model
 
-**🗂️ [View Energy Carbon Data in ERD Navigator](erd-navigator/index.html?focus=EnergyCarbonData)**
+**[View Energy Carbon Data in ERD Navigator](erd-navigator/index.html?focus=EnergyCarbonData)**
 
 % Energy Carbon Data Entity Table
 % Auto-generated from JSON schema
@@ -124,7 +124,7 @@ EnergyCarbonData entity in BOOST data model
 
 
 
-\subsubsection{Data Reconciliation}
+\subsection{Data Reconciliation}
 \label{sec:entity-data-reconciliation}
 
 DataReconciliation entity in BOOST data model
@@ -136,7 +136,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Data Reconciliation in ERD Navigator](erd-navigator/index.html?focus=DataReconciliation)**
+**[View Data Reconciliation in ERD Navigator](erd-navigator/index.html?focus=DataReconciliation)**
 
 % Data Reconciliation Entity Table
 % Auto-generated from JSON schema
@@ -160,7 +160,7 @@ This entity references the following entities:
 
 
 
-\subsubsection{Mass Balance Account}
+\subsection{Mass Balance Account}
 \label{sec:entity-mass-balance-account}
 
 MassBalanceAccount entity in BOOST data model
@@ -172,7 +172,7 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**🗂️ [View Mass Balance Account in ERD Navigator](erd-navigator/index.html?focus=MassBalanceAccount)**
+**[View Mass Balance Account in ERD Navigator](erd-navigator/index.html?focus=MassBalanceAccount)**
 
 % Mass Balance Account Entity Table
 % Auto-generated from JSON schema

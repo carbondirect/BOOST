@@ -6,7 +6,7 @@
 
 % Required packages
 \RequirePackage{xcolor}
-\RequirePackage{tcolorbox}
+\RequirePackage[skins,breakable]{tcolorbox}
 \RequirePackage{hyperref}
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
@@ -20,30 +20,29 @@
 \RequirePackage{listings}
 \RequirePackage{minted}
 \RequirePackage[T1]{fontenc}
-\RequirePackage{cmbright}  % Computer Modern Sans Serif font
+\RequirePackage{fourier}   % Utopia fonts with Fourier math (exact minted documentation style)
 \RequirePackage{textcomp}
+% Explicitly configure Latin Modern Sans and Mono (matching minted docs)
+\renewcommand{\sfdefault}{lmss}  % Latin Modern Sans
+\renewcommand{\ttdefault}{lmtt}  % Latin Modern Mono
 \RequirePackage{makeidx}
+\RequirePackage{parskip}   % Better paragraph spacing
 \makeindex  % Enable indexing
 \DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
 
-% W3C Specification Colors
-\definecolor{normative}{RGB}{0,100,0}
-\definecolor{informative}{RGB}{0,0,150}
-\definecolor{example}{RGB}{150,75,0}
-\definecolor{warning}{RGB}{200,0,0}
-\definecolor{reference}{RGB}{100,0,100}
-\definecolor{w3cblue}{RGB}{0,90,156}
+% Simplified color scheme (minted documentation style)
+\definecolor{codebackground}{RGB}{245,245,245}  % Light gray for code
+\definecolor{codeborder}{RGB}{204,204,204}      % Light gray border
+\definecolor{linkcolor}{RGB}{0,0,139}           % Dark blue for links
+\definecolor{rulecolor}{RGB}{128,128,128}       % Gray for rules
+\definecolor{examplecolor}{RGB}{102,102,102}    % Dark gray for examples
+\definecolor{example}{RGB}{102,102,102}        % Alias for minted compatibility
+\definecolor{warningcolor}{RGB}{178,34,34}      % Dark red for warnings
+\definecolor{w3cblue}{RGB}{0,0,139}             % W3C blue for hyperlinks
+\definecolor{reference}{RGB}{139,0,0}           % Dark red for references
 
-% BOOST thematic colors
-\definecolor{coretraceability}{RGB}{76,175,80}
-\definecolor{organizational}{RGB}{33,150,243}
-\definecolor{materialsupply}{RGB}{121,85,72}
-\definecolor{transaction}{RGB}{255,152,0}
-\definecolor{sustainability}{RGB}{255,193,7}
-\definecolor{geographic}{RGB}{156,39,176}
-\definecolor{reporting}{RGB}{244,67,54}
-
-% Minted configuration for syntax highlighting
+% Minted configuration for syntax highlighting (matching minted docs style)
 \setminted{
     fontsize=\small,
     linenos=false,
@@ -51,31 +50,34 @@
     breakanywhere=false,
     tabsize=2,
     autogobble=true,
-    bgcolor=gray!5
+    bgcolor=codebackground,
+    frame=leftline,
+    framerule=1pt,
+    rulecolor=codeborder
 }
 
-% Enhanced listings configuration for better syntax highlighting
+% Enhanced listings configuration (simplified minted style)
 \lstdefinelanguage{JSON}{
     basicstyle=\ttfamily\footnotesize,
     numbers=left,
-    numberstyle=\tiny\color{gray},
+    numberstyle=\tiny\color{rulecolor},
     stepnumber=1,
     numbersep=8pt,
     showstringspaces=false,
     breaklines=true,
-    frame=lines,
-    backgroundcolor=\color{example!5!white},
-    rulecolor=\color{example!75!black}
+    frame=leftline,
+    backgroundcolor=\color{codebackground},
+    rulecolor=\color{codeborder}
 }
 
 \lstdefinestyle{jsonStyle}{
     language=JSON,
     basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{blue}\bfseries,
-    stringstyle=\color{red},
-    commentstyle=\color{green}\itshape,
+    keywordstyle=\color{linkcolor},
+    stringstyle=\color{examplecolor},
+    commentstyle=\color{rulecolor}\itshape,
     numbers=left,
-    numberstyle=\tiny\color{gray},
+    numberstyle=\tiny\color{rulecolor},
     stepnumber=1,
     numbersep=8pt,
     tabsize=2,
@@ -83,40 +85,48 @@
     showstringspaces=false,
     showtabs=false,
     frame=leftline,
-    framerule=2pt,
-    rulecolor=\color{example!75!black},
-    backgroundcolor=\color{example!5!white},
+    framerule=1pt,
+    rulecolor=\color{codeborder},
+    backgroundcolor=\color{codebackground},
     breaklines=true,
     breakatwhitespace=false,
     escapeinside={(*@}{@*)}
 }
 
-% Custom environments
+% Custom environments (Latin Modern fonts matching minted documentation)
 \newtcolorbox{normative}[1][]{
-    colback=normative!5!white,
-    colframe=normative!75!black,
+    colback=codebackground,
+    colframe=codeborder,
     title={\textbf{Normative Section}},
+    fonttitle=\bfseries,
+    boxrule=0.5pt,
     #1
 }
 
 \newtcolorbox{informative}[1][]{
-    colback=informative!5!white,
-    colframe=informative!75!black,
+    colback=codebackground,
+    colframe=codeborder,
     title={\textbf{Informative Section}},
+    fonttitle=\bfseries,
+    boxrule=0.5pt,
     #1
 }
 
 \newtcolorbox{examplebox}[1][]{
-    colback=example!5!white,
-    colframe=example!75!black,
+    colback=codebackground,
+    colframe=examplecolor,
     title={\textbf{Example}},
+    fonttitle=\bfseries,
+    boxrule=0.5pt,
     #1
 }
 
 \newtcolorbox{important}[1][]{
-    colback=warning!5!white,
-    colframe=warning!75!black,
+    colback=white,
+    colframe=warningcolor,
     title={\textbf{Important}},
+    fonttitle=\bfseries,
+    boxrule=1pt,
     #1
 }
 
@@ -139,6 +149,20 @@
 \newcommand{\enum}[1]{\texttt{#1}}
 \newcommand{\TRU}{\entity{TraceableUnit}}
 
+% Thematic area formatting commands
+\newcommand{\coretraceability}[1]{\textbf{#1}}
+\newcommand{\organizational}[1]{\textbf{#1}}
+\newcommand{\material}[1]{\textbf{#1}}
+\newcommand{\materialsupply}[1]{\textbf{#1}}
+\newcommand{\transaction}[1]{\textbf{#1}}
+\newcommand{\measurement}[1]{\textbf{#1}}
+\newcommand{\sustainability}[1]{\textbf{#1}}
+\newcommand{\geographic}[1]{\textbf{#1}}
+\newcommand{\compliance}[1]{\textbf{#1}}
+\newcommand{\reporting}[1]{\textbf{#1}}
+
+% Use standard LaTeX section formatting (Computer Modern)
+
 % Simple W3C Specification metadata commands
 % These commands are not used in this minimal implementation
 % All metadata is hardcoded in \makew3ctitle command
@@ -149,53 +173,42 @@
 \newcommand{\tabref}[1]{Table~\ref{#1}}
 \newcommand{\appref}[1]{Appendix~\ref{#1}}
 
-% Original JSON example environment (keep for backwards compatibility)
+% JSON example environment (Latin Modern fonts matching minted documentation)
 \newtcolorbox{jsonexample}[2][]{
-    colback=example!5!white,
-    colframe=example!75!black,
+    enhanced,
+    colback=codebackground,
+    colframe=codeborder,
     title={\textbf{JSON Example: #2}},
     fonttitle=\bfseries,
+    boxrule=0.5pt,
+    breakable=true,
     left=8pt,
     right=8pt,
     top=8pt,
     bottom=8pt,
-    boxrule=0.8pt,
+    before skip=10pt,
+    after skip=10pt,
     #1
 }
 
-% Enhanced code listing environments using listings package
+% Enhanced code listing environments (Latin Modern fonts matching minted documentation)
 \newenvironment{codeblock}[2][]{
-    \begin{tcolorbox}[colback=gray!5!white,colframe=gray!75!black,title={\textbf{#2}},fonttitle=\bfseries]
+    \begin{tcolorbox}[colback=codebackground,colframe=codeborder,title={\textbf{#2}},fonttitle=\bfseries,boxrule=0.5pt]
     \begin{lstlisting}[#1]
 }{
     \end{lstlisting}
     \end{tcolorbox}
 }
 
-% JSON code command using minted for proper syntax highlighting
-% This version handles the existing manually formatted JSON content
-\newcommand{\jsoncode}[1]{%
-    % First we need to write the content to a temporary file
-    % and then use minted to display it with proper syntax highlighting
-    \begingroup%
-    \small%
-    \ttfamily%
-    \selectfont%
-    \setlength{\baselineskip}{1.2\baselineskip}%
-    \raggedright%
-    \hyphenpenalty=10000%
-    \exhyphenpenalty=10000%
-    #1%
-    \endgroup%
-}
+% Removed problematic \jsoncode command - use minted directly instead
 
-% New minted-based commands for proper syntax highlighting
+% New minted-based commands (simplified styling)
 \newcommand{\mintjson}[1]{%
     \begin{minted}[
-        bgcolor=example!5!white,
+        bgcolor=codebackground,
         frame=leftline,
-        framerule=2pt,
-        rulecolor=example!75!black,
+        framerule=1pt,
+        rulecolor=codeborder,
         fontsize=\small
     ]{json}
     #1
@@ -204,10 +217,10 @@
 
 \newcommand{\mintpython}[1]{%
     \begin{minted}[
-        bgcolor=normative!5!white,
+        bgcolor=codebackground,
         frame=leftline,
-        framerule=2pt,
-        rulecolor=normative!75!black,
+        framerule=1pt,
+        rulecolor=codeborder,
         fontsize=\small,
         linenos=true
     ]{python}
@@ -215,32 +228,31 @@
     \end{minted}
 }
 
-% Inline code formatting commands  
-\newcommand{\inlinejson}[1]{\texttt{\textcolor{example}{#1}}}
+% Inline code formatting commands (simplified styling)
+\newcommand{\inlinejson}[1]{\texttt{\textcolor{examplecolor}{#1}}}
 \newcommand{\inlinecode}[1]{\texttt{#1}}
 
-% Python example environment with syntax highlighting
+% Python example environment (Latin Modern fonts matching minted documentation)
 \newtcolorbox{pythonexample}[1]{
     enhanced,
-    colback=normative!5!white,
-    colframe=normative!75!black,
+    colback=codebackground,
+    colframe=codeborder,
     title={\textbf{Python Example: #1}},
-    fonttitle=\bfseries\color{white},
-    coltitle=white,
-    attach boxed title to top left={yshift=-2mm,xshift=2mm},
-    boxed title style={colback=normative!75!black},
+    fonttitle=\bfseries,
+    boxrule=0.5pt,
     breakable=true,
     before skip=10pt,
     after skip=10pt
 }
 
-% Python code command using minted for proper syntax highlighting
+% Python code command (simplified styling)
 \newcommand{\pythoncode}[1]{%
     \begin{minted}[
         fontsize=\small,
         linenos=false,
         breaklines=true,
-        breakanywhere=true
+        breakanywhere=true,
+        bgcolor=codebackground
     ]{python}
 #1
     \end{minted}%
@@ -248,15 +260,6 @@
 
 % Inline code formatting command
 \newcommand{\code}[1]{\texttt{#1}}
-
-% Thematic area formatting
-\newcommand{\coretraceability}[1]{\textcolor{coretraceability}{\textbf{#1}}}
-\newcommand{\organizational}[1]{\textcolor{organizational}{\textbf{#1}}}
-\newcommand{\materialsupply}[1]{\textcolor{materialsupply}{\textbf{#1}}}
-\newcommand{\transaction}[1]{\textcolor{transaction}{\textbf{#1}}}
-\newcommand{\sustainability}[1]{\textcolor{sustainability}{\textbf{#1}}}
-\newcommand{\geographic}[1]{\textcolor{geographic}{\textbf{#1}}}
-\newcommand{\reporting}[1]{\textcolor{reporting}{\textbf{#1}}}
 
 % Entity definition table environment
 \newenvironment{entitytable}[1]{%
@@ -280,22 +283,23 @@
     \end{informative}
 }
 
-% W3C title page command - simple approach
+% Standard title page (Latin Modern fonts like minted documentation)
 \newcommand{\boosttitle}{%
     \begin{titlepage}
     \centering
-    \vspace*{2cm}
+    \vspace*{3cm}
     {\huge\bfseries Biomass Open Origin Standard for Tracking (BOOST) \par}
-    \vspace{1cm}
-    {\Large W3C Community Group Final Specification \par}
+    \vspace{1.5cm}
+    {\LARGE W3C Community Group Final Specification \par}
+    \vspace{0.8cm}
+    {\Large Version 3.0.9 \par}
     \vspace{0.5cm}
-    {\large Version 3.0.4 \par}
-    \vspace{0.5cm}
-    {\large August 12, 2025 \par}
-    \vspace{2cm}
-    {\large Peter Tittmann \par}
-    \vspace{0.5cm}
-    {\large BOOST W3C Community Group \par}
+    {\Large August 13, 2025 \par}
+    \vspace{3cm}
+    {\large 
+        Peter Tittmann \\
+        Liam Killroy \\[0.5cm]
+        BOOST W3C Community Group \par}
     \vfill
     \end{titlepage}
 }

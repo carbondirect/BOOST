@@ -2,7 +2,7 @@
 
 Audit entity in BOOST data model
 
-**🗂️ [View Audit in ERD Navigator](erd-navigator/index.html?focus=Audit)**
+**[View Audit in ERD Navigator](erd-navigator/index.html?focus=Audit)**
 
 ### Relationships ### {{.unnumbered}}
 
