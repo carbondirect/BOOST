@@ -28,13 +28,60 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  extract-version:
+    name: 🏷️ Extract Version Info (Development)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.version-info.outputs.version }}
+      build-timestamp: ${{ steps.version-info.outputs.timestamp }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full git history for version extraction
+      
+      - name: Extract version information
+        id: version-info
+        run: |
+          echo "🔍 Extracting version information for development build..."
+          
+          # Extract version for development builds
+          if git describe --tags >/dev/null 2>&1; then
+              VERSION=$(git describe --tags --always)
+              echo "📋 Using detailed git version: $VERSION"
+          else
+              VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
+              if [ -z "$VERSION" ]; then
+                  SHORT_HASH=$(git rev-parse --short HEAD)
+                  VERSION="v0.0.0-dev-${SHORT_HASH}"
+                  echo "⚠️ No git tags found, using commit hash: $VERSION"
+              else
+                  SHORT_HASH=$(git rev-parse --short HEAD)
+                  VERSION="${VERSION}-dev-${SHORT_HASH}"
+                  echo "📋 Using tagged development version: $VERSION"
+              fi
+          fi
+          
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          BRANCH_NAME="${{ github.ref_name }}"
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          echo "::notice title=Development Build::Building BOOST Documentation $VERSION on branch $BRANCH_NAME"
+
   build-dev-documentation:
     name: 📖 Build Documentation (Development)
     runs-on: ubuntu-latest
     timeout-minutes: 15  # Prevent stuck dev builds - Docker should be ~2-3 min
+    needs: extract-version
     container:
       image: ghcr.io/carbondirect/boost/boost-builder:latest
       options: --pull=missing
+      env:
+        RELEASE_VERSION: ${{ needs.extract-version.outputs.version }}
     
     steps:
       - name: Checkout repository
@@ -50,33 +97,22 @@ jobs:
           echo "TeXLive available: $(which pdflatex && echo 'Yes' || echo 'No')"
           echo "Pandoc version: $(pandoc --version | head -1)"
 
-      - name: Extract version information
-        id: version-info
+      - name: Confirm version information
         run: |
-          cd drafts/current/specifications
+          echo "🏷️ Using pre-extracted version: ${{ needs.extract-version.outputs.version }}"
+          echo "⏰ Build timestamp: ${{ needs.extract-version.outputs.timestamp }}"
+          echo "🐳 Container environment variable RELEASE_VERSION: $RELEASE_VERSION"
           
-          # Extract version for development builds
-          if git rev-parse --git-dir >/dev/null 2>&1; then
-              VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
-              if [ -z "$VERSION" ]; then
-                  SHORT_HASH=$(git rev-parse --short HEAD)
-                  VERSION="v0.0.0-dev-${SHORT_HASH}"
-              else
-                  SHORT_HASH=$(git rev-parse --short HEAD)
-                  VERSION="${VERSION}-dev-${SHORT_HASH}"
-              fi
+          # Verify the environment variable is set correctly
+          if [ "$RELEASE_VERSION" != "${{ needs.extract-version.outputs.version }}" ]; then
+              echo "⚠️ Warning: Environment variable mismatch"
+              echo "  Pre-extracted: ${{ needs.extract-version.outputs.version }}"
+              echo "  Container env:  $RELEASE_VERSION"
           else
-              VERSION="v0.0.0-dev"
+              echo "✅ Version successfully passed to Docker container"
           fi
           
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          BRANCH_NAME="${{ github.ref_name }}"
-          
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
-          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
-          
-          echo "::notice title=Development Build::Building BOOST Documentation $VERSION on branch $BRANCH_NAME"
+          echo "::notice title=Development Build Version::Building BOOST Documentation ${{ needs.extract-version.outputs.version }}"
 
       - name: Run schema validation
         working-directory: drafts/current/specifications
@@ -111,8 +147,8 @@ jobs:
         working-directory: drafts/current/specifications
         run: |
           echo "🏗️ Building HTML documentation with consolidated build system..."
-          echo "📋 Branch: ${{ steps.version-info.outputs.branch }}"
-          echo "🔧 Version: ${{ steps.version-info.outputs.version }}"
+          echo "📋 Branch: ${{ needs.extract-version.outputs.branch }}"
+          echo "🔧 Version: ${{ needs.extract-version.outputs.version }}"
           echo "🎯 Build type: Development (no deployment)"
           
           chmod +x build.sh
@@ -165,9 +201,9 @@ jobs:
           cat > dev-build-report.md << EOF
           # 📚 BOOST Development Build Report
           
-          **Branch:** ${{ steps.version-info.outputs.branch }}
-          **Version:** ${{ steps.version-info.outputs.version }}
-          **Build Time:** ${{ steps.version-info.outputs.timestamp }}
+          **Branch:** ${{ needs.extract-version.outputs.branch }}
+          **Version:** ${{ needs.extract-version.outputs.version }}
+          **Build Time:** ${{ needs.extract-version.outputs.timestamp }}
           **Commit:** ${GITHUB_SHA::8}
           **Build Type:** Development (No Deployment)
           
@@ -180,7 +216,7 @@ jobs:
           
           ## 📋 Development Notes
           
-          This is a development build from the **${{ steps.version-info.outputs.branch }}** branch.
+          This is a development build from the **${{ needs.extract-version.outputs.branch }}** branch.
           - No deployment to GitHub Pages
           - Artifacts retained for 7 days
           - PDF optimized for development review
@@ -203,7 +239,7 @@ jobs:
       - name: Upload development build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: boost-dev-docs-${{ steps.version-info.outputs.branch }}-${{ github.run_number }}
+          name: boost-dev-docs-${{ needs.extract-version.outputs.branch }}-${{ github.run_number }}
           path: |
             drafts/current/specifications/boost-spec.html
             drafts/current/specifications/build/boost-spec.pdf
@@ -217,9 +253,9 @@ jobs:
         run: |
           echo "## 🎉 Development Build Completed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Branch:** ${{ steps.version-info.outputs.branch }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Version:** ${{ steps.version-info.outputs.version }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Build Time:** ${{ steps.version-info.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ needs.extract-version.outputs.branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ needs.extract-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Time:** ${{ needs.extract-version.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📦 Generated Artifacts" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
