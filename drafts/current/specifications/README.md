@@ -5,14 +5,17 @@ This directory contains the BOOST W3C Community Group specification documentatio
 ## Quick Start
 
 ```bash
-# Build complete PDF with all 33 entities (recommended)
-./build-all.sh
+# Build both HTML and PDF documentation (recommended)
+./build.sh
 
-# Build only PDF (faster for testing)
-./build-pdf.sh
+# Build only HTML (faster for development)
+./build.sh --html
 
-# Build only HTML  
-./build-spec.sh
+# Build only PDF (for testing LaTeX changes)
+./build.sh --pdf
+
+# Show help and all available options
+./build.sh --help
 ```
 
 **Output location**: All generated files are in the `build/` directory.
@@ -21,9 +24,9 @@ This directory contains the BOOST W3C Community Group specification documentatio
 
 The BOOST documentation system implements a **Single Source of Truth** approach:
 
-1. **JSON Schemas** (`schema/*/validation_schema.json`) define all entity structures
+1. **JSON Schemas** (`../schema/*/validation_schema.json`) define all 35 entity structures
 2. **Python generators** (`scripts/`) convert schemas to LaTeX and HTML content
-3. **Build scripts** orchestrate the complete documentation generation pipeline
+3. **Consolidated build script** (`build.sh`) orchestrates the complete documentation generation pipeline
 4. **Style files** provide professional W3C-compliant formatting
 
 ## Directory Structure
@@ -39,45 +42,43 @@ specifications/
 │   ├── *-entities.tex       # 7 thematic entity sections
 │   ├── entities/            # Individual entity tables
 │   └── entity-reference-generated.tex
-├── schema/                   # JSON Schema definitions (33 entities)
+├── ../schema/               # JSON Schema definitions (35 entities)
 ├── boost-spec.tex           # Main LaTeX document
-├── boost-spec-minimal.sty   # LaTeX style package
-├── build-all.sh             # Complete build pipeline
-├── build-pdf.sh             # PDF-only build
-└── build-spec.sh            # HTML-only build
+├── boost-spec.sty           # LaTeX style package
+└── build.sh                 # Consolidated build system (replaces all previous scripts)
 ```
 
 ## Build System Details
 
-### Complete Build (`build-all.sh`)
+### Consolidated Build System (`build.sh`)
 
-The comprehensive build process:
+The unified build process supports flexible output generation:
 
-1. **Content Generation**: Converts all 33 JSON schemas to LaTeX documentation
-2. **PDF Compilation**: 3-pass LaTeX build with minted syntax highlighting
-3. **Validation**: Statistics, warnings, and completeness checking
-4. **Cleanup**: Removes temporary files while preserving logs
+#### **Default Build** (`./build.sh`)
+- **Content Generation**: Converts all 35 JSON schemas to LaTeX documentation
+- **HTML Generation**: Bikeshed-based responsive W3C-compliant HTML with ReSpec styling
+- **PDF Compilation**: 3-pass LaTeX build with enhanced error detection
+- **Validation**: Comprehensive statistics, warnings analysis, and consistency checking
+- **Version Management**: Automatic git tag-based version extraction
+- **Cleanup**: Removes intermediate files while preserving build logs
 
-**Output**: `build/boost-spec.pdf` (67 pages with all entities)
+**Output**: 
+- `boost-spec.html` - Complete HTML documentation
+- `build/boost-spec.pdf` - Professional PDF (88+ pages with all entities)
 
-### PDF Build (`build-pdf.sh`)
+#### **HTML-Only Build** (`./build.sh --html`)
+- Fast development iteration with HTML generation only
+- Ideal for content review and validation
+- Includes mobile-friendly navigation and ReSpec styling
 
-Focused PDF generation:
-- Uses existing LaTeX content in `tex/`
-- 3-pass compilation for cross-references
-- Detailed build statistics and error reporting
-- Preserves build logs for debugging
-
-### HTML Build (`build-spec.sh`)
-
-Bikeshed-based HTML generation:
-- Generates responsive W3C-compliant HTML
-- Includes mobile-friendly navigation
-- ReSpec styling with toggle functionality
+#### **PDF-Only Build** (`./build.sh --pdf`)
+- Focused LaTeX compilation for testing formatting changes
+- 3-pass compilation with comprehensive warning analysis
+- Enhanced error detection distinguishing critical errors from acceptable warnings
 
 ## Entity Coverage
 
-The system documents **all 33 entities** across **7 thematic areas**:
+The system documents **all 35 entities** across **7 thematic areas**:
 
 - **Core Traceability** (5): TraceableUnit, MaterialProcessing, ProcessingHistory, LocationHistory, BiometricIdentifier
 - **Organizational Foundation** (6): Organization, Certificate, CertificationBody, CertificationScheme, Audit, Operator  
@@ -133,14 +134,14 @@ python3 scripts/fix-html-escaping.py
 ### Debug Build Issues
 
 ```bash
-# Check build logs
+# Check build logs (comprehensive error analysis included)
 ls build/latex-pass*.log
 
-# View last compilation errors
-tail -20 build/latex-pass3.log
+# View detailed LaTeX warnings analysis
+./build.sh --pdf  # Shows warning classification and summaries
 
 # Validate schema processing
-find tex/entities -name "*.tex" | wc -l  # Should be 33
+find tex/entities -name "*.tex" | wc -l  # Should be 35
 ```
 
 ### Clean Rebuild
@@ -149,9 +150,36 @@ find tex/entities -name "*.tex" | wc -l  # Should be 33
 # Remove all generated content
 rm -rf build/ tex/*-entities.tex tex/entity-reference-generated.tex
 
-# Full regeneration
-./build-all.sh
+# Full regeneration with comprehensive analysis
+./build.sh
 ```
+
+## Version Management
+
+The build system automatically manages versioning using Git tags and commit information:
+
+### **Version Format in Builds**
+
+All generated documentation includes version information in the format: `v3.1.3-5-gaac45b1`
+
+- **`v3.1.3`**: Latest release tag (semantic versioning)
+- **`-5`**: Number of commits since the release
+- **`gaac45b1`**: Short commit hash for exact traceability
+
+### **Version Sources** (Priority Order)
+
+1. **`RELEASE_VERSION`** environment variable (CI/CD workflows)
+2. **Git describe** with full tag and commit info (development)
+3. **Fallback** version when git is unavailable
+
+### **Build Integration**
+
+- **HTML Headers**: Show exact version used for generation
+- **PDF Metadata**: Include version for reproducibility
+- **Build Logs**: Version information logged for debugging
+- **CI/CD**: Automatic version extraction and validation
+
+This ensures every build can be traced back to its exact source code state.
 
 ## Integration Features
 

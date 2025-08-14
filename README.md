@@ -3,7 +3,7 @@
 ## Overview
 This repository contains the working draft and artifacts of the Biomass Open Origin Standard for Tracking (BOOST), which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
-**Current Version: v3.0.3** - Docker containerized builds, automatic releases for all semantic versions, and comprehensive GitHub Actions workflow automation.
+**Current Version: v3.1.3** - Consolidated build system with enhanced LaTeX error detection, automated version management, and comprehensive GitHub Actions workflow automation.
 
 - **Charter:** [BOOST_Charter.org](BOOST_Charter.org)
 - **Charter Effective Date:** 
@@ -33,7 +33,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 - **Supply Base Management** - Infrastructure mapping with harvest sites and transportation routes
 
 ### Comprehensive Entity System
-- **29 Interconnected Entities** - Complete data model covering all aspects of biomass supply chains across 7 thematic areas
+- **35 Interconnected Entities** - Complete data model covering all aspects of biomass supply chains across 7 thematic areas
 - **JSON-LD Validation** - Structured schemas with business rules and examples
 - **Interactive ERD Navigator** - Dynamic exploration with GitHub discussion integration
 - **Sustainability Claims** - Species-specific claims with inheritance through processing
@@ -63,11 +63,11 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ├── drafts/                  # Organized draft content
 │   ├── current/             # Active working content
 │   │   ├── specifications/        # Current spec documents
-│   │   ├── schema/               # Entity schemas and validation (29 entities)
+│   │   ├── schema/               # Entity schemas and validation (35 entities)
 │   │   │   ├── traceable_unit/        # Core TRU entity with examples
 │   │   │   ├── species_component/     # Multi-species tracking
 │   │   │   ├── material_processing/   # Processing operations
-│   │   │   └── [26 additional entities] # Complete BOOST Traceability System
+│   │   │   └── [32 additional entities] # Complete BOOST Traceability System
 │   │   ├── images/
 │   │   │   ├── current/              # Interactive ERD and current visuals
 │   │   │   └── archive/              # Historical ERD iterations and deprecated files
@@ -107,7 +107,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ## 🚀 Getting Started
 
 ### For Developers
-1. **Explore the Interactive ERD**: Use the [Interactive ERD Navigator](erd-navigator/index.html) to explore all 29 entities with dynamic filtering and GitHub discussion integration
+1. **Explore the Interactive ERD**: Use the [Interactive ERD Navigator](erd-navigator/index.html) to explore all 35 entities with dynamic filtering and GitHub discussion integration
 2. **Review Entity Schemas**: Check `drafts/current/schema/` for JSON validation schemas and examples
 3. **Review Schema Organization**: Check entity schemas in `drafts/current/schema/` for implementation details
 4. **Migration Guide**: See `drafts/current/specifications/MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md` for conceptual changes
@@ -128,7 +128,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 The [Interactive ERD Navigator](erd-navigator/index.html) provides a comprehensive, stakeholder-friendly way to explore the BOOST data model:
 
 ### 🔍 Key Features
-- **29 Entity Coverage**: Complete visualization of all entities across 7 thematic areas
+- **35 Entity Coverage**: Complete visualization of all entities across 7 thematic areas
 - **Dynamic Filtering**: Focus on specific domains (Core Traceability, Organizational, Material & Supply, etc.)
 - **Direct Discussion Access**: Purple 💬 icons in each entity header link directly to GitHub discussions
 - **TraceableUnit Focus Mode**: 🎯 button to reduce visual complexity and highlight essential relationships
@@ -157,10 +157,73 @@ Each entity has a dedicated GitHub discussion thread accessible via the ERD. Thi
 
 - **✅ Complete**: BOOST Traceability System Phases 1-3 implementation
 - **✅ Complete**: Plant part categorization system 
-- **✅ Complete**: 29 entity schemas with validation and examples
+- **✅ Complete**: 35 entity schemas with validation and examples
 - **✅ Complete**: Interactive ERD Navigator with GitHub discussion integration
 - **✅ Complete**: Integration testing scenarios and migration documentation
 - **🔄 Active**: Community feedback integration and use case expansion
+
+## 🏷️ Version Nomenclature
+
+BOOST uses Git-based semantic versioning with development build identification. Understanding the version format is essential for tracking releases and development progress.
+
+### Version Format: `v3.1.3-5-gaac45b1`
+
+All BOOST versions follow the **Git describe** format, providing precise traceability:
+
+#### **Components Breakdown:**
+
+1. **`v3.1.3`** - **Base Release Tag**
+   - Latest official release using semantic versioning (Major.Minor.Patch)
+   - Example: `v3.1.3` represents a patch release in the 3.1.x series
+
+2. **`-5`** - **Commits Since Release** 
+   - Number of commits made since the base release tag
+   - Indicates this is a **development build**, not an official release
+   - Higher numbers = more development activity since last release
+
+3. **`-g`** - **Git Indicator**
+   - Standard Git convention indicating the following is a commit hash
+   - The "g" stands for "git"
+
+4. **`aac45b1`** - **Commit Hash (Short)**
+   - 7-character abbreviated SHA hash of the specific commit
+   - Uniquely identifies the exact code state used for this build
+   - Full hash is longer (e.g., `aac45b1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q`)
+
+### **Version Types:**
+
+| Format | Type | Description | Example |
+|--------|------|-------------|---------|
+| `v3.1.3` | **Release** | Official tagged release | Stable, production-ready |
+| `v3.1.3-5-gabc123` | **Development** | 5 commits after v3.1.3 | In-progress development |
+| `v3.2.0-1-gdef456` | **Post-Release** | 1 commit after new release | Latest development |
+
+### **Development Build Evolution:**
+
+```
+v3.1.3           ← Official release (tagged)
+v3.1.3-1-g0057230 ← 1 commit after release  
+v3.1.3-2-gca1a0c6 ← 2 commits after release
+v3.1.3-3-g2615374 ← 3 commits after release
+v3.1.3-4-gfe2beb4 ← 4 commits after release  
+v3.1.3-5-gaac45b1 ← 5 commits after release (current example)
+```
+
+### **Practical Usage:**
+
+- **🎯 Exact Reproduction**: Any version can be reproduced with `git checkout <commit-hash>`
+- **📋 Issue Reporting**: Always include full version for accurate debugging
+- **🚀 Release Planning**: Development versions show progress toward next release
+- **🔍 Build Tracking**: CI/CD systems use this for automated version management
+
+### **In Documentation Builds:**
+
+- **HTML/PDF Headers**: Show exact version used for generation
+- **Build Logs**: Include version for reproducibility tracking  
+- **Release Artifacts**: Tagged with precise version information
+- **GitHub Actions**: Automatically extract and use for build naming
+
+This versioning system ensures **complete traceability** - you can always identify the exact code state that generated any documentation build or release artifact.
 
 ## 🤖 Automated CI/CD Workflows
 
