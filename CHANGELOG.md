@@ -2,6 +2,43 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.2.1] - 2025-08-14 - ReSpec Layout System Restoration
+
+### Fixed
+- **🎨 ReSpec-Style Layout System** - Restored sophisticated ReSpec-style layout from commit v3.1.3-5-g725c24a
+  - **User Feedback Response**: Addressed critical HTML formatting regression that broke document styling
+  - **Layout System Restoration**: Restored `main-content-wrapper` div structure for proper responsive layout
+  - **Python HTML Processing**: Restored sophisticated HTML processing in build.sh to remove Bikeshed centering constraints
+  - **CSS Integration**: Restored `respec-style.css` with fixed sidebar TOC navigation and responsive design
+  - **Workflow Validation**: Fixed workflow to check for `main-content-wrapper` instead of incorrect `h-entry` elements
+- **🔧 Build Process Integration** - ReSpec-style layout system properly integrated with CI/CD pipeline
+  - **HTML Generation**: Bikeshed generates base HTML, Python processing applies ReSpec layout structure
+  - **Responsive Design**: Proper sidebar collapse/expand functionality with mobile compatibility
+  - **Navigation Enhancement**: Fixed TOC with smooth scrolling and section highlighting
+  - **Cross-Browser Compatibility**: Consistent layout rendering across modern browsers
+
+### Enhanced
+- **📱 User Experience** - Restored professional document presentation with proper navigation
+  - **Sidebar Navigation**: Fixed TOC with expand/collapse functionality and smooth scrolling
+  - **Responsive Layout**: Proper mobile and desktop layout adaptation
+  - **Content Readability**: Restored proper content width and spacing for optimal reading experience
+  - **Visual Consistency**: Maintained ReSpec visual styling while using Bikeshed as content generator
+
+### Technical Improvements
+- **🏗️ Build System Architecture** - Hybrid approach combining Bikeshed content generation with ReSpec presentation
+  - **Content Generation**: Bikeshed generates semantic HTML with proper specification structure
+  - **Layout Processing**: Python processing applies ReSpec-style layout without affecting content semantics
+  - **CSS Override System**: Strategic CSS overrides remove Bikeshed centering while preserving document structure
+  - **Validation Integration**: Workflow validation ensures proper layout application in CI/CD pipeline
+
+### User Impact
+- **📖 Documentation Quality** - Professional document presentation suitable for standards publication
+- **🎯 Navigation Experience** - Intuitive sidebar navigation with section highlighting and smooth scrolling
+- **📱 Mobile Compatibility** - Responsive design ensuring accessibility across all device types
+- **🔗 Link Functionality** - Proper internal linking and cross-references throughout the document
+
+*This restoration addresses critical user feedback about HTML formatting changes, restoring the sophisticated ReSpec-style layout system that provides professional document presentation while maintaining Bikeshed's semantic content generation capabilities.*
+
 ## [3.2.0] - 2025-08-14 - Build System Consolidation and Version Nomenclature
 
 ### Added
