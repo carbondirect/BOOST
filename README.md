@@ -1,5 +1,10 @@
 # Biomass Open Origin Standard for Tracking (BOOST) Community Group
 
+[![Build & Deploy Documentation](https://github.com/carbondirect/BOOST/workflows/🚀%20Build%20&%20Deploy%20Documentation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml)
+[![Schema Validation](https://github.com/carbondirect/BOOST/workflows/🧪%20Schema%20Validation%20Suite/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml)
+[![PR Validation](https://github.com/carbondirect/BOOST/workflows/📋%20PR%20Validation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/validate-pr.yml)
+[![Development Docs](https://github.com/carbondirect/BOOST/workflows/📚%20Build%20Development%20Documentation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/build-dev-docs.yml)
+
 ## Overview
 This repository contains the working draft and artifacts of the Biomass Open Origin Standard for Tracking (BOOST), which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
