@@ -178,9 +178,9 @@ jobs:
             exit 1
           fi
           
-          # Check for ReSpec styling
-          if ! grep -q "main-content-wrapper" boost-spec.html; then
-            echo "❌ ReSpec styling not applied correctly"
+          # Check for Bikeshed document structure
+          if ! grep -q "class=\"h-entry\"" boost-spec.html; then
+            echo "❌ Bikeshed document structure not found"
             exit 1
           fi
           

@@ -273,67 +273,17 @@ build_html() {
     # Apply ReSpec-style CSS modifications
     print_status "🎨 Adding ReSpec-style CSS to HTML output..."
     
-    python3 -c "
-import re
-import sys
-
-# Read the generated HTML
-try:
-    with open('boost-spec.html', 'r') as f:
-        html = f.read()
-except Exception as e:
-    print(f'ERROR: Could not read boost-spec.html: {e}')
-    sys.exit(1)
-
-# Add critical CSS overrides for proper layout
-critical_overrides = '''<style>
-/* Critical CSS overrides for proper ReSpec layout */
-.main-content-wrapper {
-    margin-left: 280px !important;
-    width: calc(100vw - 280px) !important;
-    box-sizing: border-box !important;
-}
-.main-content-wrapper.toc-collapsed {
-    margin-left: 48px !important;
-    width: calc(100vw - 48px) !important;
-}
-</style>'''
-
-# Add main-content-wrapper div and CSS
-# First wrap the main content in a div with the expected class
-body_start = html.find('<body')
-if body_start != -1:
-    body_end = html.find('>', body_start) + 1
-    # Insert main-content-wrapper div right after body tag
-    content_wrapper = '<div class="main-content-wrapper">'
-    html = html[:body_end] + content_wrapper + html[body_end:]
-    
-    # Close the wrapper before any potential </body> or at end
-    if '</body>' in html:
-        html = html.replace('</body>', '</div></body>')
-    else:
-        html += '</div>'
-
-# Add the CSS - try to insert in head, or add at end
-if '</head>' in html:
-    modified_html = re.sub(r'</head>', critical_overrides + '\n</head>', html)
-else:
-    # No head tag found, add at beginning
-    modified_html = critical_overrides + '\n' + html
-
-try:
-    with open('boost-spec.html', 'w') as f:
-        f.write(modified_html)
-    print('ReSpec-style CSS and layout modifications successfully added to boost-spec.html')
-except Exception as e:
-    print(f'ERROR: Could not write modified HTML: {e}')
-    sys.exit(1)
-"
-    
-    if [ $? -eq 0 ]; then
-        print_success "✅ ReSpec-style CSS added successfully!"
+    # Validate Bikeshed HTML output was generated correctly
+    if [ -f "boost-spec.html" ]; then
+        html_size=$(wc -c < boost-spec.html)
+        if [ "$html_size" -gt 200000 ]; then
+            print_success "✅ Bikeshed HTML generated successfully (${html_size} bytes)"
+        else
+            print_error "❌ Generated HTML file appears too small ($html_size bytes)"
+            exit 1
+        fi
     else
-        print_error "❌ Failed to add ReSpec-style CSS"
+        print_error "❌ boost-spec.html was not generated"
         exit 1
     fi
     
