@@ -34,6 +34,7 @@ All notable changes to the BOOST data standard are documented in this file.
   - **Version Detection**: Resolved version extraction problems in containerized environments
   - **Workflow Integration**: Updated job dependencies and environment variable passing between workflow steps
   - **Build Script References**: Updated all workflow files to use new consolidated build script
+  - **Container Dependencies**: Fixed missing pycairo dependency in Docker environments for Bikeshed HTML generation
 - **📋 Build Script Maintenance** - Eliminated redundancy and improved reliability
   - **Script Consolidation**: Removed 4 redundant build scripts reducing maintenance burden
   - **Error Handling**: Fixed shell script integer comparison errors and improved error reporting
@@ -71,25 +72,7 @@ All notable changes to the BOOST data standard are documented in this file.
 
 *This consolidation establishes a production-grade build system with comprehensive version traceability, eliminating build script proliferation while enhancing reliability and maintainability.*
 
-## [3.1.3] - 2025-08-14 - Consolidated Build System with Git-Based Version Nomenclature
-
-### Added
-- **🏷️ Git-Based Version Nomenclature System** - Comprehensive automated versioning with complete traceability
-  - **Standard Format**: `v3.1.3-5-gaac45b1` providing base release, commit count, and exact commit hash
-  - **Automated Extraction**: Git describe-based version detection in all build processes
-  - **CI/CD Integration**: Version automatically extracted outside Docker containers and passed to builds
-  - **Complete Documentation**: Added comprehensive VERSION.md with format explanations and usage examples
-  - **Multi-Context Support**: Works in local development, CI/CD pipelines, and Docker environments
-- **📋 Consolidated Build System** - Single `build.sh` script replacing multiple build scripts
-  - **Flag Support**: `--html`, `--pdf`, `--help` flags for targeted builds
-  - **Enhanced LaTeX Error Detection**: Distinguishes critical errors from acceptable warnings
-  - **Comprehensive Validation**: Version management, dependency checking, and build statistics
-  - **Version Integration**: Automatic version placeholder replacement in all output formats
-- **📚 Version Documentation System** - Complete documentation coverage across all files
-  - **README.md**: Version nomenclature section with practical examples and traceability benefits
-  - **WORKFLOWS.md**: CI/CD version extraction and usage patterns 
-  - **Specifications README**: Build system version integration and debugging guidance
-  - **VERSION.md**: Comprehensive reference for all version-related functionality
+## [3.1.3] - 2025-08-14 - Enhanced Unified Build System & CI/CD Pipeline
 
 ### Enhanced
 - **Unified Build System Performance** - Optimized schema-to-LaTeX generation and PDF compilation
@@ -119,17 +102,6 @@ All notable changes to the BOOST data standard are documented in this file.
   - Fixed Docker image compatibility with enhanced LaTeX package requirements
 
 ### Technical Improvements
-- **Version Traceability Architecture** - Complete end-to-end version tracking system
-  - **Git Describe Integration**: Uses `git describe --tags --always` for precise version identification
-  - **Environment Variable Passing**: `RELEASE_VERSION` properly passed to Docker containers in CI/CD
-  - **Multi-Priority Detection**: Local development, CI/CD, and fallback version extraction methods
-  - **Documentation Integration**: Version information embedded in HTML headers, PDF metadata, and build logs
-  - **Exact Reproduction**: Any build can be reproduced using the commit hash from the version string
-- **Build Script Consolidation** - Eliminated redundant scripts and centralized functionality
-  - **Removed Scripts**: `build-all.sh`, `build-spec.sh`, `build-pdf.sh`, `build-unified.sh` (4 scripts removed)
-  - **Enhanced Error Handling**: LaTeX warnings classified as acceptable vs problematic with detailed reporting
-  - **Warning Analysis**: Pass-by-pass warning tracking (13→2→1 warnings) with final status summary
-  - **Build Validation**: Comprehensive consistency checking and statistics generation
 - **Build System Reliability** - Eliminated all LaTeX compilation errors for consistent PDF generation
   - **Error-Free Compilation**: Zero LaTeX errors in unified build system
   - **Complete Navigation**: TOC, LOT, and LOF properly generated in all builds
