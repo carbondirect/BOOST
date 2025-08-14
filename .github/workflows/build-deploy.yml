@@ -142,6 +142,7 @@ jobs:
 
       - name: Build documentation (HTML and PDF)
         working-directory: drafts/current/specifications
+        shell: bash
         run: |
           echo "🏗️ Building documentation with consolidated build system..."
           echo "📋 Branch: ${{ github.ref_name }}"
