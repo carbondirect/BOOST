@@ -299,8 +299,27 @@ critical_overrides = '''<style>
 }
 </style>'''
 
-# Insert at end of body instead since there's no </head> tag
-modified_html = re.sub(r'</body>', critical_overrides + '\n</body>', html)
+# Add main-content-wrapper div and CSS
+# First wrap the main content in a div with the expected class
+body_start = html.find('<body')
+if body_start != -1:
+    body_end = html.find('>', body_start) + 1
+    # Insert main-content-wrapper div right after body tag
+    content_wrapper = '<div class="main-content-wrapper">'
+    html = html[:body_end] + content_wrapper + html[body_end:]
+    
+    # Close the wrapper before any potential </body> or at end
+    if '</body>' in html:
+        html = html.replace('</body>', '</div></body>')
+    else:
+        html += '</div>'
+
+# Add the CSS - try to insert in head, or add at end
+if '</head>' in html:
+    modified_html = re.sub(r'</head>', critical_overrides + '\n</head>', html)
+else:
+    # No head tag found, add at beginning
+    modified_html = critical_overrides + '\n' + html
 
 try:
     with open('boost-spec.html', 'w') as f:
