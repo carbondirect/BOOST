@@ -34,6 +34,45 @@ def extract_entity_info(schema_path):
         print(f"Error processing {schema_path}: {e}")
         return None
 
+def get_smart_description(prop_name, prop_def):
+    """Get intelligent description with fallbacks"""
+    # First try the schema description
+    schema_desc = prop_def.get('description', '')
+    if schema_desc and schema_desc.strip():
+        return schema_desc
+    
+    # Common patterns
+    common_descriptions = {
+        '@context': 'JSON-LD context for semantic web compatibility',
+        '@type': 'JSON-LD type identifier',
+        '@id': 'Globally unique URI identifier for this entity instance',
+        'lastUpdated': 'Timestamp of the most recent data update',
+        'createdTimestamp': 'When the entity was initially created',
+        'operatorId': 'Foreign key to the operator',
+        'organizationId': 'Foreign key to the organization',
+        'transactionId': 'Foreign key to the transaction',
+        'traceableUnitId': 'Foreign key to the traceable unit'
+    }
+    
+    if prop_name in common_descriptions:
+        return common_descriptions[prop_name]
+    
+    # ID patterns
+    if prop_name.endswith('Id'):
+        entity_name = prop_name[:-2].replace('_', ' ').title()
+        return f'Unique identifier for the {entity_name.lower()}'
+    
+    # Type-based fallbacks
+    prop_type = prop_def.get('type', '')
+    if prop_type == 'boolean':
+        return f'Boolean flag for {prop_name.replace("_", " ").lower()}'
+    elif prop_type == 'array':
+        return f'Array of {prop_name.replace("_", " ").lower()} values'
+    elif 'enum' in prop_def:
+        return f'Enumerated value for {prop_name.replace("_", " ").lower()}'
+    
+    return f'{prop_name.replace("_", " ").title()} field'
+
 def format_property_type(prop_def):
     """Format property type for LaTeX table"""
     prop_type = prop_def.get('type', 'unknown')
@@ -65,7 +104,7 @@ def generate_entity_table(entity_info, output_path):
     # Add each property as a table row
     for prop_name, prop_def in properties.items():
         prop_type = format_property_type(prop_def)
-        description = prop_def.get('description', 'No description provided')
+        description = get_smart_description(prop_name, prop_def)
         
         # Clean up description for LaTeX
         description = description.replace('&', '\\&').replace('%', '\\%').replace('_', '\\_')

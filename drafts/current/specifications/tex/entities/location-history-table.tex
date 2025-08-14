@@ -2,18 +2,18 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Location History}
-\textbf{\field{geographicDataId}} & string (pattern) & No description provided \\
-\textbf{\field{isCurrentLocation}} & boolean & No description provided \\
-\textbf{\field{locationEventType}} & enum(5 values) & No description provided \\
-\textbf{\field{locationHistoryId}} & string (pattern) & No description provided \\
-\textbf{\field{timestamp}} & string (date-time) & No description provided \\
-\textbf{\field{traceableUnitId}} & string (pattern) & No description provided \\
-\field{distanceTraveled} & number (≥0) & No description provided \\
-\field{equipmentUsed} & string & No description provided \\
-\field{lastUpdated} & string (date-time) & No description provided \\
-\field{materialProcessingId} & ['string', 'null'] & No description provided \\
-\field{notes} & string & No description provided \\
-\field{operatorId} & string (pattern) & No description provided \\
-\field{transportMethod} & enum(5 values) & No description provided \\
-\field{verificationMethods} & array<string> & No description provided \\
+\textbf{\field{geographicDataId}} & string (pattern) & Foreign key to geographic location data \\
+\textbf{\field{isCurrentLocation}} & boolean & Boolean flag indicating iscurrentlocation status \\
+\textbf{\field{locationEventType}} & enum(5 values) & Enumerated value for locationeventtype \\
+\textbf{\field{locationHistoryId}} & string (pattern) & Unique identifier for the locationhistory \\
+\textbf{\field{timestamp}} & string (date-time) & Timestamp field value \\
+\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to the traceable unit \\
+\field{distanceTraveled} & number (≥0) & Distancetraveled field value \\
+\field{equipmentUsed} & string & Equipmentused field value \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{materialProcessingId} & ['string', 'null'] & Unique identifier for the materialprocessing \\
+\field{notes} & string & Notes field value \\
+\field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
+\field{transportMethod} & enum(5 values) & Enumerated value for transportmethod \\
+\field{verificationMethods} & array<string> & Array of verificationmethods values \\
 \end{entitytable}

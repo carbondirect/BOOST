@@ -171,6 +171,55 @@ class BOOSTSchemaProcessor:
         # Normal escaping for other cases
         return self._escape_latex_simple(text)
     
+    def _get_property_description(self, entity_name: str, prop_name: str, prop_def: dict) -> str:
+        """Get property description with intelligent fallbacks"""
+        # First try the schema description
+        schema_desc = prop_def.get('description', '')
+        if schema_desc and schema_desc.strip() and schema_desc != 'No description provided':
+            return self._escape_latex(schema_desc)
+        
+        # Try to infer from property name for common patterns
+        common_descriptions = {
+            '@context': 'JSON-LD context for semantic web compatibility',
+            '@type': 'JSON-LD type identifier',
+            '@id': 'Globally unique URI identifier for this entity instance',
+            'lastUpdated': 'Timestamp of the most recent data update',
+            'createdTimestamp': 'When the entity was initially created',
+            'operatorId': 'Foreign key to the operator who performed this action',
+            'organizationId': 'Foreign key to the associated organization',
+            'transactionId': 'Foreign key to the parent transaction',
+            'claimId': 'Foreign key to the associated claim',
+            'measurementRecordId': 'Foreign key to the measurement record',
+            'traceableUnitId': 'Foreign key to the traceable unit',
+            'geographicDataId': 'Foreign key to geographic location data'
+        }
+        
+        # Check exact match
+        if prop_name in common_descriptions:
+            return common_descriptions[prop_name]
+        
+        # Check for ID patterns
+        if prop_name.endswith('Id') and 'pattern' in prop_def:
+            entity_ref = prop_name[:-2].replace('_', ' ').title()
+            return f'Unique identifier for the {entity_ref.lower()}'
+        
+        # Check for foreign key patterns  
+        if prop_name.endswith('Id') and prop_name != f'{entity_name.lower().replace(" ", "")}Id':
+            entity_ref = prop_name[:-2].replace('_', ' ').title()
+            return f'Foreign key to {entity_ref} entity'
+        
+        # Generate based on type
+        prop_type = prop_def.get('type', '')
+        if prop_type == 'boolean':
+            return f'Boolean flag indicating {prop_name.replace("_", " ").lower()} status'
+        elif prop_type == 'array':
+            return f'Array of {prop_name.replace("_", " ").lower()} values'
+        elif 'enum' in prop_def:
+            return f'Enumerated value for {prop_name.replace("_", " ").lower()}'
+        
+        # Last resort - descriptive name
+        return f'{prop_name.replace("_", " ").title()} field value'
+    
     def _escape_latex_simple(self, text: str) -> str:
         """Simple LaTeX character escaping"""
         # LaTeX special character replacements (order matters)
@@ -216,7 +265,7 @@ class BOOSTSchemaProcessor:
                 continue
                 
             prop_type = self._format_property_type(prop_def)
-            description = self._escape_latex(prop_def.get('description', 'No description provided'))
+            description = self._get_property_description(entity_name, prop_name, prop_def)
             
             # Truncate long descriptions
             if len(description) > 80:

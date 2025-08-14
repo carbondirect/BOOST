@@ -9,9 +9,10 @@ The BOOST repository uses GitHub Actions to automate documentation building, val
 ### Key Features
 - **🐳 Docker Containerization**: All builds use `ghcr.io/carbondirect/boost/boost-builder:latest` for 4-6x faster execution
 - **🚀 Automatic Releases**: All semantic version tags trigger full release packages  
-- **✅ Schema Validation**: Comprehensive validation of 33+ entity schemas
+- **✅ Schema Validation**: Comprehensive validation of 35+ entity schemas
 - **📄 Multi-Format Output**: HTML, PDF, and interactive ERD Navigator generation
 - **🔍 Version Analysis**: Intelligent version type detection and appropriate release handling
+- **🏷️ Automated Versioning**: Git-based version nomenclature with complete traceability
 
 ## 📋 Workflow Summary
 
@@ -21,6 +22,67 @@ The BOOST repository uses GitHub Actions to automate documentation building, val
 | [🏷️ Version Management](#version-management) | Version tags (`v*.*.*`) | Analyze versions & provide guidance | ❌ Native | ~5 sec |
 | [📚 Build Documentation](#build-documentation) | Push to branches | Build development docs & deploy | ✅ Docker | ~2-3 min |
 | [🐳 Docker Image Builder](#docker-image-builder) | Dockerfile changes | Build & push container images | ❌ Native | ~5-8 min |
+
+## 🏷️ Version Nomenclature in CI/CD
+
+All BOOST workflows use automated Git-based versioning for complete traceability and reproducible builds.
+
+### **Version Format: `v3.1.3-5-gaac45b1`**
+
+Every build automatically extracts and uses version information following the Git describe format:
+
+| Component | Example | Purpose | Source |
+|-----------|---------|---------|---------|
+| **Base Tag** | `v3.1.3` | Latest semantic version release | Git tags |
+| **Commit Count** | `-5` | Development commits since release | Git history |
+| **Commit Hash** | `-gaac45b1` | Exact code state identifier | Git SHA |
+
+### **Version Extraction Workflow**
+
+#### **Production Builds** (Release & Main Branch)
+```bash
+# 1. Extract version outside Docker container (git access)
+VERSION=$(git describe --tags --always)
+
+# 2. Pass to containerized build via environment variable
+export RELEASE_VERSION="$VERSION"
+
+# 3. Container uses pre-extracted version (no git dependency)
+echo "Building with version: $RELEASE_VERSION"
+```
+
+#### **Development Builds** (Feature Branches)
+```bash
+# Similar process but with development-specific naming
+VERSION="${BASE_TAG}-dev-${SHORT_HASH}"
+
+# Example: v3.1.3-dev-aac45b1 for untagged development
+```
+
+### **Version Usage Across Workflows**
+
+| Workflow | Version Source | Format Example | Usage |
+|----------|---------------|----------------|-------|
+| **Release** | Git tags | `v3.1.3` | GitHub release naming, artifact tagging |
+| **Development** | Git describe | `v3.1.3-5-gaac45b1` | Build identification, artifact naming |
+| **Docker Image** | Git commits | `main-aac45b1` | Container tagging, cache keys |
+
+### **Traceability Benefits**
+
+- **🎯 Exact Reproduction**: Any build can be reproduced with the commit hash
+- **📋 Issue Debugging**: Full version context for troubleshooting
+- **🚀 Release Tracking**: Clear development progress between releases
+- **🔍 Artifact Linking**: Direct connection between builds and source code
+- **📊 Build Analytics**: Version-based performance and success tracking
+
+### **Integration with Documentation**
+
+- **HTML Headers**: Include version for user reference
+- **PDF Metadata**: Embed version for document tracking
+- **Build Logs**: Log version for debugging and audit trails
+- **Artifact Names**: Use version in downloadable package names
+
+This automated versioning ensures every BOOST documentation build has complete provenance tracking from source code to final deliverable.
 
 ## 🏷️ Release Documentation
 

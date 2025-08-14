@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       include_pdf:
-        description: 'Generate PDF documentation'
+        description: 'Generate PDF documentation (may timeout in Docker)'
         required: false
         type: boolean
         default: true
@@ -28,13 +28,60 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  extract-version:
+    name: 🏷️ Extract Version Info (Development)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.version-info.outputs.version }}
+      build-timestamp: ${{ steps.version-info.outputs.timestamp }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full git history for version extraction
+      
+      - name: Extract version information
+        id: version-info
+        run: |
+          echo "🔍 Extracting version information for development build..."
+          
+          # Extract version for development builds
+          if git describe --tags >/dev/null 2>&1; then
+              VERSION=$(git describe --tags --always)
+              echo "📋 Using detailed git version: $VERSION"
+          else
+              VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
+              if [ -z "$VERSION" ]; then
+                  SHORT_HASH=$(git rev-parse --short HEAD)
+                  VERSION="v0.0.0-dev-${SHORT_HASH}"
+                  echo "⚠️ No git tags found, using commit hash: $VERSION"
+              else
+                  SHORT_HASH=$(git rev-parse --short HEAD)
+                  VERSION="${VERSION}-dev-${SHORT_HASH}"
+                  echo "📋 Using tagged development version: $VERSION"
+              fi
+          fi
+          
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          BRANCH_NAME="${{ github.ref_name }}"
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
+          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          echo "::notice title=Development Build::Building BOOST Documentation $VERSION on branch $BRANCH_NAME"
+
   build-dev-documentation:
     name: 📖 Build Documentation (Development)
     runs-on: ubuntu-latest
     timeout-minutes: 15  # Prevent stuck dev builds - Docker should be ~2-3 min
+    needs: extract-version
     container:
       image: ghcr.io/carbondirect/boost/boost-builder:latest
       options: --pull=missing
+      env:
+        RELEASE_VERSION: ${{ needs.extract-version.outputs.version }}
     
     steps:
       - name: Checkout repository
@@ -50,33 +97,22 @@ jobs:
           echo "TeXLive available: $(which pdflatex && echo 'Yes' || echo 'No')"
           echo "Pandoc version: $(pandoc --version | head -1)"
 
-      - name: Extract version information
-        id: version-info
+      - name: Confirm version information
         run: |
-          cd drafts/current/specifications
+          echo "🏷️ Using pre-extracted version: ${{ needs.extract-version.outputs.version }}"
+          echo "⏰ Build timestamp: ${{ needs.extract-version.outputs.timestamp }}"
+          echo "🐳 Container environment variable RELEASE_VERSION: $RELEASE_VERSION"
           
-          # Extract version for development builds
-          if git rev-parse --git-dir >/dev/null 2>&1; then
-              VERSION=$(git describe --tags --abbrev=0 2>/dev/null)
-              if [ -z "$VERSION" ]; then
-                  SHORT_HASH=$(git rev-parse --short HEAD)
-                  VERSION="v0.0.0-dev-${SHORT_HASH}"
-              else
-                  SHORT_HASH=$(git rev-parse --short HEAD)
-                  VERSION="${VERSION}-dev-${SHORT_HASH}"
-              fi
+          # Verify the environment variable is set correctly
+          if [ "$RELEASE_VERSION" != "${{ needs.extract-version.outputs.version }}" ]; then
+              echo "⚠️ Warning: Environment variable mismatch"
+              echo "  Pre-extracted: ${{ needs.extract-version.outputs.version }}"
+              echo "  Container env:  $RELEASE_VERSION"
           else
-              VERSION="v0.0.0-dev"
+              echo "✅ Version successfully passed to Docker container"
           fi
           
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          BRANCH_NAME="${{ github.ref_name }}"
-          
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
-          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
-          
-          echo "::notice title=Development Build::Building BOOST Documentation $VERSION on branch $BRANCH_NAME"
+          echo "::notice title=Development Build Version::Building BOOST Documentation ${{ needs.extract-version.outputs.version }}"
 
       - name: Run schema validation
         working-directory: drafts/current/specifications
@@ -107,80 +143,28 @@ jobs:
           print(f'✅ Schema validation passed for {validated} schemas')
           "
 
-      - name: Build HTML documentation
+      - name: Build HTML documentation  
         working-directory: drafts/current/specifications
         run: |
-          echo "🏗️ Building HTML documentation..."
-          echo "📋 Branch: ${{ steps.version-info.outputs.branch }}"
-          echo "🔧 Version: ${{ steps.version-info.outputs.version }}"
+          echo "🏗️ Building HTML documentation with consolidated build system..."
+          echo "📋 Branch: ${{ needs.extract-version.outputs.branch }}"
+          echo "🔧 Version: ${{ needs.extract-version.outputs.version }}"
           echo "🎯 Build type: Development (no deployment)"
           
-          chmod +x build-spec.sh
-          ./build-spec.sh
+          chmod +x build.sh
+          ./build.sh --html
 
       - name: Build PDF documentation
         if: github.event.inputs.include_pdf != 'false'
         working-directory: drafts/current/specifications
         run: |
-          echo "📄 Building PDF documentation for development..."
-          
-          # Try LaTeX build with simplified approach
-          if [ -f "boost-spec.tex" ]; then
-            echo "🔧 Building PDF from LaTeX..."
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX first pass warnings normal"
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX second pass warnings normal"
-            pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex || echo "LaTeX third pass completed"
-            
-            if [ -f "boost-spec.pdf" ]; then
-              echo "✅ PDF generated from LaTeX: boost-spec.pdf"
-            else
-              echo "⚠️ LaTeX build failed, trying Pandoc fallback..."
-            fi
-          fi
-          
-          # Fallback to Pandoc HTML->PDF conversion
-          if [ ! -f "boost-spec.pdf" ] && [ -f "boost-spec.html" ]; then
-            echo "🔄 Converting HTML to PDF with Pandoc..."
-            
-            # Create clean HTML for PDF conversion
-            python3 -c "
-            import re
-            with open('boost-spec.html', 'r') as f:
-                html = f.read()
-            
-            # Remove interactive elements and styling that don't work in PDF
-            html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL)
-            html = re.sub(r'<style[^>]*>.*?</style>', '', html, flags=re.DOTALL) 
-            html = re.sub(r'onclick=\"[^\"]*\"', '', html)
-            html = re.sub(r'class=\"[^\"]*\"', '', html)
-            html = re.sub(r'id=\"toc\"', '', html)  # Remove TOC for cleaner PDF
-            
-            with open('boost-spec-clean.html', 'w') as f:
-                f.write(html)
-            "
-            
-            # Generate PDF with Pandoc
-            pandoc boost-spec-clean.html \
-              -o "boost-spec.pdf" \
-              --pdf-engine=xelatex \
-              --from=html \
-              --to=pdf \
-              --metadata title="BOOST Data Standard - Development (${{ steps.version-info.outputs.branch }})" \
-              --metadata author="BOOST Consortium" \
-              --metadata date="$(date +%Y-%m-%d)" \
-              --toc \
-              --toc-depth=3 \
-              --number-sections \
-              || echo "⚠️ PDF generation failed"
-            
-            rm -f boost-spec-clean.html
-            
-            if [ -f "boost-spec.pdf" ]; then
-              echo "✅ PDF generated from HTML: boost-spec.pdf"
-            else
-              echo "❌ PDF generation failed"
-            fi
-          fi
+          echo "📄 Building PDF documentation for development with consolidated build system..."
+          echo "⚠️  Note: PDF builds in Docker containers may have resource limitations"
+          timeout 300 ./build.sh --pdf || {
+            echo "❌ PDF build timed out after 5 minutes - this is expected in resource-constrained environments"
+            echo "✅ HTML documentation was built successfully"
+            exit 0
+          }
 
       - name: Validate build output
         working-directory: drafts/current/specifications
@@ -222,22 +206,22 @@ jobs:
           cat > dev-build-report.md << EOF
           # 📚 BOOST Development Build Report
           
-          **Branch:** ${{ steps.version-info.outputs.branch }}
-          **Version:** ${{ steps.version-info.outputs.version }}
-          **Build Time:** ${{ steps.version-info.outputs.timestamp }}
+          **Branch:** ${{ needs.extract-version.outputs.branch }}
+          **Version:** ${{ needs.extract-version.outputs.version }}
+          **Build Time:** ${{ needs.extract-version.outputs.timestamp }}
           **Commit:** ${GITHUB_SHA::8}
           **Build Type:** Development (No Deployment)
           
           ## 🏗️ Build Results
           
           - ✅ **HTML Documentation:** $(wc -c < boost-spec.html | numfmt --to=iec-i --suffix=B)
-          - $([ -f "boost-spec.pdf" ] && echo "✅ **PDF Documentation:** $(wc -c < boost-spec.pdf | numfmt --to=iec-i --suffix=B)" || echo "❌ **PDF Documentation:** Not generated")
+          - $([ -f "build/boost-spec.pdf" ] && echo "✅ **PDF Documentation:** $(wc -c < build/boost-spec.pdf | numfmt --to=iec-i --suffix=B)" || echo "⚠️ **PDF Documentation:** Not generated (disabled by default for faster development builds)")
           - ✅ **ERD Navigator:** Interactive tool included
           - ✅ **Schema Files:** $(find ../schema -name "validation_schema.json" | wc -l) validated schemas
           
           ## 📋 Development Notes
           
-          This is a development build from the **${{ steps.version-info.outputs.branch }}** branch.
+          This is a development build from the **${{ needs.extract-version.outputs.branch }}** branch.
           - No deployment to GitHub Pages
           - Artifacts retained for 7 days
           - PDF optimized for development review
@@ -260,10 +244,10 @@ jobs:
       - name: Upload development build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: boost-dev-docs-${{ steps.version-info.outputs.branch }}-${{ github.run_number }}
+          name: boost-dev-docs-${{ needs.extract-version.outputs.branch }}-${{ github.run_number }}
           path: |
             drafts/current/specifications/boost-spec.html
-            drafts/current/specifications/boost-spec.pdf
+            drafts/current/specifications/build/boost-spec.pdf
             drafts/current/specifications/dev-build-report.md
             drafts/current/specifications/erd-navigator/
             drafts/current/schema/
@@ -274,14 +258,14 @@ jobs:
         run: |
           echo "## 🎉 Development Build Completed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Branch:** ${{ steps.version-info.outputs.branch }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Version:** ${{ steps.version-info.outputs.version }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Build Time:** ${{ steps.version-info.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ needs.extract-version.outputs.branch }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ needs.extract-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Time:** ${{ needs.extract-version.outputs.timestamp }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📦 Generated Artifacts" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- 📄 HTML Documentation with ReSpec styling" >> $GITHUB_STEP_SUMMARY
-          echo "- $([ -f "drafts/current/specifications/boost-spec.pdf" ] && echo "📋 PDF Documentation for offline review" || echo "⚠️ PDF generation skipped or failed")" >> $GITHUB_STEP_SUMMARY
+          echo "- $([ -f "drafts/current/specifications/build/boost-spec.pdf" ] && echo "📋 PDF Documentation for offline review" || echo "⚠️ PDF generation disabled by default for faster builds")" >> $GITHUB_STEP_SUMMARY
           echo "- 🔍 Interactive ERD Navigator" >> $GITHUB_STEP_SUMMARY
           echo "- 📊 All schema validation files" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

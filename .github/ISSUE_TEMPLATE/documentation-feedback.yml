@@ -3,7 +3,7 @@ description: Report feedback on BOOST documentation (HTML, PDF, ERD Navigator, o
 title: "[DOCS] "
 labels: ["documentation", "feedback"]
 assignees:
-  - pwt-cd
+  - ptittmann
 body:
   - type: markdown
     attributes:

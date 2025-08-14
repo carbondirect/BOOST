@@ -45,12 +45,12 @@ This entity references the following entities:
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Tracking Point}
-\textbf{\field{equipmentUsed}} & string & No description provided \\
-\textbf{\field{establishedTimestamp}} & string (date-time) & No description provided \\
-\textbf{\field{geographicDataId}} & string & No description provided \\
-\textbf{\field{pointType}} & enum(4 values) & No description provided \\
+\textbf{\field{equipmentUsed}} & string & Equipmentused field value \\
+\textbf{\field{establishedTimestamp}} & string (date-time) & Establishedtimestamp field value \\
+\textbf{\field{geographicDataId}} & string & Foreign key to geographic location data \\
+\textbf{\field{pointType}} & enum(4 values) & Enumerated value for pointtype \\
 \textbf{\field{trackingPointId}} & string (pattern) & Unique identifier for the tracking point \\
-\field{operatorId} & string & No description provided \\
+\field{operatorId} & string & Foreign key to the operator who performed this action \\
 \end{entitytable}
 
 

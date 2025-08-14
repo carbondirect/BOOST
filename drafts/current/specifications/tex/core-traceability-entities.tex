@@ -63,24 +63,24 @@ This entity references the following entities:
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Material Processing}
-\textbf{\field{inputTraceableUnitId}} & string (pattern) & No description provided \\
-\textbf{\field{inputVolume}} & number (≥0) & No description provided \\
-\textbf{\field{outputTraceableUnitId}} & string (pattern) & No description provided \\
-\textbf{\field{outputVolume}} & number (≥0) & No description provided \\
-\textbf{\field{processTimestamp}} & string (date-time) & No description provided \\
-\textbf{\field{processType}} & enum(6 values) & No description provided \\
-\textbf{\field{processingId}} & string (pattern) & No description provided \\
-\field{equipmentUsed} & string & No description provided \\
-\field{inputComposition} & string & No description provided \\
+\textbf{\field{inputTraceableUnitId}} & string (pattern) & Unique identifier for the inputtraceableunit \\
+\textbf{\field{inputVolume}} & number (≥0) & Inputvolume field value \\
+\textbf{\field{outputTraceableUnitId}} & string (pattern) & Unique identifier for the outputtraceableunit \\
+\textbf{\field{outputVolume}} & number (≥0) & Outputvolume field value \\
+\textbf{\field{processTimestamp}} & string (date-time) & Processtimestamp field value \\
+\textbf{\field{processType}} & enum(6 values) & Enumerated value for processtype \\
+\textbf{\field{processingId}} & string (pattern) & Unique identifier for the processing \\
+\field{equipmentUsed} & string & Equipmentused field value \\
+\field{inputComposition} & string & Inputcomposition field value \\
 \field{inputPlantParts} & object & Plant parts in input TRU before processing \\
-\field{operatorId} & string (pattern) & No description provided \\
-\field{outputComposition} & string & No description provided \\
+\field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
+\field{outputComposition} & string & Outputcomposition field value \\
 \field{outputPlantParts} & object & Plant parts in output TRU after processing \\
 \field{plantPartLosses} & object & Volume losses by plant part during processing \\
 \field{plantPartTransformations} & array<object> & Specific plant part transformations during processing \\
-\field{processingGeographicDataId} & string (pattern) & No description provided \\
-\field{qualityMetrics} & string & No description provided \\
-\field{volumeLoss} & number (≥0) & No description provided \\
+\field{processingGeographicDataId} & string (pattern) & Unique identifier for the processinggeographicdata \\
+\field{qualityMetrics} & string & Qualitymetrics field value \\
+\field{volumeLoss} & number (≥0) & Volumeloss field value \\
 \end{entitytable}
 
 
@@ -147,20 +147,20 @@ This entity references the following entities:
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Location History}
-\textbf{\field{geographicDataId}} & string (pattern) & No description provided \\
-\textbf{\field{isCurrentLocation}} & boolean & No description provided \\
-\textbf{\field{locationEventType}} & enum(5 values) & No description provided \\
-\textbf{\field{locationHistoryId}} & string (pattern) & No description provided \\
-\textbf{\field{timestamp}} & string (date-time) & No description provided \\
-\textbf{\field{traceableUnitId}} & string (pattern) & No description provided \\
-\field{distanceTraveled} & number (≥0) & No description provided \\
-\field{equipmentUsed} & string & No description provided \\
-\field{lastUpdated} & string (date-time) & No description provided \\
-\field{materialProcessingId} & ['string', 'null'] & No description provided \\
-\field{notes} & string & No description provided \\
-\field{operatorId} & string (pattern) & No description provided \\
-\field{transportMethod} & enum(5 values) & No description provided \\
-\field{verificationMethods} & array<string> & No description provided \\
+\textbf{\field{geographicDataId}} & string (pattern) & Foreign key to geographic location data \\
+\textbf{\field{isCurrentLocation}} & boolean & Boolean flag indicating iscurrentlocation status \\
+\textbf{\field{locationEventType}} & enum(5 values) & Enumerated value for locationeventtype \\
+\textbf{\field{locationHistoryId}} & string (pattern) & Unique identifier for the locationhistory \\
+\textbf{\field{timestamp}} & string (date-time) & Timestamp field value \\
+\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to the traceable unit \\
+\field{distanceTraveled} & number (≥0) & Distancetraveled field value \\
+\field{equipmentUsed} & string & Equipmentused field value \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{materialProcessingId} & ['string', 'null'] & Unique identifier for the materialprocessing \\
+\field{notes} & string & Notes field value \\
+\field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
+\field{transportMethod} & enum(5 values) & Enumerated value for transportmethod \\
+\field{verificationMethods} & array<string> & Array of verificationmethods values \\
 \end{entitytable}
 
 
@@ -176,14 +176,14 @@ BiometricIdentifier entity in BOOST data model
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Biometric Identifier}
-\textbf{\field{biometricId}} & string (pattern) & No description provided \\
-\textbf{\field{biometricSignature}} & string & No description provided \\
-\textbf{\field{captureMethod}} & enum(optical\_scanner, photo\_analysis) & No description provided \\
-\textbf{\field{captureTimestamp}} & string (date-time) & No description provided \\
-\textbf{\field{traceableUnitId}} & string & No description provided \\
-\field{captureGeographicDataId} & string & No description provided \\
-\field{speciesBiometrics} & array<string> & No description provided \\
-\field{trackingPointId} & string & No description provided \\
+\textbf{\field{biometricId}} & string (pattern) & Unique identifier for the biometric \\
+\textbf{\field{biometricSignature}} & string & Biometricsignature field value \\
+\textbf{\field{captureMethod}} & enum(optical\_scanner, photo\_analysis) & Enumerated value for capturemethod \\
+\textbf{\field{captureTimestamp}} & string (date-time) & Capturetimestamp field value \\
+\textbf{\field{traceableUnitId}} & string & Foreign key to the traceable unit \\
+\field{captureGeographicDataId} & string & Foreign key to Capturegeographicdata entity \\
+\field{speciesBiometrics} & array<string> & Array of speciesbiometrics values \\
+\field{trackingPointId} & string & Foreign key to Trackingpoint entity \\
 \end{entitytable}
 
 
