@@ -122,7 +122,9 @@ class BOOSTSchemaProcessor:
         if 'enum' in prop_def:
             enum_values = prop_def['enum']
             if len(enum_values) <= 3:
-                return f"enum({', '.join(map(str, enum_values))})"
+                # Escape underscores in enum values for LaTeX
+                escaped_values = [str(value).replace('_', '\\_') for value in enum_values]
+                return f"enum({', '.join(escaped_values)})"
             else:
                 return f"enum({len(enum_values)} values)"
         elif prop_type == 'array':
@@ -157,8 +159,23 @@ class BOOSTSchemaProcessor:
         if not text:
             return ""
         
-        # LaTeX special character replacements
+        # Special case: if text contains both backslashes and underscores, use texttt
+        if '\\' in text and '_' in text:
+            # For complex combinations like "CAL_FIRE", wrap in texttt
+            import re
+            # Find patterns like WORD_WORD and wrap them in texttt
+            text = re.sub(r'([A-Z_][A-Z0-9_]*)', r'\\texttt{\1}', text)
+            # Now escape remaining characters normally, but skip underscore in texttt blocks
+            return self._escape_latex_simple(text)
+        
+        # Normal escaping for other cases
+        return self._escape_latex_simple(text)
+    
+    def _escape_latex_simple(self, text: str) -> str:
+        """Simple LaTeX character escaping"""
+        # LaTeX special character replacements (order matters)
         replacements = {
+            '\\': '\\textbackslash{}',
             '&': '\\&',
             '%': '\\%',
             '$': '\\$',
@@ -167,8 +184,7 @@ class BOOSTSchemaProcessor:
             '_': '\\_',
             '{': '\\{',
             '}': '\\}',
-            '~': '\\textasciitilde{}',
-            '\\': '\\textbackslash{}'
+            '~': '\\textasciitilde{}'
         }
         
         result = text
@@ -226,7 +242,7 @@ class BOOSTSchemaProcessor:
         # Create section header
         section_id = entity_dir.replace('_', '-')
         latex_content = f"""
-\\subsubsection{{{entity_name}}}
+\\subsection{{{entity_name}}}
 \\label{{sec:entity-{section_id}}}
 
 {description}
@@ -261,7 +277,7 @@ This entity references the following entities:
         
         # Add entity table
         latex_content += f"""
-**🗂️ [View {entity_name} in ERD Navigator](erd-navigator/index.html?focus={entity_name.replace(' ', '')})**
+**[View {entity_name} in ERD Navigator](erd-navigator/index.html?focus={entity_name.replace(' ', '')})**
 
 {self.generate_entity_table(entity_dir, entity_info)}
 """
@@ -345,7 +361,7 @@ This entity references the following entities:
             field_count = len([p for p in entity_info.get('properties', {}).keys() 
                              if p not in ['@context', '@type', '@id']])
             
-            latex_content += f"{entity_name} & {thematic_area} & {description} & {field_count} \\\\\n"
+            latex_content += f"{entity_name} & {self._escape_latex(thematic_area)} & {description} & {field_count} \\\\\n"
         
         latex_content += """\\end{longtable}
 
@@ -390,10 +406,10 @@ The following table shows all foreign key relationships between entities:
     
     def generate_all(self):
         """Generate all LaTeX content from schemas"""
-        print("🔄 Loading schemas...")
+        print("Loading schemas...")
         self.load_schemas()
         
-        print("📊 Generating entity tables...")
+        print("Generating entity tables...")
         self.generate_all_entity_tables()
         
         print("📝 Generating thematic sections...")

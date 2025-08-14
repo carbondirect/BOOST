@@ -2,7 +2,7 @@
 
 VerificationStatement entity in BOOST data model
 
-**🗂️ [View Verification Statement in ERD Navigator](erd-navigator/index.html?focus=VerificationStatement)**
+**[View Verification Statement in ERD Navigator](erd-navigator/index.html?focus=VerificationStatement)**
 
 ### Relationships ### {{.unnumbered}}
 

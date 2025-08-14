@@ -2,7 +2,7 @@
 
 TransactionBatch entity in BOOST data model
 
-**🗂️ [View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
+**[View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
 
 ### Relationships ### {{.unnumbered}}
 

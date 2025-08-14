@@ -2,7 +2,7 @@
 
 Certification Body entity representing independent organizations authorized to issue certificates
 
-**🗂️ [View CertificationBody in ERD Navigator](erd-navigator/index.html?focus=CertificationBody)**
+**[View CertificationBody in ERD Navigator](erd-navigator/index.html?focus=CertificationBody)**
 
 ### Properties ### {{.unnumbered}}
 

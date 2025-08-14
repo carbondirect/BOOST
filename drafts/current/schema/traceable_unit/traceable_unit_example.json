@@ -25,8 +25,8 @@
     "id": "@id"
   },
   "@type": "TraceableUnit",
-  "@id": "https://github.com/carbondirect/BOOST/schemas/traceable-unit/TRU-PILE-CA-Klamath-042",
-  "traceableUnitId": "TRU-PILE-CA-Klamath-042",
+  "@id": "https://github.com/carbondirect/BOOST/schemas/traceable-unit/TRU-PILE-CA-KLAMATH-042",
+  "traceableUnitId": "TRU-PILE-CA-KLAMATH-042",
   "unitType": "pile",
   "uniqueIdentifier": "RFID-TAG-KLA-042-789",
   "totalVolumeM3": 85.25,

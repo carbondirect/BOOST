@@ -2,7 +2,7 @@
 
 CARB-certified fuel pathway for LCFS compliance with carbon intensity and regulatory attributes
 
-**🗂️ [View LCFS Pathway in ERD Navigator](erd-navigator/index.html?focus=LcfsPathway)**
+**[View LCFS Pathway in ERD Navigator](erd-navigator/index.html?focus=LcfsPathway)**
 
 ### Properties ### {{.unnumbered}}
 

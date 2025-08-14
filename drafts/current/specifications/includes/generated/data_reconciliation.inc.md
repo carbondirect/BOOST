@@ -2,7 +2,7 @@
 
 DataReconciliation entity in BOOST data model
 
-**🗂️ [View Data Reconciliation in ERD Navigator](erd-navigator/index.html?focus=DataReconciliation)**
+**[View Data Reconciliation in ERD Navigator](erd-navigator/index.html?focus=DataReconciliation)**
 
 ### Relationships ### {{.unnumbered}}
 

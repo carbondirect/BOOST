@@ -2,7 +2,7 @@
 
 SalesDeliveryDocument entity in BOOST data model
 
-**🗂️ [View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
+**[View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
 
 ### Relationships ### {{.unnumbered}}
 

@@ -2,7 +2,7 @@
 
 SupplyBaseReport entity in BOOST data model
 
-**🗂️ [View Supply Base Report in ERD Navigator](erd-navigator/index.html?focus=SupplyBaseReport)**
+**[View Supply Base Report in ERD Navigator](erd-navigator/index.html?focus=SupplyBaseReport)**
 
 ### Relationships ### {{.unnumbered}}
 

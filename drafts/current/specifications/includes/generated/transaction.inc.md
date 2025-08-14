@@ -2,7 +2,7 @@
 
 Transaction entity in BOOST data model
 
-**🗂️ [View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
+**[View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
 
 ### Relationships ### {{.unnumbered}}
 
@@ -27,19 +27,19 @@ Transaction entity in BOOST data model
 <tr>
 <td><code>@context</code>
 <td>object (structured)
-<td>No description provided
+<td>JSON-LD context defining semantic vocabulary mappings
 <td>✓
 </tr>
 <tr>
 <td><code>@id</code>
 <td>string (uri)
-<td>No description provided
+<td>Globally unique IRI identifying this specific entity instance
 <td>✓
 </tr>
 <tr>
 <td><code>@type</code>
 <td>enum(Transaction)
-<td>No description provided
+<td>Entity type identifier for JSON-LD processing
 <td>✓
 </tr>
 <tr>
@@ -85,6 +85,12 @@ Transaction entity in BOOST data model
 <td>✓
 </tr>
 <tr>
+<td><code>BioramPathwayId</code>
+<td>string (pattern)
+<td>BioRAM pathway identifier for biomass power generation - uses EntityNameId convention referencing BioramPathway
+<td>
+</tr>
+<tr>
 <td><code>BrokerOrganizationId</code>
 <td>string | null
 <td>Optional intermediary broker organization - uses EntityNameId convention referencing Organization
@@ -106,6 +112,48 @@ Transaction entity in BOOST data model
 <td><code>SalesDeliveryDocumentId</code>
 <td>string (pattern)
 <td>Foreign key to sales/delivery documentation - uses EntityNameId convention referencing SalesDeliveryDocument
+<td>
+</tr>
+<tr>
+<td><code>attestationDate</code>
+<td>string (date)
+<td>Date of BioRAM compliance attestation
+<td>
+</tr>
+<tr>
+<td><code>attestationSignatory</code>
+<td>string
+<td>Name and title of person attesting to BioRAM compliance
+<td>
+</tr>
+<tr>
+<td><code>biomassVolume</code>
+<td>number (≥0)
+<td>Volume of biomass fuel in transaction for BioRAM reporting
+<td>
+</tr>
+<tr>
+<td><code>biomassVolumeUnit</code>
+<td>enum(bone_dry_tonnes, green_tonnes, cubic_yards)
+<td>Unit of measurement for biomass volume
+<td>
+</tr>
+<tr>
+<td><code>bioramCertificationId</code>
+<td>string
+<td>BioRAM compliance certification identifier for transaction
+<td>
+</tr>
+<tr>
+<td><code>bioramEligible</code>
+<td>boolean
+<td>Whether transaction meets BioRAM program eligibility requirements
+<td>
+</tr>
+<tr>
+<td><code>calFirePermitNumber</code>
+<td>string
+<td>CAL FIRE permit number for harvest or treatment activities
 <td>
 </tr>
 <tr>
@@ -133,15 +181,45 @@ Transaction entity in BOOST data model
 <td>
 </tr>
 <tr>
+<td><code>fhszVerificationSource</code>
+<td>string
+<td>Source of fire hazard zone verification (e.g., CAL_FIRE_2024_MAPS)
+<td>
+</tr>
+<tr>
 <td><code>financialTerms</code>
 <td>object (structured)
 <td>Detailed financial terms and conditions
 <td>
 </tr>
 <tr>
+<td><code>fireHazardSeverityZone</code>
+<td>enum(4 values)
+<td>CAL FIRE fire hazard severity zone designation
+<td>
+</tr>
+<tr>
 <td><code>fuelCategory</code>
 <td>enum(10 values)
 <td>Category of fuel for LCFS classification
+<td>
+</tr>
+<tr>
+<td><code>fuelOriginCoordinates</code>
+<td>object (structured)
+<td>Geographic coordinates of biomass fuel origin
+<td>
+</tr>
+<tr>
+<td><code>fuelOriginFacilityId</code>
+<td>string
+<td>Identifier for source facility or harvest site
+<td>
+</tr>
+<tr>
+<td><code>fuelType</code>
+<td>enum(6 values)
+<td>BioRAM eligible fuel type classification
 <td>
 </tr>
 <tr>
@@ -157,6 +235,24 @@ Transaction entity in BOOST data model
 <td>
 </tr>
 <tr>
+<td><code>haulDistance</code>
+<td>number (≥0)
+<td>Transportation distance from source to facility in miles
+<td>
+</tr>
+<tr>
+<td><code>haulUnit</code>
+<td>enum(miles, kilometers)
+<td>Unit of measurement for haul distance
+<td>
+</tr>
+<tr>
+<td><code>landowner</code>
+<td>string
+<td>Legal landowner of biomass source location
+<td>
+</tr>
+<tr>
 <td><code>lastUpdated</code>
 <td>string (date-time)
 <td>Timestamp of last modification
@@ -169,15 +265,33 @@ Transaction entity in BOOST data model
 <td>
 </tr>
 <tr>
+<td><code>materialEligibilityConfirmed</code>
+<td>boolean
+<td>Confirmation that material meets BioRAM eligibility criteria
+<td>
+</tr>
+<tr>
 <td><code>mediaBreaksDetected</code>
 <td>array&amp;lt;boolean&amp;gt;
 <td>Continuity flags per TRU
 <td>
 </tr>
 <tr>
+<td><code>parcelId</code>
+<td>string
+<td>Assessor parcel number or legal land description
+<td>
+</tr>
+<tr>
 <td><code>paymentTerms</code>
 <td>string
 <td>Payment conditions and timeline
+<td>
+</tr>
+<tr>
+<td><code>permitStatus</code>
+<td>enum(4 values)
+<td>Status of required permits for biomass harvesting
 <td>
 </tr>
 <tr>
@@ -190,6 +304,12 @@ Transaction entity in BOOST data model
 <td><code>regulatedPartyRole</code>
 <td>enum(5 values)
 <td>Role of regulated party in LCFS transaction
+<td>
+</tr>
+<tr>
+<td><code>reportingAccuracyConfirmed</code>
+<td>boolean
+<td>Confirmation of reporting data accuracy for BioRAM compliance
 <td>
 </tr>
 <tr>
@@ -211,6 +331,12 @@ Transaction entity in BOOST data model
 <td>
 </tr>
 <tr>
+<td><code>timberHarvestPlan</code>
+<td>string
+<td>Timber harvest plan identifier if applicable
+<td>
+</tr>
+<tr>
 <td><code>traceableUnitIds</code>
 <td>array&amp;lt;string&amp;gt;
 <td>TRUs included in this transaction
@@ -220,6 +346,12 @@ Transaction entity in BOOST data model
 <td><code>trackingPointIds</code>
 <td>array&amp;lt;string&amp;gt;
 <td>Location trail references
+<td>
+</tr>
+<tr>
+<td><code>withinSRA</code>
+<td>boolean
+<td>Whether fuel source is within California State Responsibility Area
 <td>
 </tr>
 </tbody>

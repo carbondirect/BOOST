@@ -2,7 +2,7 @@
 
 SupplyBase entity in BOOST data model
 
-**🗂️ [View Supply Base in ERD Navigator](erd-navigator/index.html?focus=SupplyBase)**
+**[View Supply Base in ERD Navigator](erd-navigator/index.html?focus=SupplyBase)**
 
 ### Relationships ### {{.unnumbered}}
 
@@ -25,19 +25,19 @@ SupplyBase entity in BOOST data model
 <tr>
 <td><code>@context</code>
 <td>object (structured)
-<td>No description provided
+<td>JSON-LD context defining semantic vocabulary mappings
 <td>✓
 </tr>
 <tr>
 <td><code>@id</code>
 <td>string (uri)
-<td>No description provided
+<td>Globally unique IRI identifying this specific entity instance
 <td>✓
 </tr>
 <tr>
 <td><code>@type</code>
 <td>enum(SupplyBase)
-<td>No description provided
+<td>Entity type identifier for JSON-LD processing
 <td>✓
 </tr>
 <tr>

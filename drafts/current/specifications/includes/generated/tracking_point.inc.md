@@ -2,7 +2,7 @@
 
 TrackingPoint entity in BOOST data model
 
-**🗂️ [View Tracking Point in ERD Navigator](erd-navigator/index.html?focus=TrackingPoint)**
+**[View Tracking Point in ERD Navigator](erd-navigator/index.html?focus=TrackingPoint)**
 
 ### Relationships ### {{.unnumbered}}
 

@@ -78,7 +78,7 @@ def process_dictionary_file(file_path):
         print(f"  ✅ Converted tables in {file_path}")
         return True
     else:
-        print(f"  ℹ️  No tables found in {file_path}")
+        print(f"  INFO:  No tables found in {file_path}")
         return False
 
 def main():

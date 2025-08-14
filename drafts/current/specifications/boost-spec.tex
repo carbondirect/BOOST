@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass{article}
 
 % ================================
 % BOOST SPECIFICATION DOCUMENT
@@ -51,12 +51,12 @@
     bookmarksopenlevel=2
 }
 
-% Page layout and headers
+% Page layout and headers (Latin Modern fonts matching minted documentation)
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{BOOST}
-\fancyhead[R]{v3.0.9 - \today}
-\fancyfoot[C]{\thepage}
+\fancyhead[L]{\small BOOST Specification}
+\fancyhead[R]{\small v3.0.9}
+\fancyfoot[C]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 \setlength{\headheight}{15pt}
@@ -124,6 +124,10 @@ This specification is primarily developed on GitHub (\url{https://github.com/car
 \newpage
 \pagenumbering{arabic}
 
+% ================================
+% PART I: FOUNDATION (Context & Requirements)
+% ================================
+
 % Chapter 1: Introduction
 \section{Introduction}
 \label{sec:introduction}
@@ -132,7 +136,7 @@ This specification is primarily developed on GitHub (\url{https://github.com/car
 \subsection{Purpose and Scope}
 \label{sec:purpose-scope}
 
-This specification defines the BOOST (Biomass Open-Source Traceability) data standard for biomass supply chain tracking and verification. The standard provides:
+This specification defines the BOOST (Biomass Open Origin Standard for Tracking) data standard for biomass supply chain tracking and verification. The standard provides:
 
 \begin{itemize}
     \item A unified data model for biomass custody transfers
@@ -162,25 +166,29 @@ BOOST builds upon and integrates with established standards including:
 \label{sec:community-process}
 \input{tex/community-process}
 
-% Chapter 2: Conformance
+% Chapter 2: Use Cases and Requirements
+\section{Use Cases and Requirements}
+\label{sec:use-cases}
+\input{tex/use-cases}
+
+% Chapter 3: Conformance
 \section{Conformance}
 \label{sec:conformance}
 \input{tex/conformance}
 
-% Chapter 3: BOOST Traceability System
+% ================================
+% PART II: CORE SPECIFICATION
+% ================================
+
+% Chapter 4: BOOST Traceability System
 \section{BOOST Traceability System}
 \label{sec:traceability-system}
 \input{tex/traceability-system}
 
-% Chapter 4: Data Model Architecture
+% Chapter 5: Data Model Architecture
 \section{Data Model Architecture}
 \label{sec:data-model}
 \input{tex/data-model}
-
-% Chapter 5: Plant Part Categorization System  
-\section{Plant Part Categorization System}
-\label{sec:plant-parts}
-\input{tex/plant-parts}
 
 % Chapter 6: Complete Entity Definitions
 \section{Complete Entity Definitions}
@@ -195,50 +203,57 @@ BOOST builds upon and integrates with established standards including:
 \input{tex/geographic-and-tracking-entities}
 \input{tex/compliance-and-reporting-entities}
 
-% Chapter 7: Schema Definitions
+% Chapter 7: Plant Part Categorization System  
+\section{Plant Part Categorization System}
+\label{sec:plant-parts}
+\input{tex/plant-parts}
+
+% ================================
+% PART III: IMPLEMENTATION
+% ================================
+
+% Chapter 8: Schema Definitions
 \section{Schema Definitions}
 \label{sec:schema-definitions}
 \input{tex/schema-definitions}
 
-% Chapter 8: Python Reference Implementation
-\section{Python Reference Implementation}
-\label{sec:python-implementation}
-\input{tex/python-implementation}
-
-% Chapter 9: JSON-LD Context and Semantic Web Integration
-\section{JSON-LD Context and Semantic Web Integration}
-\label{sec:jsonld-context}
-\input{tex/jsonld-context}
-
-% Chapter 10: Regulatory Program Compliance
-\section{Regulatory Program Compliance}
-\label{sec:regulatory-compliance}
-\input{tex/lcfs-programmatic-reporting}
-
-% Chapter 11: Serialization and Exchange
+% Chapter 9: Serialization and Exchange
 \section{Serialization and Exchange}
 \label{sec:serialization}
 \input{tex/serialization}
 
-% Chapter 10: Use Cases and Requirements
-\section{Use Cases and Requirements}
-\label{sec:use-cases}
-\input{tex/use-cases}
+% Chapter 10: JSON-LD Context and Semantic Web Integration
+\section{JSON-LD Context and Semantic Web Integration}
+\label{sec:jsonld-context}
+\input{tex/jsonld-context}
 
-% Chapter 11: Examples
+% ================================
+% PART IV: DOMAIN APPLICATIONS
+% ================================
+
+% Chapter 11: Regulatory Program Compliance
+\section{Regulatory Program Compliance}
+\label{sec:regulatory-compliance}
+\input{tex/lcfs-programmatic-reporting}
+
+% Chapter 12: Security Considerations
+\section{Security Considerations}
+\label{sec:security}
+\input{tex/security-considerations}
+
+% ================================
+% PART V: SUPPORTING MATERIALS
+% ================================
+
+% Chapter 13: Examples
 \section{Examples}
 \label{sec:examples}
 \input{tex/examples}
 
-% Chapter 12: Resources \& Community
+% Chapter 14: Resources \& Community
 \section{Resources \& Community}
 \label{sec:resources-community}
 \input{tex/resources-community}
-
-% Chapter 13: Security Considerations
-\section{Security Considerations}
-\label{sec:security}
-\input{tex/security-considerations}
 
 % ================================
 % APPENDICES
@@ -260,6 +275,11 @@ BOOST builds upon and integrates with established standards including:
 \section{JSON Schema Reference}
 \label{app:schema-reference}
 \input{tex/schema-reference}
+
+% Appendix D: Python Reference Implementation
+\section{Python Reference Implementation}
+\label{app:python-implementation}
+\input{tex/python-implementation}
 
 % ================================
 % BACK MATTER

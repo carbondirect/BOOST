@@ -50,7 +50,7 @@ class ConsistencyValidator:
         sections = {}
         
         if not self.bikeshed_file.exists():
-            print(f"❌ Bikeshed file not found: {self.bikeshed_file}")
+            print(f"ERROR: Bikeshed file not found: {self.bikeshed_file}")
             return entities, sections
         
         with open(self.bikeshed_file, 'r', encoding='utf-8') as f:
@@ -87,7 +87,7 @@ class ConsistencyValidator:
         sections = {}
         
         if not self.latex_file.exists():
-            print(f"❌ LaTeX file not found: {self.latex_file}")
+            print(f"ERROR: LaTeX file not found: {self.latex_file}")
             return entities, sections
         
         with open(self.latex_file, 'r', encoding='utf-8') as f:
@@ -164,105 +164,105 @@ class ConsistencyValidator:
     
     def validate_consistency(self) -> bool:
         """Run all consistency checks"""
-        print("🔍 BOOST Documentation Consistency Validator\n")
+        print("BOOST Documentation Consistency Validator\n")
         print("=" * 60)
         
         # Load all entities
-        print("📊 Loading entity definitions...")
+        print("Loading entity definitions...")
         self.schema_entities = self.load_schema_entities()
         print(f"   Found {len(self.schema_entities)} entities in schema directory")
         
         # Parse Bikeshed
-        print("\n📄 Parsing Bikeshed specification...")
+        print("\nParsing Bikeshed specification...")
         self.bikeshed_entities, self.bikeshed_sections = self.parse_bikeshed_entities()
         print(f"   Found {len(self.bikeshed_entities)} documented entities")
         
         # Parse LaTeX
-        print("\n📄 Parsing LaTeX specification...")
+        print("\nParsing LaTeX specification...")
         self.latex_entities, self.latex_sections = self.parse_latex_entities()
         print(f"   Found {len(self.latex_entities)} documented entities")
         
         # Run consistency checks
         print("\n" + "=" * 60)
-        print("🔍 Running Consistency Checks\n")
+        print("Running Consistency Checks\n")
         
         all_valid = True
         
         # Check 1: Schema coverage
-        print("1️⃣ Schema Coverage Check:")
+        print("1. Schema Coverage Check:")
         missing_in_bikeshed = self.schema_entities - self.bikeshed_entities
         missing_in_latex = self.schema_entities - self.latex_entities
         
         if missing_in_bikeshed:
             all_valid = False
-            print(f"   ❌ Missing in Bikeshed ({len(missing_in_bikeshed)}):")
+            print(f"   ERROR: Missing in Bikeshed ({len(missing_in_bikeshed)}):")
             for entity in sorted(missing_in_bikeshed):
                 print(f"      - {entity}")
                 self.inconsistencies.append(f"Entity '{entity}' not documented in Bikeshed")
         else:
-            print("   ✅ All schema entities documented in Bikeshed")
+            print("   SUCCESS: All schema entities documented in Bikeshed")
         
         if missing_in_latex:
             all_valid = False
-            print(f"   ❌ Missing in LaTeX ({len(missing_in_latex)}):")
+            print(f"   ERROR: Missing in LaTeX ({len(missing_in_latex)}):")
             for entity in sorted(missing_in_latex):
                 print(f"      - {entity}")
                 self.inconsistencies.append(f"Entity '{entity}' not documented in LaTeX")
         else:
-            print("   ✅ All schema entities documented in LaTeX")
+            print("   SUCCESS: All schema entities documented in LaTeX")
         
         # Check 2: Cross-format consistency
-        print("\n2️⃣ Cross-Format Consistency Check:")
+        print("\n2. Cross-Format Consistency Check:")
         only_in_bikeshed = self.bikeshed_entities - self.latex_entities
         only_in_latex = self.latex_entities - self.bikeshed_entities
         
         if only_in_bikeshed:
             all_valid = False
-            print(f"   ❌ Only in Bikeshed ({len(only_in_bikeshed)}):")
+            print(f"   ERROR: Only in Bikeshed ({len(only_in_bikeshed)}):")
             for entity in sorted(only_in_bikeshed):
                 print(f"      - {entity}")
                 self.inconsistencies.append(f"Entity '{entity}' only in Bikeshed, not in LaTeX")
         
         if only_in_latex:
             all_valid = False
-            print(f"   ❌ Only in LaTeX ({len(only_in_latex)}):")
+            print(f"   ERROR: Only in LaTeX ({len(only_in_latex)}):")
             for entity in sorted(only_in_latex):
                 print(f"      - {entity}")
                 self.inconsistencies.append(f"Entity '{entity}' only in LaTeX, not in Bikeshed")
         
         if not only_in_bikeshed and not only_in_latex:
-            print("   ✅ Both formats have identical entity coverage")
+            print("   SUCCESS: Both formats have identical entity coverage")
         
         # Check 3: Extra entities (not in schema)
-        print("\n3️⃣ Extra Entity Check:")
+        print("\n3. Extra Entity Check:")
         extra_in_bikeshed = self.bikeshed_entities - self.schema_entities
         extra_in_latex = self.latex_entities - self.schema_entities
         
         if extra_in_bikeshed:
-            print(f"   ⚠️  Extra in Bikeshed (not in schema):")
+            print(f"   WARNING: Extra in Bikeshed (not in schema):")
             for entity in sorted(extra_in_bikeshed):
                 print(f"      - {entity}")
         
         if extra_in_latex:
-            print(f"   ⚠️  Extra in LaTeX (not in schema):")
+            print(f"   WARNING: Extra in LaTeX (not in schema):")
             for entity in sorted(extra_in_latex):
                 print(f"      - {entity}")
         
         if not extra_in_bikeshed and not extra_in_latex:
-            print("   ✅ No extra entities found")
+            print("   SUCCESS: No extra entities found")
         
         # Summary
         print("\n" + "=" * 60)
-        print("📊 Validation Summary\n")
+        print("Validation Summary\n")
         
         if all_valid:
-            print("✅ Documentation is CONSISTENT across formats!")
+            print("SUCCESS: Documentation is CONSISTENT across formats!")
             print(f"   - {len(self.schema_entities)} entities in schemas")
             print(f"   - {len(self.bikeshed_entities)} entities in Bikeshed")
             print(f"   - {len(self.latex_entities)} entities in LaTeX")
         else:
-            print(f"❌ Found {len(self.inconsistencies)} inconsistencies!")
-            print("\n📋 Required Actions:")
+            print(f"ERROR: Found {len(self.inconsistencies)} inconsistencies!")
+            print("\nRequired Actions:")
             for i, issue in enumerate(self.inconsistencies, 1):
                 print(f"   {i}. {issue}")
         
@@ -295,7 +295,7 @@ class ConsistencyValidator:
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2)
         
-        print(f"\n📄 Detailed report saved to: {report_file}")
+        print(f"\nDetailed report saved to: {report_file}")
     
     def _calculate_consistency_score(self) -> float:
         """Calculate a consistency score (0-100%)"""
