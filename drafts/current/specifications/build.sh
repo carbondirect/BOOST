@@ -348,7 +348,8 @@ build_pdf() {
     # LaTeX compilation (3 passes for references)
     for pass in 1 2 3; do
         print_status "🔧 Running LaTeX compilation (Pass $pass/3)..."
-        pdflatex -shell-escape -interaction=nonstopmode -output-directory=build boost-spec.tex > "build/latex-pass$pass.log" 2>&1
+        # For TeX Live 2021 compatibility, avoid -output-directory with minted
+        pdflatex -shell-escape -interaction=nonstopmode boost-spec.tex > "build/latex-pass$pass.log" 2>&1
         LATEX_EXIT_CODE=$?
         
         # Check for critical LaTeX errors regardless of exit code
@@ -361,7 +362,7 @@ build_pdf() {
             echo "Critical errors found:"
             grep -A2 "^! \|Emergency stop\|Fatal error\|Runaway argument" "build/latex-pass$pass.log" || echo "See build/latex-pass$pass.log for details"
             exit 1
-        elif [ -f "build/boost-spec.pdf" ]; then
+        elif [ -f "boost-spec.pdf" ]; then
             print_warning "⚠️  Pass $pass completed with non-critical warnings (exit code: $LATEX_EXIT_CODE)"
             echo "   PDF was generated successfully despite warnings"
         elif [ $pass -eq 3 ]; then
@@ -410,8 +411,16 @@ build_pdf() {
         fi
     done
     
-    # Verify PDF generation and analyze warnings
-    if [ -f "build/boost-spec.pdf" ]; then
+    # Move generated PDF to build directory for consistency
+    if [ -f "boost-spec.pdf" ]; then
+        mv boost-spec.pdf build/
+        # Also move other LaTeX output files to build directory
+        mv boost-spec.aux build/ 2>/dev/null || true
+        mv boost-spec.log build/ 2>/dev/null || true  
+        mv boost-spec.toc build/ 2>/dev/null || true
+        mv boost-spec.out build/ 2>/dev/null || true
+        mv boost-spec.fls build/ 2>/dev/null || true
+        mv boost-spec.fdb_latexmk build/ 2>/dev/null || true
         print_success "✅ PDF generation completed successfully!"
         
         # Comprehensive warning analysis
