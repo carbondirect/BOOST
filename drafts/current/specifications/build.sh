@@ -345,8 +345,9 @@ build_pdf() {
         elif [ -f "build/boost-spec.pdf" ]; then
             print_warning "⚠️  Pass $pass completed with non-critical warnings (exit code: $LATEX_EXIT_CODE)"
             echo "   PDF was generated successfully despite warnings"
-        else
-            print_error "❌ LaTeX compilation failed on pass $pass (exit code: $LATEX_EXIT_CODE)"
+        elif [ $pass -eq 3 ]; then
+            # Only fail on final pass if PDF wasn't generated and no critical errors
+            print_error "❌ LaTeX compilation failed on final pass $pass (exit code: $LATEX_EXIT_CODE)"
             echo ""
             echo "🔍 LaTeX Error Analysis:"
             echo "========================"
@@ -377,6 +378,10 @@ build_pdf() {
             echo ""
             echo "💡 Full log available at: build/latex-pass$pass.log"
             exit 1
+        else
+            # Early passes: warnings are acceptable, continue to next pass
+            print_warning "⚠️  Pass $pass completed with warnings (exit code: $LATEX_EXIT_CODE)"
+            echo "   Continuing to next pass - warnings are expected in early LaTeX passes"
         fi
         
         # Report warnings summary for each pass
