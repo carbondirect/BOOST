@@ -20,7 +20,7 @@ on:
         description: 'Generate PDF documentation (may timeout in Docker)'
         required: false
         type: boolean
-        default: false
+        default: true
 
 # Allow concurrent builds on different branches
 concurrency:
@@ -155,7 +155,7 @@ jobs:
           ./build.sh --html
 
       - name: Build PDF documentation
-        if: github.event.inputs.include_pdf == 'true'
+        if: github.event.inputs.include_pdf != 'false'
         working-directory: drafts/current/specifications
         run: |
           echo "📄 Building PDF documentation for development with consolidated build system..."

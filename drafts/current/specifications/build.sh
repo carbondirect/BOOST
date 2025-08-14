@@ -332,25 +332,70 @@ build_pdf() {
         pdflatex -shell-escape -interaction=nonstopmode -output-directory=build boost-spec.tex > "build/latex-pass$pass.log" 2>&1
         LATEX_EXIT_CODE=$?
         
+        # Check for critical LaTeX errors regardless of exit code
+        CRITICAL_ERRORS=$(grep -c "^! \|Emergency stop\|Fatal error\|Runaway argument" "build/latex-pass$pass.log" 2>/dev/null || echo "0")
+        
         if [ $LATEX_EXIT_CODE -eq 0 ]; then
             echo "   Pass $pass completed successfully"
+        elif [ "$CRITICAL_ERRORS" -gt 0 ]; then
+            print_error "❌ LaTeX compilation failed on pass $pass with critical errors"
+            echo "Critical errors found:"
+            grep -A2 "^! \|Emergency stop\|Fatal error\|Runaway argument" "build/latex-pass$pass.log" || echo "See build/latex-pass$pass.log for details"
+            exit 1
+        elif [ -f "build/boost-spec.pdf" ]; then
+            print_warning "⚠️  Pass $pass completed with non-critical warnings (exit code: $LATEX_EXIT_CODE)"
+            echo "   PDF was generated successfully despite warnings"
         else
-            # Check if PDF was still generated despite warnings
-            if [ -f "build/boost-spec.pdf" ]; then
-                print_warning "⚠️  Pass $pass completed with warnings (exit code: $LATEX_EXIT_CODE)"
-                echo "   PDF was generated successfully despite warnings"
-            else
-                print_error "❌ LaTeX compilation failed on pass $pass (exit code: $LATEX_EXIT_CODE)"
-                echo "Last 20 lines of log:"
-                tail -20 "build/latex-pass$pass.log"
-                exit 1
-            fi
+            print_error "❌ LaTeX compilation failed on pass $pass (exit code: $LATEX_EXIT_CODE)"
+            echo "Last 20 lines of log:"
+            tail -20 "build/latex-pass$pass.log"
+            exit 1
+        fi
+        
+        # Report warnings summary for each pass
+        WARNING_COUNT=$(grep -c "LaTeX Warning\|pdfTeX warning" "build/latex-pass$pass.log" 2>/dev/null || echo "0")
+        if [ "$WARNING_COUNT" -gt 0 ]; then
+            echo "   Found $WARNING_COUNT LaTeX warnings"
         fi
     done
     
-    # Verify PDF generation
+    # Verify PDF generation and analyze warnings
     if [ -f "build/boost-spec.pdf" ]; then
         print_success "✅ PDF generation completed successfully!"
+        
+        # Comprehensive warning analysis
+        print_status "🔍 Analyzing LaTeX warnings and issues..."
+        
+        # Check for remaining undefined references (should be resolved by pass 3)
+        UNDEFINED_REFS=$(grep -c "LaTeX Warning: Reference .* undefined" "build/latex-pass3.log" 2>/dev/null || echo "0")
+        UNDEFINED_CITES=$(grep -c "LaTeX Warning: Citation .* undefined" "build/latex-pass3.log" 2>/dev/null || echo "0")
+        RERUN_WARNINGS=$(grep -c "LaTeX Warning: Label(s) may have changed. Rerun" "build/latex-pass3.log" 2>/dev/null || echo "0")
+        
+        if [ "${UNDEFINED_REFS:-0}" -gt 0 ] 2>/dev/null; then
+            print_warning "⚠️  Found $UNDEFINED_REFS undefined references in final pass"
+            grep "LaTeX Warning: Reference .* undefined" "build/latex-pass3.log" | head -5
+        fi
+        
+        if [ "${UNDEFINED_CITES:-0}" -gt 0 ] 2>/dev/null; then
+            print_warning "⚠️  Found $UNDEFINED_CITES undefined citations in final pass"
+            grep "LaTeX Warning: Citation .* undefined" "build/latex-pass3.log" | head -5
+        fi
+        
+        if [ "${RERUN_WARNINGS:-0}" -gt 0 ] 2>/dev/null; then
+            print_warning "⚠️  Labels may have changed - consider adding a 4th LaTeX pass"
+        fi
+        
+        # Summary of acceptable vs problematic warnings
+        TOTAL_WARNINGS=$(grep -c "LaTeX Warning\|pdfTeX warning" "build/latex-pass3.log" 2>/dev/null || echo "0")
+        ACCEPTABLE_WARNINGS=$(grep -c "destination with the same identifier\|File .* has changed" "build/latex-pass3.log" 2>/dev/null || echo "0")
+        PROBLEMATIC_WARNINGS=$((TOTAL_WARNINGS - ACCEPTABLE_WARNINGS))
+        
+        if [ "$PROBLEMATIC_WARNINGS" -gt 0 ]; then
+            print_warning "📊 Warning Summary: $PROBLEMATIC_WARNINGS problematic warnings, $ACCEPTABLE_WARNINGS acceptable warnings"
+        else
+            echo "   📊 Warning Summary: All $TOTAL_WARNINGS warnings are acceptable (page identifiers, file changes)"
+        fi
+        
     else
         print_error "❌ PDF generation failed - output file not found"
         exit 1
