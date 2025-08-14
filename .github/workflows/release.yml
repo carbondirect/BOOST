@@ -188,15 +188,14 @@ jobs:
       - name: Build HTML documentation
         working-directory: drafts/current/specifications
         run: |
-          echo "🏗️ Building release HTML documentation..."
-          chmod +x build-spec.sh
-          ./build-spec.sh
+          echo "🏗️ Building release documentation with consolidated build system..."
+          chmod +x build.sh
+          ./build.sh
 
-      - name: Generate PDF documentation
+      - name: Validate documentation generation
         working-directory: drafts/current/specifications
-        shell: bash
         run: |
-          set +e  # Don't exit on LaTeX warnings
+          echo "🔍 Validating consolidated build system output..."
           
           echo "📄 Generating PDF documentation..."
           
