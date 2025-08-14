@@ -1,7 +1,7 @@
 # Biomass Open Origin Standard for Tracking (BOOST) Community Group
 
 [![Build & Deploy Documentation](https://github.com/carbondirect/BOOST/workflows/🚀%20Build%20&%20Deploy%20Documentation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/build-deploy.yml)
-[![Schema Validation](https://github.com/carbondirect/BOOST/workflows/🧪%20Schema%20Validation%20Suite/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml)
+[![Schema Validation](https://github.com/carbondirect/BOOST/workflows/🔍%20Schema%20Validation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/schema-validation.yml)
 [![PR Validation](https://github.com/carbondirect/BOOST/workflows/📋%20PR%20Validation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/validate-pr.yml)
 [![Development Docs](https://github.com/carbondirect/BOOST/workflows/📚%20Build%20Development%20Documentation/badge.svg)](https://github.com/carbondirect/BOOST/actions/workflows/build-dev-docs.yml)
 
