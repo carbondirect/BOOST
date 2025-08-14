@@ -42,14 +42,12 @@
 \definecolor{w3cblue}{RGB}{0,0,139}             % W3C blue for hyperlinks
 \definecolor{reference}{RGB}{139,0,0}           % Dark red for references
 
-% Minted configuration for syntax highlighting (matching minted docs style)
+% Minted configuration for syntax highlighting (compatible with TeX Live 2021+)
 \setminted{
     fontsize=\small,
     linenos=false,
     breaklines=true,
-    breakanywhere=false,
     tabsize=2,
-    autogobble=true,
     bgcolor=codebackground,
     frame=leftline,
     framerule=1pt,
@@ -251,7 +249,6 @@
         fontsize=\small,
         linenos=false,
         breaklines=true,
-        breakanywhere=true,
         bgcolor=codebackground
     ]{python}
 #1

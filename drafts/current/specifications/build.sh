@@ -10,7 +10,7 @@
 #   ./build.sh --pdf     # Build PDF only
 #   ./build.sh --help    # Show help
 
-set -e  # Exit on any error
+# Note: Not using set -e to allow custom error handling for LaTeX warnings
 
 # Color codes for output
 RED='\033[0;31m'
