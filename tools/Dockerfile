@@ -14,6 +14,10 @@ RUN apt-get update && apt-get install -y \
     texlive-fonts-extra \
     texlive-science \
     texlive-extra-utils \
+    texlive-pictures \
+    texlive-lang-european \
+    texlive-luatex \
+    texlive-xetex \
     pandoc \
     git \
     curl \
