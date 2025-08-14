@@ -185,6 +185,12 @@ jobs:
           print(f'✅ Release schema validation passed for {len(schema_files)} schemas')
           "
 
+      - name: Fix container dependencies
+        run: |
+          echo "🔧 Installing missing container dependencies..."
+          pip3 install -r /usr/local/lib/python3.10/dist-packages/requirements.txt || echo "⚠️ Requirements file not found, continuing..."
+          pip3 install pycairo || echo "⚠️ pycairo installation failed, attempting build anyway..."
+
       - name: Build HTML documentation
         working-directory: drafts/current/specifications
         run: |
