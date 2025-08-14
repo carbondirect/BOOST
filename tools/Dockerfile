@@ -17,11 +17,14 @@ RUN apt-get update && apt-get install -y \
     pandoc \
     git \
     curl \
+    pkg-config \
+    libcairo2-dev \
+    libgirepository1.0-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip and install Python dependencies
 RUN pip install --upgrade pip && \
-    pip install bikeshed jsonschema pydantic[email] requests
+    pip install bikeshed jsonschema pydantic[email] requests pycairo
 
 # Initialize Bikeshed spec database (this takes time, so cache it in image)
 RUN bikeshed update

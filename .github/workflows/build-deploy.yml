@@ -131,11 +131,14 @@ jobs:
           echo "🔍 Running comprehensive schema validation..."
           python3 ../../../.github/scripts/validate-schemas.py
 
-      - name: Fix container dependencies
+      - name: Verify container dependencies
         run: |
-          echo "🔧 Installing missing container dependencies..."
-          pip3 install -r /usr/local/lib/python3.10/dist-packages/requirements.txt || echo "⚠️ Requirements file not found, continuing..."
-          pip3 install pycairo || echo "⚠️ pycairo installation failed, attempting build anyway..."
+          echo "🔍 Verifying container dependencies..."
+          echo "Python packages:"
+          pip3 list | grep -E "(pycairo|bikeshed|jsonschema|pydantic)"
+          echo "System packages:"
+          dpkg -l | grep -E "(pkg-config|libcairo2-dev|libgirepository)"
+          echo "✅ Container dependencies verified"
 
       - name: Build documentation (HTML and PDF)
         working-directory: drafts/current/specifications

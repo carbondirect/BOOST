@@ -347,8 +347,35 @@ build_pdf() {
             echo "   PDF was generated successfully despite warnings"
         else
             print_error "❌ LaTeX compilation failed on pass $pass (exit code: $LATEX_EXIT_CODE)"
+            echo ""
+            echo "🔍 LaTeX Error Analysis:"
+            echo "========================"
+            
+            # Show critical errors first
+            if grep -q "^! \|Emergency stop\|Fatal error" "build/latex-pass$pass.log" 2>/dev/null; then
+                echo "Critical LaTeX errors:"
+                grep -A3 -B1 "^! \|Emergency stop\|Fatal error" "build/latex-pass$pass.log" | head -20
+                echo ""
+            fi
+            
+            # Show undefined control sequence errors
+            if grep -q "Undefined control sequence" "build/latex-pass$pass.log" 2>/dev/null; then
+                echo "Undefined control sequence errors:"
+                grep -A2 -B1 "Undefined control sequence" "build/latex-pass$pass.log" | head -10
+                echo ""
+            fi
+            
+            # Show missing file errors
+            if grep -q "File.*not found\|No file" "build/latex-pass$pass.log" 2>/dev/null; then
+                echo "Missing file errors:"
+                grep -A1 -B1 "File.*not found\|No file" "build/latex-pass$pass.log" | head -10
+                echo ""
+            fi
+            
             echo "Last 20 lines of log:"
             tail -20 "build/latex-pass$pass.log"
+            echo ""
+            echo "💡 Full log available at: build/latex-pass$pass.log"
             exit 1
         fi
         
