@@ -290,12 +290,17 @@ jobs:
           echo "🔧 Environment variable RELEASE_VERSION: $RELEASE_VERSION"
           echo "::notice title=PR Build Version::Building BOOST Documentation ${{ needs.extract-version.outputs.version }}"
 
+      - name: Install missing dependencies
+        run: |
+          echo "🔧 Installing missing dependencies for build test..."
+          pip3 install pycairo || echo "⚠️ pycairo installation failed, attempting build anyway..."
+
       - name: Test documentation build
         working-directory: drafts/current/specifications
         run: |
-          echo "🔧 Testing documentation build process..."
-          chmod +x build-spec.sh
-          ./build-spec.sh
+          echo "🔧 Testing documentation build process with consolidated build system..."
+          chmod +x build.sh
+          ./build.sh --html
 
       - name: Validate generated HTML
         working-directory: drafts/current/specifications
