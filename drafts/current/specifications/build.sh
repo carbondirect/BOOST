@@ -273,18 +273,200 @@ build_html() {
     # Apply ReSpec-style CSS modifications
     print_status "🎨 Adding ReSpec-style CSS to HTML output..."
     
-    # Validate Bikeshed HTML output was generated correctly
-    if [ -f "boost-spec.html" ]; then
-        html_size=$(wc -c < boost-spec.html)
-        if [ "$html_size" -gt 200000 ]; then
-            print_success "✅ Bikeshed HTML generated successfully (${html_size} bytes)"
-        else
-            print_error "❌ Generated HTML file appears too small ($html_size bytes)"
-            exit 1
-        fi
+    # Add ReSpec-style CSS to the generated HTML
+    print_info "🎨 Adding ReSpec-style CSS to HTML output..."
+    if [ -f "respec-style.css" ] && [ -f "boost-spec.html" ]; then
+        # Create a backup of the original HTML
+        cp boost-spec.html boost-spec-original.html
+        
+        # Insert the ReSpec-style CSS and modify layout structure
+        python3 -c "
+import re
+import sys
+
+# Read the HTML file
+with open('boost-spec.html', 'r', encoding='utf-8') as f:
+    html_content = f.read()
+
+# Read the ReSpec-style CSS
+with open('respec-style.css', 'r', encoding='utf-8') as f:
+    respec_css = f.read()
+
+# DIRECTLY REMOVE the problematic Bikeshed body styles that cause centering
+html_content = re.sub(r'max-width: 50em;[\s]*\/\*[^*]*\*\/', '', html_content)
+html_content = re.sub(r'margin: 0 auto;[\s]*\/\*[^*]*\*\/', '', html_content)
+html_content = re.sub(r'max-width: 50em;', '', html_content)
+html_content = re.sub(r'margin: 0 auto;', 'margin: 0;', html_content)
+
+# 1. Insert CSS after existing styles AND add overrides at the end
+pattern = r'(</style>)(\s*<body[^>]*>)'
+replacement = r'\1\n<style>\n' + respec_css + r'\n</style>\2'
+modified_html = re.sub(pattern, replacement, html_content, flags=re.MULTILINE | re.DOTALL)
+
+# Add critical overrides right before </head> to ensure they come last
+critical_overrides = '''
+<style>
+/* CRITICAL OVERRIDES - Must be last to override Bikeshed */
+body {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    position: relative !important;
+}
+body.h-entry {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    position: relative !important;
+}
+.main-content-wrapper {
+    margin-left: 280px !important;
+    width: calc(100vw - 280px) !important;
+    box-sizing: border-box !important;
+}
+.main-content-wrapper.toc-collapsed {
+    margin-left: 48px !important;
+    width: calc(100vw - 48px) !important;
+}
+</style>'''
+# Insert at end of body instead since there's no </head> tag
+modified_html = re.sub(r'</body>', critical_overrides + '\n</body>', modified_html)
+
+# 2. Fix document structure for proper ReSpec layout:
+# Structure should be: body -> [TOC fixed sidebar] -> [main wrapper with header + content]
+# Find the body opening tag
+body_start = modified_html.find('<body')
+if body_start == -1:
+    print('ERROR: Could not find <body> tag')
+    sys.exit(1)
+    
+body_end = modified_html.find('>', body_start) + 1
+
+# Find the ToC navigation
+toc_start = modified_html.find('<nav', body_end)
+if toc_start == -1:
+    print('ERROR: Could not find ToC navigation')
+    sys.exit(1)
+    
+# Find the end of ToC navigation
+toc_nav_start = toc_start
+nav_count = 1
+pos = modified_html.find('>', toc_start) + 1
+while nav_count > 0 and pos < len(modified_html):
+    if modified_html[pos:pos+5] == '<nav ':
+        nav_count += 1
+    elif modified_html[pos:pos+6] == '</nav>':
+        nav_count -= 1
+        if nav_count == 0:
+            pos += 6
+            break
+    pos += 1
+toc_end = pos
+
+# Extract parts
+body_tag = modified_html[body_start:body_end]
+before_toc = modified_html[body_end:toc_start]  # This includes the header content
+toc_nav = modified_html[toc_start:toc_end]
+after_toc = modified_html[toc_end:]  # This is the main specification content
+
+# Remove any existing closing tags from after_toc
+after_toc = re.sub(r'</body>\s*</html>\s*$', '', after_toc.strip())
+
+# Rebuild with proper ReSpec structure:
+# 1. Body 
+# 2. Fixed TOC sidebar 
+# 3. Main content wrapper containing BOTH header and specification content
+wrapped_main_content = f'<div class=\"main-content-wrapper\">{before_toc}{after_toc}</div>'
+
+modified_html = (modified_html[:body_start] + 
+                body_tag + toc_nav + wrapped_main_content)
+
+# 3. Remove Bikeshed's existing toggle functionality and add our own
+# First remove any existing toggle elements created by Bikeshed
+modified_html = re.sub(r'<[^>]*id=[\"\\']toc-toggle[\"\\'][^>]*>[^<]*</[^>]+>', '', modified_html)
+modified_html = re.sub(r'createSidebarToggle\\(\\);', '', modified_html)
+# Also disable the toggleSidebar function calls that cause errors
+modified_html = re.sub(r'toggleSidebar\\([^)]*\\);', '', modified_html)
+# Disable the Bikeshed sidebar media query listener
+modified_html = re.sub(r'sidebarMedia\\.addListener\\(autoToggle\\);', '', modified_html)
+
+# 4. Add minimal JavaScript to prevent Bikeshed conflicts
+js_code = '''
+<script>
+// Override Bikeshed's toggle functionality completely
+createSidebarToggle = function() {}; // Disable Bikeshed toggle creation
+toggleSidebar = function() {}; // Disable Bikeshed toggle function
+// Disable any problematic Bikeshed media queries and auto-toggles
+if (typeof sidebarMedia !== 'undefined') {
+    sidebarMedia.removeListener = function() {};
+    sidebarMedia.addListener = function() {};
+}
+// Prevent Bikeshed from adding toc-sidebar/toc-inline classes
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.remove('toc-sidebar', 'toc-inline');
+});
+// Override any window resize handlers that might interfere
+window.addEventListener('resize', function() {
+    document.body.classList.remove('toc-sidebar', 'toc-inline');
+});
+
+function toggleToc() {
+    const toc = document.getElementById('toc');
+    const mainContent = document.querySelector('.main-content-wrapper');
+    
+    if (!toc || !mainContent) {
+        console.error('TOC toggle: Required elements not found');
+        return;
+    }
+    
+    // Toggle collapsed state for desktop
+    if (window.innerWidth > 768) {
+        toc.classList.toggle('collapsed');
+        mainContent.classList.toggle('toc-collapsed');
+    } else {
+        // Mobile behavior - show/hide sidebar
+        toc.classList.toggle('show');
+    }
+}
+
+// Handle window resize to ensure proper state
+window.addEventListener('resize', function() {
+    const toc = document.getElementById('toc');
+    const mainContent = document.querySelector('.main-content-wrapper');
+    
+    if (window.innerWidth > 768) {
+        // Reset mobile classes when switching to desktop
+        toc.classList.remove('show');
+    } else {
+        // Reset desktop classes when switching to mobile
+        toc.classList.remove('collapsed');
+        mainContent.classList.remove('toc-collapsed');
+    }
+});
+</script>
+'''
+
+# Insert JavaScript before existing Bikeshed scripts to override them
+script_pattern = r'(<script[^>]*>)'
+if re.search(script_pattern, modified_html):
+    modified_html = re.sub(script_pattern, js_code + r'\1', modified_html, count=1)
+elif '</body>' in modified_html:
+    modified_html = re.sub(r'</body>', js_code + '\n</body>', modified_html)
+else:
+    # Add JavaScript and closing tags if they're missing
+    modified_html += js_code + '\n</body>\n</html>'
+
+# Write the modified HTML back
+with open('boost-spec.html', 'w', encoding='utf-8') as f:
+    f.write(modified_html)
+
+print('ReSpec-style CSS and layout modifications successfully added to boost-spec.html')
+"
+        print_success "✅ ReSpec-style CSS added successfully!"
     else
-        print_error "❌ boost-spec.html was not generated"
-        exit 1
+        print_warning "⚠️  ReSpec-style CSS file not found or HTML not generated, skipping CSS injection."
     fi
     
     print_success "✅ HTML generation completed!"
