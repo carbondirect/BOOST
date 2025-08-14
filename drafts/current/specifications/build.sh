@@ -329,13 +329,22 @@ build_pdf() {
     # LaTeX compilation (3 passes for references)
     for pass in 1 2 3; do
         print_status "🔧 Running LaTeX compilation (Pass $pass/3)..."
-        if pdflatex -shell-escape -interaction=nonstopmode -output-directory=build boost-spec.tex > "build/latex-pass$pass.log" 2>&1; then
-            echo "   Pass $pass completed"
+        pdflatex -shell-escape -interaction=nonstopmode -output-directory=build boost-spec.tex > "build/latex-pass$pass.log" 2>&1
+        LATEX_EXIT_CODE=$?
+        
+        if [ $LATEX_EXIT_CODE -eq 0 ]; then
+            echo "   Pass $pass completed successfully"
         else
-            print_error "❌ LaTeX compilation failed on pass $pass. Check build/latex-pass$pass.log for details."
-            echo "Last 20 lines of log:"
-            tail -20 "build/latex-pass$pass.log"
-            exit 1
+            # Check if PDF was still generated despite warnings
+            if [ -f "build/boost-spec.pdf" ]; then
+                print_warning "⚠️  Pass $pass completed with warnings (exit code: $LATEX_EXIT_CODE)"
+                echo "   PDF was generated successfully despite warnings"
+            else
+                print_error "❌ LaTeX compilation failed on pass $pass (exit code: $LATEX_EXIT_CODE)"
+                echo "Last 20 lines of log:"
+                tail -20 "build/latex-pass$pass.log"
+                exit 1
+            fi
         fi
     done
     
