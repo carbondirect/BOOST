@@ -2,22 +2,22 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Material Processing}
-\textbf{\field{inputTraceableUnitId}} & string (pattern) & No description provided \\
-\textbf{\field{inputVolume}} & number (≥0) & No description provided \\
-\textbf{\field{outputTraceableUnitId}} & string (pattern) & No description provided \\
-\textbf{\field{outputVolume}} & number (≥0) & No description provided \\
-\textbf{\field{processTimestamp}} & string (date-time) & No description provided \\
-\textbf{\field{processType}} & enum(6 values) & No description provided \\
-\textbf{\field{processingId}} & string (pattern) & No description provided \\
-\field{equipmentUsed} & string & No description provided \\
-\field{inputComposition} & string & No description provided \\
+\textbf{\field{inputTraceableUnitId}} & string (pattern) & Unique identifier for the inputtraceableunit \\
+\textbf{\field{inputVolume}} & number (≥0) & Inputvolume field value \\
+\textbf{\field{outputTraceableUnitId}} & string (pattern) & Unique identifier for the outputtraceableunit \\
+\textbf{\field{outputVolume}} & number (≥0) & Outputvolume field value \\
+\textbf{\field{processTimestamp}} & string (date-time) & Processtimestamp field value \\
+\textbf{\field{processType}} & enum(6 values) & Enumerated value for processtype \\
+\textbf{\field{processingId}} & string (pattern) & Unique identifier for the processing \\
+\field{equipmentUsed} & string & Equipmentused field value \\
+\field{inputComposition} & string & Inputcomposition field value \\
 \field{inputPlantParts} & object & Plant parts in input TRU before processing \\
-\field{operatorId} & string (pattern) & No description provided \\
-\field{outputComposition} & string & No description provided \\
+\field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
+\field{outputComposition} & string & Outputcomposition field value \\
 \field{outputPlantParts} & object & Plant parts in output TRU after processing \\
 \field{plantPartLosses} & object & Volume losses by plant part during processing \\
 \field{plantPartTransformations} & array<object> & Specific plant part transformations during processing \\
-\field{processingGeographicDataId} & string (pattern) & No description provided \\
-\field{qualityMetrics} & string & No description provided \\
-\field{volumeLoss} & number (≥0) & No description provided \\
+\field{processingGeographicDataId} & string (pattern) & Unique identifier for the processinggeographicdata \\
+\field{qualityMetrics} & string & Qualitymetrics field value \\
+\field{volumeLoss} & number (≥0) & Volumeloss field value \\
 \end{entitytable}

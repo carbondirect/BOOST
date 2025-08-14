@@ -2,13 +2,13 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Supply Base Report}
-\textbf{\field{organizationId}} & string & No description provided \\
-\textbf{\field{preparationDate}} & string (date) & No description provided \\
-\textbf{\field{sbrId}} & string (pattern) & No description provided \\
-\field{publicationUrl} & string (uri) & No description provided \\
-\field{reportGeographicDataId} & string & No description provided \\
-\field{sourcingPractices} & string & No description provided \\
+\textbf{\field{organizationId}} & string & Foreign key to the associated organization \\
+\textbf{\field{preparationDate}} & string (date) & Preparationdate field value \\
+\textbf{\field{sbrId}} & string (pattern) & Unique identifier for the sbr \\
+\field{publicationUrl} & string (uri) & Publicationurl field value \\
+\field{reportGeographicDataId} & string & Foreign key to Reportgeographicdata entity \\
+\field{sourcingPractices} & string & Sourcingpractices field value \\
 \field{supplyBaseIds} & array<string> & Array of SupplyBase IDs that this report covers \\
-\field{supplyBaseSummary} & string & No description provided \\
-\field{sustainabilityMeasures} & string & No description provided \\
+\field{supplyBaseSummary} & string & Supplybasesummary field value \\
+\field{sustainabilityMeasures} & string & Sustainabilitymeasures field value \\
 \end{entitytable}

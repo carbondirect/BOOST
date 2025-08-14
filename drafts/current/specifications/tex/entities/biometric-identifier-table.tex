@@ -2,12 +2,12 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Biometric Identifier}
-\textbf{\field{biometricId}} & string (pattern) & No description provided \\
-\textbf{\field{biometricSignature}} & string & No description provided \\
-\textbf{\field{captureMethod}} & enum(optical\_scanner, photo\_analysis) & No description provided \\
-\textbf{\field{captureTimestamp}} & string (date-time) & No description provided \\
-\textbf{\field{traceableUnitId}} & string & No description provided \\
-\field{captureGeographicDataId} & string & No description provided \\
-\field{speciesBiometrics} & array<string> & No description provided \\
-\field{trackingPointId} & string & No description provided \\
+\textbf{\field{biometricId}} & string (pattern) & Unique identifier for the biometric \\
+\textbf{\field{biometricSignature}} & string & Biometricsignature field value \\
+\textbf{\field{captureMethod}} & enum(optical\_scanner, photo\_analysis) & Enumerated value for capturemethod \\
+\textbf{\field{captureTimestamp}} & string (date-time) & Capturetimestamp field value \\
+\textbf{\field{traceableUnitId}} & string & Foreign key to the traceable unit \\
+\field{captureGeographicDataId} & string & Foreign key to Capturegeographicdata entity \\
+\field{speciesBiometrics} & array<string> & Array of speciesbiometrics values \\
+\field{trackingPointId} & string & Foreign key to Trackingpoint entity \\
 \end{entitytable}

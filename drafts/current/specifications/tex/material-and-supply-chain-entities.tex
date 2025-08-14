@@ -13,21 +13,21 @@ Material types and specifications
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Material}
-\textbf{\field{materialCategory}} & enum(softwood, hardwood, mixed) & No description provided \\
-\textbf{\field{materialName}} & string & No description provided \\
-\textbf{\field{materialTypeId}} & string (pattern) & No description provided \\
+\textbf{\field{materialCategory}} & enum(softwood, hardwood, mixed) & Enumerated value for materialcategory \\
+\textbf{\field{materialName}} & string & Materialname field value \\
+\textbf{\field{materialTypeId}} & string (pattern) & Unique identifier for the materialtype \\
 \field{applicablePlantParts} & array<string> & Plant parts included in this material type \\
-\field{applicableProcessingTypes} & array<string> & No description provided \\
-\field{carbonStorageRate} & string & No description provided \\
-\field{defaultAssortmentTypes} & string & No description provided \\
-\field{density} & string & No description provided \\
-\field{energyContent} & string & No description provided \\
+\field{applicableProcessingTypes} & array<string> & Array of applicableprocessingtypes values \\
+\field{carbonStorageRate} & string & Carbonstoragerate field value \\
+\field{defaultAssortmentTypes} & string & Defaultassortmenttypes field value \\
+\field{density} & string & Density field value \\
+\field{energyContent} & string & Energycontent field value \\
 \field{excludedPlantParts} & array<string> & Plant parts excluded from this material type \\
-\field{lastUpdated} & string (date-time) & No description provided \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \field{plantPartProcessingSpecs} & object & Processing specifications by plant part \\
-\field{standardMoistureContent} & string & No description provided \\
-\field{standardQualityGrades} & string & No description provided \\
-\field{typicalSpecies} & array<string> & No description provided \\
+\field{standardMoistureContent} & string & Standardmoisturecontent field value \\
+\field{standardQualityGrades} & string & Standardqualitygrades field value \\
+\field{typicalSpecies} & array<string> & Array of typicalspecies values \\
 \end{entitytable}
 
 
@@ -85,13 +85,13 @@ This entity references the following entities:
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Supplier}
-\textbf{\field{supplierId}} & string (pattern) & No description provided \\
-\textbf{\field{supplierName}} & string & No description provided \\
+\textbf{\field{supplierId}} & string (pattern) & Unique identifier for the supplier \\
+\textbf{\field{supplierName}} & string & Suppliername field value \\
 \field{GeographicDataId} & string (pattern) & Supplier location - uses EntityNameId convention referencing GeographicData \\
-\field{address} & string & No description provided \\
-\field{certificateCode} & string & No description provided \\
-\field{claim} & string & No description provided \\
-\field{supplierType} & string & No description provided \\
+\field{address} & string & Address field value \\
+\field{certificateCode} & string & Certificatecode field value \\
+\field{claim} & string & Claim field value \\
+\field{supplierType} & string & Suppliertype field value \\
 \end{entitytable}
 
 
@@ -115,9 +115,9 @@ This entity references the following entities:
 
 \begin{entitytable}{Customer}
 \textbf{\field{customerId}} & string (pattern) & Unique identifier for the customer \\
-\textbf{\field{customerName}} & string & No description provided \\
+\textbf{\field{customerName}} & string & Customername field value \\
 \field{GeographicDataId} & string (pattern) & Customer location - uses EntityNameId convention referencing GeographicData \\
-\field{address} & string & No description provided \\
+\field{address} & string & Address field value \\
 \end{entitytable}
 
 
@@ -141,16 +141,16 @@ This entity references the following entities:
 
 \begin{entitytable}{Supply Base}
 \textbf{\field{OrganizationId}} & string (pattern) & Managing organization - uses EntityNameId convention referencing Organization \\
-\textbf{\field{description}} & string & No description provided \\
-\textbf{\field{supplyBaseId}} & string (pattern) & No description provided \\
-\textbf{\field{supplyBaseName}} & string & No description provided \\
+\textbf{\field{description}} & string & Description field value \\
+\textbf{\field{supplyBaseId}} & string (pattern) & Unique identifier for the supplybase \\
+\textbf{\field{supplyBaseName}} & string & Supplybasename field value \\
 \field{GeographicDataId} & string (pattern) & Supply base location - uses EntityNameId convention referencing GeographicData \\
-\field{equipmentDeployment} & array<string> & No description provided \\
-\field{forestRoads} & array<string> & No description provided \\
-\field{harvestSites} & array<string> & No description provided \\
-\field{skidRoads} & array<string> & No description provided \\
-\field{speciesAvailable} & array<string> & No description provided \\
-\field{traceableUnitIds} & array<string> & No description provided \\
+\field{equipmentDeployment} & array<string> & Array of equipmentdeployment values \\
+\field{forestRoads} & array<string> & Array of forestroads values \\
+\field{harvestSites} & array<string> & Array of harvestsites values \\
+\field{skidRoads} & array<string> & Array of skidroads values \\
+\field{speciesAvailable} & array<string> & Array of speciesavailable values \\
+\field{traceableUnitIds} & array<string> & Array of traceableunitids values \\
 \end{entitytable}
 
 
@@ -173,15 +173,15 @@ This entity references the following entities:
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Supply Base Report}
-\textbf{\field{organizationId}} & string & No description provided \\
-\textbf{\field{preparationDate}} & string (date) & No description provided \\
-\textbf{\field{sbrId}} & string (pattern) & No description provided \\
-\field{publicationUrl} & string (uri) & No description provided \\
-\field{reportGeographicDataId} & string & No description provided \\
-\field{sourcingPractices} & string & No description provided \\
+\textbf{\field{organizationId}} & string & Foreign key to the associated organization \\
+\textbf{\field{preparationDate}} & string (date) & Preparationdate field value \\
+\textbf{\field{sbrId}} & string (pattern) & Unique identifier for the sbr \\
+\field{publicationUrl} & string (uri) & Publicationurl field value \\
+\field{reportGeographicDataId} & string & Foreign key to Reportgeographicdata entity \\
+\field{sourcingPractices} & string & Sourcingpractices field value \\
 \field{supplyBaseIds} & array<string> & Array of SupplyBase IDs that this report covers \\
-\field{supplyBaseSummary} & string & No description provided \\
-\field{sustainabilityMeasures} & string & No description provided \\
+\field{supplyBaseSummary} & string & Supplybasesummary field value \\
+\field{sustainabilityMeasures} & string & Sustainabilitymeasures field value \\
 \end{entitytable}
 
 

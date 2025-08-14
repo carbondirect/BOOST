@@ -3,18 +3,18 @@
 
 \begin{entitytable}{Claim}
 \textbf{\field{TraceableUnitId}} & string (pattern) & Referenced traceable unit - uses EntityNameId convention referencing Traceabl... \\
-\textbf{\field{claimId}} & string (pattern) & No description provided \\
-\textbf{\field{claimType}} & enum(9 values) & No description provided \\
-\textbf{\field{statement}} & string & No description provided \\
-\textbf{\field{validated}} & boolean & No description provided \\
+\textbf{\field{claimId}} & string (pattern) & Foreign key to the associated claim \\
+\textbf{\field{claimType}} & enum(9 values) & Enumerated value for claimtype \\
+\textbf{\field{statement}} & string & Statement field value \\
+\textbf{\field{validated}} & boolean & Boolean flag indicating validated status \\
 \field{CertificationSchemeId} & string (pattern) & Certification scheme - uses EntityNameId convention referencing Certification... \\
-\field{applicableSpecies} & array<string> & No description provided \\
-\field{claimExpiry} & string (date-time) & No description provided \\
-\field{claimPercentage} & number (≥0, ≤100) & No description provided \\
-\field{claimScope} & enum(4 values) & No description provided \\
-\field{evidenceDocumentId} & string & No description provided \\
-\field{inheritedFromTRU} & array<string> & No description provided \\
-\field{lastUpdated} & string (date-time) & No description provided \\
-\field{validatedBy} & string & No description provided \\
-\field{validationDate} & string (date-time) & No description provided \\
+\field{applicableSpecies} & array<string> & Array of applicablespecies values \\
+\field{claimExpiry} & string (date-time) & Claimexpiry field value \\
+\field{claimPercentage} & number (≥0, ≤100) & Claimpercentage field value \\
+\field{claimScope} & enum(4 values) & Enumerated value for claimscope \\
+\field{evidenceDocumentId} & string & Foreign key to Evidencedocument entity \\
+\field{inheritedFromTRU} & array<string> & Array of inheritedfromtru values \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{validatedBy} & string & Validatedby field value \\
+\field{validationDate} & string (date-time) & Validationdate field value \\
 \end{entitytable}
