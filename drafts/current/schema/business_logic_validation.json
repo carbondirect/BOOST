@@ -23,7 +23,8 @@
                 "description": "Volume cannot be created in processing, only lost",
                 "validation": {
                   "formula": "inputVolume >= (outputVolume + volumeLoss)",
-                  "tolerance": 0.001,
+                  "toleranceRef": "certificationScheme.toleranceSpecifications.volumeConservation.perStageMaxDeviation",
+                  "deMinimisRef": "certificationScheme.toleranceSpecifications.deMinimisThresholds.volume",
                   "units": "cubic_meters"
                 },
                 "exceptions": [
@@ -42,7 +43,8 @@
                 "description": "Mass can only be lost (moisture, debris), never gained",
                 "validation": {
                   "formula": "inputMass >= outputMass",
-                  "tolerance": 0.001,
+                  "toleranceRef": "certificationScheme.toleranceSpecifications.massConservation.perStageMaxDeviation",
+                  "deMinimisRef": "certificationScheme.toleranceSpecifications.deMinimisThresholds.mass",
                   "units": "metric_tons"
                 },
                 "typicalLossRates": {

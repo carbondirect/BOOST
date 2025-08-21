@@ -172,6 +172,135 @@
         "type": "string",
         "format": "date-time",
         "description": "Timestamp of the most recent data update"
+      },
+      "toleranceSpecifications": {
+        "type": "object",
+        "description": "Defines acceptable error rates and tolerances for measurements and calculations",
+        "properties": {
+          "massConservation": {
+            "type": "object",
+            "properties": {
+              "perStageMaxDeviation": {
+                "type": "number",
+                "description": "Maximum allowed deviation per processing/transport stage (as decimal)",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.01
+              },
+              "endToEndMaxDeviation": {
+                "type": "number",
+                "description": "Maximum allowed total deviation across entire supply chain (as decimal)",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.05
+              }
+            }
+          },
+          "volumeConservation": {
+            "type": "object",
+            "properties": {
+              "perStageMaxDeviation": {
+                "type": "number",
+                "description": "Maximum allowed deviation per processing/transport stage (as decimal)",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.01
+              },
+              "endToEndMaxDeviation": {
+                "type": "number",
+                "description": "Maximum allowed total deviation across entire supply chain (as decimal)",
+                "minimum": 0,
+                "maximum": 1,
+                "default": 0.05
+              }
+            }
+          },
+          "deMinimisThresholds": {
+            "type": "object",
+            "properties": {
+              "mass": {
+                "type": "number",
+                "description": "Minimum mass (in metric tons) below which tracking is not required",
+                "minimum": 0,
+                "default": 0.1
+              },
+              "volume": {
+                "type": "number",
+                "description": "Minimum volume (in cubic meters) below which tracking is not required",
+                "minimum": 0,
+                "default": 0.2
+              }
+            }
+          },
+          "processSpecificTolerances": {
+            "type": "object",
+            "properties": {
+              "pelletizing": {
+                "type": "object",
+                "properties": {
+                  "massLoss": {
+                    "type": "number",
+                    "description": "Expected mass loss during pelletization (as decimal)",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "default": 0.02
+                  },
+                  "moistureContent": {
+                    "type": "object",
+                    "properties": {
+                      "target": {
+                        "type": "number",
+                        "description": "Target moisture content for pellets (as decimal)",
+                        "default": 0.08
+                      },
+                      "tolerance": {
+                        "type": "number",
+                        "description": "Allowed deviation from target moisture content",
+                        "default": 0.02
+                      }
+                    }
+                  }
+                }
+              },
+              "transport": {
+                "type": "object",
+                "properties": {
+                  "expectedLoss": {
+                    "type": "number",
+                    "description": "Expected material loss during transport (as decimal)",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "default": 0.005
+                  }
+                }
+              }
+            }
+          },
+          "significantFigures": {
+            "type": "object",
+            "properties": {
+              "mass": {
+                "type": "integer",
+                "description": "Number of significant figures for mass measurements",
+                "minimum": 1,
+                "default": 3
+              },
+              "volume": {
+                "type": "integer",
+                "description": "Number of significant figures for volume measurements",
+                "minimum": 1,
+                "default": 3
+              },
+              "percentage": {
+                "type": "integer",
+                "description": "Number of significant figures for percentage values",
+                "minimum": 1,
+                "default": 2
+              }
+            }
+          }
+        },
+        "required": ["massConservation", "volumeConservation", "deMinimisThresholds", "significantFigures"]
       }
     },
     "required": [
