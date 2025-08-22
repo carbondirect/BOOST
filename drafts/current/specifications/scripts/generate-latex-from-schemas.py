@@ -25,7 +25,7 @@ class BOOSTSchemaProcessor:
             'Transaction Management': ['transaction', 'transaction_batch', 'sales_delivery_document'],
             'Measurement & Verification': ['measurement_record', 'claim', 'verification_statement', 'moisture_content'],
             'Geographic & Tracking': ['geographic_data', 'tracking_point'],
-            'Compliance & Reporting': ['lcfs_pathway', 'lcfs_reporting', 'product_group', 'energy_carbon_data', 'data_reconciliation', 'mass_balance_account']
+            'Compliance & Reporting': ['lcfs_pathway', 'lcfs_reporting', 'bioram_pathway', 'bioram_reporting', 'product_group', 'energy_carbon_data', 'data_reconciliation', 'mass_balance_account']
         }
     
     def load_schemas(self):

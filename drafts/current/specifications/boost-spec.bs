@@ -120,6 +120,12 @@ This specification is primarily developed on [GitHub](https://github.com/carbond
 3. Participate in community discussions via [GitHub Discussions](https://github.com/carbondirect/BOOST/discussions)
 4. Join the [W3C Community Group mailing list](https://lists.w3.org/Archives/Public/public-boost-01/) for broader discussions
 
+# Executive Summary # {#executive-summary}
+
+<pre class=include>
+path: includes/executive-summary.inc.md
+</pre>
+
 # Introduction # {#introduction}
 
 <pre class=include>
@@ -207,6 +213,12 @@ NOTE: A comprehensive [Python reference implementation](#python-implementation) 
 - Preserve entity relationships and referential integrity
 - Support JSON-LD context and semantic annotations
 - Implement required business logic validation rules
+
+# Implementation Standards and Tolerances # {#implementation-standards}
+
+<pre class=include>
+path: includes/tolerance-standards.inc.md
+</pre>
 
 # BOOST Traceability System # {#traceability-system}
 
@@ -534,6 +546,18 @@ path: schema/lcfs_pathway/lcfs_pathway_dictionary.md
 
 <pre class=include>
 path: schema/lcfs_reporting/lcfs_reporting_dictionary.md
+</pre>
+
+### BioRAMPathway ### {#bioram-pathway}
+
+<pre class=include>
+path: schema/bioram_pathway/bioram_pathway_dictionary.md
+</pre>
+
+### BioRAMReporting ### {#bioram-reporting}
+
+<pre class=include>
+path: schema/bioram_reporting/bioram_reporting_dictionary.md
 </pre>
 
 ### Audit ### {#audit}
