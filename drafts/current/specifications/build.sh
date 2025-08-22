@@ -715,9 +715,21 @@ generate_statistics() {
     fi
     
     if [ "$PDF_EXISTS" = true ]; then
-        if ! pdftotext -f 1 -l 3 build/boost-spec.pdf - 2>/dev/null | grep -q "$VERSION"; then
-            print_error "❌ PDF version synchronization failed: $VERSION not found in PDF title pages"
-            validation_failed=true
+        # Check if pdftotext is available for PDF text extraction validation
+        if command -v pdftotext >/dev/null 2>&1; then
+            if ! pdftotext -f 1 -l 3 build/boost-spec.pdf - 2>/dev/null | grep -q "$VERSION"; then
+                print_error "❌ PDF version synchronization failed: $VERSION not found in PDF title pages"
+                validation_failed=true
+            fi
+        else
+            print_warning "⚠️  pdftotext not available - using alternative validation method"
+            # Alternative: Check if version was properly substituted in .sty file during build
+            if [ -f "boost-spec.sty" ] && grep -q "$VERSION" boost-spec.sty; then
+                print_success "✅ Alternative validation: Version found in LaTeX style file"
+            else
+                print_error "❌ Alternative validation failed: Version not properly substituted in LaTeX files"
+                validation_failed=true
+            fi
         fi
     fi
     
