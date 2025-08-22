@@ -367,6 +367,56 @@ jobs:
           sed "s|{{VERSION}}|${{ needs.extract-version.outputs.version }}|g" README.md > ./pages-content/README.md
           echo "✅ README.md processed with version ${{ needs.extract-version.outputs.version }}"
           
+          # Extract the most recent changelog entry
+          echo "📋 Extracting latest changelog entry..."
+          if [ -f "drafts/current/specifications/CHANGELOG.md" ]; then
+            # Extract from the first ## heading to the next ## heading (or end of file)
+            # Remove emojis and clean up formatting
+            awk '
+            /^## \[/{
+              if (found) exit;  # Stop at second entry
+              found=1; 
+              sub(/^## \[/, ""); sub(/\].*/, ""); 
+              version=$0; 
+              next
+            }
+            found && /^## \[/ {exit}  # Stop at next version
+            found && /^###/ {
+              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰🛡️📦]/, "");
+              gsub(/\*\*/, "");
+              sub(/^### /, "**");
+              print $0 "**"
+              next
+            }
+            found && /^####/ {
+              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰🛡️📦]/, "");
+              gsub(/\*\*/, "");
+              sub(/^#### /, "");
+              print "<strong>" $0 "</strong>"
+              next
+            }
+            found && /^- / {
+              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰🛡️📦]/, "");
+              gsub(/\*\*/, "<strong>", $0); gsub(/\*\*/, "</strong>", $0);
+              print "  " $0
+              next
+            }
+            found && /^This / {
+              gsub(/\*\*/, "<strong>", $0); gsub(/\*\*/, "</strong>", $0);
+              print "<p><em>" $0 "</em></p>"
+              next
+            }
+            found && NF > 0 && !/^#/ {
+              gsub(/\*\*/, "<strong>", $0); gsub(/\*\*/, "</strong>", $0);
+              print $0
+            }
+            ' drafts/current/specifications/CHANGELOG.md > ./pages-content/recent-changes.html
+            echo "✅ Latest changelog entry extracted and formatted"
+          else
+            echo "<p>No changelog available</p>" > ./pages-content/recent-changes.html
+            echo "⚠️ CHANGELOG.md not found"
+          fi
+          
           # List downloaded artifacts for debugging
           echo "📋 Downloaded artifact structure:"
           find build-output -type f -name "*.html" -o -name "*.pdf" -o -name "*.md" | head -10
@@ -479,23 +529,30 @@ jobs:
                       border-radius: 8px;
                       border-left: 4px solid #28a745;
                   }
-                  .recent-changes h3 {
+                  .recent-changes h2 {
                       margin-top: 0;
                       color: #24292e;
+                      border-bottom: 2px solid #e1e4e8;
+                      padding-bottom: 10px;
                   }
-                  .status-grid {
-                      display: grid;
-                      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                      gap: 15px;
-                      margin: 20px 0;
+                  .changelog-content {
+                      line-height: 1.7;
+                      color: #444;
                   }
-                  .status-item {
-                      padding: 15px;
-                      background: white;
-                      border-radius: 6px;
-                      border: 1px solid #e1e4e8;
+                  .changelog-content h3, .changelog-content h4 {
+                      color: #24292e;
+                      margin-top: 20px;
+                      margin-bottom: 10px;
                   }
-                  .status-item .check { color: #28a745; font-weight: bold; }
+                  .changelog-content ul {
+                      padding-left: 20px;
+                  }
+                  .changelog-content li {
+                      margin-bottom: 6px;
+                  }
+                  .changelog-content strong {
+                      color: #0366d6;
+                  }
               </style>
           </head>
           <body>
@@ -515,32 +572,6 @@ jobs:
                   <a href="./boost-spec.html" class="main-button">📖 View Documentation Online</a>
               </div>
               
-              <div class="recent-changes">
-                  <h3>🚀 Recent Improvements</h3>
-                  <div class="status-grid">
-                      <div class="status-item">
-                          <div class="check">✅</div>
-                          <strong>Enhanced Collaboration</strong><br>
-                          GitHub Issues-based enhancement planning with stakeholder engagement
-                      </div>
-                      <div class="status-item">
-                          <div class="check">✅</div>
-                          <strong>35 Entities Documented</strong><br>
-                          Complete JSON Schema validation across 7 thematic areas
-                      </div>
-                      <div class="status-item">
-                          <div class="check">✅</div>
-                          <strong>CI/CD Integration</strong><br>
-                          Automated quality gates with comprehensive testing
-                      </div>
-                      <div class="status-item">
-                          <div class="check">✅</div>
-                          <strong>Documentation Consistency</strong><br>
-                          100% cross-format validation between PDF and HTML
-                      </div>
-                  </div>
-              </div>
-              
               <div class="download-links">
                   <h2>📥 Documentation & Resources</h2>
           EOF
@@ -557,6 +588,21 @@ jobs:
                   <a href="./erd-navigator/">🔍 ERD Navigator</a>
                   <a href="https://github.com/carbondirect/BOOST/tree/main/drafts/current/schema">📋 JSON Schemas</a>
                   <a href="https://github.com/carbondirect/BOOST/issues?q=label%3Aplan">✅ Enhancement Planning</a>
+              </div>
+              
+              <div class="recent-changes">
+                  <h2>Recent Changes</h2>
+                  <div class="changelog-content">
+          EOF
+          
+          # Insert the processed changelog content
+          if [ -f "./pages-content/recent-changes.html" ]; then
+            cat ./pages-content/recent-changes.html >> ./pages-content/index.html
+          fi
+          
+          # Close the recent changes section
+          cat >> ./pages-content/index.html << EOF
+                  </div>
               </div>
               
               <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 1px solid #e1e4e8;">
