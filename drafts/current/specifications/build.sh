@@ -222,6 +222,12 @@ substitute_version() {
         find tex -name "*.tex" -exec sed -i.bak "s|{{VERSION}}|$VERSION|g" {} \;
         echo "   Updated tex/*.tex files"
     fi
+    
+    # Replace version placeholders in style files
+    if ls *.sty 1> /dev/null 2>&1; then
+        sed -i.bak "s|{{VERSION}}|$VERSION|g" *.sty
+        echo "   Updated *.sty files"
+    fi
 }
 
 # Clean LaTeX intermediate files
@@ -699,6 +705,13 @@ restore_version_placeholders() {
         find tex -name "*.tex" -exec sed -i.bak "s|$VERSION|{{VERSION}}|g" {} \;
         find tex -name "*.bak" -delete 2>/dev/null || true  
         echo "   Restored tex/*.tex files"
+    fi
+    
+    # Restore style files
+    if ls *.sty 1> /dev/null 2>&1; then
+        sed -i.bak "s|$VERSION|{{VERSION}}|g" *.sty
+        rm -f *.sty.bak 2>/dev/null || true
+        echo "   Restored *.sty files"
     fi
 }
 
