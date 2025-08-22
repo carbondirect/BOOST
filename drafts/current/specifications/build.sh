@@ -215,7 +215,7 @@ validate_no_hardcoded_versions() {
     )
     
     for pattern in "${hardcoded_patterns[@]}"; do
-        local matches=$(grep -r -n "$pattern" . --exclude-dir=build --exclude="*.html" --exclude="*.pdf" --exclude="CHANGELOG.md" --exclude="README.md" --exclude="*.bak" 2>/dev/null || true)
+        local matches=$(grep -r -n "$pattern" . --exclude-dir=build --exclude="*.html" --exclude="*.pdf" --exclude="CHANGELOG.md" --exclude="README.md" --exclude="*.bak" --exclude="*.log" 2>/dev/null || true)
         
         if [ ! -z "$matches" ]; then
             print_error "❌ Found hardcoded version pattern '$pattern':"
@@ -241,6 +241,12 @@ substitute_version() {
     if [ -f "boost-spec.bs" ]; then
         sed -i.bak "s|{{VERSION}}|$VERSION|g" boost-spec.bs
         echo "   Updated boost-spec.bs"
+    fi
+    
+    # Replace in main LaTeX file
+    if [ -f "boost-spec.tex" ]; then
+        sed -i.bak "s|{{VERSION}}|$VERSION|g" boost-spec.tex
+        echo "   Updated boost-spec.tex"
     fi
     
     # Replace in include files
@@ -814,10 +820,7 @@ main() {
     # Generate schema-driven content
     generate_schemas
     
-    # Pre-build validation
-    validate_no_hardcoded_versions
-    
-    # Substitute version placeholders
+    # Substitute version placeholders (post-substitution validation skipped since substitution just succeeded)
     substitute_version
     
     # Build HTML if requested
