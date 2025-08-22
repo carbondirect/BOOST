@@ -371,8 +371,7 @@ jobs:
           echo "📋 Extracting latest changelog entry..."
           if [ -f "CHANGELOG.md" ]; then
             # Get the first changelog entry and format it cleanly like keepachangelog.com
-            sed -n '/^## \[/,/^## \[/p' CHANGELOG.md | \
-            sed '$d' | \
+            awk '/^## \[/{if(count++ > 0) exit} 1' CHANGELOG.md | \
             sed 's/🎉\|✨\|🔧\|⬆️\|🏗️\|📊\|🎯\|⚠️\|🐍\|🚀\|🛡️\|🎨\|🧪\|📋\|👥\|💰\|📦\|🔄\|📚//g' | \
             sed 's/^## \[\([^]]*\)\] - \([0-9-]*\) - \(.*\)/<h3>\1 - \2<\/h3><p><strong>\3<\/strong><\/p>/' | \
             sed 's/^### \(.*\)/<h4>\1<\/h4>/' | \
