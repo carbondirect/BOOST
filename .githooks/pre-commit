@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Pre-commit hook to prevent hardcoded versions from being committed
+# This ensures version synchronization between git tags and documentation
+
+set -e
+
+echo "🔍 Pre-commit: Checking for hardcoded versions..."
+
+# Define patterns that indicate hardcoded versions (exclude changelog and readme)
+hardcoded_patterns=(
+    "v[0-9]\+\.[0-9]\+\.[0-9]\+.*BOOST"
+    "Version [0-9]\+\.[0-9]\+\.[0-9]\+"
+    "version [0-9]\+\.[0-9]\+\.[0-9]\+"
+)
+
+# Check staged files for hardcoded versions
+found_issues=false
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+
+for file in $staged_files; do
+    # Skip certain files that legitimately contain version references
+    case "$file" in
+        CHANGELOG.md|README.md|*.html|*.pdf) continue ;;
+    esac
+    
+    # Check if file exists (could be deleted)
+    if [ ! -f "$file" ]; then
+        continue
+    fi
+    
+    # Check each pattern
+    for pattern in "${hardcoded_patterns[@]}"; do
+        if grep -n "$pattern" "$file" >/dev/null 2>&1; then
+            echo "❌ Found hardcoded version in $file:"
+            grep -n "$pattern" "$file"
+            found_issues=true
+        fi
+    done
+done
+
+# Check for missing {{VERSION}} placeholders in key files
+key_files=(
+    "drafts/current/specifications/boost-spec.tex"
+    "drafts/current/specifications/boost-spec.sty"
+    "drafts/current/specifications/boost-spec.bs"
+)
+
+for file in "${key_files[@]}"; do
+    if echo "$staged_files" | grep -q "$(basename "$file")" && [ -f "$file" ]; then
+        # Check if this file should have {{VERSION}} placeholders
+        case "$(basename "$file")" in
+            boost-spec.tex)
+                if ! grep -q "{{VERSION}}" "$file" && grep -q "fancyhead\[R\]" "$file"; then
+                    echo "❌ $file should use {{VERSION}} placeholder in headers"
+                    found_issues=true
+                fi
+                ;;
+            boost-spec.sty)
+                if ! grep -q "{{VERSION}}" "$file" && grep -q "ProvidesPackage\|Version" "$file"; then
+                    echo "❌ $file should use {{VERSION}} placeholder in package definition or version displays"
+                    found_issues=true
+                fi
+                ;;
+            boost-spec.bs)
+                if ! grep -q "{{VERSION}}" "$file" && grep -q "Version:" "$file"; then
+                    echo "❌ $file should use {{VERSION}} placeholder for version metadata"
+                    found_issues=true
+                fi
+                ;;
+        esac
+    fi
+done
+
+if [ "$found_issues" = true ]; then
+    echo ""
+    echo "🚨 PRE-COMMIT BLOCKED: Hardcoded versions detected!"
+    echo ""
+    echo "📋 To fix this issue:"
+    echo "   1. Replace hardcoded versions with {{VERSION}} placeholders"
+    echo "   2. The build system will automatically substitute the correct version"
+    echo "   3. This ensures version synchronization between git tags and documentation"
+    echo ""
+    echo "💡 Example fixes:"
+    echo "   - Change: Version 3.0.9"
+    echo "   - To:     Version {{VERSION}}"
+    echo ""
+    echo "   - Change: \\fancyhead[R]{\\small v3.2.2}"
+    echo "   - To:     \\fancyhead[R]{\\small {{VERSION}}}"
+    echo ""
+    exit 1
+fi
+
+echo "✅ Pre-commit: No hardcoded versions found"
+exit 0

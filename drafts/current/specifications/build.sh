@@ -201,6 +201,38 @@ generate_schemas() {
     fi
 }
 
+# Pre-build validation to detect hardcoded versions
+validate_no_hardcoded_versions() {
+    print_status "🔍 Validating no hardcoded versions exist..."
+    
+    local found_issues=false
+    
+    # Check for common hardcoded version patterns (but allow changelog entries)
+    local hardcoded_patterns=(
+        "v[0-9]\+\.[0-9]\+\.[0-9]\+.*BOOST"
+        "Version [0-9]\+\.[0-9]\+\.[0-9]\+"
+        "version [0-9]\+\.[0-9]\+\.[0-9]\+"
+    )
+    
+    for pattern in "${hardcoded_patterns[@]}"; do
+        local matches=$(grep -r -n "$pattern" . --exclude-dir=build --exclude="*.html" --exclude="*.pdf" --exclude="CHANGELOG.md" --exclude="README.md" --exclude="*.bak" 2>/dev/null || true)
+        
+        if [ ! -z "$matches" ]; then
+            print_error "❌ Found hardcoded version pattern '$pattern':"
+            echo "$matches"
+            found_issues=true
+        fi
+    done
+    
+    if [ "$found_issues" = true ]; then
+        print_error "🚨 CRITICAL: Hardcoded versions detected! Use {{VERSION}} placeholders instead."
+        print_error "ℹ️  This prevents version synchronization between git tags and documentation."
+        exit 1
+    fi
+    
+    print_success "✅ No hardcoded versions found - using dynamic placeholders"
+}
+
 # Version placeholder substitution
 substitute_version() {
     print_status "🔧 Replacing version placeholders with $VERSION..."
@@ -671,6 +703,33 @@ generate_statistics() {
     
     echo "   🔧 LaTeX passes: 3"
     
+    # Validate version synchronization worked correctly
+    print_status "🔍 Validating version synchronization..."
+    local validation_failed=false
+    
+    if [ "$HTML_EXISTS" = true ]; then
+        if ! grep -q "$VERSION" boost-spec.html; then
+            print_error "❌ HTML version synchronization failed: $VERSION not found in boost-spec.html"
+            validation_failed=true
+        fi
+    fi
+    
+    if [ "$PDF_EXISTS" = true ]; then
+        if ! pdftotext -f 1 -l 3 build/boost-spec.pdf - 2>/dev/null | grep -q "$VERSION"; then
+            print_error "❌ PDF version synchronization failed: $VERSION not found in PDF title pages"
+            validation_failed=true
+        fi
+    fi
+    
+    if [ "$validation_failed" = true ]; then
+        print_error "🚨 CRITICAL: Version synchronization validation failed!"
+        print_error "ℹ️  Expected version: $VERSION"
+        print_error "ℹ️  This indicates placeholder replacement didn't work correctly."
+        exit 1
+    fi
+    
+    print_success "✅ Version synchronization validation passed"
+    
     # Run consistency validation if available
     if [ -f "scripts/validate-consistency.py" ] && [ "$HTML_EXISTS" = true ] && [ "$PDF_EXISTS" = true ]; then
         print_status "🔍 Running documentation consistency check..."
@@ -742,6 +801,9 @@ main() {
     
     # Generate schema-driven content
     generate_schemas
+    
+    # Pre-build validation
+    validate_no_hardcoded_versions
     
     # Substitute version placeholders
     substitute_version
