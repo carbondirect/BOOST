@@ -2,6 +2,65 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.3.0] - 2025-08-22 - Dynamic Schema-Driven Architecture and LCFS Integration
+
+### Added
+- **Dynamic Python Architecture Migration** - Complete migration from static to dynamic, schema-driven models
+  - **Schema-Driven Model Generation**: Pydantic models generated from JSON schemas at runtime
+  - **Automatic Schema Adaptation**: Python implementation adapts to schema changes without code updates
+  - **36 Entity Coverage**: All BOOST entities now available dynamically vs previous 8 static models
+  - **Backward Compatibility**: Maintained compatibility with existing enum imports and patterns
+- **LCFS Credit Integration Enhancement (#263)** - Clarified biomass tracking integration with LCFS credit systems
+  - **Credit System Integration**: Enhanced documentation for LCFS credit allocation and tracking
+  - **Regulatory Compliance**: Improved guidance for California LCFS program requirements
+  - **Biomass Pathway Optimization**: Clearer integration between biomass tracking and credit generation
+- **Schema Integrity Validation** - Comprehensive validation and normalization improvements
+  - **3NF Compliance**: Removed redundant arrays from Organization and SupplyBase entities
+  - **Foreign Key Integrity**: Validated all FK relationships across 36 entities
+  - **Pattern Consistency**: Standardized ID patterns and validation rules
+
+### Enhanced
+- **Python Reference Implementation** - Complete architectural overhaul for schema-driven operation
+  - **Dynamic Model Facade**: Clean API via `get_models()` function with caching and validation
+  - **Migration Guide**: Comprehensive guide for transitioning from static to dynamic models
+  - **Testing Framework**: Updated all tests to use dynamic model loading
+  - **Validation Integration**: Schema-driven validation with real-time enum value checking
+- **Build System Reliability** - Improved CI/CD pipeline and documentation consistency
+  - **GitHub Actions Fixes**: Updated Python validation workflows for dynamic architecture
+  - **Documentation Consistency**: Ensured single source of truth between schemas and documentation
+  - **Repository Cleanup**: Removed redundant analysis files and static model artifacts
+
+### Changed
+- **Breaking Change**: Python implementation now requires dynamic model loading
+  - **Old**: `from models import Organization, TraceableUnit`
+  - **New**: `from dynamic_models import get_models; Organization = get_models().get_model('organization')`
+- **Schema Normalization**: Organization and SupplyBase entities restructured for 3NF compliance
+  - **Removed Arrays**: equipmentIds, operatorIds, harvestSites, traceableUnitIds from Organization
+  - **Removed Arrays**: skidRoads, forestRoads, equipmentDeployment, traceableUnitIds from SupplyBase
+  - **Rationale**: Eliminated data duplication and enforced proper relational design
+
+### Fixed
+- **CI/CD Pipeline Issues** - Resolved GitHub Actions failures after architecture migration
+  - **Python Validation**: Updated workflows to validate dynamic_models.py instead of removed models.py
+  - **Test Imports**: Fixed all test files to use dynamic model loading patterns
+  - **TraceableUnit Validation**: Added missing required fields to workflow validation tests
+- **Schema Synchronization** - Eliminated inconsistencies between static models and JSON schemas
+  - **Field Coverage**: All schema fields now accessible via dynamic models
+  - **Enum Validation**: Dynamic enum validation against current schema definitions
+  - **Type Safety**: Maintained Pydantic validation while enabling schema-driven flexibility
+
+### Migration Guide
+- **Update Imports**: Change from static model imports to dynamic model loading
+- **Enum Usage**: Prefer string values over enum classes for better schema alignment
+- **Validation**: Use schema-based validation methods for enum value checking
+- **Testing**: Update test imports and model instantiation patterns
+
+### Technical Improvements
+- **Architecture Consistency**: Python implementation now truly follows "Dynamic Schema-Driven Architecture"
+- **Maintenance Reduction**: Schema changes automatically propagate without code updates
+- **Performance Optimization**: Model caching and efficient schema loading
+- **Developer Experience**: Clear migration path and comprehensive documentation
+
 ## [3.2.5] - 2025-08-22 - Plant Part Categorization Enhancement and Physical Arrangement Support
 
 ### Added
