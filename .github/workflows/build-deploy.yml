@@ -9,6 +9,7 @@ on:
       - 'drafts/current/schema/**'
       - '.github/workflows/**'
       - 'CHANGELOG.md'
+      - 'erd-navigator/**'
 
   # Allow manual triggering
   workflow_dispatch:
