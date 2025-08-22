@@ -1,16 +1,11 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: tracking_point/validation_schema.json and tracking_point_dictionary.md
-% To modify this content, edit the source files and regenerate
 % Tracking Point Entity Table
+% Auto-generated from JSON schema
 
 \begin{entitytable}{Tracking Point}
-\textbf{\field{@context} & object (structured) & No description provided \\
-\textbf{\field{@id} & string (uri) & No description provided \\
-\textbf{\field{@type} & enum(TrackingPoint) & No description provided \\
-\textbf{\field{equipmentUsed} & string & No description provided \\
-\textbf{\field{establishedTimestamp} & string (date-time) & No description provided \\
-\textbf{\field{geographicDataId} & string & No description provided \\
-\textbf{\field{pointType} & enum(4 values) & No description provided \\
-\textbf{\field{trackingPointId} & string (pattern) & Unique identifier for the tracking point \\
-\field{operatorId} & string & No description provided \\
+\textbf{\field{equipmentUsed}} & string & Equipmentused field value \\
+\textbf{\field{establishedTimestamp}} & string (date-time) & Establishedtimestamp field value \\
+\textbf{\field{geographicDataId}} & string & Foreign key to geographic location data \\
+\textbf{\field{pointType}} & enum(4 values) & Enumerated value for pointtype \\
+\textbf{\field{trackingPointId}} & string (pattern) & Unique identifier for the tracking point \\
+\field{operatorId} & string & Foreign key to the operator who performed this action \\
 \end{entitytable}

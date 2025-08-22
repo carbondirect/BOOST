@@ -1,23 +1,18 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: certificate/validation_schema.json and certificate_dictionary.md
-% To modify this content, edit the source files and regenerate
 % Certificate Entity Table
+% Auto-generated from JSON schema
 
 \begin{entitytable}{Certificate}
-\textbf{\field{@context} & object (structured) & JSON-LD context for semantic web compatibility \\
-\textbf{\field{@id} & string (uri) & Unique URI identifier for the certificate \\
-\textbf{\field{@type} & string & JSON-LD type identifier \\
-\textbf{\field{CertificationBodyId} & string (pattern) & Uses EntityNameId convention referencing CertificationBody \\
-\textbf{\field{CertificationSchemeId} & string (pattern) & Uses EntityNameId convention referencing CertificationScheme \\
-\textbf{\field{OrganizationId} & string (pattern) & Uses EntityNameId convention referencing Organization receiving the certificate \\
-\textbf{\field{certificateId} & string (pattern) & Standard certificate identifier using CERT- pattern \\
-\textbf{\field{certificateNumber} & string (pattern) & Official certificate number (primary key) \\
-\textbf{\field{dateOfExpiry} & string (date) & Certificate expiry date \\
-\textbf{\field{dateOfIssue} & string (date) & Date of certificate issuance \\
-\textbf{\field{scopeOfCertification} & string & Summary of certification coverage \\
-\textbf{\field{status} & enum(4 values) & Current certificate status \\
-\textbf{\field{versionNumber} & string & Version identifier of the certification standard \\
-\field{VerificationStatementId} & string (pattern) & Uses EntityNameId convention referencing VerificationStatement for third-party validation \\
+\textbf{\field{CertificationBodyId}} & string (pattern) & Uses EntityNameId convention referencing CertificationBody \\
+\textbf{\field{CertificationSchemeId}} & string (pattern) & Uses EntityNameId convention referencing CertificationScheme \\
+\textbf{\field{OrganizationId}} & string (pattern) & Uses EntityNameId convention referencing Organization receiving the certificate \\
+\textbf{\field{certificateId}} & string (pattern) & Standard certificate identifier using CERT- pattern \\
+\textbf{\field{certificateNumber}} & string (pattern) & Official certificate number (primary key) \\
+\textbf{\field{dateOfExpiry}} & string (date) & Certificate expiry date \\
+\textbf{\field{dateOfIssue}} & string (date) & Date of certificate issuance \\
+\textbf{\field{scopeOfCertification}} & string & Summary of certification coverage \\
+\textbf{\field{status}} & enum(4 values) & Current certificate status \\
+\textbf{\field{versionNumber}} & string & Version identifier of the certification standard \\
+\field{VerificationStatementId} & string (pattern) & Uses EntityNameId convention referencing VerificationStatement for third-part... \\
 \field{auditSchedule} & object (structured) & Scheduled audit information \\
 \field{certificateDocument} & string (uri) & Link or reference to certificate document \\
 \field{conditionalRequirements} & array<object> & Special conditions or requirements \\

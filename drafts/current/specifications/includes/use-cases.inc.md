@@ -29,11 +29,12 @@ BOOST addresses critical use cases across the biomass supply chain, from forest 
 **Objective**: Generate quarterly LCFS compliance reports with complete audit trails
 
 **Integration Points**:
-- Enhanced Organization entities with LCFS registration data
-- Transaction entities linked to CARB-certified pathways
-- EnergyCarbonData with lifecycle assessment integration
-- LCFSReporting entities for quarterly submission preparation
-- Credit/deficit position tracking with automated calculations
+
+The LCFS compliance workflow demonstrates how BOOST tracking data flows directly into credit generation. When lumber mill residue arrives at a renewable fuel facility, TraceableUnit entities capture the material's origin, volume, moisture content, and FSC Chain of Custody certification. This tracking data validates that the feedstock meets the requirements for pathway CA-RD-2025-LMR-001.
+
+As the material moves through processing, MaterialProcessing entities document the conversion of 50 tons of biomass into 1,250 gallons of renewable diesel. This tracked conversion ratio provides the foundation for volume reconciliation that CARB requires. The Transaction entity then links the fuel volume to both the certified pathway and the tracked feedstock, creating an unbroken chain of documentation from biomass to credits.
+
+The quarterly LCFSReporting entity aggregates these tracked transactions to calculate total credits. Using the documented fuel volume of 1,250 gallons and the pathway CI validated through feedstock tracking, the system generates 155,125 credits valued at approximately $31,025. The entire calculation depends on the underlying tracking data that proves feedstock eligibility, documents chain of custody, and reconciles material flows.
 
 ### 4. Multi-Certification Scheme Management
 

@@ -1,24 +1,19 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: data_reconciliation/validation_schema.json and data_reconciliation_dictionary.md
-% To modify this content, edit the source files and regenerate
 % Data Reconciliation Entity Table
+% Auto-generated from JSON schema
 
 \begin{entitytable}{Data Reconciliation}
-\textbf{\field{@context} & object (structured) & No description provided \\
-\textbf{\field{@id} & string (uri) & No description provided \\
-\textbf{\field{@type} & enum(DataReconciliation) & No description provided \\
-\textbf{\field{discrepancy} & number & No description provided \\
-\textbf{\field{forestMeasurement} & number (≥0) & No description provided \\
-\textbf{\field{millMeasurement} & number (≥0) & No description provided \\
-\textbf{\field{reconciliationDate} & string (date-time) & No description provided \\
-\textbf{\field{reconciliationId} & string (pattern) & No description provided \\
-\textbf{\field{reconciliationStatus} & enum(pending, resolved, disputed) & No description provided \\
-\textbf{\field{traceableUnitId} & string & No description provided \\
-\field{discrepancyReason} & string & No description provided \\
-\field{lastUpdated} & string (date-time) & No description provided \\
-\field{reconciliationOperator} & string & No description provided \\
-\field{resolutionNotes} & string & No description provided \\
-\field{speciesDiscrepancies} & array<string> & No description provided \\
-\field{tolerancePercentage} & number (≥0, ≤100) & No description provided \\
-\field{transactionId} & string & No description provided \\
+\textbf{\field{discrepancy}} & number & Discrepancy field value \\
+\textbf{\field{forestMeasurement}} & number (≥0) & Forestmeasurement field value \\
+\textbf{\field{millMeasurement}} & number (≥0) & Millmeasurement field value \\
+\textbf{\field{reconciliationDate}} & string (date-time) & Reconciliationdate field value \\
+\textbf{\field{reconciliationId}} & string (pattern) & Unique identifier for the reconciliation \\
+\textbf{\field{reconciliationStatus}} & enum(pending, resolved, disputed) & Enumerated value for reconciliationstatus \\
+\textbf{\field{traceableUnitId}} & string & Foreign key to the traceable unit \\
+\field{discrepancyReason} & string & Discrepancyreason field value \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{reconciliationOperator} & string & Reconciliationoperator field value \\
+\field{resolutionNotes} & string & Resolutionnotes field value \\
+\field{speciesDiscrepancies} & array<string> & Array of speciesdiscrepancies values \\
+\field{tolerancePercentage} & number (≥0, ≤100) & Tolerancepercentage field value \\
+\field{transactionId} & string & Foreign key to the parent transaction \\
 \end{entitytable}

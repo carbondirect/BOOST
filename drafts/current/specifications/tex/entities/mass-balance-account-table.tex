@@ -1,18 +1,13 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: mass_balance_account/validation_schema.json and mass_balance_account_dictionary.md
-% To modify this content, edit the source files and regenerate
 % Mass Balance Account Entity Table
+% Auto-generated from JSON schema
 
 \begin{entitytable}{Mass Balance Account}
-\textbf{\field{@context} & object (structured) & No description provided \\
-\textbf{\field{@id} & string (uri) & No description provided \\
-\textbf{\field{@type} & enum(MassBalanceAccount) & No description provided \\
-\textbf{\field{accountId} & string (pattern) & No description provided \\
-\textbf{\field{currentBalance} & number & No description provided \\
-\textbf{\field{organizationId} & string (pattern) & No description provided \\
-\textbf{\field{productGroupId} & string (pattern) & No description provided \\
-\field{balancingPeriod} & string & No description provided \\
-\field{conversionFactors} & number & No description provided \\
-\field{periodInputs} & number & No description provided \\
-\field{periodOutputs} & number & No description provided \\
+\textbf{\field{accountId}} & string (pattern) & Unique identifier for the account \\
+\textbf{\field{currentBalance}} & number & Currentbalance field value \\
+\textbf{\field{organizationId}} & string (pattern) & Foreign key to the associated organization \\
+\textbf{\field{productGroupId}} & string (pattern) & Unique identifier for the productgroup \\
+\field{balancingPeriod} & string & Balancingperiod field value \\
+\field{conversionFactors} & number & Conversionfactors field value \\
+\field{periodInputs} & number & Periodinputs field value \\
+\field{periodOutputs} & number & Periodoutputs field value \\
 \end{entitytable}

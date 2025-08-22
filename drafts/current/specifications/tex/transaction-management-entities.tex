@@ -1,10 +1,8 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: thematic area configuration and entity schemas
-% To modify this content, edit the source files and regenerate
 % Transaction Management Entities
+% Auto-generated from JSON schemas
 
 
-\subsubsection{Transaction}
+\subsection{Transaction}
 \label{sec:entity-transaction}
 
 Transaction entity in BOOST data model
@@ -12,18 +10,75 @@ Transaction entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
+    \item \field{transactionId} → \entity{Transaction} (Unique identifier for the business transaction)
     \item \field{OrganizationId} → \entity{Organization} (Primary organization involved in transaction (seller/supplier))
     \item \field{CustomerId} → \entity{Customer} (Customer organization (buyer) - uses EntityNameId convention referencing Customer entity)
-    \item \field{SalesDeliveryDocumentId} → \entity{Sales Delivery Document} (Foreign key to sales/delivery documentation - uses EntityNameId convention referencing SalesDeliveryDocument)
-    \item \field{GeographicDataId} → \entity{Geographic Data} (Primary transaction location - uses EntityNameId convention referencing GeographicData)
-    \item \field{LcfsPathwayId} → \entity{Lcfs Pathway} (CARB-certified pathway identifier for LCFS compliance - uses EntityNameId convention referencing LcfsPathway)
 \end{itemize}
 \end{informative}
 
-\input{tex/entities/transaction-table}
+**[View Transaction in ERD Navigator](erd-navigator/index.html?focus=Transaction)**
+
+% Transaction Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Transaction}
+\textbf{\field{CustomerId}} & string (pattern) & Customer organization (buyer) - uses EntityNameId convention referencing Cust... \\
+\textbf{\field{OrganizationId}} & string (pattern) & Primary organization involved in transaction (seller/supplier) \\
+\textbf{\field{contractCurrency}} & enum(9 values) & Currency code for contract value \\
+\textbf{\field{contractValue}} & number (≥0, ≤999999999.99) & Total monetary value of the transaction \\
+\textbf{\field{transactionDate}} & string (date) & Date of business agreement \\
+\textbf{\field{transactionId}} & string (pattern) & Unique identifier for the business transaction \\
+\textbf{\field{transactionStatus}} & enum(6 values) & Current status of business transaction \\
+\field{BioramPathwayId} & string (pattern) & BioRAM pathway identifier for biomass power generation - uses EntityNameId co... \\
+\field{BrokerOrganizationId} & ['string', 'null'] & Optional intermediary broker organization - uses EntityNameId convention refe... \\
+\field{GeographicDataId} & string (pattern) & Primary transaction location - uses EntityNameId convention referencing Geogr... \\
+\field{LcfsPathwayId} & string (pattern) & CARB-certified pathway identifier for LCFS compliance - uses EntityNameId con... \\
+\field{SalesDeliveryDocumentId} & string (pattern) & Foreign key to sales/delivery documentation - uses EntityNameId convention re... \\
+\field{attestationDate} & string (date) & Date of BioRAM compliance attestation \\
+\field{attestationSignatory} & string & Name and title of person attesting to BioRAM compliance \\
+\field{biomassVolume} & number (≥0) & Volume of biomass fuel in transaction for BioRAM reporting \\
+\field{biomassVolumeUnit} & enum(bone\_dry\_tonnes, green\_tonnes, cubic\_yards) & Unit of measurement for biomass volume \\
+\field{bioramCertificationId} & string & BioRAM compliance certification identifier for transaction \\
+\field{bioramEligible} & boolean & Whether transaction meets BioRAM program eligibility requirements \\
+\field{calFirePermitNumber} & string & CAL FIRE permit number for harvest or treatment activities \\
+\field{complianceRequirements} & array<string> & Regulatory compliance requirements for transaction \\
+\field{contractSignedDate} & ['string', 'null'] & Date when contract was executed \\
+\field{contractTerms} & enum(8 values) & Incoterms delivery conditions \\
+\field{expectedDeliveryDate} & ['string', 'null'] & Expected completion/delivery date \\
+\field{fhszVerificationSource} & string & Source of fire hazard zone verification (e.g., CAL\_FIRE\_2024\_MAPS) \\
+\field{financialTerms} & object (structured) & Detailed financial terms and conditions \\
+\field{fireHazardSeverityZone} & enum(4 values) & CAL FIRE fire hazard severity zone designation \\
+\field{fuelCategory} & enum(10 values) & Category of fuel for LCFS classification \\
+\field{fuelOriginCoordinates} & object (structured) & Geographic coordinates of biomass fuel origin \\
+\field{fuelOriginFacilityId} & string & Identifier for source facility or harvest site \\
+\field{fuelType} & enum(6 values) & BioRAM eligible fuel type classification \\
+\field{fuelVolume} & number (≥0) & Volume of fuel in transaction for LCFS reporting \\
+\field{fuelVolumeUnit} & enum(gallons, liters, GGE) & Unit of measurement for fuel volume \\
+\field{haulDistance} & number (≥0) & Transportation distance from source to facility in miles \\
+\field{haulUnit} & enum(miles, kilometers) & Unit of measurement for haul distance \\
+\field{landowner} & string & Legal landowner of biomass source location \\
+\field{lastUpdated} & string (date-time) & Timestamp of last modification \\
+\field{manipulationTimestamps} & array<string> & Processing step timestamps \\
+\field{materialEligibilityConfirmed} & boolean & Confirmation that material meets BioRAM eligibility criteria \\
+\field{mediaBreaksDetected} & array<boolean> & Continuity flags per TRU \\
+\field{parcelId} & string & Assessor parcel number or legal land description \\
+\field{paymentTerms} & string & Payment conditions and timeline \\
+\field{permitStatus} & enum(4 values) & Status of required permits for biomass harvesting \\
+\field{reconciliationStatus} & enum(pending, resolved, disputed) & Transaction reconciliation status \\
+\field{regulatedPartyRole} & enum(5 values) & Role of regulated party in LCFS transaction \\
+\field{reportingAccuracyConfirmed} & boolean & Confirmation of reporting data accuracy for BioRAM compliance \\
+\field{reportingPeriod} & string (pattern) & LCFS reporting quarter in YYYY-QN format \\
+\field{riskManagement} & object (structured) & Risk management and mitigation terms \\
+\field{speciesCompositionAtTransaction} & array<object> & Species breakdown at transaction time \\
+\field{timberHarvestPlan} & string & Timber harvest plan identifier if applicable \\
+\field{traceableUnitIds} & array<string> & TRUs included in this transaction \\
+\field{trackingPointIds} & array<string> & Location trail references \\
+\field{withinSRA} & boolean & Whether fuel source is within California State Responsibility Area \\
+\end{entitytable}
 
 
-\subsubsection{Transaction Batch}
+
+\subsection{Transaction Batch}
 \label{sec:entity-transaction-batch}
 
 TransactionBatch entity in BOOST data model
@@ -31,16 +86,46 @@ TransactionBatch entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{transactionBatchId} → \entity{Transaction Batch} (Unique identifier for the physical material batch)
     \item \field{transactionId} → \entity{Transaction} (Foreign key to parent business transaction)
     \item \field{claimId} → \entity{Claim} (Foreign key to primary sustainability claim)
 \end{itemize}
 \end{informative}
 
-\input{tex/entities/transaction-batch-table}
+**[View Transaction Batch in ERD Navigator](erd-navigator/index.html?focus=TransactionBatch)**
+
+% Transaction Batch Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Transaction Batch}
+\textbf{\field{batchStatus}} & enum(6 values) & Current status of the physical batch \\
+\textbf{\field{quantity}} & number (≥0) & Physical quantity of material in this batch \\
+\textbf{\field{quantityUnit}} & enum(7 values) & Unit of measurement for quantity \\
+\textbf{\field{traceableUnitIds}} & array<string> & Array of TRU IDs included in this batch \\
+\textbf{\field{transactionBatchId}} & string (pattern) & Unique identifier for the physical material batch \\
+\textbf{\field{transactionId}} & string (pattern) & Foreign key to parent business transaction \\
+\field{additionalClaimIds} & array<string> & Array of secondary claim IDs \\
+\field{batchCreatedDate} & string (date-time) & When the batch was prepared/created \\
+\field{certificationValidation} & object (structured) & Certification and compliance validation data \\
+\field{claimId} & ['string', 'null'] & Foreign key to primary sustainability claim \\
+\field{deliveryDate} & ['string', 'null'] & Actual delivery timestamp \\
+\field{deliveryGeographicDataId} & ['string', 'null'] & Foreign key to delivery location \\
+\field{lastUpdated} & string (date-time) & Timestamp of last modification \\
+\field{measurementRecordIds} & array<string> & Array of measurement record IDs \\
+\field{mediaBreakDetected} & boolean & Flag indicating if traceability continuity was broken \\
+\field{plantPartComposition} & object & Plant part composition breakdown \\
+\field{processingHistoryIds} & array<string> & Array of processing history record IDs \\
+\field{productionBatchId} & ['string', 'null'] & Foreign key to source production batch \\
+\field{qualityGrade} & enum(9 values) & Overall quality grade for the batch \\
+\field{qualityMetrics} & object (structured) & Detailed quality assessment metrics \\
+\field{reconciliationStatus} & enum(5 values) & Status of volume/quality reconciliation \\
+\field{speciesComposition} & array<object> & Species breakdown with percentages \\
+\field{trackingHistory} & string & Complete location trail summary \\
+\field{transportationData} & object (structured) & Transportation and logistics information \\
+\end{entitytable}
 
 
-\subsubsection{Sales Delivery Document}
+
+\subsection{Sales Delivery Document}
 \label{sec:entity-sales-delivery-document}
 
 SalesDeliveryDocument entity in BOOST data model
@@ -52,5 +137,23 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-\input{tex/entities/sales-delivery-document-table}
+**[View Sales Delivery Document in ERD Navigator](erd-navigator/index.html?focus=SalesDeliveryDocument)**
+
+% Sales Delivery Document Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Sales Delivery Document}
+\textbf{\field{buyerName}} & string & Buyername field value \\
+\textbf{\field{dateIssued}} & string (date) & Dateissued field value \\
+\textbf{\field{documentId}} & string (pattern) & Unique identifier for the document \\
+\textbf{\field{productDescription}} & string & Productdescription field value \\
+\textbf{\field{quantity}} & number & Quantity field value \\
+\textbf{\field{sellerName}} & string & Sellername field value \\
+\field{buyerAddress} & string & Buyeraddress field value \\
+\field{certificateCode} & string & Certificatecode field value \\
+\field{sellerAddress} & string & Selleraddress field value \\
+\field{transactionId} & string & Foreign key to the parent transaction \\
+\field{transportReference} & string & Transportreference field value \\
+\end{entitytable}
+
 

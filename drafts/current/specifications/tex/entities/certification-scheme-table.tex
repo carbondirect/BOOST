@@ -1,16 +1,11 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: certification_scheme/validation_schema.json and certification_scheme_dictionary.md
-% To modify this content, edit the source files and regenerate
 % CertificationScheme Entity Table
+% Auto-generated from JSON schema
 
 \begin{entitytable}{CertificationScheme}
-\textbf{\field{@context} & object (structured) & JSON-LD context for semantic web compatibility \\
-\textbf{\field{@id} & string (uri) & Unique URI identifier for the certification scheme \\
-\textbf{\field{@type} & string & JSON-LD type identifier \\
-\textbf{\field{certificationSchemeId} & string (pattern) & Unique identifier for the certification scheme \\
-\textbf{\field{issuingOrganizationId} & string (pattern) & Foreign key to organization that issues this scheme \\
-\textbf{\field{schemeName} & string & Official name of the certification scheme \\
-\textbf{\field{schemeType} & enum(6 values) & Type of certification scheme \\
+\textbf{\field{certificationSchemeId}} & string (pattern) & Unique identifier for the certification scheme \\
+\textbf{\field{issuingOrganizationId}} & string (pattern) & Foreign key to organization that issues this scheme \\
+\textbf{\field{schemeName}} & string & Official name of the certification scheme \\
+\textbf{\field{schemeType}} & enum(6 values) & Type of certification scheme \\
 \field{applicableGeographicAreas} & array<string> & Geographic areas where this scheme is applicable \\
 \field{auditRequirements} & string & Audit and verification requirements \\
 \field{chainOfCustodyRequirements} & string & Chain of custody tracking and documentation requirements \\
