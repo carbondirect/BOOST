@@ -190,13 +190,14 @@ jobs:
           WRAPPER_COUNT=$(grep -c "main-content-wrapper" boost-spec.html)
           echo "✅ Found $WRAPPER_COUNT main-content-wrapper references"
           
-          # Validate critical CSS is included
-          if ! grep -q "respec-style.css" boost-spec.html; then
-            echo "❌ CRITICAL: respec-style.css not included - styling broken!"
+          # Validate critical CSS is included (embedded inline, not as external file)
+          if ! grep -q "ReSpec-Inspired BOOST Documentation Styles" boost-spec.html; then
+            echo "❌ CRITICAL: ReSpec-style CSS not embedded - styling broken!"
             echo "ℹ️  This CSS is essential for the ReSpec-style layout system"
+            echo "🔍 Looking for embedded CSS content rather than external file reference"
             exit 1
           fi
-          echo "✅ ReSpec-style CSS properly included"
+          echo "✅ ReSpec-style CSS properly embedded"
           
           # Check for sidebar TOC structure
           if ! grep -q "toc.*sidebar" boost-spec.html; then
