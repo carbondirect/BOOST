@@ -1,13 +1,18 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: audit/validation_schema.json and audit_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Audit Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Audit}
-\textbf{\field{auditDate}} & string (date) & Auditdate field value \\
-\textbf{\field{auditId}} & string (pattern) & Unique identifier for the audit \\
-\textbf{\field{auditType}} & enum(Initial, Surveillance, Transfer) & Enumerated value for audittype \\
-\textbf{\field{organizationId}} & string (pattern) & Foreign key to the associated organization \\
-\field{auditGeographicDataId} & string (pattern) & Unique identifier for the auditgeographicdata \\
-\field{cbId} & string (pattern) & Unique identifier for the cb \\
-\field{findings} & string & Findings field value \\
-\field{reportUrl} & string (uri) & Reporturl field value \\
+\textbf{\field{@context} & object (structured) & No description provided \\
+\textbf{\field{@id} & string (uri) & No description provided \\
+\textbf{\field{@type} & enum(Audit) & No description provided \\
+\textbf{\field{auditDate} & string (date) & No description provided \\
+\textbf{\field{auditId} & string (pattern) & No description provided \\
+\textbf{\field{auditType} & enum(Initial, Surveillance, Transfer) & No description provided \\
+\textbf{\field{organizationId} & string (pattern) & No description provided \\
+\field{auditGeographicDataId} & string (pattern) & No description provided \\
+\field{cbId} & string (pattern) & No description provided \\
+\field{findings} & string & No description provided \\
+\field{reportUrl} & string (uri) & No description provided \\
 \end{entitytable}

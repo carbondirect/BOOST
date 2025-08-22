@@ -1,5 +1,47 @@
 % Plant Part Categorization System Section
-% Placeholder - will be enhanced with full content
+
+\subsection{Introduction and Regulatory Context}
+\label{sec:plant-parts-intro}
+
+The BOOST plant part categorization framework addresses critical regulatory and operational requirements across multiple jurisdictions and applications. This system provides the taxonomic foundation for distinguishing product classifications from physical arrangements, enabling sophisticated supply chain optimization and regulatory compliance.
+
+\subsubsection{Regulatory Drivers}
+
+\textbf{California Department of Food and Agriculture (CDFA) Requirements}
+\begin{itemize}
+    \item Agricultural biomass classification for food vs. fuel categorization
+    \item Privacy protections for farmer data in agricultural residue tracking  
+    \item Integration with existing CDFA biomass certification systems
+    \item Support for agricultural waste stream optimization programs
+\end{itemize}
+
+\textbf{Low Carbon Fuel Standard (LCFS) Compliance}
+\begin{itemize}
+    \item Feedstock categorization requirements for carbon intensity calculations
+    \item Plant part composition tracking for pathway verification
+    \item Biogenic carbon accounting across different material components
+    \item Alternative fate assessment support for BECCS applications
+\end{itemize}
+
+\textbf{Forest Stewardship Council (FSC) Integration}
+\begin{itemize}
+    \item Chain of custody tracking through plant part transformations
+    \item Controlled wood verification for different plant components
+    \item Multi-species composition documentation requirements
+    \item Value recovery optimization across plant part classifications
+\end{itemize}
+
+\subsubsection{Conceptual Framework}
+
+The BOOST system distinguishes between two fundamental attributes:
+
+\textbf{Product Classification vs. Physical Arrangement}
+\begin{itemize}
+    \item \textbf{Product Classification}: Market destination or intended use (sawlog, pulpwood, biomass, chips)
+    \item \textbf{Physical Arrangement}: Spatial organization affecting collection and decomposition (scattered, piled, windrow, stacked)
+\end{itemize}
+
+This distinction enables sophisticated LCA and BECCS analysis by capturing both economic intent and operational reality.
 
 \subsection{Standardized Plant Parts Taxonomy}
 \label{sec:plant-parts-taxonomy}
@@ -28,4 +70,65 @@ Implementations \MUST{} support the following 17 standardized plant parts:
 
 \begin{normative}[title=Plant Part Classification Requirements]
 All \TRU{} entities \MUST{} specify plant part classification using this standardized taxonomy to ensure consistent categorization across implementations.
+\end{normative}
+
+\subsection{Physical Arrangement Framework}
+\label{sec:physical-arrangement}
+
+The BOOST system captures spatial organization of biomass materials to support collection planning and LCA analysis. Physical arrangement significantly affects both operational efficiency and environmental impact assessment.
+
+\subsubsection{Arrangement Categories}
+
+\textbf{Scattered Arrangement}
+\begin{itemize}
+    \item Crowns and branches distributed across forest floor after harvesting
+    \item Lower collection efficiency (typically 65-75\%)
+    \item Higher decomposition rates due to ground contact and weather exposure
+    \item Alternative fate: natural decomposition or wildfire fuel
+\end{itemize}
+
+\textbf{Centralized Piles}
+\begin{itemize}
+    \item Material gathered into specific collection points for efficiency
+    \item High collection efficiency (typically 90-95\%)
+    \item Moderate decomposition rates depending on pile construction
+    \item Optimized for mechanical loading and transport operations
+\end{itemize}
+
+\textbf{Windrow Configuration}
+\begin{itemize}
+    \item Linear arrangements following equipment access patterns
+    \item Collection efficiency 80-90\% with mechanical systems
+    \item Balanced decomposition rates with partial ground contact
+    \item Enables efficient forwarding and chipping operations
+\end{itemize}
+
+\textbf{Stacked Arrangements}
+\begin{itemize}
+    \item Organized vertical stacking for drying and storage
+    \item Highest collection efficiency (95\%+) with quality preservation
+    \item Lowest decomposition rates when properly ventilated
+    \item Premium applications requiring controlled moisture content
+\end{itemize}
+
+\subsubsection{LCA and BECCS Integration}
+
+\textbf{Alternative Fate Modeling}
+\begin{itemize}
+    \item Baseline scenario assessment (decomposition, wildfire, prescribed burning)
+    \item Arrangement-specific decomposition rates for carbon accounting
+    \item Emissions avoided calculations based on collection vs. baseline
+    \item Soil carbon impact assessment from ground contact patterns
+\end{itemize}
+
+\textbf{Collection Efficiency Factors}
+\begin{itemize}
+    \item Energy requirements for different arrangement patterns
+    \item Equipment accessibility and operational constraints
+    \item Volume recovery rates by arrangement and terrain conditions
+    \item Economic optimization through arrangement planning
+\end{itemize}
+
+\begin{normative}[title=Physical Arrangement Requirements]
+\TRU{} entities \MAY{} include physical arrangement data to support LCA analysis and collection optimization. When included, arrangement data \MUST{} use standardized arrangement types and provide collection efficiency factors.
 \end{normative}

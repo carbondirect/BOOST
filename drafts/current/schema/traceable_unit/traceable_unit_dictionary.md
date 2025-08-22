@@ -117,11 +117,11 @@ The `TraceableUnit` object represents the fundamental unit of traceability in th
 <td>`MAT-TYPE-PINE`, `MAT-TYPE-FIR`
 </tr>
 <tr>
-<td>`assortmentType`
+<td>`productClassification`
 <td>string
 <td>No
-<td>Type of wood assortment (enum)
-<td>`sawlog`, `pulpwood`, `biomass`, `chips`
+<td>Market classification or intended product use (enum)
+<td>`sawlog`, `pulpwood`, `biomass`, `chips`, `firewood`, `veneer_log`, `post_pole`
 </tr>
 <tr>
 <td>`qualityGrade`
@@ -129,6 +129,20 @@ The `TraceableUnit` object represents the fundamental unit of traceability in th
 <td>No
 <td>Quality grade classification (enum)
 <td>`A`, `B`, `C`, `structural`, `fuel`
+</tr>
+<tr>
+<td>`physicalArrangement`
+<td>object
+<td>No
+<td>Spatial organization affecting collection and decomposition
+<td>See Physical Arrangement Fields below
+</tr>
+<tr>
+<td>`alternativeFateMetrics`
+<td>object
+<td>No
+<td>LCA and BECCS analysis metrics for alternative fate assessment
+<td>See Alternative Fate Metrics Fields below
 </tr>
 <tr>
 <td>`isMultiSpecies`
@@ -202,6 +216,130 @@ The `TraceableUnit` object represents the fundamental unit of traceability in th
 </tr>
 </tbody>
 </table>
+---
+
+### Physical Arrangement Fields
+
+The `physicalArrangement` object captures spatial organization that affects collection efficiency and decomposition rates for LCA analysis:
+
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`arrangementType`
+<td>string
+<td>No
+<td>Type of spatial arrangement (enum)
+<td>`scattered`, `piled`, `windrow`, `stacked`, `bundled`, `in_situ`
+</tr>
+<tr>
+<td>`arrangementDate`
+<td>string (date-time)
+<td>No
+<td>When material was arranged in this configuration
+<td>`2025-07-15T10:30:00Z`
+</tr>
+<tr>
+<td>`exposureConditions`
+<td>string
+<td>No
+<td>Protection from weather elements (enum)
+<td>`covered`, `exposed`, `partially_covered`
+</tr>
+<tr>
+<td>`groundContact`
+<td>boolean
+<td>No
+<td>Direct soil contact affects decomposition rate
+<td>`true`, `false`
+</tr>
+</tbody>
+</table>
+
+### Alternative Fate Metrics Fields
+
+The `alternativeFateMetrics` object provides data for LCA and BECCS alternative fate assessments:
+
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`baselineScenario`
+<td>string
+<td>No
+<td>Expected fate if material is not collected (enum)
+<td>`natural_decomposition`, `wildfire`, `prescribed_burn`, `mulching`
+</tr>
+<tr>
+<td>`annualDecayRate`
+<td>number
+<td>No
+<td>Estimated annual decomposition rate (percent per year, 0-100)
+<td>`15.5`, `8.2`, `22.1`
+</tr>
+<tr>
+<td>`collectionEfficiency`
+<td>number
+<td>No
+<td>Efficiency factor (0-1) for collecting material based on arrangement
+<td>`0.95`, `0.65`, `0.85`
+</tr>
+<tr>
+<td>`carbonImpact`
+<td>object
+<td>No
+<td>Carbon-related impacts of the current arrangement
+<td>See Carbon Impact Fields below
+</tr>
+</tbody>
+</table>
+
+#### Carbon Impact Fields
+
+<table class="data">
+<thead>
+<tr>
+<th>Field
+<th>Type
+<th>Required
+<th>Description
+<th>Examples
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`soilCarbonChange`
+<td>number
+<td>No
+<td>Change in soil carbon (tons CO2e) from current arrangement
+<td>`-2.3`, `1.8`, `0.0`
+</tr>
+<tr>
+<td>`emissionsAvoided`
+<td>number
+<td>No
+<td>Emissions avoided (tons CO2e) by collection vs baseline scenario
+<td>`45.2`, `78.9`, `125.4`
+</tr>
+</tbody>
+</table>
+
 ---
 
 ### Key Features

@@ -1,31 +1,36 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: transaction/validation_schema.json and transaction_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Transaction Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Transaction}
-\textbf{\field{CustomerId}} & string (pattern) & Customer organization (buyer) - uses EntityNameId convention referencing Cust... \\
-\textbf{\field{OrganizationId}} & string (pattern) & Primary organization involved in transaction (seller/supplier) \\
-\textbf{\field{contractCurrency}} & enum(9 values) & Currency code for contract value \\
-\textbf{\field{contractValue}} & number (≥0, ≤999999999.99) & Total monetary value of the transaction \\
-\textbf{\field{transactionDate}} & string (date) & Date of business agreement \\
-\textbf{\field{transactionId}} & string (pattern) & Unique identifier for the business transaction \\
-\textbf{\field{transactionStatus}} & enum(6 values) & Current status of business transaction \\
-\field{BioramPathwayId} & string (pattern) & BioRAM pathway identifier for biomass power generation - uses EntityNameId co... \\
-\field{BrokerOrganizationId} & ['string', 'null'] & Optional intermediary broker organization - uses EntityNameId convention refe... \\
-\field{GeographicDataId} & string (pattern) & Primary transaction location - uses EntityNameId convention referencing Geogr... \\
-\field{LcfsPathwayId} & string (pattern) & CARB-certified pathway identifier for LCFS compliance - uses EntityNameId con... \\
-\field{SalesDeliveryDocumentId} & string (pattern) & Foreign key to sales/delivery documentation - uses EntityNameId convention re... \\
+\textbf{\field{@context} & object (structured) & JSON-LD context defining semantic vocabulary mappings \\
+\textbf{\field{@id} & string (uri) & Globally unique IRI identifying this specific entity instance \\
+\textbf{\field{@type} & enum(Transaction) & Entity type identifier for JSON-LD processing \\
+\textbf{\field{CustomerId} & string (pattern) & Customer organization (buyer) - uses EntityNameId convention referencing Customer entity \\
+\textbf{\field{OrganizationId} & string (pattern) & Primary organization involved in transaction (seller/supplier) \\
+\textbf{\field{contractCurrency} & enum(9 values) & Currency code for contract value \\
+\textbf{\field{contractValue} & number (≥0, ≤999999999.99) & Total monetary value of the transaction \\
+\textbf{\field{transactionDate} & string (date) & Date of business agreement \\
+\textbf{\field{transactionId} & string (pattern) & Unique identifier for the business transaction \\
+\textbf{\field{transactionStatus} & enum(6 values) & Current status of business transaction \\
+\field{BioramPathwayId} & string (pattern) & BioRAM pathway identifier for biomass power generation - uses EntityNameId convention referencing BioramPathway \\
+\field{BrokerOrganizationId} & string | 'null' & Optional intermediary broker organization - uses EntityNameId convention referencing Organization \\
+\field{GeographicDataId} & string (pattern) & Primary transaction location - uses EntityNameId convention referencing GeographicData \\
+\field{LcfsPathwayId} & string (pattern) & CARB-certified pathway identifier for LCFS compliance - uses EntityNameId convention referencing LcfsPathway \\
+\field{SalesDeliveryDocumentId} & string (pattern) & Foreign key to sales/delivery documentation - uses EntityNameId convention referencing SalesDeliveryDocument \\
 \field{attestationDate} & string (date) & Date of BioRAM compliance attestation \\
 \field{attestationSignatory} & string & Name and title of person attesting to BioRAM compliance \\
 \field{biomassVolume} & number (≥0) & Volume of biomass fuel in transaction for BioRAM reporting \\
-\field{biomassVolumeUnit} & enum(bone\_dry\_tonnes, green\_tonnes, cubic\_yards) & Unit of measurement for biomass volume \\
+\field{biomassVolumeUnit} & enum(bone\textbackslash{}_dry\textbackslash{}_tonnes, green\textbackslash{}_tonnes, cubic\textbackslash{}_yards) & Unit of measurement for biomass volume \\
 \field{bioramCertificationId} & string & BioRAM compliance certification identifier for transaction \\
 \field{bioramEligible} & boolean & Whether transaction meets BioRAM program eligibility requirements \\
 \field{calFirePermitNumber} & string & CAL FIRE permit number for harvest or treatment activities \\
 \field{complianceRequirements} & array<string> & Regulatory compliance requirements for transaction \\
-\field{contractSignedDate} & ['string', 'null'] & Date when contract was executed \\
+\field{contractSignedDate} & string | 'null' & Date when contract was executed \\
 \field{contractTerms} & enum(8 values) & Incoterms delivery conditions \\
-\field{expectedDeliveryDate} & ['string', 'null'] & Expected completion/delivery date \\
-\field{fhszVerificationSource} & string & Source of fire hazard zone verification (e.g., CAL\_FIRE\_2024\_MAPS) \\
+\field{expectedDeliveryDate} & string | 'null' & Expected completion/delivery date \\
+\field{fhszVerificationSource} & string & Source of fire hazard zone verification (e.g., CAL\textbackslash{}_FIRE\textbackslash{}_2024\textbackslash{}_MAPS) \\
 \field{financialTerms} & object (structured) & Detailed financial terms and conditions \\
 \field{fireHazardSeverityZone} & enum(4 values) & CAL FIRE fire hazard severity zone designation \\
 \field{fuelCategory} & enum(10 values) & Category of fuel for LCFS classification \\

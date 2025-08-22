@@ -2,6 +2,44 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.2.5] - 2025-08-22 - Plant Part Categorization Enhancement and Physical Arrangement Support
+
+### Added
+- **🌱 Enhanced Plant Part Categorization System (#239)** - Added comprehensive introduction and regulatory context
+  - **Regulatory Drivers**: CDFA agricultural biomass classification, LCFS compliance requirements, FSC integration
+  - **Conceptual Framework**: Clear distinction between product classification and physical arrangement
+  - **Implementation Benefits**: Economic value optimization and environmental compliance support
+  - **CDFA Integration**: Specific context for agricultural biomass tracking and privacy protections
+
+- **📍 Physical Arrangement Framework (#252)** - Complete LCA and BECCS support for alternative fate assessment
+  - **Arrangement Categories**: Scattered, piled, windrow, stacked, bundled, and in_situ configurations
+  - **Collection Efficiency**: Arrangement-specific efficiency factors (65-95% range)
+  - **Decomposition Modeling**: Arrangement-specific decay rates for carbon accounting
+  - **Alternative Fate Analysis**: Baseline scenario assessment for BECCS project integration
+
+### Enhanced
+- **🔧 TraceableUnit Entity** - Comprehensive schema improvements for arrangement tracking
+  - **Product Classification**: Renamed `assortmentType` → `productClassification` with expanded enum values
+  - **Physical Arrangement**: New nested object with arrangement type, date, exposure conditions, and ground contact
+  - **Alternative Fate Metrics**: LCA-specific fields for baseline scenarios, decay rates, and carbon impact assessment
+  - **BECCS Integration**: Direct support for alternative fate calculations and emissions avoided calculations
+
+### Schema Changes
+- **Breaking**: `assortmentType` field renamed to `productClassification` in TraceableUnit entity
+- **New Fields**: `physicalArrangement` and `alternativeFateMetrics` objects added to TraceableUnit
+- **Extended Enums**: Product classification expanded with firewood, veneer_log, post_pole options
+
+### Documentation Updates
+- **Plant Parts System**: Complete introduction with regulatory context and implementation guidance
+- **Physical Arrangement**: Detailed framework documentation with LCA integration examples
+- **Field Specifications**: Comprehensive documentation for all new TraceableUnit fields
+
+### User Impact
+- **LCA Practitioners**: Direct support for alternative fate assessment and BECCS analysis
+- **CDFA Compliance**: Enhanced agricultural biomass classification with privacy-first design
+- **Forest Operations**: Arrangement-specific collection efficiency optimization
+- **Regulatory Reporting**: Improved support for LCFS and FSC compliance requirements
+
 ## [3.2.3] - 2025-08-22 - HTML Build System and Header Formatting Fixes
 
 ### Fixed

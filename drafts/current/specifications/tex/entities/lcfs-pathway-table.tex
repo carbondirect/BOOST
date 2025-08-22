@@ -1,17 +1,22 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: lcfs_pathway/validation_schema.json and lcfs_pathway_dictionary.md
+% To modify this content, edit the source files and regenerate
 % LCFS Pathway Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{LCFS Pathway}
-\textbf{\field{caGreetVersion}} & string (pattern) & CA-GREET model version used for pathway certification \\
-\textbf{\field{carbonIntensity}} & number (≥0, ≤200) & Certified carbon intensity in gCO2e/MJ \\
-\textbf{\field{certificationDate}} & string (date) & CARB pathway certification date \\
-\textbf{\field{energyEconomyRatio}} & number (≥0.5, ≤3.0) & Energy economy ratio multiplier for credit calculation \\
-\textbf{\field{facilityLocation}} & string & Production facility location (city, state or geographic region) \\
-\textbf{\field{feedstockCategory}} & enum(13 values) & Primary feedstock type for pathway \\
-\textbf{\field{fuelProduct}} & enum(8 values) & Final fuel product produced \\
-\textbf{\field{pathwayId}} & string (pattern) & CARB-assigned pathway identifier \\
-\textbf{\field{pathwayType}} & enum(Lookup\_Table, Tier\_1, Tier\_2) & CARB pathway certification tier \\
-\textbf{\field{verificationStatus}} & enum(4 values) & Current CARB verification status \\
+\textbf{\field{@context} & object (structured) & JSON-LD context for semantic web compatibility \\
+\textbf{\field{@id} & string (uri) & Unique URI identifier for JSON-LD \\
+\textbf{\field{@type} & string & No description provided \\
+\textbf{\field{caGreetVersion} & string (pattern) & CA-GREET model version used for pathway certification \\
+\textbf{\field{carbonIntensity} & number (≥0, ≤200) & Certified carbon intensity in gCO2e/MJ \\
+\textbf{\field{certificationDate} & string (date) & CARB pathway certification date \\
+\textbf{\field{energyEconomyRatio} & number (≥0.5, ≤3.0) & Energy economy ratio multiplier for credit calculation \\
+\textbf{\field{facilityLocation} & string & Production facility location (city, state or geographic region) \\
+\textbf{\field{feedstockCategory} & enum(13 values) & Primary feedstock type for pathway \\
+\textbf{\field{fuelProduct} & enum(8 values) & Final fuel product produced \\
+\textbf{\field{pathwayId} & string (pattern) & CARB-assigned pathway identifier \\
+\textbf{\field{pathwayType} & enum(Lookup\textbackslash{}_Table, Tier\textbackslash{}_1, Tier\textbackslash{}_2) & CARB pathway certification tier \\
+\textbf{\field{verificationStatus} & enum(4 values) & Current CARB verification status \\
 \field{expirationDate} & string (date) & Pathway certification expiration date \\
 \field{facilityCapacity} & number (≥0) & Annual production capacity in gallons \\
 \field{geographicScope} & enum(4 values) & Geographic applicability of pathway \\

@@ -1,14 +1,19 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: supply_base_report/validation_schema.json and supply_base_report_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Supply Base Report Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Supply Base Report}
-\textbf{\field{organizationId}} & string & Foreign key to the associated organization \\
-\textbf{\field{preparationDate}} & string (date) & Preparationdate field value \\
-\textbf{\field{sbrId}} & string (pattern) & Unique identifier for the sbr \\
-\field{publicationUrl} & string (uri) & Publicationurl field value \\
-\field{reportGeographicDataId} & string & Foreign key to Reportgeographicdata entity \\
-\field{sourcingPractices} & string & Sourcingpractices field value \\
+\textbf{\field{@context} & object (structured) & No description provided \\
+\textbf{\field{@id} & string (uri) & No description provided \\
+\textbf{\field{@type} & enum(SupplyBaseReport) & No description provided \\
+\textbf{\field{organizationId} & string & No description provided \\
+\textbf{\field{preparationDate} & string (date) & No description provided \\
+\textbf{\field{sbrId} & string (pattern) & No description provided \\
+\field{publicationUrl} & string (uri) & No description provided \\
+\field{reportGeographicDataId} & string & No description provided \\
+\field{sourcingPractices} & string & No description provided \\
 \field{supplyBaseIds} & array<string> & Array of SupplyBase IDs that this report covers \\
-\field{supplyBaseSummary} & string & Supplybasesummary field value \\
-\field{sustainabilityMeasures} & string & Sustainabilitymeasures field value \\
+\field{supplyBaseSummary} & string & No description provided \\
+\field{sustainabilityMeasures} & string & No description provided \\
 \end{entitytable}

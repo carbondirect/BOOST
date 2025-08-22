@@ -1,15 +1,20 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: processing_history/validation_schema.json and processing_history_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Processing History Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Processing History}
-\textbf{\field{inputTRUIds}} & array<string> & Array of input TRU IDs (multiple for merge operations) \\
-\textbf{\field{materialProcessingId}} & string (pattern) & Foreign key to MaterialProcessing operation \\
-\textbf{\field{outputTRUIds}} & array<string> & Array of output TRU IDs (multiple for split operations) \\
-\textbf{\field{processSequenceNumber}} & integer & Sequential order of this processing step for the TRU \\
-\textbf{\field{processingEventType}} & enum(7 values) & Type of processing event \\
-\textbf{\field{processingHistoryId}} & string (pattern) & Unique identifier for the processing history record \\
-\textbf{\field{timestamp}} & string (date-time) & When this processing step occurred \\
-\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to TRU this history record belongs to \\
+\textbf{\field{@context} & object (structured) & JSON-LD context defining semantic vocabulary mappings \\
+\textbf{\field{@id} & string (uri) & Globally unique IRI identifying this specific entity instance \\
+\textbf{\field{@type} & enum(ProcessingHistory) & Entity type identifier for JSON-LD processing \\
+\textbf{\field{inputTRUIds} & array<string> & Array of input TRU IDs (multiple for merge operations) \\
+\textbf{\field{materialProcessingId} & string (pattern) & Foreign key to MaterialProcessing operation \\
+\textbf{\field{outputTRUIds} & array<string> & Array of output TRU IDs (multiple for split operations) \\
+\textbf{\field{processSequenceNumber} & integer & Sequential order of this processing step for the TRU \\
+\textbf{\field{processingEventType} & enum(7 values) & Type of processing event \\
+\textbf{\field{processingHistoryId} & string (pattern) & Unique identifier for the processing history record \\
+\textbf{\field{timestamp} & string (date-time) & When this processing step occurred \\
+\textbf{\field{traceableUnitId} & string (pattern) & Foreign key to TRU this history record belongs to \\
 \field{claimInheritanceData} & object (structured) & Sustainability claim inheritance tracking \\
 \field{equipmentUsed} & string & Equipment used for this processing step \\
 \field{isCurrentProcessingState} & boolean & True if this represents the current processing state \\
@@ -17,7 +22,7 @@
 \field{nextProcessingHistoryIds} & array<string> & Array of next processing history record IDs (for split operations) \\
 \field{operatorId} & string (pattern) & Foreign key to operator who performed processing \\
 \field{plantPartTransformation} & string & Summary of plant part changes during processing \\
-\field{previousProcessingHistoryId} & ['string', 'null'] & Foreign key to previous processing history record (forms chain) \\
+\field{previousProcessingHistoryId} & string | 'null' & Foreign key to previous processing history record (forms chain) \\
 \field{processingDuration} & string (pattern) & ISO 8601 duration format for processing time \\
 \field{processingGeographicDataId} & string (pattern) & Foreign key to location where processing occurred \\
 \field{qualityChangeDescription} & string & Description of quality changes during processing \\

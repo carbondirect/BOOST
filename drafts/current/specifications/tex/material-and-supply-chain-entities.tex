@@ -1,73 +1,33 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: thematic area configuration and entity schemas
+% To modify this content, edit the source files and regenerate
 % Material & Supply Chain Entities
-% Auto-generated from JSON schemas
 
 
-\subsection{Material}
+\subsubsection{Material}
 \label{sec:entity-material}
 
 Material types and specifications
 
-**[View Material in ERD Navigator](erd-navigator/index.html?focus=Material)**
-
-% Material Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Material}
-\textbf{\field{materialCategory}} & enum(softwood, hardwood, mixed) & Enumerated value for materialcategory \\
-\textbf{\field{materialName}} & string & Materialname field value \\
-\textbf{\field{materialTypeId}} & string (pattern) & Unique identifier for the materialtype \\
-\field{applicablePlantParts} & array<string> & Plant parts included in this material type \\
-\field{applicableProcessingTypes} & array<string> & Array of applicableprocessingtypes values \\
-\field{carbonStorageRate} & string & Carbonstoragerate field value \\
-\field{defaultAssortmentTypes} & string & Defaultassortmenttypes field value \\
-\field{density} & string & Density field value \\
-\field{energyContent} & string & Energycontent field value \\
-\field{excludedPlantParts} & array<string> & Plant parts excluded from this material type \\
-\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{plantPartProcessingSpecs} & object & Processing specifications by plant part \\
-\field{standardMoistureContent} & string & Standardmoisturecontent field value \\
-\field{standardQualityGrades} & string & Standardqualitygrades field value \\
-\field{typicalSpecies} & array<string> & Array of typicalspecies values \\
-\end{entitytable}
+\input{tex/entities/material-table}
 
 
-
-\subsection{Species Component}
+\subsubsection{Species Component}
 \label{sec:entity-species-component}
 
 Species composition within TRUs
 
-**[View Species Component in ERD Navigator](erd-navigator/index.html?focus=SpeciesComponent)**
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{traceableUnitId} → \entity{Traceable Unit} (Foreign key back reference to TraceableUnit)
+\end{itemize}
+\end{informative}
 
-% Species Component Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Species Component}
-\textbf{\field{componentId}} & string (pattern) & Unique identifier for the species component \\
-\textbf{\field{percentageByVolume}} & number (≥0, ≤100) & Percentage of total TRU volume for this species \\
-\textbf{\field{species}} & string & Species name (common or scientific) \\
-\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key back reference to TraceableUnit \\
-\textbf{\field{volumeM3}} & number (≥0) & Volume of this species within the TRU in cubic meters \\
-\field{ageYears} & integer & Estimated age in years \\
-\field{carbonStorage} & string & CO2 data for this species component \\
-\field{dbhCm} & number (≥0) & Diameter at breast height in centimeters \\
-\field{defects} & array<string> & List of defects or quality issues \\
-\field{harvestTimestamp} & string (date-time) & When this species was harvested \\
-\field{harvestingMethod} & enum(4 values) & Method used to harvest this species \\
-\field{heightM} & number (≥0) & Average tree height in meters \\
-\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage \\
-\field{plantPartComposition} & object & Plant part breakdown within this species component \\
-\field{primaryPlantPart} & enum(17 values) & Primary plant part represented by this species component \\
-\field{qualityGrade} & string & Species-specific quality grade \\
-\field{scientificName} & string & Scientific/Latin name of the species \\
-\field{sourceGeographicDataId} & string (pattern) & Foreign key to geographic origin of this species \\
-\field{structuralClassification} & enum(5 values) & Functional classification of the primary plant part \\
-\end{entitytable}
+\input{tex/entities/species-component-table}
 
 
-
-\subsection{Supplier}
+\subsubsection{Supplier}
 \label{sec:entity-supplier}
 
 Supplier entity in BOOST data model
@@ -75,28 +35,14 @@ Supplier entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{supplierId} → \entity{Supplier} ()
+    \item \field{GeographicDataId} → \entity{Geographic Data} (Supplier location - uses EntityNameId convention referencing GeographicData)
 \end{itemize}
 \end{informative}
 
-**[View Supplier in ERD Navigator](erd-navigator/index.html?focus=Supplier)**
-
-% Supplier Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Supplier}
-\textbf{\field{supplierId}} & string (pattern) & Unique identifier for the supplier \\
-\textbf{\field{supplierName}} & string & Suppliername field value \\
-\field{GeographicDataId} & string (pattern) & Supplier location - uses EntityNameId convention referencing GeographicData \\
-\field{address} & string & Address field value \\
-\field{certificateCode} & string & Certificatecode field value \\
-\field{claim} & string & Claim field value \\
-\field{supplierType} & string & Suppliertype field value \\
-\end{entitytable}
+\input{tex/entities/supplier-table}
 
 
-
-\subsection{Customer}
+\subsubsection{Customer}
 \label{sec:entity-customer}
 
 Customer entity in BOOST data model
@@ -104,25 +50,14 @@ Customer entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{customerId} → \entity{Customer} (Unique identifier for the customer)
+    \item \field{GeographicDataId} → \entity{Geographic Data} (Customer location - uses EntityNameId convention referencing GeographicData)
 \end{itemize}
 \end{informative}
 
-**[View Customer in ERD Navigator](erd-navigator/index.html?focus=Customer)**
-
-% Customer Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Customer}
-\textbf{\field{customerId}} & string (pattern) & Unique identifier for the customer \\
-\textbf{\field{customerName}} & string & Customername field value \\
-\field{GeographicDataId} & string (pattern) & Customer location - uses EntityNameId convention referencing GeographicData \\
-\field{address} & string & Address field value \\
-\end{entitytable}
+\input{tex/entities/customer-table}
 
 
-
-\subsection{Supply Base}
+\subsubsection{Supply Base}
 \label{sec:entity-supply-base}
 
 SupplyBase entity in BOOST data model
@@ -130,32 +65,16 @@ SupplyBase entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
+    \item \field{supplyBaseId} → \entity{Supply Base} ()
     \item \field{OrganizationId} → \entity{Organization} (Managing organization - uses EntityNameId convention referencing Organization)
+    \item \field{GeographicDataId} → \entity{Geographic Data} (Supply base location - uses EntityNameId convention referencing GeographicData)
 \end{itemize}
 \end{informative}
 
-**[View Supply Base in ERD Navigator](erd-navigator/index.html?focus=SupplyBase)**
-
-% Supply Base Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Supply Base}
-\textbf{\field{OrganizationId}} & string (pattern) & Managing organization - uses EntityNameId convention referencing Organization \\
-\textbf{\field{description}} & string & Description field value \\
-\textbf{\field{supplyBaseId}} & string (pattern) & Unique identifier for the supplybase \\
-\textbf{\field{supplyBaseName}} & string & Supplybasename field value \\
-\field{GeographicDataId} & string (pattern) & Supply base location - uses EntityNameId convention referencing GeographicData \\
-\field{equipmentDeployment} & array<string> & Array of equipmentdeployment values \\
-\field{forestRoads} & array<string> & Array of forestroads values \\
-\field{harvestSites} & array<string> & Array of harvestsites values \\
-\field{skidRoads} & array<string> & Array of skidroads values \\
-\field{speciesAvailable} & array<string> & Array of speciesavailable values \\
-\field{traceableUnitIds} & array<string> & Array of traceableunitids values \\
-\end{entitytable}
+\input{tex/entities/supply-base-table}
 
 
-
-\subsection{Supply Base Report}
+\subsubsection{Supply Base Report}
 \label{sec:entity-supply-base-report}
 
 SupplyBaseReport entity in BOOST data model
@@ -167,26 +86,10 @@ This entity references the following entities:
 \end{itemize}
 \end{informative}
 
-**[View Supply Base Report in ERD Navigator](erd-navigator/index.html?focus=SupplyBaseReport)**
-
-% Supply Base Report Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Supply Base Report}
-\textbf{\field{organizationId}} & string & Foreign key to the associated organization \\
-\textbf{\field{preparationDate}} & string (date) & Preparationdate field value \\
-\textbf{\field{sbrId}} & string (pattern) & Unique identifier for the sbr \\
-\field{publicationUrl} & string (uri) & Publicationurl field value \\
-\field{reportGeographicDataId} & string & Foreign key to Reportgeographicdata entity \\
-\field{sourcingPractices} & string & Sourcingpractices field value \\
-\field{supplyBaseIds} & array<string> & Array of SupplyBase IDs that this report covers \\
-\field{supplyBaseSummary} & string & Supplybasesummary field value \\
-\field{sustainabilityMeasures} & string & Sustainabilitymeasures field value \\
-\end{entitytable}
+\input{tex/entities/supply-base-report-table}
 
 
-
-\subsection{Equipment}
+\subsubsection{Equipment}
 \label{sec:entity-equipment}
 
 Equipment entity representing forestry machinery and equipment used in biomass harvesting and processing operations
@@ -194,36 +97,9 @@ Equipment entity representing forestry machinery and equipment used in biomass h
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{equipmentId} → \entity{Equipment} (Unique identifier for the equipment)
     \item \field{organizationId} → \entity{Organization} (Foreign key to owning organization)
 \end{itemize}
 \end{informative}
 
-**[View Equipment in ERD Navigator](erd-navigator/index.html?focus=Equipment)**
-
-% Equipment Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Equipment}
-\textbf{\field{equipmentId}} & string (pattern) & Unique identifier for the equipment \\
-\textbf{\field{equipmentName}} & string & Descriptive name of the equipment \\
-\textbf{\field{equipmentType}} & enum(12 values) & Type of forestry equipment \\
-\textbf{\field{operationalStatus}} & enum(5 values) & Current operational status of the equipment \\
-\textbf{\field{organizationId}} & string (pattern) & Foreign key to owning organization \\
-\field{acquisitionCost} & number (≥0) & Equipment acquisition cost in USD \\
-\field{acquisitionDate} & string (date) & Date equipment was acquired by organization \\
-\field{assignedTrackingPointId} & string (pattern) & Foreign key to current location/assignment \\
-\field{certifications} & array<string> & Equipment certifications (safety, emissions, etc.) \\
-\field{currentOperatorId} & string (pattern) & Foreign key to current operator (if assigned) \\
-\field{insuranceInfo} & object (structured) & Equipment insurance information \\
-\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{maintenanceSchedule} & object (structured) & Maintenance schedule information \\
-\field{manufacturer} & string & Equipment manufacturer \\
-\field{model} & string & Equipment model designation \\
-\field{notes} & string & Additional notes or comments about the equipment \\
-\field{serialNumber} & string & Manufacturer serial number \\
-\field{specifications} & object (structured) & Technical specifications for the equipment \\
-\field{yearManufactured} & integer & Year the equipment was manufactured \\
-\end{entitytable}
-
+\input{tex/entities/equipment-table}
 

@@ -1,20 +1,25 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: material/validation_schema.json and material_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Material Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Material}
-\textbf{\field{materialCategory}} & enum(softwood, hardwood, mixed) & Enumerated value for materialcategory \\
-\textbf{\field{materialName}} & string & Materialname field value \\
-\textbf{\field{materialTypeId}} & string (pattern) & Unique identifier for the materialtype \\
+\textbf{\field{@context} & object (structured) & No description provided \\
+\textbf{\field{@id} & string (uri) & No description provided \\
+\textbf{\field{@type} & enum(Material) & No description provided \\
+\textbf{\field{materialCategory} & enum(softwood, hardwood, mixed) & No description provided \\
+\textbf{\field{materialName} & string & No description provided \\
+\textbf{\field{materialTypeId} & string (pattern) & No description provided \\
 \field{applicablePlantParts} & array<string> & Plant parts included in this material type \\
-\field{applicableProcessingTypes} & array<string> & Array of applicableprocessingtypes values \\
-\field{carbonStorageRate} & string & Carbonstoragerate field value \\
-\field{defaultAssortmentTypes} & string & Defaultassortmenttypes field value \\
-\field{density} & string & Density field value \\
-\field{energyContent} & string & Energycontent field value \\
+\field{applicableProcessingTypes} & array<string> & No description provided \\
+\field{carbonStorageRate} & string & No description provided \\
+\field{defaultAssortmentTypes} & string & No description provided \\
+\field{density} & string & No description provided \\
+\field{energyContent} & string & No description provided \\
 \field{excludedPlantParts} & array<string> & Plant parts excluded from this material type \\
-\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{plantPartProcessingSpecs} & object & Processing specifications by plant part \\
-\field{standardMoistureContent} & string & Standardmoisturecontent field value \\
-\field{standardQualityGrades} & string & Standardqualitygrades field value \\
-\field{typicalSpecies} & array<string> & Array of typicalspecies values \\
+\field{lastUpdated} & string (date-time) & No description provided \\
+\field{plantPartProcessingSpecs} & object (structured) & Processing specifications by plant part \\
+\field{standardMoistureContent} & string & No description provided \\
+\field{standardQualityGrades} & string & No description provided \\
+\field{typicalSpecies} & array<string> & No description provided \\
 \end{entitytable}

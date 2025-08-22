@@ -1,21 +1,26 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: measurement_record/validation_schema.json and measurement_record_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Measurement Record Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Measurement Record}
-\textbf{\field{measurementMethod}} & enum(4 values) & Enumerated value for measurementmethod \\
-\textbf{\field{measurementTimestamp}} & string (date-time) & Measurementtimestamp field value \\
-\textbf{\field{recordId}} & string (pattern) & Unique identifier for the record \\
-\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to the traceable unit \\
-\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{measuredDiameter} & number (≥0) & Measureddiameter field value \\
-\field{measuredLength} & number (≥0) & Measuredlength field value \\
-\field{measuredVolume} & number (≥0) & Measuredvolume field value \\
-\field{measurementGeographicDataId} & string (pattern) & Unique identifier for the measurementgeographicdata \\
+\textbf{\field{@context} & object (structured) & No description provided \\
+\textbf{\field{@id} & string (uri) & No description provided \\
+\textbf{\field{@type} & enum(MeasurementRecord) & No description provided \\
+\textbf{\field{measurementMethod} & enum(4 values) & No description provided \\
+\textbf{\field{measurementTimestamp} & string (date-time) & No description provided \\
+\textbf{\field{recordId} & string (pattern) & No description provided \\
+\textbf{\field{traceableUnitId} & string (pattern) & No description provided \\
+\field{lastUpdated} & string (date-time) & No description provided \\
+\field{measuredDiameter} & number (≥0) & No description provided \\
+\field{measuredLength} & number (≥0) & No description provided \\
+\field{measuredVolume} & number (≥0) & No description provided \\
+\field{measurementGeographicDataId} & string (pattern) & No description provided \\
 \field{moistureAccuracy} & number (≥0) & Estimated accuracy of moisture measurement (± percentage points) \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage of weight contributed by water (0-100\%) \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage of weight contributed by water (0-100\textbackslash{}%) \\
 \field{moistureMethod} & enum(8 values) & Method used to determine moisture content \\
 \field{moistureStandard} & enum(5 values) & Standard procedure followed for moisture measurement \\
-\field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
-\field{speciesMeasurements} & array<string> & Array of speciesmeasurements values \\
-\field{trackingPointId} & string (pattern) & Unique identifier for the trackingpoint \\
+\field{operatorId} & string (pattern) & No description provided \\
+\field{speciesMeasurements} & array<string> & No description provided \\
+\field{trackingPointId} & string (pattern) & No description provided \\
 \end{entitytable}

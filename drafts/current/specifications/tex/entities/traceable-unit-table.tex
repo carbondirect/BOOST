@@ -1,19 +1,24 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: traceable_unit/validation_schema.json and traceable_unit_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Traceable Unit Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Traceable Unit}
-\textbf{\field{createdTimestamp}} & string (date-time) & When the TRU was created \\
-\textbf{\field{harvestGeographicDataId}} & string (pattern) & Harvest location - uses EntityNameId convention referencing GeographicData \\
-\textbf{\field{harvesterId}} & string (pattern) & Foreign key to harvesting organization \\
-\textbf{\field{identificationConfidence}} & number (≥0, ≤100) & Confidence score for primary identification method (0-100) \\
-\textbf{\field{identificationMethodId}} & string (pattern) & Foreign key to IdentificationMethod entity \\
-\textbf{\field{isMultiSpecies}} & boolean & True if contains multiple species \\
-\textbf{\field{materialTypeId}} & string (pattern) & Foreign key to Material entity (reference table) \\
-\textbf{\field{totalVolumeM3}} & number (≥0) & Total volume of the traceable unit in cubic meters \\
-\textbf{\field{traceableUnitId}} & string (pattern) & Unique ID for each TRU \\
-\textbf{\field{uniqueIdentifier}} & string & Primary identifier - biometric signature, RFID tag, QR code, barcode, or manu... \\
-\textbf{\field{unitType}} & enum(4 values) & Type of traceable unit \\
-\field{assortmentType} & enum(4 values) & Type of wood assortment \\
+\textbf{\field{@context} & object (structured) & JSON-LD context defining semantic vocabulary mappings \\
+\textbf{\field{@id} & string (uri) & Globally unique IRI identifying this specific entity instance \\
+\textbf{\field{@type} & enum(TraceableUnit) & Entity type identifier for JSON-LD processing \\
+\textbf{\field{createdTimestamp} & string (date-time) & When the TRU was created \\
+\textbf{\field{harvestGeographicDataId} & string (pattern) & Harvest location - uses EntityNameId convention referencing GeographicData \\
+\textbf{\field{harvesterId} & string (pattern) & Foreign key to harvesting organization \\
+\textbf{\field{identificationConfidence} & number (≥0, ≤100) & Confidence score for primary identification method (0-100) \\
+\textbf{\field{identificationMethodId} & string (pattern) & Foreign key to IdentificationMethod entity \\
+\textbf{\field{isMultiSpecies} & boolean & True if contains multiple species \\
+\textbf{\field{materialTypeId} & string (pattern) & Foreign key to Material entity (reference table) \\
+\textbf{\field{totalVolumeM3} & number (≥0) & Total volume of the traceable unit in cubic meters \\
+\textbf{\field{traceableUnitId} & string (pattern) & Unique ID for each TRU \\
+\textbf{\field{uniqueIdentifier} & string & Primary identifier - biometric signature, RFID tag, QR code, barcode, or manual ID \\
+\textbf{\field{unitType} & enum(4 values) & Type of traceable unit \\
+\field{alternativeFateMetrics} & object (structured) & LCA and BECCS analysis metrics for alternative fate assessment \\
 \field{attachedInformation} & array<string> & All data linked to this TRU \\
 \field{childTraceableUnitIds} & array<string> & For split/merge operations (Phase 2) \\
 \field{currentGeographicDataId} & string (pattern) & Current location - uses EntityNameId convention referencing GeographicData \\
@@ -23,7 +28,9 @@
 \field{methodReadinessLevel} & integer & Technology Readiness Level (TRL 1-9) for identification method used \\
 \field{operatorId} & string (pattern) & Foreign key to operator \\
 \field{parentTraceableUnitId} & string & For split/merge operations (Phase 2) \\
+\field{physicalArrangement} & object (structured) & Spatial organization affecting collection and decomposition \\
 \field{processingHistory} & array<string> & Complete processing chain references (Phase 2) \\
+\field{productClassification} & enum(7 values) & Market classification or intended product use \\
 \field{qualityGrade} & enum(5 values) & Quality grade classification \\
 \field{secondaryIdentifiers} & array<object> & Secondary/backup identification methods \\
 \field{sustainabilityCertification} & string & FSC, PEFC, etc. claims (Phase 2) \\

@@ -1,12 +1,17 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: equipment/validation_schema.json and equipment_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Equipment Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Equipment}
-\textbf{\field{equipmentId}} & string (pattern) & Unique identifier for the equipment \\
-\textbf{\field{equipmentName}} & string & Descriptive name of the equipment \\
-\textbf{\field{equipmentType}} & enum(12 values) & Type of forestry equipment \\
-\textbf{\field{operationalStatus}} & enum(5 values) & Current operational status of the equipment \\
-\textbf{\field{organizationId}} & string (pattern) & Foreign key to owning organization \\
+\textbf{\field{@context} & object (structured) & JSON-LD context for semantic web compatibility \\
+\textbf{\field{@id} & string (uri) & Unique URI identifier for the equipment \\
+\textbf{\field{@type} & string & JSON-LD type identifier \\
+\textbf{\field{equipmentId} & string (pattern) & Unique identifier for the equipment \\
+\textbf{\field{equipmentName} & string & Descriptive name of the equipment \\
+\textbf{\field{equipmentType} & enum(12 values) & Type of forestry equipment \\
+\textbf{\field{operationalStatus} & enum(5 values) & Current operational status of the equipment \\
+\textbf{\field{organizationId} & string (pattern) & Foreign key to owning organization \\
 \field{acquisitionCost} & number (≥0) & Equipment acquisition cost in USD \\
 \field{acquisitionDate} & string (date) & Date equipment was acquired by organization \\
 \field{assignedTrackingPointId} & string (pattern) & Foreign key to current location/assignment \\

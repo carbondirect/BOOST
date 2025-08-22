@@ -1,11 +1,16 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: geographic_data/validation_schema.json and geographic_data_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Geographic Data Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Geographic Data}
-\textbf{\field{dataType}} & enum(7 values) & Type of geographic data \\
-\textbf{\field{description}} & string & Human-readable description of the geographic area \\
-\textbf{\field{geoJsonData}} & object (structured) & Valid GeoJSON object (Point, Polygon, LineString, etc.) \\
-\textbf{\field{geographicDataId}} & string (pattern) & Unique identifier for the geographic data \\
+\textbf{\field{@context} & object (structured) & No description provided \\
+\textbf{\field{@id} & string (uri) & No description provided \\
+\textbf{\field{@type} & enum(GeographicData) & No description provided \\
+\textbf{\field{dataType} & enum(7 values) & Type of geographic data \\
+\textbf{\field{description} & string & Human-readable description of the geographic area \\
+\textbf{\field{geoJsonData} & object (structured) & Valid GeoJSON object (Point, Polygon, LineString, etc.) \\
+\textbf{\field{geographicDataId} & string (pattern) & Unique identifier for the geographic data \\
 \field{accessRestrictions} & string & Any access restrictions or special conditions \\
 \field{accuracy} & number (≥0) & GPS accuracy in meters \\
 \field{administrativeRegion} & string & Administrative region or jurisdiction \\

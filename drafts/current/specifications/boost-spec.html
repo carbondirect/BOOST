@@ -1489,7 +1489,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 3f621ba99, updated Mon Jul 28 15:38:36 2025 -0700" name="generator">
-  <meta content="a4ea353c9b2946311052182fcd7ecf7d60fc3df5" name="revision">
+  <meta content="61986bce34297f565c7d15420148b8d3869335a2" name="revision">
   <meta content="dark light" name="color-scheme">
 <style>
 .erd-preview-container {
@@ -3073,14 +3073,27 @@ select:focus {
      <a href="#plant-parts"><span class="secno">8</span> <span class="content">Plant Part Categorization System</span></a>
      <ol class="toc">
       <li>
-       <a href="#system-overview"><span class="secno">8.1</span> <span class="content">System Overview</span></a>
+       <a href="#introduction-and-regulatory-context"><span class="secno">8.1</span> <span class="content">Introduction and Regulatory Context</span></a>
        <ol class="toc">
-        <li><a href="#17-standardized-plant-parts-taxonomy"><span class="secno">8.1.1</span> <span class="content">17 Standardized Plant Parts Taxonomy</span></a>
-        <li><a href="#processing-transformations"><span class="secno">8.1.2</span> <span class="content">Processing Transformations</span></a>
-        <li><a href="#value-optimization-applications"><span class="secno">8.1.3</span> <span class="content">Value Optimization Applications</span></a>
-        <li><a href="#circular-economy-integration"><span class="secno">8.1.4</span> <span class="content">Circular Economy Integration</span></a>
+        <li><a href="#regulatory-drivers"><span class="secno">8.1.1</span> <span class="content">Regulatory Drivers</span></a>
+        <li><a href="#conceptual-framework"><span class="secno">8.1.2</span> <span class="content">Conceptual Framework</span></a>
+        <li><a href="#implementation-benefits"><span class="secno">8.1.3</span> <span class="content">Implementation Benefits</span></a>
        </ol>
-      <li><a href="#plant-parts-taxonomy"><span class="secno">8.2</span> <span class="content">Standardized Plant Parts Taxonomy</span></a>
+      <li>
+       <a href="#system-overview"><span class="secno">8.2</span> <span class="content">System Overview</span></a>
+       <ol class="toc">
+        <li><a href="#17-standardized-plant-parts-taxonomy"><span class="secno">8.2.1</span> <span class="content">17 Standardized Plant Parts Taxonomy</span></a>
+        <li><a href="#processing-transformations"><span class="secno">8.2.2</span> <span class="content">Processing Transformations</span></a>
+        <li><a href="#value-optimization-applications"><span class="secno">8.2.3</span> <span class="content">Value Optimization Applications</span></a>
+        <li><a href="#circular-economy-integration"><span class="secno">8.2.4</span> <span class="content">Circular Economy Integration</span></a>
+       </ol>
+      <li>
+       <a href="#physical-arrangement-framework"><span class="secno">8.3</span> <span class="content">Physical Arrangement Framework</span></a>
+       <ol class="toc">
+        <li><a href="#arrangement-categories"><span class="secno">8.3.1</span> <span class="content">Arrangement Categories</span></a>
+        <li><a href="#lca-and-beccs-integration"><span class="secno">8.3.2</span> <span class="content">LCA and BECCS Integration</span></a>
+       </ol>
+      <li><a href="#plant-parts-taxonomy"><span class="secno">8.4</span> <span class="content">Standardized Plant Parts Taxonomy</span></a>
      </ol>
     <li>
      <a href="#core-entities"><span class="secno">9</span> <span class="content">Core Data Entities</span></a>
@@ -3099,16 +3112,22 @@ select:focus {
        <ol class="toc">
         <li><a href="#overview"><span class="secno">10.1.1</span> <span class="content">Overview</span></a>
         <li><a href="#fields"><span class="secno">10.1.2</span> <span class="content">Fields</span></a>
-        <li><a href="#key-features①"><span class="secno">10.1.3</span> <span class="content">Key Features</span></a>
+        <li><a href="#physical-arrangement-fields"><span class="secno">10.1.3</span> <span class="content">Physical Arrangement Fields</span></a>
         <li>
-         <a href="#identification-method-selection-guidelines"><span class="secno">10.1.4</span> <span class="content">Identification Method Selection Guidelines</span></a>
+         <a href="#alternative-fate-metrics-fields"><span class="secno">10.1.4</span> <span class="content">Alternative Fate Metrics Fields</span></a>
          <ol class="toc">
-          <li><a href="#method-selection-criteria"><span class="secno">10.1.4.1</span> <span class="content"><strong>Method Selection Criteria</strong></span></a>
-          <li><a href="#recommended-combinations"><span class="secno">10.1.4.2</span> <span class="content"><strong>Recommended Combinations</strong></span></a>
+          <li><a href="#carbon-impact-fields"><span class="secno">10.1.4.1</span> <span class="content">Carbon Impact Fields</span></a>
          </ol>
-        <li><a href="#example-use-cases"><span class="secno">10.1.5</span> <span class="content">Example Use Cases</span></a>
-        <li><a href="#relationships"><span class="secno">10.1.6</span> <span class="content">Relationships</span></a>
-        <li><a href="#organization-core"><span class="secno">10.1.7</span> <span class="content">Organization</span></a>
+        <li><a href="#key-features①"><span class="secno">10.1.5</span> <span class="content">Key Features</span></a>
+        <li>
+         <a href="#identification-method-selection-guidelines"><span class="secno">10.1.6</span> <span class="content">Identification Method Selection Guidelines</span></a>
+         <ol class="toc">
+          <li><a href="#method-selection-criteria"><span class="secno">10.1.6.1</span> <span class="content"><strong>Method Selection Criteria</strong></span></a>
+          <li><a href="#recommended-combinations"><span class="secno">10.1.6.2</span> <span class="content"><strong>Recommended Combinations</strong></span></a>
+         </ol>
+        <li><a href="#example-use-cases"><span class="secno">10.1.7</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#relationships"><span class="secno">10.1.8</span> <span class="content">Relationships</span></a>
+        <li><a href="#organization-core"><span class="secno">10.1.9</span> <span class="content">Organization</span></a>
        </ol>
      </ol>
     <li>
@@ -4363,7 +4382,7 @@ select:focus {
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:lkillroy@carbon-direct.com">Liam Killroy</a> (<span class="p-org org">Carbon Direct</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:public-boost-01@w3.org">BOOST W3C Community Group</a>
      <dt>Version:
-     <dd>v3.2.2-4-g7f244b0
+     <dd>v3.2.4-9-g61986bc
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -4535,7 +4554,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
      <p><strong>Community Participants:</strong> 15+ active members from across the biomass supply chain</p>
    </ul>
    <h3 class="heading settled" data-level="2.2" id="development-status"><span class="secno">2.2. </span><span class="content">Current Development Status</span><a class="self-link" href="#development-status"></a></h3>
-   <p><strong>Current Version:</strong> v3.2.2-9-ga4ea353 - Complete BOOST Documentation Build System with integrated HTML and PDF generation</p>
+   <p><strong>Current Version:</strong> v3.2.4-9-g61986bc - Complete BOOST Documentation Build System with integrated HTML and PDF generation</p>
    <p><strong>Recent Enhancements:</strong></p>
    <ul>
     <li data-md>
@@ -5257,8 +5276,87 @@ MaterialProcessing entities provide comprehensive audit trails by:
    </ul>
    <h2 class="heading settled" data-level="8" id="plant-parts"><span class="secno">8. </span><span class="content">Plant Part Categorization System</span><a class="self-link" href="#plant-parts"></a></h2>
    <p>The plant part categorization system enables detailed tracking of biomass components through processing operations, supporting value optimization and circular economy principles.</p>
-   <h3 class="heading settled" data-level="8.1" id="system-overview"><span class="secno">8.1. </span><span class="content">System Overview</span><a class="self-link" href="#system-overview"></a></h3>
-   <h4 class="heading settled" data-level="8.1.1" id="17-standardized-plant-parts-taxonomy"><span class="secno">8.1.1. </span><span class="content">17 Standardized Plant Parts Taxonomy</span><a class="self-link" href="#17-standardized-plant-parts-taxonomy"></a></h4>
+   <h3 class="heading settled" data-level="8.1" id="introduction-and-regulatory-context"><span class="secno">8.1. </span><span class="content">Introduction and Regulatory Context</span><a class="self-link" href="#introduction-and-regulatory-context"></a></h3>
+   <p>The BOOST plant part categorization framework addresses critical regulatory and operational requirements across multiple jurisdictions and applications. This system provides the taxonomic foundation for distinguishing product classifications from physical arrangements, enabling sophisticated supply chain optimization and regulatory compliance.</p>
+   <h4 class="heading settled" data-level="8.1.1" id="regulatory-drivers"><span class="secno">8.1.1. </span><span class="content">Regulatory Drivers</span><a class="self-link" href="#regulatory-drivers"></a></h4>
+   <p><strong>California Department of Food and Agriculture (CDFA) Requirements</strong></p>
+   <ul>
+    <li data-md>
+     <p>Agricultural biomass classification for food vs. fuel categorization</p>
+    <li data-md>
+     <p>Privacy protections for farmer data in agricultural residue tracking</p>
+    <li data-md>
+     <p>Integration with existing CDFA biomass certification systems</p>
+    <li data-md>
+     <p>Support for agricultural waste stream optimization programs</p>
+   </ul>
+   <p><strong>Low Carbon Fuel Standard (LCFS) Compliance</strong></p>
+   <ul>
+    <li data-md>
+     <p>Feedstock categorization requirements for carbon intensity calculations</p>
+    <li data-md>
+     <p>Plant part composition tracking for pathway verification</p>
+    <li data-md>
+     <p>Biogenic carbon accounting across different material components</p>
+    <li data-md>
+     <p>Alternative fate assessment support for BECCS applications</p>
+   </ul>
+   <p><strong>Forest Stewardship Council (FSC) Integration</strong></p>
+   <ul>
+    <li data-md>
+     <p>Chain of custody tracking through plant part transformations</p>
+    <li data-md>
+     <p>Controlled wood verification for different plant components</p>
+    <li data-md>
+     <p>Multi-species composition documentation requirements</p>
+    <li data-md>
+     <p>Value recovery optimization across plant part classifications</p>
+   </ul>
+   <h4 class="heading settled" data-level="8.1.2" id="conceptual-framework"><span class="secno">8.1.2. </span><span class="content">Conceptual Framework</span><a class="self-link" href="#conceptual-framework"></a></h4>
+   <p>The BOOST system distinguishes between two fundamental attributes:</p>
+   <p><strong>Product Classification vs. Physical Arrangement</strong></p>
+   <ul>
+    <li data-md>
+     <p><strong>Product Classification</strong>: Market destination or intended use (sawlog, pulpwood, biomass, chips)</p>
+    <li data-md>
+     <p><strong>Physical Arrangement</strong>: Spatial organization affecting collection and decomposition (scattered, piled, windrow, stacked)</p>
+   </ul>
+   <p>This distinction enables sophisticated LCA and BECCS analysis by capturing both economic intent and operational reality. Physical arrangement directly impacts:</p>
+   <ul>
+    <li data-md>
+     <p>Collection efficiency factors</p>
+    <li data-md>
+     <p>Decomposition rates for alternative fate modeling</p>
+    <li data-md>
+     <p>Carbon sequestration implications</p>
+    <li data-md>
+     <p>Energy requirements for harvest operations</p>
+   </ul>
+   <h4 class="heading settled" data-level="8.1.3" id="implementation-benefits"><span class="secno">8.1.3. </span><span class="content">Implementation Benefits</span><a class="self-link" href="#implementation-benefits"></a></h4>
+   <p><strong>Economic Value Optimization</strong></p>
+   <ul>
+    <li data-md>
+     <p>Route high-value heartwood to lumber markets</p>
+    <li data-md>
+     <p>Direct structural sapwood to appropriate applications</p>
+    <li data-md>
+     <p>Optimize biomass utilization from residue streams</p>
+    <li data-md>
+     <p>Maximize value recovery through detailed categorization</p>
+   </ul>
+   <p><strong>Environmental Compliance</strong></p>
+   <ul>
+    <li data-md>
+     <p>Support greenhouse gas accounting across plant part categories</p>
+    <li data-md>
+     <p>Enable alternative fate assessments for BECCS analysis</p>
+    <li data-md>
+     <p>Track biogenic carbon through processing transformations</p>
+    <li data-md>
+     <p>Document environmental impact mitigation strategies</p>
+   </ul>
+   <h3 class="heading settled" data-level="8.2" id="system-overview"><span class="secno">8.2. </span><span class="content">System Overview</span><a class="self-link" href="#system-overview"></a></h3>
+   <h4 class="heading settled" data-level="8.2.1" id="17-standardized-plant-parts-taxonomy"><span class="secno">8.2.1. </span><span class="content">17 Standardized Plant Parts Taxonomy</span><a class="self-link" href="#17-standardized-plant-parts-taxonomy"></a></h4>
    
 The BOOST standard defines a comprehensive taxonomy of plant components:
 
@@ -5309,7 +5407,7 @@ The BOOST standard defines a comprehensive taxonomy of plant components:
     <li data-md>
      <p><strong>pellets</strong> - Densified processed material (energy applications)</p>
    </ul>
-   <h4 class="heading settled" data-level="8.1.2" id="processing-transformations"><span class="secno">8.1.2. </span><span class="content">Processing Transformations</span><a class="self-link" href="#processing-transformations"></a></h4>
+   <h4 class="heading settled" data-level="8.2.2" id="processing-transformations"><span class="secno">8.2.2. </span><span class="content">Processing Transformations</span><a class="self-link" href="#processing-transformations"></a></h4>
    
 The system tracks detailed transformations during processing operations:
 
@@ -5325,7 +5423,7 @@ The system tracks detailed transformations during processing operations:
     <li data-md>
      <p><strong>Byproduct routing</strong> - Secondary material stream management</p>
    </ul>
-   <h4 class="heading settled" data-level="8.1.3" id="value-optimization-applications"><span class="secno">8.1.3. </span><span class="content">Value Optimization Applications</span><a class="self-link" href="#value-optimization-applications"></a></h4>
+   <h4 class="heading settled" data-level="8.2.3" id="value-optimization-applications"><span class="secno">8.2.3. </span><span class="content">Value Optimization Applications</span><a class="self-link" href="#value-optimization-applications"></a></h4>
    
 Plant part categorization enables sophisticated material routing:
 
@@ -5339,7 +5437,7 @@ Plant part categorization enables sophisticated material routing:
     <li data-md>
      <p><strong>Specialty markets</strong> - Extract high-value compounds from specific plant parts</p>
    </ul>
-   <h4 class="heading settled" data-level="8.1.4" id="circular-economy-integration"><span class="secno">8.1.4. </span><span class="content">Circular Economy Integration</span><a class="self-link" href="#circular-economy-integration"></a></h4>
+   <h4 class="heading settled" data-level="8.2.4" id="circular-economy-integration"><span class="secno">8.2.4. </span><span class="content">Circular Economy Integration</span><a class="self-link" href="#circular-economy-integration"></a></h4>
    
 The system supports comprehensive waste stream management:
 
@@ -5353,7 +5451,88 @@ The system supports comprehensive waste stream management:
     <li data-md>
      <p><strong>Economic value attribution</strong> - Calculate value by plant part composition</p>
    </ul>
-   <h3 class="heading settled" data-level="8.2" id="plant-parts-taxonomy"><span class="secno">8.2. </span><span class="content">Standardized Plant Parts Taxonomy</span><a class="self-link" href="#plant-parts-taxonomy"></a></h3>
+   <h3 class="heading settled" data-level="8.3" id="physical-arrangement-framework"><span class="secno">8.3. </span><span class="content">Physical Arrangement Framework</span><a class="self-link" href="#physical-arrangement-framework"></a></h3>
+   <p>The BOOST system captures spatial organization of biomass materials to support collection planning and LCA analysis. Physical arrangement significantly affects both operational efficiency and environmental impact assessment.</p>
+   <h4 class="heading settled" data-level="8.3.1" id="arrangement-categories"><span class="secno">8.3.1. </span><span class="content">Arrangement Categories</span><a class="self-link" href="#arrangement-categories"></a></h4>
+   <p><strong>Scattered Arrangement</strong></p>
+   <ul>
+    <li data-md>
+     <p>Crowns and branches distributed across forest floor after harvesting</p>
+    <li data-md>
+     <p>Lower collection efficiency (typically 65-75%)</p>
+    <li data-md>
+     <p>Higher decomposition rates due to ground contact and weather exposure</p>
+    <li data-md>
+     <p>Alternative fate: natural decomposition or wildfire fuel</p>
+   </ul>
+   <p><strong>Centralized Piles</strong></p>
+   <ul>
+    <li data-md>
+     <p>Material gathered into specific collection points for efficiency</p>
+    <li data-md>
+     <p>High collection efficiency (typically 90-95%)</p>
+    <li data-md>
+     <p>Moderate decomposition rates depending on pile construction</p>
+    <li data-md>
+     <p>Optimized for mechanical loading and transport operations</p>
+   </ul>
+   <p><strong>Windrow Configuration</strong></p>
+   <ul>
+    <li data-md>
+     <p>Linear arrangements following equipment access patterns</p>
+    <li data-md>
+     <p>Collection efficiency 80-90% with mechanical systems</p>
+    <li data-md>
+     <p>Balanced decomposition rates with partial ground contact</p>
+    <li data-md>
+     <p>Enables efficient forwarding and chipping operations</p>
+   </ul>
+   <p><strong>Stacked Arrangements</strong></p>
+   <ul>
+    <li data-md>
+     <p>Organized vertical stacking for drying and storage</p>
+    <li data-md>
+     <p>Highest collection efficiency (95%+) with quality preservation</p>
+    <li data-md>
+     <p>Lowest decomposition rates when properly ventilated</p>
+    <li data-md>
+     <p>Premium applications requiring controlled moisture content</p>
+   </ul>
+   <h4 class="heading settled" data-level="8.3.2" id="lca-and-beccs-integration"><span class="secno">8.3.2. </span><span class="content">LCA and BECCS Integration</span><a class="self-link" href="#lca-and-beccs-integration"></a></h4>
+   <p><strong>Alternative Fate Modeling</strong></p>
+   <ul>
+    <li data-md>
+     <p>Baseline scenario assessment (decomposition, wildfire, prescribed burning)</p>
+    <li data-md>
+     <p>Arrangement-specific decomposition rates for carbon accounting</p>
+    <li data-md>
+     <p>Emissions avoided calculations based on collection vs. baseline</p>
+    <li data-md>
+     <p>Soil carbon impact assessment from ground contact patterns</p>
+   </ul>
+   <p><strong>Collection Efficiency Factors</strong></p>
+   <ul>
+    <li data-md>
+     <p>Energy requirements for different arrangement patterns</p>
+    <li data-md>
+     <p>Equipment accessibility and operational constraints</p>
+    <li data-md>
+     <p>Volume recovery rates by arrangement and terrain conditions</p>
+    <li data-md>
+     <p>Economic optimization through arrangement planning</p>
+   </ul>
+   <p><strong>Carbon Sequestration Implications</strong></p>
+   <ul>
+    <li data-md>
+     <p>Soil carbon changes from different contact patterns</p>
+    <li data-md>
+     <p>Biogenic carbon release rates by exposure conditions</p>
+    <li data-md>
+     <p>Long-term carbon storage in processed vs. unprocessed material</p>
+    <li data-md>
+     <p>Integration with BECCS project alternative fate requirements</p>
+   </ul>
+   <h3 class="heading settled" data-level="8.4" id="plant-parts-taxonomy"><span class="secno">8.4. </span><span class="content">Standardized Plant Parts Taxonomy</span><a class="self-link" href="#plant-parts-taxonomy"></a></h3>
    <p>Implementations MUST support the following 17 standardized plant parts:</p>
    <ul>
     <li data-md>
@@ -5575,15 +5754,15 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
       <td><code>MAT-TYPE-PINE</code>, <code>MAT-TYPE-FIR</code>
 
      <tr>
-      <td><code>assortmentType</code>
+      <td><code>productClassification</code>
 
       <td>string
 
       <td>No
 
-      <td>Type of wood assortment (enum)
+      <td>Market classification or intended product use (enum)
 
-      <td><code>sawlog</code>, <code>pulpwood</code>, <code>biomass</code>, <code>chips</code>
+      <td><code>sawlog</code>, <code>pulpwood</code>, <code>biomass</code>, <code>chips</code>, <code>firewood</code>, <code>veneer_log</code>, <code>post_pole</code>
 
      <tr>
       <td><code>qualityGrade</code>
@@ -5595,6 +5774,28 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
       <td>Quality grade classification (enum)
 
       <td><code>A</code>, <code>B</code>, <code>C</code>, <code>structural</code>, <code>fuel</code>
+
+     <tr>
+      <td><code>physicalArrangement</code>
+
+      <td>object
+
+      <td>No
+
+      <td>Spatial organization affecting collection and decomposition
+
+      <td>See Physical Arrangement Fields below
+
+     <tr>
+      <td><code>alternativeFateMetrics</code>
+
+      <td>object
+
+      <td>No
+
+      <td>LCA and BECCS analysis metrics for alternative fate assessment
+
+      <td>See Alternative Fate Metrics Fields below
 
      <tr>
       <td><code>isMultiSpecies</code>
@@ -5708,7 +5909,168 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
 
    </table>
    <hr>
-   <h4 class="heading settled" data-level="10.1.3" id="key-features①"><span class="secno">10.1.3. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①"></a></h4>
+   <h4 class="heading settled" data-level="10.1.3" id="physical-arrangement-fields"><span class="secno">10.1.3. </span><span class="content">Physical Arrangement Fields</span><a class="self-link" href="#physical-arrangement-fields"></a></h4>
+   <p>The <code>physicalArrangement</code> object captures spatial organization that affects collection efficiency and decomposition rates for LCA analysis:</p>
+   <table class="data">
+    <thead>
+     <tr>
+      <th>Field
+
+      <th>Type
+
+      <th>Required
+
+      <th>Description
+
+      <th>Examples
+
+    <tbody>
+     <tr>
+      <td><code>arrangementType</code>
+
+      <td>string
+
+      <td>No
+
+      <td>Type of spatial arrangement (enum)
+
+      <td><code>scattered</code>, <code>piled</code>, <code>windrow</code>, <code>stacked</code>, <code>bundled</code>, <code>in_situ</code>
+
+     <tr>
+      <td><code>arrangementDate</code>
+
+      <td>string (date-time)
+
+      <td>No
+
+      <td>When material was arranged in this configuration
+
+      <td><code>2025-07-15T10:30:00Z</code>
+
+     <tr>
+      <td><code>exposureConditions</code>
+
+      <td>string
+
+      <td>No
+
+      <td>Protection from weather elements (enum)
+
+      <td><code>covered</code>, <code>exposed</code>, <code>partially_covered</code>
+
+     <tr>
+      <td><code>groundContact</code>
+
+      <td>boolean
+
+      <td>No
+
+      <td>Direct soil contact affects decomposition rate
+
+      <td><code>true</code>, <code>false</code>
+
+   </table>
+   <h4 class="heading settled" data-level="10.1.4" id="alternative-fate-metrics-fields"><span class="secno">10.1.4. </span><span class="content">Alternative Fate Metrics Fields</span><a class="self-link" href="#alternative-fate-metrics-fields"></a></h4>
+   <p>The <code>alternativeFateMetrics</code> object provides data for LCA and BECCS alternative fate assessments:</p>
+   <table class="data">
+    <thead>
+     <tr>
+      <th>Field
+
+      <th>Type
+
+      <th>Required
+
+      <th>Description
+
+      <th>Examples
+
+    <tbody>
+     <tr>
+      <td><code>baselineScenario</code>
+
+      <td>string
+
+      <td>No
+
+      <td>Expected fate if material is not collected (enum)
+
+      <td><code>natural_decomposition</code>, <code>wildfire</code>, <code>prescribed_burn</code>, <code>mulching</code>
+
+     <tr>
+      <td><code>annualDecayRate</code>
+
+      <td>number
+
+      <td>No
+
+      <td>Estimated annual decomposition rate (percent per year, 0-100)
+
+      <td><code>15.5</code>, <code>8.2</code>, <code>22.1</code>
+
+     <tr>
+      <td><code>collectionEfficiency</code>
+
+      <td>number
+
+      <td>No
+
+      <td>Efficiency factor (0-1) for collecting material based on arrangement
+
+      <td><code>0.95</code>, <code>0.65</code>, <code>0.85</code>
+
+     <tr>
+      <td><code>carbonImpact</code>
+
+      <td>object
+
+      <td>No
+
+      <td>Carbon-related impacts of the current arrangement
+
+      <td>See Carbon Impact Fields below
+
+   </table>
+   <h5 class="heading settled" data-level="10.1.4.1" id="carbon-impact-fields"><span class="secno">10.1.4.1. </span><span class="content">Carbon Impact Fields</span><a class="self-link" href="#carbon-impact-fields"></a></h5>
+   <table class="data">
+    <thead>
+     <tr>
+      <th>Field
+
+      <th>Type
+
+      <th>Required
+
+      <th>Description
+
+      <th>Examples
+
+    <tbody>
+     <tr>
+      <td><code>soilCarbonChange</code>
+
+      <td>number
+
+      <td>No
+
+      <td>Change in soil carbon (tons CO2e) from current arrangement
+
+      <td><code>-2.3</code>, <code>1.8</code>, <code>0.0</code>
+
+     <tr>
+      <td><code>emissionsAvoided</code>
+
+      <td>number
+
+      <td>No
+
+      <td>Emissions avoided (tons CO2e) by collection vs baseline scenario
+
+      <td><code>45.2</code>, <code>78.9</code>, <code>125.4</code>
+
+   </table>
+   <hr>
+   <h4 class="heading settled" data-level="10.1.5" id="key-features①"><span class="secno">10.1.5. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Multi-Method Identification Framework</strong>
@@ -5738,9 +6100,9 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
  Volume conservation validation
  Claim inheritance tracking</p>
    </ol>
-   <h4 class="heading settled" data-level="10.1.4" id="identification-method-selection-guidelines"><span class="secno">10.1.4. </span><span class="content">Identification Method Selection Guidelines</span><a class="self-link" href="#identification-method-selection-guidelines"></a></h4>
+   <h4 class="heading settled" data-level="10.1.6" id="identification-method-selection-guidelines"><span class="secno">10.1.6. </span><span class="content">Identification Method Selection Guidelines</span><a class="self-link" href="#identification-method-selection-guidelines"></a></h4>
    <p>The multi-method identification framework enables context-appropriate method selection:</p>
-   <h5 class="heading settled" data-level="10.1.4.1" id="method-selection-criteria"><span class="secno">10.1.4.1. </span><span class="content"><strong>Method Selection Criteria</strong></span><a class="self-link" href="#method-selection-criteria"></a></h5>
+   <h5 class="heading settled" data-level="10.1.6.1" id="method-selection-criteria"><span class="secno">10.1.6.1. </span><span class="content"><strong>Method Selection Criteria</strong></span><a class="self-link" href="#method-selection-criteria"></a></h5>
    <ol>
     <li data-md>
      <p><strong>Technology Readiness</strong></p>
@@ -5775,7 +6137,7 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
        <p><strong>Low Confidence (&lt;30%)</strong>: Invalid, must use alternative method</p>
      </ul>
    </ol>
-   <h5 class="heading settled" data-level="10.1.4.2" id="recommended-combinations"><span class="secno">10.1.4.2. </span><span class="content"><strong>Recommended Combinations</strong></span><a class="self-link" href="#recommended-combinations"></a></h5>
+   <h5 class="heading settled" data-level="10.1.6.2" id="recommended-combinations"><span class="secno">10.1.6.2. </span><span class="content"><strong>Recommended Combinations</strong></span><a class="self-link" href="#recommended-combinations"></a></h5>
    <ol>
     <li data-md>
      <p><strong>Traditional Approach</strong> (Current State)</p>
@@ -5808,7 +6170,7 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
        <p>Maximum accuracy when technology matures</p>
      </ul>
    </ol>
-   <h4 class="heading settled" data-level="10.1.5" id="example-use-cases"><span class="secno">10.1.5. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases"></a></h4>
+   <h4 class="heading settled" data-level="10.1.7" id="example-use-cases"><span class="secno">10.1.7. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Individual Log Tracking</strong>
@@ -5829,7 +6191,7 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
  Processing history with transformation details
  Sustainability claim inheritance</p>
    </ol>
-   <h4 class="heading settled" data-level="10.1.6" id="relationships"><span class="secno">10.1.6. </span><span class="content">Relationships</span><a class="self-link" href="#relationships"></a></h4>
+   <h4 class="heading settled" data-level="10.1.8" id="relationships"><span class="secno">10.1.8. </span><span class="content">Relationships</span><a class="self-link" href="#relationships"></a></h4>
    <ul>
     <li data-md>
      <p>TraceableUnit contains multiple SpeciesComponents (multi-species support)</p>
@@ -5854,7 +6216,7 @@ The <code>TraceableUnit</code> object represents the fundamental unit of traceab
     <li data-md>
      <p>TraceableUnit has parent/child relationships for split/merge operations</p>
    </ul>
-   <h4 class="heading settled" data-level="10.1.7" id="organization-core"><span class="secno">10.1.7. </span><span class="content">Organization</span><a class="self-link" href="#organization-core"></a></h4>
+   <h4 class="heading settled" data-level="10.1.9" id="organization-core"><span class="secno">10.1.9. </span><span class="content">Organization</span><a class="self-link" href="#organization-core"></a></h4>
    <p>Defines harvesters, processors, and supply chain participants. Referenced by <a href="#traceable-unit">TraceableUnit</a> and connects to <a href="#certificate">Certificate</a> entities for certification management.</p>
    <p>**🗂️ <a href="erd-navigator/index.html?focus=Organization">View Organization in ERD Navigator</a>**</p>
    <h2 class="heading settled" data-level="11" id="organization"><span class="secno">11. </span><span class="content">Organization</span><a class="self-link" href="#organization"></a></h2>
@@ -7779,7 +8141,7 @@ The <code>ProcessingHistory</code> entity provides chronological tracking of all
      <p><strong>Equipment Integration</strong>: Direct connection to harvesting and processing equipment data</p>
    </ul>
    <h3 class="heading settled" data-level="15.2" id="organizational-entities"><span class="secno">15.2. </span><span class="content">Organizational Foundation Entities</span><a class="self-link" href="#organizational-entities"></a></h3>
-   <p>*Note: Organization is now part of Core Traceability Entities - see <a href="#organization-core">§ 10.1.7 Organization</a>*</p>
+   <p>*Note: Organization is now part of Core Traceability Entities - see <a href="#organization-core">§ 10.1.9 Organization</a>*</p>
    <h4 class="heading settled" data-level="15.2.1" id="certificate"><span class="secno">15.2.1. </span><span class="content">Certificate</span><a class="self-link" href="#certificate"></a></h4>
    <p>Certification documents for <a href="#organization-core">Organization</a> entities. Links to <a href="#certification-body">CertificationBody</a> and <a href="#certification-scheme">CertificationScheme</a> for comprehensive certification management.</p>
    <p>**🗂️ <a href="erd-navigator/index.html?focus=Certificate">View Certificate in ERD Navigator</a>**</p>

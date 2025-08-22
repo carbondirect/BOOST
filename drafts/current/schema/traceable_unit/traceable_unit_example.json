@@ -15,7 +15,9 @@
     "harvesterId": "https://github.com/carbondirect/BOOST/schemas#harvesterId",
     "operatorId": "https://github.com/carbondirect/BOOST/schemas#operatorId",
     "materialTypeId": "https://github.com/carbondirect/BOOST/schemas#materialTypeId",
-    "assortmentType": "https://github.com/carbondirect/BOOST/schemas#assortmentType",
+    "productClassification": "https://github.com/carbondirect/BOOST/schemas#productClassification",
+    "physicalArrangement": "https://github.com/carbondirect/BOOST/schemas#physicalArrangement",
+    "alternativeFateMetrics": "https://github.com/carbondirect/BOOST/schemas#alternativeFateMetrics",
     "qualityGrade": "https://github.com/carbondirect/BOOST/schemas#qualityGrade",
     "isMultiSpecies": "https://github.com/carbondirect/BOOST/schemas#isMultiSpecies",
     "attachedInformation": "https://github.com/carbondirect/BOOST/schemas#attachedInformation",
@@ -50,8 +52,23 @@
   "harvesterId": "ORG-KLAMATH-FORESTRY-001",
   "operatorId": "OP-MIKE-JOHNSON-001",
   "materialTypeId": "MAT-TYPE-MIXED-SOFTWOOD",
-  "assortmentType": "sawlog",
+  "productClassification": "sawlog",
   "qualityGrade": "A",
+  "physicalArrangement": {
+    "arrangementType": "piled",
+    "arrangementDate": "2025-07-15T08:45:00Z",
+    "exposureConditions": "covered",
+    "groundContact": false
+  },
+  "alternativeFateMetrics": {
+    "baselineScenario": "natural_decomposition",
+    "annualDecayRate": 12.5,
+    "collectionEfficiency": 0.95,
+    "carbonImpact": {
+      "soilCarbonChange": 0.8,
+      "emissionsAvoided": 42.3
+    }
+  },
   "isMultiSpecies": true,
   "attachedInformation": [
     "moisture_content: 15%",

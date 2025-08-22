@@ -1,15 +1,20 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: certification_body/validation_schema.json and certification_body_dictionary.md
+% To modify this content, edit the source files and regenerate
 % CertificationBody Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{CertificationBody}
-\textbf{\field{accreditationStatus}} & enum(5 values) & Current accreditation status \\
-\textbf{\field{authorizedSchemes}} & array<string> & List of certification schemes the CB can certify under \\
-\textbf{\field{cbId}} & string (pattern) & Unique identifier for the certification body (primary key) \\
-\textbf{\field{cbName}} & string & Official name of the certification body \\
-\textbf{\field{cbType}} & enum(4 values) & Type or category of certification body \\
-\textbf{\field{contactInformation}} & object (structured) & Contact details for the certification body \\
-\textbf{\field{operationalRegions}} & array<string> & Geographic regions where CB operates (ISO country codes) \\
-\textbf{\field{validityPeriod}} & object (structured) & Period of CB authorization \\
+\textbf{\field{@context} & object (structured) & JSON-LD context for semantic web compatibility \\
+\textbf{\field{@id} & string (uri) & Unique URI identifier for the certification body \\
+\textbf{\field{@type} & string & JSON-LD type identifier \\
+\textbf{\field{accreditationStatus} & enum(5 values) & Current accreditation status \\
+\textbf{\field{authorizedSchemes} & array<string> & List of certification schemes the CB can certify under \\
+\textbf{\field{cbId} & string (pattern) & Unique identifier for the certification body (primary key) \\
+\textbf{\field{cbName} & string & Official name of the certification body \\
+\textbf{\field{cbType} & enum(4 values) & Type or category of certification body \\
+\textbf{\field{contactInformation} & object (structured) & Contact details for the certification body \\
+\textbf{\field{operationalRegions} & array<string> & Geographic regions where CB operates (ISO country codes) \\
+\textbf{\field{validityPeriod} & object (structured) & Period of CB authorization \\
 \field{accreditationBody} & string & Organization that accredited this CB \\
 \field{performanceMetrics} & object (structured) & CB performance and quality indicators \\
 \field{specializations} & array<string> & Specific areas of certification expertise \\

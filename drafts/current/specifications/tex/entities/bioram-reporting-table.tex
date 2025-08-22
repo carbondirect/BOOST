@@ -1,15 +1,20 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: bioram_reporting/validation_schema.json and bioram_reporting_dictionary.md
+% To modify this content, edit the source files and regenerate
 % BioRAM Reporting Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{BioRAM Reporting}
-\textbf{\field{complianceStatus}} & enum(4 values) & Overall BioRAM compliance status for the reporting period \\
-\textbf{\field{facilityEntityId}} & string (pattern) & Reference to biomass facility Organization entity \\
-\textbf{\field{overallEfficiency}} & number (≥0.15, ≤0.6) & Overall facility efficiency (net electrical output / fuel energy input) \\
-\textbf{\field{reportingId}} & string (pattern) & Unique identifier for the quarterly BioRAM report \\
-\textbf{\field{reportingPeriod}} & string (pattern) & Reporting quarter in YYYY-QN format \\
-\textbf{\field{totalBiomassVolume}} & number (≥0) & Total biomass fuel consumed in bone dry tonnes \\
-\textbf{\field{totalEnergyGenerated}} & number (≥0) & Total electrical energy generated in MWh \\
-\field{VerificationStatementId} & string (pattern) & Uses EntityNameId convention referencing VerificationStatement for independen... \\
+\textbf{\field{@context} & object (structured) & JSON-LD context for semantic web compatibility \\
+\textbf{\field{@id} & string (uri) & Unique URI identifier for JSON-LD \\
+\textbf{\field{@type} & string & No description provided \\
+\textbf{\field{complianceStatus} & enum(4 values) & Overall BioRAM compliance status for the reporting period \\
+\textbf{\field{facilityEntityId} & string (pattern) & Reference to biomass facility Organization entity \\
+\textbf{\field{overallEfficiency} & number (≥0.15, ≤0.6) & Overall facility efficiency (net electrical output / fuel energy input) \\
+\textbf{\field{reportingId} & string (pattern) & Unique identifier for the quarterly BioRAM report \\
+\textbf{\field{reportingPeriod} & string (pattern) & Reporting quarter in YYYY-QN format \\
+\textbf{\field{totalBiomassVolume} & number (≥0) & Total biomass fuel consumed in bone dry tonnes \\
+\textbf{\field{totalEnergyGenerated} & number (≥0) & Total electrical energy generated in MWh \\
+\field{VerificationStatementId} & string (pattern) & Uses EntityNameId convention referencing VerificationStatement for independent verification \\
 \field{bioramContractId} & string (pattern) & BioRAM contract identifier from competitive procurement \\
 \field{efficiencyTarget} & number (≥0.2, ≤0.55) & Contract efficiency target for BioRAM compliance \\
 \field{environmentalImpact} & object (structured) & Environmental and fire hazard reduction benefits \\

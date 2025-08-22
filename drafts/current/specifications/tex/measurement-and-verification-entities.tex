@@ -1,8 +1,10 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: thematic area configuration and entity schemas
+% To modify this content, edit the source files and regenerate
 % Measurement & Verification Entities
-% Auto-generated from JSON schemas
 
 
-\subsection{Measurement Record}
+\subsubsection{Measurement Record}
 \label{sec:entity-measurement-record}
 
 Quality measurements and dimensional data
@@ -10,37 +12,16 @@ Quality measurements and dimensional data
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
+    \item \field{traceableUnitId} → \entity{Traceable Unit} ()
     \item \field{operatorId} → \entity{Operator} ()
+    \item \field{trackingPointId} → \entity{Tracking Point} ()
 \end{itemize}
 \end{informative}
 
-**[View Measurement Record in ERD Navigator](erd-navigator/index.html?focus=MeasurementRecord)**
-
-% Measurement Record Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Measurement Record}
-\textbf{\field{measurementMethod}} & enum(4 values) & Enumerated value for measurementmethod \\
-\textbf{\field{measurementTimestamp}} & string (date-time) & Measurementtimestamp field value \\
-\textbf{\field{recordId}} & string (pattern) & Unique identifier for the record \\
-\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to the traceable unit \\
-\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{measuredDiameter} & number (≥0) & Measureddiameter field value \\
-\field{measuredLength} & number (≥0) & Measuredlength field value \\
-\field{measuredVolume} & number (≥0) & Measuredvolume field value \\
-\field{measurementGeographicDataId} & string (pattern) & Unique identifier for the measurementgeographicdata \\
-\field{moistureAccuracy} & number (≥0) & Estimated accuracy of moisture measurement (± percentage points) \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage of weight contributed by water (0-100\%) \\
-\field{moistureMethod} & enum(8 values) & Method used to determine moisture content \\
-\field{moistureStandard} & enum(5 values) & Standard procedure followed for moisture measurement \\
-\field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
-\field{speciesMeasurements} & array<string> & Array of speciesmeasurements values \\
-\field{trackingPointId} & string (pattern) & Unique identifier for the trackingpoint \\
-\end{entitytable}
+\input{tex/entities/measurement-record-table}
 
 
-
-\subsection{Claim}
+\subsubsection{Claim}
 \label{sec:entity-claim}
 
 Claim entity in BOOST data model
@@ -48,70 +29,40 @@ Claim entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{claimId} → \entity{Claim} ()
+    \item \field{TraceableUnitId} → \entity{Traceable Unit} (Referenced traceable unit - uses EntityNameId convention referencing TraceableUnit)
+    \item \field{CertificationSchemeId} → \entity{Certification Scheme} (Certification scheme - uses EntityNameId convention referencing CertificationScheme)
 \end{itemize}
 \end{informative}
 
-**[View Claim in ERD Navigator](erd-navigator/index.html?focus=Claim)**
-
-% Claim Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Claim}
-\textbf{\field{TraceableUnitId}} & string (pattern) & Referenced traceable unit - uses EntityNameId convention referencing Traceabl... \\
-\textbf{\field{claimId}} & string (pattern) & Foreign key to the associated claim \\
-\textbf{\field{claimType}} & enum(9 values) & Enumerated value for claimtype \\
-\textbf{\field{statement}} & string & Statement field value \\
-\textbf{\field{validated}} & boolean & Boolean flag indicating validated status \\
-\field{CertificationSchemeId} & string (pattern) & Certification scheme - uses EntityNameId convention referencing Certification... \\
-\field{applicableSpecies} & array<string> & Array of applicablespecies values \\
-\field{claimExpiry} & string (date-time) & Claimexpiry field value \\
-\field{claimPercentage} & number (≥0, ≤100) & Claimpercentage field value \\
-\field{claimScope} & enum(4 values) & Enumerated value for claimscope \\
-\field{evidenceDocumentId} & string & Foreign key to Evidencedocument entity \\
-\field{inheritedFromTRU} & array<string> & Array of inheritedfromtru values \\
-\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{validatedBy} & string & Validatedby field value \\
-\field{validationDate} & string (date-time) & Validationdate field value \\
-\end{entitytable}
+\input{tex/entities/claim-table}
 
 
-
-\subsection{Verification Statement}
+\subsubsection{Verification Statement}
 \label{sec:entity-verification-statement}
 
 VerificationStatement entity in BOOST data model
 
-**[View Verification Statement in ERD Navigator](erd-navigator/index.html?focus=VerificationStatement)**
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{transactionBatchId} → \entity{Transaction Batch} ()
+\end{itemize}
+\end{informative}
 
-% Verification Statement Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{Verification Statement}
-\textbf{\field{issuingBody}} & string & Issuingbody field value \\
-\textbf{\field{statementId}} & string (pattern) & Unique identifier for the statement \\
-\textbf{\field{verificationDate}} & string (date) & Verificationdate field value \\
-\field{scope} & string & Scope field value \\
-\field{transactionBatchId} & string & Foreign key to Transactionbatch entity \\
-\end{entitytable}
+\input{tex/entities/verification-statement-table}
 
 
-
-\subsection{BOOST Moisture Content Validation Rules}
+\subsubsection{BOOST Moisture Content Validation Rules}
 \label{sec:entity-moisture-content}
 
 Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard
 
-**[View BOOST Moisture Content Validation Rules in ERD Navigator](erd-navigator/index.html?focus=BOOSTMoistureContentValidationRules)**
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{moistureContentId} → \entity{Moisture Content} (Unique identifier for moisture content record)
+\end{itemize}
+\end{informative}
 
-% BOOST Moisture Content Validation Rules Entity Table
-% Auto-generated from JSON schema
-
-\begin{entitytable}{BOOST Moisture Content Validation Rules}
-\textbf{\field{measurementMethod}} & unknown & Measurementmethod field value \\
-\textbf{\field{moistureContent}} & unknown & Moisturecontent field value \\
-\textbf{\field{moistureContentId}} & string (pattern) & Unique identifier for moisture content record \\
-\field{qualityAssurance} & unknown & Qualityassurance field value \\
-\end{entitytable}
-
+\input{tex/entities/moisture-content-table}
 

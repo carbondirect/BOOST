@@ -115,15 +115,18 @@
         "pattern": "^MAT-[A-Z0-9-_]+$",
         "description": "Foreign key to Material entity (reference table)"
       },
-      "assortmentType": {
+      "productClassification": {
         "type": "string",
         "enum": [
           "sawlog",
           "pulpwood",
           "biomass",
-          "chips"
+          "chips",
+          "firewood",
+          "veneer_log",
+          "post_pole"
         ],
-        "description": "Type of wood assortment"
+        "description": "Market classification or intended product use"
       },
       "qualityGrade": {
         "type": "string",
@@ -135,6 +138,84 @@
           "fuel"
         ],
         "description": "Quality grade classification"
+      },
+      "physicalArrangement": {
+        "type": "object",
+        "description": "Spatial organization affecting collection and decomposition",
+        "properties": {
+          "arrangementType": {
+            "type": "string",
+            "enum": [
+              "scattered",
+              "piled",
+              "windrow",
+              "stacked",
+              "bundled",
+              "in_situ"
+            ],
+            "description": "Type of spatial arrangement"
+          },
+          "arrangementDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When material was arranged in this configuration"
+          },
+          "exposureConditions": {
+            "type": "string",
+            "enum": [
+              "covered",
+              "exposed", 
+              "partially_covered"
+            ],
+            "description": "Protection from weather elements"
+          },
+          "groundContact": {
+            "type": "boolean",
+            "description": "Direct soil contact affects decomposition rate"
+          }
+        }
+      },
+      "alternativeFateMetrics": {
+        "type": "object",
+        "description": "LCA and BECCS analysis metrics for alternative fate assessment",
+        "properties": {
+          "baselineScenario": {
+            "type": "string",
+            "enum": [
+              "natural_decomposition",
+              "wildfire",
+              "prescribed_burn",
+              "mulching"
+            ],
+            "description": "Expected fate if material is not collected"
+          },
+          "annualDecayRate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Estimated annual decomposition rate (percent per year) based on arrangement and conditions"
+          },
+          "collectionEfficiency": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Efficiency factor (0-1) for collecting material based on arrangement"
+          },
+          "carbonImpact": {
+            "type": "object",
+            "description": "Carbon-related impacts of the current arrangement",
+            "properties": {
+              "soilCarbonChange": {
+                "type": "number",
+                "description": "Change in soil carbon (tons CO2e) from current arrangement"
+              },
+              "emissionsAvoided": {
+                "type": "number",
+                "description": "Emissions avoided (tons CO2e) by collection vs baseline scenario"
+              }
+            }
+          }
+        }
       },
       "isMultiSpecies": {
         "type": "boolean",

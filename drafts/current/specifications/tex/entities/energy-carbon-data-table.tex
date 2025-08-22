@@ -1,23 +1,28 @@
+% AUTO-GENERATED - DO NOT EDIT
+% Generated from: energy_carbon_data/validation_schema.json and energy_carbon_data_dictionary.md
+% To modify this content, edit the source files and regenerate
 % Energy Carbon Data Entity Table
-% Auto-generated from JSON schema
 
 \begin{entitytable}{Energy Carbon Data}
-\textbf{\field{dataType}} & enum(7 values) & Enumerated value for datatype \\
-\textbf{\field{energyCarbonDataId}} & string (pattern) & Unique identifier for the energycarbondata \\
-\textbf{\field{source}} & enum(4 values) & Enumerated value for source \\
-\textbf{\field{unit}} & enum(8 values) & Enumerated value for unit \\
-\textbf{\field{value}} & number & Value field value \\
+\textbf{\field{@context} & object (structured) & No description provided \\
+\textbf{\field{@id} & string (uri) & No description provided \\
+\textbf{\field{@type} & enum(EnergyCarbonData) & No description provided \\
+\textbf{\field{dataType} & enum(7 values) & No description provided \\
+\textbf{\field{energyCarbonDataId} & string (pattern) & No description provided \\
+\textbf{\field{source} & enum(4 values) & No description provided \\
+\textbf{\field{unit} & enum(8 values) & No description provided \\
+\textbf{\field{value} & number & No description provided \\
 \field{caGreetVersion} & string (pattern) & CA-GREET model version used for calculation \\
 \field{energyEconomyRatio} & number (≥0.5, ≤3.0) & Energy economy ratio for LCFS credit calculation \\
-\field{humidityConditions} & number & Humidityconditions field value \\
+\field{humidityConditions} & number & No description provided \\
 \field{lcfsPathwayType} & enum(4 values) & LCFS pathway tier classification \\
 \field{lifeCycleStage} & enum(6 values) & Lifecycle stage for carbon intensity data \\
-\field{measurementGeographicDataId} & string (pattern) & Unique identifier for the measurementgeographicdata \\
-\field{measurementMethod} & enum(9 values) & Enumerated value for measurementmethod \\
-\field{measurementRecordId} & string (pattern) & Foreign key to the measurement record \\
-\field{measurementTimestamp} & string (date-time) & Measurementtimestamp field value \\
-\field{qualityAssurance} & string & Qualityassurance field value \\
+\field{measurementGeographicDataId} & string (pattern) & No description provided \\
+\field{measurementMethod} & enum(9 values) & No description provided \\
+\field{measurementRecordId} & string (pattern) & No description provided \\
+\field{measurementTimestamp} & string (date-time) & No description provided \\
+\field{qualityAssurance} & string & No description provided \\
 \field{regulatoryBenchmark} & number & CARB regulatory benchmark for comparison (gCO2e/MJ) \\
-\field{temperatureConditions} & number & Temperatureconditions field value \\
-\field{traceableUnitId} & string (pattern) & Foreign key to the traceable unit \\
+\field{temperatureConditions} & number & No description provided \\
+\field{traceableUnitId} & string (pattern) & No description provided \\
 \end{entitytable}
