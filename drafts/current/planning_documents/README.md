@@ -1,56 +1,66 @@
 # **BOOST Enhancement Plans Directory** {#planning-documents}
 
-This directory contains comprehensive enhancement plans for the BOOST data standard, organized to support systematic development and stakeholder review.
+This directory serves as documentation for BOOST enhancement planning processes. Enhancement plans are now tracked as GitHub Issues for improved collaboration and visibility.
 
-## **Directory Contents** {#contents}
+## **Enhancement Plan Management** {#management}
 
-### **Current Enhancement Plans**
+### **Current Process**
+Enhancement plans are tracked as **GitHub Issues** with comprehensive technical specifications, implementation details, and stakeholder analysis.
 
-#### **ISEAL_CoC_Conformance_Enhancement_Plan.md**
-Comprehensive plan for achieving full ISEAL Chain of Custody standard conformance, addressing critical gaps in CoC model specification, system boundaries, and attribution methods.
+### **Active Enhancement Plans (GitHub Issues)**
 
-**Target Conformance**: 10/10 ISEAL compliance
-**Timeline**: 9 months, 3-phase implementation
-**Priority**: Critical for certification under ISEAL-aligned standards
+- **[Issue #259](https://github.com/carbondirect/BOOST/issues/259)**: Build System Enhancement Plan
+  - 6-phase roadmap over 11 weeks addressing build fragility
+  - **Priority**: Medium - Infrastructure improvement
+  - **Status**: Planning
 
-#### **contextual_validation_enhancement_plan.md**  
-Enhancement plan for contextual validation capabilities within the BOOST framework.
+- **[Issue #260](https://github.com/carbondirect/BOOST/issues/260)**: ISEAL CoC Conformance Enhancement  
+  - 3-phase implementation over 9 months for full ISEAL compliance
+  - **Priority**: Critical - Required for certification
+  - **Status**: Planning
 
-**Status**: Implementation planning
-**Priority**: Medium-term development
+- **[Issue #261](https://github.com/carbondirect/BOOST/issues/261)**: Contextual Validation Enhancement
+  - 4-phase implementation over 8 months for sophisticated validation
+  - **Priority**: High - Data quality improvement
+  - **Status**: Planning
 
-#### **relationship_system_consolidation_enhancement_plan.md**
-Comprehensive plan for consolidating dual relationship definition systems (schema metadata and ERD configuration) into unified schema-first approach.
-
-**Target**: Single source of truth with automated ERD generation
-**Status**: Deferred implementation - Complete technical specification available  
-**Priority**: Medium-High (Architecture Improvement)
+- **[Issue #262](https://github.com/carbondirect/BOOST/issues/262)**: Relationship System Consolidation (DEFERRED)
+  - 4-phase consolidation over 6 weeks for architecture improvement
+  - **Priority**: Medium-High - Technical debt reduction
+  - **Status**: Deferred
 
 ## **Enhancement Plan Structure** {#structure}
 
-All enhancement plans in this directory follow the BOOST project writing style guide conventions:
+All enhancement plans follow comprehensive documentation standards with:
 
 ### **Required Sections**
-- **Executive Summary** with conformance scores and rationale
-- **Phase-based Implementation** with clear timelines
-- **Stakeholder Analysis** with evidence-based findings
-- **Resource Requirements** and success metrics
-- **Risk Mitigation** strategies
+- **Executive Summary** with problem analysis and strategic rationale
+- **Phase-based Implementation** with detailed timelines and deliverables
+- **Stakeholder Analysis** with evidence-based findings and quotes
+- **Technical Specifications** with code examples and JSON schemas
+- **Resource Requirements** with effort estimates and success metrics
+- **Risk Mitigation** strategies with specific contingency plans
 
-### **Document Formatting**
-- **Bold headers** with anchor IDs for cross-referencing
-- **Professional academic tone** suitable for stakeholder review
-- **Technical specifications** with schema examples
-- **Implementation timelines** with resource allocation
+### **Content Standards**
+- **Complete Technical Detail**: Full implementation specifications including code examples
+- **Professional Academic Tone**: Suitable for stakeholder review and technical evaluation
+- **Stakeholder Integration**: Direct quotes and analysis from expert interviews
+- **Implementation Readiness**: Actionable plans with resource allocation and timelines
 
 ## **Development Process** {#process}
 
 ### **Enhancement Plan Lifecycle**
-1. **Analysis Phase**: Gap analysis and stakeholder input
-2. **Planning Phase**: Comprehensive enhancement plan creation  
-3. **Review Phase**: Stakeholder and technical review
-4. **Implementation Phase**: Phased development execution
-5. **Validation Phase**: Conformance testing and verification
+1. **Analysis Phase**: Gap analysis and comprehensive stakeholder input
+2. **Planning Phase**: GitHub Issue creation with complete technical specification
+3. **Review Phase**: Stakeholder and technical review via issue comments
+4. **Implementation Phase**: Phased development execution tracked through issue updates
+5. **Validation Phase**: Conformance testing and verification with success metrics
+
+### **GitHub Issue Management**
+- **Labels**: Issues tagged with appropriate priority and type labels
+- **Milestones**: Linked to project milestones for tracking
+- **Comments**: Stakeholder feedback and implementation progress updates
+- **Cross-references**: Links to related issues, pull requests, and documentation
 
 ### **Stakeholder Integration**
 Enhancement plans incorporate findings from:
@@ -59,11 +69,28 @@ Enhancement plans incorporate findings from:
 - **Regulatory and Compliance Specialists**
 - **California State Agency Partners**
 
-## **Archive and Version Control** {#archive}
+## **Benefits of GitHub Issue Management** {#benefits}
+
+### **Improved Collaboration**
+- **Centralized Discussion**: All stakeholder feedback in one location
+- **Transparent Progress**: Implementation updates visible to all stakeholders  
+- **Integration**: Direct links to code changes and pull requests
+
+### **Enhanced Tracking**
+- **Status Visibility**: Real-time status updates and progress tracking
+- **Priority Management**: Clear priority levels with filterable labels
+- **Milestone Integration**: Alignment with project roadmaps and deliverables
+
+### **Better Documentation**
+- **Version Control**: Complete history of plan evolution and decisions
+- **Searchability**: Easy discovery of enhancement plans and related discussions
+- **Cross-referencing**: Automatic linking to related issues and implementations
+
+## **Archive and Historical Plans** {#archive}
 
 **Historical Plans**: Legacy enhancement plans are maintained in `/drafts/archive/planning_documents/`
 
-**Version Management**: Each enhancement plan includes version history and change tracking to support iterative development.
+**Migration**: Previous markdown-based enhancement plans have been migrated to GitHub Issues with complete content preservation and enhanced collaboration features.
 
 ---
 
