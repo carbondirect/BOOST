@@ -404,76 +404,104 @@ jobs:
       - name: Validate Python model syntax
         working-directory: drafts/current/reference-implementations/python
         run: |
-          echo "🐍 Validating Python model syntax..."
-          python3 -m py_compile models.py
+          echo "🐍 Validating Python dynamic model syntax..."
+          python3 -m py_compile dynamic_models.py
+          python3 -m py_compile schema_loader.py
+          python3 -m py_compile boost_client.py
           echo "✅ Python syntax validation passed"
 
-      - name: Test Pydantic model imports
+      - name: Test dynamic model loading
         working-directory: drafts/current/reference-implementations/python  
         run: |
-          echo "🔍 Testing Pydantic model imports..."
+          echo "🔍 Testing dynamic model loading..."
           python3 -c "
           import sys
-          from models import *
+          from dynamic_models import get_models
           
-          # Test that key models can be imported
-          required_models = [
-              'Organization', 
-              'TraceableUnit',
-              'Transaction',
-              'MaterialProcessing',
-              'Claim'
+          # Test dynamic model loading
+          models = get_models()
+          print('✅ Dynamic models loaded successfully')
+          
+          # Test that key entities can be loaded dynamically
+          required_entities = [
+              'organization', 
+              'traceable_unit',
+              'transaction',
+              'material_processing'
           ]
           
-          for model_name in required_models:
-              if model_name not in globals():
-                  print(f'❌ Model {model_name} not found')
+          for entity_name in required_entities:
+              try:
+                  model_class = models.get_model(entity_name)
+                  print(f'✅ {entity_name} model loaded successfully')
+              except Exception as e:
+                  print(f'❌ Failed to load {entity_name}: {e}')
                   sys.exit(1)
-              else:
-                  print(f'✅ {model_name} imported successfully')
           
-          print('✅ All required Pydantic models imported successfully')
+          # Test enum loading
+          org_types = models.get_enum_values('organization', 'organizationType')
+          if org_types:
+              print(f'✅ Organization types loaded: {org_types[:3]}...')
+          else:
+              print('❌ Failed to load organization types')
+              sys.exit(1)
+          
+          print('✅ All dynamic models and enums loaded successfully')
           "
 
       - name: Test model validation
         working-directory: drafts/current/reference-implementations/python
         run: |
-          echo "🧪 Testing model validation..."
+          echo "🧪 Testing dynamic model validation..."
           python3 -c "
           import sys
-          from models import Organization, TraceableUnit
+          from dynamic_models import get_models
           
-          # Test Organization model
+          models = get_models()
+          
+          # Test Organization model validation
           try:
-              org = Organization(
-                  context={},
-                  type='Organization',
-                  id='https://example.com/org/1',
-                  organization_id='ORG-TEST-001',
-                  organization_name='Test Organization',
-                  organization_type='harvester'
-              )
+              Organization = models.get_model('organization')
+              org_data = {
+                  '@context': {},
+                  '@type': 'Organization',
+                  '@id': 'https://example.com/org/1',
+                  'organizationId': 'ORG-TEST-001',
+                  'organizationName': 'Test Organization',
+                  'organizationType': 'harvester'
+              }
+              org = Organization(**org_data)
               print('✅ Organization model validation passed')
           except Exception as e:
               print(f'❌ Organization model validation failed: {e}')
               sys.exit(1)
           
-          # Test TraceableUnit model  
+          # Test TraceableUnit model validation
           try:
-              tru = TraceableUnit(
-                  context={},
-                  type='TraceableUnit',
-                  id='https://example.com/tru/1',
-                  traceable_unit_id='TRU-TEST-001',
-                  unit_type='log',
-                  harvester_id='ORG-HARVEST-001'
-              )
+              TraceableUnit = models.get_model('traceable_unit')
+              tru_data = {
+                  '@context': {},
+                  '@type': 'TraceableUnit',
+                  '@id': 'https://example.com/tru/1',
+                  'traceableUnitId': 'TRU-TEST-001',
+                  'unitType': 'individual_log',
+                  'harvesterId': 'ORG-HARVEST-001',
+                  'uniqueIdentifier': 'RFID-TEST-001',
+                  'identificationMethodId': 'IM-RFID-001',
+                  'identificationConfidence': 0.95,
+                  'totalVolumeM3': 2.5,
+                  'harvestGeographicDataId': 'GEO-HARVEST-001',
+                  'createdTimestamp': '2025-08-22T12:00:00Z',
+                  'materialTypeId': 'MAT-PINE-001',
+                  'isMultiSpecies': False
+              }
+              tru = TraceableUnit(**tru_data)
               print('✅ TraceableUnit model validation passed')
           except Exception as e:
               print(f'❌ TraceableUnit model validation failed: {e}')
               sys.exit(1)
           
-          print('✅ Model validation tests passed')
+          print('✅ Dynamic model validation tests passed')
           "
 
   validation-summary:
