@@ -1,4 +1,6 @@
-<!-- Auto-generated from lcfs_pathway/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: lcfs_pathway/validation_schema.json and lcfs_pathway_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 CARB-certified fuel pathway for LCFS compliance with carbon intensity and regulatory attributes
 

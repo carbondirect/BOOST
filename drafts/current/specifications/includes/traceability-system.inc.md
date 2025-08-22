@@ -1,13 +1,13 @@
-The BOOST Traceability System implements a revolutionary approach to biomass supply chain tracking that eliminates the traditional weak points where traceability is lost during material transfers and processing operations.
+The BOOST Traceability System implements a comprehensive approach to biomass supply chain tracking that addresses traditional weak points where traceability is lost during material transfers and processing operations.
 
 ## Key Implementation Features
 
-### Media-Interruption-Free Traceability
-TraceableUnit (TRU) entities maintain continuous identification through biometric signatures and optical pattern recognition, eliminating dependency on physical tags or attachments that can be lost or damaged during handling and processing operations.
+### Progressive Identification Framework
+TraceableUnit (TRU) entities maintain continuous identification through technology-appropriate methods including biometric signatures, RFID tags, QR codes, and manual identification. The multi-method approach provides data continuity while accommodating varying technology readiness levels and field conditions throughout handling and processing operations.
 
 ### Three Critical Tracking Points
 The system establishes standardized measurement and verification infrastructure at:
-- **harvest_site** - Initial TRU creation with biometric capture and volume measurement
+- **harvest_site** - Initial TRU creation with appropriate identification method and volume measurement
 - **skid_road/forest_road** - Transportation consolidation points with reconciliation validation
 - **mill_entrance** - Processing facility entry points with final verification before transformation
 

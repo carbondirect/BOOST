@@ -125,6 +125,15 @@
                 "required": false,
                 "description": "Parent TRU reference must be valid if provided"
               }
+            },
+            "identificationMethodId": {
+              "type": "object",
+              "properties": {
+                "targetEntity": {"const": "IdentificationMethod"},
+                "targetField": {"const": "methodId"},
+                "required": true,
+                "description": "Identification method must reference valid IdentificationMethod entity"
+              }
             }
           }
         },

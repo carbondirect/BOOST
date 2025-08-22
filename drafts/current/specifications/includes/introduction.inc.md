@@ -4,7 +4,7 @@ This specification provides implementers with the technical details needed to de
 
 ## Community Development Process ## {#community-process}
 
-BOOST is developed through the [BOOST W3C Community Group](https://www.w3.org/community/boost-01/) with collaborative input from industry stakeholders, regulatory agencies, and technical experts. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities.
+BOOST is developed through the [BOOST W3C Community Group](https://www.w3.org/community/boost-01/) with collaborative input from industry stakeholders, regulatory agencies, and technical experts. The standard implements a TraceableUnit (TRU)-centric model supporting continuous tracking with progressive identification methods, multi-species composition management, and comprehensive plant part categorization across 36 interconnected entities.
 
 **Working Group Leadership:**
 - **Chair:** Peter Tittmann (Carbon Direct)
@@ -19,7 +19,7 @@ BOOST is developed through the [BOOST W3C Community Group](https://www.w3.org/co
 - Restructured Core Traceability Entities for location-aware conformance
 - Added Equipment entity for operational management
 - Enhanced schema integrity validation tools
-- Interactive ERD Navigator with 33 entities across 7 thematic areas
+- Interactive ERD Navigator with 36 entities across 7 thematic areas
 
 ## Participation and Feedback ## {#participation}
 

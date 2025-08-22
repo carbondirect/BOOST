@@ -1,4 +1,6 @@
-<!-- Auto-generated from customer/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: customer/validation_schema.json and customer_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Customer entity in BOOST data model
 

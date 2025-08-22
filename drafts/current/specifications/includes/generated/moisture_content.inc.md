@@ -1,4 +1,6 @@
-<!-- Auto-generated from moisture_content/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: moisture_content/validation_schema.json and moisture_content_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard
 

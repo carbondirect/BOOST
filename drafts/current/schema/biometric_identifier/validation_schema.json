@@ -22,7 +22,9 @@
         "pattern": "^BIO-[A-Z0-9-_]+$"
       },
       "traceableUnitId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TRU-[A-Z0-9-_]+$",
+        "description": "Foreign key to TraceableUnit entity"
       },
       "biometricSignature": {
         "type": "string"
@@ -31,8 +33,30 @@
         "type": "string",
         "enum": [
           "optical_scanner",
-          "photo_analysis"
+          "photo_analysis", 
+          "manual_photo",
+          "visual_inspection"
         ]
+      },
+      "confidenceScore": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Pattern matching reliability score (0-100)"
+      },
+      "fallbackRequired": {
+        "type": "boolean",
+        "description": "True if low confidence requires secondary verification"
+      },
+      "verificationMethod": {
+        "type": "string",
+        "enum": [
+          "automated_matching",
+          "manual_review",
+          "cross_validation",
+          "secondary_identifier"
+        ],
+        "description": "Method used to verify biometric match"
       },
       "captureGeographicDataId": {
         "type": "string"
@@ -49,6 +73,11 @@
         "items": {
           "type": "string"
         }
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of the most recent data update"
       }
     },
     "required": [
@@ -59,6 +88,8 @@
       "traceableUnitId",
       "biometricSignature",
       "captureMethod",
+      "confidenceScore",
+      "fallbackRequired",
       "captureTimestamp"
     ],
     "title": "Biometric Identifier",

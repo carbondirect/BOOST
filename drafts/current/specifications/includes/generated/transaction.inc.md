@@ -1,4 +1,6 @@
-<!-- Auto-generated from transaction/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: transaction/validation_schema.json and transaction_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Transaction entity in BOOST data model
 
@@ -638,7 +640,7 @@ The `Transaction` entity manages comprehensive business transactions within the 
 2. **Tracking Point Coordination**
     - Multi-point location tracking and verification
     - Chain of custody maintenance across locations
-    - Media-interruption-free tracking validation
+    - Continuous tracking validation
     - Geographic verification and compliance
 3. **Processing Integration**
     - Material processing coordination and scheduling

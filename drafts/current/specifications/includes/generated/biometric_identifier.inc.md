@@ -1,4 +1,6 @@
-<!-- Auto-generated from biometric_identifier/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: biometric_identifier/validation_schema.json and biometric_identifier_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 BiometricIdentifier entity in BOOST data model
 
@@ -6,7 +8,7 @@ BiometricIdentifier entity in BOOST data model
 
 ### Relationships ### {{.unnumbered}}
 
-- **traceableUnitId** → [[#traceable-unit|Traceable Unit]]
+- **traceableUnitId** → [[#traceable-unit|Traceable Unit]] - Foreign key to TraceableUnit entity
 - **trackingPointId** → [[#tracking-point|Tracking Point]]
 
 ### Properties ### {{.unnumbered}}
@@ -53,7 +55,7 @@ BiometricIdentifier entity in BOOST data model
 </tr>
 <tr>
 <td><code>captureMethod</code>
-<td>enum(optical_scanner, photo_analysis)
+<td>enum(4 values)
 <td>No description provided
 <td>✓
 </tr>
@@ -64,15 +66,33 @@ BiometricIdentifier entity in BOOST data model
 <td>✓
 </tr>
 <tr>
+<td><code>confidenceScore</code>
+<td>number (≥0, ≤100)
+<td>Pattern matching reliability score (0-100)
+<td>✓
+</tr>
+<tr>
+<td><code>fallbackRequired</code>
+<td>boolean
+<td>True if low confidence requires secondary verification
+<td>✓
+</tr>
+<tr>
 <td><code>traceableUnitId</code>
-<td>string
-<td>No description provided
+<td>string (pattern)
+<td>Foreign key to TraceableUnit entity
 <td>✓
 </tr>
 <tr>
 <td><code>captureGeographicDataId</code>
 <td>string
 <td>No description provided
+<td>
+</tr>
+<tr>
+<td><code>lastUpdated</code>
+<td>string (date-time)
+<td>Timestamp of the most recent data update
 <td>
 </tr>
 <tr>
@@ -87,12 +107,18 @@ BiometricIdentifier entity in BOOST data model
 <td>No description provided
 <td>
 </tr>
+<tr>
+<td><code>verificationMethod</code>
+<td>enum(4 values)
+<td>Method used to verify biometric match
+<td>
+</tr>
 </tbody>
 </table>
 
 ## BiometricIdentifier
 ### Overview
-The `BiometricIdentifier` entity provides optical biometric identification for TRUs with multi-species support to enable attachment-free wood identification as required by the BOOST traceability system. This entity captures unique optical patterns from individual pieces of wood without requiring physical attachments, supporting media-interruption-free traceability through natural wood characteristics.
+The `BiometricIdentifier` entity provides optical multi-method identification for TRUs with multi-species support to enable attachment-free wood identification as part of the BOOST multi-method identification framework. This entity captures unique optical patterns from individual pieces of wood without requiring physical attachments, supporting continuous traceability through natural wood characteristics. The entity includes confidence scoring and progressive implementation mechanisms to address technology readiness levels while maintaining data integrity.
 ### Fields
 <table class="data">
 <thead>
@@ -131,7 +157,28 @@ The `BiometricIdentifier` entity provides optical biometric identification for T
 <td>string
 <td>Yes
 <td>Method used for biometric capture (enum)
-<td>`optical_scanner`, `photo_analysis`
+<td>`optical_scanner`, `photo_analysis`, `manual_photo`, `visual_inspection`
+</tr>
+<tr>
+<td>`confidenceScore`
+<td>number (0-100)
+<td>Yes
+<td>Pattern matching reliability score (0-100)
+<td>`87`, `65`, `42`
+</tr>
+<tr>
+<td>`fallbackRequired`
+<td>boolean
+<td>Yes
+<td>True if low confidence requires secondary verification
+<td>`true`, `false`
+</tr>
+<tr>
+<td>`verificationMethod`
+<td>string (enum)
+<td>No
+<td>Method used to verify biometric match
+<td>`automated_matching`, `manual_review`, `cross_validation`, `secondary_identifier`
 </tr>
 <tr>
 <td>`captureGeographicDataId`
@@ -184,12 +231,55 @@ The `BiometricIdentifier` entity provides optical biometric identification for T
      Automated pattern extraction algorithms
      Real-time processing and signature generation
      Integration with tracking point infrastructure
+     Confidence Range: 85-97%
 2. **photo_analysis**
      Mobile device camera capture
      Manual or semi-automated photo capture
      Post-processing pattern analysis
      Cloud-based or local analysis systems
      Field verification and backup identification
+     Confidence Range: 60-85%
+3. **manual_photo**
+     Smartphone or digital camera capture
+     Basic photo documentation without analysis
+     Manual pattern comparison and verification
+     Low-cost field implementation
+     Human operator pattern matching
+     Confidence Range: 40-60%
+4. **visual_inspection**
+     Human visual pattern recognition
+     Manual documentation of distinguishing features
+     No specialized equipment required
+     Subjective pattern identification
+     Fallback method when technology unavailable
+     Confidence Range: 20-40%
+### Confidence Scoring Framework
+The confidence score reflects the reliability and accuracy of biometric pattern matching:
+#### **Confidence Levels**
+1. **High Confidence (85-100%)**
+    - Automated optical scanning with verified algorithms
+    - Multiple pattern verification points
+    - Controlled lighting and positioning
+    - Machine learning validation
+    - Suitable for primary identification
+2. **Medium Confidence (60-84%)**
+    - Photo analysis with semi-automated processing
+    - Single pattern verification approach
+    - Variable lighting conditions
+    - Human-assisted verification
+    - May require secondary identification
+3. **Low Confidence (30-59%)**
+    - Manual photo documentation
+    - Basic visual pattern comparison
+    - Uncontrolled capture conditions
+    - Limited pattern analysis capability
+    - Requires secondary verification (fallbackRequired = true)
+4. **Very Low Confidence (<30%)**
+    - Visual inspection only
+    - Subjective pattern identification
+    - No technical validation
+    - Used only when no alternatives available
+    - Always requires secondary identification
 ### Key Features
 1. **Attachment-Free Identification**
      No physical tags or markers required
@@ -215,6 +305,12 @@ The `BiometricIdentifier` entity provides optical biometric identification for T
      Multiple angle capture support
      Lighting condition normalization
      Pattern degradation tracking over time
+5. **Progressive Implementation Framework**
+     Technology-appropriate deployment pathway from research to production
+     Confidence scoring aligned with technology maturity levels
+     Method transition support for varying field conditions
+     Integration with established identification methods
+     Continuous improvement through multi-method approaches
 ### Biometric Signature Formats
 1. **Hash-Based Signatures**
      Cryptographic hash of pattern data
@@ -244,6 +340,34 @@ The `BiometricIdentifier` entity provides optical biometric identification for T
      captureGeographicDataId must reference valid location
      trackingPointId must be consistent with location
      Capture equipment must be available at location
+### Technology Readiness and Implementation Strategy
+#### **Addressing Field Deployment Challenges**
+Current biometric wood fingerprinting technology faces several implementation challenges identified in stakeholder feedback:
+1. **Technology Maturity**
+    - Laboratory accuracy: 84-97% in controlled conditions (2024 research)
+    - Field deployment: Limited to controlled environments (mill gates)
+    - Commercial availability: Nascent market with few proven solutions
+    - Implementation timeline: 3-5 years for widespread field readiness
+2. **Progressive Implementation Strategy**
+    - **Phase 1 (Current)**: Traditional methods primary, biometric capability development
+    - **Phase 2 (2-3 years)**: Pilot biometric systems in controlled environments
+    - **Phase 3 (3-5 years)**: Expanded biometric deployment with method redundancy
+    - **Phase 4 (5+ years)**: Technology-optimized systems with seamless method integration
+3. **Continuous Improvement Approaches**
+    - Multi-method validation for confidence <70%
+    - Integration with established identification systems (RFID, QR codes)
+    - Technology-appropriate adoption based on readiness levels
+    - Regulatory compliance through method flexibility
+#### **Integration with Multi-Method Framework**
+BiometricIdentifier operates as one component in a comprehensive identification system:
+1. **Primary Method Selection**
+    - High TRL environments: Biometric as primary with RFID secondary
+    - Medium TRL environments: RFID primary with biometric pilot testing
+    - Low TRL environments: Traditional methods only
+2. **Validation Requirements**
+    - Confidence ≥85%: Single method acceptable
+    - Confidence 60-84%: Secondary verification recommended
+    - Confidence <60%: Secondary verification required (fallbackRequired = true)
 ### Multi-Species Biometric Tracking
 1. **Complex Pile Analysis**
      Individual log identification within piles
@@ -255,11 +379,11 @@ The `BiometricIdentifier` entity provides optical biometric identification for T
      Cross-validation with visual species assessment
      Pattern-based species classification
      Biodiversity compliance verification
-3. **Processing Chain Continuity**
+3. **Processing Chain Integration**
      Pattern preservation through processing steps
      Split/merge operation pattern tracking
      Parent/child TRU pattern inheritance
-     Continuous identification chain
+     Progressive identification continuity
 ### Example Use Cases
 1. **Harvest Site Identification**
      Initial biometric capture during felling

@@ -3,7 +3,7 @@
 ## TraceableUnit
 
 ### Overview
-The `TraceableUnit` object represents the fundamental unit of traceability in the BOOST media-interruption-free timber supply chain tracking system. A TRU can be an individual log, pile, volume aggregation, or processed batch that maintains continuous data linkage throughout its lifecycle. This entity replaces MaterialBatch as the primary traceable unit and supports biometric identification, species composition tracking, and complete audit trails.
+The `TraceableUnit` object represents the fundamental unit of traceability in the BOOST continuous timber supply chain tracking system. A TRU can be an individual log, pile, volume aggregation, or processed batch that maintains data linkage throughout its lifecycle using technology-appropriate identification methods. This entity replaces MaterialBatch as the primary traceable unit and supports progressive identification approaches, species composition tracking, and complete audit trails.
 
 ### Fields
 
@@ -36,8 +36,36 @@ The `TraceableUnit` object represents the fundamental unit of traceability in th
 <td>`uniqueIdentifier`
 <td>string
 <td>Yes
-<td>Biometric signature, RFID tag, or QR code
-<td>`BIO-OAK-12345`, `RFID-TAG-67890`, `QR-CODE-ABC123`
+<td>Primary identifier - biometric signature, RFID tag, QR code, barcode, or manual ID
+<td>`BIO-OAK-12345`, `RFID-TAG-67890`, `QR-CODE-ABC123`, `LOG-BATCH-2025-001`
+</tr>
+<tr>
+<td>`identificationMethodId`
+<td>string (FK)
+<td>Yes
+<td>Foreign key to IdentificationMethod entity
+<td>`IM-RFID-001`, `IM-BIOMETRIC-001`, `IM-QR-001`
+</tr>
+<tr>
+<td>`identificationConfidence`
+<td>number (0-100)
+<td>Yes
+<td>Confidence score for primary identification method (0-100)
+<td>`95`, `75`, `50`
+</tr>
+<tr>
+<td>`secondaryIdentifiers`
+<td>array&lt;object&gt;
+<td>No
+<td>Secondary/backup identification methods with confidence scores
+<td>`[{"identifierType": "rfid", "identifierValue": "TAG-001", "confidence": 90}]`
+</tr>
+<tr>
+<td>`methodReadinessLevel`
+<td>integer (1-9)
+<td>No
+<td>Technology Readiness Level (TRL 1-9) for identification method used
+<td>`9`, `6`, `3`
 </tr>
 <tr>
 <td>`totalVolumeM3`
@@ -178,25 +206,71 @@ The `TraceableUnit` object represents the fundamental unit of traceability in th
 
 ### Key Features
 
-1. **Media-Interruption-Free Traceability**
-     Continuous data linkage from harvest to mill entrance
-     Multiple identification methods (biometric, RFID, QR codes)
-     Media break detection and flagging
+1. **Multi-Method Identification Framework**
+     Progressive identification strategy accommodating technology readiness
+     Primary and secondary identification methods for redundancy
+     Confidence scoring system ensuring data integrity (≥30% minimum)
+     Support for biometric, RFID, QR codes, barcodes, manual IDs, and photo documentation
+     
+2. **Continuous Traceability Framework**
+     Progressive data linkage from harvest to mill entrance
+     Technology Readiness Level (TRL) tracking for method selection
+     Method transition detection and validation
+     Multi-method validation for data integrity assurance
 
-2. **Species Composition Support**
+3. **Species Composition Support**
      Multi-species flag for complex piles and batches
      Integration with SpeciesComponent entity for detailed tracking
      Species-specific sustainability claims
 
-3. **Complete Audit Trails**
+4. **Complete Audit Trails**
      Processing history with complete transformation records
      Location history through LocationHistory entity
      Measurement reconciliation through DataReconciliation entity
 
-4. **Split/Merge Operations**
+5. **Split/Merge Operations**
      Parent/child relationships for TRU genealogy
      Volume conservation validation
      Claim inheritance tracking
+
+### Identification Method Selection Guidelines
+
+The multi-method identification framework enables context-appropriate method selection:
+
+#### **Method Selection Criteria**
+
+1. **Technology Readiness**
+    - TRL 7-9: Production-ready methods (RFID, QR codes, barcodes, manual IDs)
+    - TRL 4-6: Pilot-ready methods (biometric systems in controlled environments)
+    - TRL 1-3: Research methods (experimental biometric approaches)
+
+2. **Location Suitability**
+    - **Harvest Site**: Manual IDs, RFID tags, QR codes (weather-resistant)
+    - **Mill Entrance**: All methods including biometric systems
+    - **Processing Facility**: Biometric, RFID, automated scanning systems
+    - **Transport**: RFID, QR codes, photo documentation
+
+3. **Confidence Requirements**
+    - **High Confidence (≥70%)**: Required for critical tracking points, enables single-method tracking
+    - **Medium Confidence (30-69%)**: Requires secondary identification method
+    - **Low Confidence (<30%)**: Invalid, must use alternative method
+
+#### **Recommended Combinations**
+
+1. **Traditional Approach** (Current State)
+    - Primary: RFID tags (95% confidence)
+    - Secondary: Manual lot numbers (50% confidence)
+    - Suitable for immediate implementation
+
+2. **Hybrid Approach** (Near-term)
+    - Primary: QR codes (75% confidence) 
+    - Secondary: Photo documentation (60% confidence)
+    - Cost-effective with visual verification
+
+3. **Advanced Approach** (Future State)
+    - Primary: Biometric optical scanning (87% confidence)
+    - Secondary: RFID backup (95% confidence)
+    - Maximum accuracy when technology matures
 
 ### Example Use Cases
 

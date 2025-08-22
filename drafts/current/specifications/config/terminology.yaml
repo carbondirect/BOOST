@@ -21,6 +21,7 @@ tracking_method:
 # Technology Approach Terms
 identification_approach:
   current: "multi-method identification"
+  title_case: "Multi-Method Identification"
   deprecated: ["biometric identification", "single-method identification"]
   description: "Using multiple identification methods with fallbacks"
 

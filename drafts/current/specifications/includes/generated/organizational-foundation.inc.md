@@ -1,4 +1,6 @@
-<!-- Auto-generated thematic section: Organizational Foundation -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: thematic area configuration and entity schemas
+     To modify this content, edit the source file and regenerate -->
 
 Entities managing organizations, certifications, and participants.
 

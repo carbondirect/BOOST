@@ -8,7 +8,7 @@ Date: 2025-08-11
 Editor: Peter Tittmann, Carbon Direct, ptittmann@carbon-direct.com  
 Editor: Liam Killroy, Carbon Direct, lkillroy@carbon-direct.com
 Editor: BOOST W3C Community Group, public-boost-01@w3.org
-Abstract: The Biomass Open Origin Standard for Tracking (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting media-interruption-free tracking, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.
+Abstract: The Biomass Open Origin Standard for Tracking (BOOST) data standard defines a comprehensive, interoperable framework for tracking biomass materials through complex supply chains. BOOST enables transparent, verifiable, and consistent data exchange to support sustainability verification, regulatory compliance, and supply chain integrity across the biomass economy. The standard implements a TraceableUnit (TRU)-centric model supporting continuous traceability, multi-species composition management, and comprehensive plant part categorization across 33 interconnected entities organized into 7 thematic areas.
 Markup Shorthands: markdown yes
 </pre>
 
@@ -235,7 +235,7 @@ The <dfn export>TraceableUnit</dfn> entity serves as the central hub for all bio
 - Geographic location data
 - Processing history linkage
 
-## Media-Interruption-Free Tracking ## {#media-interruption-free}
+## Continuous Traceability Framework ## {#continuous-traceability}
 
 BOOST implementations MUST support continuous traceability through:
 - Biometric identification without physical attachments
@@ -422,7 +422,7 @@ path: schema/equipment/equipment_dictionary.md
 
 ### BiometricIdentifier ### {#biometric-identifier}
 
-Enables media-interruption-free tracking for [[#traceable-unit|TraceableUnit]] entities through optical pattern recognition and biometric signatures.
+Enables continuous traceability for [[#traceable-unit|TraceableUnit]] entities through progressive identification methods including optical pattern recognition and biometric signatures.
 
 **🗂️ [View BiometricIdentifier in ERD Navigator](erd-navigator/index.html?focus=BiometricIdentifier)**
 
@@ -4342,7 +4342,7 @@ The foundational entities that enable end-to-end biomass supply chain tracking:
 
 ### TraceableUnit ### {#ref-traceable-unit}
 - **Primary Key**: `traceableUnitId`
-- **Purpose**: Central hub for biomass tracking with media-interruption-free identification
+- **Purpose**: Central hub for biomass tracking with continuous traceability identification
 - **Key Relationships**: Links to Organization (harvester), Material (type), GeographicData (location)
 - **Critical Fields**: `unitType`, `totalVolumeM3`, `uniqueIdentifier`, `isMultiSpecies`
 
@@ -4367,7 +4367,7 @@ The foundational entities that enable end-to-end biomass supply chain tracking:
 ### BiometricIdentifier ### {#ref-biometric-identifier}
 - **Primary Key**: `biometricIdentifierId`
 - **Purpose**: Tamper-proof identification through optical pattern recognition
-- **Key Relationships**: TraceableUnit (media-interruption-free tracking)
+- **Key Relationships**: TraceableUnit (continuous traceability tracking)
 - **Critical Fields**: `identifierType`, `biometricData`, `captureMethod`, `confidence`
 
 ## Organizational Foundation Entities ## {#organizational-entities-reference}

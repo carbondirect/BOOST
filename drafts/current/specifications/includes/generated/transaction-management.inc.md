@@ -1,4 +1,6 @@
-<!-- Auto-generated thematic section: Transaction Management -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: thematic area configuration and entity schemas
+     To modify this content, edit the source file and regenerate -->
 
 Commercial transactions and order fulfillment entities.
 

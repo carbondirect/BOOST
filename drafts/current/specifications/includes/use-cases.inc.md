@@ -46,7 +46,7 @@ BOOST addresses critical use cases across the biomass supply chain, from forest 
 - Third-party verification with evidence documentation
 - Chain of custody validation across organizational boundaries
 
-### 5. Biometric Media-Interruption-Free Tracking
+### 5. Progressive Identification and Continuous Traceability
 
 **Objective**: Maintain continuous traceability without physical tag dependencies
 

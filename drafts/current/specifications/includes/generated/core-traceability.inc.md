@@ -1,4 +1,6 @@
-<!-- Auto-generated thematic section: Core Traceability -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: thematic area configuration and entity schemas
+     To modify this content, edit the source file and regenerate -->
 
 The foundational entities enabling end-to-end biomass tracking.
 

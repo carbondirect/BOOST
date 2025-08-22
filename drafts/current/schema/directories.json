@@ -13,6 +13,7 @@
     "energy_carbon_data",
     "equipment",
     "geographic_data",
+    "identification_method",
     "lcfs_pathway",
     "lcfs_reporting",
     "location_history",
@@ -37,6 +38,6 @@
     "verification_statement"
   ],
   "last_updated": "2025-01-20T00:00:00Z",
-  "total_entities": 35,
+  "total_entities": 36,
   "description": "Comprehensive list of all BOOST schema directories for ERD Navigator auto-discovery"
 }

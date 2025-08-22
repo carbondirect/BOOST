@@ -53,7 +53,7 @@ sections:
     title: "Value Proposition: Why BOOST Reduces Costs and Complexity"
     anchor: "value-proposition"
     content: |
-      ### **{{IDENTIFICATION_APPROACH}} Benefits**
+      ### **{{IDENTIFICATION_APPROACH_TITLE}} Benefits**
 
       BOOST's {{IDENTIFICATION_STRATEGY}} provides significant operational advantages over conventional single-method tracking approaches:
 
@@ -63,7 +63,7 @@ sections:
       - Separate tracking for different species/grades multiplies documentation burden
       - System incompatibilities force duplicate data entry for different regulatory requirements
 
-      **BOOST {{IDENTIFICATION_APPROACH}} Advantages**:
+      **BOOST {{IDENTIFICATION_APPROACH_TITLE}} Advantages**:
       - **Technology-Appropriate Deployment**: Progressive identification methods from RFID tags to optical scanning based on operational readiness levels
       - **Method Redundancy**: Primary and secondary identification methods ensure continuity when individual methods fail
       - **Scalable Implementation**: Start with proven methods (RFID, QR codes) and evolve to advanced methods (optical scanning) as technology matures

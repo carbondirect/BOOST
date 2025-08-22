@@ -4,6 +4,10 @@
     "traceableUnitId": "https://github.com/carbondirect/BOOST/schemas#traceableUnitId",
     "unitType": "https://github.com/carbondirect/BOOST/schemas#unitType",
     "uniqueIdentifier": "https://github.com/carbondirect/BOOST/schemas#uniqueIdentifier",
+    "identificationMethodId": "https://github.com/carbondirect/BOOST/schemas#identificationMethodId",
+    "identificationConfidence": "https://github.com/carbondirect/BOOST/schemas#identificationConfidence",
+    "secondaryIdentifiers": "https://github.com/carbondirect/BOOST/schemas#secondaryIdentifiers",
+    "methodReadinessLevel": "https://github.com/carbondirect/BOOST/schemas#methodReadinessLevel",
     "totalVolumeM3": "https://github.com/carbondirect/BOOST/schemas#totalVolumeM3",
     "currentGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#currentGeographicDataId",
     "harvestGeographicDataId": "https://github.com/carbondirect/BOOST/schemas#harvestGeographicDataId",
@@ -29,9 +33,19 @@
   "traceableUnitId": "TRU-PILE-CA-KLAMATH-042",
   "unitType": "pile",
   "uniqueIdentifier": "RFID-TAG-KLA-042-789",
+  "identificationMethodId": "IM-RFID-001",
+  "identificationConfidence": 95,
+  "secondaryIdentifiers": [
+    {
+      "identifierType": "manual_id",
+      "identifierValue": "PILE-KLA-042-SUMMER",
+      "confidence": 60
+    }
+  ],
+  "methodReadinessLevel": 9,
   "totalVolumeM3": 85.25,
-  "currentGeographicDataId": "GEO-MILL-ENTRANCE-Pacific-001",
-  "harvestGeographicDataId": "GEO-HARVEST-SITE-CA-Klamath-Ridge-04",
+  "currentGeographicDataId": "GEO-MILL-ENTRANCE-PACIFIC-001",
+  "harvestGeographicDataId": "GEO-HARVEST-SITE-CA-KLAMATH-RIDGE-04",
   "createdTimestamp": "2025-07-15T06:30:00Z",
   "harvesterId": "ORG-KLAMATH-FORESTRY-001",
   "operatorId": "OP-MIKE-JOHNSON-001",
@@ -51,7 +65,6 @@
     "PROC-LIMB-KLA-002",
     "PROC-SORT-KLA-003"
   ],
-  "parentTraceableUnitId": null,
   "childTraceableUnitIds": [],
   "currentStatus": "delivered",
   "sustainabilityCertification": "FSC Mix Credit",

@@ -3,7 +3,7 @@
 ## TrackingPoint
 
 ### Overview
-The `TrackingPoint` entity implements the three critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the BOOST traceability system for media-interruption-free traceability. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using various equipment and identification technologies.
+The `TrackingPoint` entity implements the critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the BOOST continuous traceability system. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using technology-appropriate equipment and identification methods.
 
 ### Fields
 

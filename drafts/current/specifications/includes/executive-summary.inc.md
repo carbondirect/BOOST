@@ -2,7 +2,7 @@
      Generated from: config/narrative_sources/executive_summary.yaml
      To modify this content, edit the source file and regenerate -->
 
-## What BOOST Accomplishes ## {boost-purpose}
+## What BOOST Accomplishes ## {#boost-purpose}
 
 The Biomass Open Origin Standard for Tracking (BOOST) solves the fundamental challenge of maintaining continuous, verifiable traceability through biomass supply chains—from standing trees to processed biofuels—without losing data integrity at critical transfer points where materials change hands, locations, or physical states.
 
@@ -11,7 +11,7 @@ The Biomass Open Origin Standard for Tracking (BOOST) solves the fundamental cha
 **BOOST's Solution**: A unified data standard built around **TraceableUnits (TRUs)** that maintain their identity throughout the supply chain using progressive identification methods, technology-appropriate data capture, and comprehensive field structures that simultaneously satisfy multiple regulatory frameworks.
 
 
-## Overarching Design Principles ## {design-principles}
+## Overarching Design Principles ## {#design-principles}
 
 ### **TraceableUnits (TRUs) as Foundation**
 
@@ -32,7 +32,7 @@ BOOST's structure directly mirrors real-world biomass supply chain operations:
 4. **Multi-Species Reality**: Mixed-species piles and processing batches are represented through SpeciesComponent entities that maintain individual species data within composite TRUs
 
 
-## Continuous Traceability Framework ## {continuous-traceability}
+## Continuous Traceability Framework ## {#continuous-traceability}
 
 Unlike conventional systems that lose traceability when materials are transferred between different tracking systems, BOOST maintains continuous data linkage through:
 
@@ -41,9 +41,9 @@ Unlike conventional systems that lose traceability when materials are transferre
 - **Automated Reconciliation**: Volume conservation validation and measurement reconciliation across all tracking points
 
 
-## Value Proposition: Why BOOST Reduces Costs and Complexity ## {value-proposition}
+## Value Proposition: Why BOOST Reduces Costs and Complexity ## {#value-proposition}
 
-### **multi-method identification Benefits**
+### **Multi-Method Identification Benefits**
 
 BOOST's progressive identification methods provides significant operational advantages over conventional single-method tracking approaches:
 
@@ -53,7 +53,7 @@ BOOST's progressive identification methods provides significant operational adva
 - Separate tracking for different species/grades multiplies documentation burden
 - System incompatibilities force duplicate data entry for different regulatory requirements
 
-**BOOST multi-method identification Advantages**:
+**BOOST Multi-Method Identification Advantages**:
 - **Technology-Appropriate Deployment**: Progressive identification methods from RFID tags to optical scanning based on operational readiness levels
 - **Method Redundancy**: Primary and secondary identification methods ensure continuity when individual methods fail
 - **Scalable Implementation**: Start with proven methods (RFID, QR codes) and evolve to advanced methods (optical scanning) as technology matures
@@ -83,7 +83,7 @@ BOOST's field structure enables rapid compliance documentation for multiple regu
 **Multi-Framework Efficiency**: A single BOOST implementation captures all required data fields, eliminating the need for separate tracking systems and enabling automatic generation of compliance documentation for all major regulatory programs.
 
 
-## Tolerance Standards and Practical Considerations ## {tolerance-standards}
+## Tolerance Standards and Practical Considerations ## {#tolerance-standards}
 
 BOOST recognizes that real-world biomass supply chains cannot achieve perfect volume/mass conservation or species composition accuracy:
 

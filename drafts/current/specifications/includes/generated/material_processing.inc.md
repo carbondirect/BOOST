@@ -1,4 +1,6 @@
-<!-- Auto-generated from material_processing/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: material_processing/validation_schema.json and material_processing_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Processing operations that transform TRUs with plant part tracking
 

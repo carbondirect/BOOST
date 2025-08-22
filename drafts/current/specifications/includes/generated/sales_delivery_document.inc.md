@@ -1,4 +1,6 @@
-<!-- Auto-generated from sales_delivery_document/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: sales_delivery_document/validation_schema.json and sales_delivery_document_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 SalesDeliveryDocument entity in BOOST data model
 

@@ -1,4 +1,6 @@
-<!-- Auto-generated from geographic_data/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: geographic_data/validation_schema.json and geographic_data_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 GeographicData entity in BOOST data model
 

@@ -1,4 +1,6 @@
-<!-- Auto-generated from certification_scheme/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: certification_scheme/validation_schema.json and certification_scheme_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 CertificationScheme entity defining certification standards and requirements with geographic applicability for Phase 2 BOOST traceability system enhancements
 

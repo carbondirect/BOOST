@@ -90,6 +90,7 @@ class UnifiedContentGenerator:
         # Define mappings from template variables to terminology paths
         variable_mappings = {
             'IDENTIFICATION_APPROACH': 'identification_approach.current',
+            'IDENTIFICATION_APPROACH_TITLE': 'identification_approach.title_case',
             'IDENTIFICATION_STRATEGY': 'identification_strategy.current',
             'PRIMARY_UNIT': 'primary_unit.current',
             'TRACEABILITY_MODEL': 'traceability_model.current', 
@@ -172,7 +173,7 @@ class UnifiedContentGenerator:
             
             # Add section header with anchor
             if anchor:
-                content += f"## {title} ## {{{anchor}}}\n\n"
+                content += f"## {title} ## {{#{anchor}}}\n\n"
             else:
                 content += f"## {title}\n\n"
             

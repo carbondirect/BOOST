@@ -1,4 +1,6 @@
-<!-- Auto-generated from data_reconciliation/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: data_reconciliation/validation_schema.json and data_reconciliation_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 DataReconciliation entity in BOOST data model
 

@@ -1,4 +1,6 @@
-<!-- Auto-generated from verification_statement/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: verification_statement/validation_schema.json and verification_statement_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 VerificationStatement entity in BOOST data model
 

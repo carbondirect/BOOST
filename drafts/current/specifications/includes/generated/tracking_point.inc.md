@@ -1,4 +1,6 @@
-<!-- Auto-generated from tracking_point/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: tracking_point/validation_schema.json and tracking_point_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 TrackingPoint entity in BOOST data model
 
@@ -81,7 +83,7 @@ TrackingPoint entity in BOOST data model
 
 ## TrackingPoint
 ### Overview
-The `TrackingPoint` entity implements the three critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the BOOST traceability system for media-interruption-free traceability. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using various equipment and identification technologies.
+The `TrackingPoint` entity implements the critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the BOOST continuous traceability system. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using technology-appropriate equipment and identification methods.
 ### Fields
 <table class="data">
 <thead>
@@ -155,7 +157,7 @@ The `TrackingPoint` entity implements the three critical tracking points (harves
 ### Tracking Point Types
 1. **harvest_site**
      Initial capture point where TRUs are created
-     Biometric identification at felling/delimbing
+     multi-method identification at felling/delimbing
      Species identification and initial measurements
      GPS coordinate capture for harvest location
 2. **skid_road** 
