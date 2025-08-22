@@ -20,7 +20,7 @@
 ## Overview
 This repository contains the working draft and artifacts of the Biomass Open Origin Standard for Tracking (BOOST), which defines a robust and interoperable data model for tracking biomass through complex supply chains. The standard supports transparent, verifiable, and consistent data exchange to enable sustainability, regulatory compliance, and supply chain integrity.
 
-**Current Version: v3.1.3** - Consolidated build system with enhanced LaTeX error detection, automated version management, and comprehensive GitHub Actions workflow automation.
+**Current Version: {{VERSION}}** - Enhanced collaboration with GitHub Issues-based enhancement planning, build system improvements, and comprehensive documentation consistency validation.
 
 - **Charter:** [BOOST_Charter.org](BOOST_Charter.org)
 - **Charter Effective Date:** 
@@ -29,6 +29,42 @@ This repository contains the working draft and artifacts of the Biomass Open Ori
 Feedback and contributions are welcomed via GitHub Issues and Pull Requests at [BOOST](https://github.com/carbondirect/BOOST).
 
 W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
+
+## 📋 Documentation Access
+
+### **Primary Documentation**
+- **[📄 Complete PDF Specification](https://carbondirect.github.io/BOOST/boost-spec.pdf)** - 88+ page comprehensive specification with all 35 entities
+- **[🌐 Interactive HTML Specification](https://carbondirect.github.io/BOOST/boost-spec.html)** - W3C-compliant browsable documentation
+- **[📊 Interactive ERD Navigator](https://carbondirect.github.io/BOOST/erd-navigator/)** - Visual exploration of entity relationships and data model
+- **[🗂️ JSON Schema Repository](https://github.com/carbondirect/BOOST/tree/main/drafts/current/schema)** - 35 validation schemas (single source of truth)
+
+### **Development Resources**
+- **[📈 Build and Consistency Reports](https://github.com/carbondirect/BOOST/tree/main/drafts/current/specifications/build)** - Automated validation and generation statistics
+- **[📝 Complete Version History](https://github.com/carbondirect/BOOST/blob/main/drafts/current/specifications/CHANGELOG.md)** - Detailed change documentation
+- **[✅ Enhancement Planning](https://github.com/carbondirect/BOOST/issues?q=label%3Aplan)** - GitHub Issues-based project planning with stakeholder collaboration
+
+## 🚀 Recent Changes & Improvements
+
+### **Latest Updates (v3.2.3+)**
+- **📋 Enhanced Collaboration**: Migrated all enhancement plans to GitHub Issues ([#259](https://github.com/carbondirect/BOOST/issues/259)-[#262](https://github.com/carbondirect/BOOST/issues/262)) for improved stakeholder engagement and transparency
+- **🔧 Build System Refinements**: Resolved HTML generation consistency issues and header formatting problems
+- **🧹 Documentation Organization**: Streamlined planning documents and improved developer experience
+- **📝 Stakeholder Materials**: Comprehensive interagency presentation materials for California agency engagement
+
+### **Major Release Features (v3.0.0)**
+- **🚀 Enterprise CI/CD Pipeline**: Complete GitHub Actions automation with PR validation, schema integrity checking, and automated deployment
+- **🧪 Local Testing Infrastructure**: Full development environment with 80-90% CI/CD simulation capabilities for faster iteration
+- **🛡️ Critical Schema Integrity**: Fixed validation patterns for GeographicData, MaterialProcessing, and TraceableUnit entities
+- **🎨 Professional Layout System**: ReSpec-based responsive design with mobile optimization and W3C compliance
+- **📊 Complete Entity Coverage**: All 35 entities documented across 7 thematic areas with full cross-format consistency validation
+
+### **Current System Status**
+- ✅ **Entity Coverage**: 35/35 entities documented with complete JSON Schema validation
+- ✅ **Build System**: Unified single-command build process with HTML/PDF generation
+- ✅ **Documentation Consistency**: 100% cross-format validation between PDF and HTML outputs
+- ✅ **Version Management**: Automatic git tag-based versioning with complete traceability
+- ✅ **CI/CD Integration**: Automated quality gates with comprehensive testing and deployment
+- ✅ **Community Engagement**: GitHub Issues-based enhancement planning with stakeholder collaboration
 
 ## 🌟 Key Features
 

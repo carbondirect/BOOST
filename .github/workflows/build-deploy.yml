@@ -362,6 +362,11 @@ jobs:
         run: |
           mkdir -p ./pages-content
           
+          # Process README.md with version replacement for GitHub Pages
+          echo "🔧 Processing README.md with version replacement..."
+          sed "s|{{VERSION}}|${{ needs.extract-version.outputs.version }}|g" README.md > ./pages-content/README.md
+          echo "✅ README.md processed with version ${{ needs.extract-version.outputs.version }}"
+          
           # List downloaded artifacts for debugging
           echo "📋 Downloaded artifact structure:"
           find build-output -type f -name "*.html" -o -name "*.pdf" -o -name "*.md" | head -10
@@ -418,10 +423,19 @@ jobs:
               <style>
                   body { 
                       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-                      max-width: 800px; 
-                      margin: 50px auto; 
+                      max-width: 900px; 
+                      margin: 40px auto; 
                       padding: 20px; 
                       line-height: 1.6;
+                  }
+                  .version-info {
+                      text-align: center;
+                      margin-bottom: 20px;
+                      padding: 10px;
+                      background: #e8f4fd;
+                      border-radius: 5px;
+                      font-weight: 500;
+                      color: #0366d6;
                   }
                   .hero-section { 
                       text-align: center; 
@@ -458,9 +472,39 @@ jobs:
                       margin-bottom: 30px; 
                       font-size: 16px; 
                   }
+                  .recent-changes {
+                      margin: 30px 0;
+                      padding: 25px;
+                      background: #f6f8fa;
+                      border-radius: 8px;
+                      border-left: 4px solid #28a745;
+                  }
+                  .recent-changes h3 {
+                      margin-top: 0;
+                      color: #24292e;
+                  }
+                  .status-grid {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                      gap: 15px;
+                      margin: 20px 0;
+                  }
+                  .status-item {
+                      padding: 15px;
+                      background: white;
+                      border-radius: 6px;
+                      border: 1px solid #e1e4e8;
+                  }
+                  .status-item .check { color: #28a745; font-weight: bold; }
               </style>
           </head>
           <body>
+              <div class="version-info">
+                  <strong>Current Version: ${{ needs.extract-version.outputs.version }}</strong> | 
+                  Built: ${{ needs.extract-version.outputs.build-timestamp }} | 
+                  <a href="https://github.com/carbondirect/BOOST" style="color: inherit;">View on GitHub</a>
+              </div>
+              
               <div class="hero-section">
                   <h1>🌱 BOOST Data Standard</h1>
                   <p class="description">
@@ -471,8 +515,34 @@ jobs:
                   <a href="./boost-spec.html" class="main-button">📖 View Documentation Online</a>
               </div>
               
+              <div class="recent-changes">
+                  <h3>🚀 Recent Improvements</h3>
+                  <div class="status-grid">
+                      <div class="status-item">
+                          <div class="check">✅</div>
+                          <strong>Enhanced Collaboration</strong><br>
+                          GitHub Issues-based enhancement planning with stakeholder engagement
+                      </div>
+                      <div class="status-item">
+                          <div class="check">✅</div>
+                          <strong>35 Entities Documented</strong><br>
+                          Complete JSON Schema validation across 7 thematic areas
+                      </div>
+                      <div class="status-item">
+                          <div class="check">✅</div>
+                          <strong>CI/CD Integration</strong><br>
+                          Automated quality gates with comprehensive testing
+                      </div>
+                      <div class="status-item">
+                          <div class="check">✅</div>
+                          <strong>Documentation Consistency</strong><br>
+                          100% cross-format validation between PDF and HTML
+                      </div>
+                  </div>
+              </div>
+              
               <div class="download-links">
-                  <h2>📥 Download & Resources</h2>
+                  <h2>📥 Documentation & Resources</h2>
           EOF
           
           # Add PDF link if PDF exists
@@ -486,9 +556,16 @@ jobs:
           cat >> ./pages-content/index.html << EOF
                   <a href="./erd-navigator/">🔍 ERD Navigator</a>
                   <a href="https://github.com/carbondirect/BOOST/tree/main/drafts/current/schema">📋 JSON Schemas</a>
+                  <a href="https://github.com/carbondirect/BOOST/issues?q=label%3Aplan">✅ Enhancement Planning</a>
               </div>
               
-              <p><em>Choose how you'd like to access the BOOST Data Standard documentation above.</em></p>
+              <div style="text-align: center; margin-top: 40px; padding: 20px; border-top: 1px solid #e1e4e8;">
+                  <p style="margin: 0; color: #666;">
+                      <strong>BOOST W3C Community Group</strong> | 
+                      <a href="https://github.com/carbondirect/BOOST">GitHub Repository</a> | 
+                      <a href="https://www.w3.org/community/boost-01/">W3C Community Group</a>
+                  </p>
+              </div>
           </body>
           </html>
           EOF
