@@ -2,6 +2,34 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.2.3] - 2025-08-22 - HTML Build System and Header Formatting Fixes
+
+### Fixed
+- **🔧 HTML Build System (#258)** - Resolved critical HTML rendering issues in documentation
+  - **Bikeshed Anchor Syntax**: Fixed raw Markdown/LaTeX appearing in HTML headers (e.g., "1.1. What BOOST Accomplishes ## {boost-purpose}" → clean headers)
+  - **Header Capitalization**: Corrected improper capitalization in section headers ("multi-method identification Benefits" → "Multi-Method Identification Benefits")
+  - **Anchor Generation**: Implemented proper `{#anchor}` syntax for Bikeshed HTML generation
+  - **Template Variables**: Added title_case support in terminology configuration for consistent header formatting
+
+### Enhanced
+- **📚 Documentation Architecture** - Strengthened single source of truth approach
+  - **Terminology System**: Extended terminology.yaml with title_case fields for professional header formatting
+  - **Template Engine**: Enhanced generate-unified-content.py with proper variable mapping for title case headers
+  - **Version Synchronization**: Improved dynamic version handling across documentation formats
+  - **Build Validation**: Added comprehensive safeguards preventing pdftotext failures in CI environments
+
+### Technical Improvements
+- **🏗️ Build System Reliability** - Multi-format documentation consistency
+  - **Repository Cleanup**: Improved .gitignore handling for presentation files and development artifacts
+  - **Version Tracking**: Enhanced dynamic version synchronization with LaTeX placeholder system
+  - **CI/CD Robustness**: Fallback validation mechanisms for environments without complete toolchains
+
+### User Impact
+- **Professional Documentation**: HTML documentation now renders with clean, properly formatted headers
+- **Consistent Formatting**: Title case headers across all sections maintain professional appearance
+- **Improved Readability**: Elimination of raw markup in rendered HTML improves document accessibility
+- **Standards Compliance**: Documentation formatting now meets professional standards publication requirements
+
 ## [3.2.2] - 2025-08-22 - Executive Summary Implementation and Documentation Consistency
 
 ### Added
