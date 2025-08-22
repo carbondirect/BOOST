@@ -1269,6 +1269,7 @@
         // Enhanced connection points that connect to specific fields
         function getConnectionPoint(entity, targetEntity, relationship, isFromEntity = true, erdConfig = null) {
             const entityHeight = config.headerHeight + (entity.fields.length * config.entityFieldHeight) + (config.entityPadding * 2) + 4;
+            const targetEntityName = targetEntity.id; // Move to function scope
             
             // Find the relevant field for this relationship
             let fieldIndex = -1;
@@ -1282,7 +1283,6 @@
                     console.log(`🔗 Using explicit field: ${entity.id}.${relationship.field} → ${targetEntity.id}`);
                 } else {
                     // Fallback to old pattern matching for manual relationships
-                    const targetEntityName = targetEntity.id;
                     
                     // Use configuration-based field mapping if available
                     if (erdConfig && erdConfig.field_mappings && erdConfig.field_mappings[targetEntityName]) {
