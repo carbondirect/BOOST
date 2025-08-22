@@ -1,4 +1,6 @@
-<!-- Auto-generated from product_group/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: product_group/validation_schema.json and product_group_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 ProductGroup entity in BOOST data model
 

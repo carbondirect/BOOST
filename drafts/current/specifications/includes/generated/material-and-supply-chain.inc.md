@@ -1,4 +1,6 @@
-<!-- Auto-generated thematic section: Material & Supply Chain -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: thematic area configuration and entity schemas
+     To modify this content, edit the source file and regenerate -->
 
 Material classifications, suppliers, and supply chain management.
 

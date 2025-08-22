@@ -1,0 +1,175 @@
+[
+  {
+    "@context": {
+      "@vocab": "https://github.com/carbondirect/BOOST/contexts/identification-method"
+    },
+    "@type": "IdentificationMethod",
+    "@id": "https://github.com/carbondirect/BOOST/schemas/identification-method/IM-RFID-001",
+    "methodId": "IM-RFID-001",
+    "methodType": "rfid",
+    "technologyReadinessLevel": 9,
+    "equipmentRequired": [
+      "RFID tags",
+      "RFID readers",
+      "antenna systems",
+      "data management software"
+    ],
+    "locationSuitability": [
+      "harvest_site",
+      "skid_road", 
+      "forest_road",
+      "mill_entrance",
+      "processing_facility",
+      "warehouse"
+    ],
+    "averageConfidence": 95,
+    "implementationCost": "medium",
+    "scalabilityFactor": "unlimited",
+    "regulatoryAcceptance": [
+      "CARB_LCFS",
+      "EPA_RFS",
+      "EUDR",
+      "FSC",
+      "PEFC",
+      "SBP",
+      "RSB"
+    ],
+    "lastUpdated": "2025-08-22T15:45:00Z"
+  },
+  {
+    "@context": {
+      "@vocab": "https://github.com/carbondirect/BOOST/contexts/identification-method"
+    },
+    "@type": "IdentificationMethod", 
+    "@id": "https://github.com/carbondirect/BOOST/schemas/identification-method/IM-BIOMETRIC-001",
+    "methodId": "IM-BIOMETRIC-001",
+    "methodType": "biometric",
+    "technologyReadinessLevel": 6,
+    "equipmentRequired": [
+      "high-resolution cameras",
+      "controlled lighting systems",
+      "pattern recognition software",
+      "machine learning algorithms",
+      "processing servers"
+    ],
+    "locationSuitability": [
+      "mill_entrance",
+      "processing_facility"
+    ],
+    "averageConfidence": 87,
+    "implementationCost": "very_high",
+    "scalabilityFactor": "batch",
+    "regulatoryAcceptance": [
+      "FSC",
+      "PEFC"
+    ],
+    "lastUpdated": "2025-08-22T15:45:00Z"
+  },
+  {
+    "@context": {
+      "@vocab": "https://github.com/carbondirect/BOOST/contexts/identification-method"
+    },
+    "@type": "IdentificationMethod",
+    "@id": "https://github.com/carbondirect/BOOST/schemas/identification-method/IM-QR-001", 
+    "methodId": "IM-QR-001",
+    "methodType": "qr_code",
+    "technologyReadinessLevel": 9,
+    "equipmentRequired": [
+      "QR code labels",
+      "label printer",
+      "smartphone or barcode scanner",
+      "QR scanning app"
+    ],
+    "locationSuitability": [
+      "harvest_site",
+      "skid_road",
+      "forest_road", 
+      "mill_entrance",
+      "processing_facility",
+      "warehouse",
+      "transport_vehicle"
+    ],
+    "averageConfidence": 75,
+    "implementationCost": "low",
+    "scalabilityFactor": "unlimited",
+    "regulatoryAcceptance": [
+      "CARB_LCFS",
+      "EPA_RFS",
+      "EUDR", 
+      "FSC",
+      "PEFC",
+      "SBP",
+      "RSB",
+      "ISCC"
+    ],
+    "lastUpdated": "2025-08-22T15:45:00Z"
+  },
+  {
+    "@context": {
+      "@vocab": "https://github.com/carbondirect/BOOST/contexts/identification-method"
+    },
+    "@type": "IdentificationMethod",
+    "@id": "https://github.com/carbondirect/BOOST/schemas/identification-method/IM-MANUAL-001",
+    "methodId": "IM-MANUAL-001", 
+    "methodType": "manual_id",
+    "technologyReadinessLevel": 9,
+    "equipmentRequired": [
+      "marking paint or stencils",
+      "permanent markers",
+      "documentation forms"
+    ],
+    "locationSuitability": [
+      "harvest_site",
+      "skid_road",
+      "forest_road"
+    ],
+    "averageConfidence": 50,
+    "implementationCost": "low",
+    "scalabilityFactor": "batch",
+    "regulatoryAcceptance": [
+      "CARB_LCFS",
+      "EPA_RFS",
+      "FSC",
+      "PEFC",
+      "SBP",
+      "RSB",
+      "ISCC"
+    ],
+    "lastUpdated": "2025-08-22T15:45:00Z"
+  },
+  {
+    "@context": {
+      "@vocab": "https://github.com/carbondirect/BOOST/contexts/identification-method"
+    },
+    "@type": "IdentificationMethod",
+    "@id": "https://github.com/carbondirect/BOOST/schemas/identification-method/IM-HYBRID-001",
+    "methodId": "IM-HYBRID-001",
+    "methodType": "hybrid", 
+    "technologyReadinessLevel": 8,
+    "equipmentRequired": [
+      "RFID tags and readers",
+      "QR code labels and scanners",
+      "smartphone cameras",
+      "integrated data system"
+    ],
+    "locationSuitability": [
+      "mill_entrance",
+      "processing_facility",
+      "warehouse"
+    ],
+    "averageConfidence": 92,
+    "implementationCost": "high",
+    "scalabilityFactor": "unlimited",
+    "regulatoryAcceptance": [
+      "CARB_LCFS",
+      "EPA_RFS",
+      "EUDR",
+      "FSC", 
+      "PEFC",
+      "SBP",
+      "RSB",
+      "ISCC"
+    ],
+    "lastUpdated": "2025-08-22T15:45:00Z"
+  }
+]

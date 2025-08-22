@@ -1,4 +1,6 @@
-<!-- Auto-generated from supplier/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: supplier/validation_schema.json and supplier_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Supplier entity in BOOST data model
 
@@ -161,7 +163,7 @@ The `Supplier` entity represents organizations that provide biomass materials, w
     - Forest harvesting and timber extraction operations
     - Primary material production from standing forests
     - Logging contractors and forest management companies
-    - Initial TRU creation and biometric identification
+    - Initial TRU creation and multi-method identification
 2. **processor**
     - Manufacturing and material transformation operations
     - Sawmills, pulp mills, and processing facilities

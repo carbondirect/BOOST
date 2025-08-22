@@ -1,4 +1,6 @@
-<!-- Auto-generated from equipment/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: equipment/validation_schema.json and equipment_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Equipment entity representing forestry machinery and equipment used in biomass harvesting and processing operations
 

@@ -1,4 +1,6 @@
-<!-- Auto-generated from mass_balance_account/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: mass_balance_account/validation_schema.json and mass_balance_account_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 MassBalanceAccount entity in BOOST data model
 

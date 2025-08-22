@@ -1,4 +1,6 @@
-<!-- Auto-generated from bioram_reporting/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: bioram_reporting/validation_schema.json and bioram_reporting_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Quarterly BioRAM compliance report for biomass power generation facilities with fuel sourcing and efficiency tracking
 

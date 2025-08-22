@@ -1,4 +1,6 @@
-<!-- Auto-generated from claim/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: claim/validation_schema.json and claim_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Claim entity in BOOST data model
 

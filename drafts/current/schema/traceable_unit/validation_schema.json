@@ -39,7 +39,46 @@
       },
       "uniqueIdentifier": {
         "type": "string",
-        "description": "Biometric signature, RFID tag, or QR code"
+        "description": "Primary identifier - biometric signature, RFID tag, QR code, barcode, or manual ID"
+      },
+      "identificationMethodId": {
+        "type": "string",
+        "pattern": "^IM-[A-Z0-9-_]+$",
+        "description": "Foreign key to IdentificationMethod entity"
+      },
+      "identificationConfidence": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Confidence score for primary identification method (0-100)"
+      },
+      "secondaryIdentifiers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "identifierType": {
+              "type": "string",
+              "enum": ["biometric", "rfid", "qr_code", "barcode", "manual_id", "photo_documentation"]
+            },
+            "identifierValue": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": ["identifierType", "identifierValue"]
+        },
+        "description": "Secondary/backup identification methods"
+      },
+      "methodReadinessLevel": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9,
+        "description": "Technology Readiness Level (TRL 1-9) for identification method used"
       },
       "totalVolumeM3": {
         "type": "number",
@@ -160,6 +199,8 @@
       "traceableUnitId",
       "unitType",
       "uniqueIdentifier",
+      "identificationMethodId",
+      "identificationConfidence",
       "totalVolumeM3",
       "createdTimestamp",
       "harvesterId",
@@ -184,6 +225,24 @@
         "!!": {
           "var": "uniqueIdentifier"
         }
+      },
+      {
+        "!!": {
+          "var": "identificationMethodId"
+        }
+      },
+      {
+        "!!": {
+          "var": "identificationConfidence"
+        }
+      },
+      {
+        ">=": [
+          {
+            "var": "identificationConfidence"
+          },
+          30
+        ]
       },
       {
         "!!": {
@@ -257,6 +316,51 @@
           },
           true
         ]
+      },
+      {
+        "if": [
+          {
+            "<": [
+              {
+                "var": "identificationConfidence"
+              },
+              70
+            ]
+          },
+          {
+            "if": [
+              {
+                "var": "secondaryIdentifiers"
+              },
+              {
+                ">": [
+                  {
+                    "var": "secondaryIdentifiers.length"
+                  },
+                  0
+                ]
+              },
+              false
+            ]
+          },
+          true
+        ]
+      },
+      {
+        "if": [
+          {
+            "var": "methodReadinessLevel"
+          },
+          {
+            ">=": [
+              {
+                "var": "methodReadinessLevel"
+              },
+              1
+            ]
+          },
+          true
+        ]
       }
     ]
   },
@@ -315,6 +419,14 @@
         "required": false,
         "label": "derived from",
         "example": "TRU-890 was derived from parent unit TRU-456"
+      },
+      {
+        "field": "identificationMethodId",
+        "targetEntity": "IdentificationMethod",
+        "relationshipType": "many-to-one",
+        "required": true,
+        "label": "identified using",
+        "example": "TRU-123 is identified using method IM-RFID-001"
       }
     ]
   }

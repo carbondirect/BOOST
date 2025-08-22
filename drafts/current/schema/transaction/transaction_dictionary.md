@@ -304,7 +304,7 @@ The `Transaction` entity manages comprehensive business transactions within the 
 2. **Tracking Point Coordination**
     - Multi-point location tracking and verification
     - Chain of custody maintenance across locations
-    - Media-interruption-free tracking validation
+    - Continuous tracking validation
     - Geographic verification and compliance
 
 3. **Processing Integration**

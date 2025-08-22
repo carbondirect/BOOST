@@ -3,7 +3,7 @@
 ## ProcessingHistory
 
 ### Overview
-The `ProcessingHistory` entity provides chronological tracking of all processing operations that affect a TracableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting media-interruption-free traceability requirements of the BOOST traceability system.
+The `ProcessingHistory` entity provides chronological tracking of all processing operations that affect a TracableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting continuous traceability requirements of the BOOST traceability system.
 
 ProcessingHistory serves as the TRU-centric complement to the operation-centric MaterialProcessing entity, providing a unified timeline view of how materials evolve through the supply chain.
 
@@ -352,7 +352,7 @@ See transportation classification documentation for detailed decision framework.
 
 ProcessingHistory directly supports BOOST traceability system requirements:
 
-- **Media-Interruption-Free Traceability**: Complete chronological processing chain
+- **Continuous Traceability**: Complete chronological processing chain
 - **Volume Conservation**: Detailed tracking of volume changes and losses  
 - **Biometric Integration**: Links to biometric identification at each processing step
 - **Three Critical Tracking Points**: Processing events at harvest, transport, and mill locations

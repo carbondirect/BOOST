@@ -1,4 +1,6 @@
-<!-- Auto-generated from certification_body/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: certification_body/validation_schema.json and certification_body_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Certification Body entity representing independent organizations authorized to issue certificates
 

@@ -1,4 +1,6 @@
-<!-- Auto-generated from energy_carbon_data/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: energy_carbon_data/validation_schema.json and energy_carbon_data_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 EnergyCarbonData entity in BOOST data model
 

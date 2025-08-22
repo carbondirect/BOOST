@@ -8,6 +8,7 @@ Ensures perfect consistency between HTML and PDF documentation
 import json
 import os
 import re
+import yaml
 from pathlib import Path
 from collections import defaultdict
 from typing import Dict, List, Any, Optional, Tuple
@@ -23,6 +24,12 @@ class UnifiedContentGenerator:
         self.entities = {}
         self.entity_relationships = defaultdict(list)
         
+        # Load terminology configuration for consistent language
+        self.terminology = self._load_terminology()
+        
+        # Load narrative sources
+        self.narrative_sources = {}
+        
         # Thematic organization matching both formats
         self.thematic_areas = {
             'Core Traceability': ['traceable_unit', 'material_processing', 'processing_history', 'location_history', 'biometric_identifier'],
@@ -34,8 +41,283 @@ class UnifiedContentGenerator:
             'Compliance & Reporting': ['lcfs_pathway', 'lcfs_reporting', 'product_group', 'energy_carbon_data', 'data_reconciliation', 'mass_balance_account']
         }
     
+    def _load_terminology(self) -> Dict[str, Any]:
+        """Load terminology configuration for consistent language usage"""
+        terminology_file = self.output_dir / "config" / "terminology.yaml"
+        
+        if not terminology_file.exists():
+            print(f"Warning: Terminology config not found at {terminology_file}")
+            return {}
+        
+        try:
+            with open(terminology_file, 'r', encoding='utf-8') as f:
+                return yaml.safe_load(f) or {}
+        except Exception as e:
+            print(f"Error loading terminology config: {e}")
+            return {}
+    
+    def _apply_terminology_substitutions(self, content: str) -> str:
+        """Apply terminology substitutions to ensure consistent language"""
+        if not self.terminology:
+            return content
+        
+        # Replace deprecated terms with current terms
+        for category, term_config in self.terminology.items():
+            if isinstance(term_config, dict) and 'current' in term_config and 'deprecated' in term_config:
+                current_term = term_config['current']
+                deprecated_terms = term_config.get('deprecated', [])
+                
+                # Handle different data types for current_term
+                if isinstance(current_term, list):
+                    current_term = ", ".join(current_term)
+                
+                # Ensure deprecated_terms is a list
+                if isinstance(deprecated_terms, str):
+                    deprecated_terms = [deprecated_terms]
+                
+                for deprecated_term in deprecated_terms:
+                    if isinstance(deprecated_term, str):
+                        # Case-insensitive replacement
+                        content = re.sub(re.escape(deprecated_term), str(current_term), content, flags=re.IGNORECASE)
+        
+        return content
+    
+    def _apply_variable_substitutions(self, content: str) -> str:
+        """Apply template variable substitutions using terminology config"""
+        if not self.terminology:
+            return content
+        
+        # Define mappings from template variables to terminology paths
+        variable_mappings = {
+            'IDENTIFICATION_APPROACH': 'identification_approach.current',
+            'IDENTIFICATION_APPROACH_TITLE': 'identification_approach.title_case',
+            'IDENTIFICATION_STRATEGY': 'identification_strategy.current',
+            'PRIMARY_UNIT': 'primary_unit.current',
+            'TRACEABILITY_MODEL': 'traceability_model.current', 
+            'DATA_LINKAGE': 'data_linkage.current',
+            'TRACKING_FRAMEWORK_TITLE': 'section_titles.tracking_framework_title.current',
+            'DEPLOYMENT_STRATEGY': 'deployment_strategy.current',
+            'TECHNOLOGY_APPROACH': 'technology_approach.current',
+            'IDENTIFICATION_PERSISTENCE': 'identification_persistence.current'
+        }
+        
+        # Replace each variable with its terminology value
+        for variable, path in variable_mappings.items():
+            placeholder = f"{{{{{variable}}}}}"
+            replacement_value = self._get_terminology_value(path, variable)
+            content = content.replace(placeholder, replacement_value)
+        
+        return content
+    
+    def _get_terminology_value(self, key_path: str, default: str = "") -> str:
+        """Get a terminology value by key path (e.g., 'tracking_approach.current')"""
+        keys = key_path.split('.')
+        value = self.terminology
+        
+        try:
+            for key in keys:
+                value = value[key]
+            return str(value)
+        except (KeyError, TypeError):
+            return default
+    
+    def _add_generation_markers(self, content: str, source_info: str) -> str:
+        """Add clear markers indicating content is generated"""
+        marker = f"<!-- AUTO-GENERATED - DO NOT EDIT\n     Generated from: {source_info}\n     To modify this content, edit the source file and regenerate -->\n\n"
+        return marker + content
+    
+    def _load_narrative_sources(self) -> Dict[str, Any]:
+        """Load structured narrative source files"""
+        narrative_dir = self.output_dir / "config" / "narrative_sources"
+        
+        if not narrative_dir.exists():
+            print(f"📝 No narrative sources directory found at {narrative_dir}")
+            return {}
+        
+        sources = {}
+        for yaml_file in narrative_dir.glob("*.yaml"):
+            try:
+                with open(yaml_file, 'r', encoding='utf-8') as f:
+                    source_data = yaml.safe_load(f)
+                    if source_data:
+                        sources[yaml_file.stem] = source_data
+                        print(f"📝 Loaded narrative source: {yaml_file.name}")
+            except Exception as e:
+                print(f"Error loading narrative source {yaml_file}: {e}")
+        
+        return sources
+    
+    def _process_narrative_variables(self, content: str, variables: Dict[str, str]) -> str:
+        """Replace variables in narrative content"""
+        for var_name, var_value in variables.items():
+            # Replace {{VAR_NAME}} with actual value
+            content = content.replace(f"{{{{{var_name}}}}}", var_value)
+        
+        return content
+    
+    def _generate_narrative_markdown(self, source_name: str, source_data: Dict[str, Any]) -> str:
+        """Generate Markdown version of narrative content"""
+        content = self._add_generation_markers("", f"config/narrative_sources/{source_name}.yaml")
+        
+        sections = source_data.get('sections', {})
+        variables = source_data.get('variables', {})
+        
+        for section_name, section_data in sections.items():
+            title = section_data.get('title', '')
+            anchor = section_data.get('anchor', '')
+            section_content = section_data.get('content', '')
+            
+            # Process variables
+            title = self._process_narrative_variables(title, variables)
+            section_content = self._process_narrative_variables(section_content, variables)
+            
+            # Add section header with anchor
+            if anchor:
+                content += f"## {title} ## {{#{anchor}}}\n\n"
+            else:
+                content += f"## {title}\n\n"
+            
+            content += section_content + "\n\n"
+        
+        # Apply variable substitutions first, then terminology substitutions
+        content = self._apply_variable_substitutions(content)
+        content = self._apply_terminology_substitutions(content)
+        
+        return content
+    
+    def _generate_narrative_latex(self, source_name: str, source_data: Dict[str, Any]) -> str:
+        """Generate LaTeX version of narrative content"""
+        content = f"% AUTO-GENERATED - DO NOT EDIT\n"
+        content += f"% Generated from: config/narrative_sources/{source_name}.yaml\n"
+        content += f"% To modify this content, edit the source file and regenerate\n\n"
+        
+        sections = source_data.get('sections', {})
+        variables = source_data.get('variables', {})
+        
+        for section_name, section_data in sections.items():
+            title = section_data.get('title', '')
+            anchor = section_data.get('anchor', '')
+            section_content = section_data.get('content', '')
+            
+            # Process variables
+            title = self._process_narrative_variables(title, variables)
+            section_content = self._process_narrative_variables(section_content, variables)
+            
+            # Convert Markdown formatting to LaTeX
+            section_content = self._markdown_to_latex(section_content)
+            
+            # Add section header with label
+            content += f"\\subsection{{{title}}}\n"
+            if anchor:
+                content += f"\\label{{sec:{anchor}}}\n"
+            content += "\n" + section_content + "\n\n"
+        
+        # Apply variable substitutions first, then terminology substitutions
+        content = self._apply_variable_substitutions(content)
+        content = self._apply_terminology_substitutions(content)
+        
+        return content
+    
+    def _markdown_to_latex(self, content: str) -> str:
+        """Convert basic Markdown formatting to LaTeX"""
+        # Convert headers
+        content = re.sub(r'^### (.*?)$', r'\\subsubsection{\1}', content, flags=re.MULTILINE)
+        content = re.sub(r'^## (.*?)$', r'\\subsection{\1}', content, flags=re.MULTILINE)
+        content = re.sub(r'^# (.*?)$', r'\\section{\1}', content, flags=re.MULTILINE)
+        
+        # Convert bold and italic
+        content = re.sub(r'\*\*(.*?)\*\*', r'\\textbf{\1}', content)
+        content = re.sub(r'\*(.*?)\*', r'\\textit{\1}', content)
+        
+        # Convert code spans
+        content = re.sub(r'`(.*?)`', r'\\texttt{\1}', content)
+        
+        # Convert bullet lists
+        content = re.sub(r'^- (.*)$', r'\\item \1', content, flags=re.MULTILINE)
+        
+        # Wrap lists in itemize environment (basic detection)
+        lines = content.split('\n')
+        in_list = False
+        result_lines = []
+        
+        for line in lines:
+            if line.strip().startswith('\\item'):
+                if not in_list:
+                    result_lines.append('\\begin{itemize}')
+                    in_list = True
+                result_lines.append(line)
+            else:
+                if in_list and line.strip() == '':
+                    continue
+                elif in_list:
+                    result_lines.append('\\end{itemize}')
+                    in_list = False
+                    result_lines.append(line)
+                else:
+                    result_lines.append(line)
+        
+        if in_list:
+            result_lines.append('\\end{itemize}')
+        
+        return '\n'.join(result_lines)
+    
+    def generate_narrative_content(self):
+        """Generate narrative content from structured sources"""
+        print("\n📝 Generating narrative content from structured sources...")
+        
+        # Load narrative sources
+        narrative_sources = self._load_narrative_sources()
+        
+        if not narrative_sources:
+            print("   ⚠️  No narrative sources found - skipping narrative generation")
+            return
+        
+        generated_count = 0
+        
+        for source_name, source_data in narrative_sources.items():
+            # Generate Markdown version
+            output_formats = source_data.get('output_formats', {})
+            
+            if 'markdown' in output_formats:
+                md_config = output_formats['markdown']
+                md_filename = md_config.get('filename', f"{source_name}.inc.md")
+                md_file = self.output_dir / "includes" / md_filename
+                
+                md_content = self._generate_narrative_markdown(source_name, source_data)
+                
+                with open(md_file, 'w', encoding='utf-8') as f:
+                    f.write(md_content)
+                
+                print(f"   ✅ Generated Markdown: {md_filename}")
+                generated_count += 1
+            
+            # Generate LaTeX version
+            if 'latex' in output_formats:
+                tex_config = output_formats['latex']
+                tex_filename = tex_config.get('filename', f"{source_name}.tex")
+                tex_file = self.tex_dir / tex_filename
+                
+                tex_content = self._generate_narrative_latex(source_name, source_data)
+                
+                with open(tex_file, 'w', encoding='utf-8') as f:
+                    f.write(tex_content)
+                
+                print(f"   ✅ Generated LaTeX: {tex_filename}")
+                generated_count += 1
+        
+        print(f"   📊 Generated {generated_count} narrative files from {len(narrative_sources)} sources")
+    
     def load_schemas(self):
         """Load all JSON schemas from the schema directory"""
+        print("Loading schemas...")
+        
+        # Show terminology config status
+        if self.terminology:
+            terminology_count = sum(1 for k, v in self.terminology.items() if isinstance(v, dict) and 'current' in v)
+            print(f"📝 Loaded terminology config with {terminology_count} term definitions")
+        else:
+            print("⚠️  No terminology config loaded - using original text")
+        
         directories_file = self.schema_dir / "directories.json"
         
         if not directories_file.exists():
@@ -140,8 +422,9 @@ class UnifiedContentGenerator:
         properties = entity_info.get('properties', {})
         required = entity_info.get('required', [])
         
-        # Start with entity header
-        content = f"<!-- Auto-generated from {entity_dir}/validation_schema.json -->\n\n"
+        # Start with comprehensive generation header
+        source_info = f"{entity_dir}/validation_schema.json and {entity_dir}_dictionary.md"
+        content = self._add_generation_markers("", source_info)
         
         # Add description if available
         if description:
@@ -190,8 +473,12 @@ class UnifiedContentGenerator:
         
         # Add dictionary content if available
         if entity_info.get('dictionary_content'):
+            # Apply terminology substitutions to dictionary content
+            dict_content = entity_info['dictionary_content']
+            dict_content = self._apply_terminology_substitutions(dict_content)
+            
             # Parse and include relevant parts of dictionary
-            dict_lines = entity_info['dictionary_content'].split('\n')
+            dict_lines = dict_content.split('\n')
             
             # Look for additional content sections
             in_section = False
@@ -202,6 +489,9 @@ class UnifiedContentGenerator:
                 elif in_section and line.strip():
                     content += f"{line}\n"
         
+        # Apply final terminology substitutions to the complete content
+        content = self._apply_terminology_substitutions(content)
+        
         return content
     
     def _generate_bikeshed_thematic_section(self, area_name: str, entities: List[str]):
@@ -209,7 +499,9 @@ class UnifiedContentGenerator:
         filename = area_name.lower().replace(' ', '-').replace('&', 'and') + ".inc.md"
         include_file = self.includes_dir / filename
         
-        content = f"<!-- Auto-generated thematic section: {area_name} -->\n\n"
+        # Use proper generation markers
+        source_info = f"thematic area configuration and entity schemas"
+        content = self._add_generation_markers("", source_info)
         
         # Add section description based on area
         descriptions = {
@@ -232,6 +524,9 @@ class UnifiedContentGenerator:
                 entity_name = self.entities[entity_dir]['name']
                 entity_id = entity_dir.replace('_', '-')
                 content += f"- [[#{entity_id}|{entity_name}]]\n"
+        
+        # Apply terminology substitutions before writing
+        content = self._apply_terminology_substitutions(content)
         
         with open(include_file, 'w', encoding='utf-8') as f:
             f.write(content)
@@ -269,8 +564,11 @@ class UnifiedContentGenerator:
         properties = entity_info.get('properties', {})
         required = entity_info.get('required', [])
         
-        content = f"% {entity_name} Entity Table\n"
-        content += f"% Auto-generated from {entity_dir}/validation_schema.json\n\n"
+        # Use proper generation markers for LaTeX
+        content = f"% AUTO-GENERATED - DO NOT EDIT\n"
+        content += f"% Generated from: {entity_dir}/validation_schema.json and {entity_dir}_dictionary.md\n"
+        content += f"% To modify this content, edit the source files and regenerate\n"
+        content += f"% {entity_name} Entity Table\n\n"
         
         content += f"\\begin{{entitytable}}{{{entity_name}}}\n"
         
@@ -287,6 +585,9 @@ class UnifiedContentGenerator:
         
         content += "\\end{entitytable}\n"
         
+        # Apply terminology substitutions
+        content = self._apply_terminology_substitutions(content)
+        
         return content
     
     def _generate_latex_thematic_section(self, area_name: str, entities: List[str]):
@@ -294,8 +595,11 @@ class UnifiedContentGenerator:
         filename = area_name.lower().replace(' ', '-').replace('&', 'and') + "-entities.tex"
         tex_file = self.tex_dir / filename
         
-        content = f"% {area_name} Entities\n"
-        content += "% Auto-generated from JSON schemas\n\n"
+        # Use proper generation markers for LaTeX
+        content = f"% AUTO-GENERATED - DO NOT EDIT\n"
+        content += f"% Generated from: thematic area configuration and entity schemas\n"
+        content += f"% To modify this content, edit the source files and regenerate\n"
+        content += f"% {area_name} Entities\n\n"
         
         for entity_dir in entities:
             if entity_dir in self.entities:
@@ -324,6 +628,9 @@ class UnifiedContentGenerator:
                 # Include the entity table
                 table_file = f"entities/{entity_label}-table"
                 content += f"\\input{{tex/{table_file}}}\n\n"
+        
+        # Apply terminology substitutions before writing
+        content = self._apply_terminology_substitutions(content)
         
         with open(tex_file, 'w', encoding='utf-8') as f:
             f.write(content)
@@ -520,6 +827,9 @@ def main():
     # Load schemas
     print("Loading schemas...")
     generator.load_schemas()
+    
+    # Generate narrative content from structured sources
+    generator.generate_narrative_content()
     
     # Generate requested format(s)
     if args.format in ["all", "bikeshed"]:

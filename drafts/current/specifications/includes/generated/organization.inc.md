@@ -1,4 +1,6 @@
-<!-- Auto-generated from organization/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: organization/validation_schema.json and organization_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements
 

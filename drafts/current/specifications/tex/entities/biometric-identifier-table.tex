@@ -4,10 +4,14 @@
 \begin{entitytable}{Biometric Identifier}
 \textbf{\field{biometricId}} & string (pattern) & Unique identifier for the biometric \\
 \textbf{\field{biometricSignature}} & string & Biometricsignature field value \\
-\textbf{\field{captureMethod}} & enum(optical\_scanner, photo\_analysis) & Enumerated value for capturemethod \\
+\textbf{\field{captureMethod}} & enum(4 values) & Enumerated value for capturemethod \\
 \textbf{\field{captureTimestamp}} & string (date-time) & Capturetimestamp field value \\
-\textbf{\field{traceableUnitId}} & string & Foreign key to the traceable unit \\
+\textbf{\field{confidenceScore}} & number (≥0, ≤100) & Pattern matching reliability score (0-100) \\
+\textbf{\field{fallbackRequired}} & boolean & True if low confidence requires secondary verification \\
+\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to TraceableUnit entity \\
 \field{captureGeographicDataId} & string & Foreign key to Capturegeographicdata entity \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \field{speciesBiometrics} & array<string> & Array of speciesbiometrics values \\
 \field{trackingPointId} & string & Foreign key to Trackingpoint entity \\
+\field{verificationMethod} & enum(4 values) & Method used to verify biometric match \\
 \end{entitytable}

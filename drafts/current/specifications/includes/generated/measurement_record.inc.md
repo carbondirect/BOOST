@@ -1,4 +1,6 @@
-<!-- Auto-generated from measurement_record/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: measurement_record/validation_schema.json and measurement_record_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Quality measurements and dimensional data
 
@@ -267,7 +269,7 @@ The `MeasurementRecord` entity captures measurements at different tracking point
      Optical scanning and measurement systems
      Non-contact measurement techniques
      3D scanning for precise volume calculation
-     Integration with biometric identification
+     Integration with multi-method identification
 ### Key Features
 1. **Multi-Point Measurement**
      Measurements at harvest, transport, and processing points

@@ -1,4 +1,6 @@
-<!-- Auto-generated from bioram_pathway/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: bioram_pathway/validation_schema.json and bioram_pathway_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 California BioRAM program pathway for biomass power generation with fuel classification and efficiency attributes
 
@@ -262,7 +264,7 @@ The `BioramPathway` entity represents California Energy Commission (CEC) certifi
 - **forest_harvest_residual**: Slash, tops, and limbs from timber harvesting operations  
 - **agricultural_residue**: Orchard prunings, vineyard cuttings, and crop residues
 - **urban_wood_waste**: Tree trimmings and construction/demolition wood
-- **construction_demolition_wood**: Clean, untreated wood from C&D activities
+- **construction_demolition_wood**: Clean, untreated wood from C&amp;D activities
 #### Efficiency Standards
 - Minimum efficiency thresholds vary by fuel type and facility size
 - Measured as net electrical output divided by fuel energy input

@@ -1,4 +1,4 @@
-The TraceableUnit represents the fundamental unit of traceability in the BOOST media-interruption-free timber supply chain tracking system. A TRU can be an individual log, pile, volume aggregation, or processed batch that maintains continuous data linkage throughout its lifecycle. This entity replaces MaterialBatch as the primary traceable unit and supports biometric identification, species composition tracking, and complete audit trails.
+The TraceableUnit represents the fundamental unit of traceability in the BOOST continuous traceability timber supply chain tracking system. A TRU can be an individual log, pile, volume aggregation, or processed batch that maintains continuous data linkage throughout its lifecycle. This entity replaces MaterialBatch as the primary traceable unit and supports biometric identification, species composition tracking, and complete audit trails.
 
 ## Required Fields
 

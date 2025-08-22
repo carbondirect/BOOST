@@ -1,4 +1,6 @@
-<!-- Auto-generated from operator/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: operator/validation_schema.json and operator_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Validation schema for personnel and operator management within the BOOST biomass chain of custody system
 
@@ -367,7 +369,7 @@ The `Operator` entity represents personnel within the BOOST biomass chain of cus
 4. **Measurement Equipment**
      scale_system: Scale operation and calibration
      optical_scanner: Optical measurement systems
-     biometric_scanner: Biometric identification equipment
+     biometric_scanner: multi-method identification equipment
      GPS: GPS and location systems
      moisture_meter: Moisture content measurement
 ### Validation Rules

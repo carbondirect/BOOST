@@ -1,4 +1,6 @@
-<!-- Auto-generated from audit/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: audit/validation_schema.json and audit_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Audit entity in BOOST data model
 

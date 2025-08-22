@@ -1,4 +1,6 @@
-<!-- Auto-generated from location_history/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: location_history/validation_schema.json and location_history_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Historical movement records of TRUs
 
@@ -131,7 +133,7 @@ Historical movement records of TRUs
 
 ## LocationHistory
 ### Overview
-The `LocationHistory` entity implements comprehensive location history tracking for TRUs with timestamps, processing links, and verification methods to support complete movement audit trails. This entity enables tracking every location change, transport method, and verification approach throughout the TRU lifecycle as required by the BOOST traceability system for media-interruption-free traceability.
+The `LocationHistory` entity implements comprehensive location history tracking for TRUs with timestamps, processing links, and verification methods to support complete movement audit trails. This entity enables tracking every location change, transport method, and verification approach throughout the TRU lifecycle as required by the BOOST continuous traceability system.
 ### Fields
 <table class="data">
 <thead>

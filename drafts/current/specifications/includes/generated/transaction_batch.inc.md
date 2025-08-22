@@ -1,4 +1,6 @@
-<!-- Auto-generated from transaction_batch/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: transaction_batch/validation_schema.json and transaction_batch_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 TransactionBatch entity in BOOST data model
 

@@ -1,4 +1,6 @@
-<!-- Auto-generated from lcfs_reporting/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: lcfs_reporting/validation_schema.json and lcfs_reporting_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Quarterly LCFS compliance report for regulated entities with credit calculations and submission tracking
 

@@ -1,0 +1,153 @@
+{
+  "schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/carbondirect/BOOST/schemas/identification-method",
+    "title": "Identification Method",
+    "description": "Catalog of available identification methods for TraceableUnit tracking",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "object",
+        "description": "JSON-LD context defining semantic vocabulary mappings"
+      },
+      "@type": {
+        "type": "string",
+        "enum": [
+          "IdentificationMethod"
+        ],
+        "description": "Entity type identifier for JSON-LD processing"
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri",
+        "description": "Globally unique IRI identifying this specific entity instance"
+      },
+      "methodId": {
+        "type": "string",
+        "pattern": "^IM-[A-Z0-9-_]+$",
+        "description": "Unique identifier for the identification method"
+      },
+      "methodType": {
+        "type": "string",
+        "enum": [
+          "biometric",
+          "rfid",
+          "qr_code", 
+          "barcode",
+          "manual_id",
+          "photo_documentation",
+          "hybrid"
+        ],
+        "description": "Type of identification method"
+      },
+      "technologyReadinessLevel": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 9,
+        "description": "Technology Readiness Level (TRL 1-9) of this method"
+      },
+      "equipmentRequired": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Equipment needed to implement this method"
+      },
+      "locationSuitability": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "harvest_site",
+            "skid_road",
+            "forest_road",
+            "mill_entrance",
+            "processing_facility",
+            "warehouse",
+            "transport_vehicle"
+          ]
+        },
+        "description": "Locations where this method can be effectively used"
+      },
+      "averageConfidence": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Average confidence score achieved by this method"
+      },
+      "implementationCost": {
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "very_high"
+        ],
+        "description": "Relative cost of implementing this method"
+      },
+      "scalabilityFactor": {
+        "type": "string",
+        "enum": [
+          "individual",
+          "batch",
+          "bulk",
+          "unlimited"
+        ],
+        "description": "Scale at which this method can be effectively applied"
+      },
+      "regulatoryAcceptance": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "CARB_LCFS",
+            "EPA_RFS",
+            "EUDR",
+            "FSC",
+            "PEFC",
+            "SBP",
+            "RSB",
+            "ISCC"
+          ]
+        },
+        "description": "Regulatory frameworks that accept this method"
+      },
+      "lastUpdated": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of the most recent data update"
+      }
+    },
+    "required": [
+      "@context",
+      "@type", 
+      "@id",
+      "methodId",
+      "methodType",
+      "technologyReadinessLevel",
+      "locationSuitability",
+      "averageConfidence",
+      "implementationCost",
+      "scalabilityFactor",
+      "regulatoryAcceptance"
+    ]
+  },
+  "boost_metadata": {
+    "entity": {
+      "name": "IdentificationMethod",
+      "primaryKey": "methodId",
+      "area": "core_traceability",
+      "description": "Catalog of available identification methods with capability and suitability information"
+    },
+    "relationships": [
+      {
+        "field": "methodId",
+        "targetEntity": "TraceableUnit",
+        "relationshipType": "one-to-many",
+        "required": false,
+        "label": "identifies",
+        "example": "Method IM-RFID-001 identifies multiple TraceableUnits"
+      }
+    ]
+  }
+}

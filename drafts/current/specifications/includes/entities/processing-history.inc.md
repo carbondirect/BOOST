@@ -1,4 +1,4 @@
-The ProcessingHistory entity provides chronological tracking of all processing operations that affect a TraceableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting media-interruption-free traceability requirements of the BOOST traceability system.
+The ProcessingHistory entity provides chronological tracking of all processing operations that affect a TraceableUnit throughout its lifecycle. This entity creates a complete audit trail of transformations, movements, and quality changes, enabling comprehensive genealogy tracking and supporting continuous traceability requirements of the BOOST traceability system.
 
 ProcessingHistory serves as the TRU-centric complement to the operation-centric MaterialProcessing entity, providing a unified timeline view of how materials evolve through the supply chain.
 

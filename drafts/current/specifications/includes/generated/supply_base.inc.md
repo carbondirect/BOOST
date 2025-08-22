@@ -1,4 +1,6 @@
-<!-- Auto-generated from supply_base/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: supply_base/validation_schema.json and supply_base_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 SupplyBase entity in BOOST data model
 

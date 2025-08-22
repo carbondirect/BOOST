@@ -8,7 +8,7 @@
     "core_traceability": {
       "color": "#16A34A", 
       "label": "Core Traceability",
-      "entities": ["TraceableUnit", "ProcessingHistory", "MaterialProcessing", "LocationHistory", "BiometricIdentifier"]
+      "entities": ["TraceableUnit", "ProcessingHistory", "MaterialProcessing", "LocationHistory", "BiometricIdentifier", "IdentificationMethod"]
     },
     "material_supply_chain": {
       "color": "#A16207",
@@ -56,6 +56,10 @@
     "BiometricIdentifier": {
       "emoji": "🔬",
       "position": {"x": 1900, "y": 1400}
+    },
+    "IdentificationMethod": {
+      "emoji": "🏷️",
+      "position": {"x": 1600, "y": 800}
     },
     "Organization": {
       "emoji": "🏢",
@@ -391,6 +395,14 @@
       "from": "TraceableUnit",
       "to": "Material",
       "label": "material_type",
+      "type": "non-identifying",
+      "from_cardinality": "many",
+      "to_cardinality": "one"
+    },
+    {
+      "from": "TraceableUnit",
+      "to": "IdentificationMethod",
+      "label": "identified_using",
       "type": "non-identifying",
       "from_cardinality": "many",
       "to_cardinality": "one"
@@ -817,6 +829,7 @@
     "GeographicData": ["GeographicDataId", "primaryGeographicDataId", "measurementGeographicDataId", "processingGeographicDataId", "captureGeographicDataId", "sourceGeographicDataId", "deliveryGeographicDataId", "reportGeographicDataId", "supplyBaseGeographicDataId", "customerGeographicDataId", "supplierGeographicDataId", "currentGeographicDataId", "harvestGeographicDataId"],
     "Operator": ["OperatorId", "operatorId", "auditorId", "employeeId"],
     "TraceableUnit": ["TraceableUnitId", "traceableUnitId", "inputTraceableUnitId", "outputTraceableUnitId", "parentTraceableUnitId"],
+    "IdentificationMethod": ["methodId", "identificationMethodId"],
     "MaterialProcessing": ["MaterialProcessingId", "materialProcessingId"],
     "MeasurementRecord": ["MeasurementRecordId", "measurementRecordId"],
     "LcfsPathway": ["LcfsPathwayId", "pathwayId"],
@@ -849,6 +862,7 @@
     "VerificationStatement": ["verificationStatementId"]
   },
   "primary_key_mappings": {
+    "IdentificationMethod": "methodId",
     "LcfsReporting": "reportingId",
     "BioramReporting": "reportingId",
     "VerificationStatement": "statementId", 

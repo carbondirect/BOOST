@@ -1,4 +1,6 @@
-<!-- Auto-generated from certificate/validation_schema.json -->
+<!-- AUTO-GENERATED - DO NOT EDIT
+     Generated from: certificate/validation_schema.json and certificate_dictionary.md
+     To modify this content, edit the source file and regenerate -->
 
 Certificate entity representing formal certification records issued by certification bodies
 
