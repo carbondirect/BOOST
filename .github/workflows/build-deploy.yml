@@ -371,8 +371,20 @@ jobs:
           echo "📋 Extracting latest changelog entry..."
           if [ -f "drafts/current/specifications/CHANGELOG.md" ]; then
             # Extract from the first ## heading to the next ## heading (or end of file)
-            # Remove emojis and clean up formatting
+            # Remove ALL emojis and clean up formatting
             awk '
+            function remove_emojis(str) {
+              # Remove all Unicode emoji characters (comprehensive pattern)
+              gsub(/[\U0001F600-\U0001F64F]/, "", str);  # Emoticons
+              gsub(/[\U0001F300-\U0001F5FF]/, "", str);  # Misc symbols
+              gsub(/[\U0001F680-\U0001F6FF]/, "", str);  # Transport & map
+              gsub(/[\U0001F1E0-\U0001F1FF]/, "", str);  # Regional indicators
+              gsub(/[\U00002600-\U000027BF]/, "", str);  # Misc symbols
+              gsub(/[\U0001F900-\U0001F9FF]/, "", str);  # Supplemental symbols
+              # Common specific emojis
+              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "", str);
+              return str;
+            }
             /^## \[/{
               if (found) exit;  # Stop at second entry
               found=1; 
@@ -382,33 +394,43 @@ jobs:
             }
             found && /^## \[/ {exit}  # Stop at next version
             found && /^###/ {
-              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰🛡️📦]/, "");
+              $0 = remove_emojis($0);
               gsub(/\*\*/, "");
-              sub(/^### /, "**");
-              print $0 "**"
+              gsub(/^### */, "");
+              if (NF > 0) print "<h3>" $0 "</h3>";
               next
             }
             found && /^####/ {
-              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰🛡️📦]/, "");
+              $0 = remove_emojis($0);
               gsub(/\*\*/, "");
-              sub(/^#### /, "");
-              print "<strong>" $0 "</strong>"
+              gsub(/^#### */, "");
+              if (NF > 0) print "<h4>" $0 "</h4>";
               next
             }
             found && /^- / {
-              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰🛡️📦]/, "");
-              gsub(/\*\*/, "<strong>", $0); gsub(/\*\*/, "</strong>", $0);
-              print "  " $0
+              $0 = remove_emojis($0);
+              # Clean up bold formatting properly
+              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>", $0);
+              print "<li>" substr($0, 3) "</li>";
+              in_list = 1;
               next
             }
             found && /^This / {
-              gsub(/\*\*/, "<strong>", $0); gsub(/\*\*/, "</strong>", $0);
-              print "<p><em>" $0 "</em></p>"
+              if (in_list) {print "</ul>"; in_list = 0;}
+              $0 = remove_emojis($0);
+              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>", $0);
+              print "<p><em>" $0 "</em></p>";
               next
             }
-            found && NF > 0 && !/^#/ {
-              gsub(/\*\*/, "<strong>", $0); gsub(/\*\*/, "</strong>", $0);
-              print $0
+            found && NF > 0 && !/^#/ && !/^- / {
+              if (in_list && $0 != "" && $0 !~ /^- /) {print "</ul>"; in_list = 0;}
+              $0 = remove_emojis($0);
+              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>", $0);
+              if (NF > 0) print "<p>" $0 "</p>";
+              next
+            }
+            END {
+              if (in_list) print "</ul>";
             }
             ' drafts/current/specifications/CHANGELOG.md > ./pages-content/recent-changes.html
             echo "✅ Latest changelog entry extracted and formatted"
@@ -539,19 +561,45 @@ jobs:
                       line-height: 1.7;
                       color: #444;
                   }
-                  .changelog-content h3, .changelog-content h4 {
+                  .changelog-content h3 {
+                      color: #24292e;
+                      margin-top: 25px;
+                      margin-bottom: 15px;
+                      font-size: 1.3em;
+                      border-bottom: 1px solid #e1e4e8;
+                      padding-bottom: 5px;
+                  }
+                  .changelog-content h4 {
                       color: #24292e;
                       margin-top: 20px;
                       margin-bottom: 10px;
+                      font-size: 1.1em;
                   }
                   .changelog-content ul {
-                      padding-left: 20px;
+                      margin: 10px 0;
+                      padding-left: 0;
+                      list-style: none;
                   }
                   .changelog-content li {
-                      margin-bottom: 6px;
+                      margin-bottom: 8px;
+                      padding-left: 20px;
+                      position: relative;
+                  }
+                  .changelog-content li:before {
+                      content: "•";
+                      color: #28a745;
+                      position: absolute;
+                      left: 8px;
+                      font-weight: bold;
+                  }
+                  .changelog-content p {
+                      margin: 12px 0;
                   }
                   .changelog-content strong {
                       color: #0366d6;
+                  }
+                  .changelog-content em {
+                      color: #666;
                   }
               </style>
           </head>
