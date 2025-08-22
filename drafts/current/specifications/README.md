@@ -1,6 +1,25 @@
 # BOOST Documentation Build System
 
+**Current Version:** v3.2.3-2-gb3aedc3 | **Last Updated:** 2025-08-22
+
 This directory contains the BOOST W3C Community Group specification documentation build system with comprehensive PDF and HTML generation from a **Single Source of Truth** architecture.
+
+## **Documentation Outputs** {#documentation-outputs}
+
+### **📖 Primary Documentation**
+- **[📄 BOOST Specification PDF](build/boost-spec.pdf)** - Complete 88+ page specification with all 35 entities
+- **[🌐 HTML Specification](boost-spec.html)** - W3C-compliant interactive documentation
+- **[📊 Interactive ERD Navigator](erd-navigator/index.html)** - Explore entity relationships visually
+- **[🗂️ Schema Directory](../schema/)** - 35 JSON validation schemas (single source of truth)
+
+### **📋 Reports & Analysis**
+- **[📈 Build Reports](build/)** - Generation statistics, consistency analysis, and build logs
+- **[📝 CHANGELOG](CHANGELOG.md)** - Complete version history and recent improvements
+- **[🔍 Consistency Reports](build/consistency-report.json)** - Cross-format validation results
+
+### **🛠️ Development Resources**
+- **[⚙️ Build System Documentation](UNIFIED_BUILD_SYSTEM.md)** - Advanced build configuration
+- **[✅ Enhancement Plans](../planning_documents/README.md)** - GitHub Issues-based project planning
 
 ## Quick Start
 

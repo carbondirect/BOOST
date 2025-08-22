@@ -40,7 +40,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 
 ### **Development Resources**
 - **[📈 Build and Consistency Reports](https://github.com/carbondirect/BOOST/tree/main/drafts/current/specifications/build)** - Automated validation and generation statistics
-- **[📝 Complete Version History](https://github.com/carbondirect/BOOST/blob/main/drafts/current/specifications/CHANGELOG.md)** - Detailed change documentation
+- **[📝 Complete Version History](https://github.com/carbondirect/BOOST/blob/main/CHANGELOG.md)** - Detailed change documentation
 - **[✅ Enhancement Planning](https://github.com/carbondirect/BOOST/issues?q=label%3Aplan)** - GitHub Issues-based project planning with stakeholder collaboration
 
 ## 🚀 Recent Changes & Improvements
