@@ -369,9 +369,9 @@ jobs:
           
           # Extract the most recent changelog entry in keepachangelog.com format
           echo "📋 Extracting latest changelog entry..."
-          if [ -f "drafts/current/specifications/CHANGELOG.md" ]; then
+          if [ -f "CHANGELOG.md" ]; then
             # Get the first changelog entry and format it cleanly like keepachangelog.com
-            sed -n '/^## \[/,/^## \[/p' drafts/current/specifications/CHANGELOG.md | \
+            sed -n '/^## \[/,/^## \[/p' CHANGELOG.md | \
             sed '$d' | \
             sed 's/🎉\|✨\|🔧\|⬆️\|🏗️\|📊\|🎯\|⚠️\|🐍\|🚀\|🛡️\|🎨\|🧪\|📋\|👥\|💰\|📦\|🔄\|📚//g' | \
             sed 's/^## \[\([^]]*\)\] - \(.*\)/<h3>\1 - \2<\/h3>/' | \
