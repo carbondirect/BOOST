@@ -367,54 +367,14 @@ jobs:
           sed "s|{{VERSION}}|${{ needs.extract-version.outputs.version }}|g" README.md > ./pages-content/README.md
           echo "✅ README.md processed with version ${{ needs.extract-version.outputs.version }}"
           
-          # Extract the most recent changelog entry (simple keepachangelog.com style)
+          # Extract the most recent changelog entry verbatim (just remove emojis)
           echo "📋 Extracting latest changelog entry..."
           if [ -f "drafts/current/specifications/CHANGELOG.md" ]; then
-            # Simple extraction - just get version and main sections, remove emojis
-            awk '
-            /^## \[/{
-              if (found) exit;
-              found=1; 
-              # Extract version and date
-              match($0, /\[(.*)\].*- (.*)/, arr);
-              print "<p><strong>Version " arr[1] "</strong> - " arr[2] "</p>";
-              next
-            }
-            found && /^## \[/ {exit}
-            found && /^### / {
-              # Clean section headers - remove emojis and extra formatting
-              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "");
-              gsub(/\*\*/, "");
-              gsub(/^### */, "");
-              if ($0 !~ /^$/ && NF > 0) {
-                print "<h4>" $0 "</h4><ul>";
-                in_section = 1;
-              }
-              next
-            }
-            found && /^- / && in_section {
-              # Simple bullet points - remove emojis, keep basic formatting
-              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "");
-              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>");
-              sub(/^- */, "");
-              if (NF > 0) print "<li>" $0 "</li>";
-              next
-            }
-            found && /^$/ && in_section {
-              if (in_section) {print "</ul>"; in_section = 0;}
-              next
-            }
-            found && !/^#/ && !/^- / && NF > 0 {
-              if (in_section) {print "</ul>"; in_section = 0;}
-              # Description paragraphs
-              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "");
-              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>");
-              print "<p>" $0 "</p>";
-            }
-            END {
-              if (in_section) print "</ul>";
-            }
-            ' drafts/current/specifications/CHANGELOG.md > ./pages-content/recent-changes.html
+            # Get the first changelog entry and remove emojis
+            sed -n '/^## \[/,/^## \[/p' drafts/current/specifications/CHANGELOG.md | \
+            sed '$d' | \
+            sed 's/🎉\|✨\|🔧\|⬆️\|🏗️\|📊\|🎯\|⚠️\|🐍\|🚀\|🛡️\|🎨\|🧪\|📋\|👥\|💰\|📦\|🔄\|📚//g' \
+            > ./pages-content/recent-changes.html
             echo "✅ Latest changelog entry extracted and formatted"
           else
             echo "<p>No changelog available</p>" > ./pages-content/recent-changes.html
