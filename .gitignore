@@ -102,3 +102,6 @@ Thumbs.db
 *.swp
 *.swo
 CLAUDE.md
+
+# Internal presentation files
+interagency_report_presentation_outline*.md
