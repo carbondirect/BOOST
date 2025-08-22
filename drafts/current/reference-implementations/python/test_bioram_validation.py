@@ -19,7 +19,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from bioram_validation import create_bioram_validator
-from models import *
+from dynamic_models import get_models
 
 
 def test_bioram_pathway_validation():

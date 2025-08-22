@@ -11,10 +11,7 @@ import re
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
 from pathlib import Path
-from models import (
-    BioramPathway, BioramReporting, Organization, Transaction,
-    FuelType, FireHazardZone, ComplianceStatus, BioramEligibilityStatus
-)
+from dynamic_models import get_models
 from validation import BOOSTValidator
 
 
