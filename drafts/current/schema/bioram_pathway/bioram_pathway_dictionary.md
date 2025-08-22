@@ -140,7 +140,7 @@ The `BioramPathway` entity represents California Energy Commission (CEC) certifi
 - **forest_harvest_residual**: Slash, tops, and limbs from timber harvesting operations  
 - **agricultural_residue**: Orchard prunings, vineyard cuttings, and crop residues
 - **urban_wood_waste**: Tree trimmings and construction/demolition wood
-- **construction_demolition_wood**: Clean, untreated wood from C&D activities
+- **construction_demolition_wood**: Clean, untreated wood from C&amp;D activities
 
 #### Efficiency Standards
 - Minimum efficiency thresholds vary by fuel type and facility size
