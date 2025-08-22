@@ -1,17 +1,12 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: supplier/validation_schema.json and supplier_dictionary.md
-% To modify this content, edit the source files and regenerate
 % Supplier Entity Table
+% Auto-generated from JSON schema
 
 \begin{entitytable}{Supplier}
-\textbf{\field{@context} & object (structured) & No description provided \\
-\textbf{\field{@id} & string (uri) & No description provided \\
-\textbf{\field{@type} & enum(Supplier) & No description provided \\
-\textbf{\field{supplierId} & string (pattern) & No description provided \\
-\textbf{\field{supplierName} & string & No description provided \\
+\textbf{\field{supplierId}} & string (pattern) & Unique identifier for the supplier \\
+\textbf{\field{supplierName}} & string & Suppliername field value \\
 \field{GeographicDataId} & string (pattern) & Supplier location - uses EntityNameId convention referencing GeographicData \\
-\field{address} & string & No description provided \\
-\field{certificateCode} & string & No description provided \\
-\field{claim} & string & No description provided \\
-\field{supplierType} & string & No description provided \\
+\field{address} & string & Address field value \\
+\field{certificateCode} & string & Certificatecode field value \\
+\field{claim} & string & Claim field value \\
+\field{supplierType} & string & Suppliertype field value \\
 \end{entitytable}

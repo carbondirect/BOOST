@@ -1,30 +1,25 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: transaction_batch/validation_schema.json and transaction_batch_dictionary.md
-% To modify this content, edit the source files and regenerate
 % Transaction Batch Entity Table
+% Auto-generated from JSON schema
 
 \begin{entitytable}{Transaction Batch}
-\textbf{\field{@context} & object (structured) & No description provided \\
-\textbf{\field{@id} & string (uri) & No description provided \\
-\textbf{\field{@type} & enum(TransactionBatch) & No description provided \\
-\textbf{\field{batchStatus} & enum(6 values) & Current status of the physical batch \\
-\textbf{\field{quantity} & number (≥0) & Physical quantity of material in this batch \\
-\textbf{\field{quantityUnit} & enum(7 values) & Unit of measurement for quantity \\
-\textbf{\field{traceableUnitIds} & array<string> & Array of TRU IDs included in this batch \\
-\textbf{\field{transactionBatchId} & string (pattern) & Unique identifier for the physical material batch \\
-\textbf{\field{transactionId} & string (pattern) & Foreign key to parent business transaction \\
+\textbf{\field{batchStatus}} & enum(6 values) & Current status of the physical batch \\
+\textbf{\field{quantity}} & number (≥0) & Physical quantity of material in this batch \\
+\textbf{\field{quantityUnit}} & enum(7 values) & Unit of measurement for quantity \\
+\textbf{\field{traceableUnitIds}} & array<string> & Array of TRU IDs included in this batch \\
+\textbf{\field{transactionBatchId}} & string (pattern) & Unique identifier for the physical material batch \\
+\textbf{\field{transactionId}} & string (pattern) & Foreign key to parent business transaction \\
 \field{additionalClaimIds} & array<string> & Array of secondary claim IDs \\
 \field{batchCreatedDate} & string (date-time) & When the batch was prepared/created \\
 \field{certificationValidation} & object (structured) & Certification and compliance validation data \\
-\field{claimId} & string | 'null' & Foreign key to primary sustainability claim \\
-\field{deliveryDate} & string | 'null' & Actual delivery timestamp \\
-\field{deliveryGeographicDataId} & string | 'null' & Foreign key to delivery location \\
+\field{claimId} & ['string', 'null'] & Foreign key to primary sustainability claim \\
+\field{deliveryDate} & ['string', 'null'] & Actual delivery timestamp \\
+\field{deliveryGeographicDataId} & ['string', 'null'] & Foreign key to delivery location \\
 \field{lastUpdated} & string (date-time) & Timestamp of last modification \\
 \field{measurementRecordIds} & array<string> & Array of measurement record IDs \\
 \field{mediaBreakDetected} & boolean & Flag indicating if traceability continuity was broken \\
-\field{plantPartComposition} & object (structured) & Plant part composition breakdown \\
+\field{plantPartComposition} & object & Plant part composition breakdown \\
 \field{processingHistoryIds} & array<string> & Array of processing history record IDs \\
-\field{productionBatchId} & string | 'null' & Foreign key to source production batch \\
+\field{productionBatchId} & ['string', 'null'] & Foreign key to source production batch \\
 \field{qualityGrade} & enum(9 values) & Overall quality grade for the batch \\
 \field{qualityMetrics} & object (structured) & Detailed quality assessment metrics \\
 \field{reconciliationStatus} & enum(5 values) & Status of volume/quality reconciliation \\

@@ -1,18 +1,57 @@
-% AUTO-GENERATED - DO NOT EDIT
-% Generated from: thematic area configuration and entity schemas
-% To modify this content, edit the source files and regenerate
 % Organizational Foundation Entities
+% Auto-generated from JSON schemas
 
 
-\subsubsection{Organization}
+\subsection{Organization}
 \label{sec:entity-organization}
 
 Organization entity with geographic data references and certification management capabilities for Phase 2 BOOST traceability system enhancements
 
-\input{tex/entities/organization-table}
+\begin{informative}[title=Entity Relationships]
+This entity references the following entities:
+\begin{itemize}
+    \item \field{organizationId} → \entity{Organization} (Unique identifier for the organization)
+\end{itemize}
+\end{informative}
+
+**[View Organization in ERD Navigator](erd-navigator/index.html?focus=Organization)**
+
+% Organization Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Organization}
+\textbf{\field{organizationId}} & string (pattern) & Unique identifier for the organization \\
+\textbf{\field{organizationName}} & string & Legal name of the organization \\
+\textbf{\field{organizationType}} & enum(10 values) & Type of organization \\
+\field{airDistrictPermit} & string & Air quality management district permit identifier \\
+\field{bioramContractId} & string (pattern) & BioRAM competitive procurement contract identifier \\
+\field{bioramEligibilityStatus} & enum(4 values) & Current BioRAM program eligibility status \\
+\field{bioramFacilityId} & string (pattern) & BioRAM facility identifier for program tracking \\
+\field{bioramRegistrationId} & string (pattern) & CEC BioRAM registration identifier for biomass power facilities \\
+\field{calFireJurisdiction} & string & CAL FIRE unit or jurisdiction for facility area \\
+\field{californiaSRA} & boolean & Whether facility operates within California State Responsibility Area \\
+\field{certifications} & array<string> & List of certification IDs held by organization \\
+\field{contactEmail} & string (email) & Primary contact email address \\
+\field{contactPhone} & string (pattern) & Primary contact phone number \\
+\field{establishedDate} & string (date) & Date organization was established \\
+\field{facilityCapacity} & object (structured) & Facility production or handling capacity for LCFS reporting \\
+\field{fireHazardZoneDesignation} & enum(4 values) & CAL FIRE fire hazard severity zone designation for facility location \\
+\field{gridInterconnectionPoint} & string & Grid interconnection substation or transmission point \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{lcfsRegistrationId} & string (pattern) & CARB LCFS registration identifier for regulated entities \\
+\field{operationalAreas} & array<string> & List of geographic areas where organization operates \\
+\field{operationalStatus} & enum(4 values) & Current operational status of the organization \\
+\field{powerPurchaseAgreementId} & string & Power purchase agreement identifier with utility offtaker \\
+\field{primaryGeographicDataId} & string (pattern) & Foreign key to primary operational location \\
+\field{regulatedEntityType} & enum(5 values) & LCFS regulated entity classification \\
+\field{taxId} & string & Tax identification number \\
+\field{utilityOfftaker} & string & Utility company purchasing power under BioRAM contract \\
+\field{website} & string (uri) & Organization website URL \\
+\end{entitytable}
 
 
-\subsubsection{Certificate}
+
+\subsection{Certificate}
 \label{sec:entity-certificate}
 
 Certificate entity representing formal certification records issued by certification bodies
@@ -20,40 +59,94 @@ Certificate entity representing formal certification records issued by certifica
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{CertificationSchemeId} → \entity{Certification Scheme} (Uses EntityNameId convention referencing CertificationScheme)
-    \item \field{CertificationBodyId} → \entity{Certification Body} (Uses EntityNameId convention referencing CertificationBody)
+    \item \field{certificateId} → \entity{Certificate} (Standard certificate identifier using CERT- pattern)
     \item \field{OrganizationId} → \entity{Organization} (Uses EntityNameId convention referencing Organization receiving the certificate)
-    \item \field{VerificationStatementId} → \entity{Verification Statement} (Uses EntityNameId convention referencing VerificationStatement for third-party validation)
 \end{itemize}
 \end{informative}
 
-\input{tex/entities/certificate-table}
+**[View Certificate in ERD Navigator](erd-navigator/index.html?focus=Certificate)**
+
+% Certificate Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Certificate}
+\textbf{\field{CertificationBodyId}} & string (pattern) & Uses EntityNameId convention referencing CertificationBody \\
+\textbf{\field{CertificationSchemeId}} & string (pattern) & Uses EntityNameId convention referencing CertificationScheme \\
+\textbf{\field{OrganizationId}} & string (pattern) & Uses EntityNameId convention referencing Organization receiving the certificate \\
+\textbf{\field{certificateId}} & string (pattern) & Standard certificate identifier using CERT- pattern \\
+\textbf{\field{certificateNumber}} & string (pattern) & Official certificate number (primary key) \\
+\textbf{\field{dateOfExpiry}} & string (date) & Certificate expiry date \\
+\textbf{\field{dateOfIssue}} & string (date) & Date of certificate issuance \\
+\textbf{\field{scopeOfCertification}} & string & Summary of certification coverage \\
+\textbf{\field{status}} & enum(4 values) & Current certificate status \\
+\textbf{\field{versionNumber}} & string & Version identifier of the certification standard \\
+\field{VerificationStatementId} & string (pattern) & Uses EntityNameId convention referencing VerificationStatement for third-part... \\
+\field{auditSchedule} & object (structured) & Scheduled audit information \\
+\field{certificateDocument} & string (uri) & Link or reference to certificate document \\
+\field{conditionalRequirements} & array<object> & Special conditions or requirements \\
+\field{suspensionHistory} & array<object> & History of certificate suspensions \\
+\field{versionYear} & integer & Year of the standard's relevant version release \\
+\end{entitytable}
 
 
-\subsubsection{CertificationBody}
+
+\subsection{CertificationBody}
 \label{sec:entity-certification-body}
 
 Certification Body entity representing independent organizations authorized to issue certificates
 
-\input{tex/entities/certification-body-table}
+**[View CertificationBody in ERD Navigator](erd-navigator/index.html?focus=CertificationBody)**
+
+% CertificationBody Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{CertificationBody}
+\textbf{\field{accreditationStatus}} & enum(5 values) & Current accreditation status \\
+\textbf{\field{authorizedSchemes}} & array<string> & List of certification schemes the CB can certify under \\
+\textbf{\field{cbId}} & string (pattern) & Unique identifier for the certification body (primary key) \\
+\textbf{\field{cbName}} & string & Official name of the certification body \\
+\textbf{\field{cbType}} & enum(4 values) & Type or category of certification body \\
+\textbf{\field{contactInformation}} & object (structured) & Contact details for the certification body \\
+\textbf{\field{operationalRegions}} & array<string> & Geographic regions where CB operates (ISO country codes) \\
+\textbf{\field{validityPeriod}} & object (structured) & Period of CB authorization \\
+\field{accreditationBody} & string & Organization that accredited this CB \\
+\field{performanceMetrics} & object (structured) & CB performance and quality indicators \\
+\field{specializations} & array<string> & Specific areas of certification expertise \\
+\end{entitytable}
 
 
-\subsubsection{CertificationScheme}
+
+\subsection{CertificationScheme}
 \label{sec:entity-certification-scheme}
 
 CertificationScheme entity defining certification standards and requirements with geographic applicability for Phase 2 BOOST traceability system enhancements
 
-\begin{informative}[title=Entity Relationships]
-This entity references the following entities:
-\begin{itemize}
-    \item \field{certificationSchemeId} → \entity{Certification Scheme} (Unique identifier for the certification scheme)
-\end{itemize}
-\end{informative}
+**[View CertificationScheme in ERD Navigator](erd-navigator/index.html?focus=CertificationScheme)**
 
-\input{tex/entities/certification-scheme-table}
+% CertificationScheme Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{CertificationScheme}
+\textbf{\field{certificationSchemeId}} & string (pattern) & Unique identifier for the certification scheme \\
+\textbf{\field{issuingOrganizationId}} & string (pattern) & Foreign key to organization that issues this scheme \\
+\textbf{\field{schemeName}} & string & Official name of the certification scheme \\
+\textbf{\field{schemeType}} & enum(6 values) & Type of certification scheme \\
+\field{applicableGeographicAreas} & array<string> & Geographic areas where this scheme is applicable \\
+\field{auditRequirements} & string & Audit and verification requirements \\
+\field{chainOfCustodyRequirements} & string & Chain of custody tracking and documentation requirements \\
+\field{claimTypes} & array<string> & Types of claims supported by this scheme \\
+\field{documentationRequirements} & array<string> & Required documentation and record-keeping \\
+\field{eligibleMaterialTypes} & array<string> & Material types eligible for this certification scheme \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
+\field{schemeDescription} & string & Detailed description of the certification scheme \\
+\field{schemeStandard} & string & Standard or version identifier \\
+\field{validityPeriod} & string & Typical validity period for certifications under this scheme \\
+\field{website} & string (uri) & Official website for the certification scheme \\
+\end{entitytable}
 
 
-\subsubsection{Audit}
+
+\subsection{Audit}
 \label{sec:entity-audit}
 
 Audit entity in BOOST data model
@@ -61,14 +154,30 @@ Audit entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
+    \item \field{auditId} → \entity{Audit} ()
     \item \field{organizationId} → \entity{Organization} ()
 \end{itemize}
 \end{informative}
 
-\input{tex/entities/audit-table}
+**[View Audit in ERD Navigator](erd-navigator/index.html?focus=Audit)**
+
+% Audit Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Audit}
+\textbf{\field{auditDate}} & string (date) & Auditdate field value \\
+\textbf{\field{auditId}} & string (pattern) & Unique identifier for the audit \\
+\textbf{\field{auditType}} & enum(Initial, Surveillance, Transfer) & Enumerated value for audittype \\
+\textbf{\field{organizationId}} & string (pattern) & Foreign key to the associated organization \\
+\field{auditGeographicDataId} & string (pattern) & Unique identifier for the auditgeographicdata \\
+\field{cbId} & string (pattern) & Unique identifier for the cb \\
+\field{findings} & string & Findings field value \\
+\field{reportUrl} & string (uri) & Reporturl field value \\
+\end{entitytable}
 
 
-\subsubsection{BOOST Operator Entity Validation Schema}
+
+\subsection{BOOST Operator Entity Validation Schema}
 \label{sec:entity-operator}
 
 Validation schema for personnel and operator management within the BOOST biomass chain of custody system
@@ -76,9 +185,30 @@ Validation schema for personnel and operator management within the BOOST biomass
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
+    \item \field{operatorId} → \entity{Operator} (Unique identifier for the operator (Primary Key))
     \item \field{organizationId} → \entity{Organization} (Employing organization - uses EntityNameId convention referencing Organization)
 \end{itemize}
 \end{informative}
 
-\input{tex/entities/operator-table}
+**[View BOOST Operator Entity Validation Schema in ERD Navigator](erd-navigator/index.html?focus=BOOSTOperatorEntityValidationSchema)**
+
+% BOOST Operator Entity Validation Schema Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{BOOST Operator Entity Validation Schema}
+\textbf{\field{hireDate}} & string (date) & Date when operator started employment \\
+\textbf{\field{isActive}} & boolean & Current employment status - true if actively employed \\
+\textbf{\field{lastUpdated}} & string (date-time) & Timestamp of last record modification \\
+\textbf{\field{operatorId}} & string (pattern) & Unique identifier for the operator (Primary Key) \\
+\textbf{\field{operatorName}} & string & Full name of the operator \\
+\textbf{\field{operatorType}} & enum(10 values) & Type/role of operator within the supply chain \\
+\textbf{\field{organizationId}} & string (pattern) & Employing organization - uses EntityNameId convention referencing Organization \\
+\field{certifications} & array<string> & Array of certifications held by the operator \\
+\field{contactInfo} & ['string', 'null'] & Phone/email contact information \\
+\field{employeeId} & ['string', 'null'] & Internal employee identification number \\
+\field{equipmentAuthorizations} & array<string> & Equipment the operator is authorized to operate \\
+\field{skillsQualifications} & array<string> & Relevant skills and qualifications \\
+\field{supervisorOperatorId} & ['string', 'null'] & Foreign key reference to direct supervisor operator (optional) \\
+\end{entitytable}
+
 

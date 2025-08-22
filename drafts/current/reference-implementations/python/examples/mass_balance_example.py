@@ -21,7 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from boost_client import create_client
-from models import OrganizationType, UnitType, ProcessType
+from dynamic_models import OrganizationType, UnitType, ProcessType
 
 
 def main():

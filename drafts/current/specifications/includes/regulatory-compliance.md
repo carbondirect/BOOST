@@ -84,6 +84,16 @@ The quarterly reporting process follows these steps:
 
 ### Credit Calculation Methodology ### {#credit-calculation}
 
+#### How BOOST Tracking Enables LCFS Credits #### {#boost-lcfs-integration}
+
+The BOOST biomass tracking system provides the foundational data required for LCFS credit generation. While the credit calculation formula uses benchmark CI, pathway CI, and fuel volume as its primary inputs, each of these values depends on comprehensive biomass tracking throughout the supply chain.
+
+Feedstock verification forms the first critical connection between tracking and credits. Each LCFS pathway certification requires specific feedstock types with documented sustainability characteristics. The TraceableUnit entities in BOOST capture biomass origin, type, and chain of custody information that validates whether a particular feedstock batch qualifies for a certified pathway. For instance, lumber mill residue tracked through BOOST must demonstrate its origin from certified sustainable forestry operations to qualify for pathways like CA-RD-2025-LMR-001. Without this tracking data, fuel producers cannot claim the favorable carbon intensity values that generate credits.
+
+Volume reconciliation represents another fundamental dependency on tracking data. The fuel volume used in credit calculations must be traced back to feedstock inputs to satisfy CARB audit requirements. The Pacific Renewable Fuels example demonstrates this connection clearly: 4.2 million feedstock records tracked as TraceableUnits flow through processing operations to produce 5.075 million gallons of renewable diesel. The MaterialProcessing entities capture conversion ratios that reconcile input biomass tonnage with output fuel gallons, providing the audit trail regulators require.
+
+The pathway carbon intensity values themselves depend on tracked supply chain data. When CARB certifies a pathway with a specific CI value, that certification assumes particular feedstock sources, transportation distances, and processing methods. BOOST tracking validates that actual operations match the certified pathway parameters. Material entities track feedstock CI contributions while GeographicData entities document transportation distances, ensuring the pathway CI remains valid for credit calculations.
+
 LCFS credits are calculated using the formula:
 
 ```
@@ -97,6 +107,18 @@ Where:
 - Energy Density = MJ per gallon for fuel type
 - EER = Energy Economy Ratio for application
 
+#### Real-World Example: Pacific Renewable Fuels #### {#pacific-example}
+
+The Pacific Renewable Fuels implementation illustrates how tracked biomass data flows into LCFS credit calculations. During Q1 2025, the facility processed lumber mill residue tracked through BOOST to generate renewable diesel and corresponding LCFS credits.
+
+The process begins with feedstock tracking. When 875,000 gallons of fuel were produced from lumber mill residue, TraceableUnit entities captured the origin, volume, and sustainability certification of the input biomass. The Material entity documented a feedstock carbon intensity of 4.0 gCO2e/MJ, which directly influenced the pathway's overall carbon intensity profile.
+
+BOOST then validated that this feedstock met the requirements for pathway CA-RD-2025-LMR-001. The system verified the lumber mill residue classification, confirmed the FSC Chain of Custody certification, and validated that the material originated from approved sustainable forestry operations. This validation enabled the use of the pathway's certified CI of 19.85 gCO2e/MJ in credit calculations.
+
+The credit calculation incorporated the tracked volumes as follows: The 875,000 gallons of fuel, documented through Transaction entities linked to tracked biomass inputs, represented 121,362,500 MJ of energy. Applying the LCFS formula with the benchmark CI of 98.47 gCO2e/MJ and the pathway CI of 19.85 gCO2e/MJ yielded 9.54 million credits. These credits exist only because BOOST tracking validated the feedstock eligibility, documented the chain of custody, and reconciled the biomass inputs with fuel outputs.
+
+The tracking system made this credit generation possible by maintaining complete traceability from the 1.2 million tons of input biomass through the conversion process to the final 875,000 gallons of fuel. This documentation satisfies CARB audit requirements and supports the quarterly compliance reporting that generated $109 million in credit value for Pacific Renewable Fuels in Q1 2025.
+
 ### Data Reconciliation Process ### {#data-reconciliation}
 
 Monthly reconciliation ensures data integrity:
@@ -106,6 +128,8 @@ Monthly reconciliation ensures data integrity:
 3. Cross-check credit calculations with manual verification
 4. Document discrepancies in `DataReconciliation` entity
 5. Generate reconciliation report for audit trail
+
+The reconciliation process directly incorporates BOOST tracking data to validate credit claims. Transaction records are matched against TraceableUnit entities to verify that reported fuel volumes correspond to tracked feedstock inputs. The LCFSPathway assignments are validated against Material classifications to ensure pathway eligibility. Production records from MaterialProcessing entities confirm that conversion ratios align with certified pathway assumptions. This comprehensive reconciliation between tracking data and credit calculations reduces reporting errors by 95% compared to manual processes and provides the documentation trail required for regulatory audits.
 
 ## Implementation Examples ## {#lcfs-examples}
 

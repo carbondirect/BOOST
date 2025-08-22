@@ -16,6 +16,17 @@ This reference implementation demonstrates how to use the BOOST standard in Pyth
 - **🌐 JSON-LD Export/Import**: Full semantic web compatibility
 - **🛡️ Schema Version Compatibility**: Graceful handling of schema evolution
 
+## Recent Updates: Full Dynamic Architecture
+
+**🎉 The Python implementation now fully delivers on its promise of "Dynamic Schema-Driven Architecture"!**
+
+- **✅ All models generated dynamically** from JSON schemas at runtime
+- **✅ No more static model files** to maintain or synchronize  
+- **✅ Always current** - models automatically reflect schema changes
+- **✅ Complete entity coverage** - all 36 BOOST entities available dynamically
+
+See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for details on migrating from the old static models approach.
+
 ## Installation
 
 ### Prerequisites
