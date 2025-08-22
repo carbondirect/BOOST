@@ -367,70 +367,52 @@ jobs:
           sed "s|{{VERSION}}|${{ needs.extract-version.outputs.version }}|g" README.md > ./pages-content/README.md
           echo "✅ README.md processed with version ${{ needs.extract-version.outputs.version }}"
           
-          # Extract the most recent changelog entry
+          # Extract the most recent changelog entry (simple keepachangelog.com style)
           echo "📋 Extracting latest changelog entry..."
           if [ -f "drafts/current/specifications/CHANGELOG.md" ]; then
-            # Extract from the first ## heading to the next ## heading (or end of file)
-            # Remove ALL emojis and clean up formatting
+            # Simple extraction - just get version and main sections, remove emojis
             awk '
-            function remove_emojis(str) {
-              # Remove all Unicode emoji characters (comprehensive pattern)
-              gsub(/[\U0001F600-\U0001F64F]/, "", str);  # Emoticons
-              gsub(/[\U0001F300-\U0001F5FF]/, "", str);  # Misc symbols
-              gsub(/[\U0001F680-\U0001F6FF]/, "", str);  # Transport & map
-              gsub(/[\U0001F1E0-\U0001F1FF]/, "", str);  # Regional indicators
-              gsub(/[\U00002600-\U000027BF]/, "", str);  # Misc symbols
-              gsub(/[\U0001F900-\U0001F9FF]/, "", str);  # Supplemental symbols
-              # Common specific emojis
-              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "", str);
-              return str;
-            }
             /^## \[/{
-              if (found) exit;  # Stop at second entry
+              if (found) exit;
               found=1; 
-              sub(/^## \[/, ""); sub(/\].*/, ""); 
-              version=$0; 
+              # Extract version and date
+              match($0, /\[(.*)\].*- (.*)/, arr);
+              print "<p><strong>Version " arr[1] "</strong> - " arr[2] "</p>";
               next
             }
-            found && /^## \[/ {exit}  # Stop at next version
-            found && /^###/ {
-              $0 = remove_emojis($0);
+            found && /^## \[/ {exit}
+            found && /^### / {
+              # Clean section headers - remove emojis and extra formatting
+              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "");
               gsub(/\*\*/, "");
               gsub(/^### */, "");
-              if (NF > 0) print "<h3>" $0 "</h3>";
+              if ($0 !~ /^$/ && NF > 0) {
+                print "<h4>" $0 "</h4><ul>";
+                in_section = 1;
+              }
               next
             }
-            found && /^####/ {
-              $0 = remove_emojis($0);
-              gsub(/\*\*/, "");
-              gsub(/^#### */, "");
-              if (NF > 0) print "<h4>" $0 "</h4>";
+            found && /^- / && in_section {
+              # Simple bullet points - remove emojis, keep basic formatting
+              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "");
+              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>");
+              sub(/^- */, "");
+              if (NF > 0) print "<li>" $0 "</li>";
               next
             }
-            found && /^- / {
-              $0 = remove_emojis($0);
-              # Clean up bold formatting properly
-              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>", $0);
-              print "<li>" substr($0, 3) "</li>";
-              in_list = 1;
+            found && /^$/ && in_section {
+              if (in_section) {print "</ul>"; in_section = 0;}
               next
             }
-            found && /^This / {
-              if (in_list) {print "</ul>"; in_list = 0;}
-              $0 = remove_emojis($0);
-              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>", $0);
-              print "<p><em>" $0 "</em></p>";
-              next
-            }
-            found && NF > 0 && !/^#/ && !/^- / {
-              if (in_list && $0 != "" && $0 !~ /^- /) {print "</ul>"; in_list = 0;}
-              $0 = remove_emojis($0);
-              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>", $0);
-              if (NF > 0) print "<p>" $0 "</p>";
-              next
+            found && !/^#/ && !/^- / && NF > 0 {
+              if (in_section) {print "</ul>"; in_section = 0;}
+              # Description paragraphs
+              gsub(/[🎉✨🔧⬆️🏗️📊🎯⚠️🐍🚀🛡️🎨🧪📋👥💰📦🔄📚]/, "");
+              gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>");
+              print "<p>" $0 "</p>";
             }
             END {
-              if (in_list) print "</ul>";
+              if (in_section) print "</ul>";
             }
             ' drafts/current/specifications/CHANGELOG.md > ./pages-content/recent-changes.html
             echo "✅ Latest changelog entry extracted and formatted"
@@ -558,48 +540,32 @@ jobs:
                       padding-bottom: 10px;
                   }
                   .changelog-content {
-                      line-height: 1.7;
-                      color: #444;
-                  }
-                  .changelog-content h3 {
-                      color: #24292e;
-                      margin-top: 25px;
-                      margin-bottom: 15px;
-                      font-size: 1.3em;
-                      border-bottom: 1px solid #e1e4e8;
-                      padding-bottom: 5px;
+                      line-height: 1.6;
+                      color: #333;
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                   }
                   .changelog-content h4 {
-                      color: #24292e;
+                      color: #333;
                       margin-top: 20px;
-                      margin-bottom: 10px;
+                      margin-bottom: 8px;
                       font-size: 1.1em;
+                      font-weight: 600;
                   }
                   .changelog-content ul {
-                      margin: 10px 0;
-                      padding-left: 0;
-                      list-style: none;
+                      margin: 8px 0 20px 0;
+                      padding-left: 20px;
                   }
                   .changelog-content li {
-                      margin-bottom: 8px;
-                      padding-left: 20px;
-                      position: relative;
-                  }
-                  .changelog-content li:before {
-                      content: "•";
-                      color: #28a745;
-                      position: absolute;
-                      left: 8px;
-                      font-weight: bold;
+                      margin-bottom: 4px;
+                      line-height: 1.5;
                   }
                   .changelog-content p {
                       margin: 12px 0;
+                      line-height: 1.6;
                   }
                   .changelog-content strong {
                       color: #0366d6;
-                  }
-                  .changelog-content em {
-                      color: #666;
+                      font-weight: 600;
                   }
               </style>
           </head>
