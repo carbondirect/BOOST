@@ -130,13 +130,118 @@ class ClaimType(str, Enum):
     """Sustainability claim types."""
     SBP_COMPLIANT = "SBP-compliant"
     FSC_MIX = "FSC Mix"
-    RSB_GLOBAL = "RSB Global"
-    PEFC = "PEFC"
-    ORGANIC = "organic"
-    FSC_100 = "FSC 100%"
-    FSC_RECYCLED = "FSC Recycled"
-    ISCC_EU = "ISCC EU"
-    RED_II = "RED II"
+
+
+class ProductClassification(str, Enum):
+    """Product classification or intended product use."""
+    SAWLOG = "sawlog"
+    PULPWOOD = "pulpwood"
+    BIOMASS = "biomass"
+    CHIPS = "chips"
+    FIREWOOD = "firewood"
+    VENEER_LOG = "veneer_log"
+    POST_POLE = "post_pole"
+
+
+class ArrangementType(str, Enum):
+    """Physical arrangement types for biomass materials."""
+    SCATTERED = "scattered"
+    PILED = "piled"
+    WINDROW = "windrow"
+    STACKED = "stacked"
+    BUNDLED = "bundled"
+    IN_SITU = "in_situ"
+
+
+class ExposureConditions(str, Enum):
+    """Weather protection conditions."""
+    COVERED = "covered"
+    EXPOSED = "exposed"
+    PARTIALLY_COVERED = "partially_covered"
+
+
+class BaselineScenario(str, Enum):
+    """Expected fate if material is not collected."""
+    NATURAL_DECOMPOSITION = "natural_decomposition"
+    WILDFIRE = "wildfire"
+    PRESCRIBED_BURN = "prescribed_burn"
+    MULCHING = "mulching"
+
+
+class QualityGrade(str, Enum):
+    """Quality grade classification."""
+    A = "A"
+    B = "B"
+    C = "C"
+    STRUCTURAL = "structural"
+    FUEL = "fuel"
+
+
+# Nested models for complex objects
+class PhysicalArrangement(BaseModel):
+    """Physical arrangement information for biomass materials."""
+    arrangement_type: Optional[ArrangementType] = Field(
+        None,
+        alias="arrangementType",
+        description="Type of spatial arrangement"
+    )
+    arrangement_date: Optional[datetime] = Field(
+        None,
+        alias="arrangementDate", 
+        description="When material was arranged in this configuration"
+    )
+    exposure_conditions: Optional[ExposureConditions] = Field(
+        None,
+        alias="exposureConditions",
+        description="Protection from weather elements"
+    )
+    ground_contact: Optional[bool] = Field(
+        None,
+        alias="groundContact",
+        description="Direct soil contact affects decomposition rate"
+    )
+
+
+class CarbonImpact(BaseModel):
+    """Carbon-related impacts of the current arrangement."""
+    soil_carbon_change: Optional[float] = Field(
+        None,
+        alias="soilCarbonChange",
+        description="Change in soil carbon (tons CO2e) from current arrangement"
+    )
+    emissions_avoided: Optional[float] = Field(
+        None,
+        alias="emissionsAvoided",
+        description="Emissions avoided (tons CO2e) by collection vs baseline scenario"
+    )
+
+
+class AlternativeFateMetrics(BaseModel):
+    """LCA and BECCS analysis metrics for alternative fate assessment."""
+    baseline_scenario: Optional[BaselineScenario] = Field(
+        None,
+        alias="baselineScenario",
+        description="Expected fate if material is not collected"
+    )
+    annual_decay_rate: Optional[float] = Field(
+        None,
+        alias="annualDecayRate",
+        ge=0,
+        le=100,
+        description="Estimated annual decomposition rate (percent per year) based on arrangement and conditions"
+    )
+    collection_efficiency: Optional[float] = Field(
+        None,
+        alias="collectionEfficiency",
+        ge=0,
+        le=1,
+        description="Efficiency factor (0-1) for collecting material based on arrangement"
+    )
+    carbon_impact: Optional[CarbonImpact] = Field(
+        None,
+        alias="carbonImpact",
+        description="Carbon-related impacts of the current arrangement"
+    )
 
 
 
@@ -293,9 +398,14 @@ class TraceableUnit(BOOSTBaseModel):
     assortment_type: Optional[str] = Field(
         None,
         alias="assortmentType",
-        description="Type of wood assortment"
+        description="Type of wood assortment (deprecated - use productClassification)"
     )
-    quality_grade: Optional[str] = Field(
+    product_classification: Optional[ProductClassification] = Field(
+        None,
+        alias="productClassification",
+        description="Market classification or intended product use"
+    )
+    quality_grade: Optional[QualityGrade] = Field(
         None,
         alias="qualityGrade",
         description="Quality grade classification"
@@ -335,6 +445,22 @@ class TraceableUnit(BOOSTBaseModel):
         None,
         alias="mediaBreakFlags",
         description="Points where data continuity was lost"
+    )
+    identification_method_id: Optional[str] = Field(
+        None,
+        alias="identificationMethodId",
+        pattern=r"^IM-[A-Z0-9-_]+$",
+        description="Foreign key to IdentificationMethod entity"
+    )
+    physical_arrangement: Optional[PhysicalArrangement] = Field(
+        None,
+        alias="physicalArrangement",
+        description="Spatial organization affecting collection and decomposition"
+    )
+    alternative_fate_metrics: Optional[AlternativeFateMetrics] = Field(
+        None,
+        alias="alternativeFateMetrics", 
+        description="LCA and BECCS analysis metrics for alternative fate assessment"
     )
 
 class MaterialProcessing(BOOSTBaseModel):

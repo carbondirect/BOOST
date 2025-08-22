@@ -55,42 +55,6 @@
       "description": "List of geographic areas where organization operates",
       "examples": [["GEO-FOREST-AREA-01", "GEO-MILL-SITE-02"]]
     },
-    "equipmentIds": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^EQ-[A-Z0-9-_]+$"
-      },
-      "description": "Harvester/machine tracking references",
-      "examples": [["EQ-HARVESTER-001", "EQ-SKIDDER-002"]]
-    },
-    "operatorIds": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^OP-[A-Z0-9-_]+$"
-      },
-      "description": "Personnel tracking references",
-      "examples": [["OP-SMITH-001", "OP-JONES-002"]]
-    },
-    "harvestSites": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^TP-[A-Z0-9-_]+$"
-      },
-      "description": "Operational harvest locations managed",
-      "examples": [["TP-SITE-ALPHA", "TP-SITE-BETA"]]
-    },
-    "traceableUnitIds": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^TRU-[A-Z0-9-_]+$"
-      },
-      "description": "TRUs managed by this organization",
-      "examples": [["TRU-001", "TRU-002", "TRU-003"]]
-    },
     "contactEmail": {
       "type": "string",
       "format": "email",
@@ -241,7 +205,7 @@
       "name": "Organization",
       "primaryKey": "organizationId",
       "area": "organizational_foundation",
-      "description": "🏢 Organization entity for supply chain participants"
+      "description": "🏢 Organization entity for supply chain participants. Equipment, Operator, TrackingPoint, and TraceableUnit relationships are maintained via foreign keys in those entities rather than redundant arrays, following 3NF normalization principles."
     },
     "relationships": [
       {

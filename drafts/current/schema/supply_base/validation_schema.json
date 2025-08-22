@@ -41,30 +41,6 @@
           "type": "string"
         }
       },
-      "skidRoads": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "forestRoads": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "equipmentDeployment": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
-      "traceableUnitIds": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
-      },
       "speciesAvailable": {
         "type": "array",
         "items": {
@@ -87,7 +63,7 @@
       "description"
     ],
     "title": "Supply Base",
-    "description": "SupplyBase entity in BOOST data model"
+    "description": "SupplyBase entity in BOOST data model. Infrastructure data (roads) and entity relationships (equipment, TRUs) are maintained via proper foreign keys rather than redundant arrays, following normalization principles."
   },
   "rules": {
     "and": [
