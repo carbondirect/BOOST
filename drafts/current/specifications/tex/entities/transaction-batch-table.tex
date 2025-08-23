@@ -20,9 +20,9 @@
 \field{plantPartComposition} & object & Plant part composition breakdown \\
 \field{processingHistoryIds} & array<string> & Array of processing history record IDs \\
 \field{productionBatchId} & ['string', 'null'] & Foreign key to source production batch \\
-\field{qualityGrade} & enum(9 values) & Overall quality grade for the batch \\
+\field{qualityGrade} & enum(17 values) & Quality grade with comprehensive standard classification \\
 \field{qualityMetrics} & object (structured) & Detailed quality assessment metrics \\
-\field{reconciliationStatus} & enum(5 values) & Status of volume/quality reconciliation \\
+\field{reconciliationStatus} & enum(4 values) & Reconciliation status with standard values \\
 \field{speciesComposition} & array<object> & Species breakdown with percentages \\
 \field{trackingHistory} & string & Complete location trail summary \\
 \field{transportationData} & object (structured) & Transportation and logistics information \\

@@ -2,9 +2,9 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Verification Statement}
-\textbf{\field{issuingBody}} & string & Issuingbody field value \\
+\textbf{\field{issuingBody}} & string (pattern) & Foreign key to CertificationBody entity \\
 \textbf{\field{statementId}} & string (pattern) & Unique identifier for the statement \\
 \textbf{\field{verificationDate}} & string (date) & Verificationdate field value \\
 \field{scope} & string & Scope field value \\
-\field{transactionBatchId} & string & Foreign key to Transactionbatch entity \\
+\field{transactionBatchId} & string (pattern) & Foreign key to TransactionBatch entity \\
 \end{entitytable}

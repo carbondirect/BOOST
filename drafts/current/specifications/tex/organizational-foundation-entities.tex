@@ -24,10 +24,10 @@ This entity references the following entities:
 \textbf{\field{organizationName}} & string & Legal name of the organization \\
 \textbf{\field{organizationType}} & enum(10 values) & Type of organization \\
 \field{airDistrictPermit} & string & Air quality management district permit identifier \\
-\field{bioramContractId} & string (pattern) & BioRAM competitive procurement contract identifier \\
+\field{bioramContractId} & string (pattern) & BioRAM competitive procurement contract identifier (external system reference) \\
 \field{bioramEligibilityStatus} & enum(4 values) & Current BioRAM program eligibility status \\
-\field{bioramFacilityId} & string (pattern) & BioRAM facility identifier for program tracking \\
-\field{bioramRegistrationId} & string (pattern) & CEC BioRAM registration identifier for biomass power facilities \\
+\field{bioramFacilityId} & string (pattern) & BioRAM facility identifier for program tracking (external system reference) \\
+\field{bioramRegistrationId} & string (pattern) & CEC BioRAM registration identifier for biomass power facilities (external sys... \\
 \field{calFireJurisdiction} & string & CAL FIRE unit or jurisdiction for facility area \\
 \field{californiaSRA} & boolean & Whether facility operates within California State Responsibility Area \\
 \field{certifications} & array<string> & List of certification IDs held by organization \\
@@ -38,7 +38,7 @@ This entity references the following entities:
 \field{fireHazardZoneDesignation} & enum(4 values) & CAL FIRE fire hazard severity zone designation for facility location \\
 \field{gridInterconnectionPoint} & string & Grid interconnection substation or transmission point \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{lcfsRegistrationId} & string (pattern) & CARB LCFS registration identifier for regulated entities \\
+\field{lcfsRegistrationId} & string (pattern) & CARB LCFS registration identifier for regulated entities (external system ref... \\
 \field{operationalAreas} & array<string> & List of geographic areas where organization operates \\
 \field{operationalStatus} & enum(4 values) & Current operational status of the organization \\
 \field{powerPurchaseAgreementId} & string & Power purchase agreement identifier with utility offtaker \\
@@ -135,6 +135,7 @@ CertificationScheme entity defining certification standards and requirements wit
 \field{auditRequirements} & string & Audit and verification requirements \\
 \field{chainOfCustodyRequirements} & string & Chain of custody tracking and documentation requirements \\
 \field{claimTypes} & array<string> & Types of claims supported by this scheme \\
+\field{complianceTolerances} & object (structured) & Only regulatory compliance tolerances - equipment and process tolerances are ... \\
 \field{documentationRequirements} & array<string> & Required documentation and record-keeping \\
 \field{eligibleMaterialTypes} & array<string> & Material types eligible for this certification scheme \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\

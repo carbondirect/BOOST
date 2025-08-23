@@ -2,11 +2,11 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Supply Base Report}
-\textbf{\field{organizationId}} & string & Foreign key to the associated organization \\
+\textbf{\field{organizationId}} & string (pattern) & Foreign key to Organization entity that prepared this report \\
 \textbf{\field{preparationDate}} & string (date) & Preparationdate field value \\
 \textbf{\field{sbrId}} & string (pattern) & Unique identifier for the sbr \\
 \field{publicationUrl} & string (uri) & Publicationurl field value \\
-\field{reportGeographicDataId} & string & Foreign key to Reportgeographicdata entity \\
+\field{reportGeographicDataId} & string (pattern) & Foreign key to GeographicData entity for report coverage area \\
 \field{sourcingPractices} & string & Sourcingpractices field value \\
 \field{supplyBaseIds} & array<string> & Array of SupplyBase IDs that this report covers \\
 \field{supplyBaseSummary} & string & Supplybasesummary field value \\

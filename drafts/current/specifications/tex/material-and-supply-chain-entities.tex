@@ -56,10 +56,10 @@ Species composition within TRUs
 \field{harvestingMethod} & enum(4 values) & Method used to harvest this species \\
 \field{heightM} & number (≥0) & Average tree height in meters \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage by weight (0-100\%) \\
 \field{plantPartComposition} & object & Plant part breakdown within this species component \\
 \field{primaryPlantPart} & enum(17 values) & Primary plant part represented by this species component \\
-\field{qualityGrade} & string & Species-specific quality grade \\
+\field{qualityGrade} & enum(17 values) & Quality grade with comprehensive standard classification \\
 \field{scientificName} & string & Scientific/Latin name of the species \\
 \field{sourceGeographicDataId} & string (pattern) & Foreign key to geographic origin of this species \\
 \field{structuralClassification} & enum(5 values) & Functional classification of the primary plant part \\
@@ -159,7 +159,7 @@ SupplyBaseReport entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{organizationId} → \entity{Organization} ()
+    \item \field{organizationId} → \entity{Organization} (Foreign key to Organization entity that prepared this report)
 \end{itemize}
 \end{informative}
 
@@ -169,11 +169,11 @@ This entity references the following entities:
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Supply Base Report}
-\textbf{\field{organizationId}} & string & Foreign key to the associated organization \\
+\textbf{\field{organizationId}} & string (pattern) & Foreign key to Organization entity that prepared this report \\
 \textbf{\field{preparationDate}} & string (date) & Preparationdate field value \\
 \textbf{\field{sbrId}} & string (pattern) & Unique identifier for the sbr \\
 \field{publicationUrl} & string (uri) & Publicationurl field value \\
-\field{reportGeographicDataId} & string & Foreign key to Reportgeographicdata entity \\
+\field{reportGeographicDataId} & string (pattern) & Foreign key to GeographicData entity for report coverage area \\
 \field{sourcingPractices} & string & Sourcingpractices field value \\
 \field{supplyBaseIds} & array<string> & Array of SupplyBase IDs that this report covers \\
 \field{supplyBaseSummary} & string & Supplybasesummary field value \\

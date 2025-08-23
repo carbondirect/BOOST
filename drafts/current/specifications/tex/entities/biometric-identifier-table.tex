@@ -9,9 +9,9 @@
 \textbf{\field{confidenceScore}} & number (≥0, ≤100) & Pattern matching reliability score (0-100) \\
 \textbf{\field{fallbackRequired}} & boolean & True if low confidence requires secondary verification \\
 \textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to TraceableUnit entity \\
-\field{captureGeographicDataId} & string & Foreign key to Capturegeographicdata entity \\
+\field{captureGeographicDataId} & string (pattern) & Foreign key to GeographicData entity for capture location \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \field{speciesBiometrics} & array<string> & Array of speciesbiometrics values \\
-\field{trackingPointId} & string & Foreign key to Trackingpoint entity \\
+\field{trackingPointId} & string (pattern) & Foreign key to TrackingPoint entity where capture occurred \\
 \field{verificationMethod} & enum(4 values) & Method used to verify biometric match \\
 \end{entitytable}

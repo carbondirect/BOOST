@@ -3,7 +3,7 @@
 ## TrackingPoint
 
 ### Overview
-The `TrackingPoint` entity implements the critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the BOOST continuous traceability system. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using technology-appropriate equipment and identification methods.
+The `TrackingPoint` entity implements critical tracking points as specific geographic locations where custody changes, aggregation, or measurement occurs in biomass supply chains. BOOST supports flexible tracking configurations based on operational complexity, from minimum 2-point systems to extended 5+ point configurations addressing real-world operational variations including edge cases like silo storage and mobile processing.
 
 ### Fields
 
@@ -29,8 +29,22 @@ The `TrackingPoint` entity implements the critical tracking points (harvest site
 <td>`pointType`
 <td>string
 <td>Yes
-<td>Type of tracking point (enum)
-<td>`harvest_site`, `skid_road`, `forest_road`, `mill_entrance`
+<td>Type of tracking point (enum) - flexible based on operational needs
+<td>`harvest_site`, `consolidation_point`, `mill_entrance`, `transfer_station`, `storage_facility`
+</tr>
+<tr>
+<td>`coordinatePrecision`
+<td>number
+<td>No
+<td>Required coordinate precision in meters (±accuracy)
+<td>`5`, `10`, `25` (for ±5m, ±10m, ±25m accuracy)
+</tr>
+<tr>
+<td>`configurationRole`
+<td>string
+<td>No
+<td>Role in tracking configuration (enum)
+<td>`required`, `optional`, `seasonal`, `conditional`
 </tr>
 <tr>
 <td>`geographicDataId`
@@ -78,26 +92,112 @@ The `TrackingPoint` entity implements the critical tracking points (harvest site
 </table>
 ### Tracking Point Types
 
+#### **Standard Configuration**
+
 1. **harvest_site**
-     Initial capture point where TRUs are created
-     Biometric identification at felling/delimbing
-     Species identification and initial measurements
-     GPS coordinate capture for harvest location
+     - Specific coordinate where biomass is initially harvested (±10m precision typical)
+     - Initial TRU creation with biometric identification
+     - Species identification and volume measurements
+     - GPS coordinate capture for regulatory compliance
 
-2. **skid_road** 
-     Secondary aggregation and sorting point
-     TRU consolidation from multiple harvest sites
-     Quality grading and assortment classification
-     Load preparation for transport
+2. **consolidation_point** 
+     - Designated loading area with specific GPS coordinates (±25m precision typical)
+     - TRU aggregation from multiple harvest sites before transport
+     - Quality grading and load preparation
+     - Replaces ambiguous "skid_road/forest_road" concept
 
-3. **forest_road**
-     Transport verification and load documentation
-     Final forest-based measurement and verification
-     Transport method and vehicle assignment
-     Departure timestamp and route planning
+3. **mill_entrance**
+     - Final delivery point with precise coordinates (±5m precision typical)
+     - Scale-based measurement and verification
+     - TRU handoff from transport to processing operations
 
-4. **mill_entrance**
-     Final verification point before processing
+#### **Extended Configuration Options**
+
+4. **transfer_station**
+     - Intermediate custody transfer points between harvest and processing
+     - Common in operations with multiple transport stages
+
+5. **storage_facility**
+     - Temporary biomass storage locations (silos, covered storage)
+     - Addresses Colin's edge case question about aggregation
+
+6. **quality_control_point**
+     - Dedicated measurement and quality assessment locations
+     - Optional for operations requiring detailed quality verification
+
+7. **mobile_processing_unit**
+     - Tracking points that move with mobile equipment
+     - Coordinates updated as equipment relocates
+
+### Implementation Guidance
+
+#### **Configuration Selection**
+- **2-Point Minimum**: harvest_site → mill_entrance (direct transport operations)
+- **3-Point Standard**: harvest_site → consolidation_point → mill_entrance
+- **4-5 Point Extended**: Including transfer stations, storage facilities based on operational complexity
+
+#### **Coordinate Precision Requirements**
+- **harvest_site**: ±10m (sufficient for regulatory compliance)
+- **consolidation_point**: ±25m (loading area boundaries)
+- **mill_entrance**: ±5m (precise scale location)
+- **Other points**: ±10-50m based on operational requirements
+
+#### **Seasonal and Mobile Considerations**
+- **Seasonal access**: Use `configurationRole: "seasonal"` for roads/sites with limited access
+- **Mobile equipment**: Update coordinates as equipment moves, maintain tracking continuity
+- **Alternative routes**: Multiple consolidation_points for different seasonal/weather conditions
+
+### Edge Cases and Alternative Configurations
+
+#### **Colin's Edge Case Analysis - System Universality**
+
+**Question**: "Do they exist in all biomass harvest / transport / processing systems? Are there any edge cases to address?"
+
+**Answer**: BOOST's flexible tracking point system addresses operational variations through configurable point types:
+
+#### **Silo and Aggregation Systems**
+- **Scenario**: Biomass aggregated at silos before mill transport
+- **Solution**: Use `storage_facility` tracking points for silo locations
+- **Configuration**: harvest_site → storage_facility → mill_entrance
+- **Data Capture**: Volume measurements at silo intake and outfeed
+- **GPS Requirements**: ±10m precision for silo facility boundaries
+
+#### **Multi-Stage Transport Operations**  
+- **Scenario**: Transfer points between forest and mill (truck-to-rail, truck-to-truck)
+- **Solution**: Use `transfer_station` tracking points for custody handoffs
+- **Configuration**: harvest_site → consolidation_point → transfer_station → mill_entrance  
+- **Data Validation**: Volume conservation across all transfer points
+- **Operator Accountability**: Different operators at each transfer stage
+
+#### **Mobile Processing Units**
+- **Scenario**: Portable chippers, mobile sawmills moving between sites
+- **Solution**: `mobile_processing_unit` points with dynamic coordinate updates
+- **GPS Integration**: Continuous location tracking as equipment relocates
+- **Processing Continuity**: TRU identity maintained through equipment moves
+- **Seasonal Operations**: Equipment stored/moved based on access conditions
+
+#### **Direct Mill Delivery Systems** 
+- **Scenario**: Operations bypassing consolidation (small-scale, local mills)
+- **Solution**: 2-point minimum configuration
+- **Configuration**: harvest_site → mill_entrance (skip consolidation_point)
+- **Regulatory Compliance**: Meets minimum traceability requirements
+- **Scalability**: Can upgrade to 3+ points as operations expand
+
+#### **Alternative Workflow Handling**
+- **Non-standard systems**: Custom point types through extensible `pointType` enum
+- **Legacy integration**: Map existing tracking points to BOOST point types
+- **Regulatory adaptation**: Configure points to match specific compliance requirements (LCFS, RFS, EU RED-II)
+- **Operational flexibility**: Mix-and-match point types based on business needs
+
+#### **Universal Applicability Validation**
+✅ **Small Operations**: 2-point minimum (harvest → mill)
+✅ **Standard Operations**: 3-point configuration (harvest → consolidation → mill)  
+✅ **Complex Operations**: 4-5+ points with storage, transfer stations
+✅ **Mobile Operations**: Dynamic tracking points with coordinate updates
+✅ **Seasonal Operations**: Conditional points based on access/weather
+✅ **Multi-Modal Transport**: Transfer stations for transport method changes
+
+**Conclusion**: BOOST's flexible tracking point system accommodates all biomass operational models through configurable point types, precision requirements, and seasonal/mobile considerations.
      Scale-based measurement and reconciliation
      Quality assessment and acceptance
      Processing facility intake documentation

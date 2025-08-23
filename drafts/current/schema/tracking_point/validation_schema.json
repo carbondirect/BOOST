@@ -29,19 +29,44 @@
         "type": "string",
         "enum": [
           "harvest_site",
-          "skid_road",
-          "forest_road",
-          "mill_entrance"
-        ]
+          "consolidation_point",
+          "mill_entrance",
+          "transfer_station",
+          "storage_facility",
+          "quality_control_point",
+          "mobile_processing_unit"
+        ],
+        "description": "Type of tracking point - flexible configuration based on operational needs"
+      },
+      "coordinatePrecision": {
+        "type": "number",
+        "minimum": 1,
+        "maximum": 100,
+        "description": "Required coordinate precision in meters (e.g., 5 = ±5m accuracy)"
+      },
+      "configurationRole": {
+        "type": "string",
+        "enum": [
+          "required",
+          "optional",
+          "seasonal",
+          "conditional"
+        ],
+        "description": "Role of this point in the overall tracking configuration"
       },
       "geographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
+        "description": "Foreign key to GeographicData entity"
       },
       "equipmentUsed": {
-        "type": "string"
+        "type": "string",
+        "description": "Equipment deployed at this tracking point"
       },
       "operatorId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^OP-[A-Z0-9-_]+$",
+        "description": "Foreign key to Operator entity"
       },
       "establishedTimestamp": {
         "type": "string",

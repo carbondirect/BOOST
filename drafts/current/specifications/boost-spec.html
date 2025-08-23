@@ -1489,7 +1489,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 3f621ba99, updated Mon Jul 28 15:38:36 2025 -0700" name="generator">
-  <meta content="2abcbb9b7c4dcabdcb5dfe3797cab499a4a49f66" name="revision">
+  <meta content="fb76037a1616b214179f2514b46c96df769c8d85" name="revision">
   <meta content="dark light" name="color-scheme">
 <style>
 .erd-preview-container {
@@ -2980,10 +2980,23 @@ select:focus {
         <li><a href="#multi-framework-data-strategy"><span class="secno">2.6.1</span> <span class="content"><strong>Multi-Framework Data Strategy</strong></span></a>
         <li><a href="#automated-documentation-generation"><span class="secno">2.6.2</span> <span class="content"><strong>Automated Documentation Generation</strong></span></a>
        </ol>
-      <li><a href="#purpose-scope"><span class="secno">2.7</span> <span class="content">Purpose and Scope</span></a>
-      <li><a href="#background-motivation"><span class="secno">2.8</span> <span class="content">Background and Motivation</span></a>
-      <li><a href="#existing-standards"><span class="secno">2.9</span> <span class="content">Relationship to Existing Standards</span></a>
-      <li><a href="#community-process①"><span class="secno">2.10</span> <span class="content">Community Group Process</span></a>
+      <li>
+       <a href="#value-quantification"><span class="secno">2.7</span> <span class="content">Value Quantification and Implementation Realities</span></a>
+       <ol class="toc">
+        <li><a href="#automation-benefits"><span class="secno">2.7.1</span> <span class="content"><strong>Automation Benefits</strong></span></a>
+        <li><a href="#implementation-challenges-and-realistic-expectations"><span class="secno">2.7.2</span> <span class="content"><strong>Implementation Challenges and Realistic Expectations</strong></span></a>
+        <li><a href="#conservative-roi-expectations"><span class="secno">2.7.3</span> <span class="content"><strong>Conservative ROI Expectations</strong></span></a>
+       </ol>
+      <li>
+       <a href="#implementation-guidance"><span class="secno">2.8</span> <span class="content">Practical Implementation Guidance</span></a>
+       <ol class="toc">
+        <li><a href="#volume-tolerance-and-de-minimis-thresholds"><span class="secno">2.8.1</span> <span class="content"><strong>Volume Tolerance and De Minimis Thresholds</strong></span></a>
+        <li><a href="#edge-cases-and-alternative-configurations"><span class="secno">2.8.2</span> <span class="content"><strong>Edge Cases and Alternative Configurations</strong></span></a>
+       </ol>
+      <li><a href="#purpose-scope"><span class="secno">2.9</span> <span class="content">Purpose and Scope</span></a>
+      <li><a href="#background-motivation"><span class="secno">2.10</span> <span class="content">Background and Motivation</span></a>
+      <li><a href="#existing-standards"><span class="secno">2.11</span> <span class="content">Relationship to Existing Standards</span></a>
+      <li><a href="#community-process①"><span class="secno">2.12</span> <span class="content">Community Group Process</span></a>
      </ol>
     <li>
      <a href="#use-cases"><span class="secno">3</span> <span class="content">Use Cases and Requirements</span></a>
@@ -3024,14 +3037,15 @@ select:focus {
      <a href="#implementation-standards"><span class="secno">5</span> <span class="content">Implementation Standards and Tolerances</span></a>
      <ol class="toc">
       <li>
-       <a href="#tolerance-standards①"><span class="secno">5.1</span> <span class="content">Tolerance Standards and Precision Guidelines</span></a>
+       <a href="#tolerance-standards①"><span class="secno">5.1</span> <span class="content">Distributed Tolerance Framework</span></a>
        <ol class="toc">
-        <li><a href="#volume-and-mass-conservation-tolerances"><span class="secno">5.1.1</span> <span class="content"><strong>Volume and Mass Conservation Tolerances</strong></span></a>
-        <li><a href="#de-minimis-thresholds"><span class="secno">5.1.2</span> <span class="content"><strong>De Minimis Thresholds</strong></span></a>
-        <li><a href="#numeric-precision-requirements"><span class="secno">5.1.3</span> <span class="content"><strong>Numeric Precision Requirements</strong></span></a>
-        <li><a href="#measurement-accuracy-standards"><span class="secno">5.1.4</span> <span class="content"><strong>Measurement Accuracy Standards</strong></span></a>
-        <li><a href="#error-rate-acceptability-criteria"><span class="secno">5.1.5</span> <span class="content"><strong>Error Rate Acceptability Criteria</strong></span></a>
-        <li><a href="#quality-assurance-requirements"><span class="secno">5.1.6</span> <span class="content"><strong>Quality Assurance Requirements</strong></span></a>
+        <li><a href="#tolerance-governance-model"><span class="secno">5.1.1</span> <span class="content"><strong>Tolerance Governance Model</strong></span></a>
+        <li><a href="#equipment-accuracy"><span class="secno">5.1.2</span> <span class="content"><strong>Equipment Accuracy Standards</strong> {#equipment-accuracy}</span></a>
+        <li><a href="#process-loss"><span class="secno">5.1.3</span> <span class="content"><strong>Process Loss Standards</strong> {#process-loss}</span></a>
+        <li><a href="#regulatory-compliance"><span class="secno">5.1.4</span> <span class="content"><strong>Regulatory Compliance Standards</strong> {#regulatory-compliance}</span></a>
+        <li><a href="#multi-level-validation-framework"><span class="secno">5.1.5</span> <span class="content"><strong>Multi-Level Validation Framework</strong></span></a>
+        <li><a href="#tolerance-exception-handling-procedures"><span class="secno">5.1.6</span> <span class="content"><strong>Tolerance Exception Handling Procedures</strong></span></a>
+        <li><a href="#python-reference-implementation"><span class="secno">5.1.7</span> <span class="content"><strong>Python Reference Implementation</strong></span></a>
        </ol>
      </ol>
     <li>
@@ -3411,11 +3425,12 @@ select:focus {
         <li><a href="#overview①②"><span class="secno">22.1.1</span> <span class="content">Overview</span></a>
         <li><a href="#fields①①"><span class="secno">22.1.2</span> <span class="content">Fields</span></a>
         <li><a href="#measurement-methods"><span class="secno">22.1.3</span> <span class="content">Measurement Methods</span></a>
-        <li><a href="#key-features①⓪"><span class="secno">22.1.4</span> <span class="content">Key Features</span></a>
-        <li><a href="#validation-rules⑧"><span class="secno">22.1.5</span> <span class="content">Validation Rules</span></a>
-        <li><a href="#example-use-cases⑨"><span class="secno">22.1.6</span> <span class="content">Example Use Cases</span></a>
-        <li><a href="#relationships①②"><span class="secno">22.1.7</span> <span class="content">Relationships</span></a>
-        <li><a href="#moisture-content"><span class="secno">22.1.8</span> <span class="content">MoistureContent</span></a>
+        <li><a href="#equipment-accuracy-standards"><span class="secno">22.1.4</span> <span class="content">Equipment Accuracy Standards</span></a>
+        <li><a href="#key-features①⓪"><span class="secno">22.1.5</span> <span class="content">Key Features</span></a>
+        <li><a href="#validation-rules⑧"><span class="secno">22.1.6</span> <span class="content">Validation Rules</span></a>
+        <li><a href="#example-use-cases⑨"><span class="secno">22.1.7</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#relationships①②"><span class="secno">22.1.8</span> <span class="content">Relationships</span></a>
+        <li><a href="#moisture-content"><span class="secno">22.1.9</span> <span class="content">MoistureContent</span></a>
        </ol>
      </ol>
     <li>
@@ -3443,14 +3458,37 @@ select:focus {
        <ol class="toc">
         <li><a href="#overview①④"><span class="secno">24.1.1</span> <span class="content">Overview</span></a>
         <li><a href="#fields①③"><span class="secno">24.1.2</span> <span class="content">Fields</span></a>
-        <li><a href="#tracking-point-types"><span class="secno">24.1.3</span> <span class="content">Tracking Point Types</span></a>
-        <li><a href="#equipment-categories"><span class="secno">24.1.4</span> <span class="content">Equipment Categories</span></a>
-        <li><a href="#key-features①②"><span class="secno">24.1.5</span> <span class="content">Key Features</span></a>
-        <li><a href="#equipment-specifications"><span class="secno">24.1.6</span> <span class="content">Equipment Specifications</span></a>
-        <li><a href="#validation-rules①⓪"><span class="secno">24.1.7</span> <span class="content">Validation Rules</span></a>
-        <li><a href="#example-use-cases①①"><span class="secno">24.1.8</span> <span class="content">Example Use Cases</span></a>
-        <li><a href="#relationships①④"><span class="secno">24.1.9</span> <span class="content">Relationships</span></a>
-        <li><a href="#data-reconciliation"><span class="secno">24.1.10</span> <span class="content">DataReconciliation</span></a>
+        <li>
+         <a href="#tracking-point-types"><span class="secno">24.1.3</span> <span class="content">Tracking Point Types</span></a>
+         <ol class="toc">
+          <li><a href="#standard-configuration"><span class="secno">24.1.3.1</span> <span class="content"><strong>Standard Configuration</strong></span></a>
+          <li><a href="#extended-configuration-options"><span class="secno">24.1.3.2</span> <span class="content"><strong>Extended Configuration Options</strong></span></a>
+         </ol>
+        <li>
+         <a href="#implementation-guidance①"><span class="secno">24.1.4</span> <span class="content">Implementation Guidance</span></a>
+         <ol class="toc">
+          <li><a href="#configuration-selection"><span class="secno">24.1.4.1</span> <span class="content"><strong>Configuration Selection</strong></span></a>
+          <li><a href="#coordinate-precision-requirements"><span class="secno">24.1.4.2</span> <span class="content"><strong>Coordinate Precision Requirements</strong></span></a>
+          <li><a href="#seasonal-and-mobile-considerations"><span class="secno">24.1.4.3</span> <span class="content"><strong>Seasonal and Mobile Considerations</strong></span></a>
+         </ol>
+        <li>
+         <a href="#edge-cases-and-alternative-configurations①"><span class="secno">24.1.5</span> <span class="content">Edge Cases and Alternative Configurations</span></a>
+         <ol class="toc">
+          <li><a href="#colins-edge-case-analysis---system-universality"><span class="secno">24.1.5.1</span> <span class="content"><strong>Colin’s Edge Case Analysis - System Universality</strong></span></a>
+          <li><a href="#silo-and-aggregation-systems"><span class="secno">24.1.5.2</span> <span class="content"><strong>Silo and Aggregation Systems</strong></span></a>
+          <li><a href="#multi-stage-transport-operations"><span class="secno">24.1.5.3</span> <span class="content"><strong>Multi-Stage Transport Operations</strong></span></a>
+          <li><a href="#mobile-processing-units"><span class="secno">24.1.5.4</span> <span class="content"><strong>Mobile Processing Units</strong></span></a>
+          <li><a href="#direct-mill-delivery-systems"><span class="secno">24.1.5.5</span> <span class="content"><strong>Direct Mill Delivery Systems</strong></span></a>
+          <li><a href="#alternative-workflow-handling"><span class="secno">24.1.5.6</span> <span class="content"><strong>Alternative Workflow Handling</strong></span></a>
+          <li><a href="#universal-applicability-validation"><span class="secno">24.1.5.7</span> <span class="content"><strong>Universal Applicability Validation</strong></span></a>
+         </ol>
+        <li><a href="#equipment-categories"><span class="secno">24.1.6</span> <span class="content">Equipment Categories</span></a>
+        <li><a href="#key-features①②"><span class="secno">24.1.7</span> <span class="content">Key Features</span></a>
+        <li><a href="#equipment-specifications"><span class="secno">24.1.8</span> <span class="content">Equipment Specifications</span></a>
+        <li><a href="#validation-rules①⓪"><span class="secno">24.1.9</span> <span class="content">Validation Rules</span></a>
+        <li><a href="#example-use-cases①①"><span class="secno">24.1.10</span> <span class="content">Example Use Cases</span></a>
+        <li><a href="#relationships①④"><span class="secno">24.1.11</span> <span class="content">Relationships</span></a>
+        <li><a href="#data-reconciliation"><span class="secno">24.1.12</span> <span class="content">DataReconciliation</span></a>
        </ol>
      </ol>
     <li>
@@ -3885,7 +3923,7 @@ select:focus {
         <li><a href="#third-party-verification"><span class="secno">46.5.3</span> <span class="content">Third-Party Verification</span></a>
        </ol>
       <li>
-       <a href="#regulatory-compliance"><span class="secno">46.6</span> <span class="content">Regulatory Compliance</span></a>
+       <a href="#regulatory-compliance①"><span class="secno">46.6</span> <span class="content">Regulatory Compliance</span></a>
        <ol class="toc">
         <li><a href="#california-lcfs-compliance"><span class="secno">46.6.1</span> <span class="content">California LCFS Compliance</span></a>
         <li><a href="#species-specific-regulations"><span class="secno">46.6.2</span> <span class="content">Species-Specific Regulations</span></a>
@@ -3928,7 +3966,7 @@ select:focus {
          <ol class="toc">
           <li><a href="#semantic-interoperability"><span class="secno">47.1.2.1</span> <span class="content">Semantic Interoperability</span></a>
           <li><a href="#supply-chain-integration①"><span class="secno">47.1.2.2</span> <span class="content">Supply Chain Integration</span></a>
-          <li><a href="#regulatory-compliance①"><span class="secno">47.1.2.3</span> <span class="content">Regulatory Compliance</span></a>
+          <li><a href="#regulatory-compliance②"><span class="secno">47.1.2.3</span> <span class="content">Regulatory Compliance</span></a>
           <li><a href="#future-proofing"><span class="secno">47.1.2.4</span> <span class="content">Future-Proofing</span></a>
          </ol>
         <li>
@@ -4382,7 +4420,7 @@ select:focus {
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:lkillroy@carbon-direct.com">Liam Killroy</a> (<span class="p-org org">Carbon Direct</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:public-boost-01@w3.org">BOOST W3C Community Group</a>
      <dt>Version:
-     <dd>v3.2.4-11-g2abcbb9
+     <dd>v3.3.0-5-g3c35882
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -4554,7 +4592,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
      <p><strong>Community Participants:</strong> 15+ active members from across the biomass supply chain</p>
    </ul>
    <h3 class="heading settled" data-level="2.2" id="development-status"><span class="secno">2.2. </span><span class="content">Current Development Status</span><a class="self-link" href="#development-status"></a></h3>
-   <p><strong>Current Version:</strong> v3.2.4-11-g2abcbb9 - Complete BOOST Documentation Build System with integrated HTML and PDF generation</p>
+   <p><strong>Current Version:</strong> v3.4.1 - Complete BOOST Documentation Build System with integrated HTML and PDF generation</p>
    <p><strong>Recent Enhancements:</strong></p>
    <ul>
     <li data-md>
@@ -4595,16 +4633,27 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
    </ol>
    <p>This architecture ensures that every data element in BOOST directly supports traceability objectives while avoiding redundant or disconnected information structures.</p>
    <h4 class="heading settled" data-level="2.4.2" id="critical-tracking-point-implementation"><span class="secno">2.4.2. </span><span class="content"><strong>Critical Tracking Point Implementation</strong></span><a class="self-link" href="#critical-tracking-point-implementation"></a></h4>
-   <p>BOOST defines three critical tracking points that correspond to actual physical locations where custody changes or aggregation occurs:</p>
+   <p>BOOST defines critical tracking points as specific geographic locations where custody changes or aggregation occurs. While many operations use a three-point configuration, implementations may adapt based on operational complexity:</p>
+   <p><strong>Standard Configuration</strong>:</p>
    <ul>
     <li data-md>
-     <p><strong>harvest_site</strong>: Geographic location where biomass is initially harvested and first TRU is created</p>
+     <p><strong>harvest_site</strong>: Specific coordinate where biomass is initially harvested and first TRU is created (±10m precision)</p>
     <li data-md>
-     <p><strong>skid_road/forest_road</strong>: Intermediate aggregation points where multiple harvest TRUs may be consolidated before transport</p>
+     <p><strong>consolidation_point</strong>: Designated loading area (formerly skid_road/forest_road) with specific GPS coordinates where TRUs are consolidated for transport (±25m precision)</p>
     <li data-md>
-     <p><strong>mill_entrance</strong>: Final delivery point where TRUs transition from transportation to processing operations</p>
+     <p><strong>mill_entrance</strong>: Final delivery point where TRUs transition from transportation to processing operations (±5m precision)</p>
    </ul>
-   <p>These tracking points represent the physical bottlenecks where traditional systems lose traceability due to material mixing or transfer between different tracking systems.</p>
+   <p><strong>Flexible Configurations</strong>:</p>
+   <ul>
+    <li data-md>
+     <p><strong>Minimum (2-point)</strong>: harvest_site → mill_entrance (for direct transport operations)</p>
+    <li data-md>
+     <p><strong>Extended (4-5 point)</strong>: Including intermediate transfer stations, storage facilities, or quality control points</p>
+    <li data-md>
+     <p><strong>Edge cases</strong>: Silo storage, mobile processing units, seasonal access roads</p>
+   </ul>
+   <p><strong>Implementation Guidance</strong>:
+Operations should establish tracking points where physical custody transfers occur, material aggregation happens, or regulatory measurement is required. Not all operations require all three standard points - the minimum viable configuration depends on supply chain complexity and regulatory requirements.</p>
    <h3 class="heading settled" data-level="2.5" id="biometric-implementation"><span class="secno">2.5. </span><span class="content">Biometric Implementation Framework</span><a class="self-link" href="#biometric-implementation"></a></h3>
    <h4 class="heading settled" data-level="2.5.1" id="current-technology-landscape"><span class="secno">2.5.1. </span><span class="content"><strong>Current Technology Landscape</strong></span><a class="self-link" href="#current-technology-landscape"></a></h4>
    <p>BOOST’s biometric identification framework is designed to work with emerging computer vision technologies for wood identification:</p>
@@ -4669,8 +4718,53 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
     <li data-md>
      <p><strong>Format Transformation</strong>: Converting BOOST data into regulatory-specific formats (LCFS Quarterly Reports, RFS Annual Compliance, EU Sustainability Verification)</p>
    </ol>
-   <p>This approach eliminates manual report preparation while ensuring consistency across regulatory frameworks.</p>
-   <h3 class="heading settled" data-level="2.7" id="purpose-scope"><span class="secno">2.7. </span><span class="content">Purpose and Scope</span><a class="self-link" href="#purpose-scope"></a></h3>
+   <p>This approach can significantly reduce manual report preparation effort while ensuring consistency across regulatory frameworks, though implementation requires initial setup and operational integration work.</p>
+   <h3 class="heading settled" data-level="2.7" id="value-quantification"><span class="secno">2.7. </span><span class="content">Value Quantification and Implementation Realities</span><a class="self-link" href="#value-quantification"></a></h3>
+   <h4 class="heading settled" data-level="2.7.1" id="automation-benefits"><span class="secno">2.7.1. </span><span class="content"><strong>Automation Benefits</strong></span><a class="self-link" href="#automation-benefits"></a></h4>
+   <p>BOOST’s structured approach provides measurable automation benefits in specific areas:</p>
+   <p><strong>Data Quality Assurance</strong>: Automated schema validation can reduce manual data review time from 2-4 hours to 15-30 minutes per validation cycle. The comprehensive validation framework detects schema violations, foreign key integrity issues, and business rule violations that would require significant manual cross-referencing effort.</p>
+   <p><strong>Regulatory Compliance Checking</strong>: Single-system compliance with LCFS, RFS, and EU RED-II requirements can reduce regulatory reporting preparation from 6-12 hours to 2-4 hours per reporting period, primarily through automated data aggregation and format transformation rather than manual document assembly.</p>
+   <p><strong>Volume Conservation Monitoring</strong>: Automated tolerance compliance checking with process-specific thresholds (e.g., ±15% for drying, ±35% for sawmill operations) provides real-time quality control that would otherwise require manual calculations and spreadsheet maintenance.</p>
+   <h4 class="heading settled" data-level="2.7.2" id="implementation-challenges-and-realistic-expectations"><span class="secno">2.7.2. </span><span class="content"><strong>Implementation Challenges and Realistic Expectations</strong></span><a class="self-link" href="#implementation-challenges-and-realistic-expectations"></a></h4>
+   <p><strong>Initial Setup Investment</strong>: BOOST implementation requires substantial initial data entry and system integration work. Organizations should expect 40-80 hours of setup time for schema familiarization, data migration, and workflow integration, depending on existing system complexity.</p>
+   <p><strong>Technology Dependencies</strong>: Biometric identification capabilities remain in early commercial deployment. Most implementations will rely on RFID/QR code systems initially, with biometric capabilities becoming viable as computer vision technology matures and cost decreases.</p>
+   <p><strong>Data Entry Complexity</strong>: BOOST’s comprehensive field structure supports multiple regulatory frameworks but requires more detailed data entry than simplified tracking systems. The trade-off is between initial effort and subsequent multi-framework compliance capability.</p>
+   <p><strong>Integration Requirements</strong>: BOOST is not plug-and-play with existing forest management or mill systems. JSON-LD standardization enables integration, but requires development effort and may need custom middleware for legacy systems.</p>
+   <h4 class="heading settled" data-level="2.7.3" id="conservative-roi-expectations"><span class="secno">2.7.3. </span><span class="content"><strong>Conservative ROI Expectations</strong></span><a class="self-link" href="#conservative-roi-expectations"></a></h4>
+   <p>Organizations can expect positive returns on BOOST implementation investment in specific scenarios:</p>
+   <ul>
+    <li data-md>
+     <p><strong>Multi-regulatory environments</strong>: Operations subject to 2+ regulatory frameworks (LCFS + RFS, or EU RED-II + national standards) show strongest ROI through consolidated reporting</p>
+    <li data-md>
+     <p><strong>High-volume operations</strong>: Facilities processing 10,000+ m³ annually benefit most from automated validation and tolerance monitoring</p>
+    <li data-md>
+     <p><strong>Data-intensive certifications</strong>: Operations requiring detailed sustainability documentation see efficiency gains in audit preparation and verification processes</p>
+   </ul>
+   <p>Implementation success depends on operational complexity, existing system maturity, and regulatory compliance requirements rather than technology sophistication alone.</p>
+   <h3 class="heading settled" data-level="2.8" id="implementation-guidance"><span class="secno">2.8. </span><span class="content">Practical Implementation Guidance</span><a class="self-link" href="#implementation-guidance"></a></h3>
+   <h4 class="heading settled" data-level="2.8.1" id="volume-tolerance-and-de-minimis-thresholds"><span class="secno">2.8.1. </span><span class="content"><strong>Volume Tolerance and De Minimis Thresholds</strong></span><a class="self-link" href="#volume-tolerance-and-de-minimis-thresholds"></a></h4>
+   <p>Real-world biomass supply chains do not achieve 100% volume conservation due to measurement variance, processing losses, and material handling. BOOST accommodates these realities through configurable tolerance frameworks:</p>
+   <p><strong>Process-Specific Tolerances</strong>:</p>
+   <ul>
+    <li data-md>
+     <p>Transport operations: ±2% variance for measurement differences</p>
+    <li data-md>
+     <p>Drying operations: ±15% volume loss typical for moisture reduction</p>
+    <li data-md>
+     <p>Chipping operations: ±8% volume loss from mechanical processing</p>
+    <li data-md>
+     <p>Sawmill operations: ±35% volume loss for lumber production (industry standard)</p>
+    <li data-md>
+     <p>Pelletizing operations: ±12% volume loss from compression and binding</p>
+   </ul>
+   <p><strong>De Minimis Thresholds</strong>: Operations may establish minimum tracking thresholds (e.g., 0.1 m³ for individual logs, 1.0 m³ for batch processing) below which tracking precision requirements are relaxed. These thresholds should align with regulatory requirements - CARB LCFS specifies ±0.5% volume tolerance for fuel reporting.</p>
+   <p><strong>Significant Figures</strong>: Volume and carbon intensity reporting should maintain 3 significant figures for regulatory compliance (e.g., 94.17 gCO2e/MJ rather than 94.2). Measurement precision should reflect actual equipment capabilities rather than theoretical precision.</p>
+   <h4 class="heading settled" data-level="2.8.2" id="edge-cases-and-alternative-configurations"><span class="secno">2.8.2. </span><span class="content"><strong>Edge Cases and Alternative Configurations</strong></span><a class="self-link" href="#edge-cases-and-alternative-configurations"></a></h4>
+   <p><strong>Silo Storage and Aggregation</strong>: Operations using storage facilities create temporary aggregation points between harvest and processing. BOOST accommodates these through <code>storage_facility</code> tracking points with time-stamped inventory management and first-in-first-out (FIFO) or weighted-average blending calculations.</p>
+   <p><strong>Mobile Processing Units</strong>: Portable equipment requires dynamic tracking point coordinates updated as equipment relocates. GPS coordinate updates maintain traceability continuity without creating new tracking point entities for each location.</p>
+   <p><strong>Seasonal Access Roads</strong>: Forest operations with seasonal road restrictions use <code>configurationRole: "seasonal"</code> tracking points, with alternative routes activated based on weather and access conditions.</p>
+   <p><strong>Multi-Species Aggregation</strong>: Mixed-species piles require volume percentage tracking through the <code>SpeciesComponent</code> entity, maintaining species-specific sustainability claims and carbon storage calculations even within aggregated units.</p>
+   <h3 class="heading settled" data-level="2.9" id="purpose-scope"><span class="secno">2.9. </span><span class="content">Purpose and Scope</span><a class="self-link" href="#purpose-scope"></a></h3>
    <p>This specification defines the BOOST (Biomass Open Origin Standard for Tracking) data standard for biomass supply chain tracking and verification. The standard provides:</p>
    <ul>
     <li data-md>
@@ -4682,10 +4776,10 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
     <li data-md>
      <p>Regulatory compliance frameworks for multiple jurisdictions</p>
    </ul>
-   <h3 class="heading settled" data-level="2.8" id="background-motivation"><span class="secno">2.8. </span><span class="content">Background and Motivation</span><a class="self-link" href="#background-motivation"></a></h3>
+   <h3 class="heading settled" data-level="2.10" id="background-motivation"><span class="secno">2.10. </span><span class="content">Background and Motivation</span><a class="self-link" href="#background-motivation"></a></h3>
    <p>The development of comprehensive biomass traceability systems addresses critical needs for sustainability verification, regulatory compliance, and supply chain transparency in the growing biomass economy. This standard enables interoperability between reporting systems, registries, and certification bodies.</p>
    <p>The initial version of this data standard is funded through a grant from the California Department of Conservation, with an initial focus on California as the jurisdictional context while maintaining broad applicability to generalized biomass chain of custody requirements.</p>
-   <h3 class="heading settled" data-level="2.9" id="existing-standards"><span class="secno">2.9. </span><span class="content">Relationship to Existing Standards</span><a class="self-link" href="#existing-standards"></a></h3>
+   <h3 class="heading settled" data-level="2.11" id="existing-standards"><span class="secno">2.11. </span><span class="content">Relationship to Existing Standards</span><a class="self-link" href="#existing-standards"></a></h3>
    <p>BOOST builds upon and integrates with established standards including:</p>
    <ul>
     <li data-md>
@@ -4701,7 +4795,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
     <li data-md>
      <p><a data-link-type="biblio" href="#biblio-eu-red-ii" title="Renewable Energy Directive II">[EU-RED-II]</a> European Union Renewable Energy Directive II</p>
    </ul>
-   <h3 class="heading settled" data-level="2.10" id="community-process①"><span class="secno">2.10. </span><span class="content">Community Group Process</span><a class="self-link" href="#community-process①"></a></h3>
+   <h3 class="heading settled" data-level="2.12" id="community-process①"><span class="secno">2.12. </span><span class="content">Community Group Process</span><a class="self-link" href="#community-process①"></a></h3>
    <p>This specification was developed through the W3C Community Group process with balanced stakeholder participation including civil society organizations, government agencies, small and large businesses, and independent technical experts. Recruitment and engagement efforts were made to avoid overrepresentation of any single stakeholder group.</p>
    <p>The group operates under the Community and Business Group Process, seeking organizational licensing commitments under the W3C Community Contributor License Agreement (CLA) for all substantive contributions.</p>
    <h2 class="heading settled" data-level="3" id="use-cases"><span class="secno">3. </span><span class="content">Use Cases and Requirements</span><a class="self-link" href="#use-cases"></a></h2>
@@ -4903,174 +4997,145 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
      <p>Implement required business logic validation rules</p>
    </ul>
    <h2 class="heading settled" data-level="5" id="implementation-standards"><span class="secno">5. </span><span class="content">Implementation Standards and Tolerances</span><a class="self-link" href="#implementation-standards"></a></h2>
-   <h3 class="heading settled" data-level="5.1" id="tolerance-standards①"><span class="secno">5.1. </span><span class="content">Tolerance Standards and Precision Guidelines</span><a class="self-link" href="#tolerance-standards①"></a></h3>
-   <p>BOOST recognizes that real-world biomass supply chains cannot achieve perfect accuracy in volume/mass conservation, species composition, or measurement precision. This section establishes acceptable tolerance standards and precision requirements for BOOST implementations.</p>
-   <h4 class="heading settled" data-level="5.1.1" id="volume-and-mass-conservation-tolerances"><span class="secno">5.1.1. </span><span class="content"><strong>Volume and Mass Conservation Tolerances</strong></span><a class="self-link" href="#volume-and-mass-conservation-tolerances"></a></h4>
-   <p><strong>California CARB Standards</strong>:</p>
+   <h3 class="heading settled" data-level="5.1" id="tolerance-standards①"><span class="secno">5.1. </span><span class="content">Distributed Tolerance Framework</span><a class="self-link" href="#tolerance-standards①"></a></h3>
+   <p>The Biomass Open Origin Standard for Tracking (BOOST) implements a distributed tolerance approach wherein tolerance specifications are defined within the entities where they physically manifest. This architecture provides clear governance attribution and enables concrete validation processes for biomass supply chain operations.</p>
+   <p>The distributed tolerance framework establishes explicit tolerance specifications for measurement accuracy, processing losses, and regulatory compliance reporting across interconnected BOOST entities.</p>
+   <h4 class="heading settled" data-level="5.1.1" id="tolerance-governance-model"><span class="secno">5.1.1. </span><span class="content"><strong>Tolerance Governance Model</strong></span><a class="self-link" href="#tolerance-governance-model"></a></h4>
+   <p><strong>Equipment Accuracy Tolerances</strong> → <a href="#measurement-record">MeasurementRecord</a> entity</p>
+   <dl>
+    <dt data-md><strong>Authority</strong>: Equipment manufacturers and calibration standards
+    <dt data-md><strong>Scope</strong>: Measurement accuracy specifications for harvester, mill, manual, and optical equipment
+    <dt data-md><strong>Example</strong>: Harvester measurements ±2.0% accuracy per ISO forestry equipment standards
+   </dl>
+   <p><strong>Process Loss Tolerances</strong> → <a href="#material-processing">MaterialProcessing</a> entity</p>
+   <dl>
+    <dt data-md><strong>Authority</strong>: Industry standards and equipment manufacturers
+    <dt data-md><strong>Scope</strong>: Expected material losses during biomass processing operations
+    <dt data-md><strong>Example</strong>: Pelletizing 1.5-3.5% acceptable loss range per industry standard
+   </dl>
+   <p><strong>Regulatory Compliance Tolerances</strong> → <a href="#certification-scheme">CertificationScheme</a> entity</p>
+   <dl>
+    <dt data-md><strong>Authority</strong>: Regulatory agencies (California Air Resources Board (CARB), European Union (EU), Environmental Protection Agency (EPA))
+    <dt data-md><strong>Scope</strong>: Volume/mass deviation limits for compliance reporting
+    <dt data-md><strong>Example</strong>: CARB Low Carbon Fuel Standard (LCFS) ±0.5% volume deviation for regulatory reporting
+   </dl>
+   <h4 class="heading settled" data-level="5.1.2" id="equipment-accuracy"><span class="secno">5.1.2. </span><span class="content"><strong>Equipment Accuracy Standards</strong> {#equipment-accuracy}</span><a class="self-link" href="#equipment-accuracy"></a></h4>
+   <p><strong>MeasurementRecord.expectedAccuracy</strong> field specifies equipment-specific tolerances:</p>
+   <p>| <strong>Equipment Method</strong> | <strong>Expected Accuracy</strong> | <strong>Calibration Standard</strong> | <strong>Typical Range</strong> |
+|----------------------|----------------------|---------------------------|-------------------|
+| <code>harvester</code> | ±2.0% | International Organization for Standardization (ISO) forestry equipment | 1.5% - 3.0% |  
+| <code>mill</code> | ±0.5% | National Institute of Standards and Technology (NIST) traceable scales | 0.25% - 1.0% |
+| <code>manual</code> | ±3.0% | American Society for Testing and Materials (ASTM) measurement standards | 2.0% - 8.0% |
+| <code>optical</code> | ±1.5% | Manufacturer specification | 1.0% - 2.5% |</p>
+   <p><strong>Validation Methodology</strong>: Each measurement record incorporates an <code>accuracyValidation</code> object containing the acceptable measurement range and compliance status determination.</p>
+   <p><strong>Governance Structure</strong>: Equipment manufacturers establish accuracy specifications through industry standards; operational personnel validate measurements against established calibration standards.</p>
+   <h4 class="heading settled" data-level="5.1.3" id="process-loss"><span class="secno">5.1.3. </span><span class="content"><strong>Process Loss Standards</strong> {#process-loss}</span><a class="self-link" href="#process-loss"></a></h4>
+   <p><strong>MaterialProcessing.acceptableRange</strong> field specifies process-specific tolerance ranges:</p>
+   <p>| <strong>Process Type</strong> | <strong>Expected Loss</strong> | <strong>Acceptable Range</strong> | <strong>Standard Authority</strong> |
+|------------------|-------------------|---------------------|------------------------|
+| <code>pelletizing</code> | 2.0% | 1.5% - 3.5% | Industry standard |
+| <code>chipping</code> | 1.5% | 0.5% - 2.5% | Equipment manufacturer |
+| <code>transport</code> | 0.5% | 0.1% - 1.0% | Industry best practice |
+| <code>drying</code> | 10.0% | 5.0% - 15.0% | Equipment manufacturer |
+| <code>debarking</code> | 8.0% | 5.0% - 12.0% | Industry standard |
+| <code>sizing</code> | 1.5% | 0.5% - 2.5% | Equipment manufacturer |</p>
+   <p><strong>Process Loss Validation Example</strong>:</p>
+<pre class="language-json highlight"><c- p>{</c->
+  <c- f>"processType"</c-><c- p>:</c-> <c- u>"pelletizing"</c-><c- p>,</c->
+  <c- f>"inputVolume"</c-><c- p>:</c-> <c- mf>100.0</c-><c- p>,</c->
+  <c- f>"outputVolume"</c-><c- p>:</c-> <c- mf>98.2</c-><c- p>,</c-> 
+  <c- f>"volumeLoss"</c-><c- p>:</c-> <c- mf>1.8</c-><c- p>,</c->
+  <c- f>"expectedLossRate"</c-><c- p>:</c-> <c- mf>0.02</c-><c- p>,</c->
+  <c- f>"acceptableRange"</c-><c- p>:</c-> <c- p>[</c-><c- mf>0.015</c-><c- p>,</c-> <c- mf>0.035</c-><c- p>],</c->
+  <c- f>"toleranceValidation"</c-><c- p>:</c-> <c- p>{</c->
+    <c- f>"actualLossRate"</c-><c- p>:</c-> <c- mf>0.018</c-><c- p>,</c->
+    <c- f>"withinTolerance"</c-><c- p>:</c-> <c- kc>true</c->
+  <c- p>}</c->
+<c- p>}</c->
+</pre>
+   <p><strong>Governance Structure</strong>: Industry standards organizations and equipment manufacturers establish acceptable material loss ranges through technical specifications; facility operators implement compliance validation procedures.</p>
+   <h4 class="heading settled" data-level="5.1.4" id="regulatory-compliance"><span class="secno">5.1.4. </span><span class="content"><strong>Regulatory Compliance Standards</strong> {#regulatory-compliance}</span><a class="self-link" href="#regulatory-compliance"></a></h4>
+   <p><strong>CertificationScheme.complianceTolerances</strong> field specifies regulatory reporting tolerances:</p>
+   <p>| <strong>Regulatory Standard</strong> | <strong>Volume Deviation</strong> | <strong>Mass Deviation</strong> | <strong>Application</strong> |
+|-------------------------|---------------------|-------------------|------------------|
+| CARB LCFS | ±0.5% | ±0.5% | California Low Carbon Fuel Standard |
+| European Union Renewable Energy Directive (EU RED) | ±1.0% | ±1.0% | European renewable energy compliance |
+| Renewable Fuel Standard (RFS2) | ±0.75% | ±0.75% | United States renewable fuel compliance |</p>
+   <p><strong>Validation Methodology</strong>: End-to-end volume and mass conservation calculations must satisfy regulatory deviation limits for compliance reporting and program eligibility determination.</p>
+   <p><strong>Governance Structure</strong>: Regulatory agencies establish tolerance specifications for program compliance requirements; certification scheme administrators validate adherence through audit procedures.</p>
+   <h4 class="heading settled" data-level="5.1.5" id="multi-level-validation-framework"><span class="secno">5.1.5. </span><span class="content"><strong>Multi-Level Validation Framework</strong></span><a class="self-link" href="#multi-level-validation-framework"></a></h4>
+   <p>The BOOST tolerance validation framework operates through a hierarchical three-tier validation structure:</p>
+   <ol>
+    <li data-md>
+     <p><strong>Equipment-Level Validation</strong> (MeasurementRecord entity)</p>
+     <ul>
+      <li data-md>
+       <p>Validates individual measurements against manufacturer-specified equipment accuracy parameters</p>
+      <li data-md>
+       <p>Ensures calibration compliance and measurement consistency across operational contexts</p>
+      <li data-md>
+       <p><strong>Governance Authority</strong>: Equipment manufacturers and accredited calibration organizations</p>
+     </ul>
+    <li data-md>
+     <p><strong>Process-Level Validation</strong> (MaterialProcessing entity)</p>
+     <ul>
+      <li data-md>
+       <p>Validates material losses against process-specific tolerance parameters established through industry standards</p>
+      <li data-md>
+       <p>Supports process optimization and operational efficiency monitoring procedures</p>
+      <li data-md>
+       <p><strong>Governance Authority</strong>: Industry standards organizations and equipment manufacturers</p>
+     </ul>
+    <li data-md>
+     <p><strong>Regulatory Compliance-Level Validation</strong> (CertificationScheme entity)</p>
+     <ul>
+      <li data-md>
+       <p>Validates regulatory reporting calculations against program-specific compliance tolerance requirements</p>
+      <li data-md>
+       <p>Ensures program eligibility determination and regulatory adherence verification</p>
+      <li data-md>
+       <p><strong>Governance Authority</strong>: Regulatory agencies and accredited certification scheme administrators</p>
+     </ul>
+   </ol>
+   <h4 class="heading settled" data-level="5.1.6" id="tolerance-exception-handling-procedures"><span class="secno">5.1.6. </span><span class="content"><strong>Tolerance Exception Handling Procedures</strong></span><a class="self-link" href="#tolerance-exception-handling-procedures"></a></h4>
+   <p><strong>Out-of-Tolerance Condition Management</strong>:</p>
    <ul>
     <li data-md>
-     <p><strong>Volume Tolerance</strong>: ±0.5% for LCFS reporting calculations (as specified in CARB LCFS Regulation Section 95488.8)</p>
+     <p><strong>Equipment-Level Exceptions</strong>: Measurements exceeding accuracy range parameters require calibration verification procedures</p>
     <li data-md>
-     <p><strong>Application</strong>: Applies to total volume reconciliation between harvest and processing stages</p>
+     <p><strong>Process-Level Exceptions</strong>: Material losses exceeding acceptable tolerance ranges require mandatory <code>lossJustification</code> field completion</p>
     <li data-md>
-     <p><strong>Documentation Requirement</strong>: Variances exceeding ±0.5% require documented justification and corrective action plans</p>
+     <p><strong>Compliance-Level Exceptions</strong>: Deviations exceeding regulatory limits require formal compliance investigation procedures</p>
    </ul>
-   <p><strong>Processing-Specific Tolerances</strong>:</p>
+   <p><strong>Documentation and Audit Requirements</strong>:</p>
    <ul>
     <li data-md>
-     <p><strong>Pelletizing Operations</strong>: ±2.0% volume variance acceptable due to densification and moisture content changes during pellet formation</p>
+     <p>All tolerance violations require comprehensive documented cause analysis and corrective action implementation</p>
     <li data-md>
-     <p><strong>Chipping Operations</strong>: ±1.5% volume variance acceptable due to material loss during mechanical processing</p>
+     <p>Corrective action effectiveness must be recorded and verified through established quality assurance procedures</p>
     <li data-md>
-     <p><strong>Drying Operations</strong>: Mass variance up to 15% acceptable due to moisture content reduction (tracked separately through <code>MoistureContent</code> entity)</p>
+     <p>Complete audit trails must demonstrate tolerance compliance maintenance throughout biomass supply chain operations</p>
    </ul>
-   <p><strong>Transportation Tolerances</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Handling Loss</strong>: Up to 0.5% volume loss acceptable during loading, transportation, and unloading operations</p>
-    <li data-md>
-     <p><strong>Scale Accuracy</strong>: ±0.25% for truck scale measurements, ±0.5% for portable scale measurements</p>
-    <li data-md>
-     <p><strong>Documentation</strong>: Losses exceeding acceptable tolerances must be documented with cause analysis</p>
-   </ul>
-   <h4 class="heading settled" data-level="5.1.2" id="de-minimis-thresholds"><span class="secno">5.1.2. </span><span class="content"><strong>De Minimis Thresholds</strong></span><a class="self-link" href="#de-minimis-thresholds"></a></h4>
-   <p><strong>Material Loss Categories</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Sawdust and Debris</strong>: Material fragments &lt;2cm not requiring individual tracking</p>
-    <li data-md>
-     <p><strong>Incidental Loss</strong>: Spillage, dust, and minor material loss during handling &lt;1% of total volume</p>
-    <li data-md>
-     <p><strong>Quality Degradation</strong>: Material downgraded due to moisture, contamination, or damage &lt;5% of total volume per processing stage</p>
-   </ul>
-   <p><strong>Tracking Exemptions</strong>:</p>
-   <ul>
-    <li data-md>
-     <p>Material losses below de minimis thresholds may be recorded as aggregate loss rather than requiring individual TRU tracking</p>
-    <li data-md>
-     <p>Total aggregate losses must not exceed 2% of initial harvest volume across entire supply chain</p>
-    <li data-md>
-     <p>Systematic losses exceeding de minimis thresholds indicate process control issues requiring corrective action</p>
-   </ul>
-   <h4 class="heading settled" data-level="5.1.3" id="numeric-precision-requirements"><span class="secno">5.1.3. </span><span class="content"><strong>Numeric Precision Requirements</strong></span><a class="self-link" href="#numeric-precision-requirements"></a></h4>
-   <p><strong>Carbon Intensity Values</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Standard Precision</strong>: 2 decimal places (e.g., 94.17 gCO2e/MJ)</p>
-    <li data-md>
-     <p><strong>Rationale</strong>: Matches CARB LCFS reporting precision requirements</p>
-    <li data-md>
-     <p><strong>Application</strong>: All <code>benchmarkCI</code>, <code>pathwayCI</code>, and calculated CI values</p>
-   </ul>
-   <p><strong>Volume Measurements</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Cubic Meter Values</strong>: 3 decimal places (e.g., 125.847 m³)</p>
-    <li data-md>
-     <p><strong>Rationale</strong>: Maintains precision for volume conservation calculations across aggregation operations</p>
-    <li data-md>
-     <p><strong>Application</strong>: <code>TraceableUnit.totalVolumeM3</code>, <code>Transaction.quantityM3</code>, <code>MaterialProcessing.outputQuantity</code></p>
-   </ul>
-   <p><strong>Percentage Compositions</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Species Composition</strong>: 1 decimal place (e.g., 78.5%)</p>
-    <li data-md>
-     <p><strong>Moisture Content</strong>: 1 decimal place (e.g., 15.2%)</p>
-    <li data-md>
-     <p><strong>Quality Grade Distribution</strong>: Whole percentages (e.g., 85%)</p>
-    <li data-md>
-     <p><strong>Rationale</strong>: Balances practical measurement accuracy with data precision needs</p>
-   </ul>
-   <p><strong>Geographic Coordinates</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Latitude/Longitude</strong>: 6 decimal places (~0.1 meter precision)</p>
-    <li data-md>
-     <p><strong>Application</strong>: All <code>GeographicData</code> location fields</p>
-    <li data-md>
-     <p><strong>Rationale</strong>: Provides sub-meter accuracy for harvest site and critical tracking point location</p>
-   </ul>
-   <h4 class="heading settled" data-level="5.1.4" id="measurement-accuracy-standards"><span class="secno">5.1.4. </span><span class="content"><strong>Measurement Accuracy Standards</strong></span><a class="self-link" href="#measurement-accuracy-standards"></a></h4>
-   <p><strong>Field Measurement Equipment</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Diameter Measurements</strong>: ±0.5 cm accuracy for individual log measurements</p>
-    <li data-md>
-     <p><strong>Length Measurements</strong>: ±5 cm accuracy for log length measurements</p>
-    <li data-md>
-     <p><strong>Volume Calculations</strong>: Combine diameter and length measurements using standard forestry volume equations</p>
-   </ul>
-   <p><strong>Scale and Weighing Systems</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Truck Scales</strong>: Class III scales with ±0.25% accuracy certification</p>
-    <li data-md>
-     <p><strong>Portable Scales</strong>: Class II scales with ±0.5% accuracy certification</p>
-    <li data-md>
-     <p><strong>Calibration</strong>: Annual calibration required, quarterly verification recommended</p>
-   </ul>
-   <p><strong>Moisture Content Measurement</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Oven-Dry Method</strong>: ±1.0% accuracy (reference standard)</p>
-    <li data-md>
-     <p><strong>Electronic Meters</strong>: ±2.0% accuracy with species-specific calibration</p>
-    <li data-md>
-     <p><strong>Sampling Requirements</strong>: Minimum 3 samples per TRU, average used for reporting</p>
-   </ul>
-   <h4 class="heading settled" data-level="5.1.5" id="error-rate-acceptability-criteria"><span class="secno">5.1.5. </span><span class="content"><strong>Error Rate Acceptability Criteria</strong></span><a class="self-link" href="#error-rate-acceptability-criteria"></a></h4>
-   <p><strong>Volume Conservation Validation</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Acceptable Range</strong>: 98.0% - 102.0% volume conservation across supply chain stages</p>
-    <li data-md>
-     <p><strong>Warning Threshold</strong>: 97.0% - 103.0% requires investigation and documentation</p>
-    <li data-md>
-     <p><strong>Failure Threshold</strong>: &lt;97.0% or >103.0% requires corrective action and potential TRU revalidation</p>
-   </ul>
-   <p><strong>Species Composition Accuracy</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Primary Species</strong>: ±5% accuracy for species comprising >20% of TRU composition</p>
-    <li data-md>
-     <p><strong>Minor Species</strong>: ±10% accuracy for species comprising 5-20% of TRU composition</p>
-    <li data-md>
-     <p><strong>Trace Species</strong>: ±15% accuracy for species comprising &lt;5% of TRU composition</p>
-   </ul>
-   <p><strong>Temporal Reporting Tolerances</strong>:</p>
-   <ul>
-    <li data-md>
-     <p><strong>Timestamp Accuracy</strong>: ±15 minutes for operational activities (harvest, processing, transport)</p>
-    <li data-md>
-     <p><strong>Date Accuracy</strong>: Same calendar day for all supply chain stage transitions</p>
-    <li data-md>
-     <p><strong>Reporting Periods</strong>: Monthly aggregation acceptable for regulatory compliance reporting</p>
-   </ul>
-   <h4 class="heading settled" data-level="5.1.6" id="quality-assurance-requirements"><span class="secno">5.1.6. </span><span class="content"><strong>Quality Assurance Requirements</strong></span><a class="self-link" href="#quality-assurance-requirements"></a></h4>
-   <p><strong>Data Validation Rules</strong>:</p>
-   <ul>
-    <li data-md>
-     <p>Volume conservation validation must pass for all TRU transformations</p>
-    <li data-md>
-     <p>Species composition percentages must sum to 100.0% ±0.1%</p>
-    <li data-md>
-     <p>Moisture content values must be within realistic ranges (5.0% - 60.0% for wood biomass)</p>
-    <li data-md>
-     <p>Geographic coordinates must validate against known harvest and processing locations</p>
-   </ul>
-   <p><strong>Audit Trail Requirements</strong>:</p>
-   <ul>
-    <li data-md>
-     <p>All tolerance-exceeding variances must include documented cause analysis</p>
-    <li data-md>
-     <p>Measurement equipment calibration records must be maintained and available for audit</p>
-    <li data-md>
-     <p>Operator training records must demonstrate competency in measurement procedures</p>
-    <li data-md>
-     <p>Corrective actions taken for tolerance violations must be documented with effectiveness verification</p>
-   </ul>
-   <p>This tolerance framework ensures that BOOST implementations maintain practical operability while preserving the data integrity required for regulatory compliance and sustainability verification across diverse biomass supply chain operations.</p>
+   <h4 class="heading settled" data-level="5.1.7" id="python-reference-implementation"><span class="secno">5.1.7. </span><span class="content"><strong>Python Reference Implementation</strong></span><a class="self-link" href="#python-reference-implementation"></a></h4>
+   <p>The BOOST Python reference implementation demonstrates concrete tolerance validation:</p>
+<pre class="language-python highlight"><c- c1># Equipment accuracy validation</c->
+<c- n>measurement_result</c-> <c- o>=</c-> <c- n>equipment_validator</c-><c- o>.</c-><c- n>validate_measurement_accuracy</c-><c- p>(</c-><c- n>measurement_data</c-><c- p>)</c->
+
+<c- c1># Process loss validation - answers "within tolerance for pelletizing"  </c->
+<c- n>process_result</c-> <c- o>=</c-> <c- n>process_validator</c-><c- o>.</c-><c- n>validate_process_loss</c-><c- p>(</c-><c- n>pelletizing_data</c-><c- p>)</c->
+
+<c- c1># Regulatory compliance validation</c->
+<c- n>compliance_result</c-> <c- o>=</c-> <c- n>compliance_validator</c-><c- o>.</c-><c- n>validate_regulatory_compliance</c-><c- p>(</c-><c- n>cert_data</c-><c- p>)</c->
+</pre>
+   <p><strong>Implementation Results</strong>:</p>
+<pre>Process Loss Validation Results:
+  - Actual material loss: 1.80%
+  - Expected loss rate: 2.00%  
+  - Acceptable tolerance range: 1.5% - 3.5%
+  - Governing authority: Industry standards organization
+  - Schema location: MaterialProcessing.acceptableRange attribute
+</pre>
+   <p>The distributed tolerance approach ensures that tolerance specifications are defined within the entities where they physically manifest, providing clear governance attribution and enabling explicit validation procedures throughout biomass supply chain operations.</p>
    <h2 class="heading settled" data-level="6" id="traceability-system"><span class="secno">6. </span><span class="content">BOOST Traceability System</span><a class="self-link" href="#traceability-system"></a></h2>
    <p>The BOOST Traceability System implements a comprehensive approach to biomass supply chain tracking that addresses traditional weak points where traceability is lost during material transfers and processing operations.</p>
    <h3 class="heading settled" data-level="6.1" id="key-implementation-features"><span class="secno">6.1. </span><span class="content">Key Implementation Features</span><a class="self-link" href="#key-implementation-features"></a></h3>
@@ -5191,7 +5256,7 @@ MaterialProcessing entities provide comprehensive audit trails by:
      <p><strong>Supply Base Management</strong> - Infrastructure mapping with harvest sites and transportation routes</p>
    </ul>
    <h3 class="heading settled" data-level="7.2" id="interactive-erd"><span class="secno">7.2. </span><span class="content">Interactive Entity Relationship Diagram</span><a class="self-link" href="#interactive-erd"></a></h3>
-   <p>The BOOST data model comprises 33 interconnected entities organized into 7 thematic areas. For comprehensive exploration of entity relationships and schema definitions, use our interactive ERD Navigator.</p>
+   <p>The BOOST data model comprises 33 interconnected entities organized into 7 thematic areas. For comprehensive exploration of entity relationships and schema definitions, the interactive ERD Navigator provides complete visualization capabilities.</p>
    <h4 class="heading settled" data-level="7.2.1" id="erd-overview"><span class="secno">7.2.1. </span><span class="content">ERD Navigator Overview</span><a class="self-link" href="#erd-overview"></a></h4>
    <p>The **<a href="erd-navigator/index.html">Interactive ERD Navigator</a>** provides:</p>
    <ul>
@@ -7476,6 +7541,61 @@ The <code>MaterialProcessing</code> entity tracks all technical manipulations wi
       <td><code>harvester_head</code>, <code>chainsaw</code>, <code>chipper</code>, <code>debarker</code>
 
      <tr>
+      <td><code>expectedLossRate</code>
+
+      <td>number
+
+      <td>No
+
+      <td>Expected material loss rate as decimal (2% = 0.02)
+
+      <td><code>0.02</code>, <code>0.015</code>, <code>0.035</code>
+
+     <tr>
+      <td><code>acceptableRange</code>
+
+      <td>array
+
+      <td>No
+
+      <td>[min, max] acceptable loss percentages as decimals
+
+      <td><code>[0.005, 0.035]</code>, <code>[0.01, 0.025]</code>
+
+     <tr>
+      <td><code>lossJustification</code>
+
+      <td>string
+
+      <td>No
+
+      <td>Explanation when losses exceed acceptable range
+
+      <td><code>"Standard pelletizing densification loss"</code>, <code>"Equipment malfunction"</code>
+
+     <tr>
+      <td><code>processStandard</code>
+
+      <td>string
+
+      <td>No
+
+      <td>Authority defining acceptable tolerances (enum)
+
+      <td><code>industry_standard</code>, <code>equipment_manufacturer</code>
+
+     <tr>
+      <td><code>toleranceValidation</code>
+
+      <td>object
+
+      <td>No
+
+      <td>Process loss tolerance validation results
+
+      <td><code>{"actualLossRate": 0.018, "withinTolerance": true}</code>
+
+     <tr>
       <td><code>@id</code>
 
       <td>string (uri)
@@ -7542,6 +7662,31 @@ The <code>MaterialProcessing</code> entity tracks all technical manipulations wi
  Market specification preparation
  Quality-based value optimization
  Inventory organization</p>
+    <li data-md>
+     <p><strong>pelletizing</strong>
+ Conversion of biomass to compressed pellets
+ Densification process with heat and pressure
+ Moisture content adjustment and standardization
+ <strong>Expected Loss</strong>: 1.5-3.5% (densification and moisture loss)
+ <strong>Tolerance Standard</strong>: Industry standard pelletizing guidelines</p>
+    <li data-md>
+     <p><strong>transport</strong>
+ Movement of biomass between locations
+ Handling and loading/unloading operations
+ <strong>Expected Loss</strong>: 0.1-1.0% (spillage, handling, weather exposure)
+ <strong>Tolerance Standard</strong>: Industry transportation best practices</p>
+    <li data-md>
+     <p><strong>drying</strong>
+ Moisture content reduction operations
+ Preparation for processing or storage
+ <strong>Expected Loss</strong>: 5-15% mass loss (water removal)
+ <strong>Tolerance Standard</strong>: Equipment manufacturer specifications</p>
+    <li data-md>
+     <p><strong>sizing</strong>
+ Size reduction and standardization
+ Screening and grading by dimensions
+ <strong>Expected Loss</strong>: 0.5-2.5% (fines removal, screening losses)
+ <strong>Tolerance Standard</strong>: Equipment manufacturer specifications</p>
    </ol>
    <h4 class="heading settled" data-level="14.1.4" id="key-features⑤"><span class="secno">14.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features⑤"></a></h4>
    <ol>
@@ -7573,6 +7718,13 @@ The <code>MaterialProcessing</code> entity tracks all technical manipulations wi
  Defect identification and impact
  Processing quality assurance
  Value optimization tracking</p>
+    <li data-md>
+     <p><strong>Process Loss Tolerance Validation</strong>
+ Expected loss rate definition by process type
+ Acceptable tolerance range specification
+ Real-time validation against tolerance limits
+ Exception handling for out-of-tolerance conditions
+ Industry standard compliance verification</p>
    </ol>
    <h4 class="heading settled" data-level="14.1.5" id="processing-efficiency-metrics"><span class="secno">14.1.5. </span><span class="content">Processing Efficiency Metrics</span><a class="self-link" href="#processing-efficiency-metrics"></a></h4>
    <ol>
@@ -7638,6 +7790,25 @@ The <code>MaterialProcessing</code> entity tracks all technical manipulations wi
  Output: Separate species piles
  Composition change: Mixed to segregated
  Quality improvement through sorting</p>
+    <li data-md>
+     <p><strong>Pelletizing with Tolerance Validation</strong></p>
+<pre class="language-json highlight"><c- p>{</c->
+  <c- f>"processingId"</c-><c- p>:</c-> <c- u>"MP-PELLET-001"</c-><c- p>,</c->
+  <c- f>"processType"</c-><c- p>:</c-> <c- u>"pelletizing"</c-><c- p>,</c->
+  <c- f>"inputVolume"</c-><c- p>:</c-> <c- mf>100.0</c-><c- p>,</c->
+  <c- f>"outputVolume"</c-><c- p>:</c-> <c- mf>98.2</c-><c- p>,</c->
+  <c- f>"volumeLoss"</c-><c- p>:</c-> <c- mf>1.8</c-><c- p>,</c->
+  <c- f>"expectedLossRate"</c-><c- p>:</c-> <c- mf>0.02</c-><c- p>,</c->
+  <c- f>"acceptableRange"</c-><c- p>:</c-> <c- p>[</c-><c- mf>0.015</c-><c- p>,</c-> <c- mf>0.035</c-><c- p>],</c->
+  <c- f>"processStandard"</c-><c- p>:</c-> <c- u>"industry_standard"</c-><c- p>,</c->
+  <c- f>"toleranceValidation"</c-><c- p>:</c-> <c- p>{</c->
+    <c- f>"actualLossRate"</c-><c- p>:</c-> <c- mf>0.018</c-><c- p>,</c->
+    <c- f>"withinTolerance"</c-><c- p>:</c-> <c- kc>true</c-><c- p>,</c->
+    <c- f>"deviationFromExpected"</c-><c- p>:</c-> <c- mf>-0.002</c->
+  <c- p>}</c->
+<c- p>}</c->
+</pre>
+     <p>This example demonstrates Colin’s "within tolerance for pelletizing" scenario with explicit validation showing 1.8% actual loss is within the 1.5-3.5% acceptable range.</p>
    </ol>
    <h4 class="heading settled" data-level="14.1.8" id="relationships④"><span class="secno">14.1.8. </span><span class="content">Relationships</span><a class="self-link" href="#relationships④"></a></h4>
    <ul>
@@ -10335,6 +10506,39 @@ The <code>MeasurementRecord</code> entity captures measurements at different tra
       <td><code>["Pine: 45.2m3", "Fir: 28.8m3"]</code>
 
      <tr>
+      <td><code>expectedAccuracy</code>
+
+      <td>number
+
+      <td>No
+
+      <td>Expected accuracy of measurement method as decimal (±2% = 0.02)
+
+      <td><code>0.02</code>, <code>0.005</code>, <code>0.025</code>
+
+     <tr>
+      <td><code>calibrationStandard</code>
+
+      <td>string
+
+      <td>No
+
+      <td>Reference standard for equipment calibration (enum)
+
+      <td><code>ISO_forestry_equipment</code>, <code>manufacturer_specification</code>
+
+     <tr>
+      <td><code>accuracyValidation</code>
+
+      <td>object
+
+      <td>No
+
+      <td>Min/max acceptable range based on equipment accuracy
+
+      <td><code>{"minAcceptable": 12.25, "maxAcceptable": 12.75, "withinTolerance": true}</code>
+
+     <tr>
       <td><code>@id</code>
 
       <td>string (uri)
@@ -10384,7 +10588,58 @@ The <code>MeasurementRecord</code> entity captures measurements at different tra
  3D scanning for precise volume calculation
  Integration with biometric identification</p>
    </ol>
-   <h4 class="heading settled" data-level="22.1.4" id="key-features①⓪"><span class="secno">22.1.4. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①⓪"></a></h4>
+   <h4 class="heading settled" data-level="22.1.4" id="equipment-accuracy-standards"><span class="secno">22.1.4. </span><span class="content">Equipment Accuracy Standards</span><a class="self-link" href="#equipment-accuracy-standards"></a></h4>
+   <ol>
+    <li data-md>
+     <p><strong>harvester</strong></p>
+     <ul>
+      <li data-md>
+       <p><strong>Expected Accuracy</strong>: ±2.0% for automated volume calculations</p>
+      <li data-md>
+       <p><strong>Calibration Standard</strong>: International Organization for Standardization (ISO) forestry equipment standards</p>
+      <li data-md>
+       <p><strong>Typical Range</strong>: 1.5% - 3.0% depending on equipment condition</p>
+      <li data-md>
+       <p><strong>Validation</strong>: Cross-check with manual measurements periodically</p>
+     </ul>
+    <li data-md>
+     <p><strong>mill</strong></p>
+     <ul>
+      <li data-md>
+       <p><strong>Expected Accuracy</strong>: ±0.5% for scale-based measurements</p>
+      <li data-md>
+       <p><strong>Calibration Standard</strong>: National Institute of Standards and Technology (NIST) traceable scales, Class III certification</p>
+      <li data-md>
+       <p><strong>Typical Range</strong>: 0.25% - 1.0% depending on scale type</p>
+      <li data-md>
+       <p><strong>Validation</strong>: Daily calibration checks, annual certification</p>
+     </ul>
+    <li data-md>
+     <p><strong>manual</strong></p>
+     <ul>
+      <li data-md>
+       <p><strong>Expected Accuracy</strong>: ±3.0% for diameter measurements, ±5.0% for volume calculations</p>
+      <li data-md>
+       <p><strong>Calibration Standard</strong>: American Society for Testing and Materials (ASTM) measurement standards</p>
+      <li data-md>
+       <p><strong>Typical Range</strong>: 2.0% - 8.0% depending on operator skill and conditions</p>
+      <li data-md>
+       <p><strong>Validation</strong>: Training verification and periodic cross-validation</p>
+     </ul>
+    <li data-md>
+     <p><strong>optical</strong></p>
+     <ul>
+      <li data-md>
+       <p><strong>Expected Accuracy</strong>: ±1.5% for 3D scanning systems</p>
+      <li data-md>
+       <p><strong>Calibration Standard</strong>: Manufacturer specification with NIST traceable references</p>
+      <li data-md>
+       <p><strong>Typical Range</strong>: 1.0% - 2.5% depending on scanning resolution</p>
+      <li data-md>
+       <p><strong>Validation</strong>: Reference object scanning for calibration verification</p>
+     </ul>
+   </ol>
+   <h4 class="heading settled" data-level="22.1.5" id="key-features①⓪"><span class="secno">22.1.5. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①⓪"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Multi-Point Measurement</strong>
@@ -10407,7 +10662,7 @@ The <code>MeasurementRecord</code> entity captures measurements at different tra
  Integration with tracking point infrastructure
  Spatial validation of measurement locations</p>
    </ol>
-   <h4 class="heading settled" data-level="22.1.5" id="validation-rules⑧"><span class="secno">22.1.5. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules⑧"></a></h4>
+   <h4 class="heading settled" data-level="22.1.6" id="validation-rules⑧"><span class="secno">22.1.6. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules⑧"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Measurement Consistency</strong>
@@ -10425,7 +10680,7 @@ The <code>MeasurementRecord</code> entity captures measurements at different tra
  Tracking point integration for location consistency
  Operator assignment validation</p>
    </ol>
-   <h4 class="heading settled" data-level="22.1.6" id="example-use-cases⑨"><span class="secno">22.1.6. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases⑨"></a></h4>
+   <h4 class="heading settled" data-level="22.1.7" id="example-use-cases⑨"><span class="secno">22.1.7. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases⑨"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Harvest Measurements</strong>
@@ -10445,8 +10700,25 @@ The <code>MeasurementRecord</code> entity captures measurements at different tra
  Spot check validation of automated systems
  Defect assessment and grading
  Compliance verification measurements</p>
+    <li data-md>
+     <p><strong>Tolerance Validation Example</strong></p>
+<pre class="language-json highlight"><c- p>{</c->
+  <c- f>"recordId"</c-><c- p>:</c-> <c- u>"MR-HARVEST-001"</c-><c- p>,</c->
+  <c- f>"traceableUnitId"</c-><c- p>:</c-> <c- u>"TRU-LOG-001"</c-><c- p>,</c->
+  <c- f>"measuredVolume"</c-><c- p>:</c-> <c- mf>12.5</c-><c- p>,</c->
+  <c- f>"measurementMethod"</c-><c- p>:</c-> <c- u>"harvester"</c-><c- p>,</c->
+  <c- f>"expectedAccuracy"</c-><c- p>:</c-> <c- mf>0.02</c-><c- p>,</c->
+  <c- f>"calibrationStandard"</c-><c- p>:</c-> <c- u>"ISO_forestry_equipment"</c-><c- p>,</c->
+  <c- f>"accuracyValidation"</c-><c- p>:</c-> <c- p>{</c->
+    <c- f>"minAcceptable"</c-><c- p>:</c-> <c- mf>12.25</c-><c- p>,</c->
+    <c- f>"maxAcceptable"</c-><c- p>:</c-> <c- mf>12.75</c-><c- p>,</c->
+    <c- f>"withinTolerance"</c-><c- p>:</c-> <c- kc>true</c->
+  <c- p>}</c->
+<c- p>}</c->
+</pre>
+     <p>This example shows a harvester measurement with ±2% expected accuracy (0.02), resulting in an acceptable range of 12.25-12.75 m³ for a measured volume of 12.5 m³.</p>
    </ol>
-   <h4 class="heading settled" data-level="22.1.7" id="relationships①②"><span class="secno">22.1.7. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①②"></a></h4>
+   <h4 class="heading settled" data-level="22.1.8" id="relationships①②"><span class="secno">22.1.8. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①②"></a></h4>
    <ul>
     <li data-md>
      <p>MeasurementRecord belongs to one TraceableUnit</p>
@@ -10461,7 +10733,7 @@ The <code>MeasurementRecord</code> entity captures measurements at different tra
     <li data-md>
      <p>MeasurementRecord generated by MaterialProcessing operations</p>
    </ul>
-   <h4 class="heading settled" data-level="22.1.8" id="moisture-content"><span class="secno">22.1.8. </span><span class="content">MoistureContent</span><a class="self-link" href="#moisture-content"></a></h4>
+   <h4 class="heading settled" data-level="22.1.9" id="moisture-content"><span class="secno">22.1.9. </span><span class="content">MoistureContent</span><a class="self-link" href="#moisture-content"></a></h4>
    <h2 class="heading settled" data-level="23" id="moisturecontent"><span class="secno">23. </span><span class="content">MoistureContent</span><a class="self-link" href="#moisturecontent"></a></h2>
    <h3 class="heading settled" data-level="23.1" id="moisturecontent①"><span class="secno">23.1. </span><span class="content">MoistureContent</span><a class="self-link" href="#moisturecontent①"></a></h3>
    <h4 class="heading settled" data-level="23.1.1" id="overview①③"><span class="secno">23.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①③"></a></h4>
@@ -10932,7 +11204,7 @@ The <code>MoistureContent</code> entity tracks moisture measurements for biomass
    <h3 class="heading settled" data-level="24.1" id="trackingpoint①"><span class="secno">24.1. </span><span class="content">TrackingPoint</span><a class="self-link" href="#trackingpoint①"></a></h3>
    <h4 class="heading settled" data-level="24.1.1" id="overview①④"><span class="secno">24.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①④"></a></h4>
    
-The <code>TrackingPoint</code> entity implements the critical tracking points (harvest site, skid road, forest road, mill entrance) as defined in the BOOST continuous traceability system. These tracking points serve as infrastructure nodes where TRUs are identified, measured, and verified throughout the supply chain using technology-appropriate equipment and identification methods.
+The <code>TrackingPoint</code> entity implements critical tracking points as specific geographic locations where custody changes, aggregation, or measurement occurs in biomass supply chains. BOOST supports flexible tracking configurations based on operational complexity, from minimum 2-point systems to extended 5+ point configurations addressing real-world operational variations including edge cases like silo storage and mobile processing.
 
 
    <h4 class="heading settled" data-level="24.1.2" id="fields①③"><span class="secno">24.1.2. </span><span class="content">Fields</span><a class="self-link" href="#fields①③"></a></h4>
@@ -10968,9 +11240,31 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
 
       <td>Yes
 
-      <td>Type of tracking point (enum)
+      <td>Type of tracking point (enum) - flexible based on operational needs
 
-      <td><code>harvest_site</code>, <code>skid_road</code>, <code>forest_road</code>, <code>mill_entrance</code>
+      <td><code>harvest_site</code>, <code>consolidation_point</code>, <code>mill_entrance</code>, <code>transfer_station</code>, <code>storage_facility</code>
+
+     <tr>
+      <td><code>coordinatePrecision</code>
+
+      <td>number
+
+      <td>No
+
+      <td>Required coordinate precision in meters (±accuracy)
+
+      <td><code>5</code>, <code>10</code>, <code>25</code> (for ±5m, ±10m, ±25m accuracy)
+
+     <tr>
+      <td><code>configurationRole</code>
+
+      <td>string
+
+      <td>No
+
+      <td>Role in tracking configuration (enum)
+
+      <td><code>required</code>, <code>optional</code>, <code>seasonal</code>, <code>conditional</code>
 
      <tr>
       <td><code>geographicDataId</code>
@@ -11040,33 +11334,190 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
 
    </table>
    <h4 class="heading settled" data-level="24.1.3" id="tracking-point-types"><span class="secno">24.1.3. </span><span class="content">Tracking Point Types</span><a class="self-link" href="#tracking-point-types"></a></h4>
+   <h5 class="heading settled" data-level="24.1.3.1" id="standard-configuration"><span class="secno">24.1.3.1. </span><span class="content"><strong>Standard Configuration</strong></span><a class="self-link" href="#standard-configuration"></a></h5>
    <ol>
     <li data-md>
-     <p><strong>harvest_site</strong>
- Initial capture point where TRUs are created
- Biometric identification at felling/delimbing
- Species identification and initial measurements
- GPS coordinate capture for harvest location</p>
+     <p><strong>harvest_site</strong></p>
+     <ul>
+      <li data-md>
+       <p>Specific coordinate where biomass is initially harvested (±10m precision typical)</p>
+      <li data-md>
+       <p>Initial TRU creation with biometric identification</p>
+      <li data-md>
+       <p>Species identification and volume measurements</p>
+      <li data-md>
+       <p>GPS coordinate capture for regulatory compliance</p>
+     </ul>
     <li data-md>
-     <p><strong>skid_road</strong>
- Secondary aggregation and sorting point
- TRU consolidation from multiple harvest sites
- Quality grading and assortment classification
- Load preparation for transport</p>
+     <p><strong>consolidation_point</strong></p>
+     <ul>
+      <li data-md>
+       <p>Designated loading area with specific GPS coordinates (±25m precision typical)</p>
+      <li data-md>
+       <p>TRU aggregation from multiple harvest sites before transport</p>
+      <li data-md>
+       <p>Quality grading and load preparation</p>
+      <li data-md>
+       <p>Replaces ambiguous "skid_road/forest_road" concept</p>
+     </ul>
     <li data-md>
-     <p><strong>forest_road</strong>
- Transport verification and load documentation
- Final forest-based measurement and verification
- Transport method and vehicle assignment
- Departure timestamp and route planning</p>
-    <li data-md>
-     <p><strong>mill_entrance</strong>
- Final verification point before processing
- Scale-based measurement and reconciliation
- Quality assessment and acceptance
- Processing facility intake documentation</p>
+     <p><strong>mill_entrance</strong></p>
+     <ul>
+      <li data-md>
+       <p>Final delivery point with precise coordinates (±5m precision typical)</p>
+      <li data-md>
+       <p>Scale-based measurement and verification</p>
+      <li data-md>
+       <p>TRU handoff from transport to processing operations</p>
+     </ul>
    </ol>
-   <h4 class="heading settled" data-level="24.1.4" id="equipment-categories"><span class="secno">24.1.4. </span><span class="content">Equipment Categories</span><a class="self-link" href="#equipment-categories"></a></h4>
+   <h5 class="heading settled" data-level="24.1.3.2" id="extended-configuration-options"><span class="secno">24.1.3.2. </span><span class="content"><strong>Extended Configuration Options</strong></span><a class="self-link" href="#extended-configuration-options"></a></h5>
+   <ol start="4">
+    <li data-md>
+     <p><strong>transfer_station</strong></p>
+     <ul>
+      <li data-md>
+       <p>Intermediate custody transfer points between harvest and processing</p>
+      <li data-md>
+       <p>Common in operations with multiple transport stages</p>
+     </ul>
+    <li data-md>
+     <p><strong>storage_facility</strong></p>
+     <ul>
+      <li data-md>
+       <p>Temporary biomass storage locations (silos, covered storage)</p>
+      <li data-md>
+       <p>Addresses Colin’s edge case question about aggregation</p>
+     </ul>
+    <li data-md>
+     <p><strong>quality_control_point</strong></p>
+     <ul>
+      <li data-md>
+       <p>Dedicated measurement and quality assessment locations</p>
+      <li data-md>
+       <p>Optional for operations requiring detailed quality verification</p>
+     </ul>
+    <li data-md>
+     <p><strong>mobile_processing_unit</strong></p>
+     <ul>
+      <li data-md>
+       <p>Tracking points that move with mobile equipment</p>
+      <li data-md>
+       <p>Coordinates updated as equipment relocates</p>
+     </ul>
+   </ol>
+   <h4 class="heading settled" data-level="24.1.4" id="implementation-guidance①"><span class="secno">24.1.4. </span><span class="content">Implementation Guidance</span><a class="self-link" href="#implementation-guidance①"></a></h4>
+   <h5 class="heading settled" data-level="24.1.4.1" id="configuration-selection"><span class="secno">24.1.4.1. </span><span class="content"><strong>Configuration Selection</strong></span><a class="self-link" href="#configuration-selection"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>2-Point Minimum</strong>: harvest_site → mill_entrance (direct transport operations)</p>
+    <li data-md>
+     <p><strong>3-Point Standard</strong>: harvest_site → consolidation_point → mill_entrance</p>
+    <li data-md>
+     <p><strong>4-5 Point Extended</strong>: Including transfer stations, storage facilities based on operational complexity</p>
+   </ul>
+   <h5 class="heading settled" data-level="24.1.4.2" id="coordinate-precision-requirements"><span class="secno">24.1.4.2. </span><span class="content"><strong>Coordinate Precision Requirements</strong></span><a class="self-link" href="#coordinate-precision-requirements"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>harvest_site</strong>: ±10m (sufficient for regulatory compliance)</p>
+    <li data-md>
+     <p><strong>consolidation_point</strong>: ±25m (loading area boundaries)</p>
+    <li data-md>
+     <p><strong>mill_entrance</strong>: ±5m (precise scale location)</p>
+    <li data-md>
+     <p><strong>Other points</strong>: ±10-50m based on operational requirements</p>
+   </ul>
+   <h5 class="heading settled" data-level="24.1.4.3" id="seasonal-and-mobile-considerations"><span class="secno">24.1.4.3. </span><span class="content"><strong>Seasonal and Mobile Considerations</strong></span><a class="self-link" href="#seasonal-and-mobile-considerations"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>Seasonal access</strong>: Use <code>configurationRole: "seasonal"</code> for roads/sites with limited access</p>
+    <li data-md>
+     <p><strong>Mobile equipment</strong>: Update coordinates as equipment moves, maintain tracking continuity</p>
+    <li data-md>
+     <p><strong>Alternative routes</strong>: Multiple consolidation_points for different seasonal/weather conditions</p>
+   </ul>
+   <h4 class="heading settled" data-level="24.1.5" id="edge-cases-and-alternative-configurations①"><span class="secno">24.1.5. </span><span class="content">Edge Cases and Alternative Configurations</span><a class="self-link" href="#edge-cases-and-alternative-configurations①"></a></h4>
+   <h5 class="heading settled" data-level="24.1.5.1" id="colins-edge-case-analysis---system-universality"><span class="secno">24.1.5.1. </span><span class="content"><strong>Colin’s Edge Case Analysis - System Universality</strong></span><a class="self-link" href="#colins-edge-case-analysis---system-universality"></a></h5>
+   <p><strong>Question</strong>: "Do they exist in all biomass harvest / transport / processing systems? Are there any edge cases to address?"</p>
+   <p><strong>Answer</strong>: BOOST’s flexible tracking point system addresses operational variations through configurable point types:</p>
+   <h5 class="heading settled" data-level="24.1.5.2" id="silo-and-aggregation-systems"><span class="secno">24.1.5.2. </span><span class="content"><strong>Silo and Aggregation Systems</strong></span><a class="self-link" href="#silo-and-aggregation-systems"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>Scenario</strong>: Biomass aggregated at silos before mill transport</p>
+    <li data-md>
+     <p><strong>Solution</strong>: Use <code>storage_facility</code> tracking points for silo locations</p>
+    <li data-md>
+     <p><strong>Configuration</strong>: harvest_site → storage_facility → mill_entrance</p>
+    <li data-md>
+     <p><strong>Data Capture</strong>: Volume measurements at silo intake and outfeed</p>
+    <li data-md>
+     <p><strong>GPS Requirements</strong>: ±10m precision for silo facility boundaries</p>
+   </ul>
+   <h5 class="heading settled" data-level="24.1.5.3" id="multi-stage-transport-operations"><span class="secno">24.1.5.3. </span><span class="content"><strong>Multi-Stage Transport Operations</strong></span><a class="self-link" href="#multi-stage-transport-operations"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>Scenario</strong>: Transfer points between forest and mill (truck-to-rail, truck-to-truck)</p>
+    <li data-md>
+     <p><strong>Solution</strong>: Use <code>transfer_station</code> tracking points for custody handoffs</p>
+    <li data-md>
+     <p><strong>Configuration</strong>: harvest_site → consolidation_point → transfer_station → mill_entrance</p>
+    <li data-md>
+     <p><strong>Data Validation</strong>: Volume conservation across all transfer points</p>
+    <li data-md>
+     <p><strong>Operator Accountability</strong>: Different operators at each transfer stage</p>
+   </ul>
+   <h5 class="heading settled" data-level="24.1.5.4" id="mobile-processing-units"><span class="secno">24.1.5.4. </span><span class="content"><strong>Mobile Processing Units</strong></span><a class="self-link" href="#mobile-processing-units"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>Scenario</strong>: Portable chippers, mobile sawmills moving between sites</p>
+    <li data-md>
+     <p><strong>Solution</strong>: <code>mobile_processing_unit</code> points with dynamic coordinate updates</p>
+    <li data-md>
+     <p><strong>GPS Integration</strong>: Continuous location tracking as equipment relocates</p>
+    <li data-md>
+     <p><strong>Processing Continuity</strong>: TRU identity maintained through equipment moves</p>
+    <li data-md>
+     <p><strong>Seasonal Operations</strong>: Equipment stored/moved based on access conditions</p>
+   </ul>
+   <h5 class="heading settled" data-level="24.1.5.5" id="direct-mill-delivery-systems"><span class="secno">24.1.5.5. </span><span class="content"><strong>Direct Mill Delivery Systems</strong></span><a class="self-link" href="#direct-mill-delivery-systems"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>Scenario</strong>: Operations bypassing consolidation (small-scale, local mills)</p>
+    <li data-md>
+     <p><strong>Solution</strong>: 2-point minimum configuration</p>
+    <li data-md>
+     <p><strong>Configuration</strong>: harvest_site → mill_entrance (skip consolidation_point)</p>
+    <li data-md>
+     <p><strong>Regulatory Compliance</strong>: Meets minimum traceability requirements</p>
+    <li data-md>
+     <p><strong>Scalability</strong>: Can upgrade to 3+ points as operations expand</p>
+   </ul>
+   <h5 class="heading settled" data-level="24.1.5.6" id="alternative-workflow-handling"><span class="secno">24.1.5.6. </span><span class="content"><strong>Alternative Workflow Handling</strong></span><a class="self-link" href="#alternative-workflow-handling"></a></h5>
+   <ul>
+    <li data-md>
+     <p><strong>Non-standard systems</strong>: Custom point types through extensible <code>pointType</code> enum</p>
+    <li data-md>
+     <p><strong>Legacy integration</strong>: Map existing tracking points to BOOST point types</p>
+    <li data-md>
+     <p><strong>Regulatory adaptation</strong>: Configure points to match specific compliance requirements (LCFS, RFS, EU RED-II)</p>
+    <li data-md>
+     <p><strong>Operational flexibility</strong>: Mix-and-match point types based on business needs</p>
+   </ul>
+   <h5 class="heading settled" data-level="24.1.5.7" id="universal-applicability-validation"><span class="secno">24.1.5.7. </span><span class="content"><strong>Universal Applicability Validation</strong></span><a class="self-link" href="#universal-applicability-validation"></a></h5>
+   
+✅ <strong>Small Operations</strong>: 2-point minimum (harvest → mill)
+✅ <strong>Standard Operations</strong>: 3-point configuration (harvest → consolidation → mill)  
+✅ <strong>Complex Operations</strong>: 4-5+ points with storage, transfer stations
+✅ <strong>Mobile Operations</strong>: Dynamic tracking points with coordinate updates
+✅ <strong>Seasonal Operations</strong>: Conditional points based on access/weather
+✅ <strong>Multi-Modal Transport</strong>: Transfer stations for transport method changes
+
+
+   <p><strong>Conclusion</strong>: BOOST’s flexible tracking point system accommodates all biomass operational models through configurable point types, precision requirements, and seasonal/mobile considerations.
+     Scale-based measurement and reconciliation
+     Quality assessment and acceptance
+     Processing facility intake documentation</p>
+   <h4 class="heading settled" data-level="24.1.6" id="equipment-categories"><span class="secno">24.1.6. </span><span class="content">Equipment Categories</span><a class="self-link" href="#equipment-categories"></a></h4>
    <ul>
     <li data-md>
      <p><strong>RFID_reader</strong>: Radio frequency identification scanning equipment</p>
@@ -11081,7 +11532,7 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
     <li data-md>
      <p><strong>optical_scanner</strong>: Advanced optical measurement systems</p>
    </ul>
-   <h4 class="heading settled" data-level="24.1.5" id="key-features①②"><span class="secno">24.1.5. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①②"></a></h4>
+   <h4 class="heading settled" data-level="24.1.7" id="key-features①②"><span class="secno">24.1.7. </span><span class="content">Key Features</span><a class="self-link" href="#key-features①②"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Critical Point Infrastructure</strong>
@@ -11109,7 +11560,7 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
  Performance monitoring and validation
  Backup identification methods</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.6" id="equipment-specifications"><span class="secno">24.1.6. </span><span class="content">Equipment Specifications</span><a class="self-link" href="#equipment-specifications"></a></h4>
+   <h4 class="heading settled" data-level="24.1.8" id="equipment-specifications"><span class="secno">24.1.8. </span><span class="content">Equipment Specifications</span><a class="self-link" href="#equipment-specifications"></a></h4>
    <ol>
     <li data-md>
      <p><strong>RFID Systems</strong>
@@ -11130,7 +11581,7 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
  Integration with geographic data systems
  Offline capability for remote locations</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.7" id="validation-rules①⓪"><span class="secno">24.1.7. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①⓪"></a></h4>
+   <h4 class="heading settled" data-level="24.1.9" id="validation-rules①⓪"><span class="secno">24.1.9. </span><span class="content">Validation Rules</span><a class="self-link" href="#validation-rules①⓪"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Location Consistency</strong>
@@ -11148,7 +11599,7 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
  Equipment installation must precede TRU processing
  Operator assignment must be current and valid</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.8" id="example-use-cases①①"><span class="secno">24.1.8. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①①"></a></h4>
+   <h4 class="heading settled" data-level="24.1.10" id="example-use-cases①①"><span class="secno">24.1.10. </span><span class="content">Example Use Cases</span><a class="self-link" href="#example-use-cases①①"></a></h4>
    <ol>
     <li data-md>
      <p><strong>Harvest Site Setup</strong>
@@ -11169,7 +11620,7 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
  Weather-resistant equipment configurations
  Remote location connectivity solutions</p>
    </ol>
-   <h4 class="heading settled" data-level="24.1.9" id="relationships①④"><span class="secno">24.1.9. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①④"></a></h4>
+   <h4 class="heading settled" data-level="24.1.11" id="relationships①④"><span class="secno">24.1.11. </span><span class="content">Relationships</span><a class="self-link" href="#relationships①④"></a></h4>
    <ul>
     <li data-md>
      <p>TrackingPoint located at one GeographicData location</p>
@@ -11184,7 +11635,7 @@ The <code>TrackingPoint</code> entity implements the critical tracking points (h
     <li data-md>
      <p>TrackingPoint supports LocationHistory event recording</p>
    </ul>
-   <h4 class="heading settled" data-level="24.1.10" id="data-reconciliation"><span class="secno">24.1.10. </span><span class="content">DataReconciliation</span><a class="self-link" href="#data-reconciliation"></a></h4>
+   <h4 class="heading settled" data-level="24.1.12" id="data-reconciliation"><span class="secno">24.1.12. </span><span class="content">DataReconciliation</span><a class="self-link" href="#data-reconciliation"></a></h4>
    <h2 class="heading settled" data-level="25" id="datareconciliation"><span class="secno">25. </span><span class="content">DataReconciliation</span><a class="self-link" href="#datareconciliation"></a></h2>
    <h3 class="heading settled" data-level="25.1" id="datareconciliation①"><span class="secno">25.1. </span><span class="content">DataReconciliation</span><a class="self-link" href="#datareconciliation①"></a></h3>
    <h4 class="heading settled" data-level="25.1.1" id="overview①⑤"><span class="secno">25.1.1. </span><span class="content">Overview</span><a class="self-link" href="#overview①⑤"></a></h4>
@@ -19800,7 +20251,7 @@ Downstream certification claims CANNOT exceed input certified percentages:</p>
     <li data-md>
      <p><strong>Result Documentation</strong>: Verification results and findings MUST be documented</p>
    </ul>
-   <h3 class="heading settled" data-level="46.6" id="regulatory-compliance"><span class="secno">46.6. </span><span class="content">Regulatory Compliance</span><a class="self-link" href="#regulatory-compliance"></a></h3>
+   <h3 class="heading settled" data-level="46.6" id="regulatory-compliance①"><span class="secno">46.6. </span><span class="content">Regulatory Compliance</span><a class="self-link" href="#regulatory-compliance①"></a></h3>
    <p>Jurisdiction-specific rules MUST be enforced based on operational location, material destination, and applicable regulatory frameworks.</p>
    <h4 class="heading settled" data-level="46.6.1" id="california-lcfs-compliance"><span class="secno">46.6.1. </span><span class="content">California LCFS Compliance</span><a class="self-link" href="#california-lcfs-compliance"></a></h4>
    <p><strong>Pathway Registration Requirements:</strong></p>
@@ -20194,7 +20645,7 @@ Biomass supply chains involve diverse participants (harvesters, processors, cert
      <p><strong>Regulatory agencies</strong> with reporting and monitoring systems</p>
    </ul>
    <p>JSON-LD enables seamless data flow between these heterogeneous systems without requiring proprietary APIs or custom integration points.</p>
-   <h5 class="heading settled" data-level="47.1.2.3" id="regulatory-compliance①"><span class="secno">47.1.2.3. </span><span class="content">Regulatory Compliance</span><a class="self-link" href="#regulatory-compliance①"></a></h5>
+   <h5 class="heading settled" data-level="47.1.2.3" id="regulatory-compliance②"><span class="secno">47.1.2.3. </span><span class="content">Regulatory Compliance</span><a class="self-link" href="#regulatory-compliance②"></a></h5>
    
 Multiple jurisdictions have different reporting requirements:
 
@@ -23629,7 +24080,7 @@ Technical presentation on BOOST integration with California’s Low Carbon Fuel 
    </div>
    <h3 class="heading settled" data-level="52.2" id="interactive-tools"><span class="secno">52.2. </span><span class="content">Interactive Tools</span><a class="self-link" href="#interactive-tools"></a></h3>
    <h4 class="heading settled" data-level="52.2.1" id="erd-navigator-section"><span class="secno">52.2.1. </span><span class="content">Entity Relationship Diagram Navigator</span><a class="self-link" href="#erd-navigator-section"></a></h4>
-   <p>Explore the complete BOOST data model through our interactive ERD Navigator, featuring all 33 entities across 7 thematic areas.</p>
+   <p>Explore the complete BOOST data model through the interactive ERD Navigator, featuring all 33 entities across 7 thematic areas.</p>
    <p>**<a href="erd-navigator/index.html">Interactive ERD Navigator</a>**</p>
    <p>The ERD Navigator provides:</p>
    <ul>
@@ -23703,7 +24154,7 @@ Latest working group meeting notes and updates from June 25th session.
      <p>Martin Twer (The Watershed Research &amp; Training Center)</p>
    </ul>
    <h4 class="heading settled" data-level="52.4.2" id="stakeholder-feedback"><span class="secno">52.4.2. </span><span class="content">Stakeholder Feedback</span><a class="self-link" href="#stakeholder-feedback"></a></h4>
-   <p>We welcome feedback from industry stakeholders on our entity schemas. Use our <a href="erd-navigator/index.html">interactive ERD Navigator</a> to explore the data model and provide input on each entity definition.</p>
+   <p>Industry stakeholders are welcome to provide feedback on BOOST entity schemas. The <a href="erd-navigator/index.html">interactive ERD Navigator</a> enables exploration of the data model and input on each entity definition.</p>
    <p><strong>How to Provide Feedback:</strong></p>
    <ol>
     <li data-md>
@@ -23713,7 +24164,7 @@ Latest working group meeting notes and updates from June 25th session.
     <li data-md>
      <p>Submit feedback via <a href="https://github.com/carbondirect/BOOST/issues">GitHub Issues</a></p>
     <li data-md>
-     <p>Join our <a href="https://lists.w3.org/Archives/Public/public-boost-01/">W3C Community Group discussions</a></p>
+     <p>Join <a href="https://lists.w3.org/Archives/Public/public-boost-01/">W3C Community Group discussions</a></p>
    </ol>
    <h2 class="heading settled" data-level="53" id="security"><span class="secno">53. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
    <p>The BOOST data standard involves the exchange of sensitive commercial and operational data across biomass supply chains. Implementations must carefully consider security implications at multiple levels:</p>

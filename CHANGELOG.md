@@ -2,6 +2,36 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.4.2] - 2025-08-23 - Critical Tracking Points and Python Validation Enhancement
+
+### Added
+- **Critical Tracking Points Enhancement (Issue #247)**: Resolved ambiguous tracking point definitions with comprehensive implementation
+  - **Replaced Deprecated Concepts**: Eliminated ambiguous "skid_road/forest_road" with specific "consolidation_point" definition
+  - **Enhanced TrackingPoint Schema**: Added `coordinatePrecision` and `configurationRole` fields for operational flexibility
+  - **Expanded Point Types**: Updated enum to 7 values including `harvest_site`, `consolidation_point`, `mill_entrance`, `transfer_station`, `storage_facility`, `quality_control_point`, `mobile_processing_unit`
+  - **Edge Case Documentation**: Comprehensive analysis addressing universal applicability, silo systems, mobile processing, and multi-stage transport operations
+  - **Flexible Configuration Support**: 2-point minimum to 5+ point extended configurations based on operational complexity
+- **Python Reference Implementation Enhancement (Issue #248)**: Implemented comprehensive validation logic addressing missing functionality
+  - **Complete validate_all() Function**: Replaced empty signatures with actual business logic and validation rules
+  - **Six Validation Categories**: Schema validation, foreign key integrity, volume conservation, tolerance compliance, temporal consistency, and business rules
+  - **Process-Specific Tolerances**: Realistic tolerance definitions for drying (15%), chipping (8%), pelletizing (12%), sawmill (35%), transport (2%)
+  - **Actionable Recommendations**: Automated generation of specific improvement suggestions based on validation results
+  - **Cross-Entity Relationship Validation**: Comprehensive foreign key integrity checking across all entity types
+
+### Fixed
+- **TrackingPoint Documentation Consistency**: Updated all documentation formats to reflect Issue #247 schema changes
+  - **HTML Documentation**: Regenerated with correct enum values and consolidation_point terminology
+  - **Schema-Documentation Alignment**: Verified consistency between JSON schemas and generated documentation
+  - **Build System Synchronization**: All formats now reflect current schema definitions
+- **IdentificationMethod Entity Coverage**: Resolved missing entity in HTML documentation
+  - **Thematic Areas Integration**: Added to Core Traceability section in documentation generation
+  - **Complete Entity Coverage**: All 36 entities now documented across HTML and PDF formats
+
+### Enhanced
+- **Documentation Generation Pipeline**: Improved synchronization between schema changes and documentation output
+  - **Automated Schema Processing**: Enhanced build system to handle recent entity additions and modifications
+  - **Cross-Format Consistency**: Verified alignment between HTML, PDF, and LaTeX documentation formats
+
 ## [3.4.1] - 2025-08-23 - Documentation Consistency and Schema Integrity Enhancements
 
 ### Added

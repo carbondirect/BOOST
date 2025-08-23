@@ -22,11 +22,11 @@
 \field{mediaBreakFlags} & array<string> & Points where data continuity was lost (Phase 2) \\
 \field{methodReadinessLevel} & integer & Technology Readiness Level (TRL 1-9) for identification method used \\
 \field{operatorId} & string (pattern) & Foreign key to operator \\
-\field{parentTraceableUnitId} & string & For split/merge operations (Phase 2) \\
+\field{parentTraceableUnitId} & string (pattern) & Foreign key to parent TraceableUnit for split/merge operations (Phase 2) \\
 \field{physicalArrangement} & object (structured) & Spatial organization affecting collection and decomposition \\
 \field{processingHistory} & array<string> & Complete processing chain references (Phase 2) \\
 \field{productClassification} & enum(7 values) & Market classification or intended product use \\
-\field{qualityGrade} & enum(5 values) & Quality grade classification \\
+\field{qualityGrade} & enum(17 values) & Quality grade with comprehensive standard classification \\
 \field{secondaryIdentifiers} & array<object> & Secondary/backup identification methods \\
 \field{sustainabilityCertification} & string & FSC, PEFC, etc. claims (Phase 2) \\
 \end{entitytable}

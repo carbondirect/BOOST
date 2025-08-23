@@ -7,13 +7,13 @@
 \textbf{\field{millMeasurement}} & number (≥0) & Millmeasurement field value \\
 \textbf{\field{reconciliationDate}} & string (date-time) & Reconciliationdate field value \\
 \textbf{\field{reconciliationId}} & string (pattern) & Unique identifier for the reconciliation \\
-\textbf{\field{reconciliationStatus}} & enum(pending, resolved, disputed) & Enumerated value for reconciliationstatus \\
-\textbf{\field{traceableUnitId}} & string & Foreign key to the traceable unit \\
+\textbf{\field{reconciliationStatus}} & enum(4 values) & Reconciliation status with standard values \\
+\textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to TraceableUnit entity being reconciled \\
 \field{discrepancyReason} & string & Discrepancyreason field value \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \field{reconciliationOperator} & string & Reconciliationoperator field value \\
 \field{resolutionNotes} & string & Resolutionnotes field value \\
 \field{speciesDiscrepancies} & array<string> & Array of speciesdiscrepancies values \\
 \field{tolerancePercentage} & number (≥0, ≤100) & Tolerancepercentage field value \\
-\field{transactionId} & string & Foreign key to the parent transaction \\
+\field{transactionId} & string (pattern) & Foreign key to Transaction entity being reconciled \\
 \end{entitytable}

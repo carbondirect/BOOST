@@ -15,10 +15,10 @@
 \field{harvestingMethod} & enum(4 values) & Method used to harvest this species \\
 \field{heightM} & number (≥0) & Average tree height in meters \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage by weight (0-100\%) \\
 \field{plantPartComposition} & object & Plant part breakdown within this species component \\
 \field{primaryPlantPart} & enum(17 values) & Primary plant part represented by this species component \\
-\field{qualityGrade} & string & Species-specific quality grade \\
+\field{qualityGrade} & enum(17 values) & Quality grade with comprehensive standard classification \\
 \field{scientificName} & string & Scientific/Latin name of the species \\
 \field{sourceGeographicDataId} & string (pattern) & Foreign key to geographic origin of this species \\
 \field{structuralClassification} & enum(5 values) & Functional classification of the primary plant part \\

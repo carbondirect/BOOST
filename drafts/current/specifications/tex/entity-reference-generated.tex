@@ -24,12 +24,13 @@ LCFS Reporting & Compliance \& Reporting & Quarterly LCFS compliance report for 
 Mass Balance Account & Compliance \& Reporting & MassBalanceAccount entity in BOOST data model & 8 \\
 Product Group & Compliance \& Reporting & ProductGroup entity in BOOST data model & 11 \\
 Biometric Identifier & Core Traceability & BiometricIdentifier entity in BOOST data model & 12 \\
+Identification Method & Core Traceability & Catalog of available identification methods for Traceable... & 10 \\
 Location History & Core Traceability & Historical movement records of TRUs & 14 \\
-Material Processing & Core Traceability & Processing operations that transform TRUs with plant part... & 18 \\
+Material Processing & Core Traceability & Processing operations that transform TRUs with plant part... & 23 \\
 Processing History & Core Traceability & Complete timeline of processing events with moisture trac... & 22 \\
 Traceable Unit & Core Traceability & Unique biomass tracking unit with BOOST traceability syst... & 27 \\
 Geographic Data & Geographic \& Tracking & GeographicData entity in BOOST data model & 10 \\
-Tracking Point & Geographic \& Tracking & TrackingPoint entity in BOOST data model & 6 \\
+Tracking Point & Geographic \& Tracking & TrackingPoint entity in BOOST data model & 8 \\
 Customer & Material \& Supply Chain & Customer entity in BOOST data model & 4 \\
 Equipment & Material \& Supply Chain & Equipment entity representing forestry machinery and equi... & 19 \\
 Material & Material \& Supply Chain & Material types and specifications & 15 \\
@@ -39,15 +40,14 @@ Supply Base & Material \& Supply Chain & SupplyBase entity in BOOST data model. 
 Supply Base Report & Material \& Supply Chain & SupplyBaseReport entity in BOOST data model & 9 \\
 BOOST Moisture Content Validation Rules & Measurement \& Verification & Comprehensive validation rules and business logic for moi... & 4 \\
 Claim & Measurement \& Verification & Claim entity in BOOST data model & 15 \\
-Measurement Record & Measurement \& Verification & Quality measurements and dimensional data & 16 \\
+Measurement Record & Measurement \& Verification & Quality measurements and dimensional data & 19 \\
 Verification Statement & Measurement \& Verification & VerificationStatement entity in BOOST data model & 5 \\
 Audit & Organizational Foundation & Audit entity in BOOST data model & 8 \\
 BOOST Operator Entity Validation Schema & Organizational Foundation & Validation schema for personnel and operator management w... & 13 \\
 Certificate & Organizational Foundation & Certificate entity representing formal certification reco... & 16 \\
 CertificationBody & Organizational Foundation & Certification Body entity representing independent organi... & 11 \\
-CertificationScheme & Organizational Foundation & CertificationScheme entity defining certification standar... & 15 \\
+CertificationScheme & Organizational Foundation & CertificationScheme entity defining certification standar... & 16 \\
 Organization & Organizational Foundation & Organization entity with geographic data references and c... & 27 \\
-Identification Method & Other & Catalog of available identification methods for Traceable... & 10 \\
 Sales Delivery Document & Transaction Management & SalesDeliveryDocument entity in BOOST data model & 11 \\
 Transaction & Transaction Management & Transaction entity in BOOST data model & 52 \\
 Transaction Batch & Transaction Management & TransactionBatch entity in BOOST data model & 24 \\
@@ -75,7 +75,7 @@ Certificate & \field{certificateId} & Certificate & Standard certificate identif
 Certificate & \field{OrganizationId} & Organization & Uses EntityNameId convention referenc... \\
 Claim & \field{claimId} & Claim &  \\
 Customer & \field{customerId} & Customer & Unique identifier for the customer \\
-Data Reconciliation & \field{transactionId} & Transaction &  \\
+Data Reconciliation & \field{transactionId} & Transaction & Foreign key to Transaction entity bei... \\
 Equipment & \field{equipmentId} & Equipment & Unique identifier for the equipment \\
 Equipment & \field{organizationId} & Organization & Foreign key to owning organization \\
 Location History & \field{operatorId} & Operator &  \\
@@ -86,12 +86,12 @@ BOOST Operator Entity Validation Schema & \field{operatorId} & Operator & Unique
 BOOST Operator Entity Validation Schema & \field{organizationId} & Organization & Employing organization - uses EntityN... \\
 Organization & \field{organizationId} & Organization & Unique identifier for the organization \\
 Processing History & \field{operatorId} & Operator & Foreign key to operator who performed... \\
-Sales Delivery Document & \field{transactionId} & Transaction &  \\
+Sales Delivery Document & \field{transactionId} & Transaction & Foreign key to Transaction entity \\
 Supplier & \field{supplierId} & Supplier &  \\
 Supply Base & \field{OrganizationId} & Organization & Managing organization - uses EntityNa... \\
-Supply Base Report & \field{organizationId} & Organization &  \\
+Supply Base Report & \field{organizationId} & Organization & Foreign key to Organization entity th... \\
 Traceable Unit & \field{operatorId} & Operator & Foreign key to operator \\
-Tracking Point & \field{operatorId} & Operator &  \\
+Tracking Point & \field{operatorId} & Operator & Foreign key to Operator entity \\
 Transaction & \field{transactionId} & Transaction & Unique identifier for the business tr... \\
 Transaction & \field{OrganizationId} & Organization & Primary organization involved in tran... \\
 Transaction & \field{CustomerId} & Customer & Customer organization (buyer) - uses ... \\

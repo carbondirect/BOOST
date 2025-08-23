@@ -64,7 +64,7 @@ This entity references the following entities:
 \field{parcelId} & string & Assessor parcel number or legal land description \\
 \field{paymentTerms} & string & Payment conditions and timeline \\
 \field{permitStatus} & enum(4 values) & Status of required permits for biomass harvesting \\
-\field{reconciliationStatus} & enum(pending, resolved, disputed) & Transaction reconciliation status \\
+\field{reconciliationStatus} & enum(4 values) & Reconciliation status with standard values \\
 \field{regulatedPartyRole} & enum(5 values) & Role of regulated party in LCFS transaction \\
 \field{reportingAccuracyConfirmed} & boolean & Confirmation of reporting data accuracy for BioRAM compliance \\
 \field{reportingPeriod} & string (pattern) & LCFS reporting quarter in YYYY-QN format \\
@@ -115,9 +115,9 @@ This entity references the following entities:
 \field{plantPartComposition} & object & Plant part composition breakdown \\
 \field{processingHistoryIds} & array<string> & Array of processing history record IDs \\
 \field{productionBatchId} & ['string', 'null'] & Foreign key to source production batch \\
-\field{qualityGrade} & enum(9 values) & Overall quality grade for the batch \\
+\field{qualityGrade} & enum(17 values) & Quality grade with comprehensive standard classification \\
 \field{qualityMetrics} & object (structured) & Detailed quality assessment metrics \\
-\field{reconciliationStatus} & enum(5 values) & Status of volume/quality reconciliation \\
+\field{reconciliationStatus} & enum(4 values) & Reconciliation status with standard values \\
 \field{speciesComposition} & array<object> & Species breakdown with percentages \\
 \field{trackingHistory} & string & Complete location trail summary \\
 \field{transportationData} & object (structured) & Transportation and logistics information \\
@@ -133,7 +133,7 @@ SalesDeliveryDocument entity in BOOST data model
 \begin{informative}[title=Entity Relationships]
 This entity references the following entities:
 \begin{itemize}
-    \item \field{transactionId} → \entity{Transaction} ()
+    \item \field{transactionId} → \entity{Transaction} (Foreign key to Transaction entity)
 \end{itemize}
 \end{informative}
 
@@ -152,7 +152,7 @@ This entity references the following entities:
 \field{buyerAddress} & string & Buyeraddress field value \\
 \field{certificateCode} & string & Certificatecode field value \\
 \field{sellerAddress} & string & Selleraddress field value \\
-\field{transactionId} & string & Foreign key to the parent transaction \\
+\field{transactionId} & string (pattern) & Foreign key to Transaction entity \\
 \field{transportReference} & string & Transportreference field value \\
 \end{entitytable}
 

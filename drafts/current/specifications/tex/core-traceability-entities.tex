@@ -40,11 +40,11 @@ This entity references the following entities:
 \field{mediaBreakFlags} & array<string> & Points where data continuity was lost (Phase 2) \\
 \field{methodReadinessLevel} & integer & Technology Readiness Level (TRL 1-9) for identification method used \\
 \field{operatorId} & string (pattern) & Foreign key to operator \\
-\field{parentTraceableUnitId} & string & For split/merge operations (Phase 2) \\
+\field{parentTraceableUnitId} & string (pattern) & Foreign key to parent TraceableUnit for split/merge operations (Phase 2) \\
 \field{physicalArrangement} & object (structured) & Spatial organization affecting collection and decomposition \\
 \field{processingHistory} & array<string> & Complete processing chain references (Phase 2) \\
 \field{productClassification} & enum(7 values) & Market classification or intended product use \\
-\field{qualityGrade} & enum(5 values) & Quality grade classification \\
+\field{qualityGrade} & enum(17 values) & Quality grade with comprehensive standard classification \\
 \field{secondaryIdentifiers} & array<object> & Secondary/backup identification methods \\
 \field{sustainabilityCertification} & string & FSC, PEFC, etc. claims (Phase 2) \\
 \end{entitytable}
@@ -74,18 +74,23 @@ This entity references the following entities:
 \textbf{\field{outputTraceableUnitId}} & string (pattern) & Unique identifier for the outputtraceableunit \\
 \textbf{\field{outputVolume}} & number (≥0) & Outputvolume field value \\
 \textbf{\field{processTimestamp}} & string (date-time) & Processtimestamp field value \\
-\textbf{\field{processType}} & enum(6 values) & Enumerated value for processtype \\
+\textbf{\field{processType}} & enum(10 values) & Enumerated value for processtype \\
 \textbf{\field{processingId}} & string (pattern) & Unique identifier for the processing \\
+\field{acceptableRange} & array<number> & Array of [min, max] acceptable loss percentages as decimals \\
 \field{equipmentUsed} & string & Equipmentused field value \\
+\field{expectedLossRate} & number (≥0, ≤1) & Expected material loss rate for this process type as decimal (e.g., 0.02 = 2\... \\
 \field{inputComposition} & string & Inputcomposition field value \\
 \field{inputPlantParts} & object & Plant parts in input TRU before processing \\
+\field{lossJustification} & string & Required explanation when losses exceed acceptable range \\
 \field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
 \field{outputComposition} & string & Outputcomposition field value \\
 \field{outputPlantParts} & object & Plant parts in output TRU after processing \\
 \field{plantPartLosses} & object & Volume losses by plant part during processing \\
 \field{plantPartTransformations} & array<object> & Specific plant part transformations during processing \\
+\field{processStandard} & enum(5 values) & Standard or authority defining acceptable loss tolerances for this process \\
 \field{processingGeographicDataId} & string (pattern) & Unique identifier for the processinggeographicdata \\
 \field{qualityMetrics} & string & Qualitymetrics field value \\
+\field{toleranceValidation} & object (structured) & Validation results for process loss tolerance compliance \\
 \field{volumeLoss} & number (≥0) & Volumeloss field value \\
 \end{entitytable}
 
@@ -189,11 +194,36 @@ BiometricIdentifier entity in BOOST data model
 \textbf{\field{confidenceScore}} & number (≥0, ≤100) & Pattern matching reliability score (0-100) \\
 \textbf{\field{fallbackRequired}} & boolean & True if low confidence requires secondary verification \\
 \textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to TraceableUnit entity \\
-\field{captureGeographicDataId} & string & Foreign key to Capturegeographicdata entity \\
+\field{captureGeographicDataId} & string (pattern) & Foreign key to GeographicData entity for capture location \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \field{speciesBiometrics} & array<string> & Array of speciesbiometrics values \\
-\field{trackingPointId} & string & Foreign key to Trackingpoint entity \\
+\field{trackingPointId} & string (pattern) & Foreign key to TrackingPoint entity where capture occurred \\
 \field{verificationMethod} & enum(4 values) & Method used to verify biometric match \\
+\end{entitytable}
+
+
+
+\subsection{Identification Method}
+\label{sec:entity-identification-method}
+
+Catalog of available identification methods for TraceableUnit tracking
+
+**[View Identification Method in ERD Navigator](erd-navigator/index.html?focus=IdentificationMethod)**
+
+% Identification Method Entity Table
+% Auto-generated from JSON schema
+
+\begin{entitytable}{Identification Method}
+\textbf{\field{averageConfidence}} & number (≥0, ≤100) & Average confidence score achieved by this method \\
+\textbf{\field{implementationCost}} & enum(4 values) & Relative cost of implementing this method \\
+\textbf{\field{locationSuitability}} & array<string> & Locations where this method can be effectively used \\
+\textbf{\field{methodId}} & string (pattern) & Unique identifier for the identification method \\
+\textbf{\field{methodType}} & enum(7 values) & Type of identification method \\
+\textbf{\field{regulatoryAcceptance}} & array<string> & Regulatory frameworks that accept this method \\
+\textbf{\field{scalabilityFactor}} & enum(4 values) & Scale at which this method can be effectively applied \\
+\textbf{\field{technologyReadinessLevel}} & integer & Technology Readiness Level (TRL 1-9) of this method \\
+\field{equipmentRequired} & array<string> & Equipment needed to implement this method \\
+\field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \end{entitytable}
 
 

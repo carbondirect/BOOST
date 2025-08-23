@@ -54,7 +54,7 @@ Technical presentation on BOOST integration with California's Low Carbon Fuel St
 
 ### Entity Relationship Diagram Navigator ### {#erd-navigator-section}
 
-Explore the complete BOOST data model through our interactive ERD Navigator, featuring all 33 entities across 7 thematic areas.
+Explore the complete BOOST data model through the interactive ERD Navigator, featuring all 33 entities across 7 thematic areas.
 
 **[Interactive ERD Navigator](erd-navigator/index.html)**
 
@@ -118,13 +118,13 @@ Latest working group meeting notes and updates from June 25th session.
 
 ### Stakeholder Feedback ### {#stakeholder-feedback}
 
-We welcome feedback from industry stakeholders on our entity schemas. Use our [interactive ERD Navigator](erd-navigator/index.html) to explore the data model and provide input on each entity definition.
+Industry stakeholders are welcome to provide feedback on BOOST entity schemas. The [interactive ERD Navigator](erd-navigator/index.html) enables exploration of the data model and input on each entity definition.
 
 **How to Provide Feedback:**
 1. Explore entities using the [ERD Navigator](erd-navigator/index.html)
 2. Review entity schemas and field definitions
 3. Submit feedback via [GitHub Issues](https://github.com/carbondirect/BOOST/issues)
-4. Join our [W3C Community Group discussions](https://lists.w3.org/Archives/Public/public-boost-01/)
+4. Join [W3C Community Group discussions](https://lists.w3.org/Archives/Public/public-boost-01/)
 
 <style>
 .presentation-grid, .meeting-grid {

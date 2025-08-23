@@ -2,17 +2,20 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Measurement Record}
-\textbf{\field{measurementMethod}} & enum(4 values) & Enumerated value for measurementmethod \\
+\textbf{\field{measurementMethod}} & enum(18 values) & Method used for measurement with comprehensive standard values \\
 \textbf{\field{measurementTimestamp}} & string (date-time) & Measurementtimestamp field value \\
 \textbf{\field{recordId}} & string (pattern) & Unique identifier for the record \\
 \textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to the traceable unit \\
+\field{accuracyValidation} & object (structured) & Validation range based on equipment accuracy specifications \\
+\field{calibrationStandard} & enum(5 values) & Reference standard used for equipment calibration and accuracy specification \\
+\field{expectedAccuracy} & number (≥0, ≤1) & Expected accuracy of the measurement method as decimal (e.g., 0.02 = ±2\% acc... \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \field{measuredDiameter} & number (≥0) & Measureddiameter field value \\
 \field{measuredLength} & number (≥0) & Measuredlength field value \\
 \field{measuredVolume} & number (≥0) & Measuredvolume field value \\
 \field{measurementGeographicDataId} & string (pattern) & Unique identifier for the measurementgeographicdata \\
 \field{moistureAccuracy} & number (≥0) & Estimated accuracy of moisture measurement (± percentage points) \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage of weight contributed by water (0-100\%) \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage by weight (0-100\%) \\
 \field{moistureMethod} & enum(8 values) & Method used to determine moisture content \\
 \field{moistureStandard} & enum(5 values) & Standard procedure followed for moisture measurement \\
 \field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\

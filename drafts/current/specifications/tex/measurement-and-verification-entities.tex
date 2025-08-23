@@ -20,17 +20,20 @@ This entity references the following entities:
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Measurement Record}
-\textbf{\field{measurementMethod}} & enum(4 values) & Enumerated value for measurementmethod \\
+\textbf{\field{measurementMethod}} & enum(18 values) & Method used for measurement with comprehensive standard values \\
 \textbf{\field{measurementTimestamp}} & string (date-time) & Measurementtimestamp field value \\
 \textbf{\field{recordId}} & string (pattern) & Unique identifier for the record \\
 \textbf{\field{traceableUnitId}} & string (pattern) & Foreign key to the traceable unit \\
+\field{accuracyValidation} & object (structured) & Validation range based on equipment accuracy specifications \\
+\field{calibrationStandard} & enum(5 values) & Reference standard used for equipment calibration and accuracy specification \\
+\field{expectedAccuracy} & number (≥0, ≤1) & Expected accuracy of the measurement method as decimal (e.g., 0.02 = ±2\% acc... \\
 \field{lastUpdated} & string (date-time) & Timestamp of the most recent data update \\
 \field{measuredDiameter} & number (≥0) & Measureddiameter field value \\
 \field{measuredLength} & number (≥0) & Measuredlength field value \\
 \field{measuredVolume} & number (≥0) & Measuredvolume field value \\
 \field{measurementGeographicDataId} & string (pattern) & Unique identifier for the measurementgeographicdata \\
 \field{moistureAccuracy} & number (≥0) & Estimated accuracy of moisture measurement (± percentage points) \\
-\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage of weight contributed by water (0-100\%) \\
+\field{moistureContent} & number (≥0, ≤100) & Moisture content as percentage by weight (0-100\%) \\
 \field{moistureMethod} & enum(8 values) & Method used to determine moisture content \\
 \field{moistureStandard} & enum(5 values) & Standard procedure followed for moisture measurement \\
 \field{operatorId} & string (pattern) & Foreign key to the operator who performed this action \\
@@ -88,11 +91,11 @@ VerificationStatement entity in BOOST data model
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Verification Statement}
-\textbf{\field{issuingBody}} & string & Issuingbody field value \\
+\textbf{\field{issuingBody}} & string (pattern) & Foreign key to CertificationBody entity \\
 \textbf{\field{statementId}} & string (pattern) & Unique identifier for the statement \\
 \textbf{\field{verificationDate}} & string (date) & Verificationdate field value \\
 \field{scope} & string & Scope field value \\
-\field{transactionBatchId} & string & Foreign key to Transactionbatch entity \\
+\field{transactionBatchId} & string (pattern) & Foreign key to TransactionBatch entity \\
 \end{entitytable}
 
 
@@ -108,8 +111,8 @@ Comprehensive validation rules and business logic for moisture content tracking 
 % Auto-generated from JSON schema
 
 \begin{entitytable}{BOOST Moisture Content Validation Rules}
-\textbf{\field{measurementMethod}} & unknown & Measurementmethod field value \\
-\textbf{\field{moistureContent}} & unknown & Moisturecontent field value \\
+\textbf{\field{measurementMethod}} & enum(18 values) & Method used for measurement with comprehensive standard values \\
+\textbf{\field{moistureContent}} & number (≥0, ≤100) & Moisture content as percentage by weight (0-100\%) \\
 \textbf{\field{moistureContentId}} & string (pattern) & Unique identifier for moisture content record \\
 \field{qualityAssurance} & unknown & Qualityassurance field value \\
 \end{entitytable}

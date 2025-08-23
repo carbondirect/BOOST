@@ -1,6 +1,6 @@
 ## Interactive Entity Relationship Diagram ## {#interactive-erd}
 
-The BOOST data model comprises 33 interconnected entities organized into 7 thematic areas. For comprehensive exploration of entity relationships and schema definitions, use our interactive ERD Navigator.
+The BOOST data model comprises 33 interconnected entities organized into 7 thematic areas. For comprehensive exploration of entity relationships and schema definitions, the interactive ERD Navigator provides complete visualization capabilities.
 
 ### ERD Navigator Overview ### {#erd-overview}
 

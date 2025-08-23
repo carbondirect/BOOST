@@ -2,10 +2,12 @@
 % Auto-generated from JSON schema
 
 \begin{entitytable}{Tracking Point}
-\textbf{\field{equipmentUsed}} & string & Equipmentused field value \\
+\textbf{\field{equipmentUsed}} & string & Equipment deployed at this tracking point \\
 \textbf{\field{establishedTimestamp}} & string (date-time) & Establishedtimestamp field value \\
-\textbf{\field{geographicDataId}} & string & Foreign key to geographic location data \\
-\textbf{\field{pointType}} & enum(4 values) & Enumerated value for pointtype \\
+\textbf{\field{geographicDataId}} & string (pattern) & Foreign key to GeographicData entity \\
+\textbf{\field{pointType}} & enum(7 values) & Type of tracking point - flexible configuration based on operational needs \\
 \textbf{\field{trackingPointId}} & string (pattern) & Unique identifier for the tracking point \\
-\field{operatorId} & string & Foreign key to the operator who performed this action \\
+\field{configurationRole} & enum(4 values) & Role of this point in the overall tracking configuration \\
+\field{coordinatePrecision} & number (≥1, ≤100) & Required coordinate precision in meters (e.g., 5 = ±5m accuracy) \\
+\field{operatorId} & string (pattern) & Foreign key to Operator entity \\
 \end{entitytable}
