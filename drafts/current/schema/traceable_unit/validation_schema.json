@@ -59,7 +59,14 @@
           "properties": {
             "identifierType": {
               "type": "string",
-              "enum": ["biometric", "rfid", "qr_code", "barcode", "manual_id", "photo_documentation"]
+              "enum": [
+                "biometric",
+                "rfid",
+                "qr_code",
+                "barcode",
+                "manual_id",
+                "photo_documentation"
+              ]
             },
             "identifierValue": {
               "type": "string"
@@ -70,7 +77,10 @@
               "maximum": 100
             }
           },
-          "required": ["identifierType", "identifierValue"]
+          "required": [
+            "identifierType",
+            "identifierValue"
+          ]
         },
         "description": "Secondary/backup identification methods"
       },
@@ -131,13 +141,25 @@
       "qualityGrade": {
         "type": "string",
         "enum": [
-          "A",
-          "B",
-          "C",
-          "structural",
-          "fuel"
+          "Grade-A",
+          "Grade-B",
+          "Grade-C",
+          "Grade-D",
+          "Premium",
+          "Standard",
+          "Economy",
+          "Utility",
+          "Structural",
+          "Non-structural",
+          "Fuel",
+          "Residue",
+          "Export",
+          "Domestic",
+          "Sawlog",
+          "Pulpwood",
+          "Biomass"
         ],
-        "description": "Quality grade classification"
+        "description": "Quality grade with comprehensive standard classification"
       },
       "physicalArrangement": {
         "type": "object",
@@ -164,7 +186,7 @@
             "type": "string",
             "enum": [
               "covered",
-              "exposed", 
+              "exposed",
               "partially_covered"
             ],
             "description": "Protection from weather elements"
@@ -231,18 +253,21 @@
       "processingHistory": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^PH-[A-Z0-9-_]+$"
         },
         "description": "Complete processing chain references (Phase 2)"
       },
       "parentTraceableUnitId": {
         "type": "string",
-        "description": "For split/merge operations (Phase 2)"
+        "pattern": "^TRU-[A-Z0-9-_]+$",
+        "description": "Foreign key to parent TraceableUnit for split/merge operations (Phase 2)"
       },
       "childTraceableUnitIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^TRU-[A-Z0-9-_]+$"
         },
         "description": "For split/merge operations (Phase 2)"
       },
@@ -462,7 +487,7 @@
         "example": "TRU-456 is currently located at 'Portland Mill Yard'"
       },
       {
-        "field": "harvestGeographicDataId", 
+        "field": "harvestGeographicDataId",
         "targetEntity": "GeographicData",
         "relationshipType": "many-to-one",
         "required": true,
@@ -471,7 +496,7 @@
       },
       {
         "field": "harvesterId",
-        "targetEntity": "Organization", 
+        "targetEntity": "Organization",
         "relationshipType": "many-to-one",
         "required": true,
         "label": "harvested by",
@@ -480,7 +505,7 @@
       {
         "field": "operatorId",
         "targetEntity": "Operator",
-        "relationshipType": "many-to-one", 
+        "relationshipType": "many-to-one",
         "required": false,
         "label": "operated by",
         "example": "TRU-789 was created by operator 'John Smith'"

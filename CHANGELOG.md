@@ -2,6 +2,36 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.4.1] - 2025-08-23 - Documentation Consistency and Schema Integrity Enhancements
+
+### Added
+- **IdentificationMethod Entity Integration**: Added missing IdentificationMethod entity to HTML documentation through thematic areas mapping fix
+  - **Complete Entity Coverage**: All 36 entities now properly included in both HTML and PDF documentation
+  - **Core Traceability Integration**: IdentificationMethod categorized correctly in Core Traceability thematic area
+  - **Schema-First Documentation**: Validated single source of truth integrity across all documentation formats
+
+### Fixed
+- **Array Foreign Key Pattern Validation**: Enhanced validation patterns for array-based foreign key fields across 8 critical entities
+  - **TraceableUnit Arrays**: Added FK patterns for childTraceableUnitIds and processingHistory fields
+  - **TransactionBatch Arrays**: Fixed additionalClaimIds, processingHistoryIds, measurementRecordIds, and certificateIds patterns
+  - **ProcessingHistory Arrays**: Standardized inputTRUIds and outputTRUIds pattern validation
+  - **Data Integrity**: Prevents orphaned foreign key references in array fields throughout the data model
+- **QualityGrade Enum Standardization**: Resolved inconsistencies in qualityGrade field definitions across all entities
+  - **Nested Structure Fixes**: Standardized qualityGrade enums in MaterialProcessing and SpeciesComponent plant part compositions
+  - **Comprehensive Classification**: All qualityGrade fields now use complete 17-value enum (Grade-A through Biomass)
+  - **Cross-Entity Consistency**: Eliminated validation conflicts between related entity quality grade references
+- **Cross-Entity Validation Framework Enhancement**: Added comprehensive validation rules for advanced schema integrity
+  - **Array FK Validation**: Pattern compliance and existence validation for all array foreign key fields
+  - **Self-Referencing Validation**: Cycle prevention and hierarchy depth limits for parent-child relationships
+  - **JSON-LD Compliance**: Context consistency, type validation, and ID uniqueness rules
+  - **Enhanced FK Validation**: Comprehensive pattern enforcement across all foreign key types
+
+### Enhanced
+- **Documentation Build System**: Improved schema-to-documentation generation reliability and consistency
+  - **Entity Discovery**: Validated all 36 entities properly mapped between schema directories and LaTeX generation
+  - **Enum Handling Analysis**: Identified HTML generation enum display limitation (shows 5 values vs LaTeX's correct 17 values)
+  - **Cross-Format Validation**: Confirmed LaTeX generation pipeline working correctly for comprehensive entity documentation
+
 ## [3.4.0] - 2025-08-23 - Distributed Tolerance Framework Implementation
 
 ### Added

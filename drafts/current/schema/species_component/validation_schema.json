@@ -46,7 +46,26 @@
       },
       "qualityGrade": {
         "type": "string",
-        "description": "Species-specific quality grade"
+        "description": "Quality grade with comprehensive standard classification",
+        "enum": [
+          "Grade-A",
+          "Grade-B",
+          "Grade-C",
+          "Grade-D",
+          "Premium",
+          "Standard",
+          "Economy",
+          "Utility",
+          "Structural",
+          "Non-structural",
+          "Fuel",
+          "Residue",
+          "Export",
+          "Domestic",
+          "Sawlog",
+          "Pulpwood",
+          "Biomass"
+        ]
       },
       "sourceGeographicDataId": {
         "type": "string",
@@ -95,7 +114,7 @@
         "type": "number",
         "minimum": 0,
         "maximum": 100,
-        "description": "Moisture content as percentage"
+        "description": "Moisture content as percentage by weight (0-100%)"
       },
       "defects": {
         "type": "array",
@@ -123,7 +142,26 @@
               },
               "qualityGrade": {
                 "type": "string",
-                "description": "Quality grade specific to this plant part"
+                "enum": [
+                  "Grade-A",
+                  "Grade-B", 
+                  "Grade-C",
+                  "Grade-D",
+                  "Premium",
+                  "Standard",
+                  "Economy",
+                  "Utility",
+                  "Structural",
+                  "Non-structural",
+                  "Fuel",
+                  "Residue",
+                  "Export",
+                  "Domestic",
+                  "Sawlog",
+                  "Pulpwood",
+                  "Biomass"
+                ],
+                "description": "Quality grade specific to this plant part with comprehensive standard classification"
               },
               "moistureContent": {
                 "type": "number",

@@ -796,6 +796,32 @@
             "applies_to": ["MeasurementRecord.moistureContent", "Material.standardMoistureContent"],
             "validation": "Moisture content measurements must reference valid MoistureContent validation rules and comply with defined business rules"
           }
+        },
+        "toleranceValidationConsistency": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "tolerance_fields_consistency"},
+            "description": "Tolerance validation fields must be mathematically consistent with actual measurements",
+            "applies_to": ["MeasurementRecord.accuracyValidation", "MaterialProcessing.toleranceValidation"],
+            "validation": {
+              "measurement_accuracy": "MeasurementRecord.accuracyValidation.withinTolerance must reflect measuredValue vs expectedAccuracy range",
+              "process_loss": "MaterialProcessing.toleranceValidation.actualLossRate must equal volumeLoss/inputVolume",
+              "tolerance_calculations": "All tolerance validation objects must have mathematically correct calculated fields"
+            }
+          }
+        },
+        "toleranceHierarchyCompliance": {
+          "type": "object", 
+          "properties": {
+            "rule": {"const": "tolerance_hierarchy_consistency"},
+            "description": "Multi-level tolerance validation must be hierarchically consistent across entities",
+            "applies_to": ["MeasurementRecord", "MaterialProcessing", "CertificationScheme"],
+            "validation": {
+              "equipment_to_process": "Individual measurement tolerances must not conflict with process-level tolerance validation",
+              "process_to_compliance": "Process tolerance compliance must contribute correctly to regulatory compliance calculations",
+              "aggregation_rules": "Combined individual tolerances must not exceed aggregate compliance tolerance limits"
+            }
+          }
         }
       }
     },
@@ -855,15 +881,126 @@
         }
       }
     },
+    "arrayForeignKeyValidation": {
+      "type": "object",
+      "description": "Validation rules for array foreign key fields",
+      "properties": {
+        "patternCompliance": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "array_fk_pattern_validation"},
+            "description": "All array FK fields must have proper pattern validation",
+            "validation": {
+              "traceableUnitIds": "Arrays containing TRU references must validate pattern ^TRU-[A-Z0-9-_]+$",
+              "processingHistoryIds": "Arrays containing PH references must validate pattern ^PH-[A-Z0-9-_]+$", 
+              "measurementRecordIds": "Arrays containing MR references must validate pattern ^MR-[A-Z0-9-_]+$",
+              "certificateIds": "Arrays containing certificate references must validate pattern ^CERT-[A-Z0-9-_]+$",
+              "additionalClaimIds": "Arrays containing claim references must validate pattern ^CLA-[A-Z0-9-_]+$",
+              "trackingPointIds": "Arrays containing tracking point references must validate pattern ^TP-[A-Z0-9-_]+$"
+            }
+          }
+        },
+        "arrayElementExistence": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "array_fk_existence_validation"},
+            "description": "Each element in array FK fields must reference existing entities",
+            "applies_to": ["Transaction.traceableUnitIds", "TransactionBatch.traceableUnitIds", "ProcessingHistory.inputTRUIds", "ProcessingHistory.outputTRUIds", "TraceableUnit.childTraceableUnitIds", "TraceableUnit.processingHistory"],
+            "validation": "Each array element must correspond to existing entity in target table"
+          }
+        }
+      }
+    },
+    "selfReferencingValidation": {
+      "type": "object", 
+      "description": "Validation rules for self-referencing relationships",
+      "properties": {
+        "cyclePrevention": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "no_self_referencing_cycles"},
+            "description": "Self-referencing relationships must not create cycles",
+            "applies_to": ["TraceableUnit.parentTraceableUnitId", "GeographicData.parentGeographicDataId"],
+            "validation": "Traverse parent chain and ensure no entity appears twice in hierarchy"
+          }
+        },
+        "hierarchyDepth": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "reasonable_hierarchy_depth"},
+            "description": "Self-referencing hierarchies should have reasonable depth limits",
+            "applies_to": ["TraceableUnit.parentTraceableUnitId", "GeographicData.parentGeographicDataId"],
+            "validation": "Maximum hierarchy depth should not exceed 50 levels to prevent infinite recursion"
+          }
+        }
+      }
+    },
+    "jsonLdComplianceValidation": {
+      "type": "object",
+      "description": "JSON-LD semantic compliance validation rules", 
+      "properties": {
+        "contextConsistency": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "context_vocabulary_consistency"},
+            "description": "@context must provide semantic mappings for all used properties",
+            "validation": "All entity properties should have corresponding @context mappings to BOOST vocabulary URIs"
+          }
+        },
+        "typeValidation": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "type_consistency"},
+            "description": "@type must match entity schema name exactly",
+            "validation": "@type field must equal the entity name defined in boost_metadata.entity.name"
+          }
+        },
+        "idUniqueness": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "global_id_uniqueness"},
+            "description": "@id URIs must be globally unique across all BOOST data",
+            "validation": "No two entities should have the same @id URI, even across different entity types"
+          }
+        }
+      }
+    },
+    "enhancedForeignKeyValidation": {
+      "type": "object",
+      "description": "Enhanced foreign key validation incorporating recent schema fixes",
+      "properties": {
+        "patternValidation": {
+          "type": "object",
+          "properties": {
+            "rule": {"const": "fk_pattern_enforcement"},
+            "description": "All foreign key fields must have correct ID patterns",
+            "validation": {
+              "organization_refs": "Organization references must match ^ORG-[A-Z0-9-_]+$",
+              "geographic_refs": "GeographicData references must match ^GEO-[A-Z0-9-_]+$",
+              "customer_refs": "Customer references must match ^CUST-[A-Z0-9-_]+$",
+              "operator_refs": "Operator references must match ^OP-[A-Z0-9-_]+$",
+              "material_refs": "Material references must match ^MAT-[A-Z0-9-_]+$",
+              "document_refs": "Document references must match ^DOC-[A-Z0-9-_]+$"
+            }
+          }
+        }
+      }
+    },
     "validationSequence": {
       "type": "array",
       "description": "Recommended order for cross-entity validation execution",
       "items": {"type": "string"},
       "default": [
+        "enhancedForeignKeyValidation",
+        "arrayForeignKeyValidation",
         "foreignKeyConstraints",
-        "circularReferenceRules", 
+        "selfReferencingValidation",
+        "circularReferenceRules",
         "cardinalityConstraints",
+        "jsonLdComplianceValidation", 
         "statusConsistencyRules",
+        "toleranceValidationConsistency",
+        "toleranceHierarchyCompliance",
         "dataIntegrityRules"
       ]
     }
@@ -874,7 +1011,13 @@
     "circularReferenceRules",
     "cardinalityConstraints", 
     "statusConsistencyRules",
+    "toleranceValidationConsistency",
+    "toleranceHierarchyCompliance",
     "dataIntegrityRules",
+    "arrayForeignKeyValidation",
+    "selfReferencingValidation",
+    "jsonLdComplianceValidation",
+    "enhancedForeignKeyValidation",
     "validationSequence"
   ],
   "additionalProperties": false

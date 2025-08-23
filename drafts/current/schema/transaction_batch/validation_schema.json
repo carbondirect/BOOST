@@ -56,7 +56,8 @@
       "traceableUnitIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^TRU-[A-Z0-9-_]+$"
         },
         "minItems": 1,
         "description": "Array of TRU IDs included in this batch"
@@ -72,7 +73,8 @@
       "additionalClaimIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^CLA-[A-Z0-9-_]+$"
         },
         "description": "Array of secondary claim IDs"
       },
@@ -104,22 +106,31 @@
       "qualityGrade": {
         "type": "string",
         "enum": [
-          "Grade_A",
-          "Grade_B",
-          "Grade_C",
+          "Grade-A",
+          "Grade-B",
+          "Grade-C",
+          "Grade-D",
+          "Premium",
+          "Standard",
+          "Economy",
+          "Utility",
           "Structural",
+          "Non-structural",
           "Fuel",
-          "Pulpwood",
+          "Residue",
+          "Export",
+          "Domestic",
           "Sawlog",
-          "Veneer",
-          "Mixed"
+          "Pulpwood",
+          "Biomass"
         ],
-        "description": "Overall quality grade for the batch"
+        "description": "Quality grade with comprehensive standard classification"
       },
       "processingHistoryIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^PH-[A-Z0-9-_]+$"
         },
         "description": "Array of processing history record IDs"
       },
@@ -127,12 +138,11 @@
         "type": "string",
         "enum": [
           "pending",
-          "in_progress",
           "resolved",
           "disputed",
-          "escalated"
+          "investigating"
         ],
-        "description": "Status of volume/quality reconciliation"
+        "description": "Reconciliation status with standard values"
       },
       "trackingHistory": {
         "type": "string",
@@ -141,7 +151,8 @@
       "measurementRecordIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^MR-[A-Z0-9-_]+$"
         },
         "description": "Array of measurement record IDs"
       },
@@ -301,7 +312,8 @@
           "certificateIds": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^CERT-[A-Z0-9-_]+$"
             }
           },
           "validationRequired": {

@@ -63,7 +63,8 @@
       "inputTRUIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^TRU-[A-Z0-9-_]+$"
         },
         "minItems": 1,
         "description": "Array of input TRU IDs (multiple for merge operations)"
@@ -71,7 +72,8 @@
       "outputTRUIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^TRU-[A-Z0-9-_]+$"
         },
         "minItems": 1,
         "description": "Array of output TRU IDs (multiple for split operations)"

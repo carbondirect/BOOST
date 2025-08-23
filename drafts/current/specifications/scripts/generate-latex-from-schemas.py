@@ -19,7 +19,7 @@ class BOOSTSchemaProcessor:
         self.entities = {}
         self.entity_relationships = defaultdict(list)
         self.thematic_areas = {
-            'Core Traceability': ['traceable_unit', 'material_processing', 'processing_history', 'location_history', 'biometric_identifier'],
+            'Core Traceability': ['traceable_unit', 'material_processing', 'processing_history', 'location_history', 'biometric_identifier', 'identification_method'],
             'Organizational Foundation': ['organization', 'certificate', 'certification_body', 'certification_scheme', 'audit', 'operator'],
             'Material & Supply Chain': ['material', 'species_component', 'supplier', 'customer', 'supply_base', 'supply_base_report', 'equipment'],
             'Transaction Management': ['transaction', 'transaction_batch', 'sales_delivery_document'],

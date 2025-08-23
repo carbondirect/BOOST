@@ -39,7 +39,11 @@
           "crosscutting",
           "chipping",
           "debarking",
-          "assortment"
+          "assortment",
+          "pelletizing",
+          "transport",
+          "drying",
+          "sizing"
         ]
       },
       "processTimestamp": {
@@ -78,6 +82,57 @@
       "equipmentUsed": {
         "type": "string"
       },
+      "expectedLossRate": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Expected material loss rate for this process type as decimal (e.g., 0.02 = 2% expected loss)"
+      },
+      "acceptableRange": {
+        "type": "array",
+        "items": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "minItems": 2,
+        "maxItems": 2,
+        "description": "Array of [min, max] acceptable loss percentages as decimals"
+      },
+      "lossJustification": {
+        "type": "string",
+        "description": "Required explanation when losses exceed acceptable range"
+      },
+      "processStandard": {
+        "type": "string",
+        "enum": [
+          "industry_standard",
+          "equipment_manufacturer",
+          "facility_specific",
+          "regulatory_requirement",
+          "best_practice"
+        ],
+        "description": "Standard or authority defining acceptable loss tolerances for this process"
+      },
+      "toleranceValidation": {
+        "type": "object",
+        "properties": {
+          "actualLossRate": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Calculated actual loss rate as decimal (volumeLoss / inputVolume)"
+          },
+          "withinTolerance": {
+            "type": "boolean",
+            "description": "Whether the actual loss falls within acceptable range"
+          },
+          "deviationFromExpected": {
+            "type": "number",
+            "description": "Deviation from expected loss rate (actualLossRate - expectedLossRate)"
+          }
+        },
+        "description": "Validation results for process loss tolerance compliance"
+      },
       "inputPlantParts": {
         "type": "object",
         "patternProperties": {
@@ -94,7 +149,27 @@
                 "maximum": 100
               },
               "qualityGrade": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "Grade-A",
+                  "Grade-B",
+                  "Grade-C",
+                  "Grade-D",
+                  "Premium",
+                  "Standard",
+                  "Economy",
+                  "Utility",
+                  "Structural",
+                  "Non-structural",
+                  "Fuel",
+                  "Residue",
+                  "Export",
+                  "Domestic",
+                  "Sawlog",
+                  "Pulpwood",
+                  "Biomass"
+                ],
+                "description": "Quality grade with comprehensive standard classification"
               }
             },
             "required": [
@@ -121,7 +196,27 @@
                 "maximum": 100
               },
               "qualityGrade": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "Grade-A",
+                  "Grade-B",
+                  "Grade-C",
+                  "Grade-D",
+                  "Premium",
+                  "Standard",
+                  "Economy",
+                  "Utility",
+                  "Structural",
+                  "Non-structural",
+                  "Fuel",
+                  "Residue",
+                  "Export",
+                  "Domestic",
+                  "Sawlog",
+                  "Pulpwood",
+                  "Biomass"
+                ],
+                "description": "Quality grade with comprehensive standard classification"
               }
             },
             "required": [
