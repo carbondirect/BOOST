@@ -8,7 +8,7 @@
     "core_traceability": {
       "color": "#16A34A", 
       "label": "Core Traceability",
-      "entities": ["TraceableUnit", "ProcessingHistory", "LocationHistory", "BiometricIdentifier"]
+      "entities": ["TraceableUnit", "ProcessingHistory", "LocationHistory", "BiometricIdentifier", "IdentificationMethod"]
     },
     "material_supply_chain": {
       "color": "#A16207",
@@ -23,7 +23,7 @@
     "measurement_verification": {
       "color": "#EAB308",
       "label": "Measurement & Verification", 
-      "entities": ["MeasurementRecord", "Claim", "VerificationStatement"]
+      "entities": ["MeasurementRecord", "Claim", "VerificationStatement", "MoistureContent"]
     },
     "geographic_tracking": {
       "color": "#9333EA",
@@ -33,7 +33,7 @@
     "compliance_reporting": {
       "color": "#DC2626",
       "label": "Compliance & Reporting",
-      "entities": ["LcfsPathway", "LcfsReporting", "ProductGroup", "EnergyCarbonData", "DataReconciliation", "MassBalanceAccount"]
+      "entities": ["LcfsPathway", "LcfsReporting", "BioramPathway", "BioramReporting", "ProductGroup", "EnergyCarbonData", "DataReconciliation", "MassBalanceAccount"]
     }
   },
   "entity_display": {
@@ -164,6 +164,22 @@
     "Equipment": {
       "emoji": "🔧",
       "position": {"x": 1900, "y": 2000}
+    },
+    "BioramPathway": {
+      "emoji": "🛤️",
+      "position": {"x": 2400, "y": 2300}
+    },
+    "BioramReporting": {
+      "emoji": "📋",
+      "position": {"x": 2700, "y": 2600}
+    },
+    "IdentificationMethod": {
+      "emoji": "🔬",
+      "position": {"x": 1600, "y": 800}
+    },
+    "MoistureContent": {
+      "emoji": "💧",
+      "position": {"x": 3600, "y": 100}
     }
   },
   "manual_relationships": [

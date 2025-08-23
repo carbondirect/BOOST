@@ -768,11 +768,23 @@
 
         // Entity positions are now managed exclusively through the ERD config file
 
+        // Determine schema path based on environment (local vs GitHub Pages)
+        function getSchemaBasePath() {
+            // Check if we're on GitHub Pages or local development
+            const hostname = window.location.hostname;
+            if (hostname === 'carbondirect.github.io' || hostname.endsWith('.github.io')) {
+                return '../schema'; // GitHub Pages path
+            } else {
+                return '../drafts/current/schema'; // Local development path
+            }
+        }
+
         // Auto-discovery functions - uses manifest file for reliable cross-platform discovery
         async function discoverSchemaDirectories() {
             try {
+                const schemaBasePath = getSchemaBasePath();
                 // Try manifest file first (recommended approach)
-                const manifestResponse = await fetch('../drafts/current/schema/directories.json');
+                const manifestResponse = await fetch(`${schemaBasePath}/directories.json`);
                 if (manifestResponse.ok) {
                     const manifest = await manifestResponse.json();
                     console.log(`Loaded ${manifest.total_entities} schema directories from manifest (updated: ${manifest.last_updated})`);
@@ -782,7 +794,7 @@
                 console.warn('Manifest file not found, falling back to directory discovery');
                 
                 // Fallback to raw directory listing (local development)
-                const response = await fetch('../drafts/current/schema/');
+                const response = await fetch(`${schemaBasePath}/`);
                 const text = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, 'text/html');
@@ -810,7 +822,8 @@
         // Schema loading functions
         async function loadSchemaFile(entityName) {
             try {
-                const schemaPath = `../drafts/current/schema/${entityName.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2').replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()}/validation_schema.json?cb=${Date.now()}`;
+                const schemaBasePath = getSchemaBasePath();
+                const schemaPath = `${schemaBasePath}/${entityName.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2').replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()}/validation_schema.json?cb=${Date.now()}`;
                 const response = await fetch(schemaPath);
                 if (!response.ok) {
                     console.warn(`Could not load schema for ${entityName}: ${response.status}`);
