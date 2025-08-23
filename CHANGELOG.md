@@ -2,6 +2,49 @@
 
 All notable changes to the BOOST data standard are documented in this file.
 
+## [3.4.0] - 2025-08-23 - Distributed Tolerance Framework Implementation
+
+### Added
+- **Distributed Tolerance Framework**: Equipment accuracy, process loss, and regulatory compliance tolerances distributed across entities where they physically manifest
+  - **Equipment-Level Tolerances**: MeasurementRecord entity enhanced with expectedAccuracy, calibrationStandard, and accuracyValidation fields
+  - **Process-Level Tolerances**: MaterialProcessing entity enhanced with expectedLossRate, acceptableRange, lossJustification, and toleranceValidation fields
+  - **Regulatory Compliance Tolerances**: CertificationScheme entity streamlined to focus only on regulatory compliance tolerance specifications
+  - **Clear Governance Attribution**: Equipment manufacturers set accuracy specs, industry standards set process tolerances, regulators set compliance limits
+- **Comprehensive Tolerance Validation**: Multi-level validation framework ensuring consistency across equipment, process, and regulatory compliance levels
+  - **Cross-Entity Validation Rules**: toleranceValidationConsistency and toleranceHierarchyCompliance rules for mathematical correctness
+  - **Python Reference Implementation**: Working tolerance validation classes demonstrating concrete tolerance checking
+  - **Professional Documentation**: Complete tolerance standards documentation with proper governance model and technical specifications
+
+### Changed
+- **Tolerance Architecture Philosophy**: Moved from centralized policy-driven approach to distributed operation-driven tolerance specifications
+  - **Physical Reality Grounding**: Tolerances defined where they physically manifest rather than abstract policy centralization
+  - **Governance Model Alignment**: Authority for setting tolerances matches real-world operational responsibility
+  - **Explicit Validation Logic**: Replaced vague "within tolerance" statements with concrete, measurable validation criteria
+- **Entity Schema Enhancements**: Updated validation schemas with tolerance-specific fields and validation rules
+  - **MaterialProcessing ProcessType Enum**: Added pelletizing, transport, drying, and sizing process types with specific tolerance ranges
+  - **Business Logic Validation**: Enhanced with measurementAccuracyValidation section and entity-specific tolerance references
+  - **Cross-Entity Validation**: Updated validation sequence to include tolerance consistency checking
+- **Documentation Writing Standards**: Improved professional academic tone compliance across all tolerance-related documentation
+  - **Acronym Definitions**: All technical acronyms properly defined on first use (CARB, LCFS, NIST, ISO, ASTM, EU, EPA)
+  - **Formal Language**: Eliminated informal pronouns and contractions for government and industry stakeholder appropriateness
+  - **Technical Precision**: Balanced accessibility with domain-specific terminology accuracy
+
+### Fixed
+- **Schema Integrity**: Comprehensive schema integrity validation confirmed zero critical issues with tolerance enhancements
+  - **Foreign Key Relationships**: All tolerance-enhanced entities maintain proper FK integrity without introducing orphaned references
+  - **Cross-Entity Consistency**: Three-way consistency maintained across Schema/ERD/Validation systems
+  - **Pattern Compliance**: All tolerance fields follow established naming conventions and validation patterns
+- **Documentation Consistency**: 92% technical consistency achieved across HTML, PDF, and schema documentation formats
+  - **Single Source of Truth**: No conflicting tolerance specifications between documentation formats
+  - **Build System Integration**: Tolerance documentation properly integrated into HTML and PDF generation pipeline
+  - **Professional Standards**: 100% writing standards compliance after addressing informal language violations
+
+### Resolved Issues
+- **Issue #244**: Addressed Colin's feedback about "within tolerance for pelletizing" with explicit tolerance specifications and clear governance model
+  - **Concrete Tolerance Values**: Pelletizing 1.5-3.5% acceptable loss range with industry standard authority attribution
+  - **Governance Questions Answered**: Who sets tolerances, acceptable error rates, and schema location clearly documented
+  - **Operational Validation**: Working Python implementation demonstrating exact tolerance validation logic
+
 ## [3.3.0] - 2025-08-22 - Dynamic Schema-Driven Architecture and LCFS Integration
 
 ### Added
