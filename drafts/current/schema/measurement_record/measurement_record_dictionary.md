@@ -96,6 +96,27 @@ The `MeasurementRecord` entity captures measurements at different tracking point
 <td>`["Pine: 45.2m3", "Fir: 28.8m3"]`
 </tr>
 <tr>
+<td>`expectedAccuracy`
+<td>number
+<td>No
+<td>Expected accuracy of measurement method as decimal (±2% = 0.02)
+<td>`0.02`, `0.005`, `0.025`
+</tr>
+<tr>
+<td>`calibrationStandard`
+<td>string
+<td>No
+<td>Reference standard for equipment calibration (enum)
+<td>`ISO_forestry_equipment`, `manufacturer_specification`
+</tr>
+<tr>
+<td>`accuracyValidation`
+<td>object
+<td>No
+<td>Min/max acceptable range based on equipment accuracy
+<td>`{"minAcceptable": 12.25, "maxAcceptable": 12.75, "withinTolerance": true}`
+</tr>
+<tr>
 <td>`@id`
 <td>string (uri)
 <td>Yes
@@ -136,6 +157,32 @@ The `MeasurementRecord` entity captures measurements at different tracking point
      Non-contact measurement techniques
      3D scanning for precise volume calculation
      Integration with biometric identification
+
+### Equipment Accuracy Standards
+
+1. **harvester**
+     - **Expected Accuracy**: ±2.0% for automated volume calculations
+     - **Calibration Standard**: International Organization for Standardization (ISO) forestry equipment standards
+     - **Typical Range**: 1.5% - 3.0% depending on equipment condition
+     - **Validation**: Cross-check with manual measurements periodically
+
+2. **mill**
+     - **Expected Accuracy**: ±0.5% for scale-based measurements
+     - **Calibration Standard**: National Institute of Standards and Technology (NIST) traceable scales, Class III certification
+     - **Typical Range**: 0.25% - 1.0% depending on scale type
+     - **Validation**: Daily calibration checks, annual certification
+
+3. **manual**
+     - **Expected Accuracy**: ±3.0% for diameter measurements, ±5.0% for volume calculations
+     - **Calibration Standard**: American Society for Testing and Materials (ASTM) measurement standards
+     - **Typical Range**: 2.0% - 8.0% depending on operator skill and conditions
+     - **Validation**: Training verification and periodic cross-validation
+
+4. **optical**
+     - **Expected Accuracy**: ±1.5% for 3D scanning systems
+     - **Calibration Standard**: Manufacturer specification with NIST traceable references
+     - **Typical Range**: 1.0% - 2.5% depending on scanning resolution
+     - **Validation**: Reference object scanning for calibration verification
 
 ### Key Features
 
@@ -195,6 +242,24 @@ The `MeasurementRecord` entity captures measurements at different tracking point
      Spot check validation of automated systems
      Defect assessment and grading
      Compliance verification measurements
+
+4. **Tolerance Validation Example**
+     ```json
+     {
+       "recordId": "MR-HARVEST-001",
+       "traceableUnitId": "TRU-LOG-001",
+       "measuredVolume": 12.5,
+       "measurementMethod": "harvester",
+       "expectedAccuracy": 0.02,
+       "calibrationStandard": "ISO_forestry_equipment",
+       "accuracyValidation": {
+         "minAcceptable": 12.25,
+         "maxAcceptable": 12.75,
+         "withinTolerance": true
+       }
+     }
+     ```
+     This example shows a harvester measurement with ±2% expected accuracy (0.02), resulting in an acceptable range of 12.25-12.75 m³ for a measured volume of 12.5 m³.
 
 ### Relationships
 - MeasurementRecord belongs to one TraceableUnit

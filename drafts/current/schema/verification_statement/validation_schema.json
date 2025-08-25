@@ -26,13 +26,17 @@
         "format": "date"
       },
       "issuingBody": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^CB-[A-Z0-9-_]+$",
+        "description": "Foreign key to CertificationBody entity"
       },
       "scope": {
         "type": "string"
       },
       "transactionBatchId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TB-[A-Z0-9-_]+$",
+        "description": "Foreign key to TransactionBatch entity"
       }
     },
     "required": [

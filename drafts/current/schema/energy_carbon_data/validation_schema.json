@@ -62,15 +62,25 @@
         "type": "string",
         "enum": [
           "oven_dry",
-          "electrical_resistance",
-          "microwave",
-          "near_infrared",
-          "gravimetric",
-          "CA-GREET3.0",
-          "GREET2023",
-          "Direct_Measurement",
-          "LCA_Modeling"
-        ]
+          "air_dry",
+          "kiln_dry",
+          "moisture_meter",
+          "capacitance",
+          "resistance",
+          "dielectric",
+          "pin_type",
+          "pinless",
+          "manual",
+          "automated",
+          "harvester_head",
+          "mill_scale",
+          "truck_scale",
+          "optical",
+          "laser",
+          "ultrasonic",
+          "photogrammetry"
+        ],
+        "description": "Method used for measurement with comprehensive standard values"
       },
       "traceableUnitId": {
         "type": "string",

@@ -117,6 +117,41 @@ The `MaterialProcessing` entity tracks all technical manipulations with input/ou
 <td>`harvester_head`, `chainsaw`, `chipper`, `debarker`
 </tr>
 <tr>
+<td>`expectedLossRate`
+<td>number
+<td>No
+<td>Expected material loss rate as decimal (2% = 0.02)
+<td>`0.02`, `0.015`, `0.035`
+</tr>
+<tr>
+<td>`acceptableRange`
+<td>array
+<td>No
+<td>[min, max] acceptable loss percentages as decimals
+<td>`[0.005, 0.035]`, `[0.01, 0.025]`
+</tr>
+<tr>
+<td>`lossJustification`
+<td>string
+<td>No
+<td>Explanation when losses exceed acceptable range
+<td>`"Standard pelletizing densification loss"`, `"Equipment malfunction"`
+</tr>
+<tr>
+<td>`processStandard`
+<td>string
+<td>No
+<td>Authority defining acceptable tolerances (enum)
+<td>`industry_standard`, `equipment_manufacturer`
+</tr>
+<tr>
+<td>`toleranceValidation`
+<td>object
+<td>No
+<td>Process loss tolerance validation results
+<td>`{"actualLossRate": 0.018, "withinTolerance": true}`
+</tr>
+<tr>
 <td>`@id`
 <td>string (uri)
 <td>Yes
@@ -176,6 +211,31 @@ The `MaterialProcessing` entity tracks all technical manipulations with input/ou
      Quality-based value optimization
      Inventory organization
 
+7. **pelletizing**
+     Conversion of biomass to compressed pellets
+     Densification process with heat and pressure
+     Moisture content adjustment and standardization
+     **Expected Loss**: 1.5-3.5% (densification and moisture loss)
+     **Tolerance Standard**: Industry standard pelletizing guidelines
+
+8. **transport**
+     Movement of biomass between locations
+     Handling and loading/unloading operations
+     **Expected Loss**: 0.1-1.0% (spillage, handling, weather exposure)
+     **Tolerance Standard**: Industry transportation best practices
+
+9. **drying**
+     Moisture content reduction operations
+     Preparation for processing or storage
+     **Expected Loss**: 5-15% mass loss (water removal)
+     **Tolerance Standard**: Equipment manufacturer specifications
+
+10. **sizing**
+     Size reduction and standardization
+     Screening and grading by dimensions
+     **Expected Loss**: 0.5-2.5% (fines removal, screening losses)
+     **Tolerance Standard**: Equipment manufacturer specifications
+
 ### Key Features
 
 1. **Complete Processing Chain Tracking**
@@ -205,6 +265,13 @@ The `MaterialProcessing` entity tracks all technical manipulations with input/ou
      Defect identification and impact
      Processing quality assurance
      Value optimization tracking
+
+5. **Process Loss Tolerance Validation**
+     Expected loss rate definition by process type
+     Acceptable tolerance range specification
+     Real-time validation against tolerance limits
+     Exception handling for out-of-tolerance conditions
+     Industry standard compliance verification
 
 ### Processing Efficiency Metrics
 
@@ -267,6 +334,26 @@ The `MaterialProcessing` entity tracks all technical manipulations with input/ou
      Output: Separate species piles
      Composition change: Mixed to segregated
      Quality improvement through sorting
+
+4. **Pelletizing with Tolerance Validation**
+     ```json
+     {
+       "processingId": "MP-PELLET-001",
+       "processType": "pelletizing",
+       "inputVolume": 100.0,
+       "outputVolume": 98.2,
+       "volumeLoss": 1.8,
+       "expectedLossRate": 0.02,
+       "acceptableRange": [0.015, 0.035],
+       "processStandard": "industry_standard",
+       "toleranceValidation": {
+         "actualLossRate": 0.018,
+         "withinTolerance": true,
+         "deviationFromExpected": -0.002
+       }
+     }
+     ```
+     This example demonstrates Colin's "within tolerance for pelletizing" scenario with explicit validation showing 1.8% actual loss is within the 1.5-3.5% acceptable range.
 
 ### Relationships
 - MaterialProcessing consumes one input TraceableUnit

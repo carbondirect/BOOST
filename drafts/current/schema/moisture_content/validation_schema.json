@@ -6,22 +6,69 @@
     "description": "Comprehensive validation rules and business logic for moisture content tracking across the BOOST data standard",
     "type": "object",
     "properties": {
+      "@context": {
+        "type": "object",
+        "description": "JSON-LD context for semantic web compatibility"
+      },
+      "@type": {
+        "type": "string",
+        "const": "MoistureContent",
+        "description": "JSON-LD type identifier"
+      },
+      "@id": {
+        "type": "string",
+        "format": "uri",
+        "description": "Unique URI identifier for JSON-LD"
+      },
       "moistureContentId": {
         "type": "string",
         "pattern": "^MOI-[A-Z0-9-_]+$",
         "description": "Unique identifier for moisture content record"
       },
       "moistureContent": {
-        "$ref": "#/definitions/moistureContentValue"
+        "$ref": "#/definitions/moistureContentValue",
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Moisture content as percentage by weight (0-100%)"
       },
       "measurementMethod": {
-        "$ref": "#/definitions/moistureMeasurementMethod"  
+        "$ref": "#/definitions/moistureMeasurementMethod",
+        "type": "string",
+        "enum": [
+          "oven_dry",
+          "air_dry",
+          "kiln_dry",
+          "moisture_meter",
+          "capacitance",
+          "resistance",
+          "dielectric",
+          "pin_type",
+          "pinless",
+          "manual",
+          "automated",
+          "harvester_head",
+          "mill_scale",
+          "truck_scale",
+          "optical",
+          "laser",
+          "ultrasonic",
+          "photogrammetry"
+        ],
+        "description": "Method used for measurement with comprehensive standard values"
       },
       "qualityAssurance": {
         "$ref": "#/definitions/moistureQualityAssurance"
       }
     },
-    "required": ["moistureContentId", "moistureContent", "measurementMethod"],
+    "required": [
+      "@context",
+      "@type",
+      "@id",
+      "moistureContentId",
+      "moistureContent",
+      "measurementMethod"
+    ],
     "definitions": {
       "moistureContentValue": {
         "type": "number",

@@ -172,6 +172,30 @@
         "type": "string",
         "format": "date-time",
         "description": "Timestamp of the most recent data update"
+      },
+      "complianceTolerances": {
+        "type": "object",
+        "description": "Regulatory compliance tolerance specifications only",
+        "properties": {
+          "volumeDeviation": {
+            "type": "number",
+            "description": "Maximum allowed volume deviation for regulatory reporting (as decimal, e.g., 0.005 = ±0.5%)",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "massDeviation": {
+            "type": "number", 
+            "description": "Maximum allowed mass deviation for regulatory reporting (as decimal)",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "reportingStandard": {
+            "type": "string",
+            "description": "Regulatory standard defining these tolerance requirements",
+            "examples": ["CARB_LCFS", "EU_RED", "RFS2"]
+          }
+        },
+        "description": "Only regulatory compliance tolerances - equipment and process tolerances are defined in respective entities"
       }
     },
     "required": [

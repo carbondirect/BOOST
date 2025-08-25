@@ -305,7 +305,10 @@
             "description": "Longitude of fuel origin location"
           }
         },
-        "required": ["latitude", "longitude"],
+        "required": [
+          "latitude",
+          "longitude"
+        ],
         "description": "Geographic coordinates of biomass fuel origin"
       },
       "fuelOriginFacilityId": {
@@ -407,9 +410,10 @@
         "enum": [
           "pending",
           "resolved",
-          "disputed"
+          "disputed",
+          "investigating"
         ],
-        "description": "Transaction reconciliation status"
+        "description": "Reconciliation status with standard values"
       },
       "manipulationTimestamps": {
         "type": "array",
@@ -450,7 +454,10 @@
               "description": "Percentage of total volume"
             }
           },
-          "required": ["species", "percentage"]
+          "required": [
+            "species",
+            "percentage"
+          ]
         },
         "description": "Species breakdown at transaction time"
       },
@@ -492,7 +499,7 @@
         "example": "TXN-2024-001 sold by 'Olympic Forest Products'"
       },
       {
-        "field": "CustomerId", 
+        "field": "CustomerId",
         "targetEntity": "Customer",
         "relationshipType": "many-to-one",
         "required": true,
@@ -523,7 +530,7 @@
       },
       {
         "field": "LcfsPathwayId",
-        "targetEntity": "LcfsPathway", 
+        "targetEntity": "LcfsPathway",
         "relationshipType": "many-to-one",
         "required": false,
         "label": "LCFS pathway"
@@ -546,10 +553,10 @@
       {
         "field": "trackingPointIds",
         "targetEntity": "TrackingPoint",
-        "relationshipType": "many-to-many", 
+        "relationshipType": "many-to-many",
         "required": false,
         "label": "location trail",
-        "example": "TXN-2024-001 tracked through TP-HARVEST-01 → TP-MILL-02"
+        "example": "TXN-2024-001 tracked through TP-HARVEST-01 \u2192 TP-MILL-02"
       }
     ]
   }

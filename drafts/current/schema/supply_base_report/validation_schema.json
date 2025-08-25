@@ -22,7 +22,9 @@
         "pattern": "^SBR-[A-Z0-9-_]+$"
       },
       "organizationId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^ORG-[A-Z0-9-_]+$",
+        "description": "Foreign key to Organization entity that prepared this report"
       },
       "preparationDate": {
         "type": "string",
@@ -42,12 +44,15 @@
         "format": "uri"
       },
       "reportGeographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
+        "description": "Foreign key to GeographicData entity for report coverage area"
       },
       "supplyBaseIds": {
         "type": "array",
         "items": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^SB-[A-Z0-9-_]+$"
         },
         "description": "Array of SupplyBase IDs that this report covers"
       }

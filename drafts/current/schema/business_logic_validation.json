@@ -23,7 +23,8 @@
                 "description": "Volume cannot be created in processing, only lost",
                 "validation": {
                   "formula": "inputVolume >= (outputVolume + volumeLoss)",
-                  "tolerance": 0.001,
+                  "toleranceRef": "MaterialProcessing.toleranceValidation.withinTolerance",
+                  "acceptableRangeRef": "MaterialProcessing.acceptableRange",
                   "units": "cubic_meters"
                 },
                 "exceptions": [
@@ -42,7 +43,8 @@
                 "description": "Mass can only be lost (moisture, debris), never gained",
                 "validation": {
                   "formula": "inputMass >= outputMass",
-                  "tolerance": 0.001,
+                  "toleranceRef": "MaterialProcessing.toleranceValidation.withinTolerance",
+                  "acceptableRangeRef": "MaterialProcessing.acceptableRange",
                   "units": "metric_tons"
                 },
                 "typicalLossRates": {
@@ -94,6 +96,41 @@
                   "minimumVolume": 1.0,
                   "minimumValue": 100.0,
                   "units": "cubic_meters and currency"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "measurementAccuracyValidation": {
+      "type": "object",
+      "description": "Equipment-specific measurement accuracy validation rules",
+      "properties": {
+        "measurementRecord": {
+          "type": "object",
+          "properties": {
+            "accuracyCompliance": {
+              "type": "object",
+              "properties": {
+                "rule": {"const": "measurement_within_equipment_accuracy"},
+                "description": "Measurements must fall within equipment accuracy specifications",
+                "validation": {
+                  "formula": "measurement >= minAcceptable && measurement <= maxAcceptable",
+                  "toleranceRef": "MeasurementRecord.accuracyValidation.withinTolerance",
+                  "accuracyRef": "MeasurementRecord.expectedAccuracy",
+                  "calibrationRef": "MeasurementRecord.calibrationStandard"
+                }
+              }
+            },
+            "methodConsistency": {
+              "type": "object", 
+              "properties": {
+                "rule": {"const": "consistent_measurement_method_accuracy"},
+                "description": "Multiple measurements of same TRU should have consistent accuracy",
+                "validation": {
+                  "maxDeviation": 0.05,
+                  "formula": "abs(measurement1 - measurement2) <= (expectedAccuracy1 + expectedAccuracy2)"
                 }
               }
             }
@@ -532,6 +569,7 @@
           "items": {"type": "string"},
           "default": [
             "volumeMassConservation",
+            "measurementAccuracyValidation",
             "temporalLogicRules",
             "geographicLogicRules",
             "speciesCompositionRules",
@@ -561,6 +599,7 @@
   "required": [
     "version",
     "volumeMassConservation",
+    "measurementAccuracyValidation",
     "temporalLogicRules",
     "geographicLogicRules", 
     "speciesCompositionRules",

@@ -96,9 +96,10 @@
     },
     "lcfsRegistrationId": {
       "type": "string",
-      "description": "CARB LCFS registration identifier for regulated entities",
+      "description": "CARB LCFS registration identifier for regulated entities (external system reference)",
       "pattern": "^LCFS-REG-[0-9]{4}-[0-9]{3}$",
-      "examples": ["LCFS-REG-2025-003", "LCFS-REG-2025-127"]
+      "examples": ["LCFS-REG-2025-003", "LCFS-REG-2025-127"],
+      "boost_external_reference": true
     },
     "regulatedEntityType": {
       "type": "string",
@@ -124,21 +125,24 @@
     },
     "bioramRegistrationId": {
       "type": "string",
-      "description": "CEC BioRAM registration identifier for biomass power facilities",
+      "description": "CEC BioRAM registration identifier for biomass power facilities (external system reference)",
       "pattern": "^CEC-BIO-[0-9]{3}$",
-      "examples": ["CEC-BIO-012", "CEC-BIO-087"]
+      "examples": ["CEC-BIO-012", "CEC-BIO-087"],
+      "boost_external_reference": true
     },
     "bioramFacilityId": {
       "type": "string",
-      "description": "BioRAM facility identifier for program tracking",
+      "description": "BioRAM facility identifier for program tracking (external system reference)",
       "pattern": "^BIORAM-FAC-[0-9]{4}-[0-9]{3}$",
-      "examples": ["BIORAM-FAC-2025-001", "BIORAM-FAC-2025-087"]
+      "examples": ["BIORAM-FAC-2025-001", "BIORAM-FAC-2025-087"],
+      "boost_external_reference": true
     },
     "bioramContractId": {
       "type": "string",
-      "description": "BioRAM competitive procurement contract identifier",
+      "description": "BioRAM competitive procurement contract identifier (external system reference)",
       "pattern": "^BR-RFO-[0-9]{4}-[0-9]{2}$",
-      "examples": ["BR-RFO-2024-01", "BR-RFO-2025-03"]
+      "examples": ["BR-RFO-2024-01", "BR-RFO-2025-03"],
+      "boost_external_reference": true
     },
     "powerPurchaseAgreementId": {
       "type": "string",
@@ -225,44 +229,12 @@
         "example": "'West Coast Timber' operates in 'Cascade Forest' + 'Olympic Peninsula'"
       },
       {
-        "field": "traceableUnitIds",
-        "targetEntity": "TraceableUnit",
-        "relationshipType": "many-to-many",
-        "required": false,
-        "label": "manages TRUs",
-        "example": "'Pacific Forest Products' manages TRU-001 + TRU-002 + TRU-003"
-      },
-      {
-        "field": "harvestSites",
-        "targetEntity": "TrackingPoint",
-        "relationshipType": "many-to-many",
-        "required": false,
-        "label": "operates harvest sites",
-        "example": "'Forest Company' operates TP-SITE-ALPHA + TP-SITE-BETA"
-      },
-      {
-        "field": "operatorIds",
-        "targetEntity": "Operator",
-        "relationshipType": "one-to-many",
-        "required": false,
-        "label": "employs operators",
-        "example": "'Pacific Forest Products' employs OP-SMITH-001 + OP-JONES-002"
-      },
-      {
         "field": "certifications",
         "targetEntity": "Certificate",
         "relationshipType": "many-to-many",
         "required": false,
         "label": "holds certifications",
         "example": "'Forest Company' holds CERT-FSC-001 + CERT-SFI-002"
-      },
-      {
-        "field": "equipmentIds",
-        "targetEntity": "Equipment",
-        "relationshipType": "one-to-many",
-        "required": false,
-        "label": "owns equipment",
-        "example": "'Pacific Forest Products' owns EQ-HARVESTER-001 + EQ-SKIDDER-002"
       }
     ]
   }

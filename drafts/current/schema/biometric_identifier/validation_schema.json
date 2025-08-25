@@ -59,14 +59,18 @@
         "description": "Method used to verify biometric match"
       },
       "captureGeographicDataId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^GEO-[A-Z0-9-_]+$",
+        "description": "Foreign key to GeographicData entity for capture location"
       },
       "captureTimestamp": {
         "type": "string",
         "format": "date-time"
       },
       "trackingPointId": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^TP-[A-Z0-9-_]+$",
+        "description": "Foreign key to TrackingPoint entity where capture occurred"
       },
       "speciesBiometrics": {
         "type": "array",

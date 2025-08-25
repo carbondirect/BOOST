@@ -42,11 +42,26 @@
       "measurementMethod": {
         "type": "string",
         "enum": [
-          "harvester",
-          "mill",
+          "oven_dry",
+          "air_dry",
+          "kiln_dry",
+          "moisture_meter",
+          "capacitance",
+          "resistance",
+          "dielectric",
+          "pin_type",
+          "pinless",
           "manual",
-          "optical"
-        ]
+          "automated",
+          "harvester_head",
+          "mill_scale",
+          "truck_scale",
+          "optical",
+          "laser",
+          "ultrasonic",
+          "photogrammetry"
+        ],
+        "description": "Method used for measurement with comprehensive standard values"
       },
       "measurementGeographicDataId": {
         "type": "string",
@@ -74,7 +89,7 @@
         "type": "number",
         "minimum": 0,
         "maximum": 100,
-        "description": "Moisture content as percentage of weight contributed by water (0-100%)"
+        "description": "Moisture content as percentage by weight (0-100%)"
       },
       "moistureMethod": {
         "type": "string",
@@ -104,7 +119,44 @@
       "moistureAccuracy": {
         "type": "number",
         "minimum": 0,
-        "description": "Estimated accuracy of moisture measurement (± percentage points)"
+        "description": "Estimated accuracy of moisture measurement (\u00b1 percentage points)"
+      },
+      "expectedAccuracy": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1,
+        "description": "Expected accuracy of the measurement method as decimal (e.g., 0.02 = \u00b12% accuracy)"
+      },
+      "calibrationStandard": {
+        "type": "string",
+        "enum": [
+          "ISO_forestry_equipment",
+          "ASTM_measurement_standards",
+          "manufacturer_specification",
+          "local_calibration_standard",
+          "NIST_traceable"
+        ],
+        "description": "Reference standard used for equipment calibration and accuracy specification"
+      },
+      "accuracyValidation": {
+        "type": "object",
+        "properties": {
+          "minAcceptable": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Minimum acceptable measured value based on expected accuracy"
+          },
+          "maxAcceptable": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Maximum acceptable measured value based on expected accuracy"
+          },
+          "withinTolerance": {
+            "type": "boolean",
+            "description": "Whether the measurement falls within expected accuracy range"
+          }
+        },
+        "description": "Validation range based on equipment accuracy specifications"
       },
       "lastUpdated": {
         "type": "string",
