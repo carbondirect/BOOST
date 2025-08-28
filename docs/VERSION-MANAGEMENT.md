@@ -1,6 +1,6 @@
 # BOOST Version Management System
 
-This document describes the comprehensive version management system that ensures version synchronization between git tags and documentation across all formats (HTML, PDF).
+This document describes the version management system that ensures version synchronization between git tags and documentation across all formats (HTML, PDF).
 
 ## Overview
 
