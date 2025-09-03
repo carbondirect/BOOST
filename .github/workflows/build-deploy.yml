@@ -153,6 +153,16 @@ jobs:
           echo "📦 Version source: Pre-extracted outside Docker container"
           chmod +x build.sh
           ./build.sh
+          
+          # Copy ERD Navigator from root directory
+          echo "📋 Copying ERD Navigator files..."
+          if [ -d "../../../erd-navigator" ]; then
+            cp -r ../../../erd-navigator ./
+            echo "✅ Copied ERD navigator from root directory"
+          else
+            echo "❌ ERD navigator not found at ../../../erd-navigator/"
+            exit 1
+          fi
 
       - name: Validate build output
         working-directory: drafts/current/specifications
@@ -426,12 +436,13 @@ jobs:
             exit 1
           fi
           
-          # Copy ERD navigator from root directory
-          if [ -d "erd-navigator" ]; then
-            cp -r erd-navigator ./pages-content/
-            echo "✅ Copied ERD navigator from root directory"
+          # Copy ERD navigator (already copied during build step)
+          if [ -d "drafts/current/specifications/erd-navigator" ]; then
+            cp -r drafts/current/specifications/erd-navigator ./pages-content/
+            echo "✅ Copied ERD navigator from build directory"
           else
-            echo "❌ ERD navigator not found at erd-navigator/"
+            echo "❌ ERD navigator not found in build directory"
+            exit 1
           fi
           
           # Copy build report if it exists
