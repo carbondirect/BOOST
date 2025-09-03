@@ -33,10 +33,10 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ## 📋 Documentation Access
 
 ### **Primary Documentation**
-- **[📄 Complete PDF Specification](https://carbondirect.github.io/BOOST/boost-spec.pdf)** - 88+ page comprehensive specification with all 35 entities
+- **[📄 Complete PDF Specification](https://carbondirect.github.io/BOOST/boost-spec.pdf)** - 88+ page comprehensive specification with all 36 entities
 - **[🌐 Interactive HTML Specification](https://carbondirect.github.io/BOOST/boost-spec.html)** - W3C-compliant browsable documentation
 - **[📊 Interactive ERD Navigator](https://carbondirect.github.io/BOOST/erd-navigator/)** - Visual exploration of entity relationships and data model
-- **[🗂️ JSON Schema Repository](https://github.com/carbondirect/BOOST/tree/main/drafts/current/schema)** - 35 validation schemas (single source of truth)
+- **[🗂️ JSON Schema Repository](https://github.com/carbondirect/BOOST/tree/main/drafts/current/schema)** - 36 validation schemas (single source of truth)
 
 ### **Development Resources**
 - **[📈 Build and Consistency Reports](https://github.com/carbondirect/BOOST/tree/main/drafts/current/specifications/build)** - Automated validation and generation statistics
@@ -45,21 +45,21 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 
 ## 🚀 Recent Changes & Improvements
 
-### **Latest Updates (v3.2.3+)**
+### **Latest Updates (v3.4.2)**
 - **📋 Enhanced Collaboration**: Migrated all enhancement plans to GitHub Issues ([#259](https://github.com/carbondirect/BOOST/issues/259)-[#262](https://github.com/carbondirect/BOOST/issues/262)) for improved stakeholder engagement and transparency
 - **🔧 Build System Refinements**: Resolved HTML generation consistency issues and header formatting problems
 - **🧹 Documentation Organization**: Streamlined planning documents and improved developer experience
 - **📝 Stakeholder Materials**: Comprehensive interagency presentation materials for California agency engagement
 
-### **Major Release Features (v3.0.0)**
-- **🚀 Enterprise CI/CD Pipeline**: Complete GitHub Actions automation with PR validation, schema integrity checking, and automated deployment
-- **🧪 Local Testing Infrastructure**: Full development environment with 80-90% CI/CD simulation capabilities for faster iteration
-- **🛡️ Critical Schema Integrity**: Fixed validation patterns for GeographicData, MaterialProcessing, and TraceableUnit entities
-- **🎨 Professional Layout System**: ReSpec-based responsive design with mobile optimization and W3C compliance
-- **📊 Complete Entity Coverage**: All 35 entities documented across 7 thematic areas with full cross-format consistency validation
+### **Major Release Features (v3.4.x Series)**
+- **🎯 Distributed Tolerance Framework**: Equipment accuracy, process loss, and regulatory compliance tolerances distributed across entities where they physically manifest
+- **📍 Enhanced Tracking Points System**: 7-point tracking system with consolidation_point replacement for deprecated skid_road/forest_road concepts
+- **🐍 Complete Python Validation**: Full validate_all() function with six validation categories, process-specific tolerances, and automated recommendations
+- **🔧 Schema Integrity Enhancements**: Comprehensive cross-entity validation, array foreign key patterns, and quality grade standardization
+- **📊 Complete Entity Coverage**: All 36 entities documented with enhanced IdentificationMethod integration and documentation consistency
 
 ### **Current System Status**
-- ✅ **Entity Coverage**: 35/35 entities documented with complete JSON Schema validation
+- ✅ **Entity Coverage**: 36/36 entities documented with complete JSON Schema validation
 - ✅ **Build System**: Unified single-command build process with HTML/PDF generation
 - ✅ **Documentation Consistency**: 100% cross-format validation between PDF and HTML outputs
 - ✅ **Version Management**: Automatic git tag-based versioning with complete traceability
@@ -99,7 +99,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ├── LICENSE.md               # License info (not auto-created)
 ├── CODE_OF_CONDUCT.md       # Community standards (not auto-created)
 ├── CONTRIBUTING.md          # Contribution guide (not auto-created)
-├── CHARTER.md               # Group charter (not auto-created)
+├── BOOST_Charter.org        # Group charter (not auto-created)
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
 │   │   ├── bug_report.md
@@ -116,7 +116,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ├── drafts/                  # Organized draft content
 │   ├── current/             # Active working content
 │   │   ├── specifications/        # Current spec documents
-│   │   ├── schema/               # Entity schemas and validation (35 entities)
+│   │   ├── schema/               # Entity schemas and validation (36 entities)
 │   │   │   ├── traceable_unit/        # Core TRU entity with examples
 │   │   │   ├── species_component/     # Multi-species tracking
 │   │   │   ├── material_processing/   # Processing operations
@@ -160,7 +160,7 @@ W3C Community Group page: [BOOST-01](https://www.w3.org/community/boost-01/)
 ## 🚀 Getting Started
 
 ### For Developers
-1. **Explore the Interactive ERD**: Use the [Interactive ERD Navigator](erd-navigator/index.html) to explore all 35 entities with dynamic filtering and GitHub discussion integration
+1. **Explore the Interactive ERD**: Use the [Interactive ERD Navigator](erd-navigator/index.html) to explore all 36 entities with dynamic filtering and GitHub discussion integration
 2. **Review Entity Schemas**: Check `drafts/current/schema/` for JSON validation schemas and examples
 3. **Review Schema Organization**: Check entity schemas in `drafts/current/schema/` for implementation details
 4. **Migration Guide**: See `drafts/current/specifications/MATERIALBATCH_TO_TRU_MIGRATION_GUIDE.md` for conceptual changes
@@ -210,7 +210,7 @@ Each entity has a dedicated GitHub discussion thread accessible via the ERD. Thi
 
 - **✅ Complete**: BOOST Traceability System Phases 1-3 implementation
 - **✅ Complete**: Plant part categorization system 
-- **✅ Complete**: 35 entity schemas with validation and examples
+- **✅ Complete**: 36 entity schemas with validation and examples
 - **✅ Complete**: Interactive ERD Navigator with GitHub discussion integration
 - **✅ Complete**: Integration testing scenarios and migration documentation
 - **🔄 Active**: Community feedback integration and use case expansion
@@ -219,17 +219,17 @@ Each entity has a dedicated GitHub discussion thread accessible via the ERD. Thi
 
 BOOST uses Git-based semantic versioning with development build identification. Understanding the version format is essential for tracking releases and development progress.
 
-### Version Format: `v3.1.3-5-gaac45b1`
+### Version Format: `vX.Y.Z-N-gHHHHHHH`
 
 All BOOST versions follow the **Git describe** format, providing precise traceability:
 
 #### **Components Breakdown:**
 
-1. **`v3.1.3`** - **Base Release Tag**
+1. **`vX.Y.Z`** - **Base Release Tag**
    - Latest official release using semantic versioning (Major.Minor.Patch)
-   - Example: `v3.1.3` represents a patch release in the 3.1.x series
+   - Example: `v3.4.2` represents a patch release in the 3.4.x series
 
-2. **`-5`** - **Commits Since Release** 
+2. **`-N`** - **Commits Since Release** 
    - Number of commits made since the base release tag
    - Indicates this is a **development build**, not an official release
    - Higher numbers = more development activity since last release
@@ -238,28 +238,28 @@ All BOOST versions follow the **Git describe** format, providing precise traceab
    - Standard Git convention indicating the following is a commit hash
    - The "g" stands for "git"
 
-4. **`aac45b1`** - **Commit Hash (Short)**
+4. **`HHHHHHH`** - **Commit Hash (Short)**
    - 7-character abbreviated SHA hash of the specific commit
    - Uniquely identifies the exact code state used for this build
-   - Full hash is longer (e.g., `aac45b1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q`)
+   - Full hash is longer but abbreviated for readability
 
 ### **Version Types:**
 
 | Format | Type | Description | Example |
 |--------|------|-------------|---------|
-| `v3.1.3` | **Release** | Official tagged release | Stable, production-ready |
-| `v3.1.3-5-gabc123` | **Development** | 5 commits after v3.1.3 | In-progress development |
-| `v3.2.0-1-gdef456` | **Post-Release** | 1 commit after new release | Latest development |
+| `vX.Y.Z` | **Release** | Official tagged release | Stable, production-ready |
+| `vX.Y.Z-N-gHHHHHHH` | **Development** | N commits after release | In-progress development |
+| `vX.Y.Z-1-gHHHHHHH` | **Post-Release** | 1 commit after new release | Latest development |
 
 ### **Development Build Evolution:**
 
 ```
-v3.1.3           ← Official release (tagged)
-v3.1.3-1-g0057230 ← 1 commit after release  
-v3.1.3-2-gca1a0c6 ← 2 commits after release
-v3.1.3-3-g2615374 ← 3 commits after release
-v3.1.3-4-gfe2beb4 ← 4 commits after release  
-v3.1.3-5-gaac45b1 ← 5 commits after release (current example)
+vX.Y.Z           ← Official release (tagged)
+vX.Y.Z-1-gHHHHHHH ← 1 commit after release  
+vX.Y.Z-2-gHHHHHHH ← 2 commits after release
+vX.Y.Z-3-gHHHHHHH ← 3 commits after release
+vX.Y.Z-4-gHHHHHHH ← 4 commits after release  
+vX.Y.Z-5-gHHHHHHH ← 5 commits after release
 ```
 
 ### **Practical Usage:**
@@ -285,7 +285,7 @@ The BOOST repository includes comprehensive GitHub Actions automation for docume
 ### Key Features
 - **🐳 Docker Containerization**: All builds use pre-built containers for 4-6x faster execution
 - **🚀 Automatic Releases**: Every semantic version tag triggers complete release packages
-- **✅ Schema Validation**: Comprehensive validation of all 33+ entity schemas
+- **✅ Schema Validation**: Comprehensive validation of all 36 entity schemas
 - **📄 Multi-Format Output**: HTML, PDF, and interactive ERD Navigator generation
 
 ### Workflow Overview
@@ -302,8 +302,8 @@ The BOOST repository includes comprehensive GitHub Actions automation for docume
 #### Create a Release
 ```bash
 # Any semantic version automatically triggers release
-git tag v3.1.0
-git push origin v3.1.0
+git tag vX.Y.Z
+git push origin vX.Y.Z
 
 # This automatically:
 # 1. Builds complete documentation (HTML + PDF)

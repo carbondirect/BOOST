@@ -63,23 +63,23 @@
     },
     "Certificate": {
       "emoji": "📜",
-      "position": {"x": 350, "y": 400}
+      "position": {"x": 400, "y": 400}
     },
     "CertificationScheme": {
       "emoji": "📋",
-      "position": {"x": 600, "y": 400}
+      "position": {"x": 700, "y": 400}
     },
     "CertificationBody": {
       "emoji": "🏛️",
-      "position": {"x": 100, "y": 700}
+      "position": {"x": 100, "y": 800}
     },
     "Audit": {
       "emoji": "🔍",
-      "position": {"x": 350, "y": 700}
+      "position": {"x": 400, "y": 800}
     },
     "Operator": {
       "emoji": "👤",
-      "position": {"x": 600, "y": 700}
+      "position": {"x": 700, "y": 800}
     },
     "Material": {
       "emoji": "🪵",

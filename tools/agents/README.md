@@ -61,7 +61,7 @@ schema-integrity-reviewer
 ```
 
 The schema integrity agent will automatically:
-- Scan all 32 entity schemas for integrity issues
+- Scan all 36 entity schemas for integrity issues
 - Validate foreign key relationships and detect orphaned references  
 - Check ERD configuration alignment
 - Test Python reference implementation synchronization

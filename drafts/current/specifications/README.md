@@ -1,16 +1,14 @@
 # BOOST Documentation Build System
 
-**Current Version:** v3.2.3-2-gb3aedc3 | **Last Updated:** 2025-08-22
-
 This directory contains the BOOST W3C Community Group specification documentation build system with comprehensive PDF and HTML generation from a **Single Source of Truth** architecture.
 
 ## **Documentation Outputs** {#documentation-outputs}
 
 ### **📖 Primary Documentation**
-- **[📄 BOOST Specification PDF](build/boost-spec.pdf)** - Complete 88+ page specification with all 35 entities
+- **[📄 BOOST Specification PDF](build/boost-spec.pdf)** - Complete 88+ page specification with all 36 entities
 - **[🌐 HTML Specification](boost-spec.html)** - W3C-compliant interactive documentation
 - **[📊 Interactive ERD Navigator](erd-navigator/index.html)** - Explore entity relationships visually
-- **[🗂️ Schema Directory](../schema/)** - 35 JSON validation schemas (single source of truth)
+- **[🗂️ Schema Directory](../schema/)** - 36 JSON validation schemas (single source of truth)
 
 ### **📋 Reports & Analysis**
 - **[📈 Build Reports](build/)** - Generation statistics, consistency analysis, and build logs
@@ -43,7 +41,7 @@ This directory contains the BOOST W3C Community Group specification documentatio
 
 The BOOST documentation system implements a **Single Source of Truth** approach:
 
-1. **JSON Schemas** (`../schema/*/validation_schema.json`) define all 35 entity structures
+1. **JSON Schemas** (`../schema/*/validation_schema.json`) define all 36 entity structures
 2. **Python generators** (`scripts/`) convert schemas to LaTeX and HTML content
 3. **Consolidated build script** (`build.sh`) orchestrates the complete documentation generation pipeline
 4. **Style files** provide professional W3C-compliant formatting
@@ -61,7 +59,7 @@ specifications/
 │   ├── *-entities.tex       # 7 thematic entity sections
 │   ├── entities/            # Individual entity tables
 │   └── entity-reference-generated.tex
-├── ../schema/               # JSON Schema definitions (35 entities)
+├── ../schema/               # JSON Schema definitions (36 entities)
 ├── boost-spec.tex           # Main LaTeX document
 ├── boost-spec.sty           # LaTeX style package
 └── build.sh                 # Consolidated build system (replaces all previous scripts)
@@ -74,7 +72,7 @@ specifications/
 The unified build process supports flexible output generation:
 
 #### **Default Build** (`./build.sh`)
-- **Content Generation**: Converts all 35 JSON schemas to LaTeX documentation
+- **Content Generation**: Converts all 36 JSON schemas to LaTeX documentation
 - **HTML Generation**: Bikeshed-based responsive W3C-compliant HTML with ReSpec styling
 - **PDF Compilation**: 3-pass LaTeX build with enhanced error detection
 - **Validation**: Comprehensive statistics, warnings analysis, and consistency checking
@@ -97,9 +95,9 @@ The unified build process supports flexible output generation:
 
 ## Entity Coverage
 
-The system documents **all 35 entities** across **7 thematic areas**:
+The system documents **all 36 entities** across **7 thematic areas**:
 
-- **Core Traceability** (5): TraceableUnit, MaterialProcessing, ProcessingHistory, LocationHistory, BiometricIdentifier
+- **Core Traceability** (6): TraceableUnit, MaterialProcessing, ProcessingHistory, LocationHistory, BiometricIdentifier, IdentificationMethod
 - **Organizational Foundation** (6): Organization, Certificate, CertificationBody, CertificationScheme, Audit, Operator  
 - **Material & Supply Chain** (7): Material, SpeciesComponent, Equipment, Supplier, Customer, SupplyBase, SupplyBaseReport
 - **Transaction Management** (3): Transaction, TransactionBatch, SalesDeliveryDocument
@@ -160,7 +158,7 @@ ls build/latex-pass*.log
 ./build.sh --pdf  # Shows warning classification and summaries
 
 # Validate schema processing
-find tex/entities -name "*.tex" | wc -l  # Should be 35
+find tex/entities -name "*.tex" | wc -l  # Should be 36
 ```
 
 ### Clean Rebuild
@@ -179,11 +177,11 @@ The build system automatically manages versioning using Git tags and commit info
 
 ### **Version Format in Builds**
 
-All generated documentation includes version information in the format: `v3.1.3-5-gaac45b1`
+All generated documentation includes version information in the format: `vX.Y.Z-N-gHHHHHHH`
 
-- **`v3.1.3`**: Latest release tag (semantic versioning)
-- **`-5`**: Number of commits since the release
-- **`gaac45b1`**: Short commit hash for exact traceability
+- **`vX.Y.Z`**: Latest release tag (semantic versioning)
+- **`-N`**: Number of commits since the release
+- **`gHHHHHHH`**: Short commit hash for exact traceability
 
 ### **Version Sources** (Priority Order)
 
