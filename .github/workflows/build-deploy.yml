@@ -436,12 +436,14 @@ jobs:
             exit 1
           fi
           
-          # Copy ERD navigator (already copied during build step)
-          if [ -d "drafts/current/specifications/erd-navigator" ]; then
-            cp -r drafts/current/specifications/erd-navigator ./pages-content/
-            echo "✅ Copied ERD navigator from build directory"
+          # Copy ERD navigator (already copied during build step) 
+          if [ -d "build-output/specifications/erd-navigator" ]; then
+            cp -r build-output/specifications/erd-navigator ./pages-content/
+            echo "✅ Copied ERD navigator from build artifacts"
           else
-            echo "❌ ERD navigator not found in build directory"
+            echo "❌ ERD navigator not found in build artifacts"
+            echo "📋 Available directories in build-output/specifications:"
+            ls -la build-output/specifications/ || echo "No specifications directory found"
             exit 1
           fi
           
