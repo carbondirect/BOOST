@@ -1489,7 +1489,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 3f621ba99, updated Mon Jul 28 15:38:36 2025 -0700" name="generator">
-  <meta content="9ff137609e52b6eaf40e6a9f9cd19b4c21d1389b" name="revision">
+  <meta content="c15f0c67505ddba626fa697804e41be42eed3339" name="revision">
   <meta content="dark light" name="color-scheme">
 <style>
 .erd-preview-container {
@@ -2969,10 +2969,10 @@ select:focus {
         <li><a href="#critical-tracking-point-implementation"><span class="secno">2.4.2</span> <span class="content"><strong>Critical Tracking Point Implementation</strong></span></a>
        </ol>
       <li>
-       <a href="#biometric-implementation"><span class="secno">2.5</span> <span class="content">Biometric Implementation Framework</span></a>
+       <a href="#identification-methods"><span class="secno">2.5</span> <span class="content">Identification Methods and Current Practice</span></a>
        <ol class="toc">
-        <li><a href="#current-technology-landscape"><span class="secno">2.5.1</span> <span class="content"><strong>Current Technology Landscape</strong></span></a>
-        <li><a href="#fallback-identification-methods"><span class="secno">2.5.2</span> <span class="content"><strong>Fallback Identification Methods</strong></span></a>
+        <li><a href="#current-industry-practice"><span class="secno">2.5.1</span> <span class="content"><strong>Current Industry Practice</strong></span></a>
+        <li><a href="#emerging-technologies"><span class="secno">2.5.2</span> <span class="content"><strong>Emerging Technologies</strong></span></a>
        </ol>
       <li>
        <a href="#regulatory-integration"><span class="secno">2.6</span> <span class="content">Regulatory Compliance Integration</span></a>
@@ -3008,7 +3008,7 @@ select:focus {
         <li><a href="#2-multi-species-mixed-material-processing"><span class="secno">3.1.2</span> <span class="content">2. Multi-Species Mixed Material Processing</span></a>
         <li><a href="#3-california-lcfs-regulatory-compliance"><span class="secno">3.1.3</span> <span class="content">3. California LCFS Regulatory Compliance</span></a>
         <li><a href="#4-multi-certification-scheme-management"><span class="secno">3.1.4</span> <span class="content">4. Multi-Certification Scheme Management</span></a>
-        <li><a href="#5-progressive-identification-and-continuous-traceability"><span class="secno">3.1.5</span> <span class="content">5. Progressive Identification and Continuous Traceability</span></a>
+        <li><a href="#5-flexible-identification-supporting-current-and-future-methods"><span class="secno">3.1.5</span> <span class="content">5. Flexible Identification Supporting Current and Future Methods</span></a>
         <li><a href="#6-plant-part-value-optimization"><span class="secno">3.1.6</span> <span class="content">6. Plant Part Value Optimization</span></a>
        </ol>
       <li>
@@ -3054,14 +3054,14 @@ select:focus {
       <li>
        <a href="#key-implementation-features"><span class="secno">6.1</span> <span class="content">Key Implementation Features</span></a>
        <ol class="toc">
-        <li><a href="#progressive-identification-framework"><span class="secno">6.1.1</span> <span class="content">Progressive Identification Framework</span></a>
-        <li><a href="#three-critical-tracking-points"><span class="secno">6.1.2</span> <span class="content">Three Critical Tracking Points</span></a>
+        <li><a href="#flexible-identification-framework"><span class="secno">6.1.1</span> <span class="content">Flexible Identification Framework</span></a>
+        <li><a href="#critical-tracking-points"><span class="secno">6.1.2</span> <span class="content">Critical Tracking Points</span></a>
         <li><a href="#multi-species-support"><span class="secno">6.1.3</span> <span class="content">Multi-Species Support</span></a>
         <li><a href="#complete-processing-chain-documentation"><span class="secno">6.1.4</span> <span class="content">Complete Processing Chain Documentation</span></a>
        </ol>
       <li><a href="#tru-concept"><span class="secno">6.2</span> <span class="content">TraceableUnit (TRU) Central Concept</span></a>
       <li><a href="#continuous-traceability①"><span class="secno">6.3</span> <span class="content">Continuous Traceability Framework</span></a>
-      <li><a href="#critical-tracking-points"><span class="secno">6.4</span> <span class="content">Three Critical Tracking Points</span></a>
+      <li><a href="#critical-tracking-points①"><span class="secno">6.4</span> <span class="content">Three Critical Tracking Points</span></a>
       <li><a href="#processing-chain"><span class="secno">6.5</span> <span class="content">Processing Chain Methodology</span></a>
      </ol>
     <li>
@@ -4420,7 +4420,7 @@ select:focus {
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:lkillroy@carbon-direct.com">Liam Killroy</a> (<span class="p-org org">Carbon Direct</span>)
      <dd class="editor p-author h-card vcard"><a class="p-name fn u-email email" href="mailto:public-boost-01@w3.org">BOOST W3C Community Group</a>
      <dt>Version:
-     <dd>v3.4.2-6-g9ff1376
+     <dd>v3.4.2-9-gc15f0c6
     </dl>
    </div>
    <div data-fill-with="warning"></div>
@@ -4620,7 +4620,7 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
      <p>Martin Twer (The Watershed Research &amp; Training Center)</p>
    </ul>
    <h3 class="heading settled" data-level="2.2" id="development-status"><span class="secno">2.2. </span><span class="content">Current Development Status</span><a class="self-link" href="#development-status"></a></h3>
-   <p><strong>Current Version:</strong> v3.4.2-6-g9ff1376 - Complete BOOST Documentation Build System with integrated HTML and PDF generation</p>
+   <p><strong>Current Version:</strong> v3.4.2-9-gc15f0c6 - Complete BOOST Documentation Build System with integrated HTML and PDF generation</p>
    <p><strong>Recent Enhancements:</strong></p>
    <ul>
     <li data-md>
@@ -4682,30 +4682,34 @@ Copyright © 2025 BOOST W3C Community Group. This work is licensed under the <a 
    </ul>
    <p><strong>Implementation Guidance</strong>:
 Operations should establish tracking points where physical custody transfers occur, material aggregation happens, or regulatory measurement is required. Not all operations require all three standard points - the minimum viable configuration depends on supply chain complexity and regulatory requirements.</p>
-   <h3 class="heading settled" data-level="2.5" id="biometric-implementation"><span class="secno">2.5. </span><span class="content">Biometric Implementation Framework</span><a class="self-link" href="#biometric-implementation"></a></h3>
-   <h4 class="heading settled" data-level="2.5.1" id="current-technology-landscape"><span class="secno">2.5.1. </span><span class="content"><strong>Current Technology Landscape</strong></span><a class="self-link" href="#current-technology-landscape"></a></h4>
-   <p>BOOST’s biometric identification framework is designed to work with emerging computer vision technologies for wood identification:</p>
-   <p><strong>Available Technologies</strong>:</p>
+   <h3 class="heading settled" data-level="2.5" id="identification-methods"><span class="secno">2.5. </span><span class="content">Identification Methods and Current Practice</span><a class="self-link" href="#identification-methods"></a></h3>
+   <h4 class="heading settled" data-level="2.5.1" id="current-industry-practice"><span class="secno">2.5.1. </span><span class="content"><strong>Current Industry Practice</strong></span><a class="self-link" href="#current-industry-practice"></a></h4>
+   <p>BOOST supports existing forest industry identification methods while enabling future technology adoption:</p>
+   <p><strong>Trip Tickets</strong>: The current standard for biomass tracking uses paper-based or digital trip tickets containing load information, harvest location, destination, and unique delivery numbers. BOOST accommodates trip ticket IDs as TraceableUnit identifiers, bridging current practice with enhanced traceability.</p>
+   <p><strong>Industry-Standard Methods</strong>:</p>
    <ul>
     <li data-md>
-     <p><strong>End-grain Photography</strong>: Log cross-section imaging with pattern recognition algorithms (Ravindran2022, USDA Forest Service)</p>
+     <p><strong>Trip Tickets</strong>: Current standard practice with unique delivery numbers (e.g., <code>TRIP-2025-001234</code>)</p>
     <li data-md>
-     <p><strong>Wood Grain Analysis</strong>: Surface texture recognition using machine learning classification (Hwang2021, Plant Methods)</p>
+     <p><strong>RFID Tags</strong>: Automated tracking systems for equipment and load identification</p>
     <li data-md>
-     <p><strong>Geometric Profiling</strong>: Combined dimension and visual signature identification (Ergun2024, PMC)</p>
+     <p><strong>QR Codes</strong>: Human-readable codes linking to digital records and documentation</p>
+    <li data-md>
+     <p><strong>Manual Documentation</strong>: Paper-based tracking with unique reference numbers</p>
    </ul>
-   <p><strong>Implementation Readiness</strong>: While full commercial deployment is still developing, controlled environment demonstrations show sufficient accuracy for pilot implementations. BOOST provides the data structure framework to capture biometric data as the technology scales.</p>
-   <h4 class="heading settled" data-level="2.5.2" id="fallback-identification-methods"><span class="secno">2.5.2. </span><span class="content"><strong>Fallback Identification Methods</strong></span><a class="self-link" href="#fallback-identification-methods"></a></h4>
-   <p>BOOST supports multiple identification approaches to accommodate varying technology deployment levels:</p>
+   <h4 class="heading settled" data-level="2.5.2" id="emerging-technologies"><span class="secno">2.5.2. </span><span class="content"><strong>Emerging Technologies</strong></span><a class="self-link" href="#emerging-technologies"></a></h4>
+   <p>BOOST provides forward compatibility for emerging identification technologies:</p>
+   <p><strong>Biometric Identification</strong>: Computer vision technologies for wood identification are emerging in research settings:</p>
    <ul>
     <li data-md>
-     <p><strong>Primary</strong>: Biometric signatures captured through computer vision systems</p>
+     <p><strong>End-grain Photography</strong>: Log cross-section imaging with pattern recognition algorithms</p>
     <li data-md>
-     <p><strong>Secondary</strong>: RFID or QR code tags for operations not ready for biometric implementation</p>
+     <p><strong>Wood Grain Analysis</strong>: Surface texture recognition using machine learning classification</p>
     <li data-md>
-     <p><strong>Hybrid</strong>: Combination approaches using both biometric and traditional marking systems for validation</p>
+     <p><strong>Geometric Profiling</strong>: Combined dimension and visual signature identification</p>
    </ul>
-   <p>The <code>BiometricIdentifier</code> entity structure accommodates all identification methods while maintaining forward compatibility as biometric technology matures.</p>
+   <p><strong>Implementation Approach</strong>: All identification methods are treated equally in BOOST. Organizations can start with current practices (trip tickets, RFID) and adopt emerging technologies (biometrics) as they become commercially viable, without requiring system redesign.</p>
+   <p>The flexible <code>uniqueIdentifier</code> field and <code>IdentificationMethod</code> entity support all approaches, ensuring continuity from current industry practice through future technology adoption.</p>
    <h3 class="heading settled" data-level="2.6" id="regulatory-integration"><span class="secno">2.6. </span><span class="content">Regulatory Compliance Integration</span><a class="self-link" href="#regulatory-integration"></a></h3>
    <h4 class="heading settled" data-level="2.6.1" id="multi-framework-data-strategy"><span class="secno">2.6.1. </span><span class="content"><strong>Multi-Framework Data Strategy</strong></span><a class="self-link" href="#multi-framework-data-strategy"></a></h4>
    <p>BOOST’s field structure enables single-system compliance with multiple regulatory programs through strategic data element combinations:</p>
@@ -4880,20 +4884,31 @@ Operations should establish tracking points where physical custody transfers occ
     <li data-md>
      <p>Chain of custody validation across organizational boundaries</p>
    </ul>
-   <h4 class="heading settled" data-level="3.1.5" id="5-progressive-identification-and-continuous-traceability"><span class="secno">3.1.5. </span><span class="content">5. Progressive Identification and Continuous Traceability</span><a class="self-link" href="#5-progressive-identification-and-continuous-traceability"></a></h4>
-   <p><strong>Objective</strong>: Maintain continuous traceability without physical tag dependencies</p>
+   <h4 class="heading settled" data-level="3.1.5" id="5-flexible-identification-supporting-current-and-future-methods"><span class="secno">3.1.5. </span><span class="content">5. Flexible Identification Supporting Current and Future Methods</span><a class="self-link" href="#5-flexible-identification-supporting-current-and-future-methods"></a></h4>
+   <p><strong>Objective</strong>: Maintain continuous traceability using current industry practices and emerging technologies</p>
+   <p><strong>Current Industry Integration</strong>:</p>
+   <ul>
+    <li data-md>
+     <p>Trip ticket systems with unique delivery numbers as TraceableUnit identifiers</p>
+    <li data-md>
+     <p>RFID tag integration for automated tracking and equipment identification</p>
+    <li data-md>
+     <p>QR code systems linking to existing documentation and record systems</p>
+    <li data-md>
+     <p>Paper-based documentation workflows with manual identifier capture</p>
+   </ul>
    <p><strong>Technical Features</strong>:</p>
    <ul>
     <li data-md>
-     <p>Optical pattern recognition of grain, bark, or cut surfaces</p>
+     <p>IdentificationMethod catalog supporting all current and future approaches</p>
     <li data-md>
-     <p>BiometricIdentifier entities with tamper-proof signatures</p>
+     <p>Media break detection and flagging mechanisms for data continuity</p>
     <li data-md>
-     <p>Media break detection and flagging mechanisms</p>
+     <p>Multiple identifier redundancy (trip tickets + RFID + QR codes)</p>
     <li data-md>
-     <p>Backup identification methods (RFID, QR codes) for redundancy</p>
+     <p>Forward compatibility with emerging biometric pattern recognition</p>
     <li data-md>
-     <p>Data continuity validation across all processing steps</p>
+     <p>Seamless integration with legacy transportation and documentation systems</p>
    </ul>
    <h4 class="heading settled" data-level="3.1.6" id="6-plant-part-value-optimization"><span class="secno">3.1.6. </span><span class="content">6. Plant Part Value Optimization</span><a class="self-link" href="#6-plant-part-value-optimization"></a></h4>
    <p><strong>Objective</strong>: Optimize material routing based on plant part composition</p>
@@ -4940,10 +4955,25 @@ Operations should establish tracking points where physical custody transfers occ
     <li data-md>
      <p><strong>Location History</strong> documentation for all TRU movements</p>
     <li data-md>
+     <p><strong>Trip Ticket Integration</strong> with existing delivery documentation workflows</p>
+    <li data-md>
      <p><strong>Real-time Tracking</strong> integration with transportation systems</p>
     <li data-md>
      <p><strong>Arrival Verification</strong> with measurement validation</p>
    </ul>
+   <p><strong>Trip Ticket Workflow Example</strong>:</p>
+   <ol>
+    <li data-md>
+     <p>Driver receives trip ticket: <code>TRIP-2025-001234</code> with load details</p>
+    <li data-md>
+     <p>BOOST creates TraceableUnit with <code>uniqueIdentifier: "TRIP-2025-001234"</code></p>
+    <li data-md>
+     <p>Additional TRU fields capture enhanced tracking data (species, volume, location)</p>
+    <li data-md>
+     <p>Delivery confirmation links trip ticket to destination processing facility</p>
+    <li data-md>
+     <p>Complete audit trail maintained without changing current documentation practices</p>
+   </ol>
    <h4 class="heading settled" data-level="3.2.4" id="regulatory-agencies"><span class="secno">3.2.4. </span><span class="content">Regulatory Agencies</span><a class="self-link" href="#regulatory-agencies"></a></h4>
    <ul>
     <li data-md>
@@ -5167,23 +5197,24 @@ Operations should establish tracking points where physical custody transfers occ
    <h2 class="heading settled" data-level="6" id="traceability-system"><span class="secno">6. </span><span class="content">BOOST Traceability System</span><a class="self-link" href="#traceability-system"></a></h2>
    <p>The BOOST Traceability System implements a comprehensive approach to biomass supply chain tracking that addresses traditional weak points where traceability is lost during material transfers and processing operations.</p>
    <h3 class="heading settled" data-level="6.1" id="key-implementation-features"><span class="secno">6.1. </span><span class="content">Key Implementation Features</span><a class="self-link" href="#key-implementation-features"></a></h3>
-   <h4 class="heading settled" data-level="6.1.1" id="progressive-identification-framework"><span class="secno">6.1.1. </span><span class="content">Progressive Identification Framework</span><a class="self-link" href="#progressive-identification-framework"></a></h4>
+   <h4 class="heading settled" data-level="6.1.1" id="flexible-identification-framework"><span class="secno">6.1.1. </span><span class="content">Flexible Identification Framework</span><a class="self-link" href="#flexible-identification-framework"></a></h4>
    
-TraceableUnit (TRU) entities maintain continuous identification through technology-appropriate methods including biometric signatures, RFID tags, QR codes, and manual identification. The multi-method approach provides data continuity while accommodating varying technology readiness levels and field conditions throughout handling and processing operations.
+TraceableUnit (TRU) entities maintain continuous identification through technology-appropriate methods including trip tickets, RFID tags, QR codes, manual documentation, and emerging biometric signatures. This multi-method approach provides data continuity while accommodating existing industry practices and varying technology readiness levels throughout handling and processing operations.
 
 
-   <h4 class="heading settled" data-level="6.1.2" id="three-critical-tracking-points"><span class="secno">6.1.2. </span><span class="content">Three Critical Tracking Points</span><a class="self-link" href="#three-critical-tracking-points"></a></h4>
+   <h4 class="heading settled" data-level="6.1.2" id="critical-tracking-points"><span class="secno">6.1.2. </span><span class="content">Critical Tracking Points</span><a class="self-link" href="#critical-tracking-points"></a></h4>
    
-The system establishes standardized measurement and verification infrastructure at:
+The system establishes standardized measurement and verification infrastructure with flexible configurations. The standard three-point configuration includes:
 
    <ul>
     <li data-md>
      <p><strong>harvest_site</strong> - Initial TRU creation with appropriate identification method and volume measurement</p>
     <li data-md>
-     <p><strong>skid_road/forest_road</strong> - Transportation consolidation points with reconciliation validation</p>
+     <p><strong>consolidation_point</strong> - Transportation consolidation points with reconciliation validation (formerly skid_road/forest_road)</p>
     <li data-md>
      <p><strong>mill_entrance</strong> - Processing facility entry points with final verification before transformation</p>
    </ul>
+   <p>BOOST supports 7 tracking point types total (<code>harvest_site</code>, <code>consolidation_point</code>, <code>mill_entrance</code>, <code>transfer_station</code>, <code>storage_facility</code>, <code>quality_control_point</code>, <code>mobile_processing_unit</code>) enabling flexible configurations from 2-point minimum to 5+ point extended setups based on operational complexity.</p>
    <h4 class="heading settled" data-level="6.1.3" id="multi-species-support"><span class="secno">6.1.3. </span><span class="content">Multi-Species Support</span><a class="self-link" href="#multi-species-support"></a></h4>
    
 Species-specific tracking capabilities enable:
@@ -5238,7 +5269,7 @@ MaterialProcessing entities provide comprehensive audit trails by:
     <li data-md>
      <p>Media break detection and flagging mechanisms</p>
    </ul>
-   <h3 class="heading settled" data-level="6.4" id="critical-tracking-points"><span class="secno">6.4. </span><span class="content">Three Critical Tracking Points</span><a class="self-link" href="#critical-tracking-points"></a></h3>
+   <h3 class="heading settled" data-level="6.4" id="critical-tracking-points①"><span class="secno">6.4. </span><span class="content">Three Critical Tracking Points</span><a class="self-link" href="#critical-tracking-points①"></a></h3>
    <p>Implementations MUST support measurement and verification at:</p>
    <ul>
     <li data-md>
@@ -24654,6 +24685,11 @@ Latest working group meeting notes and updates from June 25th session.
      <p><strong>Environmental organizations</strong> - Sustainability criteria and verification methods</p>
    </ul>
    <p>Special recognition to the contributors of the Interactive ERD Navigator, Python reference implementation, and comprehensive schema validation tools that support this specification.</p>
+   <p><strong>Technical Development Contributions:</strong></p>
+   <ul>
+    <li data-md>
+     <p><strong>Claude (Anthropic)</strong> - AI-assisted development including schema integrity validation, Python reference implementation enhancements, comprehensive documentation generation, expert review integration, and systematic issue resolution supporting v3.4.2 release preparation</p>
+   </ul>
    <h2 class="no-num heading settled" id="spec-index"><span class="content">Index</span><a class="self-link" href="#spec-index"></a></h2>
    <div data-fill-with="index">
     <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>

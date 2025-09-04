@@ -39,7 +39,7 @@
       },
       "uniqueIdentifier": {
         "type": "string",
-        "description": "Primary identifier - biometric signature, RFID tag, QR code, barcode, or manual ID"
+        "description": "Primary identifier - trip ticket ID, RFID tag, QR code, barcode, biometric signature, or manual ID"
       },
       "identificationMethodId": {
         "type": "string",
@@ -60,10 +60,11 @@
             "identifierType": {
               "type": "string",
               "enum": [
-                "biometric",
+                "trip_ticket",
                 "rfid",
                 "qr_code",
                 "barcode",
+                "biometric",
                 "manual_id",
                 "photo_documentation"
               ]

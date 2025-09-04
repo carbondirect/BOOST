@@ -1,4 +1,4 @@
-The TraceableUnit represents the fundamental unit of traceability in the BOOST continuous traceability timber supply chain tracking system. A TRU can be an individual log, pile, volume aggregation, or processed batch that maintains continuous data linkage throughout its lifecycle. This entity replaces MaterialBatch as the primary traceable unit and supports biometric identification, species composition tracking, and complete audit trails.
+The TraceableUnit represents the fundamental unit of traceability in the BOOST timber supply chain tracking system. A TRU can be an individual log, pile, volume aggregation, or processed batch that maintains continuous data linkage throughout its lifecycle. This entity replaces MaterialBatch as the primary traceable unit and supports flexible identification methods, species composition tracking, and complete audit trails.
 
 ## Required Fields
 
@@ -10,8 +10,8 @@ All TraceableUnit implementations MUST include the following required fields:
 - **`unitType`** (string enum) - Type of traceable unit  
     Valid values: `individual_log`, `pile`, `volume_aggregation`, `processed_batch`
 
-- **`uniqueIdentifier`** (string) - Biometric signature, RFID tag, or QR code  
-    Examples: `BIO-OAK-12345`, `RFID-TAG-67890`, `QR-CODE-ABC123`
+- **`uniqueIdentifier`** (string) - Trip ticket ID, RFID tag, QR code, or biometric signature  
+    Examples: `TRIP-2025-001234`, `RFID-TAG-67890`, `QR-CODE-ABC123`, `BIO-OAK-12345`
 
 - **`totalVolumeM3`** (number) - Total volume in cubic meters  
     Examples: `12.5`, `250.75`, `1000.0`
@@ -40,12 +40,20 @@ TraceableUnit entities MAY include additional fields for enhanced tracking:
 
 ## Key Capabilities
 
-### Biometric Identification
-TRUs support multiple identification methods without requiring physical attachments:
-- Optical pattern recognition of grain, bark, or cut surfaces
-- RFID tags for conventional tracking
-- QR codes for human-readable identification
-- Biometric signatures for tamper-proof identification
+### Flexible Identification Methods
+TRUs support multiple identification approaches to accommodate current industry practices and future technologies:
+- **Trip Tickets**: Current industry standard with unique delivery numbers
+- **RFID Tags**: Automated tracking systems for equipment and load identification  
+- **QR Codes**: Human-readable codes linking to digital records
+- **Manual Documentation**: Paper-based tracking with reference numbers
+- **Biometric Signatures**: Emerging optical pattern recognition technology
+
+### Current Industry Integration
+BOOST TraceableUnits integrate seamlessly with existing forest industry workflows:
+
+**Trip Ticket Integration**: Existing trip ticket systems can populate the `uniqueIdentifier` field with delivery numbers, enabling immediate BOOST adoption without changing current documentation practices. Additional TRU fields capture enhanced tracking data while maintaining compatibility with established transportation and delivery workflows.
+
+**Legacy System Compatibility**: TRUs accommodate existing identification schemes through flexible field mapping, allowing gradual system integration without disrupting ongoing operations.
 
 ### Multi-Species Support
 When `isMultiSpecies` is true, TRUs can reference multiple SpeciesComponent entities to track:

@@ -47,16 +47,22 @@ The quarterly LCFSReporting entity aggregates these tracked transactions to calc
 - Third-party verification with evidence documentation
 - Chain of custody validation across organizational boundaries
 
-### 5. Progressive Identification and Continuous Traceability
+### 5. Flexible Identification Supporting Current and Future Methods
 
-**Objective**: Maintain continuous traceability without physical tag dependencies
+**Objective**: Maintain continuous traceability using current industry practices and emerging technologies
+
+**Current Industry Integration**:
+- Trip ticket systems with unique delivery numbers as TraceableUnit identifiers
+- RFID tag integration for automated tracking and equipment identification
+- QR code systems linking to existing documentation and record systems
+- Paper-based documentation workflows with manual identifier capture
 
 **Technical Features**:
-- Optical pattern recognition of grain, bark, or cut surfaces
-- BiometricIdentifier entities with tamper-proof signatures
-- Media break detection and flagging mechanisms
-- Backup identification methods (RFID, QR codes) for redundancy
-- Data continuity validation across all processing steps
+- IdentificationMethod catalog supporting all current and future approaches
+- Media break detection and flagging mechanisms for data continuity
+- Multiple identifier redundancy (trip tickets + RFID + QR codes)
+- Forward compatibility with emerging biometric pattern recognition
+- Seamless integration with legacy transportation and documentation systems
 
 ### 6. Plant Part Value Optimization
 
@@ -86,8 +92,16 @@ The quarterly LCFSReporting entity aggregates these tracked transactions to calc
 ### Transportation Companies
 - **Chain of Custody Maintenance** across organizational boundaries
 - **Location History** documentation for all TRU movements
-- **Real-time Tracking** integration with transportation systems
+- **Trip Ticket Integration** with existing delivery documentation workflows
+- **Real-time Tracking** integration with transportation systems  
 - **Arrival Verification** with measurement validation
+
+**Trip Ticket Workflow Example**:
+1. Driver receives trip ticket: `TRIP-2025-001234` with load details
+2. BOOST creates TraceableUnit with `uniqueIdentifier: "TRIP-2025-001234"`
+3. Additional TRU fields capture enhanced tracking data (species, volume, location)
+4. Delivery confirmation links trip ticket to destination processing facility
+5. Complete audit trail maintained without changing current documentation practices
 
 ### Regulatory Agencies
 - **Compliance Monitoring** with automated report generation

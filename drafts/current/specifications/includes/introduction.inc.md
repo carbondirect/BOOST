@@ -80,28 +80,32 @@ BOOST defines critical tracking points as specific geographic locations where cu
 **Implementation Guidance**:
 Operations should establish tracking points where physical custody transfers occur, material aggregation happens, or regulatory measurement is required. Not all operations require all three standard points - the minimum viable configuration depends on supply chain complexity and regulatory requirements.
 
-## Biometric Implementation Framework ## {#biometric-implementation}
+## Identification Methods and Current Practice ## {#identification-methods}
 
-### **Current Technology Landscape**
+### **Current Industry Practice**
 
-BOOST's biometric identification framework is designed to work with emerging computer vision technologies for wood identification:
+BOOST supports existing forest industry identification methods while enabling future technology adoption:
 
-**Available Technologies**:
-- **End-grain Photography**: Log cross-section imaging with pattern recognition algorithms (Ravindran2022, USDA Forest Service)
-- **Wood Grain Analysis**: Surface texture recognition using machine learning classification (Hwang2021, Plant Methods)
-- **Geometric Profiling**: Combined dimension and visual signature identification (Ergun2024, PMC)
+**Trip Tickets**: The current standard for biomass tracking uses paper-based or digital trip tickets containing load information, harvest location, destination, and unique delivery numbers. BOOST accommodates trip ticket IDs as TraceableUnit identifiers, bridging current practice with enhanced traceability.
 
-**Implementation Readiness**: While full commercial deployment is still developing, controlled environment demonstrations show sufficient accuracy for pilot implementations. BOOST provides the data structure framework to capture biometric data as the technology scales.
+**Industry-Standard Methods**:
+- **Trip Tickets**: Current standard practice with unique delivery numbers (e.g., `TRIP-2025-001234`)
+- **RFID Tags**: Automated tracking systems for equipment and load identification
+- **QR Codes**: Human-readable codes linking to digital records and documentation
+- **Manual Documentation**: Paper-based tracking with unique reference numbers
 
-### **Fallback Identification Methods**
+### **Emerging Technologies**
 
-BOOST supports multiple identification approaches to accommodate varying technology deployment levels:
+BOOST provides forward compatibility for emerging identification technologies:
 
-- **Primary**: Biometric signatures captured through computer vision systems
-- **Secondary**: RFID or QR code tags for operations not ready for biometric implementation
-- **Hybrid**: Combination approaches using both biometric and traditional marking systems for validation
+**Biometric Identification**: Computer vision technologies for wood identification are emerging in research settings:
+- **End-grain Photography**: Log cross-section imaging with pattern recognition algorithms
+- **Wood Grain Analysis**: Surface texture recognition using machine learning classification  
+- **Geometric Profiling**: Combined dimension and visual signature identification
 
-The `BiometricIdentifier` entity structure accommodates all identification methods while maintaining forward compatibility as biometric technology matures.
+**Implementation Approach**: All identification methods are treated equally in BOOST. Organizations can start with current practices (trip tickets, RFID) and adopt emerging technologies (biometrics) as they become commercially viable, without requiring system redesign.
+
+The flexible `uniqueIdentifier` field and `IdentificationMethod` entity support all approaches, ensuring continuity from current industry practice through future technology adoption.
 
 ## Regulatory Compliance Integration ## {#regulatory-integration}
 

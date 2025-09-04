@@ -2,8 +2,8 @@ The BOOST Traceability System implements a comprehensive approach to biomass sup
 
 ## Key Implementation Features
 
-### Progressive Identification Framework
-TraceableUnit (TRU) entities maintain continuous identification through technology-appropriate methods including biometric signatures, RFID tags, QR codes, and manual identification. The multi-method approach provides data continuity while accommodating varying technology readiness levels and field conditions throughout handling and processing operations.
+### Flexible Identification Framework
+TraceableUnit (TRU) entities maintain continuous identification through technology-appropriate methods including trip tickets, RFID tags, QR codes, manual documentation, and emerging biometric signatures. This multi-method approach provides data continuity while accommodating existing industry practices and varying technology readiness levels throughout handling and processing operations.
 
 ### Critical Tracking Points
 The system establishes standardized measurement and verification infrastructure with flexible configurations. The standard three-point configuration includes:
