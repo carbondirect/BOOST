@@ -13,16 +13,18 @@ The BOOST Traceability System implements a comprehensive approach to biomass sup
 \TRU{} entities maintain continuous identification through biometric signatures and optical pattern recognition, eliminating dependency on physical tags or attachments that can be lost or damaged during handling and processing operations.
 \end{important}
 
-\subsubsection{Three Critical Tracking Points}
-\label{sec:three-critical-tracking-points}
+\subsubsection{Critical Tracking Points}
+\label{sec:critical-tracking-points}
 
-The system establishes standardized measurement and verification infrastructure at:
+The system establishes standardized measurement and verification infrastructure with flexible configurations. The standard three-point configuration includes:
 
 \begin{itemize}
     \item \textbf{\enum{harvest\_site}} - Initial TRU creation with biometric capture and volume measurement
-    \item \textbf{\enum{skid\_road}/\enum{forest\_road}} - Transportation consolidation points with reconciliation validation
+    \item \textbf{\enum{consolidation\_point}} - Transportation consolidation points with reconciliation validation (formerly \enum{skid\_road}/\enum{forest\_road})
     \item \textbf{\enum{mill\_entrance}} - Processing facility entry points with final verification before transformation
 \end{itemize}
+
+BOOST supports 7 tracking point types total (\enum{harvest\_site}, \enum{consolidation\_point}, \enum{mill\_entrance}, \enum{transfer\_station}, \enum{storage\_facility}, \enum{quality\_control\_point}, \enum{mobile\_processing\_unit}) enabling flexible configurations from 2-point minimum to 5+ point extended setups based on operational complexity.
 
 \begin{normative}[title=Critical Tracking Point Requirements]
 Implementations \MUST{} support measurement and verification at all three critical tracking points to ensure complete traceability chain integrity.

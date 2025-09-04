@@ -5,11 +5,13 @@ The BOOST Traceability System implements a comprehensive approach to biomass sup
 ### Progressive Identification Framework
 TraceableUnit (TRU) entities maintain continuous identification through technology-appropriate methods including biometric signatures, RFID tags, QR codes, and manual identification. The multi-method approach provides data continuity while accommodating varying technology readiness levels and field conditions throughout handling and processing operations.
 
-### Three Critical Tracking Points
-The system establishes standardized measurement and verification infrastructure at:
+### Critical Tracking Points
+The system establishes standardized measurement and verification infrastructure with flexible configurations. The standard three-point configuration includes:
 - **harvest_site** - Initial TRU creation with appropriate identification method and volume measurement
-- **skid_road/forest_road** - Transportation consolidation points with reconciliation validation
+- **consolidation_point** - Transportation consolidation points with reconciliation validation (formerly skid_road/forest_road)
 - **mill_entrance** - Processing facility entry points with final verification before transformation
+
+BOOST supports 7 tracking point types total (`harvest_site`, `consolidation_point`, `mill_entrance`, `transfer_station`, `storage_facility`, `quality_control_point`, `mobile_processing_unit`) enabling flexible configurations from 2-point minimum to 5+ point extended setups based on operational complexity.
 
 ### Multi-Species Support
 Species-specific tracking capabilities enable:
