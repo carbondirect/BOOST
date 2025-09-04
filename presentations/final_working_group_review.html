@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BOOST v3.4.2 Final Working Group Review</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js/dist/theme/solarized.css" id="theme">
+  <style>
+      .logo-corner {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 80px;   /* adjust size as needed */
+        z-index: 1000;
+      }
+      
+      /* Custom styling for the presentation */
+      .reveal h1, .reveal h2, .reveal h3 {
+        color: #2E8B57;
+      }
+      
+      .reveal .slides section.has-dark-background h1,
+      .reveal .slides section.has-dark-background h2,
+      .reveal .slides section.has-dark-background h3 {
+        color: #fff;
+      }
+      
+      /* Reduce default font sizes to prevent overrun */
+      .reveal {
+        font-size: 32px; /* Default is 40px */
+      }
+      
+      .reveal h1 {
+        font-size: 2.2em; /* Slightly smaller than default 2.5em */
+      }
+      
+      .reveal h2 {
+        font-size: 1.4em; /* Slightly smaller than default 1.6em */
+      }
+      
+      .reveal h3 {
+        font-size: 1.2em; /* Slightly smaller than default 1.3em */
+      }
+      
+      /* Style for status indicators */
+      .status-complete {
+        color: #28a745;
+        font-weight: bold;
+      }
+      
+      .status-pending {
+        color: #ffc107;
+        font-weight: bold;
+      }
+      
+      .status-ready {
+        color: #17a2b8;
+        font-weight: bold;
+      }
+      
+      /* Enhanced bullet points with tighter spacing */
+      .reveal ul li {
+        margin: 0.3em 0;
+        line-height: 1.3;
+      }
+      
+      /* Smaller paragraph text */
+      .reveal p {
+        font-size: 0.9em;
+        line-height: 1.4;
+      }
+      
+      /* Code blocks and inline code styling */
+      .reveal pre code {
+        font-size: 0.7em;
+        line-height: 1.2;
+        background: #f8f8f8;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        font-family: 'Courier New', monospace;
+        color: #333;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      /* Inline code styling */
+      .reveal code {
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-family: 'Courier New', monospace;
+        color: #d63384;
+        font-size: 0.9em;
+        font-weight: bold;
+      }
+      
+      /* Backtick elements (like coordinatePrecision, configurationRole) */
+      .reveal p code, .reveal li code {
+        background: #e3f2fd;
+        border: 1px solid #2196f3;
+        color: #1565c0;
+        font-weight: bold;
+      }
+      
+      /* Compact lists */
+      .reveal ul, .reveal ol {
+        margin: 0.5em 0;
+      }
+    </style>
+</head>
+<body>
+  <!-- Logo in top-right corner -->
+  <img src="img/boost_logo.png" alt="BOOST Logo" class="logo-corner" />
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown="final_working_group_review.md"
+               data-separator="^---$"
+               data-separator-vertical="^--$"
+               data-separator-notes="^Note:"
+               data-charset="utf-8">
+      </section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js/dist/reveal.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/markdown/markdown.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-light.css" />
+  <script src="https://unpkg.com/reveal.js/plugin/highlight/highlight.js"></script>
+  <script src="https://unpkg.com/reveal.js/plugin/notes/notes.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      backgroundTransition: 'fade',
+      controls: true,
+      progress: true,
+      center: true,
+      touch: true,
+      loop: false,
+      rtl: false,
+      navigationMode: 'default',
+      shuffle: false,
+      fragments: true,
+      fragmentInURL: false,
+      embedded: false,
+      help: true,
+      pause: true,
+      showNotes: false,
+      autoPlayMedia: null,
+      preloadIframes: null,
+      autoAnimate: true,
+      autoAnimateMatcher: null,
+      autoAnimateEasing: 'ease',
+      autoAnimateDuration: 1.0,
+      autoAnimateUnmatched: true,
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+  </script>
+
+</body>
+</html>

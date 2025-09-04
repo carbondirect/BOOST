@@ -6,10 +6,27 @@ This specification provides implementers with the technical details needed to de
 
 BOOST is developed through the [BOOST W3C Community Group](https://www.w3.org/community/boost-01/) with collaborative input from industry stakeholders, regulatory agencies, and technical experts. The standard implements a TraceableUnit (TRU)-centric model supporting continuous tracking with progressive identification methods, multi-species composition management, and comprehensive plant part categorization across 36 interconnected entities.
 
-**Working Group Leadership:**
-- **Chair:** Peter Tittmann (Carbon Direct)
-- **Technical Contributors:** Industry partners, certification bodies, and regulatory agencies
-- **Community Participants:** 15+ active members from across the biomass supply chain
+**Working Group Members:**
+
+**Chair:** Peter Tittmann (Carbon Direct)
+
+**Community Group Participants:**
+- Bodie Cabiyo (Carbon Direct)
+- Dani Charles (Veriflux)
+- Kylee Durrett (Green Diamond)
+- Vanessa Felix (Tule River Economic Development Corporation)
+- Marieke Fenton (California Air Resources Board)
+- Robert Hambrect (Allotrope Partners)
+- Liam Kilroy (Carbon Direct)
+- Jeremy Loeb (California Air Resources Board)
+- QUINN Matuschek (Life Cycle Associates)
+- Carmen Meialua (ARB)
+- Andy Miller (Loamist)
+- Mahmoud Nabil
+- Sarah Oldson (Cascade Resource Consultants, LLC)
+- Daniel Sanchez (Carbon Direct)
+- Clarke Stevenson (The Watershed Research and Training Center)
+- Martin Twer (The Watershed Research & Training Center)
 
 ## Current Development Status ## {#development-status}
 
